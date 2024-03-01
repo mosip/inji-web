@@ -1,29 +1,10 @@
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "common.names.fullname" . }}
-  namespace: {{ .Release.Namespace | quote }}
-  labels: {{- include "common.labels.standard" . | nindent 4 }}
-    {{- if .Values.commonLabels }}
-    {{- include "common.tplvalues.render" (dict "value" .Values.commonLabels "context" $) | nindent 4 }}
-    {{- end }}
-  {{- if .Values.commonAnnotations }}
-  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
-  {{- end }}
+  name: {{ template "inji-web.serviceAccountName" . }}-pods-role
+  namespace: {{ .Release.Namespace }}
 rules:
-  - apiGroups:
-      - "*"
-    resources:
-      - endpoints
-      - pods
-      - services
-      - configmaps
-      - secrets
-      - virtualservices
-      - gateways
-    verbs:
-      - get
-      - list
-      - create
-      - update
-      - patch
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get","patch","list","watch"]

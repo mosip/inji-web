@@ -42,12 +42,30 @@ data:
           proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
           proxy_set_header   X-Forwarded-Host $server_name;
         }
-        location /authorize {
-          return 301 https://{{ .Values.esignet_redirect_url }}$request_uri;
-        }
   
         location / {
           try_files $uri $uri/ /index.html;
         }
       }
     }
+{{- if .Values.inji_web.configmaps }}
+  {{- range $cm_name, $cm_value := .Values.inji_web.configmaps }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $cm_name }}
+  namespace: {{ $.Release.Namespace }}
+  labels: {{- include "common.labels.standard" $ | nindent 8 }}
+    {{- if $.Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" $.Values.commonLabels "context" $ ) | nindent 8 }}
+    {{- end }}
+  {{- if $.Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" $.Values.commonAnnotations "context" $ ) | nindent 8 }}
+  {{- end }}
+data:
+  {{- range $key, $value := $cm_value }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+  {{- end }}

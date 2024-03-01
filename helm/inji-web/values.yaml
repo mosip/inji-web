@@ -51,7 +51,7 @@ service:
 
 image:
   registry: docker.io
-  repository: mosipdev/inji-web
+  repository: bn46/inji-web
   tag: develop
 
   ## Specify a imagePullPolicy
@@ -250,6 +250,7 @@ extraEnvVarsCM:
   - artifactory-share
   - softhsm-esignet-share
   - oidc-ui
+  - inji-web
 
 ## Secret with extra environment variables
 ##
@@ -419,8 +420,14 @@ metrics:
 ## Slash is important!
 inji_web:
   inji_web_port: '3004'
-  inji_web_service_host: 'mimoto.mimoto'
-esignet_redirect_url: 'esignet.sandbox.xyz.net'
+  inji_web_service_host: 'https://api-internal.sandbox.xxx.net'
+  configmaps:
+    inji-web:
+      REACT_APP_ESIGNET_UI_URL: 'https://api-internal.sandbox.xxx.net/v1/esignet'
+      REACT_APP_ESIGNET_REDIRECT_URL: ''
+      REACT_APP_MIMOTO_URL: 'https://api.sandbox.xxx.net/v1/mimoto'
+
+
 ## injiweb UI swagger should have only internal access. Hence linked to internal gateway
 ## We create a gateway for esignet specific URL(s) listed under `hosts`
 istio:

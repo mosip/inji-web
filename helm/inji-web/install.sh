@@ -20,18 +20,17 @@ function installing_inji-web() {
   helm repo update
 
   echo Copy configmaps
- # ./copy_cm.sh
+  ./copy_cm.sh
 
   ESIGNET_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-esignet-host})
-  INJI_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-injiweb-host})
+
   echo Installing INJIWEB
-  helm -n $NS install inji-web mosip/inji-web \
+  helm -n $NS install inji-web /home/bhuminathan/injiwebfinal/inji-web/helm/inji-web \
   -f values.yaml \
-  --set esignet_redirect_url=$ESIGNET_HOST \
-  --set istio.hosts\[0\]=$INJI_HOST \
+  --set istio.hosts\[0\]=$ESIGNET_HOST \
   --version $CHART_VERSION
 
-#  kubectl -n $NS  get deploy -o name |  xargs -n1 -t  kubectl -n $NS rollout status
+  kubectl -n $NS  get deploy -o name |  xargs -n1 -t  kubectl -n $NS rollout status
 
   echo Installed inji-web
   return 0
