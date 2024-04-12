@@ -18,7 +18,7 @@ function PageTemplate({children}) {
         if (Object.keys(searchParamsMap).indexOf("code") !== -1) {
             let sessionState = searchParamsMap["state"];
             let vcRedirectionDetails = JSON.parse(localStorage.getItem(DATA_KEY_IN_LOCAL_STORAGE) || "{}");
-            if (!sessionState || !vcRedirectionDetails || vcRedirectionDetails["state"].contains(sessionState) === -1 ) {
+            if (!sessionState || !vcRedirectionDetails || vcRedirectionDetails["state"].indexOf(sessionState) === -1 ) {
                 console.error('invalid state');
                 navigate("/", {
                     state: {

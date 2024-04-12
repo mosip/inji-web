@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import GridComponent from "../../components/molecules/GridComponent";
 import {Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import styled from "@emotion/styled";
-import { SampleIssuersData } from '../Home/testData';
+import {SampleIssuersData} from '../Home/testData';
 import {DATA_KEY_IN_LOCAL_STORAGE, getESignetRedirectURL} from "../../utils/config";
 import {generateCodeChallenge, generateRandomString} from "../../utils/oauth-utils";
 import CustonDownloadButton from "../../components/atoms/CustomDownloadButton.js";
@@ -30,13 +30,14 @@ const getCardsData = (issuerId, issuerDisplayName, authEndpoint, credentialList,
             icon: <CustonDownloadButton/>,
             onClick: () => {
                 let {codeVerifier, codeChallenge} = generateCodeChallenge();
+                let state = generateRandomString();
                 localStorage.setItem(DATA_KEY_IN_LOCAL_STORAGE,
                     JSON.stringify({
                         issuerId,
                         issuerDisplayName,
                         certificateId: cred.id,
                         codeVerifier: codeVerifier,
-                        state: constructNewState(),
+                        state: constructNewState(state),
                         clientId: clientId
                     }));
                 window.location.assign(getESignetRedirectURL(authEndpoint, cred.scope, clientId, codeChallenge, state));
@@ -46,8 +47,8 @@ const getCardsData = (issuerId, issuerDisplayName, authEndpoint, credentialList,
     });
 }
 
-const constructNewState = () => {
-    let state = generateRandomString();
+const constructNewState = (state) => {
+
     let oldLocalStorageData = localStorage.getItem(DATA_KEY_IN_LOCAL_STORAGE) ;
     let newState = [state];
     if(oldLocalStorageData !== null){
