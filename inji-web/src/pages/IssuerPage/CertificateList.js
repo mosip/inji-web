@@ -30,14 +30,13 @@ const getCardsData = (issuerId, issuerDisplayName, authEndpoint, credentialList,
             icon: <CustonDownloadButton/>,
             onClick: () => {
                 let {codeVerifier, codeChallenge} = generateCodeChallenge();
-                let state = generateRandomString();
                 localStorage.setItem(DATA_KEY_IN_LOCAL_STORAGE,
                     JSON.stringify({
                         issuerId,
                         issuerDisplayName,
                         certificateId: cred.id,
                         codeVerifier: codeVerifier,
-                        state: state,
+                        state: constructNewState(),
                         clientId: clientId
                     }));
                 window.location.assign(getESignetRedirectURL(authEndpoint, cred.scope, clientId, codeChallenge, state));
@@ -45,6 +44,17 @@ const getCardsData = (issuerId, issuerDisplayName, authEndpoint, credentialList,
             clickable: true
         }
     });
+}
+
+const constructNewState = () => {
+    let state = generateRandomString();
+    let oldLocalStorageData = localStorage.getItem(DATA_KEY_IN_LOCAL_STORAGE) ;
+    let newState = [state];
+    if(oldLocalStorageData !== null){
+        oldLocalStorageData = JSON.parse(oldLocalStorageData);
+        newState.concat(oldLocalStorageData.state)
+    }
+    return newState;
 }
 
 function CertificateList({issuerId, issuerDisplayName, authEndpoint, credentialList, clientId}) {
