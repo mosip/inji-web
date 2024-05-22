@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="8" passed="5" failed="3" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2024-05-20T09:44:48 IST" name="Default suite" finished-at="2024-05-20T09:46:36 IST" duration-ms="107797">
+    <groups>
+      <group name="cucumber">
+        <method signature="AbstractTestNGCucumberTests.runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runnerfiles.Runner@c5dc4a2]" name="runScenario" class="io.cucumber.testng.AbstractTestNGCucumberTests"/>
+      </group> <!-- cucumber -->
+    </groups>
+    <test started-at="2024-05-20T09:44:48 IST" name="Default test" finished-at="2024-05-20T09:46:36 IST" duration-ms="107797">
+      <class name="runnerfiles.Runner">
+        <test-method is-config="true" signature="setUpClass(org.testng.ITestContext)[pri:0, instance:runnerfiles.Runner@c5dc4a2]" started-at="2024-05-20T09:44:48 IST" name="setUpClass" finished-at="2024-05-20T09:44:48 IST" duration-ms="486" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@5d51e129]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpClass -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runnerfiles.Runner@c5dc4a2]" started-at="2024-05-20T09:44:48 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-05-20T09:45:35 IST" duration-ms="46642" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Mosip Natonal Id by e-Signet"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["download mosip cridentials"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runnerfiles.Runner@c5dc4a2]" started-at="2024-05-20T09:45:35 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-05-20T09:45:40 IST" duration-ms="4833" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Mosip Natonal Id by e-Signet"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["download mosip cridentials"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runnerfiles.Runner@c5dc4a2]" started-at="2024-05-20T09:45:40 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-05-20T09:45:51 IST" duration-ms="10595" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Navigating to help page and verfying it"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Inji web help page testing"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runnerfiles.Runner@c5dc4a2]" started-at="2024-05-20T09:45:51 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-05-20T09:46:00 IST" duration-ms="9099" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Verify the Inji web homepage"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Inji web homepage testing"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runnerfiles.Runner@c5dc4a2]" started-at="2024-05-20T09:46:00 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-05-20T09:46:16 IST" duration-ms="16533" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Verify the Inji web configured language"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Inji web multilanguage testing"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runnerfiles.Runner@c5dc4a2]" started-at="2024-05-20T09:46:16 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-05-20T09:46:23 IST" duration-ms="6518" status="FAIL">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["download vc via sunbird"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Login using Sunbird Credentials"]]>
+              </value>
+            </param>
+          </params>
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[expected:<false> but was:<true>]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: expected:<false> but was:<true>
+at org.junit.Assert.fail(Assert.java:89)
+at org.junit.Assert.failNotEquals(Assert.java:835)
+at org.junit.Assert.assertEquals(Assert.java:120)
+at org.junit.Assert.assertEquals(Assert.java:146)
+at stepdefinitions.StepDef.user_verify_sunbird_cridentials_button(StepDef.java:144)
+at ✽.User verify sunbird cridentials button(file:///D:/GitAuto1/inji-web-test/inji-web-test.zip_expanded/inji-web-test/src/test/resources/featurefiles/sunbirdVc.feature:8)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runnerfiles.Runner@c5dc4a2]" started-at="2024-05-20T09:46:23 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-05-20T09:46:29 IST" duration-ms="6523" status="FAIL">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["download vc via sunbird"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Login using Sunbird Credentials"]]>
+              </value>
+            </param>
+          </params>
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[expected:<false> but was:<true>]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: expected:<false> but was:<true>
+at org.junit.Assert.fail(Assert.java:89)
+at org.junit.Assert.failNotEquals(Assert.java:835)
+at org.junit.Assert.assertEquals(Assert.java:120)
+at org.junit.Assert.assertEquals(Assert.java:146)
+at stepdefinitions.StepDef.user_verify_sunbird_cridentials_button(StepDef.java:144)
+at ✽.User verify sunbird cridentials button(file:///D:/GitAuto1/inji-web-test/inji-web-test.zip_expanded/inji-web-test/src/test/resources/featurefiles/sunbirdVc.feature:32)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runnerfiles.Runner@c5dc4a2]" started-at="2024-05-20T09:46:29 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-05-20T09:46:36 IST" duration-ms="6491" status="FAIL">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["download vc via sunbird"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Login using Sunbird Credentials"]]>
+              </value>
+            </param>
+          </params>
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[expected:<false> but was:<true>]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: expected:<false> but was:<true>
+at org.junit.Assert.fail(Assert.java:89)
+at org.junit.Assert.failNotEquals(Assert.java:835)
+at org.junit.Assert.assertEquals(Assert.java:120)
+at org.junit.Assert.assertEquals(Assert.java:146)
+at stepdefinitions.StepDef.user_verify_sunbird_cridentials_button(StepDef.java:144)
+at ✽.User verify sunbird cridentials button(file:///D:/GitAuto1/inji-web-test/inji-web-test.zip_expanded/inji-web-test/src/test/resources/featurefiles/sunbirdVc.feature:58)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method is-config="true" signature="tearDownClass()[pri:0, instance:runnerfiles.Runner@c5dc4a2]" started-at="2024-05-20T09:46:36 IST" name="tearDownClass" finished-at="2024-05-20T09:46:36 IST" duration-ms="19" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDownClass -->
+      </class> <!-- runnerfiles.Runner -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

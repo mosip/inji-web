@@ -1,0 +1,113 @@
+09:43:15.354 [main] INFO  c.b.launchers.LaunchMavenCommand - Executing maven archetype command - browserstack-sdk-archetype-integrate
+09:43:15.362 [main] INFO  c.b.launchers.LaunchMavenCommand - The maven properties for launcher are [archetypeVersion=1.4, archetypeGroupId=com.browserstack, archetypeArtifactId=browserstack-sdk-archetype-integrate, BROWSERSTACK_ACCESS_KEY=YOUR_ACCESS_KEY, groupId=com.browserstack, artifactId=java-archetype-integrate, BROWSERSTACK_USERNAME=YOUR_USERNAME, BROWSERSTACK_FRAMEWORK=java, BUILD_NAME=browserstack build, version=1.0, PROJECT_NAME=BrowserStack Sample, BROWSERSTACK_SOURCE=java:eclipse:v1.0.8]
+09:43:15.370 [Worker-80: Launching mavenrun-7b64a6a6-7fc8-4d43-983d-ac917337e1ab] INFO  c.b.BrowserStackPluginActivator - The previous launch removed.
+09:43:30.416 [main] INFO  c.b.a.BrowserStackPropertyTester - Testing : isBrowserStackEnabled
+09:43:30.416 [main] INFO  c.b.BrowserStackPluginActivator - Prefs Keys []
+09:43:30.418 [main] INFO  c.b.a.BrowserStackPropertyTester - Validation Result isBrowserStackEnabled : true P/inji-web-test
+09:43:30.419 [main] INFO  c.b.a.BrowserStackPropertyTester - Testing : isBrowserStackDisabled
+09:43:30.420 [main] INFO  c.b.BrowserStackPluginActivator - Prefs Keys []
+09:43:30.422 [main] INFO  c.b.a.BrowserStackPropertyTester - Validation Result isBrowserStackDisabled : false P/inji-web-test
+09:44:44.608 [Worker-81: Launching Runner] INFO  c.b.BrowserStackPluginActivator - The previous launch removed.
+09:44:44.611 [Worker-81: Launching Runner] INFO  c.b.BrowserStackPluginActivator - Existing javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs is 
+09:44:44.616 [Worker-81: Launching Runner] INFO  c.b.BrowserStackPluginActivator - Prefs Keys []
+09:44:44.617 [Worker-81: Launching Runner] INFO  c.b.BrowserStackPluginActivator - The environment variables for the launch configuration are {BROWSERSTACK_EXEC_SOURCE=eclipse/1.0.8}
+10:03:17.321 [Worker-80: Launching Runner] INFO  c.b.BrowserStackPluginActivator - The previous launch removed.
+10:03:17.322 [Worker-80: Launching Runner] INFO  c.b.BrowserStackPluginActivator - Existing javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs is 
+10:03:17.326 [Worker-80: Launching Runner] INFO  c.b.BrowserStackPluginActivator - Prefs Keys []
+10:03:17.328 [Worker-80: Launching Runner] INFO  c.b.BrowserStackPluginActivator - The environment variables for the launch configuration are {BROWSERSTACK_EXEC_SOURCE=eclipse/1.0.8}
+10:04:20.234 [main] INFO  c.b.a.BrowserStackPropertyTester - Testing : isBrowserStackEnabled
+10:04:20.235 [main] INFO  c.b.BrowserStackPluginActivator - Prefs Keys []
+10:04:20.238 [main] INFO  c.b.a.BrowserStackPropertyTester - Validation Result isBrowserStackEnabled : true P/inji-web-test
+10:04:20.239 [main] INFO  c.b.a.BrowserStackPropertyTester - Testing : isBrowserStackDisabled
+10:04:20.240 [main] INFO  c.b.BrowserStackPluginActivator - Prefs Keys []
+10:04:20.243 [main] INFO  c.b.a.BrowserStackPropertyTester - Validation Result isBrowserStackDisabled : false P/inji-web-test
+10:17:15.472 [main] INFO  c.b.a.BrowserStackPropertyTester - Testing : isBrowserStackEnabled
+10:17:15.473 [main] INFO  c.b.BrowserStackPluginActivator - Prefs Keys []
+10:17:15.476 [main] INFO  c.b.a.BrowserStackPropertyTester - Validation Result isBrowserStackEnabled : true P/inji-web-test
+10:17:15.478 [main] INFO  c.b.a.BrowserStackPropertyTester - Testing : isBrowserStackDisabled
+10:17:15.478 [main] INFO  c.b.BrowserStackPluginActivator - Prefs Keys []
+10:17:15.482 [main] INFO  c.b.a.BrowserStackPropertyTester - Validation Result isBrowserStackDisabled : false P/inji-web-test
+11:37:59.378 [Worker-80: Launching Runner] INFO  c.b.BrowserStackPluginActivator - The previous launch removed.
+11:37:59.384 [Worker-80: Launching Runner] INFO  c.b.BrowserStackPluginActivator - Existing javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs is 
+11:37:59.387 [Worker-80: Launching Runner] INFO  c.b.BrowserStackPluginActivator - Prefs Keys []
+11:37:59.388 [Worker-80: Launching Runner] INFO  c.b.BrowserStackPluginActivator - The environment variables for the launch configuration are {BROWSERSTACK_EXEC_SOURCE=eclipse/1.0.8}
+12:27:28.066 [Worker-98: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - The previous launch removed.
+12:27:28.069 [Worker-98: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Existing javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs is 
+12:27:28.071 [Worker-98: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Prefs Keys []
+12:27:28.074 [Worker-98: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Adding the javaagent argLine with path - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+12:27:28.074 [Worker-98: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Setting javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+12:27:28.082 [Worker-98: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - The environment variables for the launch configuration are {BROWSERSTACK_EXEC_SOURCE=eclipse/1.0.8}
+14:31:58.707 [main] INFO  c.b.BrowserStackPluginActivator - The previous launch removed.
+14:33:02.522 [Worker-97: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Existing javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs is C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+14:33:02.527 [Worker-97: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Prefs Keys [BROWSERSTACK_JAVAAGENT_ARGLINE]
+14:33:02.530 [Worker-97: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Adding the javaagent argLine with path - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+14:33:02.531 [Worker-97: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Setting javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+14:33:02.532 [Worker-97: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - The environment variables for the launch configuration are {BROWSERSTACK_EXEC_SOURCE=eclipse/1.0.8}
+14:34:20.133 [Worker-99: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - The previous launch removed.
+14:34:20.134 [Worker-99: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Existing javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs is C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+14:34:20.138 [Worker-99: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Prefs Keys [BROWSERSTACK_JAVAAGENT_ARGLINE]
+14:34:20.141 [Worker-99: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Adding the javaagent argLine with path - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+14:34:20.142 [Worker-99: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Setting javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+14:34:20.144 [Worker-99: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - The environment variables for the launch configuration are {BROWSERSTACK_EXEC_SOURCE=eclipse/1.0.8}
+14:34:52.214 [main] INFO  c.b.BrowserStackPluginActivator - The previous launch removed.
+14:34:56.385 [Worker-96: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Existing javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs is C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+14:34:56.388 [Worker-96: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Prefs Keys [BROWSERSTACK_JAVAAGENT_ARGLINE]
+14:34:56.390 [Worker-96: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Adding the javaagent argLine with path - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+14:34:56.391 [Worker-96: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - Setting javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+14:34:56.392 [Worker-96: Launching sunbirdVc.feature] INFO  c.b.BrowserStackPluginActivator - The environment variables for the launch configuration are {BROWSERSTACK_EXEC_SOURCE=eclipse/1.0.8}
+14:59:58.953 [Worker-80: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - The previous launch removed.
+14:59:58.954 [Worker-80: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Existing javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs is C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+14:59:58.958 [Worker-80: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Prefs Keys [BROWSERSTACK_JAVAAGENT_ARGLINE]
+14:59:58.960 [Worker-80: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Adding the javaagent argLine with path - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+14:59:58.960 [Worker-80: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Setting javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+14:59:58.961 [Worker-80: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - The environment variables for the launch configuration are {BROWSERSTACK_EXEC_SOURCE=eclipse/1.0.8}
+15:33:30.954 [Worker-96: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - The previous launch removed.
+15:33:30.955 [Worker-96: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Existing javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs is C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+15:33:30.957 [Worker-96: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Prefs Keys [BROWSERSTACK_JAVAAGENT_ARGLINE]
+15:33:30.959 [Worker-96: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Adding the javaagent argLine with path - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+15:33:30.959 [Worker-96: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Setting javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+15:33:30.961 [Worker-96: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - The environment variables for the launch configuration are {BROWSERSTACK_EXEC_SOURCE=eclipse/1.0.8}
+15:35:52.582 [Worker-98: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - The previous launch removed.
+15:35:52.583 [Worker-98: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Existing javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs is C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+15:35:52.585 [Worker-98: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Prefs Keys [BROWSERSTACK_JAVAAGENT_ARGLINE]
+15:35:52.588 [Worker-98: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Adding the javaagent argLine with path - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+15:35:52.588 [Worker-98: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Setting javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+15:35:52.589 [Worker-98: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - The environment variables for the launch configuration are {BROWSERSTACK_EXEC_SOURCE=eclipse/1.0.8}
+15:52:02.559 [Worker-81: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - The previous launch removed.
+15:52:02.561 [Worker-81: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Existing javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs is C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+15:52:02.563 [Worker-81: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Prefs Keys [BROWSERSTACK_JAVAAGENT_ARGLINE]
+15:52:02.566 [Worker-81: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Adding the javaagent argLine with path - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+15:52:02.566 [Worker-81: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Setting javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+15:52:02.567 [Worker-81: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - The environment variables for the launch configuration are {BROWSERSTACK_EXEC_SOURCE=eclipse/1.0.8}
+15:53:33.964 [main] INFO  c.b.BrowserStackPluginActivator - The previous launch removed.
+15:53:36.276 [Worker-81: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Existing javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs is C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+15:53:36.278 [Worker-81: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Prefs Keys [BROWSERSTACK_JAVAAGENT_ARGLINE]
+15:53:36.280 [Worker-81: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Adding the javaagent argLine with path - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+15:53:36.280 [Worker-81: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - Setting javaagentArgline (BROWSERSTACK_JAVAAGENT_ARGLINE) in plugin prefs - C:\Users\anup.nehe\.m2\repository\com\browserstack\browserstack-java-sdk\1.14.0\browserstack-java-sdk-1.14.0.jar
+15:53:36.281 [Worker-81: Launching homepage.feature] INFO  c.b.BrowserStackPluginActivator - The environment variables for the launch configuration are {BROWSERSTACK_EXEC_SOURCE=eclipse/1.0.8}
+18:38:11.971 [Framework stop - Equinox Container: 2366998e-0dd0-4304-8253-b28c34c4e787] INFO  c.b.BrowserStackPluginActivator - Stopping BrowserStack Plugin...
+16:27:43.784 [ApplicationImpl pooled thread 122] INFO  c.b.l.BrowserStackRunExtension - junit
+16:27:43.788 [ApplicationImpl pooled thread 122] INFO  com.browserstack.utils.Helpers - null
+16:27:43.789 [ApplicationImpl pooled thread 122] INFO  com.browserstack.utils.Helpers - C:/Users/anup.nehe/.m2/repository/com/browserstack/browserstack-java-sdk/1.14.0/browserstack-java-sdk-1.14.0.jar
+16:27:43.789 [ApplicationImpl pooled thread 122] INFO  c.b.l.BrowserStackRunExtension - Agent path: C:/Users/anup.nehe/.m2/repository/com/browserstack/browserstack-java-sdk/1.14.0/browserstack-java-sdk-1.14.0.jar
+16:27:43.789 [ApplicationImpl pooled thread 122] INFO  c.b.l.BrowserStackRunExtension - Plugin version: v1.1.4
+16:28:34.493 [ApplicationImpl pooled thread 120] INFO  c.b.l.BrowserStackRunExtension - junit
+16:28:34.493 [ApplicationImpl pooled thread 120] INFO  com.browserstack.utils.Helpers - null
+16:28:34.495 [ApplicationImpl pooled thread 120] INFO  com.browserstack.utils.Helpers - C:/Users/anup.nehe/.m2/repository/com/browserstack/browserstack-java-sdk/1.14.0/browserstack-java-sdk-1.14.0.jar
+16:28:34.495 [ApplicationImpl pooled thread 120] INFO  c.b.l.BrowserStackRunExtension - Agent path: C:/Users/anup.nehe/.m2/repository/com/browserstack/browserstack-java-sdk/1.14.0/browserstack-java-sdk-1.14.0.jar
+16:28:34.495 [ApplicationImpl pooled thread 120] INFO  c.b.l.BrowserStackRunExtension - Plugin version: v1.1.4
+16:28:51.729 [ApplicationImpl pooled thread 122] INFO  c.b.l.BrowserStackRunExtension - junit
+16:28:51.729 [ApplicationImpl pooled thread 122] INFO  com.browserstack.utils.Helpers - null
+16:28:51.729 [ApplicationImpl pooled thread 122] INFO  com.browserstack.utils.Helpers - C:/Users/anup.nehe/.m2/repository/com/browserstack/browserstack-java-sdk/1.14.0/browserstack-java-sdk-1.14.0.jar
+16:28:51.729 [ApplicationImpl pooled thread 122] INFO  c.b.l.BrowserStackRunExtension - Agent path: C:/Users/anup.nehe/.m2/repository/com/browserstack/browserstack-java-sdk/1.14.0/browserstack-java-sdk-1.14.0.jar
+16:28:51.729 [ApplicationImpl pooled thread 122] INFO  c.b.l.BrowserStackRunExtension - Plugin version: v1.1.4
+16:48:20.043 [ApplicationImpl pooled thread 126] INFO  c.b.l.BrowserStackRunExtension - cucumber java
+16:48:20.043 [ApplicationImpl pooled thread 126] INFO  com.browserstack.utils.Helpers - null
+16:48:20.046 [ApplicationImpl pooled thread 126] INFO  com.browserstack.utils.Helpers - C:/Users/anup.nehe/.m2/repository/com/browserstack/browserstack-java-sdk/1.14.0/browserstack-java-sdk-1.14.0.jar
+16:48:20.047 [ApplicationImpl pooled thread 126] INFO  c.b.l.BrowserStackRunExtension - Agent path: C:/Users/anup.nehe/.m2/repository/com/browserstack/browserstack-java-sdk/1.14.0/browserstack-java-sdk-1.14.0.jar
+16:48:20.047 [ApplicationImpl pooled thread 126] INFO  c.b.l.BrowserStackRunExtension - Plugin version: v1.1.4
+16:49:36.071 [ApplicationImpl pooled thread 135] INFO  c.b.l.BrowserStackRunExtension - cucumber java
+16:49:36.071 [ApplicationImpl pooled thread 135] INFO  com.browserstack.utils.Helpers - null
+16:49:36.074 [ApplicationImpl pooled thread 135] INFO  com.browserstack.utils.Helpers - C:/Users/anup.nehe/.m2/repository/com/browserstack/browserstack-java-sdk/1.14.0/browserstack-java-sdk-1.14.0.jar
+16:49:36.075 [ApplicationImpl pooled thread 135] INFO  c.b.l.BrowserStackRunExtension - Agent path: C:/Users/anup.nehe/.m2/repository/com/browserstack/browserstack-java-sdk/1.14.0/browserstack-java-sdk-1.14.0.jar
+16:49:36.075 [ApplicationImpl pooled thread 135] INFO  c.b.l.BrowserStackRunExtension - Plugin version: v1.1.4
