@@ -11,24 +11,10 @@ public class SunbirdCredentials extends BasePage {
 	}
 	
 	public Boolean isDownloadSunbirdCredentialsDisplayed() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		return isElementIsVisible("//*[text()='Veridonia Insurance Company']");
-		
 	}
 	
 	public Boolean isSunbirdInsuranceDisplayed() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return isElementIsVisible("(//div[@class='justify-center items-center'])[1]");
 	}
 	
@@ -38,12 +24,6 @@ public class SunbirdCredentials extends BasePage {
 	}
 	
 	public void clickOnDownloadSunbird() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		clickOnElement("//*[text()='Veridonia Insurance Company']");
 	}
 	

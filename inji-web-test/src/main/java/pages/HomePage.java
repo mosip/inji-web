@@ -43,12 +43,6 @@ public class HomePage extends BasePage{
 	}
 	
 	public Boolean isListOfCredentialsTypeDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return isElementIsVisible("//div[@data-testid='HeaderTile-Text']");
 	}
 	
@@ -57,21 +51,10 @@ public class HomePage extends BasePage{
 	}
 	
 	public String isSuccessMessageDisplayed() {
-		try {
-			Thread.sleep(6000);;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return getElementText("//p[@data-testid='DownloadResult-Title']");
 	}
 	
 	public Boolean isMosipNationalIdDisplayed() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible("//h3[@data-testid='ItemBox-Text']");
 	}
 		
@@ -117,13 +100,6 @@ public class HomePage extends BasePage{
 	
 	public void selectOtherLangauge() {
 		clickOnElement("(//button[@type='button'])[3]");
-		
-		try {
-			Thread.sleep(7000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public Boolean isNoIssuerFoundMessageDisplayed() {

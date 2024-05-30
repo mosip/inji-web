@@ -11,12 +11,7 @@ public class MosipCredentials extends BasePage {
 	}
 		
 		public Boolean isMockVerifiableCredentialDisplayed() {
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 			return isElementIsVisible("//h3[text()='Mock Verifiable Credential']");
 		}
 		
@@ -41,12 +36,7 @@ public class MosipCredentials extends BasePage {
 			}
 		
 		public void clickOnMosipNationalId() {
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 			clickOnElement("(//div[@data-testid='ItemBox-Outer-Container'])[1]");
 		}
 		public Boolean isLoginPageLableDisplayed() {
