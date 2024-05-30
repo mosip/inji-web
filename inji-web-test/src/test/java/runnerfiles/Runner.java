@@ -9,7 +9,7 @@ import io.cucumber.testng.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = {"src/test/resources/featurefiles"},
+		features = {"src/test/resources/featurefiles/"},
 		dryRun = !true,
 		glue = {"stepdefinitions", "utils"},
 		snippets = SnippetType.CAMELCASE,
