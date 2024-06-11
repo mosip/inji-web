@@ -1,6 +1,6 @@
 Feature: Inji web multilanguage testing
 
-  
+
   @smoke @verifyingLanguages
   Scenario: Verify the Inji web configured language
   Given User gets the title of the page
@@ -9,7 +9,7 @@ Feature: Inji web multilanguage testing
   And User verify that langauge button is displayed
   And User click on langauge button
   And User verify All the languages
-  
+
   @smoke @verifyingHomepageAndSearchInConfiguredLanguge
   Scenario: Verify the Inji web homepage
   Given User gets the title of the page
@@ -64,7 +64,7 @@ Feature: Inji web multilanguage testing
   And User click on langauge button
   And User click on french langauge
   Then User validate the list of credential types title of the page in french laguage
-  
+
   @smoke @verifyingCredentialDetailsPageForSunbirdInConfiguredLanguge
   Scenario: Verify the Credential Details Page
     Given User gets the title of the page

@@ -1,8 +1,10 @@
 package utils;
 
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserType;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
 
-import browserstack.shaded.com.google.gson.Gson;
-import com.microsoft.playwright.*;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.restassured.RestAssured;

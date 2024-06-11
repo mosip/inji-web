@@ -21,7 +21,6 @@ public class BasePage {
 	}
 	
 	public Boolean isElementIsVisible(String locator) {
-//		 page.waitForTimeout(2000);
 		 page.waitForSelector(locator);
 		return page.locator(locator).isVisible();
 	}
