@@ -39,18 +39,13 @@ export const CredentialsPage: React.FC = () => {
             dispatch(storeSelectedIssuer(response?.response));
             setSelectedIssuer(response?.response);
 
-            apiRequest = api.fetchCredentialTypes2;
+            apiRequest = api.fetchCredentialTypes;
             response = await fetchRequest(
                 apiRequest.url(params.issuerId ?? ""),
                 apiRequest.methodType,
                 apiRequest.headers()
             );
-            // apiRequest = api.fetchCredentialTypes;
-            // response = await fetchRequest(
-            //     apiRequest.url(response?.response[".well-known"]),
-            //     apiRequest.methodType,
-            //     apiRequest.headers()
-            // );
+
             dispatch(storeFilteredCredentials(response?.response?.supportedCredentials));
             dispatch(storeCredentials(response?.response?.supportedCredentials));
         }

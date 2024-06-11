@@ -5,20 +5,25 @@ import {NavBar} from "../components/Common/NavBar";
 import {RequestStatus, useFetch} from "../hooks/useFetch";
 import {DownloadResult} from "../components/Redirection/DownloadResult";
 import {api} from "../utils/api";
-import {ApiRequest, DisplayArrayObject, SessionObject} from "../types/data";
+import {ApiRequest, IssuerWellknownObject, SessionObject} from "../types/data";
 import {useTranslation} from "react-i18next";
-import {downloadCredentialPDF} from "../utils/misc";
+import {downloadCredentialPDF, getCredentialRequestBody, getTokenRequestBody} from "../utils/misc";
 import {getObjectForCurrentLanguage} from "../utils/i18n";
+import {storeSelectedIssuer} from "../redux/reducers/issuersReducer";
+import {useDispatch} from "react-redux";
+import {storeCredentials, storeFilteredCredentials} from "../redux/reducers/credentialsReducer";
 
 export const RedirectionPage: React.FC = () => {
 
     const {error, state, fetchRequest} = useFetch();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
+    const dispatch = useDispatch();
     const redirectedSessionId = searchParams.get("state");
     const activeSessionInfo: any = getActiveSession(redirectedSessionId);
     const {t} = useTranslation("RedirectionPage");
     const [session, setSession] = useState<SessionObject | null>(activeSessionInfo);
+    const [completedDownload, setCompletedDownload] = useState<boolean>(false);
     const displayObject = getObjectForCurrentLanguage(session?.selectedIssuer?.display ?? []);
 
     useEffect(() => {
@@ -31,34 +36,46 @@ export const RedirectionPage: React.FC = () => {
                 const issuerId = activeSessionInfo?.selectedIssuer.credential_issuer ?? "";
                 const certificateId = activeSessionInfo?.certificateId;
 
-                const bodyJson = {
-                    'grant_type': 'authorization_code',
-                    'code': code,
-                    'client_id': clientId,
-                    'client_assertion_type': 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
-                    'client_assertion': '',
-                    'redirect_uri': api.authorizationRedirectionUrl,
-                    'code_verifier': codeVerifier
-                }
-                const requestBody = new URLSearchParams(bodyJson);
+                let apiRequest: ApiRequest = api.fetchSpecificIssuer;
+                let issuerConfig = await fetchRequest(
+                    apiRequest.url(issuerId ?? ""),
+                    apiRequest.methodType,
+                    apiRequest.headers()
+                );
+                dispatch(storeSelectedIssuer(issuerConfig?.response));
 
-                let apiRequest: ApiRequest = api.fetchToken;
-                let response = await fetchRequest(
+
+                apiRequest = api.fetchCredentialTypes;
+                let credentialTypesResponse = await fetchRequest(
+                    apiRequest.url(issuerId ?? ""),
+                    apiRequest.methodType,
+                    apiRequest.headers()
+                );
+                dispatch(storeFilteredCredentials(credentialTypesResponse?.response?.supportedCredentials));
+                dispatch(storeCredentials(credentialTypesResponse?.response?.supportedCredentials));
+
+                const requestBody = new URLSearchParams(getTokenRequestBody(code, clientId, codeVerifier));
+                apiRequest = api.fetchToken;
+                let tokenResponse = await fetchRequest(
                     apiRequest.url(issuerId),
                     apiRequest.methodType,
                     apiRequest.headers(),
                     requestBody
                 );
 
+                const credentialRequestBody = await getCredentialRequestBody(tokenResponse?.access_token, clientId, issuerConfig.response.credential_audience, credentialTypesResponse?.response, certificateId);
+
                 apiRequest = api.downloadVc;
-                response = await fetchRequest(
+                let credentialDownloadResponse = await fetchRequest(
                     apiRequest.url(issuerId, certificateId),
                     apiRequest.methodType,
-                    apiRequest.headers(response?.access_token)
+                    apiRequest.headers(tokenResponse?.access_token),
+                    JSON.stringify(credentialRequestBody)
                 );
                 if (state !== RequestStatus.ERROR) {
-                    await downloadCredentialPDF(response, certificateId);
+                    await downloadCredentialPDF(credentialDownloadResponse, certificateId);
                 }
+                setCompletedDownload(true);
                 if (urlState != null) {
                     removeActiveSession(urlState);
                 }
@@ -76,15 +93,16 @@ export const RedirectionPage: React.FC = () => {
                                    subTitle={t("error.invalidSession.subTitle")}
                                    state={RequestStatus.ERROR}/>
         }
-        if (state === RequestStatus.LOADING) {
+        if(!completedDownload){
             return <DownloadResult title={t("loading.title")}
-                            subTitle={t("loading.subTitle")}
-                            state={RequestStatus.LOADING}/>
-        }
-        if (state === RequestStatus.ERROR && error) {
-            return <DownloadResult title={t("error.generic.title")}
-                                   subTitle={t("error.generic.subTitle")}
-                                   state={RequestStatus.ERROR}/>
+                                   subTitle={t("loading.subTitle")}
+                                   state={RequestStatus.LOADING}/>
+        } else {
+            if (state === RequestStatus.ERROR && error) {
+                return <DownloadResult title={t("error.generic.title")}
+                                       subTitle={t("error.generic.subTitle")}
+                                       state={RequestStatus.ERROR}/>
+            }
         }
         return <DownloadResult title={t("success.title")}
                                subTitle={t("success.subTitle")}

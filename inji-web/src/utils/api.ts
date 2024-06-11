@@ -32,7 +32,7 @@ export class api {
             }
         }
     }
-    static fetchCredentialTypes = {
+    static fetchCredentialTypesFromWellknown = {
         url: (well_known: string) => well_known,
         methodType: MethodType.GET,
         headers: () => {
@@ -41,7 +41,7 @@ export class api {
             }
         }
     }
-    static fetchCredentialTypes2 = {
+    static fetchCredentialTypes: ApiRequest = {
         url: (issuerId: string) => api.mimotoHost + `/issuers/${issuerId}/credentialTypes`,
         methodType: MethodType.GET,
         headers: () => {
@@ -60,12 +60,13 @@ export class api {
             }
         }
     };
-    static downloadVc = {
+    static downloadVc: ApiRequest = {
         url: (issuerId: string, credentialId: string) => api.mimotoHost + `/issuers/${issuerId}/credentials/${credentialId}/download`,
-        methodType: MethodType.GET,
+        methodType: MethodType.POST,
         headers: (token: string) => {
             return {
-                'Bearer': token,
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
                 'Cache-Control': 'no-cache, no-store, must-revalidate'
             }
         }
