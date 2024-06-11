@@ -16,11 +16,13 @@ public class BasePage {
 	}
 
 	public void clickOnElement(String locator) {
+		page.waitForSelector(locator);
 		page.locator(locator).click();
 	}
 	
 	public Boolean isElementIsVisible(String locator) {
-		 page.waitForTimeout(2000);
+//		 page.waitForTimeout(2000);
+		 page.waitForSelector(locator);
 		return page.locator(locator).isVisible();
 	}
 	
@@ -29,7 +31,7 @@ public class BasePage {
 		}
 	
 	public String getElementText(String locator) {
-		page.waitForTimeout(2000);
+		page.waitForSelector(locator);
 		  return page.locator(locator).textContent();
 		}
 	

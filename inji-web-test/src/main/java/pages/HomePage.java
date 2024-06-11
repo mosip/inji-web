@@ -33,7 +33,7 @@ public class HomePage extends BasePage{
 	}
 	
 	public void clickOnDownloadMosipCredentials() {
-		clickOnElement("//h3[@data-testid='ItemBox-Text']");
+		clickOnElement("(//h3[@data-testid='ItemBox-Text'])[1]");
 	}
 	
 	public Boolean isListOfCredentialsTypeDisplayed() {
@@ -96,7 +96,7 @@ public class HomePage extends BasePage{
 	}
 	
 	public boolean verifyLanguagesInLanguageFilter() {
-		List<String> expectedLanguages = Arrays.asList("English, தமிழ், ಕನ್ನಡ, हिंदी, Français, عربي");
+		List<String> expectedLanguages = Arrays.asList("English", "தமிழ்", "ಕನ್ನಡ", "हिंदी", "Français", "عربي");
 		List<String> actualLanguages= null;
 		try {
 			 actualLanguages= getElementTexts("//ul[@class='py-1 divide-y divide-gray-200']//li");
@@ -121,7 +121,12 @@ public class HomePage extends BasePage{
 	}
 	
 	public Boolean isNoIssuerFoundMessageDisplayed() {
-		return isElementIsVisible("//p[@data-testid='EmptyList-Text']");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return isElementIsVisible("//p[@data-testid='EmptyList-Text']");
 	}
 	
 //	public void isPdfDownloaded() {

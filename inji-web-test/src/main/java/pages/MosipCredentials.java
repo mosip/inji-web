@@ -47,7 +47,7 @@ public class MosipCredentials extends BasePage {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			clickOnElement("(//div[@data-testid='ItemBox-Outer-Container'])[1]");
+			clickOnElement("//h3[@data-testid='ItemBox-Text']");
 		}
 		public Boolean isLoginPageLableDisplayed() {
 			

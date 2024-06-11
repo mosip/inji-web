@@ -2,7 +2,7 @@ Feature: Login using Sunbird Credentials
 
   @smoke @VerifyAndDownloadVcViaSunbirdInsurance
   Scenario Outline: download vc via sunbird
-    Given Load application url "https://inji.qa-inji.mosip.net/"
+    Given Load application url "url"
     Then User gets the title of the page
     And User search the issuers with "Insurance"
     And User verify sunbird cridentials button
@@ -20,8 +20,8 @@ Feature: Login using Sunbird Credentials
     And User verify go back button
 
     Examples: 
-      | policy number | full name | date of birth |
-      |    1234567890 | Aswin     | 01-01-2024    |
+      | policy number | full name | date of birth |url |
+      |    1234567890 | Aswin     | 01-01-2024    |   https://inji.qa-inji.mosip.net/  |
 
       
         @smoke @VerifyAndDownloadVcViaSunbirdLife
