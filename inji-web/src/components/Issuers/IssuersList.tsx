@@ -18,7 +18,7 @@ export const IssuersList: React.FC<IssuersListProps> = ({state}) => {
         return <SpinningLoader/>
     }
 
-    if(state === RequestStatus.ERROR || !issuers?.issuers || (issuers?.issuers && issuers?.issuers?.length === 0)) {
+    if(state === RequestStatus.ERROR || !issuers?.filtered_issuers || (issuers?.filtered_issuers && issuers?.filtered_issuers?.length === 0)) {
         return <div data-testid="Issuers-List-Container">
             <HeaderTile content={t("containerHeading")}/>
             <EmptyListContainer content={t("emptyContainerContent")}/>
@@ -29,8 +29,8 @@ export const IssuersList: React.FC<IssuersListProps> = ({state}) => {
         <div data-testid="Issuers-List-Container" className={"mb-20"}>
             <HeaderTile content={t("containerHeading")}/>
             <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-5">
-                {issuers.issuers.map((issuer: IssuerObject, index: number) =>
-                    <Issuer issuer={issuer} index={index}/>)}
+                {issuers.filtered_issuers.map((issuer: IssuerObject, index: number) =>
+                    <Issuer issuer={issuer} key={index} index={index}/>)}
             </div>
         </div>
     </React.Fragment>

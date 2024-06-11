@@ -13,7 +13,7 @@ export const Issuer: React.FC<IssuerProps> = ({issuer, index}) => {
     return <React.Fragment>
         <ItemBox index={index}
                  url={issuerDisplayObject?.logo.url}
-                 title={issuerDisplayObject?.title}
+                 title={issuerDisplayObject?.name}
                  description={issuerDisplayObject?.description}
                  onClick={() => navigate(`/issuers/${issuer.credential_issuer}`)}/>
     </React.Fragment>

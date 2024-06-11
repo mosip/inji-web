@@ -8,23 +8,14 @@ export enum MethodType {
 
 export class api {
 
-    //static mimotoHost = "http://localhost:3010";
+    // static mimotoHost = "http://localhost:3010";
      static mimotoHost = window.location.origin + "/v1/mimoto";
 
     static authorizationRedirectionUrl = window.location.origin + "/redirect";
 
 
     static fetchIssuers: ApiRequest = {
-        url: () => "/issuers",
-        methodType: MethodType.GET,
-        headers: () => {
-            return {
-                "Content-Type": "application/json"
-            }
-        }
-    }
-    static searchIssuers: ApiRequest = {
-        url: (searchText: string) => `/issuers?search=${searchText}`,
+        url: () => (api.mimotoHost + "/issuers"),
         methodType: MethodType.GET,
         headers: () => {
             return {
@@ -33,7 +24,7 @@ export class api {
         }
     }
     static fetchSpecificIssuer: ApiRequest = {
-        url: (issuerId: string) => `/issuers/${issuerId}`,
+        url: (issuerId: string) => api.mimotoHost + `/issuers/${issuerId}`,
         methodType: MethodType.GET,
         headers: () => {
             return {
@@ -42,7 +33,7 @@ export class api {
         }
     }
     static fetchCredentialTypes = {
-        url: (issuerId: string) => `/issuers/${issuerId}/credentialTypes`,
+        url: (well_known: string) => well_known,
         methodType: MethodType.GET,
         headers: () => {
             return {
@@ -50,9 +41,8 @@ export class api {
             }
         }
     }
-
-    static searchCredentialType: ApiRequest = {
-        url: (issuerId: string, searchText: string) => `/issuers/${issuerId}/credentialTypes?search=${searchText}`,
+    static fetchCredentialTypes2 = {
+        url: (issuerId: string) => api.mimotoHost + `/issuers/${issuerId}/credentialTypes`,
         methodType: MethodType.GET,
         headers: () => {
             return {
@@ -61,7 +51,7 @@ export class api {
         }
     }
     static fetchToken: ApiRequest = {
-        url: (issuer: string): string => `/get-token/${issuer}`,
+        url: (issuer: string): string => api.mimotoHost + `/get-token/${issuer}`,
         methodType: MethodType.POST,
         headers: () => {
             return {
@@ -71,7 +61,7 @@ export class api {
         }
     };
     static downloadVc = {
-        url: (issuerId: string, credentialId: string) => `/issuers/${issuerId}/credentials/${credentialId}/download`,
+        url: (issuerId: string, credentialId: string) => api.mimotoHost + `/issuers/${issuerId}/credentials/${credentialId}/download`,
         methodType: MethodType.GET,
         headers: (token: string) => {
             return {

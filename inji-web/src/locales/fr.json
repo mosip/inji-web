@@ -12,14 +12,14 @@
     "Intro": {
       "title": "Le téléchargement d'un identifiant se fait en un seul clic !",
       "subTitle": "Veuillez rechercher l'émetteur et, à l'étape suivante, sélectionnez les informations d'identification à télécharger.",
-      "searchText": "Rechercher les émetteurs par nom."
+      "searchText": "Rechercher les émetteurs par nom"
     },
     "emptyContainerContent": "Aucun émetteur trouvé. ",
     "containerHeading": "Liste des émetteurs",
     "errorContent": "Le service est actuellement indisponible. "
   },
   "CredentialsPage": {
-    "searchText": "Rechercher le type d’informations d’identification.",
+    "searchText": "Rechercher le type d’informations d’identification",
     "emptyContainerContent": "Aucune information d'identification trouvée. ",
     "containerHeading": "Liste des types d'informations d'identification",
     "errorContent": "Le service est actuellement indisponible. "

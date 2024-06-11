@@ -1,8 +1,9 @@
 import {storage} from "../../utils/storage";
 import {CommonReducerActionType} from "../../types/redux";
+import {defaultLanguage} from "../../utils/i18n";
 
 const initialState = {
-    language: storage.getItem(storage.SELECTED_LANGUAGE) ? storage.getItem(storage.SELECTED_LANGUAGE) : 'en',
+    language: storage.getItem(storage.SELECTED_LANGUAGE) ? storage.getItem(storage.SELECTED_LANGUAGE) : defaultLanguage,
 }
 
 const CommonReducerAction: CommonReducerActionType = {

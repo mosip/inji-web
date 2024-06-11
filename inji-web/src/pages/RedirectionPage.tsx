@@ -92,7 +92,7 @@ export const RedirectionPage: React.FC = () => {
     }
 
     return <div data-testid="Redirection-Page-Container">
-        <NavBar title={displayObject?.name ?? ""} search={false} link={`/issuers/${activeSessionInfo?.selectedIssuer?.credential_issuer}`}/>
+        {activeSessionInfo?.selectedIssuer?.credential_issuer && <NavBar title={displayObject?.name ?? ""} search={false} link={`/issuers/${activeSessionInfo?.selectedIssuer?.credential_issuer}`}/>}
         {loadStatusOfRedirection()}
     </div>
 }

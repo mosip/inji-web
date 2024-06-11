@@ -14,7 +14,7 @@ export const useFetch = () => {
     const fetchRequest = async (uri: string, method: MethodType, header: any, body?: any) => {
         try {
             setState(RequestStatus.LOADING);
-            const response = await fetch(`${api.mimotoHost}${uri}`, {
+            const response = await fetch(`${uri}`, {
                 method: MethodType[method],
                 headers: header,
                 body: body,

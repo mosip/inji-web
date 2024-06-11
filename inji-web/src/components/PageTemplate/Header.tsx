@@ -3,6 +3,7 @@ import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import {LanguageSelector} from "../Common/LanguageSelector";
 import {GiHamburgerMenu} from "react-icons/gi";
+import OutsideClickHandler from 'react-outside-click-handler';
 
 export const Header: React.FC = () => {
 
@@ -26,7 +27,7 @@ export const Header: React.FC = () => {
                          alt="Inji Web Logo"/>
                 </div>
                 <nav>
-                    <ul className="flex space-x-4 items-center font-semibold">
+                    <ul className="flex space-x-4 items-center font-semibold" data-testid="Header-Menu-Elements">
                         <li data-testid="Header-Menu-AboutInji"><a href="https://docs.mosip.io/inji/inji-web/overview"
                                                                    target="_blank"
                                                                    rel="noreferrer"
@@ -41,19 +42,19 @@ export const Header: React.FC = () => {
                 </nav>
             </div>
             { isOpen &&
-            <div className="container mx-auto px-4 flex flex-col justify-start items-start font-semibold">
-                <div data-testid="Header-Menu-AboutInji" className={"py-5 w-full"} onClick={() => setIsOpen(false)}>
-                    <a href="https://docs.mosip.io/inji/inji-web/overview"
-                       target="_blank"
-                       rel="noreferrer"
-                       className="text-iw-title inline-block sm:hidden">{t("Header.aboutInji")}</a>
-                </div>
-                <div data-testid="Header-Menu-Help"
-                     onClick={() => {navigate("/help");setIsOpen(false)}}
-                     className="text-iw-title cursor-pointer py-5 w-full inline-block sm:hidden">
-                        {t("Header.help")}
-                </div>
-            </div>
+                <OutsideClickHandler onOutsideClick={()=>setIsOpen(false)}>
+                    <div className="container mx-auto px-4 flex flex-col justify-start items-start font-semibold" onBlur={() => {console.log("Blur is pressed");setIsOpen(false)}}>
+                        <div data-testid="Header-Menu-AboutInji" className={"py-5 w-full"}
+                             onClick={() => {window.open("https://docs.mosip.io/inji/inji-web/overview");setIsOpen(false)}}>
+                            {t("Header.aboutInji")}
+                        </div>
+                        <div data-testid="Header-Menu-Help"
+                             onClick={() => {navigate("/help");setIsOpen(false)}}
+                             className="text-iw-title cursor-pointer py-5 w-full inline-block sm:hidden">
+                                {t("Header.help")}
+                        </div>
+                    </div>
+                </OutsideClickHandler>
             }
         </div>
         </header>

@@ -31,8 +31,14 @@ Once the config file is updated run following commands to save the updates:
   * **inji-web:** contains the source code and Dockerfile
 
 ---
+# Updating Mimoto Host
 
-# Run Inji Web:
+In the api.ts file, modify the **mimotoHost** to url pointing to the mimoto service running  
+
+---
+
+
+# Running Inji Web:
 
 * Run following commands to start the application:
 
@@ -41,15 +47,28 @@ $ cd ./inji-web
 $ npm install
 $ npm start
 ```
-Run `npm test` to run tests
+ * Run `npm test` to run tests
 
 
 - Build and run Docker for a service:
 ```
 $ cd ./inji-web
-$ docker build -t <dockerImageName>:<tag> .
-$ docker run -it -d -p 3000:3000 <dockerImageName>:<tag>
+$ docker build -f Dockerfile.local -t <dockerImageName>:<tag> .
+$ docker run -p 3004:3004 <dockerImageName>:<tag>
 ```
 
-- Open URL http://localhost:3000
+- Run Using Docker Compose 
+```
+$ cd ./inji-web
+$ docker-compose up
+```
+
+- Stop Using Docker Compose
+```
+$ cd ./inji-web
+$ docker-compose down
+```
+
+- You can access the application in the below nginx server :  
+> Open URL http://localhost:81
 

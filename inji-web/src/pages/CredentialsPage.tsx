@@ -5,9 +5,8 @@ import {NavBar} from "../components/Common/NavBar";
 import {CredentialList} from "../components/Credentials/CredentialList";
 import {useDispatch, useSelector} from "react-redux";
 import {storeSelectedIssuer} from "../redux/reducers/issuersReducer";
-import {storeCredentials} from "../redux/reducers/credentialsReducer";
+import {storeCredentials, storeFilteredCredentials} from "../redux/reducers/credentialsReducer";
 import {api} from "../utils/api";
-import {HeaderTile} from "../components/Common/HeaderTile";
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 
@@ -40,12 +39,19 @@ export const CredentialsPage: React.FC = () => {
             dispatch(storeSelectedIssuer(response?.response));
             setSelectedIssuer(response?.response);
 
-            apiRequest = api.fetchCredentialTypes;
+            apiRequest = api.fetchCredentialTypes2;
             response = await fetchRequest(
                 apiRequest.url(params.issuerId ?? ""),
                 apiRequest.methodType,
                 apiRequest.headers()
             );
+            // apiRequest = api.fetchCredentialTypes;
+            // response = await fetchRequest(
+            //     apiRequest.url(response?.response[".well-known"]),
+            //     apiRequest.methodType,
+            //     apiRequest.headers()
+            // );
+            dispatch(storeFilteredCredentials(response?.response?.supportedCredentials));
             dispatch(storeCredentials(response?.response?.supportedCredentials));
         }
         fetchCall();

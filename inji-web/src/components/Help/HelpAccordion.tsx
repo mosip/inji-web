@@ -41,6 +41,7 @@ export const HelpAccordion: React.FC = () => {
             <div data-testid="Help-Accordion-Container">
                 {accordionItems.map((item, index) => (
                     <HelpAccordionItem id={index}
+                                       key={index}
                                        title={item.title}
                                        content={item.content}
                                        open={open}

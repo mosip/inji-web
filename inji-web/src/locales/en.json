@@ -12,14 +12,14 @@
     "Intro": {
       "title": "Downloading a Credential is one-click away!",
       "subTitle": "Please search for the issuer and in the next step, select credential to download.",
-      "searchText": "Search Issuers by name.."
+      "searchText": "Search Issuers by name"
     },
     "emptyContainerContent": "No issuers found. Please refresh your browser window or try again later",
     "containerHeading": "List of Issuers",
     "errorContent": "The service is currently unavailable now. Please try again later."
   },
   "CredentialsPage": {
-    "searchText": "Search Credential Type..",
+    "searchText": "Search Credential Type",
     "emptyContainerContent": "No Credentials found. Please refresh your browser window or try again later",
     "containerHeading": "List of Credential Types",
     "errorContent": "The service is currently unavailable now. Please try again later."
