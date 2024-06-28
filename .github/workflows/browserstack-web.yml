@@ -24,3 +24,10 @@
         run: |
            cd inji-web-test
            mvn clean test -DtestngXmlFile="TestNg.xml"
+
+      - name: Save test reports
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
+        with:
+          name: test-reports
+          path: inji-web-test/test-output         
