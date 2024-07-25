@@ -20,7 +20,7 @@ export const AuthorizationPage: React.FC = () => {
             const resource = queryParams.get("resource") + "";
             const clientId = queryParams.get("client_id") + "";
             const redirectUri = queryParams.get("redirect_uri") + "";
-            const presentationDefinition = queryParams.get("presentation_definition") + "";
+            const presentationDefinition = encodeURI(queryParams.get("presentation_definition") + "");
 
             const apiRequest: ApiRequest = api.presentationAuthorization;
             const apiResponse = await fetchRequest(
