@@ -21,7 +21,7 @@ export const useFetch = () => {
             }
             if(uri.indexOf("authorize") !== -1){
                 // @ts-ignore
-                requestOptions = { ...requestOptions, referrerPolicy: "no-referrer"}
+                requestOptions = { ...requestOptions, referrerPolicy: "no-referrer", redirect: 'follow'}
             }
             const response = await fetch(uri, requestOptions);
             if (!response.ok) {
