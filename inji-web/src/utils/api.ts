@@ -62,7 +62,7 @@ export class api {
         }
     }
     static presentationAuthorization: ApiRequest = {
-        url: (responseType: string, resource: string, clientId: string, redirectUri: string, presentationDefinition: string) => api.mimotoHost + `/presentation/authorize?response_type=${responseType}&resource=${resource}&client_id=${clientId}&redirect_uri=${redirectUri}&presentation_definition=${presentationDefinition}`,
+        url: (responseType: string, resource: string, clientId: string, redirectUri: string, presentationDefinition: string) => api.mimotoHost + `/authorize?response_type=${responseType}&resource=${resource}&client_id=${clientId}&redirect_uri=${redirectUri}&presentation_definition=${presentationDefinition}`,
         methodType: MethodType.GET,
         headers: () => {
             return {
