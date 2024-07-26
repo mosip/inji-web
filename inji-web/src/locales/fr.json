@@ -40,8 +40,8 @@
         "subTitle": "la session n'est pas valide ou la session est terminée"
       },
       "generic": {
-        "title": "Échec du téléchargement",
-        "subTitle": "Quelque chose c'est mal passé. Merci d'essayer plus tard"
+        "title": "Une erreur s'est produite",
+        "subTitle": "Désolé, en raison d'une erreur technique, nous ne pouvons pas télécharger le VC. "
       }
     }
   },

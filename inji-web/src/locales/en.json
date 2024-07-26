@@ -40,8 +40,8 @@
         "subTitle": "session is not valid or session is completed"
       },
       "generic": {
-        "title": "Download Failed",
-        "subTitle": "something went wrong, please try again later"
+        "title": "An Error Occurred",
+        "subTitle": "Sorry, due to technical error, we are unable to download the VC. Please try again later!"
       }
     }
   },
