@@ -5,18 +5,17 @@ import {LandingPageWrapper} from "../components/Common/LandingPageWrapper";
 import {ErrorSheildIcon} from "../components/Common/ErrorSheildIcon";
 
 export const AuthorizationPage: React.FC = () => {
-    const [error, setError] = useState<String>("");
-    const [errorDesc, setErrorDesc] = useState<String>("");
+    const url = window.location.href;
+    const currentQueryParams = new URLSearchParams(window.location.search);
+    const [error, setError] = useState<String>(currentQueryParams.get("error")+"");
+    const [errorDesc, setErrorDesc] = useState<String>(currentQueryParams.get("error_description")+"");
     useEffect( () => {
-        const currentQueryParams = new URLSearchParams(window.location.search);
-        setError(currentQueryParams.get("error")+"");
-        setErrorDesc(currentQueryParams.get("error_description")+"")
-        if(error == "null"){
+        if(url.indexOf("error") === -1) {
             window.location.href = api.mimotoHost + "/authorize" + window.location.search;
         }
+    },[])
 
-    },[error])
-    if(error == ""){
+    if(url.indexOf("error") == -1){
         return <div><LandingPageWrapper icon={<SpinningLoader/>} title={""} subTitle={""} gotoHome={false}/></div>
     }
     return <div><LandingPageWrapper icon={<ErrorSheildIcon />} title={error+""} subTitle={errorDesc+""} gotoHome={false}/></div>
