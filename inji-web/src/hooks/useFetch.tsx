@@ -14,14 +14,10 @@ export const useFetch = () => {
     const fetchRequest = async (uri: string, method: MethodType, header: any, body?: any) => {
         try {
             setState(RequestStatus.LOADING);
-            let requestOptions = {
+            const requestOptions = {
                 method: MethodType[method],
                 headers: header,
                 body: body
-            }
-            if(uri.indexOf("authorize") !== -1){
-                // @ts-ignore
-                requestOptions = { ...requestOptions, referrerPolicy: "no-referrer", redirect: 'follow'}
             }
             const response = await fetch(uri, requestOptions);
             if (!response.ok) {
