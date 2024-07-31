@@ -1,4 +1,4 @@
-import {CredentialWellknownObject, IssuerObject, ResponseTypeObject} from "./data";
+import {IssuerObject, IssuerWellknownObject} from "./data";
 import React from "react";
 import {RequestStatus} from "../hooks/useFetch";
 
@@ -16,7 +16,8 @@ export type NavBarProps = {
     fetchRequest?: any;
 }
 export type CredentialProps = {
-    credential: CredentialWellknownObject;
+    credentialId: string;
+    credentialWellknown: IssuerWellknownObject;
     index: number;
 }
 export type HelpAccordionItemProps = {

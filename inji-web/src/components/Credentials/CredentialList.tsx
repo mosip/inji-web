@@ -1,7 +1,6 @@
 import React from "react";
 import {Credential} from "./Crendential";
 import {useSelector} from "react-redux";
-import {CredentialWellknownObject} from "../../types/data";
 import {RootState} from "../../types/redux";
 import {EmptyListContainer} from "../Common/EmptyListContainer";
 import {useTranslation} from "react-i18next";
@@ -29,8 +28,8 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
     return <React.Fragment>
             <HeaderTile content={t("containerHeading")}/>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {credentials?.filtered_credentials && credentials?.filtered_credentials.map((credential: CredentialWellknownObject, index: number) => (
-                    <Credential credential={credential} key={index} index={index}/>
+                {credentials?.filtered_credentials && Object.keys(credentials?.filtered_credentials.credential_configurations_supported).map((credentialId: string, index: number) => (
+                    <Credential credentialId={credentialId} credentialWellknown={credentials.filtered_credentials} key={index} index={index}/>
                 ))}
             </div>
     </React.Fragment>

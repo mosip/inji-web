@@ -1,4 +1,9 @@
-import {ApiRequest, CodeChallengeObject, CredentialWellknownObject, IssuerObject} from "../types/data";
+import {
+    ApiRequest,
+    CodeChallengeObject,
+    CredentialConfigurationObject,
+    IssuerObject, IssuerWellknownObject
+} from "../types/data";
 import i18n from "i18next";
 
 export enum MethodType {
@@ -32,8 +37,8 @@ export class api {
             }
         }
     }
-    static fetchCredentialTypes: ApiRequest = {
-        url: (issuerId: string) => api.mimotoHost + `/issuers/${issuerId}/credentialTypes`,
+    static fetchIssuersWellknown: ApiRequest = {
+        url: (issuerId: string) => api.mimotoHost + `/issuers/${issuerId}/.well-known`,
         methodType: MethodType.GET,
         headers: () => {
             return {
@@ -52,11 +57,11 @@ export class api {
             }
         }
     }
-    static authorization = (currentIssuer: IssuerObject, credentialWellknown: CredentialWellknownObject, state: string, code_challenge: CodeChallengeObject) => {
-        return `${currentIssuer.authorization_endpoint}` +
+    static authorization = (currentIssuer: IssuerObject, credentialWellknown: IssuerWellknownObject, filterCredentialWellknown: CredentialConfigurationObject, state: string, code_challenge: CodeChallengeObject) => {
+        return `${credentialWellknown.authorization_servers[0]}/authorize` +
             `?response_type=code&` +
             `client_id=${currentIssuer.client_id}&` +
-            `scope=${credentialWellknown.scope}&` +
+            `scope=${filterCredentialWellknown.scope}&` +
             `redirect_uri=${api.authorizationRedirectionUrl}&` +
             `state=${state}&` +
             `code_challenge=${code_challenge.codeChallenge}&` +

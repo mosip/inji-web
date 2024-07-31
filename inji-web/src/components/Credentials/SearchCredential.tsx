@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {FaSearch} from "react-icons/fa";
 import {IoCloseCircleSharp} from "react-icons/io5";
-import {CredentialWellknownObject} from "../../types/data";
+import {CredentialConfigurationObject} from "../../types/data";
 import {storeFilteredCredentials} from "../../redux/reducers/credentialsReducer";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
@@ -18,7 +18,7 @@ export const SearchCredential:React.FC = () => {
 
     const filterCredential = async (searchText: string) => {
         setSearchText(searchText)
-        const filteredCredentials = credentials.filter( (credential:CredentialWellknownObject) => {
+        const filteredCredentials = credentials.filter( (credential:CredentialConfigurationObject) => {
             const displayObject = getObjectForCurrentLanguage(credential.display, language);
             return (displayObject.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1)
         })

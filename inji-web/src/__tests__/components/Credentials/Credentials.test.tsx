@@ -1,7 +1,7 @@
 import React from 'react';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {Credential} from "../../../components/Credentials/Crendential";
-import {CredentialWellknownObject, DisplayArrayObject, LogoObject} from "../../../types/data";
+import {CredentialConfigurationObject, CredentialsSupportedObject, IssuerWellknownObject} from "../../../types/data";
 import {Provider} from "react-redux";
 import {reduxStore} from "../../../redux/reduxStore";
 import {getObjectForCurrentLanguage} from "../../../utils/i18n";
@@ -14,21 +14,28 @@ global.window._env_ = {
     DEFAULT_LANG: 'en'
 };
 
-const getCredentialObject = (): CredentialWellknownObject => {
+const getCredentialObject = (): IssuerWellknownObject => {
     return {
-        format: "ldp_vc",
-        id: "id",
-        scope: "mosip_ldp_vc",
-        display: {
-            name: "Name",
-            language: "en",
-            locale: "en",
-            logo: {
-                url: "https://url.com",
-                alt_text: "alt text of the url"
-            },
-            title: "Title",
-            description: "Description",
+        credential_issuer: "",
+        credential_endpoint: "",
+        authorization_servers: [""],
+        credential_configurations_supported: {
+            InsuranceCredential: {
+                format: "ldp_vc",
+                id: "id",
+                scope: "mosip_ldp_vc",
+                display: {
+                    name: "Name",
+                    language: "en",
+                    locale: "en",
+                    logo: {
+                        url: "https://url.com",
+                        alt_text: "alt text of the url"
+                    },
+                    title: "Title",
+                    description: "Description",
+                }
+            }
         }
     }
 };
@@ -36,11 +43,12 @@ const getCredentialObject = (): CredentialWellknownObject => {
 describe.skip("Test Credentials Item Layout",() => {
     test('check the presence of the container', () => {
         const clickHandler = jest.fn();
-        const credential: CredentialWellknownObject = getCredentialObject();
-        jest.spyOn(require('../../../utils/i18n'), 'getObjectForCurrentLanguage').mockReturnValue(credential.display[0]);
+        const credential: IssuerWellknownObject = getCredentialObject();
+        // @ts-ignore
+        jest.spyOn(require('../../../utils/i18n'), 'getObjectForCurrentLanguage').mockReturnValue(credential.credential_configurations_supported["InsuranceCredential"].display[0]);
         render(
             <Provider store={reduxStore}>
-                <Credential credential={credential} index={1} />
+                <Credential credential={""} index={1}  credentialWellknown={credential}/>
             </Provider>
         );
         const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container");

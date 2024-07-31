@@ -16,19 +16,24 @@ type LogoObject = {
 export type IssuerWellknownObject = {
     credential_issuer: string;
     credential_endpoint: string;
-    supportedCredentials: CredentialWellknownObject[];
+    authorization_servers: string[];
+    credential_configurations_supported: CredentialsSupportedObject;
 }
 
-export type CredentialWellknownObject = {
+export type CredentialsSupportedObject = {
+    [type: string] : CredentialConfigurationObject
+}
+
+export type CredentialConfigurationObject = {
     format: string;
-    "id": string;
     "scope": string;
-    "display": DisplayArrayObject[],
-    "proof_types_supported": string[],
+    "display": DisplayArrayObject[];
+    "order": string[];
+    "proof_types_supported": string[];
     "credential_definition": {
         "type": string[],
         "credentialSubject": {
-            "fullName": {
+            [name: any]: {
                 "display": DisplayArrayObject[]
             }
         }
@@ -47,6 +52,11 @@ export type IssuerObject = {
     credentials_endpoint: string;
     display: DisplayArrayObject[];
     client_id: string;
+    redirect_uri: string;
+    token_endpoint: string;
+    proxy_token_endpoint: string;
+    client_alias: string;
+    ovp_qr_enabled: boolean,
     scopes_supported: string[];
 }
 export type ResponseTypeObject = {
