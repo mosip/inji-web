@@ -18,7 +18,11 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
         return <SpinningLoader />
     }
 
-    if (state === RequestStatus.ERROR || !credentials?.filtered_credentials || (credentials?.filtered_credentials && credentials?.filtered_credentials.length === 0)) {
+    if (state === RequestStatus.ERROR ||
+        !credentials?.filtered_credentials?.credential_configurations_supported ||
+        (credentials?.filtered_credentials?.credential_configurations_supported &&
+            credentials?.filtered_credentials?.credential_configurations_supported.length === 0 )
+    ) {
         return <div>
                 <HeaderTile content={t("containerHeading")}/>
                 <EmptyListContainer content={t("emptyContainerContent")}/>
@@ -28,8 +32,8 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
     return <React.Fragment>
             <HeaderTile content={t("containerHeading")}/>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {credentials?.filtered_credentials && Object.keys(credentials?.filtered_credentials.credential_configurations_supported).map((credentialId: string, index: number) => (
-                    <Credential credentialId={credentialId} credentialWellknown={credentials.filtered_credentials} key={index} index={index}/>
+                {credentials?.filtered_credentials && Object.keys(credentials?.filtered_credentials?.credential_configurations_supported).map((credentialId: string, index: number) => (
+                    <Credential credentialId={credentialId} credentialWellknown={credentials?.filtered_credentials} key={index} index={index}/>
                 ))}
             </div>
     </React.Fragment>
