@@ -18,11 +18,17 @@ export const SearchCredential:React.FC = () => {
 
     const filterCredential = async (searchText: string) => {
         setSearchText(searchText)
-        const filteredCredentials = credentials.filter( (credential:CredentialConfigurationObject) => {
-            const displayObject = getObjectForCurrentLanguage(credential.display, language);
-            return (displayObject.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1)
-        })
-        dispatch(storeFilteredCredentials(filteredCredentials))
+        const filteredConfigurations = Object.fromEntries(
+            Object.entries(credentials.credential_configurations_supported).filter(
+                ([_, configValue]) => {
+                    // @ts-ignore
+                    const displayObject = getObjectForCurrentLanguage(configValue?.display, language);
+                    return displayObject.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
+                }
+            )
+        );
+        const filteredCredential = { ...credentials, credential_configurations_supported: filteredConfigurations };
+        dispatch(storeFilteredCredentials(filteredCredential))
     }
     return <div className={"flex items-center w-full justify-start sm:justify-end my-5 sm:my-0"} data-testid="NavBar-Search-Container">
       <div data-testid="Search-Issuer-Container" className="w-full sm:w-96 flex justify-center items-center bg-iw-background shadow-md shadow-iw-shadow">
