@@ -7,9 +7,6 @@ function copying_cm() {
   DST_NS=injiweb
 
   $COPY_UTIL configmap global default $DST_NS
-  $COPY_UTIL configmap artifactory-share artifactory $DST_NS
-  $COPY_UTIL configmap inji-config-server-share config-server $DST_NS
-  #$COPY_UTIL configmap softhsm-esignet-share softhsm $DST_NS
   return 0
 }
 
