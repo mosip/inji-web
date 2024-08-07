@@ -246,10 +246,7 @@ extraEnvVars: []
 ##
 extraEnvVarsCM:
   - global
-  - inji-config-server-share
-  - artifactory-share
   - injiweb-ui
-  # - softhsm-esignet-share
 
 ## Secret with extra environment variables
 ##
@@ -433,7 +430,7 @@ esignet_redirect_url: 'esignet.sandbox.xyz.net'
 istio:
   enabled: true
   ingressController:
-    name: ingressgateway
+    name: ingressgateway-internal
   gateways:
     - name: inji-web-gateway
       protocol: HTTP
