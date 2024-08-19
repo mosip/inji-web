@@ -430,7 +430,7 @@ esignet_redirect_url: 'esignet.sandbox.xyz.net'
 istio:
   enabled: true
   ingressController:
-    name: ingressgateway-internal
+    name: ingressgateway
   gateways:
     - name: inji-web-gateway
       protocol: HTTP
