@@ -1,0 +1,18 @@
+istio:
+  enabled: true
+  gateway:
+    enabled: true
+    selector:
+      istio: ingressgateway-internal
+    servers:
+      - hosts:
+          - datashare-inji.sandbox.xyz.net
+        port:
+          name: http
+          number: 80
+          protocol: HTTP
+  vs:
+    prefix: /v1/datashare-injiweb
+    rewrite: /v1/datashare
+    gateways:
+      - datashare-inji
