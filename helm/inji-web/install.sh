@@ -53,6 +53,9 @@ function installing_inji-web() {
   echo Copy configmaps
   ./copy_cm.sh
 
+  echo Installing datashare
+  helm -n $NS install datashare-inji mosip/datashare -f datashare-values.yaml --version $CHART_VERSION
+
   INJI_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-injiweb-host})
   echo Installing INJIWEB
   helm -n $NS install injiweb mosip/injiweb \
