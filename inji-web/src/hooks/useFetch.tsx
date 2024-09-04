@@ -20,12 +20,17 @@ export const useFetch = () => {
                 body: body
             }
             const response = await fetch(uri, requestOptions);
-            if (!response.ok) {
-                 throw new Error();
-            }
             if (uri.indexOf("download") !== -1) {
+                if (!response.ok) {
+                    setState(RequestStatus.ERROR);
+                    setError("Error");
+                    return await response.json();
+                }
                 setState(RequestStatus.DONE);
                 return await response.blob();
+            }
+            if (!response.ok) {
+                throw new Error();
             }
             setState(RequestStatus.DONE);
             return await response.json();

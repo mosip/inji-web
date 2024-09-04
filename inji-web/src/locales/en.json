@@ -39,6 +39,28 @@
         "title": "Invalid Session",
         "subTitle": "session is not valid or session is completed"
       },
+      "verification": {
+        "proof_type_not_supported": {
+          "title": "An Error Occurred",
+          "subTitle": "Sorry, due to technical error, we are unable to download the VC. Please try again later!"
+        },
+        "json_parsing_failed": {
+          "title": "An Error Occurred",
+          "subTitle": "Sorry, due to technical error, we are unable to download the VC. Please try again later!"
+        },
+        "signature_verification_failed": {
+          "title": "An Error Occurred",
+          "subTitle": "Sorry, due to technical error, we are unable to download the VC. Please try again later!"
+        },
+        "unknown_exception": {
+          "title": "An Error Occurred",
+          "subTitle": "Sorry, due to technical error, we are unable to download the VC. Please try again later!"
+        },
+        "proof_document_not_found": {
+          "title": "An Error Occurred",
+          "subTitle": "Sorry, due to technical error, we are unable to download the VC. Please try again later!"
+        }
+      },
       "generic": {
         "title": "An Error Occurred",
         "subTitle": "Sorry, due to technical error, we are unable to download the VC. Please try again later!"

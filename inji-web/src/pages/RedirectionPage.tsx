@@ -7,7 +7,7 @@ import {DownloadResult} from "../components/Redirection/DownloadResult";
 import {api} from "../utils/api";
 import {SessionObject} from "../types/data";
 import {useTranslation} from "react-i18next";
-import {downloadCredentialPDF, getTokenRequestBody} from "../utils/misc";
+import {downloadCredentialPDF, getErrorObject, getTokenRequestBody} from "../utils/misc";
 import {getObjectForCurrentLanguage} from "../utils/i18n";
 
 export const RedirectionPage: React.FC = () => {
@@ -22,6 +22,12 @@ export const RedirectionPage: React.FC = () => {
     const [session, setSession] = useState<SessionObject | null>(activeSessionInfo);
     const [completedDownload, setCompletedDownload] = useState<boolean>(false);
     const displayObject = getObjectForCurrentLanguage(session?.selectedIssuer?.display ?? []);
+    const [errorObj, setErrorObj] = useState({
+        code: "error.generic.title",
+        message: "error.generic.subTitle"
+    })
+
+
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -43,6 +49,8 @@ export const RedirectionPage: React.FC = () => {
                 if (state !== RequestStatus.ERROR) {
                     await downloadCredentialPDF(credentialDownloadResponse, certificateId);
                     setCompletedDownload(true);
+                } else {
+                    setErrorObj(getErrorObject(credentialDownloadResponse));
                 }
                 if (urlState != null) {
                     removeActiveSession(urlState);
@@ -62,8 +70,8 @@ export const RedirectionPage: React.FC = () => {
                                    state={RequestStatus.ERROR}/>
         }
         if (state === RequestStatus.ERROR && error) {
-            return <DownloadResult title={t("error.generic.title")}
-                                   subTitle={t("error.generic.subTitle")}
+            return <DownloadResult title={t(errorObj.code)}
+                                   subTitle={t(errorObj.message)}
                                    state={RequestStatus.ERROR}/>
         }
         if(!completedDownload){
