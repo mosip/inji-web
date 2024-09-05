@@ -39,6 +39,28 @@
         "title": "جلسة غير صالحة",
         "subTitle": "الجلسة غير صالحة أو الجلسة مكتملة"
       },
+      "verification": {
+        "proof_type_not_supported": {
+          "title": "حدث خطأ",
+          "subTitle": "آسف! "
+        },
+        "json_parsing_failed": {
+          "title": "حدث خطأ",
+          "subTitle": "عذرًا، بسبب خطأ فني، لا يمكننا تنزيل VC. "
+        },
+        "signature_verification_failed": {
+          "title": "حدث خطأ",
+          "subTitle": "آسف! "
+        },
+        "unknown_exception": {
+          "title": "حدث خطأ",
+          "subTitle": "عذرًا، يبدو أن خدماتنا غير متاحة مؤقتًا. "
+        },
+        "proof_document_not_found": {
+          "title": "حدث خطأ",
+          "subTitle": "آسف! "
+        }
+      },
       "generic": {
         "title": "حدث خطأ",
         "subTitle": "عذرًا، بسبب خطأ فني، لا يمكننا تنزيل VC. "

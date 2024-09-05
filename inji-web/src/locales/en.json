@@ -42,7 +42,7 @@
       "verification": {
         "proof_type_not_supported": {
           "title": "An Error Occurred",
-          "subTitle": "Sorry, due to technical error, we are unable to download the VC. Please try again later!"
+          "subTitle": "Sorry! Due to technical error we cannot download your credential."
         },
         "json_parsing_failed": {
           "title": "An Error Occurred",
@@ -50,15 +50,15 @@
         },
         "signature_verification_failed": {
           "title": "An Error Occurred",
-          "subTitle": "Sorry, due to technical error, we are unable to download the VC. Please try again later!"
+          "subTitle": "Sorry! Your credential couldn’t be downloaded as there is an issue with validating the issuer's signature. Please contact the admin for further assistance."
         },
         "unknown_exception": {
           "title": "An Error Occurred",
-          "subTitle": "Sorry, due to technical error, we are unable to download the VC. Please try again later!"
+          "subTitle": "Sorry, it seems our services are temporarily unavailable. Please check back shortly, and we appreciate your patience!"
         },
         "proof_document_not_found": {
           "title": "An Error Occurred",
-          "subTitle": "Sorry, due to technical error, we are unable to download the VC. Please try again later!"
+          "subTitle": "Sorry! Your credential couldn’t be downloaded as there is an issue with validating the issuer's signature. Please contact the admin for further assistance."
         }
       },
       "generic": {

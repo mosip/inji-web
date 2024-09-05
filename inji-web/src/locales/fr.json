@@ -39,6 +39,28 @@
         "title": "Session invalide",
         "subTitle": "la session n'est pas valide ou la session est terminée"
       },
+      "verification": {
+        "proof_type_not_supported": {
+          "title": "Une erreur s'est produite",
+          "subTitle": "Désolé! "
+        },
+        "json_parsing_failed": {
+          "title": "Une erreur s'est produite",
+          "subTitle": "Désolé, en raison d'une erreur technique, nous ne pouvons pas télécharger le VC. "
+        },
+        "signature_verification_failed": {
+          "title": "Une erreur s'est produite",
+          "subTitle": "Désolé! "
+        },
+        "unknown_exception": {
+          "title": "Une erreur s'est produite",
+          "subTitle": "Désolé, il semble que nos services soient temporairement indisponibles. "
+        },
+        "proof_document_not_found": {
+          "title": "Une erreur s'est produite",
+          "subTitle": "Désolé! "
+        }
+      },
       "generic": {
         "title": "Une erreur s'est produite",
         "subTitle": "Désolé, en raison d'une erreur technique, nous ne pouvons pas télécharger le VC. "

@@ -39,6 +39,28 @@
         "title": "अवैध सत्र",
         "subTitle": "सत्र वैध नहीं है या सत्र पूरा हो गया है"
       },
+      "verification": {
+        "proof_type_not_supported": {
+          "title": "एक त्रुटि पाई गई",
+          "subTitle": "क्षमा मांगना! "
+        },
+        "json_parsing_failed": {
+          "title": "एक त्रुटि पाई गई",
+          "subTitle": "क्षमा करें, तकनीकी त्रुटि के कारण हम वीसी डाउनलोड करने में असमर्थ हैं। "
+        },
+        "signature_verification_failed": {
+          "title": "एक त्रुटि पाई गई",
+          "subTitle": "क्षमा मांगना! "
+        },
+        "unknown_exception": {
+          "title": "एक त्रुटि पाई गई",
+          "subTitle": "क्षमा करें, ऐसा लगता है कि हमारी सेवाएँ अस्थायी रूप से अनुपलब्ध हैं। "
+        },
+        "proof_document_not_found": {
+          "title": "एक त्रुटि पाई गई",
+          "subTitle": "क्षमा मांगना! "
+        }
+      },
       "generic": {
         "title": "एक त्रुटि पाई गई",
         "subTitle": "क्षमा करें, तकनीकी त्रुटि के कारण हम वीसी डाउनलोड करने में असमर्थ हैं। "
