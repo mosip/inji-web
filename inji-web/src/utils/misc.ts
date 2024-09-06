@@ -42,16 +42,16 @@ export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId
 }
 
 export const downloadCredentialPDF = async (response: any, certificateId: string) => {
-    // let fileName = `${certificateId}.pdf`;
-    // const url = window.URL.createObjectURL(response);
-    // const link = document.createElement('a');
-    // link.href = url;
-    // link.setAttribute('download', fileName);
-    // link.setAttribute('target', '_blank');
-    // document.body.appendChild(link);
-    // link.click();
-    // document.body.removeChild(link);
-    // window.URL.revokeObjectURL(url);
+    let fileName = `${certificateId}.pdf`;
+    const url = window.URL.createObjectURL(response);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', fileName);
+    link.setAttribute('target', '_blank');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
 }
 
 export const getErrorObject = (downloadResponse: any) => {
