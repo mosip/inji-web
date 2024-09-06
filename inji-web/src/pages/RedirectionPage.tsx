@@ -13,7 +13,7 @@ import {getObjectForCurrentLanguage} from "../utils/i18n";
 export const RedirectionPage: React.FC = () => {
 
 
-    const {error, state, fetchRequest} = useFetch();
+    const {error, state, response,  fetchRequest} = useFetch();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const redirectedSessionId = searchParams.get("state");
@@ -35,7 +35,7 @@ export const RedirectionPage: React.FC = () => {
                 const code = searchParams.get("code") ?? "";
                 const urlState = searchParams.get("state") ?? "";
                 const codeVerifier = activeSessionInfo?.codeVerifier;
-                const issuerId = activeSessionInfo?.selectedIssuer.credential_issuer ?? "";
+                const issuerId = activeSessionInfo?.selectedIssuer?.credential_issuer ?? "";
                 const certificateId = activeSessionInfo?.certificateId;
 
                 const requestBody = new URLSearchParams(getTokenRequestBody(code, codeVerifier, issuerId, certificateId));
@@ -46,8 +46,6 @@ export const RedirectionPage: React.FC = () => {
                     apiRequest.headers(),
                     requestBody
                 );
-                console.log("Credential Download Response => ", credentialDownloadResponse);
-                console.log("state -> " + state + " Error -> " + RequestStatus.ERROR);
                 if (state !== RequestStatus.ERROR) {
                     await downloadCredentialPDF(credentialDownloadResponse, certificateId);
                     setCompletedDownload(true);
@@ -72,9 +70,10 @@ export const RedirectionPage: React.FC = () => {
                                    state={RequestStatus.ERROR}/>
         }
         if (state === RequestStatus.ERROR && error) {
-            return <DownloadResult title={t(errorObj.code)}
-                                   subTitle={t(errorObj.message)}
-                                   state={RequestStatus.ERROR}/>
+            const errorObject = getErrorObject(response);
+            return <div><DownloadResult title={t(errorObject.code)}
+                                   subTitle={t(errorObject.message)}
+                                               state={RequestStatus.ERROR}/>{error}</div>
         }
         if(!completedDownload){
             return <DownloadResult title={t("loading.title")}

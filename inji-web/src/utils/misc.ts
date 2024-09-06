@@ -42,31 +42,31 @@ export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId
 }
 
 export const downloadCredentialPDF = async (response: any, certificateId: string) => {
-    let fileName = `${certificateId}.pdf`;
-    const url = window.URL.createObjectURL(response);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', fileName);
-    link.setAttribute('target', '_blank');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+    // let fileName = `${certificateId}.pdf`;
+    // const url = window.URL.createObjectURL(response);
+    // const link = document.createElement('a');
+    // link.href = url;
+    // link.setAttribute('download', fileName);
+    // link.setAttribute('target', '_blank');
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
+    // window.URL.revokeObjectURL(url);
 }
 
 export const getErrorObject = (downloadResponse: any) => {
-    const errorCode = downloadResponse.errors[0].errorCode;
-    if(errorCode in [
+    const errorCode = downloadResponse?.errors ? downloadResponse?.errors[0]?.errorCode : "";
+    if([
         "proof_type_not_supported",
         "json_parsing_failed",
         "signature_verification_failed",
         "unknown_exception",
         "proof_document_not_found",
         "public_key_not_found"
-    ] ){
+    ].indexOf(errorCode) != -1 ){
         return {
             code: `error.verification.${errorCode}.title`,
-            message: `error.verification.${errorCode}.subtitle`
+            message: `error.verification.${errorCode}.subTitle`
         }
     }
     return {
