@@ -71,9 +71,9 @@ export const RedirectionPage: React.FC = () => {
         }
         if (state === RequestStatus.ERROR && error) {
             const errorObject = getErrorObject(response);
-            return <div><DownloadResult title={t(errorObject.code)}
+            return <DownloadResult title={t(errorObject.code)}
                                    subTitle={t(errorObject.message)}
-                                               state={RequestStatus.ERROR}/>{error}</div>
+                                   state={RequestStatus.ERROR}/>
         }
         if(!completedDownload){
             return <DownloadResult title={t("loading.title")}
