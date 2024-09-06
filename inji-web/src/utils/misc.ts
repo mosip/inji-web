@@ -61,7 +61,8 @@ export const getErrorObject = (downloadResponse: any) => {
         "json_parsing_failed",
         "signature_verification_failed",
         "unknown_exception",
-        "proof_document_not_found"
+        "proof_document_not_found",
+        "public_key_not_found"
     ] ){
         return {
             code: `error.verification.${errorCode}.title`,

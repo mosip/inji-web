@@ -59,6 +59,10 @@
         "proof_document_not_found": {
           "title": "Une erreur s'est produite",
           "subTitle": "Désolé! "
+        },
+        "public_key_not_found": {
+          "title": "Une erreur s'est produite",
+          "subTitle": "Désolé, votre identifiant n'a pas pu être téléchargé car il y a un problème avec la validation de la signature de l'émetteur. "
         }
       },
       "generic": {

@@ -59,6 +59,10 @@
         "proof_document_not_found": {
           "title": "An Error Occurred",
           "subTitle": "Sorry! Your credential couldn’t be downloaded as there is an issue with validating the issuer's signature. Please contact the admin for further assistance."
+        },
+        "public_key_not_found": {
+          "title": "An Error Occurred",
+          "subTitle": "Sorry! Your credential couldn’t be downloaded as there is an issue with validating the issuer's signature. Please contact the admin for further assistance."
         }
       },
       "generic": {
