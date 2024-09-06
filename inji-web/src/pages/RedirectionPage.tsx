@@ -46,6 +46,8 @@ export const RedirectionPage: React.FC = () => {
                     apiRequest.headers(),
                     requestBody
                 );
+                console.log("Credential Download Response => ", credentialDownloadResponse);
+                console.log("state -> " + state + " Error -> " + RequestStatus.ERROR);
                 if (state !== RequestStatus.ERROR) {
                     await downloadCredentialPDF(credentialDownloadResponse, certificateId);
                     setCompletedDownload(true);
