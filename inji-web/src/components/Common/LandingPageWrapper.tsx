@@ -14,11 +14,11 @@ export const LandingPageWrapper: React.FC<LandingPageWrapperProps> = (props) => 
                 <p>{props.subTitle}</p>
             </div>
             { props.gotoHome &&
-                <div>
+                <div className={"bg-gradient-to-r rounded-lg from-iw-spinningLoaderPrimary to-iw-spinningLoaderSecondary p-0.5"}>
                     <button
                         data-testid="DownloadResult-Home-Button"
                         onClick={() => navigate("/")}
-                        className="text-iw-primary font-bold py-2 px-4 rounded-lg border-2 border-iw-primary">
+                        className="text-iw-primary font-bold py-2 px-4 rounded-lg bg-white">
                         {t("navigateButton")}
                     </button>
                 </div>

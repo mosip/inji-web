@@ -5,7 +5,7 @@
     </clipPath>
   </defs>
   <g id="Background" transform="translate(0 -80)" clip-path="url(#clip-path)">
-    <path id="Path_155490" data-name="Path 155490" d="M0,686.181s184.839,40.392,243.429-357.946S431.724,5.775,431.724,5.775V690.2Z" transform="translate(675.797 493.724) rotate(-90)" fill="#fffbf0"/>
-    <path id="Path_155489" data-name="Path 155489" d="M0,381.487s486.314,22.456,640.466-199S1135.87,3.21,1135.87,3.21V383.724Z" transform="translate(1135.871 463.724) rotate(180)" fill="#f2fbff"/>
+    <path id="Path_155490" data-name="Path 155490" d="M0,686.181s184.839,40.392,243.429-357.946S431.724,5.775,431.724,5.775V690.2Z" transform="translate(675.797 493.724) rotate(-90)" fill="#F0FBFF"/>
+    <path id="Path_155489" data-name="Path 155489" d="M0,381.487s486.314,22.456,640.466-199S1135.87,3.21,1135.87,3.21V383.724Z" transform="translate(1135.871 463.724) rotate(180)" fill="#F2FFF5"/>
   </g>
 </svg>
