@@ -34,34 +34,35 @@
         --iw-color-shieldErrorShadow: #FEF2F2;
         --iw-color-shieldLoadingShadow: #f6dfbe;
     }
-    .purple_theme {
-        --iw-font-base: "Inter", sans-serif;
-        --iw-color-background: #FFFFFF;
-        --iw-color-header: #000000;
-        --iw-color-footer: #FFFFFF;
+    [class="purple_theme"] {
+        --iw-font-base: "Gentium Plus", serif;
+        --iw-color-background: #bcaaf3;
+        --iw-color-header: #8f69ec;
+        --iw-color-footer: #8f69ec;
         --iw-color-title: #000000;
         --iw-color-subTitle: #717171;
         --iw-color-searchTitle: #3E3E3E;
-        --iw-color-primary: #0FAC8B;
+        --iw-color-primary: #5a31ee;
         --iw-color-helpAccordionHover: #e0e0e0;
         --iw-color-shadow: #18479329;
-        --iw-color-spinningLoaderPrimary: #0FAC8B;
-        --iw-color-spinningLoaderSecondary: #00a3dd;
+        --iw-color-selected-shadow: #164EA840;
+        --iw-color-spinningLoaderPrimary: #4518de;
+        --iw-color-spinningLoaderSecondary: #E6E6E6;
         --iw-color-navigationBar: #F2FBFF;
-        --iw-color-languageGlobeIcon: #0FAC8B;
-        --iw-color-languageArrowIcon: #0FAC8B;
-        --iw-color-languageCheckIcon: #0FAC8B;
-        --iw-color-closeIcon: #8E8E8E;
-        --iw-color-searchIcon: #8E8E8E;
+        --iw-color-languageGlobeIcon: #4518de;
+        --iw-color-languageArrowIcon: #4518de;
+        --iw-color-languageCheckIcon: #4518de;
+        --iw-color-closeIcon: #4518de;
+        --iw-color-searchIcon: #4518de;
         --iw-color-tileBackground: #FFFFFF;
         --iw-color-shieldSuccessIcon: #4b9d1f;
-        --iw-color-shieldErrorIcon: #EF4444;
-        --iw-color-shieldLoadingIcon: #0FAC8B;
+        --iw-color-shieldErrorIcon: #4518de;
+        --iw-color-shieldLoadingIcon: #5b32f1;
         --iw-color-shieldSuccessShadow: #f1f7ee;
         --iw-color-shieldErrorShadow: #FEF2F2;
         --iw-color-shieldLoadingShadow: #f6dfbe;
     }
-    .emerald_theme {
+    [class="emerald_theme"] {
         --iw-font-base: "Inter", sans-serif;
         --iw-color-background: #FFFFFF;
         --iw-color-header: #000000;
