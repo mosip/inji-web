@@ -35,7 +35,7 @@
         --iw-color-shieldErrorShadow: #FEF2F2;
         --iw-color-shieldLoadingShadow: #f6dfbe;
     }
-    .purple_theme {
+    [class="purple_theme"] {
         --iw-font-base: "Gentium Plus", serif;
         --iw-color-background: #bcaaf3;
         --iw-color-header: #8f69ec;

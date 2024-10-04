@@ -7,7 +7,7 @@ if [ $# -ge 1 ] ; then
 fi
 
 NS=injiweb
-CHART_VERSION=0.0.1-develop
+CHART_VERSION=0.10.0-develop
 
 DEFAULT_MOSIP_INJIWEB_HOST=$( kubectl get cm global -n config-server -o jsonpath={.data.mosip-injiweb-host} )
 # Check if MOSIP_INJIWEB_HOST is present under configmap/global of configserver

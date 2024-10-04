@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {FaSearch} from "react-icons/fa";
 import {IoCloseCircleSharp} from "react-icons/io5";
-import {CredentialConfigurationObject} from "../../types/data";
 import {storeFilteredCredentials} from "../../redux/reducers/credentialsReducer";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";

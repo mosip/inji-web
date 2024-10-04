@@ -6,9 +6,9 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import pages.*;
 import utils.BaseTest;
 import utils.GlobelConstants;
@@ -66,14 +66,14 @@ public class StepDef {
         homePage.clickOnHelp();
     }
 
-    //
+
     @Given("Load application url {string}")
     public void load_application_url(String string) {
 //		String currentURL = driver.getCurrentUrl();
 //		Assert.assertEquals(currentURL, string);
     }
 
-    //
+
     @When("User click on download mosip credentials button")
     public void user_click_on_download_mosip_credentials_button() {
         homePage.scrollDownByPage(baseTest.getDriver());
@@ -171,6 +171,7 @@ public class StepDef {
     public void user_enter_the_policy_number(String string) throws InterruptedException {
         Thread.sleep(3000);
         sunbirdCredentials.enterPolicyNumer(string);
+
     }
 
     @Then("User enter the full name  {string}")
@@ -551,5 +552,4 @@ public class StepDef {
     public void user_verify_the_logo_of_the_issuer() {
         homePage.isIssuerLogoDisplayed();
     }
-
 }
