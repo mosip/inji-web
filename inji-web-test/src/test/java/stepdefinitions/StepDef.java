@@ -6,19 +6,14 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import pages.HomePage;
-import pages.MosipCredentials;
-import pages.SetNetwork;
-import pages.SunbirdCredentials;
+import org.testng.Assert;
+import pages.*;
 import utils.BaseTest;
+import utils.GlobelConstants;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Base64;
 import java.util.Set;
 
@@ -27,7 +22,9 @@ public class StepDef {
     String pageTitle;
     public WebDriver driver;
     BaseTest baseTest;
+    private GlobelConstants globelConstants;
     private HomePage homePage;
+    private HelpPage helpPage;
     private MosipCredentials mosipCredentials;
     private SunbirdCredentials sunbirdCredentials;
     private SetNetwork setNetwork;
@@ -37,6 +34,7 @@ public class StepDef {
         this.homePage = new HomePage(baseTest.getDriver());
         this.sunbirdCredentials = new SunbirdCredentials(baseTest.getDriver());
         this.mosipCredentials = new MosipCredentials(baseTest.getDriver());
+        this.helpPage = new HelpPage(baseTest.getDriver());
         this.setNetwork = new SetNetwork();
     }
 
@@ -129,7 +127,7 @@ public class StepDef {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Assert.assertEquals(homePage.isSuccessMessageDisplayed(), "Success!");
+        Assert.assertTrue(homePage.isSuccessMessageDisplayed());
     }
 
     @Then("User verify mosip national id by e-signet displayed")
@@ -173,7 +171,6 @@ public class StepDef {
     public void user_enter_the_policy_number(String string) throws InterruptedException {
         Thread.sleep(3000);
         sunbirdCredentials.enterPolicyNumer(string);
-
     }
 
     @Then("User enter the full name  {string}")
@@ -191,7 +188,6 @@ public class StepDef {
         sunbirdCredentials.clickOnLogin();
     }
 
-    //
     @Then("User search the issuers with {string}")
     public void user_search_the_issuers_with(String string) {
         try {
@@ -200,11 +196,8 @@ public class StepDef {
             throw new RuntimeException(e);
         }
         homePage.enterIssuersInSearchBox(string);
-
-
     }
 
-    //
     @Then("User verify life Insurance displayed")
     public void user_verify_life_insurance_displayed() {
         Assert.assertTrue(sunbirdCredentials.isLifeInceranceDisplayed());
@@ -236,13 +229,11 @@ public class StepDef {
         Assert.assertTrue(mosipCredentials.isLoginPageLableDisplayed());
     }
 
-
     @When("User verify vid input box header")
     public void user_verify_vid_input_box_header() {
         Assert.assertTrue(mosipCredentials.isVidInputBoxHeaderDisplayed());
     }
 
-    //
     @Then("User verify that langauge button is displayed")
     public void verify_that_langauge_button_is_displayed() {
         Assert.assertTrue(homePage.isLanguageDisplayed());
@@ -258,36 +249,48 @@ public class StepDef {
         Assert.assertTrue(homePage.isNoIssuerFoundMessageDisplayed());
     }
 
-    //
 	@Then("User verify pdf is downloaded")
-	public void user_verify_pdf_is_downloaded() throws IOException {
-        System.out.println(baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"fileExists\", \"arguments\": {\"fileName\": \"MOSIPVerifiableCredential.pdf\"}}"));
+	public String user_verify_pdf_is_downloaded() throws IOException {
+        baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"fileExists\", \"arguments\": {\"fileName\": \"" + baseTest.PdfNameForMosip + "\"}}");
+        baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"getFileProperties\", \"arguments\": {\"fileName\": \"" + baseTest.PdfNameForMosip + "\"}}");
 
-        // Get file properties
-        System.out.println(baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"getFileProperties\", \"arguments\": {\"fileName\": \"MosipVerifiableCredential.pdf\"}}"));
-
-        // Get file content. The content is Base64 encoded
-        String base64EncodedFile = (String) baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"getFileContent\", \"arguments\": {\"fileName\": \"MosipVerifiableCredential.pdf\"}}");
-
-        // Decode the content to Base64
+        String base64EncodedFile = (String) baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"getFileContent\", \"arguments\": {\"fileName\": \"" + baseTest.PdfNameForMosip + "\"}}");
         byte[] data = Base64.getDecoder().decode(base64EncodedFile);
-        OutputStream stream = new FileOutputStream("MOSIPVerifiableCredential.pdf");
+        OutputStream stream = new FileOutputStream(baseTest.PdfNameForMosip);
         stream.write(data);
 
         System.out.println(stream);
         stream.close();
 
-        File pdfFile = new File(System.getProperty("user.dir")+"/MOSIPVerifiableCredential.pdf");
+        File pdfFile = new File(System.getProperty("user.dir") + "/" + baseTest.PdfNameForMosip);
         PDDocument document = PDDocument.load(pdfFile);
 
         PDFTextStripper stripper = new PDFTextStripper();
         String text = stripper.getText(document);
-
-
-
-        System.out.print(text);
+        return text;
     }
-//
+
+
+    @Then("User verify pdf is downloaded for Insurance")
+    public String user_verify_pdf_is_downloaded_for_insurance() throws IOException {
+        baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"fileExists\", \"arguments\": {\"fileName\": \"" + baseTest.PdfNameForInsurance + "\"}}");
+        baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"getFileProperties\", \"arguments\": {\"fileName\": \"" + baseTest.PdfNameForInsurance + "\"}}");
+
+        String base64EncodedFile = (String) baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"getFileContent\", \"arguments\": {\"fileName\": \"" + baseTest.PdfNameForInsurance + "\"}}");
+        byte[] data = Base64.getDecoder().decode(base64EncodedFile);
+        OutputStream stream = new FileOutputStream(baseTest.PdfNameForInsurance);
+        stream.write(data);
+
+        System.out.println(stream);
+        stream.close();
+
+        File pdfFile = new File(System.getProperty("user.dir") + "/" + baseTest.PdfNameForInsurance);
+        PDDocument document = PDDocument.load(pdfFile);
+
+        PDFTextStripper stripper = new PDFTextStripper();
+        String text = stripper.getText(document);
+        return text;
+    }
     @Then("User verify policy number input box header")
     public void user_verify_policy_number_input_box_header() {
         Assert.assertTrue(sunbirdCredentials.isEnterPolicyNumberHeaderDisplayed());
@@ -308,11 +311,6 @@ public class StepDef {
         Assert.assertTrue(sunbirdCredentials.isAuthenticationFailedDisplayed());
     }
 
-//	@Then("User wait for three min on home page")
-//	public void user_wait_for_three_min_on_home_page() {
-//		page.waitForTimeout(300000);
-//	}
-
     @Then("User click on arabic langauge")
     public void user_click_on_arabic_langauge() {
         homePage.clickOnArabicLanguage();
@@ -320,9 +318,10 @@ public class StepDef {
 
     @Then("User verify home screens in arabic")
     public void user_verify_home_screens_in_arabic() {
-//		homePage.scrollDownByPage(driver);
-        Assert.assertEquals(homePage.isHomePageTextDisplayed(), "تنزيل بيانات الاعتماد هو بنقرة واحدة!");
-        Assert.assertEquals(homePage.isHomePageDiscriptinTextDisplayed(), "يرجى البحث عن جهة الإصدار وفي الخطوة التالية، حدد بيانات الاعتماد للتنزيل.");
+        Assert.assertEquals(homePage.isHomePageTextDisplayed(), globelConstants.HomePageTextInArabic);
+        Assert.assertEquals(homePage.isHomePageDescriptionTextDisplayed(), globelConstants.isHomePageDescriptionTextnArabic);
+//        Assert.assertEquals(homePage.isListOfIssuersTextDisplayed(), globelConstants.ListOfCredentialTypeOnHomePageInArabic);
+//        Assert.assertEquals(homePage.isListOfIssuersDescriptionTextDisplayed(), globelConstants.ListOfCredentialDescriptionTextInArabic);
     }
 
     @Then("User click on tamil langauge")
@@ -332,8 +331,10 @@ public class StepDef {
 
     @Then("User verify home screens in tamil")
     public void user_verify_home_screens_in_tamil() {
-        Assert.assertEquals(homePage.isHomePageTextDisplayed(), "நற்சான்றிதழைப் பதிவிறக்குவது ஒரே கிளிக்கில் உள்ளது!");
-        Assert.assertEquals(homePage.isHomePageDiscriptinTextDisplayed(), "வழங்குபவரைத் தேடி, அடுத்த கட்டத்தில், பதிவிறக்குவதற்கான நற்சான்றிதழைத் தேர்ந்தெடுக்கவும்.");
+        Assert.assertEquals(homePage.isHomePageTextDisplayed(), globelConstants.HomePageTextInTamil);
+        Assert.assertEquals(homePage.isHomePageDescriptionTextDisplayed(), globelConstants.isHomePageDescriptionTextnTamil);
+//        Assert.assertEquals(homePage.isListOfIssuersTextDisplayed(), globelConstants.ListOfCredentialTypeOnHomePageInTamil);
+//        Assert.assertEquals(homePage.isListOfIssuersDescriptionTextDisplayed(), globelConstants.ListOfCredentialDescriptionTextInTamil);
     }
 
     @Then("User click on kannada langauge")
@@ -343,8 +344,10 @@ public class StepDef {
 
     @Then("User verify home screens in kannada")
     public void user_verify_home_screens_in_kannada() {
-        Assert.assertEquals(homePage.isHomePageTextDisplayed(), "ರುಜುವಾತುಗಳನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡುವುದು ಒಂದು ಕ್ಲಿಕ್ ದೂರದಲ್ಲಿದೆ!");
-        Assert.assertEquals(homePage.isHomePageDiscriptinTextDisplayed(), "ದಯವಿಟ್ಟು ನೀಡುವವರಿಗಾಗಿ ಹುಡುಕಿ ಮತ್ತು ಮುಂದಿನ ಹಂತದಲ್ಲಿ, ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ರುಜುವಾತುಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ.");
+        Assert.assertEquals(homePage.isHomePageTextDisplayed(), globelConstants.HomePageTextInKannada);
+        Assert.assertEquals(homePage.isHomePageDescriptionTextDisplayed(), globelConstants.HomePageDescriptionTextInKannada);
+//        Assert.assertEquals(homePage.isListOfIssuersTextDisplayed(), globelConstants.ListOfCredentialTypeOnHomePageInKannada);
+//        Assert.assertEquals(homePage.isListOfIssuersDescriptionTextDisplayed(), globelConstants.ListOfCredentialDescriptionTextInKannada);
     }
 
     @Then("User click on hindi langauge")
@@ -354,8 +357,10 @@ public class StepDef {
 
     @Then("User verify home screens in hindi")
     public void user_verify_home_screens_in_hindi() {
-        Assert.assertEquals(homePage.isHomePageTextDisplayed(), "क्रेडेंशियल डाउनलोड करना एक-क्लिक दूर है!");
-        Assert.assertEquals(homePage.isHomePageDiscriptinTextDisplayed(), "कृपया जारीकर्ता को खोजें और अगले चरण में, डाउनलोड करने के लिए क्रेडेंशियल चुनें।");
+        Assert.assertEquals(homePage.isHomePageTextDisplayed(), globelConstants.HomePageTextInHindi);
+        Assert.assertEquals(homePage.isHomePageDescriptionTextDisplayed(),globelConstants.HomePageDescriptionTextInHindi);
+//        Assert.assertEquals(homePage.isListOfIssuersTextDisplayed(), globelConstants.ListOfCredentialTypeOnHomePageInHindi);
+//        Assert.assertEquals(homePage.isListOfIssuersDescriptionTextDisplayed(), globelConstants.ListOfCredentialDescriptionTextInHindi);
     }
 
     @Then("User click on french langauge")
@@ -363,86 +368,76 @@ public class StepDef {
         homePage.clickOnFranchLanguage();
     }
 
-    //
     @Then("User verify home screens in french")
     public void user_verify_home_screens_in_french() {
         System.out.println(homePage.isHomePageTextDisplayed());
-        System.out.println(homePage.isHomePageDiscriptinTextDisplayed());
-        Assert.assertEquals(homePage.isHomePageTextDisplayed(), "Le téléchargement d'un identifiant se fait en un seul clic !");
-        Assert.assertEquals(homePage.isHomePageDiscriptinTextDisplayed(), "Veuillez rechercher l'émetteur et, à l'étape suivante, sélectionnez les informations d'identification à télécharger.");
+        System.out.println(homePage.isHomePageDescriptionTextDisplayed());
+        Assert.assertEquals(homePage.isHomePageTextDisplayed(), globelConstants.HomePageTextInFrench);
+        Assert.assertEquals(homePage.isHomePageDescriptionTextDisplayed(), globelConstants.HomePageDescriptionTextInFrench);
+//        Assert.assertEquals(homePage.isListOfIssuersTextDisplayed(), globelConstants.ListOfCredentialTypeOnHomePageInFrench);
+//        Assert.assertEquals(homePage.isListOfIssuersDescriptionTextDisplayed(), globelConstants.ListOfCredentialDescriptionTextInFrench);
     }
 
     @Then("User validate the list of credential types title of the page")
     public void user_validate_the_list_of_credential_types_title_of_the_page() {
-        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "List of Credential Types");
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialType);
     }
 
     @Then("User validate the list of credential types title of the page in arabic laguage")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_arabic_laguage() {
-        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "قائمة أنواع الاعتمادات");
-        Assert.assertEquals(homePage.isNationalIdentityDepartmentTextDisplayed(), "دائرة الهوية الوطنية");
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInArabic);
     }
 
     @Then("User validate the list of credential types title of the page in tamil laguage")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_tamil_laguage() {
-        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "நற்சான்றிதழ் வகைகளின் பட்டியல்");
-        Assert.assertEquals(homePage.isNationalIdentityDepartmentTextDisplayed(), "தேசிய அடையாளத் துறை");
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInTamil);
     }
 
     @Then("User validate the list of credential types title of the page in kannada laguage")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_kannada_laguage() {
-        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "ರುಜುವಾತು ಪ್ರಕಾರಗಳ ಪಟ್ಟಿ");
-        Assert.assertEquals(homePage.isNationalIdentityDepartmentTextDisplayed(), "ರಾಷ್ಟ್ರೀಯ ಗುರುತಿನ ಇಲಾಖೆ");
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInKannada);
     }
 
     @Then("User validate the list of credential types title of the page in hindi laguage")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_hindi_laguage() {
-        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "क्रेडेंशियल प्रकारों की सूची");
-        Assert.assertEquals(homePage.isNationalIdentityDepartmentTextDisplayed(), "राष्ट्रीय पहचान विभाग");
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInHindi);
     }
 
     @Then("User validate the list of credential types title of the page in french laguage")
     public void user_validate_the_list_of_credential_types_title_of_the_french_in_hindi_laguage() {
-        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "Liste des types d'informations d'identification");
-//		Assert.assertEquals(homePage.isNationalIdentityDepartmentTextDisplayed(),"");
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInFrench);
     }
 
     @Then("User validate the list of credential types title of the page for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_for_sunbird() {
         System.out.println(homePage.isVeridoniaInsuranceCompanyTextDisplayed());
         System.out.println(homePage.isCredentialTypesDisplayed());
-        Assert.assertEquals(homePage.isVeridoniaInsuranceCompanyTextDisplayed(), "StayProtected Insurance");
-        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "List of Credential Types");
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialType);
     }
 
     @Then("User validate the list of credential types title of the page in arabic laguage for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_arabic_laguage_for_sunbird() {
-//        Assert.assertEquals(homePage.isVeridoniaInsuranceCompanyTextDisplayed(), "شركة فيريدونيا للتأمين");
-        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "قائمة أنواع الاعتمادات");
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(),globelConstants.ListOfCredentialTypeInArabic );
     }
 
     @Then("User validate the list of credential types title of the page in tamil laguage for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_tamil_laguage_for_sunbird() {
-//        Assert.assertEquals(homePage.isVeridoniaInsuranceCompanyTextDisplayed(), "வெரிடோனியா இன்சூரன்ஸ் நிறுவனம்");
-        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "நற்சான்றிதழ் வகைகளின் பட்டியல்");
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInTamil);
     }
 
     @Then("User validate the list of credential types title of the page in kannada laguage for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_kannada_laguage_for_sunbird() {
-//        Assert.assertEquals(homePage.isVeridoniaInsuranceCompanyTextDisplayed(), "ವೆರಿಡೋನಿಯಾ ವಿಮಾ ಕಂಪನಿ");
-        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "ರುಜುವಾತು ಪ್ರಕಾರಗಳ ಪಟ್ಟಿ");
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInKannada);
     }
 
     @Then("User validate the list of credential types title of the page in hindi laguage for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_hindi_laguage_for_sunbird() {
-//        Assert.assertEquals(homePage.isVeridoniaInsuranceCompanyTextDisplayed(), "वेरिडोनिया बीमा कंपनींं");
-        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "क्रेडेंशियल प्रकारों की सूची");
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInHindi);
     }
 
     @Then("User validate the list of credential types title of the page in french laguage for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_french_laguage_for_sunbird() {
-//		Assert.assertEquals(homePage.isVeridoniaInsuranceCompanyTextDisplayed(),"वेरिडोनिया बीमा कंपनींं");
-        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "Liste des types d'informations d'identification");
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInFrench);
     }
 
     @Then("User verify All the languages")
@@ -467,16 +462,24 @@ public class StepDef {
 
     @Then("User open new tab")
     public void user_open_new_tab() {
-        ((JavascriptExecutor) baseTest.getDriver()).executeScript("window.open('https://injiweb.qa-inji.mosip.net')");
+        ((JavascriptExecutor) baseTest.getDriver()).executeScript("window.open('" + baseTest.url + "')");
 
         Set<String> allWindowHandles =baseTest.getDriver().getWindowHandles();
         System.out.println(allWindowHandles);
         if (allWindowHandles.size() >= 2) {
             String secondWindowHandle = allWindowHandles.toArray(new String[0])[1];
-            // Switch to the second window
             baseTest.getDriver().switchTo().window(secondWindowHandle);
         } else {
 
+        }
+    }
+    @Then("User verify About inji open")
+    public void UserSwitchToAboutInjiTab() throws InterruptedException {
+        Set<String> allWindowHandles = baseTest.getDriver().getWindowHandles();
+        System.out.println(allWindowHandles);
+        if (allWindowHandles.size() >= 2) {
+            String secondWindowHandle = allWindowHandles.toArray(new String[0])[1];
+            baseTest.getDriver().switchTo().window(secondWindowHandle);
         }
     }
 
@@ -484,15 +487,69 @@ public class StepDef {
     public void user_refresh_the_page() {
         baseTest.getDriver().navigate().refresh();
     }
+
     @Then("user verify the page after Refresh")
     public void user_verify_the_page_after_refresh() {
-
     }
 
-//    @When("User set no network")
-//    public void user_set_no_network() {
-//        baseTest.getDriver().getSessionId();
-//
-//        setNetwork.setNoNetworkProfile();
-//    }
+    @Then("User verify downloading in progress text")
+    public void user_VerifyDownloadingInProgressDisplaed() {
+        Assert.assertTrue(mosipCredentials.isDownloadingDescriptionTextDisplayed());
+    }
+
+    @When("User verify the FAQ header and its description")
+    public void user_verify_the_faq_header_and_its_description() {
+        Assert.assertTrue(helpPage.isHelpPageFAQDescriptionTextDisplayed());
+        Assert.assertTrue(helpPage.isHelpPageFAQTitelTextDisplayed());
+    }
+    @When("User verify the only one FAQ is open")
+    public void user_verify_the_only_one_faq_is_open() {
+        Assert.assertTrue(helpPage.isUpArrowDisplayed());
+        Assert.assertEquals(helpPage.getUpArrowCount(),1);
+    }
+
+    @When("User verify the only one FAQ is at a time")
+    public void user_verify_the_only_one_faq_is_at_a_time() {
+        helpPage.ClickOnDownArrow();
+        Assert.assertEquals(helpPage.getUpArrowCount(),1);
+        Assert.assertEquals(helpPage.getDownArrowCount(),6);
+    }
+
+    @Then("User verify that help button displayed")
+    public void user_verify_that_help_button_displayed() {
+        Assert.assertTrue(homePage.isHelpPageDisplayed());
+    }
+    @Then("User verify header displayed")
+    public void user_verify_header_displayed() {
+        Assert.assertTrue(homePage.isHeaderContanerDisplayed());
+    }
+    @Then("User verify that home page container displayed")
+    public void user_verify_that_home_page_container_displayed() {
+        Assert.assertTrue(homePage.isHomePageContainerDisplayed());
+    }
+    @Then("User verify the footer on home page")
+    public void user_verify_the_footer_on_home_page() {
+        Assert.assertTrue(homePage.isFooterIsDisplayedOnHomePage());
+        Assert.assertEquals(homePage.getFooterText(),globelConstants.FooterText);
+    }
+
+    @Then("User verify that about inji web displayed")
+    public void user_verify_that_about_inji_web_displayed() {
+        Assert.assertTrue(homePage.isAboutDisplayed());
+    }
+    @Then("User verify that on home page searchbox is present")
+    public void user_verify_that_on_home_page_searchbox_is_present() {
+        Assert.assertTrue(homePage.isSerchBoxDisplayed());
+    }
+
+    @Then("User verify click on about inji page")
+    public void user_verify_click_on_about_inji_page() {
+        homePage.clickOnAboutInji();
+    }
+
+    @When("User verify the logo of the issuer")
+    public void user_verify_the_logo_of_the_issuer() {
+        homePage.isIssuerLogoDisplayed();
+    }
+
 }
