@@ -127,5 +127,30 @@
       "description3": "2. لم يتم تكوين أي جهات إصدار.",
       "description4": "وفي كلتا الحالتين، يرجى الاتصال بفريقك الفني لمعالجة المشكلة."
     }
+  },
+  "DataShareExpiryModal": {
+    "title": "صلاحية المشاركة",
+    "subTitle": "يرجى تقديم موافقتك على تعيين صلاحية مشاركة {{credentialName}}",
+    "content": {
+      "selectedDocument": "المستند المحدد",
+      "consent": "صلاحية الموافقة *",
+      "validityTimesHeader": "عدد المرات",
+      "validityTimesOptions": {
+        "once": "مرة واحدة",
+        "thrice": "ثلاث مرات",
+        "noLimit": "لا يوجد حد",
+        "custom": "مخصص"
+      },
+      "validityDate": "تاريخ"
+    },
+    "success": "يتابع",
+    "cancel": "خلف",
+    "disclaimer": "يرجى ملاحظة أنه لا يمكن مشاركة رمز الاستجابة السريعة إلا لعدد المرات التي اخترتها هنا. "
+  },
+  "CustomExpiryModal": {
+    "title": "الرجاء إدخال عدد المرات التي تريد فيها استخدام بيانات الاعتماد هذه ",
+    "metrics": "مرات",
+    "success": "يتابع",
+    "cancel": "يلغي"
   }
 }
