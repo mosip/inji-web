@@ -24,6 +24,8 @@ public class BaseTest {
         this.driver = driver;
     }
 
+    public String url ="https://injiweb.qa-inji.mosip.net/";
+
     public WebDriver driver;
 
     public JavascriptExecutor jse;
@@ -40,13 +42,12 @@ public class BaseTest {
         HashMap<String, Object> browserstackOptions = new HashMap<String, Object>();
         browserstackOptions.put("os", "Windows");
         browserstackOptions.put("osVersion", "10");
-        browserstackOptions.put("projectName", "Bstack-[Java] Sample file download");
         capabilities.setCapability("bstack:options", browserstackOptions);
 
          driver = new RemoteWebDriver(new URL(URL), capabilities);
          jse = (JavascriptExecutor) driver;
         driver.manage().window().maximize();
-        driver.get("https://injiweb.qa-inji.mosip.net");
+        driver.get(url);
     }
 
     @After

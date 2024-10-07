@@ -462,7 +462,7 @@ public class StepDef {
 
     @Then("User open new tab")
     public void user_open_new_tab() {
-        ((JavascriptExecutor) baseTest.getDriver()).executeScript("window.open('https://injiweb.qa-inji.mosip.net')");
+        ((JavascriptExecutor) baseTest.getDriver()).executeScript("window.open('" + baseTest.url + "')");
 
         Set<String> allWindowHandles =baseTest.getDriver().getWindowHandles();
         System.out.println(allWindowHandles);
