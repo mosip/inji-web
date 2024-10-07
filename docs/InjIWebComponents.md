@@ -13,7 +13,7 @@
 ### **Inji Web**
 
 - The Inji Web portal is a Web equivalent wallet, which lets you download the credentials in the PDF Format.
-- The InjiWeb allows you a generate a QR code in the PDF itself.
+- The InjiWeb allows you to generate a QR code in the PDF itself.
 - Currently Supports Two Different QR Codes
     - EmbeddedVC -> uses Pixel pass library to embed the complete VC within the QR
     - OnlineSharing -> QR Contains a authorize endpoint, which validates the VP and redirects the VP token to the caller.
