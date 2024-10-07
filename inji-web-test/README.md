@@ -7,7 +7,7 @@ Inji-Web-test Automation is a robust and comprehensive web automation framework 
 ## Pre-requisites
 
 Ensure the following software is installed on the machine from where the automation tests will be executed:
-- Java 21
+- The project requires JDK 21
 - Maven 3.6.0 or higher
 
 ## Build
@@ -17,7 +17,7 @@ Ensure the following software is installed on the machine from where the automat
 
 
 ## BrowserStack
-1. singup to browserStack. 
+1. singup to browserStack & get the userName and accessKey from home page on browserStack  
 2. update the userName and accessKey from browserstack.yml
 3. update the device from tag `platforms` from `https://www.browserstack.com/list-of-browsers-and-platforms/automate` (Windows, Mac)
 4. Open command prompt and change directory by using command 'cd ../inji-web-test'
