@@ -77,6 +77,7 @@ export type SessionObject = {
     selectedIssuer?: IssuerObject;
     certificateId: string;
     codeVerifier: string;
+    vcExpiryTimes: number;
     state: string;
 }
 export type ApiRequest = {

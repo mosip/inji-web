@@ -30,14 +30,15 @@ export const isObjectEmpty = (object: any) => {
     return object === null || object === undefined || Object.keys(object).length === 0;
 }
 
-export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialType: string) => {
+export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialType: string, vcExpiryTimes: string) => {
     return {
         'grant_type': 'authorization_code',
         'code': code,
         'redirect_uri': api.authorizationRedirectionUrl,
         'code_verifier': codeVerifier,
         'issuer': issuerId,
-        'credential': credentialType
+        'credential': credentialType,
+        'vcExpiryTimes': vcExpiryTimes
     }
 }
 
@@ -74,4 +75,3 @@ export const getErrorObject = (downloadResponse: any) => {
         message: "error.generic.subTitle"
     }
 }
-

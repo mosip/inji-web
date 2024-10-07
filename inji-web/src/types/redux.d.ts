@@ -8,6 +8,7 @@ export type CredentialsReducerActionType = {
 }
 export type CommonReducerActionType = {
     STORE_LANGUAGE: string;
+    STORE_VC_EXPIRY_TIMES: string;
 }
 export type IssuersReducerActionType = {
     STORE_SELECTED_ISSUER: string;

@@ -34,6 +34,15 @@
         --iw-color-shieldSuccessShadow: #f1f7ee;
         --iw-color-shieldErrorShadow: #FEF2F2;
         --iw-color-shieldLoadingShadow: #f6dfbe;
+        --iw-color-backDrop: #000000;
+        --iw-color-borderDark: #717171;
+        --iw-color-borderLight: #E8EBEC;
+        --iw-color-arrowDown: #164EA840;
+        --iw-color-hoverBackGround: #164EA840;
+        --iw-color-text: #FFFFFF;
+        --iw-color-subText: #A0A8AC;
+        --iw-color-disclaimerBackGround: #FFF7E5;
+        --iw-color-disclaimerText: #8B6105;
     }
     [class="purple_theme"] {
         --iw-font-base: "Gentium Plus", serif;
@@ -62,6 +71,15 @@
         --iw-color-shieldSuccessShadow: #f1f7ee;
         --iw-color-shieldErrorShadow: #FEF2F2;
         --iw-color-shieldLoadingShadow: #f6dfbe;
+        --iw-color-backDrop: #000000;
+        --iw-color-borderDark: #717171;
+        --iw-color-borderLight: #E8EBEC;
+        --iw-color-arrowDown: #164EA840;
+        --iw-color-hoverBackGround: #164EA840;
+        --iw-color-text: #FFFFFF;
+        --iw-color-subText: #A0A8AC;
+        --iw-color-disclaimerBackGround: #FFF7E5;
+        --iw-color-disclaimerText: #8B6105;
     }
 }
 

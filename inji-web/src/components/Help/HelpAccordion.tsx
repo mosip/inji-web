@@ -29,7 +29,7 @@ export const HelpAccordion: React.FC = () => {
         },
         {
             title: t("item6.title"),
-            content: [t("item6.description1")],
+            content: [t("item6.descrip tion1")],
         },
         {
             title: t("item7.title"),
