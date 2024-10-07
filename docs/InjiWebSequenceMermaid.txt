@@ -1,0 +1,20 @@
+sequenceDiagram
+actor User
+    User->>+Inji Web: Launches Inji Web in browser
+    Inji Web->>+Mimoto: Fetch trusted issuers
+    Mimoto->>+Inji Web: List of Issuers
+    User->>Inji Web: User chooses an issuer
+    Mimoto->>+Certify: Fetches issuers' well-known details
+    Mimoto->>+Inji Web: Provide List of Credential types
+    User->>Inji Web: User chooses a credential type
+    Inji Web->>+eSignet: Authentication request
+    User->>eSignet: User provides details for authentication
+    eSignet->>+Inji Web: Authentication response with auth code
+    Inji Web->>+Mimoto: Initiate Token & Credential Download request
+    Mimoto->>+eSignet: Access Token request with client details
+    eSignet->>+Mimoto: Token response with access token
+    Mimoto->>+Certify: Credential request with token
+    Certify->>+Mimoto: VC sent in response
+    Mimoto->>+Data Share: Store the VC only when the QRCode Type is OnlineSharing and not for EmbeddedVC
+    Mimoto->>+Mimoto: QR Code generation & PDF creation
+    Mimoto->>+Inji Web: PDF
