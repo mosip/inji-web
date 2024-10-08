@@ -5,8 +5,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../types/redux";
 import {storevcStorageExpiryLimitInTimes} from "../../redux/reducers/commonReducer";
 import {useTranslation} from "react-i18next";
+import {DSContentProps} from "../../types/components";
 
-export const DataShareContent:React.FC<DSContentType> = (props) => {
+export const DataShareContent:React.FC<DSContentProps> = (props) => {
 
     const [timesDropDown, setTimesDropDown] = useState<boolean>(false);
     const vcStorageExpiryLimitInTimes = useSelector((state: RootState) => state.common.vcStorageExpiryLimitInTimes);
@@ -92,8 +93,3 @@ export const DataShareContent:React.FC<DSContentType> = (props) => {
     </div>;
 }
 
-export type DSContentType = {
-    credentialName: string;
-    credentialLogo: string;
-    setIsCustomExpiryInTimesModalOpen: (isCustomExpiryInTimesModalOpen: boolean) => void;
-}

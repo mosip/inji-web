@@ -5,8 +5,9 @@ import {DataShareFooter} from "../components/DataShare/DataShareFooter";
 import {DataShareContent} from "../components/DataShare/DataShareContent";
 import {CustomExpiryModal} from "./CustomExpiryModal";
 import {useTranslation} from "react-i18next";
+import {DataShareExpiryModalProps} from "../types/components";
 
-export const DataShareExpiryModal: React.FC<DataShareExpiryModalType> = (props) => {
+export const DataShareExpiryModal: React.FC<DataShareExpiryModalProps> = (props) => {
 
     const [isCustomExpiryInTimesModalOpen, setIsCustomExpiryInTimesModalOpen] = useState<boolean>(false);
     const {t} = useTranslation("DataShareExpiryModal")
@@ -21,9 +22,3 @@ export const DataShareExpiryModal: React.FC<DataShareExpiryModalType> = (props) 
 
 }
 
-export type DataShareExpiryModalType = {
-    credentialName: string;
-    credentialLogo: string;
-    onSuccess: () => void;
-    onCancel: () => void;
-}

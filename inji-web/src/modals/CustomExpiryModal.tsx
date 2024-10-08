@@ -7,9 +7,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {storevcStorageExpiryLimitInTimes} from "../redux/reducers/commonReducer";
 import {RootState} from "../types/redux";
 import {useTranslation} from "react-i18next";
+import {CustomExpiryModalProps} from "../types/components";
 
 
-export const CustomExpiryModal: React.FC<CustomExpiryModalType> = (props) => {
+export const CustomExpiryModal: React.FC<CustomExpiryModalProps> = (props) => {
 
     const vcStorageExpiryLimitInTimes = useSelector((state: RootState) => state.common.vcStorageExpiryLimitInTimes);
     const [expiryTime, setExpiryTime] = useState<number>(vcStorageExpiryLimitInTimes);
@@ -22,7 +23,3 @@ export const CustomExpiryModal: React.FC<CustomExpiryModalType> = (props) => {
                          zIndex={50} />
 }
 
-export type CustomExpiryModalType = {
-    onCancel: () => void;
-    onSuccess: () => void;
-}

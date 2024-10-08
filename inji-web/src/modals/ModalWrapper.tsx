@@ -1,6 +1,7 @@
 import React from "react";
+import {ModalWrapperProps} from "../types/components";
 
-export const ModalWrapper:React.FC<ModalWrapperType> = (props) => {
+export const ModalWrapper:React.FC<ModalWrapperProps> = (props) => {
 
     return <>
         <div data-testid={"ModalWrapper-Outer-Container"} className={`justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 ${props.zIndex == 50 ? 'z-50': 'z-40'} outline-none focus:outline-none`}>
@@ -16,10 +17,3 @@ export const ModalWrapper:React.FC<ModalWrapperType> = (props) => {
     </>
 }
 
-export type ModalWrapperType = {
-    header: React.ReactNode;
-    content: React.ReactNode;
-    footer: React.ReactNode;
-    zIndex: number;
-    size: string;
-}

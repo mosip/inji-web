@@ -1,8 +1,9 @@
 import React from "react";
 import {RiArrowDownSLine, RiArrowUpSLine} from "react-icons/ri";
 import {useTranslation} from "react-i18next";
+import {CTContentProps} from "../../../types/components";
 
-export const CustomExpiryTimesContent:React.FC<CTContentType>= (props) => {
+export const CustomExpiryTimesContent:React.FC<CTContentProps>= (props) => {
 
     const {t} = useTranslation("CustomExpiryModal");
     return <div className="relative px-6 mx-4 flex flex-col justify-between" data-testid={"CustomExpiryTimesContent-Outer-Container"}>
@@ -21,7 +22,3 @@ export const CustomExpiryTimesContent:React.FC<CTContentType>= (props) => {
     </div>;
 }
 
-export type CTContentType = {
-    expiryTime: number;
-    setExpiryTime: (expiry:number) => void;
-}

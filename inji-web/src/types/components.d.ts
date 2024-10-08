@@ -55,3 +55,45 @@ export type IssuersListProps = {
 export type CredentialListProps = {
     state: RequestStatus;
 }
+export type CTContentProps = {
+    expiryTime: number;
+    setExpiryTime: (expiry: number) => void;
+}
+export type CTHeaderProps = {
+    title: string;
+}
+export type DSContentProps = {
+    credentialName: string;
+    credentialLogo: string;
+    setIsCustomExpiryInTimesModalOpen: (isCustomExpiryInTimesModalOpen: boolean) => void;
+}
+export type DSDisclaimerProps = {
+    content: string;
+}
+export type DSFooterProps = {
+    successText: string;
+    onSuccess: () => void;
+    cancelText: string;
+    onCancel: () => void;
+}
+export type DSHeaderProps = {
+    title: string;
+    subTitle: string;
+}
+export type CustomExpiryModalProps = {
+    onCancel: () => void;
+    onSuccess: () => void;
+}
+export type DataShareExpiryModalProps = {
+    credentialName: string;
+    credentialLogo: string;
+    onSuccess: () => void;
+    onCancel: () => void;
+}
+export type ModalWrapperProps = {
+    header: React.ReactNode;
+    content: React.ReactNode;
+    footer: React.ReactNode;
+    zIndex: number;
+    size: string;
+}
