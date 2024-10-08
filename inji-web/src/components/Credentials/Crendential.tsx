@@ -22,7 +22,6 @@ export const Credential: React.FC<CredentialProps> = (props) => {
     const onSuccess = () => {
         const state = generateRandomString();
         const code_challenge: CodeChallengeObject = generateCodeChallenge(state);
-        console.log("vcExpiryTimes => " + vcExpiryTimes);
         window.open(api.authorization(selectedIssuer.selected_issuer, props.credentialWellknown, filteredCredentialConfig, state, code_challenge), '_self', 'noopener');
         addNewSession({
             selectedIssuer: selectedIssuer.selected_issuer,

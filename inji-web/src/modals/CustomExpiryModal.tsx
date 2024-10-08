@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import {ModalWrapper} from "./ModalWrapper";
-import {DSFooter} from "../components/DataShare/DSFooter";
-import {CTContent} from "../components/DataShare/CustomTimes/CTContent";
-import {CTHeader} from "../components/DataShare/CustomTimes/CTHeader";
+import {DataShareFooter} from "../components/DataShare/DataShareFooter";
+import {CustomExpiryTimesContent} from "../components/DataShare/CustomExpiryTimes/CustomExpiryTimesContent";
+import {CustomExpiryTimesHeader} from "../components/DataShare/CustomExpiryTimes/CustomExpiryTimesHeader";
 import {useDispatch, useSelector} from "react-redux";
 import {storeVCExpiryTimes} from "../redux/reducers/commonReducer";
 import {RootState} from "../types/redux";
@@ -15,9 +15,9 @@ export const CustomExpiryModal: React.FC<CustomExpiryModalType> = (props) => {
     const [expiryTime, setExpiryTime] = useState<number>(vcExpiryTimes);
     const {t} = useTranslation("CustomExpiryModal");
     const dispatch = useDispatch();
-    return <ModalWrapper header={<CTHeader title={t("title")}/>}
-                         content={<CTContent expiryTime={expiryTime} setExpiryTime={setExpiryTime}/>}
-                         footer={<DSFooter success={t("success")} cancel={t("cancel")} onSuccess={() => {dispatch(storeVCExpiryTimes(expiryTime));props.onSuccess()} } onCancel={props.onCancel}/>}
+    return <ModalWrapper header={<CustomExpiryTimesHeader title={t("title")}/>}
+                         content={<CustomExpiryTimesContent expiryTime={expiryTime} setExpiryTime={setExpiryTime}/>}
+                         footer={<DataShareFooter success={t("success")} cancel={t("cancel")} onSuccess={() => {dispatch(storeVCExpiryTimes(expiryTime));props.onSuccess()} } onCancel={props.onCancel}/>}
                          size={"sm"}
                          zIndex={50} />
 }

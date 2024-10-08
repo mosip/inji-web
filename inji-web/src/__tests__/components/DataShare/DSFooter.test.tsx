@@ -1,5 +1,5 @@
 import {fireEvent, render, screen} from "@testing-library/react";
-import {DSFooter} from "../../../components/DataShare/DSFooter";
+import {DataShareFooter} from "../../../components/DataShare/DataShareFooter";
 
 describe("Testing Layout of the Expiry Footer", () => {
 
@@ -11,31 +11,31 @@ describe("Testing Layout of the Expiry Footer", () => {
                 t: (key: string) => key,
             }),
         }));
-        render(<DSFooter success={"success"} onSuccess={successMockFn} cancel={"cancel"} onCancel={cancelMockFn} />);
+        render(<DataShareFooter success={"success"} onSuccess={successMockFn} cancel={"cancel"} onCancel={cancelMockFn} />);
     } )
 
     test("Test the presence of the Outer Container", ()=>{
-        const document = screen.getByTestId("DSFooter-Outer-Container");
+        const document = screen.getByTestId("DataShareFooter-Outer-Container");
         expect(document).toBeInTheDocument();
     })
     test("Test the presence of the Cancel Button", ()=>{
-        const document = screen.getByTestId("DSFooter-Cancel-Button");
+        const document = screen.getByTestId("DataShareFooter-Cancel-Button");
         expect(document).toBeInTheDocument();
     })
     test("Test the presence of the Success Button", ()=>{
-        const document = screen.getByTestId("DSFooter-Success-Button");
+        const document = screen.getByTestId("DataShareFooter-Success-Button");
         expect(document).toBeInTheDocument();
     })
 
     test("Test whether success button is invoked on clicking", ()=>{
-        const successButton = screen.getByTestId("DSFooter-Success-Button");
+        const successButton = screen.getByTestId("DataShareFooter-Success-Button");
         fireEvent.click(successButton);
         expect(successMockFn).toBeCalled();
         expect(cancelMockFn).not.toBeCalled();
     })
 
     test("Test whether cancel button is invoked on clicking", ()=>{
-        const cancelButton = screen.getByTestId("DSFooter-Cancel-Button");
+        const cancelButton = screen.getByTestId("DataShareFooter-Cancel-Button");
         fireEvent.click(cancelButton);
         expect(successMockFn).not.toBeCalled();
         expect(cancelMockFn).toBeCalled();

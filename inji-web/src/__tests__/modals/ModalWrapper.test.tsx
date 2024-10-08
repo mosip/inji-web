@@ -1,9 +1,9 @@
 import {render, screen} from "@testing-library/react";
 import {ModalWrapper} from "../../modals/ModalWrapper";
-import {DSHeader} from "../../components/DataShare/DSHeader";
-import {DSFooter} from "../../components/DataShare/DSFooter";
+import {DataShareHeader} from "../../components/DataShare/DataShareHeader";
+import {DataShareFooter} from "../../components/DataShare/DataShareFooter";
 import React from "react";
-import {DSContent} from "../../components/DataShare/DSContent";
+import {DataShareContent} from "../../components/DataShare/DataShareContent";
 import {reduxStore} from "../../redux/reduxStore";
 import {Provider} from "react-redux";
 
@@ -13,9 +13,9 @@ describe("Test the Layout of the Modal Wrapper", () => {
     beforeEach(() => {
         render(
             <Provider store={reduxStore}>
-            <ModalWrapper header={<DSHeader title={"title"} subTitle={"subTitle"}/>}
-                             content={<DSContent credentialName={"credentialName"} credentialLogo={"credentialLogo"} setCustom={jest.fn()}/>}
-                             footer={<DSFooter cancel={"cancel"} success={"success"} onSuccess={jest.fn()} onCancel={jest.fn()}/>}
+            <ModalWrapper header={<DataShareHeader title={"title"} subTitle={"subTitle"}/>}
+                             content={<DataShareContent credentialName={"credentialName"} credentialLogo={"credentialLogo"} setCustom={jest.fn()}/>}
+                             footer={<DataShareFooter cancel={"cancel"} success={"success"} onSuccess={jest.fn()} onCancel={jest.fn()}/>}
                              size={"3xl"}
                              zIndex={40} />
             </Provider>)

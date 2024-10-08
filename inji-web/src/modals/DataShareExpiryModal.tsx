@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import {ModalWrapper} from "./ModalWrapper";
-import {DSHeader} from "../components/DataShare/DSHeader";
-import {DSFooter} from "../components/DataShare/DSFooter";
-import {DSContent} from "../components/DataShare/DSContent";
+import {DataShareHeader} from "../components/DataShare/DataShareHeader";
+import {DataShareFooter} from "../components/DataShare/DataShareFooter";
+import {DataShareContent} from "../components/DataShare/DataShareContent";
 import {CustomExpiryModal} from "./CustomExpiryModal";
 import {useTranslation} from "react-i18next";
 
@@ -11,9 +11,9 @@ export const DataShareExpiryModal: React.FC<DataShareExpiryModalType> = (props) 
     const [custom, setCustom] = useState<boolean>(false);
     const {t} = useTranslation("DataShareExpiryModal")
     return <React.Fragment>
-            <ModalWrapper header={<DSHeader title={t("title")} subTitle={t("subTitle", {credentialName: props.credentialName})}/>}
-                       content={<DSContent credentialName={props.credentialName} credentialLogo={props.credentialLogo} setCustom={setCustom}/>}
-                       footer={<DSFooter cancel={t("cancel")} success={t("success")} onSuccess={props.onSuccess} onCancel={props.onCancel}/>}
+            <ModalWrapper header={<DataShareHeader title={t("title")} subTitle={t("subTitle", {credentialName: props.credentialName})}/>}
+                       content={<DataShareContent credentialName={props.credentialName} credentialLogo={props.credentialLogo} setCustom={setCustom}/>}
+                       footer={<DataShareFooter cancel={t("cancel")} success={t("success")} onSuccess={props.onSuccess} onCancel={props.onCancel}/>}
                        size={"3xl"}
                        zIndex={40}/>
             {custom && <CustomExpiryModal onSuccess={() => setCustom(false)} onCancel={() => setCustom(false)}/>}

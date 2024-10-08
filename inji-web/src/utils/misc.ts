@@ -38,7 +38,7 @@ export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId
         'code_verifier': codeVerifier,
         'issuer': issuerId,
         'credential': credentialType,
-        'vcExpiryTimes': vcExpiryTimes
+        'vcStorageExpiryLimitInTimes': vcExpiryTimes
     }
 }
 
