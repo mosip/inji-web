@@ -8,15 +8,15 @@ import {useTranslation} from "react-i18next";
 
 export const DataShareExpiryModal: React.FC<DataShareExpiryModalType> = (props) => {
 
-    const [custom, setCustom] = useState<boolean>(false);
+    const [isCustomExpiryInTimesModalOpen, setIsCustomExpiryInTimesModalOpen] = useState<boolean>(false);
     const {t} = useTranslation("DataShareExpiryModal")
     return <React.Fragment>
             <ModalWrapper header={<DataShareHeader title={t("title")} subTitle={t("subTitle", {credentialName: props.credentialName})}/>}
-                       content={<DataShareContent credentialName={props.credentialName} credentialLogo={props.credentialLogo} setCustom={setCustom}/>}
-                       footer={<DataShareFooter cancel={t("cancel")} success={t("success")} onSuccess={props.onSuccess} onCancel={props.onCancel}/>}
+                       content={<DataShareContent credentialName={props.credentialName} credentialLogo={props.credentialLogo} setIsCustomExpiryInTimesModalOpen={setIsCustomExpiryInTimesModalOpen}/>}
+                       footer={<DataShareFooter cancelText={t("cancel")} successText={t("success")} onSuccess={props.onSuccess} onCancel={props.onCancel}/>}
                        size={"3xl"}
                        zIndex={40}/>
-            {custom && <CustomExpiryModal onSuccess={() => setCustom(false)} onCancel={() => setCustom(false)}/>}
+            {isCustomExpiryInTimesModalOpen && <CustomExpiryModal onSuccess={() => setIsCustomExpiryInTimesModalOpen(false)} onCancel={() => setIsCustomExpiryInTimesModalOpen(false)}/>}
         </React.Fragment>
 
 }

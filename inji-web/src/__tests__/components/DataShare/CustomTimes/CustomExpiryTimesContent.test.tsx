@@ -1,15 +1,12 @@
 import {fireEvent, render, screen} from "@testing-library/react";
 import {CustomExpiryTimesContent} from "../../../../components/DataShare/CustomExpiryTimes/CustomExpiryTimesContent";
 import {useTranslation} from "react-i18next";
+import {mockUseTranslation} from "../../../../utils/mockUtils";
 
 describe("Test the Layout of the Custom Expiry Content", () => {
 
     beforeEach(() => {
-        jest.mock("react-i18next", () => ({
-            useTranslation: () => ({
-                t: (key: string) => key,
-            }),
-        }));
+        mockUseTranslation();
     } )
 
     test("Test the presence of the Outer Container", ()=>{

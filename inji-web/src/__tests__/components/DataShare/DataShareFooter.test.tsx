@@ -1,17 +1,14 @@
 import {fireEvent, render, screen} from "@testing-library/react";
 import {DataShareFooter} from "../../../components/DataShare/DataShareFooter";
+import {mockUseTranslation} from "../../../utils/mockUtils";
 
 describe("Testing Layout of the Expiry Footer", () => {
 
     const successMockFn = jest.fn();
     const cancelMockFn = jest.fn();
     beforeEach(() => {
-        jest.mock("react-i18next", () => ({
-            useTranslation: () => ({
-                t: (key: string) => key,
-            }),
-        }));
-        render(<DataShareFooter success={"success"} onSuccess={successMockFn} cancel={"cancel"} onCancel={cancelMockFn} />);
+        mockUseTranslation()
+        render(<DataShareFooter successText={"success"} onSuccess={successMockFn} cancelText={"cancel"} onCancel={cancelMockFn} />);
     } )
 
     test("Test the presence of the Outer Container", ()=>{

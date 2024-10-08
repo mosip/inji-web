@@ -17,7 +17,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
     const language = useSelector((state: RootState) => state.common.language);
     const filteredCredentialConfig: CredentialConfigurationObject = props.credentialWellknown.credential_configurations_supported[props.credentialId];
     const credentialObject = getObjectForCurrentLanguage(filteredCredentialConfig.display, language);
-    const vcExpiryTimes = useSelector((state: RootState) => state.common.vcExpiryTimes);
+    const vcStorageExpiryLimitInTimes = useSelector((state: RootState) => state.common.vcStorageExpiryLimitInTimes);
 
     const onSuccess = () => {
         const state = generateRandomString();
@@ -27,21 +27,22 @@ export const Credential: React.FC<CredentialProps> = (props) => {
             selectedIssuer: selectedIssuer.selected_issuer,
             certificateId: props.credentialId,
             codeVerifier: state,
-            vcExpiryTimes: vcExpiryTimes ?? 1,
+            vcStorageExpiryLimitInTimes: vcStorageExpiryLimitInTimes ?? 1,
             state: state,
         });
     }
 
     return <React.Fragment>
         <ItemBox index={props.index}
-                        url={credentialObject.logo.url}
-                        title={credentialObject.name}
-                        onClick={() => setCredentialExpiry(true)}/>
-        {credentialExpiry && <DataShareExpiryModal
-            onCancel={() => setCredentialExpiry(false)}
-            onSuccess={onSuccess}
-            credentialName={credentialObject.name}
-            credentialLogo={credentialObject.logo.url}/> }
+                 url={credentialObject.logo.url}
+                 title={credentialObject.name}
+                 onClick={() => setCredentialExpiry(true)}/>
+                        { credentialExpiry &&
+                            <DataShareExpiryModal onCancel={() => setCredentialExpiry(false)}
+                                                  onSuccess={onSuccess}
+                                                  credentialName={credentialObject.name}
+                                                  credentialLogo={credentialObject.logo.url}/>
+                        }
     </React.Fragment>
 }
 

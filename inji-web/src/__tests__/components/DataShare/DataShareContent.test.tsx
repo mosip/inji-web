@@ -2,18 +2,15 @@ import {fireEvent, render, screen} from "@testing-library/react";
 import {DataShareContent} from "../../../components/DataShare/DataShareContent";
 import {reduxStore} from "../../../redux/reduxStore";
 import {Provider} from "react-redux";
+import {mockUseTranslation} from "../../../utils/mockUtils";
 
 describe("Test the Layout of the Expiry Content", () => {
 
     const customMockFn = jest.fn();
     beforeEach(() => {
-        jest.mock("react-i18next", () => ({
-            useTranslation: () => ({
-                t: (key: string) => key,
-            }),
-        }));
+        mockUseTranslation();
         render(<Provider store={reduxStore}>
-            <DataShareContent credentialName={"credentialName"} credentialLogo={"credentialLogo"} setCustom={customMockFn} />
+            <DataShareContent credentialName={"credentialName"} credentialLogo={"credentialLogo"} setIsCustomExpiryInTimesModalOpen={customMockFn} />
         </Provider>);
     } )
 
