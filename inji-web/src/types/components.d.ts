@@ -23,7 +23,7 @@ export type CredentialProps = {
 export type HelpAccordionItemProps = {
     id: number;
     title: string;
-    content: string[];
+    content: (string | { __html: string })[];
     open: number;
     setOpen: React.Dispatch<React.SetStateAction<number>>;
 }
