@@ -7,14 +7,21 @@ Inji-Web-test Automation is a robust and comprehensive web automation framework 
 ## Pre-requisites
 
 Ensure the following software is installed on the machine from where the automation tests will be executed:
-- Java 21
+- The project requires JDK 21
 - Maven 3.6.0 or higher
 
 ## Build
 1. Clone the repository by git clone https://github.com/mosip/inji-web.git
 2. Change directory by using command 'cd ../inji-web-test'  & Build the JAR file: `mvn clean package -DskipTests=true`
 3. The JAR file will be generated in the `target` directory.
-4. For running tests on Device Farm, use the JAR file with dependencies (`zip-with-dependencies`).
+
+
+## BrowserStack
+1. singup to browserStack & get the userName and accessKey from home page on browserStack  
+2. update the userName and accessKey from browserstack.yml
+3. update the device from tag `platforms` from `https://www.browserstack.com/list-of-browsers-and-platforms/automate` (Windows, Mac)
+4. Open command prompt and change directory by using command 'cd ../inji-web-test'
+5. Hit the command `mvn clean test -DtestngXmlFile=TestNg.xml`, for running the UI automation test
 
 ## Configurations
 
