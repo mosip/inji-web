@@ -38,8 +38,6 @@ echo "MOSIP_INJIWEB_HOST is not present in configmap/global of configserver"
     # Restart the configserver deployment
     kubectl -n config-server get deploy -o name | xargs -n1 -t kubectl -n config-server rollout status
 
-sleep 400s
-
 echo Create $NS namespace
 kubectl create ns $NS
 
