@@ -29,7 +29,7 @@ describe("Test Intro Box Content",() => {
         const headerElement = screen.getByTestId("IntroBox-Text");
         expect(headerElement).toHaveTextContent("Intro.title")
     });
-    test('check if content is rendered properly', () => {
+    test('check if content is rendered properly subTitle', () => {
         render(<IntroBox />);
         const headerElement = screen.getByTestId("IntroBox-SubText");
         expect(headerElement).toHaveTextContent("Intro.subTitle")
