@@ -30,14 +30,15 @@ export const isObjectEmpty = (object: any) => {
     return object === null || object === undefined || Object.keys(object).length === 0;
 }
 
-export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialType: string) => {
+export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialType: string, vcStorageExpiryLimitInTimes: string) => {
     return {
         'grant_type': 'authorization_code',
         'code': code,
         'redirect_uri': api.authorizationRedirectionUrl,
         'code_verifier': codeVerifier,
         'issuer': issuerId,
-        'credential': credentialType
+        'credential': credentialType,
+        'vcStorageExpiryLimitInTimes': vcStorageExpiryLimitInTimes
     }
 }
 
@@ -74,4 +75,11 @@ export const getErrorObject = (downloadResponse: any) => {
         message: "error.generic.subTitle"
     }
 }
-
+export const constructContent = (descriptions: string[],applyHTML:boolean) => {
+    return descriptions.map((desc, index) => {
+        if (applyHTML) {
+            return { __html: desc };
+        }
+        return desc;
+    });
+};

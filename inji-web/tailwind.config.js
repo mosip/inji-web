@@ -9,6 +9,11 @@ module.exports = {
             fontFamily:{
                 base: 'var(--iw-font-base)',
             },
+            zIndex: {
+                '50': '50',
+                '40': '40',
+                '30': '30'
+            },
             colors: {
                 iw: {
                     background: 'var(--iw-color-background)',
@@ -36,6 +41,15 @@ module.exports = {
                     shieldSuccessShadow: 'var(--iw-color-shieldSuccessShadow)',
                     shieldErrorShadow: 'var(--iw-color-shieldErrorShadow)',
                     shieldLoadingShadow: 'var(--iw-color-shieldLoadingShadow)',
+                    backDrop: 'var(--iw-color-backDrop)',
+                    borderLight: 'var(--iw-color-borderLight)',
+                    borderDark: 'var(--iw-color-borderDark)',
+                    arrowDown: 'var(--iw-color-arrowDown)',
+                    hoverBackGround: 'var(--iw-color-hoverBackGround)',
+                    text: 'var(--iw-color-text)',
+                    subText: 'var(--iw-color-subText)',
+                    disclaimerBackGround: 'var(--iw-color-disclaimerBackGround)',
+                    disclaimerText: 'var(--iw-color-disclaimerText)'
                 }
             }
         },

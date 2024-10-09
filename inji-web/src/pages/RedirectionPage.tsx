@@ -37,8 +37,9 @@ export const RedirectionPage: React.FC = () => {
                 const codeVerifier = activeSessionInfo?.codeVerifier;
                 const issuerId = activeSessionInfo?.selectedIssuer?.credential_issuer ?? "";
                 const certificateId = activeSessionInfo?.certificateId;
+                const vcStorageExpiryLimitInTimes = activeSessionInfo?.vcStorageExpiryLimitInTimes;
 
-                const requestBody = new URLSearchParams(getTokenRequestBody(code, codeVerifier, issuerId, certificateId));
+                const requestBody = new URLSearchParams(getTokenRequestBody(code, codeVerifier, issuerId, certificateId, vcStorageExpiryLimitInTimes));
                 const apiRequest = api.fetchTokenAnddownloadVc;
                 let credentialDownloadResponse = await fetchRequest(
                     apiRequest.url(),

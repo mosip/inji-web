@@ -2,8 +2,6 @@ import React from "react";
 import {ItemBoxProps} from "../../types/components";
 
 export const ItemBox: React.FC<ItemBoxProps> = (props) => {
-    console.log(`Index -> ${props.index}`)
-    console.log(`Mod Index -> ${props.index%6}`)
     return <React.Fragment>
         <div key={props.index}
              data-testid={`ItemBox-Outer-Container-${props.index}`}
