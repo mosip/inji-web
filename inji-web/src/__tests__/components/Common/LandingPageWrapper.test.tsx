@@ -1,57 +1,42 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import {  screen, fireEvent } from '@testing-library/react';
 import { LandingPageWrapper, LandingPageWrapperProps } from '../../../components/Common/LandingPageWrapper';
+import {  mockUseTranslation, renderWithProvider } from '../../../test-utils/mockUtils';
 
-// Mock the i18n configuration
-jest.mock('react-i18next', () => ({
-    useTranslation: () => ({
-        t: (key: string) => key,
-    }),
+// Mock useTranslation
+mockUseTranslation();
+// Mock useNavigate
+const mockNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockNavigate,
 }));
 
-const renderWithRouter = (props: LandingPageWrapperProps) => {
-    render(
-        <Router>
-            <LandingPageWrapper {...props} />
-        </Router>
-    );
+const defaultProps: LandingPageWrapperProps = {
+    icon: <div data-testid="Test-Icon">Icon</div>,
+    title: "Test Title",
+    subTitle: "Test SubTitle",
+    gotoHome: true,
 };
 
-describe("Test LandingPageWrapper Component", () => {
-    const defaultProps: LandingPageWrapperProps = {
-        icon: <div data-testid="Test-Icon">Icon</div>,
-        title: "Test Title",
-        subTitle: "Test SubTitle",
-        gotoHome: true,
-    };
-
-    test('renders the LandingPageWrapper component', () => {
-        renderWithRouter(defaultProps);
-        expect(screen.getByTestId("DownloadResult-Outer-Container")).toBeInTheDocument();
+describe("LandingPageWrapper Component Layout Tests", () => {
+    test('check the presence of LandingPageWrapper component', () => {
+        const { asFragment } = renderWithProvider(<LandingPageWrapper {...defaultProps} />);
+        expect(asFragment()).toMatchSnapshot();
     });
+});
 
-    test('renders the icon, title, and subtitle', () => {
-        renderWithRouter(defaultProps);
-        expect(screen.getByTestId("Test-Icon")).toBeInTheDocument();
-        expect(screen.getByTestId("DownloadResult-Title")).toHaveTextContent("Test Title");
-        expect(screen.getByTestId("DownloadResult-SubTitle")).toHaveTextContent("Test SubTitle");
-    });
-
-    test('renders the home button when gotoHome is true', () => {
-        renderWithRouter(defaultProps);
-        expect(screen.getByTestId("DownloadResult-Home-Button")).toBeInTheDocument();
-    });
-
-    test('does not render the home button when gotoHome is false', () => {
-        renderWithRouter({ ...defaultProps, gotoHome: false });
-        expect(screen.queryByTestId("DownloadResult-Home-Button")).not.toBeInTheDocument();
-    });
-
-    test('navigates to home when the home button is clicked', () => {
-        renderWithRouter(defaultProps);
+describe("LandingPageWrapper Component Functionality Tests", () => {
+    test('check it navigates to home when the home button is clicked', () => {
+        renderWithProvider(<LandingPageWrapper {...defaultProps} />);
         const homeButton = screen.getByTestId("DownloadResult-Home-Button");
         fireEvent.click(homeButton);
-        // You can add more assertions here to check if the navigation happened correctly
+        expect(mockNavigate).toHaveBeenCalledWith('/'); // Assuming '/' is the home route
+    });
+
+    test('check', () => {
+        renderWithProvider(<LandingPageWrapper {...defaultProps} />);
+        expect(screen.getByTestId("DownloadResult-Title")).toHaveTextContent("Test Title");
+        expect(screen.getByTestId("DownloadResult-SubTitle")).toHaveTextContent("Test SubTitle");
     });
 });

@@ -3,16 +3,12 @@ import {render, screen} from '@testing-library/react';
 import {Footer} from "../../../components/PageTemplate/Footer";
 describe("Footer Container",() => {
     test('check the presence of the container', () => {
-        render(<Footer />);
-        const footerElement = screen.getByTestId("Footer-Container");
-        expect(footerElement).toBeInTheDocument();
+        const {asFragment} = render(<Footer />);
+        expect(asFragment()).toMatchSnapshot();
     });
-
-    test('check the presence of the container', () => {
-        render(<Footer />);
-        const footerElementText = screen.getByTestId("Footer-Text");
-        expect(footerElementText).toBeInTheDocument();
-    });
+    
+})
+describe("Test the functionality of the Footer Container",()=>{
     test('check the presence of the container', () => {
         render(<Footer />);
         const footerElementText = screen.getByTestId("Footer-Text");

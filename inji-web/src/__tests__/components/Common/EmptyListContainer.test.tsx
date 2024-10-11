@@ -1,18 +1,20 @@
-import React,{act} from 'react';
-import { render, screen }  from '@testing-library/react';
-import {EmptyListContainer} from "../../../components/Common/EmptyListContainer";
+import React from 'react';
+import { screen } from '@testing-library/react';
+import { EmptyListContainer } from "../../../components/Common/EmptyListContainer";
+import { renderWithProvider } from '../../../test-utils/mockUtils';
 
 
-describe("Test Empty List Container",() => {
+describe("Test EmptyListContainer Layout", () => {
+    
     test('check the presence of the container', () => {
-        render(<EmptyListContainer content={"No Issuers Found"} />);
-        const emptyElement = screen.getByTestId("EmptyList-Outer-Container");
-        expect(emptyElement).toBeInTheDocument();
+        const { asFragment } = renderWithProvider(<EmptyListContainer content={"No Issuers Found"} />);
+        expect(asFragment()).toMatchSnapshot();
     });
+});
+describe("Test EmptyListContainer Functionality", () => {
+   
     test('check if content is rendered properly', () => {
-        render(<EmptyListContainer content={"No Issuers Found"} />);
-        const emptyElement = screen.getByTestId("EmptyList-Outer-Container");
-        expect(emptyElement).toHaveTextContent("No Issuers Found")
+        renderWithProvider(<EmptyListContainer content={"No Issuers Found"} />);
+        expect(screen.getByTestId("EmptyList-Text")).toHaveTextContent("No Issuers Found");
     });
-})
-
+});

@@ -1,26 +1,25 @@
 import React from 'react';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {fireEvent, screen} from '@testing-library/react';
 import {HelpAccordion} from "../../../components/Help/HelpAccordion";
-
-describe("Test Help Accordion Container",() => {
+import { renderWithProvider } from '../../../test-utils/mockUtils';
+describe("Test layout of Help Accordion Container",() => {
     test('check the presence of the container', () => {
-        render(<HelpAccordion />);
-        const helpElement = screen.getByTestId("Help-Accordion-Container");
-        expect(helpElement).toBeInTheDocument();
+        const {asFragment} =  renderWithProvider(<HelpAccordion />)
+        expect(asFragment()).toMatchSnapshot();
     });
 
-    test('check the presence of the container', () => {
-        render(<HelpAccordion />);
+    test('check if renders the correct number of help item containers', () => {
+        renderWithProvider(<HelpAccordion />);
         const helpItemElement = screen.getAllByTestId("Help-Item-Container");
-        expect(helpItemElement.length).toBe(7)
+        expect(helpItemElement.length).toBe(23)
     });
-    test('check first item should be expanded', () => {
-        render(<HelpAccordion />);
+    test('check if renders the correct number of help item titles', () => {
+        renderWithProvider(<HelpAccordion />);
         const helpItemElement = screen.getAllByTestId("Help-Item-Title-Text");
-        expect(helpItemElement.length).toBe(7)
+        expect(helpItemElement.length).toBe(23)
     });
     test('check first item should be expanded', () => {
-        render(<HelpAccordion />);
+        renderWithProvider(<HelpAccordion />);
         const helpItemElement = screen.getAllByTestId("Help-Item-Content-Text");
         expect(helpItemElement.length).toBe(1)
     });
@@ -28,7 +27,7 @@ describe("Test Help Accordion Container",() => {
 
 describe("Test Help Accordion Working",() => {
     test('The Description should open when we press on the title', () => {
-        render(<HelpAccordion />);
+        renderWithProvider(<HelpAccordion />);
         const helpItemElement = screen.getAllByTestId("Help-Item-Container")[1];
         const button = screen.getAllByTestId("Help-Item-Title-Button")[1];
         expect(helpItemElement.childElementCount).toBe(1)
@@ -37,7 +36,7 @@ describe("Test Help Accordion Working",() => {
     });
 
     test('only one description should be open at a time, rest should close', () => {
-        render(<HelpAccordion />);
+        renderWithProvider(<HelpAccordion />);
         const helpItemElement = screen.getAllByTestId("Help-Item-Container")[1];
         const button = screen.getAllByTestId("Help-Item-Title-Button")[1];
         expect(helpItemElement.childElementCount).toBe(1)

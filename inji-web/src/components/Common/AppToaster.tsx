@@ -5,7 +5,7 @@ import { RootState } from "../../types/redux";
 import { isRTL } from "../../utils/i18n";
 
 const CustomToast = ({ message }: { message: string }) => (
-    <div data-testid="custom-toast">{message}</div>
+    <div data-testid="AppToaster-custom-toast">{message}</div>
 );
 
 export const AppToaster: React.FC = () => {
@@ -14,11 +14,11 @@ export const AppToaster: React.FC = () => {
 
     // Example of triggering a toast
     React.useEffect(() => {
-        toast(<CustomToast message="Test message" />);
+        toast(<CustomToast message="AppToaster test message" />);
     }, []);
 
     return (
-        <div className={`toast-container ${positionClass}`} data-testid="toast-container">
+        <div className={`text-center pt-20 pb-10 ${positionClass}`} data-testid="Apptoaster-outer-container">
             <ToastContainer
                 position={isRTL(language) ? "top-left" : "top-right"}
                 autoClose={1000}

@@ -1,9 +1,9 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Provider } from 'react-redux';
+import { screen, fireEvent } from '@testing-library/react';
 import { SearchCredential } from '../../../components/Credentials/SearchCredential';
-import { reduxStore } from '../../../redux/reduxStore';
 import { storeFilteredCredentials } from '../../../redux/reducers/credentialsReducer';
+import { mockSearchCredential } from '../../../test-utils/mockObjects';
+import { renderWithProvider } from '../../../test-utils/mockUtils';
 
 // Mock the useSelector and useDispatch hooks
 jest.mock('react-redux', () => ({
@@ -22,46 +22,40 @@ jest.mock('react-i18next', () => ({
         init: jest.fn(),
     },
 }));
+describe("Test SearchCredential Layout", () => {
+    beforeEach(() => {
+        const useSelectorMock = require('react-redux').useSelector;
+        useSelectorMock.mockImplementation((selector: any) => selector({
+            credentials: {
+                credentials: mockSearchCredential,
+            },
+            common: {
+                language: 'en',
+            },
+        }));
+    });
 
-const mockCredentials = {
-    credential_configurations_supported: {
-        InsuranceCredential: {
-            display: [{
-                name: "Insurance Credential",
-                language: "en",
-                locale: "en",
-                logo: {
-                    url: "https://url.com",
-                    alt_text: "alt text of the url"
-                },
-                title: "Title",
-                description: "Description",
-            }],
-        },
-        AnotherCredential: {
-            display: [{
-                name: "Another Credential",
-                language: "en",
-                locale: "en",
-                logo: {
-                    url: "https://url.com",
-                    alt_text: "alt text of the url"
-                },
-                title: "Title",
-                description: "Description",
-            }],
-        }
-    }
-};
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
 
-describe("Test SearchCredential Component", () => {
+    test('checks whether it renders search input and icons', () => {
+        const {asFragment} = renderWithProvider(<SearchCredential />)
+        expect(asFragment()).toMatchSnapshot();
+        // expect(screen.getByTestId('NavBar-Search-Container')).toBeInTheDocument();
+        // expect(screen.getByTestId('NavBar-Search-Icon')).toBeInTheDocument();
+        // expect(screen.getByTestId('NavBar-Search-Input')).toBeInTheDocument();
+    });
+});
+
+describe("Test SearchCredential Functionality", () => {
     const mockDispatch = jest.fn();
 
     beforeEach(() => {
         const useSelectorMock = require('react-redux').useSelector;
         useSelectorMock.mockImplementation((selector: any) => selector({
             credentials: {
-                credentials: mockCredentials,
+                credentials: mockSearchCredential,
             },
             common: {
                 language: 'en',
@@ -76,30 +70,15 @@ describe("Test SearchCredential Component", () => {
         jest.clearAllMocks();
     });
 
-    const renderWithProvider = () => {
-        render(
-            <Provider store={reduxStore}>
-                <SearchCredential />
-            </Provider>
-        );
-    };
-
-    test('renders search input and icons', () => {
-        renderWithProvider();
-        expect(screen.getByTestId('NavBar-Search-Container')).toBeInTheDocument();
-        expect(screen.getByTestId('NavBar-Search-Icon')).toBeInTheDocument();
-        expect(screen.getByTestId('NavBar-Search-Input')).toBeInTheDocument();
-    });
-
-    test('filters credentials based on search input', () => {
-        renderWithProvider();
+    test('checks whether it filters credentials based on search input', () => {
+        renderWithProvider(<SearchCredential />);
         const searchInput = screen.getByTestId('NavBar-Search-Input');
         fireEvent.change(searchInput, { target: { value: 'Insurance' } });
 
         const expectedAction = storeFilteredCredentials({
-            ...mockCredentials,
+            ...mockSearchCredential,
             credential_configurations_supported: {
-                InsuranceCredential: mockCredentials.credential_configurations_supported.InsuranceCredential
+                InsuranceCredential: mockSearchCredential.credential_configurations_supported.InsuranceCredential
             }
         });
 
@@ -107,8 +86,8 @@ describe("Test SearchCredential Component", () => {
         expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
     });
 
-    test('clears search input when clear icon is clicked', () => {
-        renderWithProvider();
+    test('checks whether it clears search input when clear icon is clicked', () => {
+        renderWithProvider(<SearchCredential />);
         const searchInput = screen.getByTestId('NavBar-Search-Input');
         fireEvent.change(searchInput, { target: { value: 'Insurance' } });
         expect(searchInput).toHaveValue('Insurance');

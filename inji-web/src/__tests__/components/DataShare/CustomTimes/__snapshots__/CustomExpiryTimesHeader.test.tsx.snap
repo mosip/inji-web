@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test the Layout of the Custom Expiry Header Test the presence of the Outer Container 1`] = `
+<DocumentFragment>
+  <div
+    class="flex items-start justify-between p-5 rounded-t text-center"
+    data-testid="CustomExpiryTimesHeader-Outer-Container"
+  >
+    <div
+      class="text-lg font-semibold"
+      data-testid="CustomExpiryTimesHeader-Title-Content"
+    >
+      CTHeader 
+    </div>
+  </div>
+</DocumentFragment>
+`;

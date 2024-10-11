@@ -1,32 +1,18 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { LanguageSelector } from '../../../components/Common/LanguageSelector';
-import { Provider } from 'react-redux';
-import { reduxStore } from '../../../redux/reduxStore';
+import { renderWithProvider } from '../../../test-utils/mockUtils'; // Import from mockutils
 
-describe("Test Language Selector", () => {
-    const renderWithProvider = () => {
-        render(
-            <Provider store={reduxStore}>
-                <LanguageSelector />
-            </Provider>
-        );
-    };
-
+describe("Language Selector Component Layout Tests", () => {
     test('check the presence of the Language Selector', () => {
-        renderWithProvider();
-        const languageSelector = screen.getByTestId("LanguageSelector-Outer-Div");
-        expect(languageSelector).toBeInTheDocument();
+        const { asFragment } = renderWithProvider(<LanguageSelector />);
+        expect(asFragment()).toMatchSnapshot();
     });
+});
 
-    test('check if the default language is rendered properly', () => {
-        renderWithProvider();
-        const selectedLanguage = screen.getByTestId("Language-Selector-Selected-DropDown-en");
-        expect(selectedLanguage).toHaveTextContent("English");
-    });
-
+describe("Language Selector Component Functionality Tests", () => {
     test('check if dropdown opens and closes', () => {
-        renderWithProvider();
+        renderWithProvider(<LanguageSelector />);
         const button = screen.getByTestId("Language-Selector-Button");
         fireEvent.mouseDown(button);
         const dropdownItem = screen.getByTestId("Language-Selector-DropDown-Item-en");
@@ -35,8 +21,9 @@ describe("Test Language Selector", () => {
         expect(screen.queryByTestId("Language-Selector-DropDown-Item-en")).not.toBeInTheDocument();
     });
 
+    // Uncomment and update this test if needed
     // test('check if language changes on selection', () => {
-    //     renderWithProvider();
+    //     renderWithProvider(<LanguageSelector />);
     //     const button = screen.getByTestId("Language-Selector-Button");
     //     fireEvent.mouseDown(button);
     //     const dropdownItem = screen.getByTestId("Language-Selector-DropDown-Item-fr");

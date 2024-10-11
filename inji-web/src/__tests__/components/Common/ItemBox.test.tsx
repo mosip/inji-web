@@ -1,26 +1,26 @@
 import React from 'react';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {fireEvent, screen} from '@testing-library/react';
 import {ItemBox} from "../../../components/Common/ItemBox";
-describe("Test Item Box Container",() => {
+import { renderWithProvider } from '../../../test-utils/mockUtils';
+
+const clickHandler = jest.fn();
+
+describe("Test Item Box Container Layouts", () => {
     test('check the presence of the container', () => {
-        const clickHandler = jest.fn();
-        render(<ItemBox index={1} url={"/"} title={"TitleOfItemBox"} onClick={clickHandler} />);
-        const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container-1");
-        expect(itemBoxElement).toBeInTheDocument();
+        const {asFragment} = renderWithProvider(<ItemBox index={1} url={"/"} title={"TitleOfItemBox"} onClick={clickHandler} />);
+        expect(asFragment()).toMatchSnapshot();
     });
+});
+
+describe("Test Item Box Container Functionality", () => {
     test('check if content is rendered properly', () => {
-        const clickHandler = jest.fn();
-        render(<ItemBox index={1} url={"/"} title={"TitleOfItemBox"} onClick={clickHandler} />);
-        const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container-1");
-        expect(itemBoxElement).toHaveTextContent("TitleOfItemBox")
+        renderWithProvider(<ItemBox index={1} url={"/"} title={"TitleOfItemBox"} onClick={clickHandler} />);
+        expect(screen.getByTestId("ItemBox-Outer-Container-1")).toHaveTextContent("TitleOfItemBox");
     });
 
     test('check if item box onClick handler is working', () => {
-        const clickHandler = jest.fn();
-        render(<ItemBox index={1} url={"/"} title={"TitleOfItemBox"} onClick={clickHandler} />);
-        const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container-1");
-        fireEvent.click(itemBoxElement);
-        expect(clickHandler).toBeCalled()
+        renderWithProvider(<ItemBox index={1} url={"/"} title={"TitleOfItemBox"} onClick={clickHandler} />);
+        fireEvent.click(screen.getByTestId("ItemBox-Outer-Container-1"));
+        expect(clickHandler).toBeCalled();
     });
-})
-
+});

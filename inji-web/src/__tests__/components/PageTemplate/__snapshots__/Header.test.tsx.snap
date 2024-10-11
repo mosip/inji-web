@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Container Layout Test check the presence of the three menus in the header 1`] = `
+<DocumentFragment>
+  <header>
+    <div
+      class="fixed top-0 left-0 right-0 bg-iw-background py-4 shadow-sm"
+      data-testid="Header-Container"
+    >
+      <div
+        class="container mx-auto flex justify-between items-center px-4"
+      >
+        <div
+          class="flex flex-row justify-center items-center"
+          data-testid="Header-InjiWeb-Logo-Container"
+        >
+          <div
+            class="sm:hidden"
+            role="button"
+            tabindex="0"
+          >
+            <svg
+              fill="currentColor"
+              height="32"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="32"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M32 96v64h448V96H32zm0 128v64h448v-64H32zm0 128v64h448v-64H32z"
+              />
+            </svg>
+          </div>
+          <div
+            role="button"
+            tabindex="0"
+          >
+            <img
+              alt="Inji Web Logo"
+              class="h-13 w-28 cursor-pointer"
+              data-testid="Header-InjiWeb-Logo"
+              src="InjiWebLogo.png"
+            />
+          </div>
+        </div>
+        <nav>
+          <ul
+            class="flex space-x-4 items-center font-semibold"
+            data-testid="Header-Menu-Elements"
+          >
+            <li
+              data-testid="Header-Menu-AboutInji"
+            >
+              <a
+                class="text-iw-title hidden sm:inline-block"
+                href="https://docs.mosip.io/inji/inji-web/overview"
+                rel="noreferrer"
+                target="_blank"
+              >
+                About Inji Web
+              </a>
+            </li>
+            <li
+              data-testid="Header-Menu-Help"
+            >
+              <div
+                class="text-iw-title cursor-pointer hidden sm:inline-block"
+                data-testid="Header-Menu-Help-div"
+                role="button"
+                tabindex="0"
+              >
+                Help
+              </div>
+            </li>
+            <li
+              data-testid="Header-Menu-LanguageSelector"
+            />
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+</DocumentFragment>
+`;

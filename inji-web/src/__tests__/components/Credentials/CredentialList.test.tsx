@@ -1,10 +1,8 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
 import { CredentialList } from '../../../components/Credentials/CredentialList';
-import { reduxStore } from '../../../redux/reduxStore';
 import { RequestStatus } from '../../../hooks/useFetch';
-import { IssuerWellknownObject } from '../../../types/data';
+import { mockCredentials } from '../../../test-utils/mockObjects';
+import { renderWithProvider } from '../../../test-utils/mockUtils'; // Import from mockutils
 
 // Mock the i18n configuration
 jest.mock('react-i18next', () => ({
@@ -23,84 +21,6 @@ jest.mock('react-redux', () => ({
     useSelector: jest.fn(),
 }));
 
-const mockCredentials: IssuerWellknownObject = {
-    credential_issuer: "",
-    credential_endpoint: "",
-    authorization_servers: [""],
-    credential_configurations_supported: {
-        InsuranceCredential: {
-            format: "ldp_vc",
-            scope: "mosip_ldp_vc",
-            order: [],
-            display: [{
-                name: "Name1",
-                language: "en",
-                locale: "en",
-                logo: {
-                    url: "https://url.com",
-                    alt_text: "alt text of the url"
-                },
-                title: "Title",
-                description: "Description",
-            }],
-            proof_types_supported: [],
-            credential_definition: {
-                type: [],
-                credentialSubject: {
-                    fullName: {
-                        display: [{
-                            name: "Name1",
-                            language: "en",
-                            locale: "en",
-                            logo: {
-                                url: "https://url.com",
-                                alt_text: "alt text of the url"
-                            },
-                            title: "Title",
-                            description: "Description",
-                        }],
-                    }
-                }
-            }
-        },
-        AnotherCredential: {
-            format: "ldp_vc",
-            scope: "mosip_ldp_vc",
-            order: [],
-            display: [{
-                name: "Name2",
-                language: "en",
-                locale: "en",
-                logo: {
-                    url: "https://url.com",
-                    alt_text: "alt text of the url"
-                },
-                title: "Title",
-                description: "Description",
-            }],
-            proof_types_supported: [],
-            credential_definition: {
-                type: [],
-                credentialSubject: {
-                    fullName: {
-                        display: [{
-                            name: "Name2",
-                            language: "en",
-                            locale: "en",
-                            logo: {
-                                url: "https://url.com",
-                                alt_text: "alt text of the url"
-                            },
-                            title: "Title",
-                            description: "Description",
-                        }],
-                    }
-                }
-            }
-        }
-    }
-};
-
 describe("Test CredentialList Component", () => {
     beforeEach(() => {
         const useSelectorMock = require('react-redux').useSelector;
@@ -118,26 +38,17 @@ describe("Test CredentialList Component", () => {
         jest.clearAllMocks();
     });
 
-    const renderWithProvider = (state: RequestStatus) => {
-        render(
-            <Provider store={reduxStore}>
-                <CredentialList state={state} />
-            </Provider>
-        );
-    };
-
-    test('renders loading state', () => {
-        renderWithProvider(RequestStatus.LOADING);
-        expect(screen.getByTestId('SpinningLoader-Container')).toBeInTheDocument();
+    test('matches the loading state snapshot', () => {
+        const { asFragment } = renderWithProvider(<CredentialList state={RequestStatus.LOADING} />);
+        expect(asFragment()).toMatchSnapshot();
     });
 
-    test('renders error state', () => {
-        renderWithProvider(RequestStatus.ERROR);
-        expect(screen.getByText('containerHeading')).toBeInTheDocument();
-        expect(screen.getByText('emptyContainerContent')).toBeInTheDocument();
+    test('matches the error state snapshot', () => {
+        const { asFragment } = renderWithProvider(<CredentialList state={RequestStatus.ERROR} />);
+        expect(asFragment()).toMatchSnapshot();
     });
 
-    test('renders empty credentials list', () => {
+    test('matches the empty credentials list snapshot', () => {
         const useSelectorMock = require('react-redux').useSelector;
         useSelectorMock.mockImplementation((selector: any) => selector({
             credentials: {
@@ -148,14 +59,12 @@ describe("Test CredentialList Component", () => {
             },
         }));
 
-        renderWithProvider(RequestStatus.DONE);
-        expect(screen.getByText('containerHeading')).toBeInTheDocument();
-        expect(screen.getByText('emptyContainerContent')).toBeInTheDocument();
+        const { asFragment } = renderWithProvider(<CredentialList state={RequestStatus.DONE} />);
+        expect(asFragment()).toMatchSnapshot();
     });
 
-    test('renders credentials list', () => {
-        renderWithProvider(RequestStatus.DONE);
-        expect(screen.getByText('containerHeading')).toBeInTheDocument();
-        expect(screen.getByText('Name1')).toBeInTheDocument();
+    test('matches the credentials list snapshot', () => {
+        const { asFragment } = renderWithProvider(<CredentialList state={RequestStatus.DONE} />);
+        expect(asFragment()).toMatchSnapshot();
     });
 });

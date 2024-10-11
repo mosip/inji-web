@@ -2,6 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 import {DownloadResult} from "../../../components/Redirection/DownloadResult";
 import {RequestStatus} from "../../../hooks/useFetch";
+import { renderWithProvider } from '../../../test-utils/mockUtils';
 
 jest.mock('../../../components/Common/SpinningLoader', () => ({
     SpinningLoader: () => <div data-testid={"SpinningLoader-Container"}/>,
@@ -27,93 +28,18 @@ describe("DownloadResult Container",() => {
     });
 })
 
-describe("DownloadResult For Success (DONE) Scenario", () => {
+describe("DownloadResult Layout check for Success Error and Loading", () => {
 
-    beforeEach(() => {
-        render(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.DONE}/>);
+    test('checking the Layout for the Success',()=>{
+        const {asFragment} = renderWithProvider(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.DONE}/>)
+        expect(asFragment()).toMatchSnapshot();
+    });
+    test('checking the Layout for the Error',()=>{
+        const {asFragment} = renderWithProvider(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.ERROR}/>)
+        expect(asFragment()).toMatchSnapshot();
     })
-
-    test('check the presence of the title', () => {
-        const redirectionElement = screen.getByTestId("DownloadResult-Title");
-        expect(redirectionElement).toBeInTheDocument();
-    });
-
-    test('check the presence of the subTitle', () => {
-        const redirectionElement = screen.getByTestId("DownloadResult-SubTitle");
-        expect(redirectionElement).toBeInTheDocument();
-    });
-
-    test('check the presence of the success ShieldIcon', () => {
-        const redirectionElement = screen.getByTestId("DownloadResult-Success-ShieldIcon");
-        expect(redirectionElement).toBeInTheDocument();
-    });
-    test('check the presence of the error ShieldIcon to be not in the document', () => {
-        const redirectionElement = screen.queryByTestId("DownloadResult-Error-ShieldIcon");
-        expect(redirectionElement).not.toBeInTheDocument();
-    });
-    test('check the presence of the Loader to be not in the document', () => {
-        const redirectionElement = screen.queryByTestId("SpinningLoader-Container");
-        expect(redirectionElement).not.toBeInTheDocument();
-    });
-})
-
-describe("DownloadResult For Error (ERROR) Scenario", () => {
-
-    beforeEach(() => {
-        render(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.ERROR}/>);
+    test('checking the Layout for the Loading',()=>{
+        const {asFragment} = renderWithProvider(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.LOADING}/>)
+        expect(asFragment()).toMatchSnapshot();
     })
-
-    test('check the presence of the title', () => {
-        const redirectionElement = screen.getByTestId("DownloadResult-Title");
-        expect(redirectionElement).toBeInTheDocument();
-    });
-
-    test('check the presence of the subTitle', () => {
-        const redirectionElement = screen.getByTestId("DownloadResult-SubTitle");
-        expect(redirectionElement).toBeInTheDocument();
-    });
-
-    test('check the presence of the success ShieldIcon to be in the document', () => {
-        const redirectionElement = screen.queryByTestId("DownloadResult-Success-ShieldIcon");
-        expect(redirectionElement).not.toBeInTheDocument();
-    });
-    test('check the presence of the error ShieldIcon to be in the document', () => {
-        const redirectionElement = screen.getByTestId("DownloadResult-Error-ShieldIcon");
-        expect(redirectionElement).toBeInTheDocument();
-    });
-    test('check the presence of the Loader to be not in the document', () => {
-        const redirectionElement = screen.queryByTestId("SpinningLoader-Container");
-        expect(redirectionElement).not.toBeInTheDocument();
-    });
-})
-
-
-describe("DownloadResult For Loading (LOADING) Scenario", () => {
-
-    beforeEach(() => {
-        render(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.LOADING}/>);
-    })
-
-    test('check the presence of the title', () => {
-        const redirectionElement = screen.getByTestId("DownloadResult-Title");
-        expect(redirectionElement).toBeInTheDocument();
-    });
-
-    test('check the presence of the subTitle', () => {
-        const redirectionElement = screen.getByTestId("DownloadResult-SubTitle");
-        expect(redirectionElement).toBeInTheDocument();
-    });
-
-    test('check the presence of the success ShieldIcon not to be in the document', () => {
-        const redirectionElement = screen.queryByTestId("DownloadResult-Success-ShieldIcon");
-        expect(redirectionElement).not.toBeInTheDocument();
-    });
-    test('check the presence of the error ShieldIcon to be in the document', () => {
-        const redirectionElement = screen.queryByTestId("DownloadResult-Error-ShieldIcon");
-        expect(redirectionElement).not.toBeInTheDocument();
-    });
-    test('check the presence of the Loader to be in the document', () => {
-        const redirectionElement = screen.queryByTestId("SpinningLoader-Container");
-        expect(redirectionElement).toBeInTheDocument();
-    });
-})
+});

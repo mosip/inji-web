@@ -1,16 +1,18 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import {  screen} from '@testing-library/react';
 import { ErrorSheildIcon } from '../../../components/Common/ErrorSheildIcon';
+import { renderWithProvider } from '../../../test-utils/mockUtils';
 
-describe("Test ErrorSheildIcon Component", () => {
-    test('renders the ErrorSheildIcon component', () => {
-        render(<ErrorSheildIcon />);
-        const iconElement = screen.getByTestId("DownloadResult-Error-ShieldIcon");
-        expect(iconElement).toBeInTheDocument();
+describe("ErrorSheildIcon Layout Tests", () => {
+    test('check if icon renders properly', () => {
+        const{asFragment} =  renderWithProvider(<ErrorSheildIcon />);
+        expect(asFragment()).toMatchSnapshot();
     });
+});
 
-    test('checks the icon size and color', () => {
-        render(<ErrorSheildIcon />);
+describe("ErrorSheildIcon Functionality Tests", () => {
+    test('checks for the icon size and color of ErrorShieldIcon Component', () => {
+        renderWithProvider(<ErrorSheildIcon />);
         const iconElement = screen.getByTestId("DownloadResult-Error-ShieldIcon");
         expect(iconElement).toHaveStyle('color: var(--iw-color-shieldErrorIcon)');
     });

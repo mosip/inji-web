@@ -1,51 +1,35 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import {  screen } from '@testing-library/react';
 import { AppToaster } from '../../../components/Common/AppToaster';
-import { Provider } from 'react-redux';
 import { reduxStore } from '../../../redux/reduxStore'; // Assuming the store is named reduxStore
+import { renderWithProvider } from '../../../test-utils/mockUtils';
 
-describe('AppToaster', () => {
-    const renderWithProvider = () => {
-        render(
-            <Provider store={reduxStore}>
-                <AppToaster />
-            </Provider>
-        );
-    };
-
+describe('AppToaster Layout Tests', () => {
     test('renders correctly with English language', () => {
-        // Ensure the language is set to English
+        const { asFragment } = renderWithProvider(<AppToaster />);
         reduxStore.dispatch({ type: 'SET_LANGUAGE', payload: 'en' });
-
-        renderWithProvider();
-
-        // Find the custom toast using getByTestId
-        const customToast = screen.getByTestId('custom-toast');
-
-        // Assert that the custom toast is rendered
-        expect(customToast).toBeInTheDocument();
-        expect(customToast).toHaveTextContent('Test message');
-
-        // Check the position of the toast container
-        const toastContainer = screen.getByTestId('toast-container');
-        expect(toastContainer).toHaveClass('top-right');
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('renders correctly with Arabic language', () => {
-        // Ensure the language is set to Arabic
+        const { asFragment } = renderWithProvider(<AppToaster />);
         reduxStore.dispatch({ type: 'SET_LANGUAGE', payload: 'ar' });
+        expect(asFragment()).toMatchSnapshot();
+    });
+});
 
-        renderWithProvider();
+describe('AppToaster Behavioral and Functionality Tests', () => {
+    test('checks if renders correctly with English language', () => {
+        renderWithProvider(<AppToaster />);
+        reduxStore.dispatch({ type: 'SET_LANGUAGE', payload: 'en' });
+        const customToast = screen.getByTestId('AppToaster-custom-toast');
+        expect(customToast).toHaveTextContent('AppToaster test message');
+    });
 
-        // Find the custom toast using getByTestId
-        const customToast = screen.getByTestId('custom-toast');
-
-        // Assert that the custom toast is rendered
-        expect(customToast).toBeInTheDocument();
-        expect(customToast).toHaveTextContent('Test message');
-
-        // Check the position of the toast container
-        const toastContainer = screen.getByTestId('toast-container');
-        expect(toastContainer).toHaveClass('top-right');
+    test('check if renders correctly with Arabic language', () => {
+        renderWithProvider(<AppToaster />);
+        reduxStore.dispatch({ type: 'SET_LANGUAGE', payload: 'ar' });
+        const customToast = screen.getByTestId('AppToaster-custom-toast');
+        expect(customToast).toHaveTextContent('AppToaster test message');
     });
 });
