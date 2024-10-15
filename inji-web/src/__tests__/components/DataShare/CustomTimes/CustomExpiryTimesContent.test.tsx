@@ -5,16 +5,14 @@ import { renderWithProvider } from "../../../../test-utils/mockUtils";
 mockUseTranslation();
 const expiryMockFn = jest.fn();
 
-describe("Test the Layout of the Custom Expiry Content", () => {
-
-   
-    test("Test the presence of the Outer Container", ()=>{
+describe("Testing the Layout of the Custom Expiry Content", () => {
+    test("Check if the layout is matching with the snapshots", ()=>{
         const{asFragment} = renderWithProvider(<CustomExpiryTimesContent expiryTime={1} setExpiryTime={expiryMockFn} />);
         expect(asFragment()).toMatchSnapshot();
     })
 });
-describe("Test the  Functionality of custom expiry content",()=>{
-    test("Test the Time Range Metrics", ()=>{
+describe("Testing the  Functionality of custom expiry content",()=>{
+    test("Check the Time Range Metrics", ()=>{
         const expiryMockFn = jest.fn();
         renderWithProvider(<CustomExpiryTimesContent expiryTime={1} setExpiryTime={expiryMockFn} />);
         const ctDocument = screen.getByTestId("CustomExpiryTimesContent-Times-Metrics");
@@ -22,7 +20,7 @@ describe("Test the  Functionality of custom expiry content",()=>{
         expect(ctDocument).toHaveTextContent("Times");
     })
 
-    test("Test the Time Range Increase on Clicking the Increase Button", ()=>{
+    test("Check the Time Range Increase on Clicking the Increase Button", ()=>{
         const expiryTime=1;
         const expiryMockFn = jest.fn(()=> expiryTime+1);
         renderWithProvider(<CustomExpiryTimesContent expiryTime={expiryTime} setExpiryTime={expiryMockFn} />);
@@ -34,7 +32,7 @@ describe("Test the  Functionality of custom expiry content",()=>{
         expect(expiryMockFn).toHaveBeenCalledWith(expiryTime + 1);
     })
 
-    test("Test the Time Range Decrease on Clicking the Decrease Button", ()=>{
+    test("Check the Time Range Decrease on Clicking the Decrease Button", ()=>{
         const expiryTime=3;
         const expiryMockFn = jest.fn(()=> expiryTime+1);
         renderWithProvider(<CustomExpiryTimesContent expiryTime={expiryTime} setExpiryTime={expiryMockFn} />);

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test Spinning Loader Container check the presence of the container 1`] = `
+exports[`Testing the Layout of Spinning Loader Container Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
     class="flex justify-center items-center"

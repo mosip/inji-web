@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test EmptyListContainer Layout check the presence of the container 1`] = `
+exports[`Testing the Layouts of EmptyListContainer Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
     class="flex justify-center items-center w-full mx-auto bg-iw-background

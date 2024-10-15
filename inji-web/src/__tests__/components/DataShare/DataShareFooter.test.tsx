@@ -11,12 +11,12 @@ describe("Testing Layout of the Expiry Footer", () => {
         mockUseTranslation()
     } )
 
-    test("Test the presence of the Outer Container", ()=>{
+    test("Check if the layout is matching with the snapshots", ()=>{
         const {asFragment} = renderWithProvider(<DataShareFooter successText={"success"} onSuccess={successMockFn} cancelText={"cancel"} onCancel={cancelMockFn} />);
         expect(asFragment()).toMatchSnapshot();
     })
 
-    test("Test whether success button is invoked on clicking", ()=>{
+    test("Check whether success button is invoked on clicking", ()=>{
         renderWithProvider(<DataShareFooter successText={"success"} onSuccess={successMockFn} cancelText={"cancel"} onCancel={cancelMockFn} />);
         const successButton = screen.getByTestId("DataShareFooter-Success-Button");
         fireEvent.click(successButton);
@@ -24,7 +24,7 @@ describe("Testing Layout of the Expiry Footer", () => {
         expect(cancelMockFn).not.toBeCalled();
     })
 
-    test("Test whether cancel button is invoked on clicking", ()=>{
+    test("Check whether cancel button is invoked on clicking", ()=>{
         renderWithProvider(<DataShareFooter successText={"success"} onSuccess={successMockFn} cancelText={"cancel"} onCancel={cancelMockFn} />);
         const cancelButton = screen.getByTestId("DataShareFooter-Cancel-Button");
         fireEvent.click(cancelButton);

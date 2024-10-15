@@ -4,16 +4,16 @@ import { EmptyListContainer } from "../../../components/Common/EmptyListContaine
 import { renderWithProvider } from '../../../test-utils/mockUtils';
 
 
-describe("Test EmptyListContainer Layout", () => {
+describe("Testing the Layouts of EmptyListContainer", () => {
     
-    test('check the presence of the container', () => {
+    test('Check if the layout is matching with the snapshots', () => {
         const { asFragment } = renderWithProvider(<EmptyListContainer content={"No Issuers Found"} />);
         expect(asFragment()).toMatchSnapshot();
     });
 });
-describe("Test EmptyListContainer Functionality", () => {
+describe("Testing the Functionality EmptyListContainer", () => {
    
-    test('check if content is rendered properly', () => {
+    test('Check if content is rendered properly', () => {
         renderWithProvider(<EmptyListContainer content={"No Issuers Found"} />);
         expect(screen.getByTestId("EmptyList-Text")).toHaveTextContent("No Issuers Found");
     });

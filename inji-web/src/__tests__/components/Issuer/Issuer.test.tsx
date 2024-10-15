@@ -1,33 +1,20 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import {screen, fireEvent } from '@testing-library/react';
 import { Issuer } from '../../../components/Issuers/Issuer';
-import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { reduxStore } from '../../../redux/reduxStore';
 import { IssuerObject } from '../../../types/data';
 import { mockIssuerObject } from '../../../test-utils/mockObjects';
-
-// Mock the initial state of the store
+import { renderWithProvider } from '../../../test-utils/mockUtils';
 reduxStore.dispatch({ type: 'STORE_COMMON_LANGUAGE', language: 'en' });
 const mockIssuer : IssuerObject = mockIssuerObject;
-
-const renderwithprovider = () => {
+describe("Testing the layout of Issuer Component",()=> {
+    test('Check if the layout is matching with the snapshots', () => {
         jest.spyOn(require('../../../utils/i18n'), 'getObjectForCurrentLanguage').mockReturnValue(mockIssuer.display[0]);
-        return render(
-            <Provider store={reduxStore}>
-                <Router>
-                    <Issuer index={1} issuer={mockIssuer} />
-                </Router>
-            </Provider>
-        );
-    }
-describe("Test the layout of the Issuer Component",()=> {
-    test('check the presence of the container', () => {
-        const {asFragment} =  renderwithprovider()
+        const {asFragment} =  renderWithProvider(<Issuer index={1} issuer={mockIssuer} />)
         expect(asFragment()).toMatchSnapshot();
     });
 });
-describe('Test Issuer Component', () => {
+describe('Testing the Functionality of Issuer Component', () => {
 
     let originalOpen: typeof window.open;
 
@@ -39,14 +26,19 @@ describe('Test Issuer Component', () => {
     afterAll(() => {
         window.open = originalOpen;
     });
-    test('check if content is rendered properly', () => {
-        renderwithprovider();
+    
+    beforeEach(()=>{
+        jest.spyOn(require('../../../utils/i18n'), 'getObjectForCurrentLanguage').mockReturnValue(mockIssuer.display[0]);
+    })
+
+    test('Check if content is rendered properly', () => {
+        renderWithProvider(<Issuer index={1} issuer={mockIssuer} />)
         const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container-1");
         expect(itemBoxElement).toHaveTextContent("Name");
     });
 
-    test('check if onClick function is called', () => {
-        renderwithprovider();
+    test('Check if onClick function is called', () => {
+        renderWithProvider(<Issuer index={1} issuer={mockIssuer} />)
         const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container-1");
         fireEvent.click(itemBoxElement);
         expect(window.location.pathname).toBe('/issuers/test-issuer');

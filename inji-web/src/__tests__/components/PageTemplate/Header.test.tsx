@@ -1,29 +1,28 @@
 import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import { Header } from "../../../components/PageTemplate/Header";
-import { mockUseNavigate, wrapUnderRouter } from '../../../test-utils/mockUtils';
-import { renderWithProvider } from '../../../test-utils/mockUtils';
+import { mockUseNavigate} from '../../../test-utils/mockUtils';
+import { renderWithProvider,mockUseLanguageSelector } from '../../../test-utils/mockUtils';
 
+
+
+mockUseLanguageSelector();
+//todo : extract the local method to mockUtils, which is added to bypass the routing problems
 const mockedUsedNavigate = jest.fn();
-
-jest.mock('../../../components/Common/LanguageSelector', () => ({
-    LanguageSelector: () => <></>,
-}));
-
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: () => mockedUsedNavigate,
 }));
 
 describe("Header Container Layout Test", () => {
-    test('check the presence of the three menus in the header', () => {
+    test('Check if the layout is matching with the snapshots', () => {
         const { asFragment } = renderWithProvider((<Header />));
         expect(asFragment()).toMatchSnapshot();
     });
 });
 
-describe("Test Header Container Functionality", () => {
-    test("Testing length of the Header menu elements", () => {
+describe("Testing Header Container Functionality", () => {
+    test("Check the length of the Header menu elements", () => {
         renderWithProvider((<Header />));
         const headerElementLi = screen.getByTestId("Header-Menu-Elements");
         expect(headerElementLi.children.length).toBe(3);
@@ -59,7 +58,7 @@ describe("Test Header Container Functionality", () => {
     //     expect(mockedUsedNavigate).toHaveBeenCalled();
     // });
 
-    test('check the presence of the Language Selector', () => {
+    test('Check the presence of the Language Selector', () => {
         renderWithProvider((<Header />));
         const headerElementLi = screen.getByTestId("Header-Menu-LanguageSelector");
         expect(headerElementLi).toBeInTheDocument();

@@ -2,12 +2,11 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 import {DownloadResult} from "../../../components/Redirection/DownloadResult";
 import {RequestStatus} from "../../../hooks/useFetch";
-import { renderWithProvider } from '../../../test-utils/mockUtils';
+import { renderWithProvider,mockUseNavigate,mockUseSpinningLoader } from '../../../test-utils/mockUtils';
 
-jest.mock('../../../components/Common/SpinningLoader', () => ({
-    SpinningLoader: () => <div data-testid={"SpinningLoader-Container"}/>,
-}))
-
+mockUseNavigate();
+mockUseSpinningLoader();
+//todo : extract the local method to mockUtils, which is added to bypass the routing problems
 const mockedUsedNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
@@ -16,8 +15,8 @@ jest.mock('react-router-dom', () => ({
     }),
 }))
 
-describe("DownloadResult Container",() => {
-    test('check the presence of the container', () => {
+describe("Testing the Functionality of DownloadResult Container",() => {
+    test('Check the presence of the container', () => {
         render(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.DONE}/>);
         let redirectionElement = screen.getByTestId("DownloadResult-Outer-Container");
         expect(redirectionElement).toBeInTheDocument();
@@ -28,17 +27,17 @@ describe("DownloadResult Container",() => {
     });
 })
 
-describe("DownloadResult Layout check for Success Error and Loading", () => {
+describe("Testing the Layout of DownloadResult for Success Error and Loading", () => {
 
-    test('checking the Layout for the Success',()=>{
+    test('Check if the layout is matching with the snapshots for the Success',()=>{
         const {asFragment} = renderWithProvider(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.DONE}/>)
         expect(asFragment()).toMatchSnapshot();
     });
-    test('checking the Layout for the Error',()=>{
+    test('Check if the layout is matching with the snapshots for the Error',()=>{
         const {asFragment} = renderWithProvider(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.ERROR}/>)
         expect(asFragment()).toMatchSnapshot();
     })
-    test('checking the Layout for the Loading',()=>{
+    test('Check if the layout is matching with the snapshots for the Loading',()=>{
         const {asFragment} = renderWithProvider(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.LOADING}/>)
         expect(asFragment()).toMatchSnapshot();
     })

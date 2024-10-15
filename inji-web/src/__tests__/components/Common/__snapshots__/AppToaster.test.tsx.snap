@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AppToaster Layout Tests renders correctly with Arabic language 1`] = `
+exports[`Testing the Layout of AppToaster Check if the layout is matching with the snapshots for Arabic language 1`] = `
 <DocumentFragment>
   <div
     class="text-center pt-20 pb-10 top-right"
@@ -70,7 +70,7 @@ exports[`AppToaster Layout Tests renders correctly with Arabic language 1`] = `
 </DocumentFragment>
 `;
 
-exports[`AppToaster Layout Tests renders correctly with English language 1`] = `
+exports[`Testing the Layout of AppToaster Check if the layout is matching with the snapshots for English language 1`] = `
 <DocumentFragment>
   <div
     class="text-center pt-20 pb-10 top-right"

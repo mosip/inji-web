@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test layout of Help Accordion Container check the presence of the container 1`] = `
+exports[`Testing the layout of Help Accordion Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
     data-testid="Help-Accordion-Container"

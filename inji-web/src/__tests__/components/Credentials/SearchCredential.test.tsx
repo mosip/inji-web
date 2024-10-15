@@ -3,26 +3,20 @@ import { screen, fireEvent } from '@testing-library/react';
 import { SearchCredential } from '../../../components/Credentials/SearchCredential';
 import { storeFilteredCredentials } from '../../../redux/reducers/credentialsReducer';
 import { mockSearchCredential } from '../../../test-utils/mockObjects';
-import { renderWithProvider } from '../../../test-utils/mockUtils';
+import { renderWithProvider,mockUseTranslation } from '../../../test-utils/mockUtils';
 
+
+mockUseTranslation();
 // Mock the useSelector and useDispatch hooks
+// todo : extract the local method to mockUtils
 jest.mock('react-redux', () => ({
     ...jest.requireActual('react-redux'),
     useSelector: jest.fn(),
     useDispatch: jest.fn(),
 }));
 
-// Mock the i18n configuration
-jest.mock('react-i18next', () => ({
-    useTranslation: () => ({
-        t: (key: string) => key,
-    }),
-    initReactI18next: {
-        type: '3rdParty',
-        init: jest.fn(),
-    },
-}));
-describe("Test SearchCredential Layout", () => {
+
+describe("Testing the Layout of SearchCredential", () => {
     beforeEach(() => {
         const useSelectorMock = require('react-redux').useSelector;
         useSelectorMock.mockImplementation((selector: any) => selector({
@@ -39,16 +33,13 @@ describe("Test SearchCredential Layout", () => {
         jest.clearAllMocks();
     });
 
-    test('checks whether it renders search input and icons', () => {
+    test('Check if the layout is matching with the snapshots', () => {
         const {asFragment} = renderWithProvider(<SearchCredential />)
         expect(asFragment()).toMatchSnapshot();
-        // expect(screen.getByTestId('NavBar-Search-Container')).toBeInTheDocument();
-        // expect(screen.getByTestId('NavBar-Search-Icon')).toBeInTheDocument();
-        // expect(screen.getByTestId('NavBar-Search-Input')).toBeInTheDocument();
     });
 });
 
-describe("Test SearchCredential Functionality", () => {
+describe("Testing the Functionality of SearchCredential", () => {
     const mockDispatch = jest.fn();
 
     beforeEach(() => {
@@ -70,7 +61,7 @@ describe("Test SearchCredential Functionality", () => {
         jest.clearAllMocks();
     });
 
-    test('checks whether it filters credentials based on search input', () => {
+    test('Check whether it filters credentials based on search input', () => {
         renderWithProvider(<SearchCredential />);
         const searchInput = screen.getByTestId('NavBar-Search-Input');
         fireEvent.change(searchInput, { target: { value: 'Insurance' } });
@@ -86,7 +77,7 @@ describe("Test SearchCredential Functionality", () => {
         expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
     });
 
-    test('checks whether it clears search input when clear icon is clicked', () => {
+    test('Check whether it clears search input when clear icon is clicked', () => {
         renderWithProvider(<SearchCredential />);
         const searchInput = screen.getByTestId('NavBar-Search-Input');
         fireEvent.change(searchInput, { target: { value: 'Insurance' } });

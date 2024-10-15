@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test Help Accordion Container check the presence of the container 1`] = `
+exports[`Testing the Layout of Help Accordion Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
     class="rounded-md mb-2 shadow-sm shadow-iw-shadow"

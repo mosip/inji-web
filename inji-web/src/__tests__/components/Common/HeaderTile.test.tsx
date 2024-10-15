@@ -4,19 +4,19 @@ import { HeaderTile } from "../../../components/Common/HeaderTile";
 import { renderWithProvider } from '../../../test-utils/mockUtils';
 
 
-describe("HeaderTile Layout Tests", () => {
-    test('check the presence of the container', () => {
+describe("Testing the Layout of HeaderTile", () => {
+    test('Check if the layout is matching with the snapshots', () => {
         const {asFragment} = renderWithProvider(<HeaderTile content={"No Issuers Found"} subContent={"No Issuers Found"} />);
         expect(asFragment()).toMatchSnapshot();
     });
 });
-describe("HeaderTile Functionality Tests", () => {
-    test('check if content is rendered properly', () => {
+describe("Testing the Functionality of HeaderTile", () => {
+    test('Check if content is rendered properly', () => {
         renderWithProvider(<HeaderTile content={"No Issuers Found"} subContent={"No Issuers Found"} />);
         expect(screen.getByTestId("HeaderTile-Text")).toHaveTextContent("No Issuers Found");
     });
 
-    test('check if sub-content is rendered properly', () => {
+    test('Check if sub-content is rendered properly', () => {
         renderWithProvider(<HeaderTile content={"No Issuers Found"} subContent={"No Issuers Found"} />);
         expect(screen.getByTestId("HeaderTile-Text-subContent")).toHaveTextContent("No Issuers Found");
     });

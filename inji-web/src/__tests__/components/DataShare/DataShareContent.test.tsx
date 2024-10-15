@@ -1,28 +1,17 @@
-import {fireEvent, render, screen} from "@testing-library/react";
+import {fireEvent, screen} from "@testing-library/react";
 import {DataShareContent} from "../../../components/DataShare/DataShareContent";
-import {reduxStore} from "../../../redux/reduxStore";
-import {Provider} from "react-redux";
-// import {mockUseTranslation} from "../../../utils/mockUtils";
-import { mockUseTranslation } from "../../../test-utils/mockUtils";
 import { renderWithProvider } from "../../../test-utils/mockUtils";
 
 const customMockFn = jest.fn();
 
-describe("Test the Layout of the Expiry Content", () => {
+describe("Testing  the Layout of the Expiry Content", () => {
 
-    
-    // const renderWithProvider = ()=>{
-    //     return render(<Provider store={reduxStore}>
-    //         <DataShareContent credentialName={"credentialName"} credentialLogo={"credentialLogo"} setIsCustomExpiryInTimesModalOpen={customMockFn} />
-    //     </Provider>);
-    // }
-
-    test("Test layout of DataShareContent", ()=>{
+    test("Check if the layout is matching with the snapshots", ()=>{
         const{asFragment} = renderWithProvider(<DataShareContent credentialName={"credentialName"} credentialLogo={"credentialLogo"} setIsCustomExpiryInTimesModalOpen={customMockFn} />)
         expect(asFragment()).toMatchSnapshot();
     })
   
-    test("Test the Validity Times Dropdown should not show custom as selected option at first", ()=>{
+    test("Check the Validity Times Dropdown should not show custom as selected option at first", ()=>{
         renderWithProvider(<DataShareContent credentialName={"credentialName"} credentialLogo={"credentialLogo"} setIsCustomExpiryInTimesModalOpen={customMockFn} />);
         const selectedDocument = screen.getByTestId("DataShareContent-Selected-Validity-Times");
         expect(selectedDocument).not.toHaveTextContent("Custom");
@@ -30,7 +19,7 @@ describe("Test the Layout of the Expiry Content", () => {
         const document = screen.queryByTestId("DataShareContent-Validity-Times-DropDown");
         expect(document).not.toBeInTheDocument();
     })
-    test.skip("Test the Validity Times Dropdown should option when custom is selected", ()=>{
+    test.skip("Check the Validity Times Dropdown should option when custom is selected", ()=>{
         renderWithProvider(<DataShareContent credentialName={"credentialName"} credentialLogo={"credentialLogo"} setIsCustomExpiryInTimesModalOpen={customMockFn} />);
         let selectedDocument = screen.getByTestId("DataShareContent-Selected-Validity-Times");
         fireEvent.click(selectedDocument);

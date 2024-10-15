@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing Layout of the Expiry Footer Test the presence of the Outer Container 1`] = `
+exports[`Testing Layout of the Expiry Footer Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
     class="flex items-center justify-between p-6 rounded-b"

@@ -4,17 +4,12 @@ import { SearchIssuer } from '../../../components/Issuers/SearchIssuer';
 import { reduxStore } from '../../../redux/reduxStore';
 import { storeFilteredIssuers } from '../../../redux/reducers/issuersReducer';
 import { RequestStatus } from '../../../hooks/useFetch';
-import { renderWithProvider } from '../../../test-utils/mockUtils';
+import { renderWithProvider,mockUseTranslation } from '../../../test-utils/mockUtils';
 
-jest.mock('../../../utils/i18n', () => ({
-    useTranslation: () => ({
-        t: (key: string) => key,
-    }),
-    getObjectForCurrentLanguage: jest.fn((displayArray: any, language: string) => displayArray),
-}));
+mockUseTranslation();
 
-describe("Test layout SearchIssuer", () => {
-    test('renders SearchIssuer component', () => {
+describe("Testing the layout of SearchIssuer", () => {
+    test('Check if the layout is matching with the snapshots', () => {
         const { asFragment } = renderWithProvider(
             <SearchIssuer state={RequestStatus.DONE} fetchRequest={jest.fn()} />
         );
@@ -22,12 +17,12 @@ describe("Test layout SearchIssuer", () => {
     });
 });
 
-describe('Test SearchIssuer Functionality', () => {
+describe('Testing the Functionality of SearchIssuer', () => {
     beforeEach(() => {
         reduxStore.dispatch = jest.fn();
     });
 
-    test('filters issuers based on search text', () => {
+    test('Check if it filters issuers based on search text', () => {
         renderWithProvider(
             <SearchIssuer state={RequestStatus.DONE} fetchRequest={jest.fn()} />
         );
@@ -38,7 +33,7 @@ describe('Test SearchIssuer Functionality', () => {
         expect(reduxStore.dispatch).toHaveBeenCalledWith(storeFilteredIssuers([]));
     });
 
-    test('clears search text when clear icon is clicked', () => {
+    test('Check if it clears search text when clear icon is clicked', () => {
         renderWithProvider(
             <SearchIssuer state={RequestStatus.DONE} fetchRequest={jest.fn()} />
         );

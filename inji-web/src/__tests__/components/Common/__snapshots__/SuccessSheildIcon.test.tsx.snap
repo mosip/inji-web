@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test SuccessSheildIcon Component checks the presence of SuccessSheildIcon component 1`] = `
+exports[`Testing the Layout of SuccessSheildIcon Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
     class="rounded-full p-2 shadow"

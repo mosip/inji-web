@@ -1,16 +1,20 @@
 import React from 'react';
 import {  screen, fireEvent } from '@testing-library/react';
 import { LandingPageWrapper, LandingPageWrapperProps } from '../../../components/Common/LandingPageWrapper';
-import {  mockUseTranslation, renderWithProvider } from '../../../test-utils/mockUtils';
+import {  mockUseTranslation, renderWithProvider,mockUseNavigate} from '../../../test-utils/mockUtils';
+
 
 // Mock useTranslation
 mockUseTranslation();
-// Mock useNavigate
+
+//todo : extract the local method to mockUtils, which is added to bypass the routing problems
+// mockUseNavigate();
 const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: () => mockNavigate,
 }));
+
 
 const defaultProps: LandingPageWrapperProps = {
     icon: <div data-testid="Test-Icon">Icon</div>,
@@ -19,22 +23,25 @@ const defaultProps: LandingPageWrapperProps = {
     gotoHome: true,
 };
 
-describe("LandingPageWrapper Component Layout Tests", () => {
-    test('check the presence of LandingPageWrapper component', () => {
+describe("Testing the Layout of LandingPageWrapper", () => {
+    test('Check if the layout is matching with the snapshots', () => {
         const { asFragment } = renderWithProvider(<LandingPageWrapper {...defaultProps} />);
         expect(asFragment()).toMatchSnapshot();
     });
 });
 
-describe("LandingPageWrapper Component Functionality Tests", () => {
-    test('check it navigates to home when the home button is clicked', () => {
+describe("Testing the Functionality LandingPageWrapper", () => {
+    beforeEach(()=>{
+        mockUseNavigate();
+    })
+    test('Check it navigates to home when the home button is clicked', () => {
         renderWithProvider(<LandingPageWrapper {...defaultProps} />);
         const homeButton = screen.getByTestId("DownloadResult-Home-Button");
         fireEvent.click(homeButton);
-        expect(mockNavigate).toHaveBeenCalledWith('/'); // Assuming '/' is the home route
+        expect(mockNavigate).toHaveBeenCalledWith('/'); 
     });
 
-    test('check', () => {
+    test('Check if it have the Title and the SubTitle', () => {
         renderWithProvider(<LandingPageWrapper {...defaultProps} />);
         expect(screen.getByTestId("DownloadResult-Title")).toHaveTextContent("Test Title");
         expect(screen.getByTestId("DownloadResult-SubTitle")).toHaveTextContent("Test SubTitle");

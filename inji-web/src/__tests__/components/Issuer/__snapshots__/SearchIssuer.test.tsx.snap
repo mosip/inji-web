@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test layout SearchIssuer renders SearchIssuer component 1`] = `
+exports[`Testing the layout of SearchIssuer Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
     class="flex justify-center items-center w-full"
@@ -28,7 +28,7 @@ exports[`Test layout SearchIssuer renders SearchIssuer component 1`] = `
       <input
         class="py-6 w-11/12 text-iw-searchTitle focus:outline-none overflow-ellipsis mr-10"
         data-testid="Search-Issuer-Input"
-        placeholder="Intro.searchText"
+        placeholder="Search Issuers by name"
         type="text"
         value=""
       />

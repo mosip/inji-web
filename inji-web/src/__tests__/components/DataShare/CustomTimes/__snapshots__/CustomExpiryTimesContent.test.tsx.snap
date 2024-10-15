@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test the Layout of the Custom Expiry Content Test the presence of the Outer Container 1`] = `
+exports[`Testing the Layout of the Custom Expiry Content Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
     class="relative px-6 mx-4 flex flex-col justify-between"

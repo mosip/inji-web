@@ -3,15 +3,15 @@ import { screen, fireEvent } from '@testing-library/react';
 import { LanguageSelector } from '../../../components/Common/LanguageSelector';
 import { renderWithProvider } from '../../../test-utils/mockUtils'; // Import from mockutils
 
-describe("Language Selector Component Layout Tests", () => {
-    test('check the presence of the Language Selector', () => {
+describe("Testing the Layout of Language Selector", () => {
+    test('Check if the layout is matching with the snapshots', () => {
         const { asFragment } = renderWithProvider(<LanguageSelector />);
         expect(asFragment()).toMatchSnapshot();
     });
 });
 
-describe("Language Selector Component Functionality Tests", () => {
-    test('check if dropdown opens and closes', () => {
+describe("Testing the Functionality of Language Selector", () => {
+    test('Check if dropdown opens and closes', () => {
         renderWithProvider(<LanguageSelector />);
         const button = screen.getByTestId("Language-Selector-Button");
         fireEvent.mouseDown(button);
@@ -21,7 +21,6 @@ describe("Language Selector Component Functionality Tests", () => {
         expect(screen.queryByTestId("Language-Selector-DropDown-Item-en")).not.toBeInTheDocument();
     });
 
-    // Uncomment and update this test if needed
     // test('check if language changes on selection', () => {
     //     renderWithProvider(<LanguageSelector />);
     //     const button = screen.getByTestId("Language-Selector-Button");

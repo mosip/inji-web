@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test IssuersList Component checks whether it renders empty issuers list 1`] = `
+exports[`Testing the Layout of IssuersList Check whether it renders empty issuers list 1`] = `
 <DocumentFragment>
   <div
     class=" flex flex-col items-center justify-center"
@@ -10,13 +10,13 @@ exports[`Test IssuersList Component checks whether it renders empty issuers list
       class="font-bold text-iw-title mt-8 text-xl flex"
       data-testid="HeaderTile-Text"
     >
-      containerHeading
+      List of Issuers
     </div>
     <div
       class="text-iw-subTitle text-md mb-8 mt-2 flex"
       data-testid="HeaderTile-Text-subContent"
     >
-      containerSubHeading
+      Search for your trusted issuer and choose a credential type in the next step.
     </div>
     <div
       class="flex justify-center items-center w-full mx-auto bg-iw-background
@@ -27,14 +27,14 @@ exports[`Test IssuersList Component checks whether it renders empty issuers list
         class="text-center text-light-title dark:text-dark-title"
         data-testid="EmptyList-Text"
       >
-        emptyContainerContent
+        No issuers found. Please refresh your browser window or try again later
       </p>
     </div>
   </div>
 </DocumentFragment>
 `;
 
-exports[`Test IssuersList Component checks whether it renders error state 1`] = `
+exports[`Testing the Layout of IssuersList Check whether it renders error state 1`] = `
 <DocumentFragment>
   <div
     class=" flex flex-col items-center justify-center"
@@ -44,13 +44,13 @@ exports[`Test IssuersList Component checks whether it renders error state 1`] = 
       class="font-bold text-iw-title mt-8 text-xl flex"
       data-testid="HeaderTile-Text"
     >
-      containerHeading
+      List of Issuers
     </div>
     <div
       class="text-iw-subTitle text-md mb-8 mt-2 flex"
       data-testid="HeaderTile-Text-subContent"
     >
-      containerSubHeading
+      Search for your trusted issuer and choose a credential type in the next step.
     </div>
     <div
       class="flex justify-center items-center w-full mx-auto bg-iw-background
@@ -61,88 +61,48 @@ exports[`Test IssuersList Component checks whether it renders error state 1`] = 
         class="text-center text-light-title dark:text-dark-title"
         data-testid="EmptyList-Text"
       >
-        emptyContainerContent
+        No issuers found. Please refresh your browser window or try again later
       </p>
     </div>
   </div>
 </DocumentFragment>
 `;
 
-exports[`Test IssuersList Component checks whether it renders issuers list properly 1`] = `
+exports[`Testing the Layout of IssuersList Check whether it renders issuers list properly 1`] = `
 <DocumentFragment>
   <div
-    class="flex flex-col items-center justify-center"
+    class=" flex flex-col items-center justify-center"
     data-testid="Issuers-List-Container"
   >
     <div
       class="font-bold text-iw-title mt-8 text-xl flex"
       data-testid="HeaderTile-Text"
     >
-      containerHeading
+      List of Issuers
     </div>
     <div
       class="text-iw-subTitle text-md mb-8 mt-2 flex"
       data-testid="HeaderTile-Text-subContent"
     >
-      containerSubHeading
+      Search for your trusted issuer and choose a credential type in the next step.
     </div>
     <div
-      class="flex flex-wrap gap-3 p-4 pb-20 justify-center"
+      class="flex justify-center items-center w-full mx-auto bg-iw-background
+ my-auto flex-col h-72 shadow-md shadow-iw-shadow border-t-iw-shadow px-10"
+      data-testid="EmptyList-Outer-Container"
     >
-      <div
-        class="flex items-center justify-center"
+      <p
+        class="text-center text-light-title dark:text-dark-title"
+        data-testid="EmptyList-Text"
       >
-        <div
-          class="bg-iw-tileBackground w-48 h-48 flex flex-col shadow hover:shadow-lg hover:scale-110 hover:shadow-iw-selectedShadow p-5 m-4 rounded-md cursor-pointer items-center"
-          data-testid="ItemBox-Outer-Container-0"
-          role="menuitem"
-          tabindex="0"
-        >
-          <img
-            alt="Issuer Logo"
-            class="w-20 h-20 items-center justify-center me-4 flex"
-            data-testid="ItemBox-Logo"
-          />
-          <div
-            class="flex justify-center items-center pt-4"
-          >
-            <h3
-              class="flex text-sm font-semibold text-iw-title text-center"
-              data-testid="ItemBox-Text"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="flex items-center justify-center"
-      >
-        <div
-          class="bg-iw-tileBackground w-48 h-48 flex flex-col shadow hover:shadow-lg hover:scale-110 hover:shadow-iw-selectedShadow p-5 m-4 rounded-md cursor-pointer items-center"
-          data-testid="ItemBox-Outer-Container-1"
-          role="menuitem"
-          tabindex="0"
-        >
-          <img
-            alt="Issuer Logo"
-            class="w-20 h-20 items-center justify-center me-4 flex"
-            data-testid="ItemBox-Logo"
-          />
-          <div
-            class="flex justify-center items-center pt-4"
-          >
-            <h3
-              class="flex text-sm font-semibold text-iw-title text-center"
-              data-testid="ItemBox-Text"
-            />
-          </div>
-        </div>
-      </div>
+        No issuers found. Please refresh your browser window or try again later
+      </p>
     </div>
   </div>
 </DocumentFragment>
 `;
 
-exports[`Test IssuersList Component checks whether it renders loading state 1`] = `
+exports[`Testing the Layout of IssuersList Check whether it renders loading state 1`] = `
 <DocumentFragment>
   <div
     class="flex justify-center items-center"
