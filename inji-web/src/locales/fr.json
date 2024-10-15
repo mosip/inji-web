@@ -10,7 +10,7 @@
   },
   "HomePage": {
     "Intro": {
-      "title": "Accédez facilement à vos informations d’identification vérifiables !",
+      "title": "Accédez facilement à vos informations d'identification vérifiables !",
       "subTitle": "Téléchargez et partagez en toute sécurité vos informations d'identification instantanément.",
       "searchText": "Rechercher des émetteurs par nom"
     },
@@ -105,7 +105,7 @@
     "item3": {
       "title": "Comment puis-je télécharger un identifiant dans Inji Web ?",
       "description1": "Étape 1 : Recherchez et choisissez un émetteur sur la page de destination et sélectionnez un type d'informations d'identification.",
-      "description2": "Étape 2 : Sur la page d'authentification, fournissez les détails requis",
+      "description2": "Étape 2 : Sur la page d'authentification, fournissez les détails requis.",
       "description3": "Étape 3 : Le format PDF des informations d'identification vérifiables sera téléchargé dans le système."
     },
     "item4": {
@@ -137,7 +137,7 @@
       "description6": "5. Le code QR renvoie à l'URL de stockage VC, ce qui facilite le partage sans surcharger le code QR avec des données denses."
     },
     "item9": {
-      "title": "Quel est le rôle du QR code dans le PDF du justificatif ?",
+      "title": "Quel est le rôle du QR code dans le PDF du badge ?",
       "description1": "Le code QR intégré dans le PDF des informations d'identification sert de lien vers le stockage sécurisé de vos informations d'identification vérifiables (VC). ",
       "description2": "1. Le code QR est facile à scanner.",
       "description3": "2. Les informations d'identification peuvent être récupérées en toute sécurité par les vérificateurs lorsqu'ils scannent le code QR."
@@ -175,7 +175,7 @@
     "item15": {
       "title": "Qu'est-ce qu'OpenID4VP et comment est-il utilisé dans Inji Web ?",
       "description1": "OpenID4VP (OpenID for Verifiable Présentations) est une norme permettant de partager en toute sécurité des informations d'identification vérifiables (VC) avec les vérificateurs. ",
-      "description2": "1. Générer un QR code lié au stockage sécurisé de votre VC",
+      "description2": "1. Génération d'un code QR lié au stockage sécurisé de votre VC.",
       "description3": "2. Permettre aux vérificateurs (comme Inji Verify) de demander et de recevoir votre VC à l'aide de mécanismes sécurisés d'autorisation et d'échange de jetons."
     },
     "item16": {
@@ -186,9 +186,9 @@
     },
     "item17": {
       "title": "Que se passe-t-il si le code QR est scanné sur un appareil différent de celui sur lequel le VC a été généré ?",
-      "description1": "1. Inji Web prend en charge le partage entre appareils :",
-      "description2": "2. Le vérificateur peut scanner le code QR à partir de n'importe quelle copie physique ou numérique du PDF VC.",
-      "description3": "Inji Web vérifiera la demande et partagera le VC avec le vérificateur, quel que soit l'appareil à partir duquel le VC a été initialement généré ou est stocké."
+      "description1": "Inji Web prend en charge le partage entre appareils :",
+      "description2": "1. Le vérificateur peut scanner le code QR à partir de n'importe quelle copie physique ou numérique du PDF VC.",
+      "description3": "2. Inji Web vérifiera la demande et partagera le VC avec le vérificateur, quel que soit l'appareil à partir duquel le VC a été initialement généré ou est stocké."
     },
     "item18": {
       "title": "Inji Web peut-il prendre en charge différents formats pour le code QR ?",
@@ -218,7 +218,7 @@
       "title": "Comment puis-je basculer entre le VC intégré et le partage en ligne dans Inji Web ?",
       "description1": "Dans Inji Web, vous pouvez basculer entre l'intégration des informations d'identification vérifiables (VC) complètes dans le code QR ou l'utilisation du partage en ligne en configurant la propriété qr_code_type dans la configuration des émetteurs mimoto. ",
       "description2": "1. EmbeddedVC : Cette option intègre l'intégralité des données VC (au format JSON) directement dans le code QR. ",
-      "description3": "2. Partage en ligne : cette option génère un code QR avec une URL qui pointe vers le VC stocké en ligne de manière sécurisée. ",
+      "description3": "2. OnlineSharing : cette option génère un code QR avec une URL qui pointe vers le VC stocké en ligne de manière sécurisée. ",
       "description4": "Ces configurations se trouvent dans la configuration de l'émetteur Mimoto. "
     }
   },
