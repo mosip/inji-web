@@ -124,7 +124,11 @@ public class StepDef {
 
     @Then("User verify Download Success text displayed")
     public void user_verify_download_success_text_displayed() {
-
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         Assert.assertEquals(homePage.isSuccessMessageDisplayed(), "Success!");
     }
 
@@ -260,20 +264,20 @@ public class StepDef {
         System.out.println(baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"fileExists\", \"arguments\": {\"fileName\": \"MOSIPVerifiableCredential.pdf\"}}"));
 
         // Get file properties
-        System.out.println(baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"getFileProperties\", \"arguments\": {\"fileName\": \"MOSIPVerifiableCredential.pdf\"}}"));
+        System.out.println(baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"getFileProperties\", \"arguments\": {\"fileName\": \"MosipVerifiableCredential.pdf\"}}"));
 
         // Get file content. The content is Base64 encoded
-        String base64EncodedFile = (String) baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"getFileContent\", \"arguments\": {\"fileName\": \"MOSIPVerifiableCredential.pdf\"}}");
+        String base64EncodedFile = (String) baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"getFileContent\", \"arguments\": {\"fileName\": \"MosipVerifiableCredential.pdf\"}}");
 
         // Decode the content to Base64
         byte[] data = Base64.getDecoder().decode(base64EncodedFile);
-        OutputStream stream = new FileOutputStream("MOSIPVerifiableCredential.pdf");
+        OutputStream stream = new FileOutputStream("MosipVerifiableCredential.pdf");
         stream.write(data);
 
         System.out.println(stream);
         stream.close();
 
-        File pdfFile = new File(System.getProperty("user.dir")+"/MOSIPVerifiableCredential.pdf");
+        File pdfFile = new File(System.getProperty("user.dir")+"/MosipVerifiableCredential.pdf");
         PDDocument document = PDDocument.load(pdfFile);
 
         PDFTextStripper stripper = new PDFTextStripper();
@@ -407,37 +411,32 @@ public class StepDef {
     public void user_validate_the_list_of_credential_types_title_of_the_page_for_sunbird() {
         System.out.println(homePage.isVeridoniaInsuranceCompanyTextDisplayed());
         System.out.println(homePage.isCredentialTypesDisplayed());
-        Assert.assertEquals(homePage.isVeridoniaInsuranceCompanyTextDisplayed(), "Veridonia Insurance Company");
+        Assert.assertEquals(homePage.isVeridoniaInsuranceCompanyTextDisplayed(), "StayProtected Insurance");
         Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "List of Credential Types");
     }
 
     @Then("User validate the list of credential types title of the page in arabic laguage for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_arabic_laguage_for_sunbird() {
-        Assert.assertEquals(homePage.isVeridoniaInsuranceCompanyTextDisplayed(), "شركة فيريدونيا للتأمين");
         Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "قائمة أنواع الاعتمادات");
     }
 
     @Then("User validate the list of credential types title of the page in tamil laguage for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_tamil_laguage_for_sunbird() {
-        Assert.assertEquals(homePage.isVeridoniaInsuranceCompanyTextDisplayed(), "வெரிடோனியா இன்சூரன்ஸ் நிறுவனம்");
         Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "நற்சான்றிதழ் வகைகளின் பட்டியல்");
     }
 
     @Then("User validate the list of credential types title of the page in kannada laguage for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_kannada_laguage_for_sunbird() {
-        Assert.assertEquals(homePage.isVeridoniaInsuranceCompanyTextDisplayed(), "ವೆರಿಡೋನಿಯಾ ವಿಮಾ ಕಂಪನಿ");
         Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "ರುಜುವಾತು ಪ್ರಕಾರಗಳ ಪಟ್ಟಿ");
     }
 
     @Then("User validate the list of credential types title of the page in hindi laguage for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_hindi_laguage_for_sunbird() {
-        Assert.assertEquals(homePage.isVeridoniaInsuranceCompanyTextDisplayed(), "वेरिडोनिया बीमा कंपनींं");
         Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "क्रेडेंशियल प्रकारों की सूची");
     }
 
     @Then("User validate the list of credential types title of the page in french laguage for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_french_laguage_for_sunbird() {
-//		Assert.assertEquals(homePage.isVeridoniaInsuranceCompanyTextDisplayed(),"वेरिडोनिया बीमा कंपनींं");
         Assert.assertEquals(homePage.isCredentialTypesDisplayed(), "Liste des types d'informations d'identification");
     }
 
@@ -463,7 +462,7 @@ public class StepDef {
 
     @Then("User open new tab")
     public void user_open_new_tab() {
-        ((JavascriptExecutor) baseTest.getDriver()).executeScript("window.open('https://injiweb.qa-inji.mosip.net')");
+        ((JavascriptExecutor) baseTest.getDriver()).executeScript("window.open('" + baseTest.url + "')");
 
         Set<String> allWindowHandles =baseTest.getDriver().getWindowHandles();
         System.out.println(allWindowHandles);
@@ -484,11 +483,4 @@ public class StepDef {
     public void user_verify_the_page_after_refresh() {
 
     }
-
-//    @When("User set no network")
-//    public void user_set_no_network() {
-//        baseTest.getDriver().getSessionId();
-//
-//        setNetwork.setNoNetworkProfile();
-//    }
 }

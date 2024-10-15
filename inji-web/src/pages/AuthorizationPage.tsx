@@ -17,20 +17,10 @@ export const AuthorizationPage: React.FC = () => {
         }
     },[])
 
-
-    const getErrorCode = (errorCode: String) => {
-        return t(`error.code.${errorCode}`);
-    }
-
-    const getErrorMessage = (errorCode: String) => {
-        return t(`error.message.${errorCode}`);
-    }
-
-
     if(url.indexOf("error") == -1){
         return <div><LandingPageWrapper icon={<SpinningLoader/>} title={""} subTitle={""} gotoHome={false}/></div>
     }
-    return <div><LandingPageWrapper icon={<ErrorSheildIcon />} title={getErrorCode(error)} subTitle={getErrorMessage(error)} gotoHome={false}/></div>
+    return <div><LandingPageWrapper icon={<ErrorSheildIcon />} title={t(`error.code.${error}`)} subTitle={t(`error.message.${error}`)} gotoHome={false}/></div>
 }
 
 
