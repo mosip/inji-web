@@ -29,13 +29,12 @@ describe("Testing the Layout of SearchCredential", () => {
         }));
     });
 
-    afterEach(() => {
-        jest.clearAllMocks();
-    });
-
     test('Check if the layout is matching with the snapshots', () => {
         const {asFragment} = renderWithProvider(<SearchCredential />)
         expect(asFragment()).toMatchSnapshot();
+    });
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 });
 
@@ -55,10 +54,6 @@ describe("Testing the Functionality of SearchCredential", () => {
 
         const useDispatchMock = require('react-redux').useDispatch;
         useDispatchMock.mockReturnValue(mockDispatch);
-    });
-
-    afterEach(() => {
-        jest.clearAllMocks();
     });
 
     test('Check whether it filters credentials based on search input', () => {
@@ -86,5 +81,9 @@ describe("Testing the Functionality of SearchCredential", () => {
         const clearIcon = screen.getByTestId('NavBar-Search-Clear-Icon');
         fireEvent.click(clearIcon);
         expect(searchInput).toHaveValue('');
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 });

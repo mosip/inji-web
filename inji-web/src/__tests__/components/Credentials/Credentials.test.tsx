@@ -57,11 +57,6 @@ describe("Testing the Functionality of Credentials", () => {
         originalOpen = window.open;
         window.open = jest.fn();
     });
-
-    afterAll(() => {
-        window.open = originalOpen;
-    });
-
     beforeEach(() => {
         const useSelectorMock = require('react-redux').useSelector;
         useSelectorMock.mockImplementation((selector: any) => selector({
@@ -72,10 +67,6 @@ describe("Testing the Functionality of Credentials", () => {
                 language: 'en',
             },
         }));
-    });
-
-    afterEach(() => {
-        jest.clearAllMocks();
     });
 
     test('Check the presence of the container', () => {
@@ -106,5 +97,11 @@ describe("Testing the Functionality of Credentials", () => {
         renderWithProvider(<Credential credentialId="InsuranceCredential" index={1} credentialWellknown={credential} />);
         const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container-1");
         expect(itemBoxElement).toHaveTextContent("Name");
+    });
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+    afterAll(() => {
+        window.open = originalOpen;
     });
 });

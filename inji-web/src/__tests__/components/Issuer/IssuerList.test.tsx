@@ -20,10 +20,6 @@ describe("Testing the Layout of IssuersList", () => {
         }));
     });
 
-    afterEach(() => {
-        jest.clearAllMocks();
-    });
-
     test('Check whether it renders loading state', () => {
         
         const { asFragment } = renderWithProvider(<IssuersList state={RequestStatus.LOADING} />);
@@ -55,5 +51,8 @@ describe("Testing the Layout of IssuersList", () => {
         const { asFragment } = renderWithProvider(<IssuersList state={RequestStatus.DONE} />);
         // expect(screen.getByText('Issuer 1')).toBeInTheDocument();
         expect(asFragment()).toMatchSnapshot();
+    });
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 });

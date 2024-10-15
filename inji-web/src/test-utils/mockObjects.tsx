@@ -1,6 +1,6 @@
 import { IssuerWellknownObject } from '../types/data';
-
-
+import { LandingPageWrapperProps } from '../components/Common/LandingPageWrapper';
+import { NavBarProps } from '../types/components';
 export const mockDisplayArrayObject = {
     name: "Name",
     language: "en",
@@ -201,3 +201,16 @@ export const mockIssuerObjectList =  [
         scopes_supported: ['openid', 'profile'],
     },
 ]
+
+export const mockLandingPageWrapperProps: LandingPageWrapperProps = {
+    icon: <div data-testid="Test-Icon">Icon</div>,
+    title: "Test Title",
+    subTitle: "Test SubTitle",
+    gotoHome: true,
+};
+
+export const mockNavBarProps: NavBarProps = {
+    title: 'Test Title',
+    link: '/test-link',
+    search: true,
+};

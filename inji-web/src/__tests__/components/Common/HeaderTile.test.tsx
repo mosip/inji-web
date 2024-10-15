@@ -18,6 +18,6 @@ describe("Testing the Functionality of HeaderTile", () => {
 
     test('Check if sub-content is rendered properly', () => {
         renderWithProvider(<HeaderTile content={"No Issuers Found"} subContent={"No Issuers Found"} />);
-        expect(screen.getByTestId("HeaderTile-Text-subContent")).toHaveTextContent("No Issuers Found");
+        expect(screen.getByTestId("HeaderTile-Text-SubContent")).toHaveTextContent("No Issuers Found");
     });
 });

@@ -4,17 +4,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../types/redux";
 import { isRTL } from "../../utils/i18n";
 
-const CustomToast = ({ message }: { message: string }) => (
-    <div data-testid="AppToaster-custom-toast">{message}</div>
-);
-
 export const AppToaster: React.FC = () => {
     const language = useSelector((state: RootState) => state.common.language);
     const positionClass = isRTL(language) ? "top-left" : "top-right";
 
-    // Example of triggering a toast
     React.useEffect(() => {
-        toast(<CustomToast message="AppToaster test message" />);
+        toast("AppToaster test message");
     }, []);
 
     return (

@@ -2,17 +2,14 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { NavBar } from '../../../components/Common/NavBar';
-import { NavBarProps } from '../../../types/components';
-import { mockUseSearchcredentials } from '../../../test-utils/mockUtils';
+// import { NavBarProps } from '../../../types/components';
+import { mockUseSearchCredentials } from '../../../test-utils/mockUtils';
 import { Provider } from 'react-redux';
 import { reduxStore } from '../../../redux/reduxStore';
+import { mockNavBarProps } from '../../../test-utils/mockObjects';
 
-mockUseSearchcredentials();
-const defaultProps: NavBarProps = {
-    title: 'Test Title',
-    link: '/test-link',
-    search: true,
-};
+mockUseSearchCredentials();
+
 // todo : extract the local method to mockUtils, which is added to bypass the routing problems
 const renderWithProvider = (ui: React.ReactElement, { route = '/' } = {}) => {
     window.history.pushState({}, 'Test page', route);
@@ -30,17 +27,19 @@ const renderWithProvider = (ui: React.ReactElement, { route = '/' } = {}) => {
 
 describe("Testing the Layout of NavBar", () => {
     test('Check the presence of the navbar container', () => {
-        const{asFragment} = renderWithProvider(<NavBar {...defaultProps}  />);
+        const{asFragment} = renderWithProvider(<NavBar {...mockNavBarProps}  />);
         expect(asFragment()).toMatchSnapshot();
     });
 });
 
 describe("Testing the Functionality of NavBar", () => {
     test('Check navigates to the link when back arrow is clicked', () => {
-        renderWithProvider(<NavBar {...defaultProps} />);
+        renderWithProvider(<NavBar {...mockNavBarProps} />);
         fireEvent.click(screen.getByTestId('NavBar-Back-Arrow'));
         expect(screen.getByText('Test Link Page')).toBeInTheDocument();
     });
-    
 
+    afterEach(()=>{
+        jest.clearAllMocks();
+    })
 });

@@ -2,23 +2,20 @@ import React from 'react';
 import { CredentialList } from '../../../components/Credentials/CredentialList';
 import { RequestStatus } from '../../../hooks/useFetch';
 import { mockCredentials } from '../../../test-utils/mockObjects';
-import { renderWithProvider,mockUseSelector,mockUseTranslation} from '../../../test-utils/mockUtils'; // Import from mockutils
-
-
+import { renderWithProvider, mockUseSelector, mockUseTranslation, setMockUseSelectorState } from '../../../test-utils/mockUtils';
 
 describe("Testing the Layout of CredentialList Layouts", () => {
     beforeEach(() => {
         mockUseTranslation();
         mockUseSelector();
-        const useSelectorMock = require('react-redux').useSelector;
-        useSelectorMock.mockImplementation((selector: any) => selector({
+        setMockUseSelectorState({
             credentials: {
                 filtered_credentials: mockCredentials,
             },
             common: {
                 language: 'en',
             },
-        }));
+        });
     });
 
     afterEach(() => {
@@ -36,16 +33,6 @@ describe("Testing the Layout of CredentialList Layouts", () => {
     });
 
     test('Check if the layout is matching with the snapshots of Empty List', () => {
-        const useSelectorMock = require('react-redux').useSelector;
-        useSelectorMock.mockImplementation((selector: any) => selector({
-            credentials: {
-                filtered_credentials: []
-            },
-            common: {
-                language: 'en',
-            },
-        }));
-
         const { asFragment } = renderWithProvider(<CredentialList state={RequestStatus.DONE} />);
         expect(asFragment()).toMatchSnapshot();
     });
@@ -54,4 +41,7 @@ describe("Testing the Layout of CredentialList Layouts", () => {
         const { asFragment } = renderWithProvider(<CredentialList state={RequestStatus.DONE} />);
         expect(asFragment()).toMatchSnapshot();
     });
+    afterEach(()=>{
+        jest.clearAllMocks();
+    })
 });

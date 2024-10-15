@@ -14,19 +14,6 @@ jest.mock('react-router-dom', () => ({
         navigate: mockedUsedNavigate,
     }),
 }))
-
-describe("Testing the Functionality of DownloadResult Container",() => {
-    test('Check the presence of the container', () => {
-        render(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.DONE}/>);
-        let redirectionElement = screen.getByTestId("DownloadResult-Outer-Container");
-        expect(redirectionElement).toBeInTheDocument();
-        redirectionElement = screen.getByTestId("DownloadResult-Title");
-        expect(redirectionElement).toHaveTextContent("Title")
-        redirectionElement = screen.getByTestId("DownloadResult-SubTitle");
-        expect(redirectionElement).toHaveTextContent("SubTitle")
-    });
-})
-
 describe("Testing the Layout of DownloadResult for Success Error and Loading", () => {
 
     test('Check if the layout is matching with the snapshots for the Success',()=>{
@@ -42,3 +29,18 @@ describe("Testing the Layout of DownloadResult for Success Error and Loading", (
         expect(asFragment()).toMatchSnapshot();
     })
 });
+
+describe("Testing the Functionality of DownloadResult Container",() => {
+    test('Check the presence of the container', () => {
+        render(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.DONE}/>);
+        let redirectionElement = screen.getByTestId("DownloadResult-Outer-Container");
+        expect(redirectionElement).toBeInTheDocument();
+        redirectionElement = screen.getByTestId("DownloadResult-Title");
+        expect(redirectionElement).toHaveTextContent("Title")
+        redirectionElement = screen.getByTestId("DownloadResult-SubTitle");
+        expect(redirectionElement).toHaveTextContent("SubTitle")
+    });
+    afterEach(()=>{
+        jest.clearAllMocks();
+    })
+})

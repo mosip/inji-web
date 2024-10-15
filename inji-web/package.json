@@ -17,6 +17,7 @@
     "autoprefixer": "^9.8.6",
     "crypto-js": "^4.2.0",
     "i18next": "^23.11.2",
+    "inji-web": "file:",
     "postcss-cli": "^11.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

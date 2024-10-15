@@ -31,4 +31,7 @@ describe("Testing Layout of the Expiry Footer", () => {
         expect(successMockFn).not.toBeCalled();
         expect(cancelMockFn).toBeCalled();
     })
+    afterEach(()=>{
+        jest.clearAllMocks();
+    })
 })

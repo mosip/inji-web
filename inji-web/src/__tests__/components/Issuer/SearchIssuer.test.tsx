@@ -47,4 +47,7 @@ describe('Testing the Functionality of SearchIssuer', () => {
         expect(input).toHaveValue('');
         expect(reduxStore.dispatch).toHaveBeenCalledWith(storeFilteredIssuers([]));
     });
+    afterEach(()=>{
+        jest.clearAllMocks();
+    })
 });

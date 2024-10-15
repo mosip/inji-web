@@ -10,7 +10,7 @@ exports[`Testing the Layout of HeaderTile Check if the layout is matching with t
   </div>
   <div
     class="text-iw-subTitle text-md mb-8 mt-2 flex"
-    data-testid="HeaderTile-Text-subContent"
+    data-testid="HeaderTile-Text-SubContent"
   >
     No Issuers Found
   </div>

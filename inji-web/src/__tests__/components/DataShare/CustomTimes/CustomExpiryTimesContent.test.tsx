@@ -43,4 +43,7 @@ describe("Testing the  Functionality of custom expiry content",()=>{
         expect(expiryMockFn).toHaveBeenCalledTimes(1);
         expect(expiryMockFn).toHaveBeenCalledWith(expiryTime -1);
     })
+    afterEach(()=>{
+        jest.clearAllMocks();
+    })
 });

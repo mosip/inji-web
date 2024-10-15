@@ -14,7 +14,7 @@ exports[`Testing the Layout of IssuersList Check whether it renders empty issuer
     </div>
     <div
       class="text-iw-subTitle text-md mb-8 mt-2 flex"
-      data-testid="HeaderTile-Text-subContent"
+      data-testid="HeaderTile-Text-SubContent"
     >
       Search for your trusted issuer and choose a credential type in the next step.
     </div>
@@ -48,7 +48,7 @@ exports[`Testing the Layout of IssuersList Check whether it renders error state 
     </div>
     <div
       class="text-iw-subTitle text-md mb-8 mt-2 flex"
-      data-testid="HeaderTile-Text-subContent"
+      data-testid="HeaderTile-Text-SubContent"
     >
       Search for your trusted issuer and choose a credential type in the next step.
     </div>
@@ -82,7 +82,7 @@ exports[`Testing the Layout of IssuersList Check whether it renders issuers list
     </div>
     <div
       class="text-iw-subTitle text-md mb-8 mt-2 flex"
-      data-testid="HeaderTile-Text-subContent"
+      data-testid="HeaderTile-Text-SubContent"
     >
       Search for your trusted issuer and choose a credential type in the next step.
     </div>

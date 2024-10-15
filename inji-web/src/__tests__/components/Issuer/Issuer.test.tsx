@@ -22,11 +22,6 @@ describe('Testing the Functionality of Issuer Component', () => {
         originalOpen = window.open;
         window.open = jest.fn();
     });
-
-    afterAll(() => {
-        window.open = originalOpen;
-    });
-    
     beforeEach(()=>{
         jest.spyOn(require('../../../utils/i18n'), 'getObjectForCurrentLanguage').mockReturnValue(mockIssuer.display[0]);
     })
@@ -42,5 +37,8 @@ describe('Testing the Functionality of Issuer Component', () => {
         const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container-1");
         fireEvent.click(itemBoxElement);
         expect(window.location.pathname).toBe('/issuers/test-issuer');
+    });
+    afterAll(() => {
+        window.open = originalOpen;
     });
 });
