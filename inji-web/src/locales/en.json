@@ -105,7 +105,7 @@
     "item3": {
       "title": "How can I download a credential in Inji Web?",
       "description1": "Step 1: Search & choose an Issuer from the landing page and select a credential type.",
-      "description2": "Step 2: In the authentication page, provide required details",
+      "description2": "Step 2: In the authentication page, provide required details.",
       "description3": "Step 3: PDF format of the verifiable credential will be downloaded into the system."
     },
     "item4": {
@@ -118,7 +118,7 @@
     },
     "item6": {
       "title": "What details are present in the PDF credential?",
-      "description1": "Details collected as part of the registration process will be presented in the PDF. At present, for Insurance use case, one can find Policy details like Name, DoB"
+      "description1": "Details collected as part of the registration process will be presented in the PDF. At present, for Insurance use case, one can find Policy details like Name, DoB."
     },
     "item7": {
       "title": "Why I am not finding the list of issuers?",
@@ -175,7 +175,7 @@
     "item15":{
       "title":"What is OpenID4VP, and how is it used in Inji Web?",
       "description1":"OpenID4VP (OpenID for Verifiable Presentations) is a standard for securely sharing Verifiable Credentials (VCs) with verifiers. Inji Web implements this standard by:",
-      "description2":"1. Generating a QR code linked to the secure storage of your VC",
+      "description2":"1. Generating a QR code linked to the secure storage of your VC.",
       "description3":"2. Enabling verifiers (like Inji Verify) to request and receive your VC using secure authorization and token exchange mechanisms."
     },
     "item16":{
@@ -186,9 +186,9 @@
     },
     "item17":{
       "title":"What happens if the QR code is scanned on a different device from where the VC was generated?",
-      "description1":"1. Inji Web supports cross-device sharing:",
-      "description2":"2. The verifier can scan the QR code from any physical or digital copy of the VC PDF.",
-      "description3":"Inji Web will verify the request and share the VC with the verifier, regardless of the device from which the VC was originally generated or is stored."
+      "description1":"Inji Web supports cross-device sharing:",
+      "description2":"1. The verifier can scan the QR code from any physical or digital copy of the VC PDF.",
+      "description3":"2. Inji Web will verify the request and share the VC with the verifier, regardless of the device from which the VC was originally generated or is stored."
     },
     "item18":{
       "title":"Can Inji Web support different formats for the QR code?",

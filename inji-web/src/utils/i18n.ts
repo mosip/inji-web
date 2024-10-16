@@ -20,19 +20,21 @@ export const LanguagesSupported: LanguageObject[] = [
     {label: "عربي", value: 'ar'}
 ]
 
-export const defaultLanguage = window._env_.DEFAULT_LANG;
+export const defaultLanguage = window._env_.DEFAULT_LANG || 'en';
 
-const selected_language = storage.getItem(storage.SELECTED_LANGUAGE);
-i18n
-    .use(initReactI18next) // passes i18n down to react-i18next
-    .init({
-        resources,
-        lng: selected_language ? selected_language : defaultLanguage,
-        fallbackLng: defaultLanguage,
-        interpolation: {
-            escapeValue: false // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
-        },
-    });
+export const initializeI18n = () => {
+    const selected_language = storage.getItem(storage.SELECTED_LANGUAGE);
+    return i18n
+        .use(initReactI18next)
+        .init({
+            resources,
+            lng: selected_language || defaultLanguage,
+            fallbackLng: defaultLanguage,
+            interpolation: {
+                escapeValue: false
+            },
+        });
+};
 
 export const switchLanguage = async (language: string) => {
     storage.setItem(storage.SELECTED_LANGUAGE, language);
@@ -53,3 +55,5 @@ export const getDirCurrentLanguage = (language: string) => {
 export const isRTL = (language:string) => {
     return language === 'ar';
 }
+
+export default i18n;
