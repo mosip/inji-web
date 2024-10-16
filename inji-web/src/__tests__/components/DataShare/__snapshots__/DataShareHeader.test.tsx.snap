@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Layout of the Expiry Header Check if the layout is matching with the snapshots 1`] = `
+<DocumentFragment>
+  <div
+    class="flex items-start justify-between p-5 border-b border-solid rounded-t"
+    data-testid="DataShareHeader-Outer-Container"
+  >
+    <div
+      class="flex flex-col"
+    >
+      <div
+        class="text-lg font-semibold"
+        data-testid="DataShareHeader-Header-Title"
+      >
+         title
+      </div>
+      <div
+        class="text-md text-iw-subTitle"
+        data-testid="DataShareHeader-Header-SubTitle"
+      >
+         subTitle 
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

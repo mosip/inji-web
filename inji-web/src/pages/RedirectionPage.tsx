@@ -7,13 +7,13 @@ import {DownloadResult} from "../components/Redirection/DownloadResult";
 import {api} from "../utils/api";
 import {SessionObject} from "../types/data";
 import {useTranslation} from "react-i18next";
-import {downloadCredentialPDF, getTokenRequestBody} from "../utils/misc";
+import {downloadCredentialPDF, getErrorObject, getTokenRequestBody} from "../utils/misc";
 import {getObjectForCurrentLanguage} from "../utils/i18n";
 
 export const RedirectionPage: React.FC = () => {
 
 
-    const {error, state, fetchRequest} = useFetch();
+    const {error, state, response,  fetchRequest} = useFetch();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const redirectedSessionId = searchParams.get("state");
@@ -22,6 +22,12 @@ export const RedirectionPage: React.FC = () => {
     const [session, setSession] = useState<SessionObject | null>(activeSessionInfo);
     const [completedDownload, setCompletedDownload] = useState<boolean>(false);
     const displayObject = getObjectForCurrentLanguage(session?.selectedIssuer?.display ?? []);
+    const [errorObj, setErrorObj] = useState({
+        code: "error.generic.title",
+        message: "error.generic.subTitle"
+    })
+
+
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -29,10 +35,11 @@ export const RedirectionPage: React.FC = () => {
                 const code = searchParams.get("code") ?? "";
                 const urlState = searchParams.get("state") ?? "";
                 const codeVerifier = activeSessionInfo?.codeVerifier;
-                const issuerId = activeSessionInfo?.selectedIssuer.credential_issuer ?? "";
+                const issuerId = activeSessionInfo?.selectedIssuer?.credential_issuer ?? "";
                 const certificateId = activeSessionInfo?.certificateId;
+                const vcStorageExpiryLimitInTimes = activeSessionInfo?.vcStorageExpiryLimitInTimes;
 
-                const requestBody = new URLSearchParams(getTokenRequestBody(code, codeVerifier, issuerId, certificateId));
+                const requestBody = new URLSearchParams(getTokenRequestBody(code, codeVerifier, issuerId, certificateId, vcStorageExpiryLimitInTimes));
                 const apiRequest = api.fetchTokenAnddownloadVc;
                 let credentialDownloadResponse = await fetchRequest(
                     apiRequest.url(),
@@ -43,6 +50,8 @@ export const RedirectionPage: React.FC = () => {
                 if (state !== RequestStatus.ERROR) {
                     await downloadCredentialPDF(credentialDownloadResponse, certificateId);
                     setCompletedDownload(true);
+                } else {
+                    setErrorObj(getErrorObject(credentialDownloadResponse));
                 }
                 if (urlState != null) {
                     removeActiveSession(urlState);
@@ -62,8 +71,9 @@ export const RedirectionPage: React.FC = () => {
                                    state={RequestStatus.ERROR}/>
         }
         if (state === RequestStatus.ERROR && error) {
-            return <DownloadResult title={t("error.generic.title")}
-                                   subTitle={t("error.generic.subTitle")}
+            const errorObject = getErrorObject(response);
+            return <DownloadResult title={t(errorObject.code)}
+                                   subTitle={t(errorObject.message)}
                                    state={RequestStatus.ERROR}/>
         }
         if(!completedDownload){

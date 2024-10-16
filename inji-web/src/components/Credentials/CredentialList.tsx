@@ -24,18 +24,18 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
             credentials?.filtered_credentials?.credential_configurations_supported.length === 0 )
     ) {
         return <div>
-                <HeaderTile content={t("containerHeading")}/>
+                <HeaderTile content={t("containerHeading")} subContent={t("containerSubHeading")}/>
                 <EmptyListContainer content={t("emptyContainerContent")}/>
             </div>
     }
 
     return <React.Fragment>
-            <HeaderTile content={t("containerHeading")}/>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {credentials?.filtered_credentials && Object.keys(credentials?.filtered_credentials?.credential_configurations_supported).map((credentialId: string, index: number) => (
-                    <Credential credentialId={credentialId} credentialWellknown={credentials?.filtered_credentials} key={index} index={index}/>
-                ))}
-            </div>
+        <HeaderTile content={t("containerHeading")} subContent={t("containerSubHeading")}/>
+        <div className="grid grid-cols-8 gap-6 md:grid-cols-6 sm:grid-cols-4">
+            {credentials?.filtered_credentials && Object.keys(credentials?.filtered_credentials?.credential_configurations_supported).map((credentialId: string, index: number) => (
+                <Credential credentialId={credentialId} credentialWellknown={credentials?.filtered_credentials} key={index} index={index}/>
+            ))}
+        </div>
     </React.Fragment>
 }
 

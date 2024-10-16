@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing the Layouts of EmptyListContainer Check if the layout is matching with the snapshots 1`] = `
+<DocumentFragment>
+  <div
+    class="flex justify-center items-center w-full mx-auto bg-iw-background
+ my-auto flex-col h-72 shadow-md shadow-iw-shadow border-t-iw-shadow px-10"
+    data-testid="EmptyList-Outer-Container"
+  >
+    <p
+      class="text-center text-light-title dark:text-dark-title"
+      data-testid="EmptyList-Text"
+    >
+      No Issuers Found
+    </p>
+  </div>
+</DocumentFragment>
+`;

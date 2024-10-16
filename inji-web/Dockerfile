@@ -18,6 +18,13 @@ ENV DEFAULT_TITLE=$defaultTitle
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
+# Clean your cache
+RUN npm cache clean --force
+# Rebuild npm
+RUN npm rebuild
+# Reinstall node_modules
+RUN rm -rf node_modules
+
 # Install Node.js dependencies
 RUN npm install
 

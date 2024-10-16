@@ -246,10 +246,7 @@ extraEnvVars: []
 ##
 extraEnvVarsCM:
   - global
-  - inji-config-server-share
-  - artifactory-share
   - injiweb-ui
-  # - softhsm-esignet-share
 
 ## Secret with extra environment variables
 ##

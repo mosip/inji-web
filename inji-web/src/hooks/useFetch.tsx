@@ -10,6 +10,7 @@ export enum RequestStatus {
 export const useFetch = () => {
     const [state, setState] = useState<RequestStatus>(RequestStatus.LOADING);
     const [error, setError] = useState<string>("");
+    const [response, setResponse] = useState<any>("");
 
     const fetchRequest = async (uri: string, method: MethodType, header: any, body?: any) => {
         try {
@@ -20,12 +21,19 @@ export const useFetch = () => {
                 body: body
             }
             const response = await fetch(uri, requestOptions);
-            if (!response.ok) {
-                 throw new Error();
-            }
             if (uri.indexOf("download") !== -1) {
+                if (!response.ok) {
+                    setState(RequestStatus.ERROR);
+                    let downloadResponse = await response.json();
+                    setError("Error");
+                    setResponse(downloadResponse);
+                    return downloadResponse;
+                }
                 setState(RequestStatus.DONE);
                 return await response.blob();
+            }
+            if (!response.ok) {
+                throw new Error();
             }
             setState(RequestStatus.DONE);
             return await response.json();
@@ -34,7 +42,7 @@ export const useFetch = () => {
             setError("Error Happened");
         }
     };
-    return {state, error, fetchRequest};
+    return {state, error, response, fetchRequest};
 }
 
 

@@ -18,23 +18,14 @@
     
   jobs:
     inji-web-test:
-      runs-on: ubuntu-latest
-      env:
+      uses: mosip/kattu/.github/workflows/browserstack-web.yml@master-java21
+      with:
+        SERVICE_LOCATION: inji-web-test
+        BUILD_ARTIFACT: test-output
+      secrets:
         BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-        BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-  
-      steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-    
-      - name: Run tests
-        run: |
-           cd inji-web-test
-           mvn clean test -DtestngXmlFile="TestNg.xml"
-
-      - name: Save test reports
-        uses: actions/upload-artifact@v3
-        if: success() || failure()
-        with:
-          name: test-reports
-          path: inji-web-test/test-output          
+        BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}         
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }} 
+        S3_BUCKET: ${{ secrets.S3_BUCKET }} 

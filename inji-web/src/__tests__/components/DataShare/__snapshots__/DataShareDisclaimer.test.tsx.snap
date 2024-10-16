@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Layout of the DataShareDisclaimer Check if the layout is matching with the snapshots 1`] = `
+<DocumentFragment>
+  <div
+    class="flex w-full p-2 rounded-lg border-2 border-iw-shieldLoadingShadow bg-iw-disclaimerBackGround my-8"
+    data-testid="DataShareDisclaimer-Outer-Container"
+  >
+    <div
+      class="px-4 text-center text-iw-disclaimerText text-xs"
+      data-testid="DataShareDisclaimer-Content"
+    >
+      Disclaimer
+    </div>
+  </div>
+</DocumentFragment>
+`;

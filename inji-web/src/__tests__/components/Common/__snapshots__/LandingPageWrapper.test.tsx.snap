@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing the Layout of LandingPageWrapper Check if the layout is matching with the snapshots 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col justify-center items-center pt-32"
+    data-testid="DownloadResult-Outer-Container"
+  >
+    <div
+      data-testid="Test-Icon"
+    >
+      Icon
+    </div>
+    <div
+      class="my-4"
+    >
+      <p
+        class="font-bold"
+        data-testid="DownloadResult-Title"
+      >
+        Test Title
+      </p>
+    </div>
+    <div
+      class="mb-6 px-10 text-center"
+      data-testid="DownloadResult-SubTitle"
+    >
+      <p>
+        Test SubTitle
+      </p>
+    </div>
+    <div>
+      <button
+        class="text-iw-primary font-bold py-2 px-4 rounded-lg border-2 border-iw-primary"
+        data-testid="DownloadResult-Home-Button"
+      >
+        Go To Home
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -34,10 +34,9 @@ export const HomePage: React.FC = () => {
     if (state === RequestStatus.ERROR) {
         toast.error(t("errorContent"));
     }
-
     return <div data-testid="Home-Page-Container">
         <div className="container mx-auto mt-8 flex flex-col px-10">
-            <div className={"my-20"}>
+            <div className={"mb-20"}>
                 <IntroBox/>
                 <SearchIssuer state={state} fetchRequest={fetchRequest}/>
             </div>

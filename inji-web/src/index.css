@@ -18,6 +18,7 @@
         --iw-color-primary: #EB6F2D;
         --iw-color-helpAccordionHover: #e0e0e0;
         --iw-color-shadow: #18479329;
+        --iw-color-selected-shadow: #164EA840;
         --iw-color-spinningLoaderPrimary: #EB6F2D;
         --iw-color-spinningLoaderSecondary: #E6E6E6;
         --iw-color-navigationBar: #F2FBFF;
@@ -33,6 +34,15 @@
         --iw-color-shieldSuccessShadow: #f1f7ee;
         --iw-color-shieldErrorShadow: #FEF2F2;
         --iw-color-shieldLoadingShadow: #f6dfbe;
+        --iw-color-backDrop: #000000;
+        --iw-color-borderDark: #717171;
+        --iw-color-borderLight: #E8EBEC;
+        --iw-color-arrowDown: #164EA840;
+        --iw-color-hoverBackGround: #164EA840;
+        --iw-color-text: #FFFFFF;
+        --iw-color-subText: #A0A8AC;
+        --iw-color-disclaimerBackGround: #FFF7E5;
+        --iw-color-disclaimerText: #8B6105;
     }
     [class="purple_theme"] {
         --iw-font-base: "Gentium Plus", serif;
@@ -45,6 +55,7 @@
         --iw-color-primary: #5a31ee;
         --iw-color-helpAccordionHover: #e0e0e0;
         --iw-color-shadow: #18479329;
+        --iw-color-selected-shadow: #164EA840;
         --iw-color-spinningLoaderPrimary: #4518de;
         --iw-color-spinningLoaderSecondary: #E6E6E6;
         --iw-color-navigationBar: #F2FBFF;
@@ -60,6 +71,15 @@
         --iw-color-shieldSuccessShadow: #f1f7ee;
         --iw-color-shieldErrorShadow: #FEF2F2;
         --iw-color-shieldLoadingShadow: #f6dfbe;
+        --iw-color-backDrop: #000000;
+        --iw-color-borderDark: #717171;
+        --iw-color-borderLight: #E8EBEC;
+        --iw-color-arrowDown: #164EA840;
+        --iw-color-hoverBackGround: #164EA840;
+        --iw-color-text: #FFFFFF;
+        --iw-color-subText: #A0A8AC;
+        --iw-color-disclaimerBackGround: #FFF7E5;
+        --iw-color-disclaimerText: #8B6105;
     }
 }
 

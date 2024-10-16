@@ -30,14 +30,15 @@ export const isObjectEmpty = (object: any) => {
     return object === null || object === undefined || Object.keys(object).length === 0;
 }
 
-export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialType: string) => {
+export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialType: string, vcStorageExpiryLimitInTimes: string) => {
     return {
         'grant_type': 'authorization_code',
         'code': code,
         'redirect_uri': api.authorizationRedirectionUrl,
         'code_verifier': codeVerifier,
         'issuer': issuerId,
-        'credential': credentialType
+        'credential': credentialType,
+        'vcStorageExpiryLimitInTimes': vcStorageExpiryLimitInTimes
     }
 }
 
@@ -53,3 +54,32 @@ export const downloadCredentialPDF = async (response: any, certificateId: string
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
 }
+
+export const getErrorObject = (downloadResponse: any) => {
+    const errorCode = downloadResponse?.errors ? downloadResponse?.errors[0]?.errorCode : "";
+    if([
+        "proof_type_not_supported",
+        "json_parsing_failed",
+        "signature_verification_failed",
+        "unknown_exception",
+        "proof_document_not_found",
+        "public_key_not_found"
+    ].indexOf(errorCode) != -1 ){
+        return {
+            code: `error.verification.${errorCode}.title`,
+            message: `error.verification.${errorCode}.subTitle`
+        }
+    }
+    return {
+        code: "error.generic.title",
+        message: "error.generic.subTitle"
+    }
+}
+export const constructContent = (descriptions: string[],applyHTML:boolean) => {
+    return descriptions.map((desc, index) => {
+        if (applyHTML) {
+            return { __html: desc };
+        }
+        return desc;
+    });
+};
