@@ -7,7 +7,8 @@ if [ $# -ge 1 ] ; then
 fi
 
 NS=injiweb
-CHART_VERSION=0.10.0-develop
+CHART_VERSION=0.10.0
+DATASHARE_CHART_VERSION=1.3.0-beta.1
 
 DEFAULT_MOSIP_INJIWEB_HOST=$( kubectl get cm global -n config-server -o jsonpath={.data.mosip-injiweb-host} )
 # Check if MOSIP_INJIWEB_HOST is present under configmap/global of configserver
@@ -56,7 +57,7 @@ function installing_inji-web() {
   helm -n $NS install datashare-inji mosip/datashare \
   -f datashare-values.yaml \
   --set istio.gateway.servers[0].hosts[0]=$INJI_DATASHARE_HOST \
-  --version $CHART_VERSION
+  --version $DATASHARE_CHART_VERSION
 
   INJI_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-injiweb-host})
   echo Installing INJIWEB
