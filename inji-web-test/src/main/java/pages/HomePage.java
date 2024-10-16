@@ -30,6 +30,40 @@ public class HomePage extends BasePage {
         }
     }
 
+    public boolean isHelpPageDisplayed(){
+      return   isElementIsVisible(driver, By.xpath("//div[@data-testid='Header-Menu-Help']"));
+    }
+
+    public boolean isHeaderContanerDisplayed(){
+        return   isElementIsVisible(driver, By.xpath("//div[@data-testid='Header-Container']"));
+    }
+    public boolean isFooterIsDisplayedOnHomePage(){
+        return isElementIsVisible(driver, By.xpath("//*[@data-testid='Footer-Text']"));
+    }
+
+    public String getFooterText(){
+        return getElementText(driver, By.xpath("//*[@data-testid='Footer-Text']"));
+    }
+    public boolean isHomePageContainerDisplayed(){
+        return isElementIsVisible(driver, By.xpath("//*[@data-testid='Home-Page-Container']"));
+    }
+    public boolean isAboutDisplayed(){
+        return isElementIsVisible(driver, By.xpath("//*[@data-testid='Header-Menu-AboutInji']"));
+    }
+
+    public boolean isSerchBoxDisplayed(){
+        return isElementIsVisible(driver, By.xpath("//*[@data-testid='Search-Issuer-Input']"));
+    }
+
+    public boolean isIssuerLogoDisplayed(){
+        return isElementIsVisible(driver, By.xpath("//*[@data-testid='ItemBox-Logo']"));
+    }
+
+    public void clickOnAboutInji(){
+        clickOnElement(driver, By.xpath("//*[@data-testid='Header-Menu-AboutInji']"));
+    }
+
+
     public Boolean isLogoDisplayed() {
         try {
             Thread.sleep(3000);
@@ -47,7 +81,7 @@ public class HomePage extends BasePage {
         return getElementText(driver, By.xpath("//h2[@data-testid='IntroBox-Text']"));
     }
 
-    public String isHomePageDiscriptinTextDisplayed() {
+    public String isHomePageDescriptionTextDisplayed() {
         return getElementText(driver, By.xpath("//p[@data-testid='IntroBox-SubText']"));
     }
 
@@ -77,7 +111,7 @@ public class HomePage extends BasePage {
         }
     }
 
-    public String isSuccessMessageDisplayed() {
+    public Boolean isSuccessMessageDisplayed() {
         try {
             Thread.sleep(6000);
             ;
@@ -85,7 +119,7 @@ public class HomePage extends BasePage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return getElementText(driver, By.xpath("//p[@data-testid='DownloadResult-Title']"));
+        return isElementIsVisible(driver, By.xpath("//*[@data-testid='DownloadResult-Title']"));
     }
 
     public Boolean isMosipNationalIdDisplayed() {
@@ -227,4 +261,15 @@ public class HomePage extends BasePage {
     }
 
 
+    public String isListOfIssuersTextDisplayed() {
+        return getElementText(driver, By.xpath("(//*[@data-testid='HeaderTile-Text'])[1]"));
+    }
+
+    public String isListOfIssuersDescriptionTextDisplayed() {
+        return getElementText(driver, By.xpath("(//*[@data-testid='HeaderTile-Text'])[2]"));
+    }
+
+    public boolean isAboutPageDisplayed(){
+       return isElementIsVisible(driver, By.xpath("//p[text()='Overview']"));
+    }
 }

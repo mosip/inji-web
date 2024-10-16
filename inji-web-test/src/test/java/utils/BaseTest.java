@@ -1,9 +1,7 @@
 package utils;
 
-import io.cucumber.java.After;
-import io.cucumber.java.AfterAll;
-import io.cucumber.java.Before;
-import io.cucumber.java.BeforeAll;
+import io.cucumber.java.*;
+import org.json.JSONObject;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -23,15 +21,18 @@ public class BaseTest {
     public void setDriver(WebDriver driver) {
         this.driver = driver;
     }
-
     public WebDriver driver;
 
+    public String url ="https://injiweb.qa-inji.mosip.net/";
+
     public JavascriptExecutor jse;
+    public String  PdfNameForMosip="MosipVerifiableCredential.pdf";
+    public String  PdfNameForInsurance="InsuranceCredential.pdf";
 
     String accessKey = getKeyValueFromYaml("/browserstack.yml","accessKey");
     String userName = getKeyValueFromYaml("/browserstack.yml","userName");
     public  final String URL = "https://" + userName + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
-
+    private Scenario scenario;
     @Before
     public void beforeAll() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -40,13 +41,12 @@ public class BaseTest {
         HashMap<String, Object> browserstackOptions = new HashMap<String, Object>();
         browserstackOptions.put("os", "Windows");
         browserstackOptions.put("osVersion", "10");
-        browserstackOptions.put("projectName", "Bstack-[Java] Sample file download");
         capabilities.setCapability("bstack:options", browserstackOptions);
 
-         driver = new RemoteWebDriver(new URL(URL), capabilities);
-         jse = (JavascriptExecutor) driver;
+        driver = new RemoteWebDriver(new URL(URL), capabilities);
+        jse = (JavascriptExecutor) driver;
         driver.manage().window().maximize();
-        driver.get("https://injiweb.qa-inji.mosip.net");
+        driver.get(url);
     }
 
     @After

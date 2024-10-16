@@ -69,5 +69,9 @@ public class MosipCredentials extends BasePage {
         return isElementIsVisible(driver, By.xpath("//label[text() = 'UIN/VID']"));
     }
 
+    public Boolean isDownloadingDescriptionTextDisplayed() {
+
+        return isElementIsVisible(driver, By.xpath("//*[@data-testid='DownloadResult-SubTitle']"));
+    }
 
 }
