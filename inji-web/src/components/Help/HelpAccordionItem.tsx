@@ -6,7 +6,7 @@ import {IoIosArrowDown, IoIosArrowUp} from "react-icons/io";
 export const HelpAccordionItem: React.FC<HelpAccordionItemProps> = (props) => {
 
     return <React.Fragment>
-        <div className="rounded-md mb-2 shadow-sm shadow-iw-shadow"
+        <div className="rounded-md mb-2 shadow-md shadow-iw-shadow"
              data-testid="Help-Item-Container">
             <button
                 data-testid="Help-Item-Title-Button"
@@ -25,7 +25,7 @@ export const HelpAccordionItem: React.FC<HelpAccordionItemProps> = (props) => {
                 </div>
             </button>
             {(props.id === props.open) && (
-                <div className="p-5 bg-iw-background border-t-2"
+                <div className="p-5 bg-iw-background border-t"
                      data-testid="Help-Item-Content-Text">
                     {props.content.map((content, index) => <p key={index} className={"text-iw-title"}>{content}</p>)}
 
