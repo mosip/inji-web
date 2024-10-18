@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { reduxStore } from '../redux/reduxStore';
 
 export const mockUseTranslation = () => {
@@ -11,7 +11,6 @@ export const mockUseTranslation = () => {
         }),
     }));
 };
-
 export const mockUseNavigate = () => {
     const mockNavigate = jest.fn();
     jest.mock('react-router-dom', () => ({
@@ -47,35 +46,23 @@ export const mockUseGetObjectForCurrentLanguage = () => {
 export const wrapUnderRouter = (children: React.ReactNode) => {
     return <Router>{children}</Router>;
 };
-
-export const mockUseToast = () => {
-    jest.mock('react-toastify', () => ({
-        toast: jest.fn(),
-        ToastContainer: jest.requireActual('react-toastify').ToastContainer,
-    }));
-};
-
 export const mockUseDispatch = () => {
     jest.mock('react-redux', () => ({
         ...jest.requireActual('react-redux'),
         useDispatch: jest.fn(),
     }));
 };
-
 export const mockUseSpinningLoader = () => {
     jest.mock('../components/Common/SpinningLoader', () => ({
         SpinningLoader: () => <></>,
     }));
 };
-
 export const mockUseLanguageSelector = () => {
     jest.mock('../components/Common/LanguageSelector', () => ({
         LanguageSelector: () => <></>,
     }));
 };
-
 interface RenderWithProviderOptions extends Omit<RenderOptions, 'queries'> {}
-
 export const renderWithProvider = (element: ReactElement, options?: RenderWithProviderOptions) => {
     return render(
         <Provider store={reduxStore}>
@@ -86,4 +73,76 @@ export const renderWithProvider = (element: ReactElement, options?: RenderWithPr
         options
     );
 };
+export const mockUseParams = ()=>{
+    jest.mock('react-router-dom', () => ({
+        ...jest.requireActual('react-router-dom'),
+        useParams: () => ({ issuerId: 'test-issuer-id' }),
+      }));   
+};
+export const mockUseapiObject = () =>{
+    jest.mock('../utils/api', () => ({
+        api: {
+          mimotoHost: 'http://mocked-api-host',
+        },
+      }));
+};
+export const mockUseFetch = () =>{
+    jest.mock('../hooks/useFetch', () => {
+        const RequestStatus = {
+          LOADING: 'LOADING',
+          DONE: 'DONE',
+          ERROR: 'ERROR',
+        };
+        return {
+          useFetch: () => jest.fn(),
+          RequestStatus,
+        };
+      });
+};
+
+export const mockUseToast = () =>{
+    jest.mock('react-toastify', () => ({
+      toast: {
+        error: jest.fn(),
+      },
+    }));
+};
+export const mockusemisc = ()=>{
+    jest.mock('../utils/misc', () => ({
+        downloadCredentialPDF: jest.fn(),
+        getErrorObject: jest.fn(),
+        getTokenRequestBody: jest.fn(),
+      }));
+}
+export const mockusei18n = ()=>{
+    jest.mock('react-i18next', () => ({
+        useTranslation: () => ({
+          t: (key: string) => key,
+        }),
+        initReactI18next: {
+          type: '3rdParty',
+          init: jest.fn(),
+        },
+      }));
+
+}
+export const mockWindowLocation = (url: string) => {
+    const location = new URL(url) as unknown as Location;
+    Object.defineProperty(window, 'location', {
+      value: location,
+      writable: true,
+    });
+  };
+export const renderWithRouter = (Element: React.ReactElement, { route = '/' } = {}) => {
+    window.history.pushState({}, 'Test page', route);
+    return render(
+      <BrowserRouter>
+        <Provider store={reduxStore}>
+          <Routes>
+            <Route path="*" element={Element} />
+          </Routes>
+        </Provider>
+      </BrowserRouter>
+    );
+  };
 
