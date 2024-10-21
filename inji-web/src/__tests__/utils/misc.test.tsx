@@ -3,14 +3,14 @@ import { mockApi, mockCrypto } from '../../test-utils/mockUtils';
 import sha256 from 'crypto-js/sha256';
 import Base64 from 'crypto-js/enc-base64';
 
-describe('misc.ts tests', () => {
+describe('Test misc.ts utility functions', () => {
     beforeAll(() => {
         global.crypto = mockCrypto;
         global.URL.createObjectURL = jest.fn(); 
         global.URL.revokeObjectURL = jest.fn(); 
     });
 
-    test('generateCodeChallenge should return correct code challenge and verifier', () => {
+    test('Check if generateCodeChallenge returns correct code challenge and verifier', () => {
         const verifier = 'testVerifier';
         const hashedVerifier = sha256(verifier);
         const base64Verifier = Base64.stringify(hashedVerifier);
@@ -24,32 +24,32 @@ describe('misc.ts tests', () => {
         expect(codeChallenge).toBe(expectedCodeChallenge);
     });
     
-    test('generateRandomString should return a string of specified length', () => {
+    test('Check if generateRandomString returns a string of specified length', () => {
         const randomString = generateRandomString(43);
         expect(randomString).toHaveLength(43);
     });
 
-    test('isObjectEmpty should correctly identify empty objects', () => {
+    test('Check if isObjectEmpty correctly identifies empty objects', () => {
         expect(isObjectEmpty({})).toBe(true);
         expect(isObjectEmpty(null)).toBe(true);
         expect(isObjectEmpty(undefined)).toBe(true);
         expect(isObjectEmpty({ key: 'value' })).toBe(false);
     });
 
-    test('getTokenRequestBody should return correct request body', () => {
-        const requestBody = getTokenRequestBody('code', 'verifier', 'issuer', 'credential', 'expiry');
-        expect(requestBody).toEqual({
-            'grant_type': 'authorization_code',
-            'code': 'code',
-            'redirect_uri': 'http://localhost/redirect', 
-            'code_verifier': 'verifier',
-            'issuer': 'issuer',
-            'credential': 'credential',
-            'vcStorageExpiryLimitInTimes': 'expiry'
-        });
+   test('Check if getTokenRequestBody returns correct request body', () => {
+    const requestBody = getTokenRequestBody('code', 'verifier', 'issuer', 'credential', 'expiry');
+    expect(requestBody).toEqual({
+        'grant_type': 'authorization_code',
+        'code': 'code',
+        'redirect_uri': 'https://api.collab.mossip.net/redirect', 
+        'code_verifier': 'verifier',
+        'issuer': 'issuer',
+        'credential': 'credential',
+        'vcStorageExpiryLimitInTimes': 'expiry'
     });
+});
 
-    test('downloadCredentialPDF should create and click a download link', async () => {
+    test('Check if downloadCredentialPDF creates and clicks a download link', async () => {
         const response = new Blob(['test'], { type: 'application/pdf' });
         const certificateId = '12345';
         const createElementSpy = jest.spyOn(document, 'createElement');
@@ -71,8 +71,7 @@ describe('misc.ts tests', () => {
         expect(removeChildSpy).toHaveBeenCalledWith(mockLink);
     });
 
-
-    test('getErrorObject should return correct error object', () => {
+    test('Check if getErrorObject returns correct error object', () => {
         const downloadResponse = { errors: [{ errorCode: 'proof_type_not_supported' }] };
         const errorObject = getErrorObject(downloadResponse);
         expect(errorObject).toEqual({
@@ -81,7 +80,7 @@ describe('misc.ts tests', () => {
         });
     });
 
-    test('constructContent should return correct content array', () => {
+    test('Check if constructContent returns correct content array', () => {
         const descriptions = ['desc1', 'desc2'];
         const content = constructContent(descriptions, true);
         expect(content).toEqual([{ __html: 'desc1' }, { __html: 'desc2' }]);

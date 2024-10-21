@@ -1,5 +1,5 @@
 import { addNewSession, getAllActiveSession, getActiveSession, removeActiveSession } from '../../utils/sessions';
-import {mockStorageModule } from '../../test-utils/mockUtils';
+import { mockStorageModule } from '../../test-utils/mockUtils';
 import { SessionObject } from '../../types/data';
 
 // Set up the storage mock before the tests run
@@ -8,7 +8,7 @@ mockStorageModule();
 // Import the mocked storage after setting up the mock
 import { storage as mockStorage } from '../../utils/storage';
 
-describe('Session Management', () => {
+describe('Test Session Management Functions', () => {
   const mockSession: SessionObject = {
     selectedIssuer: undefined,
     certificateId: 'cert123',
@@ -21,7 +21,7 @@ describe('Session Management', () => {
     jest.clearAllMocks();
   });
 
-  test('should add a new session', () => {
+  test('Check if a new session is added correctly', () => {
     (mockStorage.getItem as jest.Mock).mockReturnValueOnce(JSON.stringify([]));
     addNewSession(mockSession);
     expect(mockStorage.setItem).toHaveBeenCalledWith(
@@ -30,25 +30,25 @@ describe('Session Management', () => {
     );
   });
 
-  test('should get all active sessions', () => {
+  test('Check if all active sessions are retrieved correctly', () => {
     (mockStorage.getItem as jest.Mock).mockReturnValueOnce(JSON.stringify([mockSession]));
     const sessions = getAllActiveSession();
     expect(sessions).toEqual([mockSession]);
   });
 
-  test('should get an active session by state', () => {
+  test('Check if an active session is retrieved correctly by state', () => {
     (mockStorage.getItem as jest.Mock).mockReturnValueOnce(JSON.stringify([mockSession]));
     const session = getActiveSession('state123');
     expect(session).toEqual(mockSession);
   });
 
-  test('should return an empty object if no active session is found', () => {
+  test('Check if an empty object is returned when no active session is found', () => {
     (mockStorage.getItem as jest.Mock).mockReturnValueOnce(JSON.stringify([]));
     const session = getActiveSession('state456');
     expect(session).toEqual({});
   });
 
-  test('should remove an active session by state', () => {
+  test('Check if an active session is removed correctly by state', () => {
     (mockStorage.getItem as jest.Mock).mockReturnValueOnce(JSON.stringify([mockSession]));
     removeActiveSession('state123');
     expect(mockStorage.setItem).toHaveBeenCalledWith(

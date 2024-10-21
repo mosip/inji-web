@@ -7,7 +7,7 @@ type ApiModule = {
   MethodType: typeof MethodType;
 };
 
-describe('api class', () => {
+describe('Testing API Class', () => {
   let apiModule: ApiModule;
   let originalEnv: NodeJS.ProcessEnv;
 
@@ -30,15 +30,15 @@ describe('api class', () => {
     process.env = originalEnv;
   });
 
-  test('should have the correct mimotoHost', () => {
+  test('Check mimotoHost property', () => {
     expect(apiModule.api.mimotoHost).toBe('https://api.collab.mossip.net/v1/mimoto');
   });
 
-  test('should have the correct authorizationRedirectionUrl', () => {
+  test('Check authorizationRedirectionUrl property', () => {
     expect(apiModule.api.authorizationRedirectionUrl).toBe('https://api.collab.mossip.net/redirect');
   });
 
-  test('should have the correct fetchIssuers request', () => {
+  test('Check fetchIssuers request', () => {
     const fetchIssuers: ApiRequest = apiModule.api.fetchIssuers;
     expect(fetchIssuers.url()).toBe('https://api.collab.mossip.net/v1/mimoto/issuers');
     expect(fetchIssuers.methodType).toBe(apiModule.MethodType.GET);
@@ -47,7 +47,7 @@ describe('api class', () => {
     });
   });
 
-  test('should have the correct fetchSpecificIssuer request', () => {
+  test('Check fetchSpecificIssuer request', () => {
     const issuerId = '123';
     const fetchSpecificIssuer: ApiRequest = apiModule.api.fetchSpecificIssuer;
     expect(fetchSpecificIssuer.url(issuerId)).toBe('https://api.collab.mossip.net/v1/mimoto/issuers/123');
@@ -57,7 +57,7 @@ describe('api class', () => {
     });
   });
 
-  test('should have the correct fetchIssuersWellknown request', () => {
+  test('Check fetchIssuersWellknown request', () => {
     const issuerId = '123';
     const fetchIssuersWellknown: ApiRequest = apiModule.api.fetchIssuersWellknown;
     expect(fetchIssuersWellknown.url(issuerId)).toBe('https://api.collab.mossip.net/v1/mimoto/issuers/123/well-known-proxy');
@@ -67,7 +67,7 @@ describe('api class', () => {
     });
   });
 
-  test('should have the correct fetchTokenAnddownloadVc request', () => {
+  test('Check fetchTokenAnddownloadVc request', () => {
     const fetchTokenAnddownloadVc: ApiRequest = apiModule.api.fetchTokenAnddownloadVc;
     expect(fetchTokenAnddownloadVc.url()).toBe('https://api.collab.mossip.net/v1/mimoto/credentials/download');
     expect(fetchTokenAnddownloadVc.methodType).toBe(apiModule.MethodType.POST);
@@ -78,7 +78,7 @@ describe('api class', () => {
     });
   });
 
-  test('should generate the correct authorization URL', () => {
+  test('Check authorization URL generation', () => {
     const currentIssuer: IssuerObject = {
       name: 'Issuer Name',
       desc: 'Issuer Description',

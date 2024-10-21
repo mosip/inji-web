@@ -44,7 +44,7 @@ jest.mock('../../utils/storage', () => ({
 // Mock window
 const windowSpy = jest.spyOn(global, 'window', 'get');
 
-describe('i18n configuration', () => {
+describe('Test i18n configuration', () => {
   let i18nModule: any;
 
   beforeEach(() => {
@@ -75,8 +75,8 @@ describe('i18n configuration', () => {
     clearReduxState();
   });
 
-  describe('initialization', () => {
-    test('should initialize with selected language', async () => {
+  describe('Testing initialization process', () => {
+    test('Check if it initializes with the selected language', async () => {
       const selectedLanguage = 'ar';
       mockStorage.getItem.mockReturnValue(selectedLanguage);
       
@@ -96,7 +96,7 @@ describe('i18n configuration', () => {
       }));
     });
 
-    test('should initialize with default language when none selected', async () => {
+    test('Check if it initializes with the default language when none is selected', async () => {
       mockStorage.getItem.mockReturnValue(null);
       
       await i18nModule.initializeI18n();
@@ -111,21 +111,21 @@ describe('i18n configuration', () => {
     });
   });
 
-  describe('language direction', () => {
-    test('should correctly identify RTL languages', () => {
+  describe('Test language direction functionality', () => {
+    test('Check if it correctly identifies RTL languages', () => {
       expect(i18nModule.isRTL('ar')).toBe(true);
       expect(i18nModule.isRTL('en')).toBe(false);
       expect(i18nModule.isRTL('fr')).toBe(false);
     });
 
-    test('should return correct direction for language', () => {
+    test('Check if it returns the correct direction for a given language', () => {
       expect(i18nModule.getDirCurrentLanguage('ar')).toBe('rtl');
       expect(i18nModule.getDirCurrentLanguage('en')).toBe('ltr');
     });
   });
 
-  describe('switching language', () => {
-    test('should store and change language', async () => {
+  describe('Test language switching functionality', () => {
+    test('Check if it stores and changes the language correctly', async () => {
       const newLanguage = 'fr';
       await i18nModule.switchLanguage(newLanguage);
       
@@ -134,8 +134,8 @@ describe('i18n configuration', () => {
     });
   });
 
-  describe('getObjectForCurrentLanguage', () => {
-    test('should return object for current language', () => {
+  describe('Test getObjectForCurrentLanguage functionality', () => {
+    test('Check if it returns the correct object for the current language', () => {
       const displayArray = [
         { language: 'en', value: 'English' },
         { language: 'fr', value: 'French' }
@@ -145,7 +145,7 @@ describe('i18n configuration', () => {
       expect(result).toEqual({ language: 'fr', value: 'French' });
     });
 
-    test('should fall back to default language if requested language not found', () => {
+    test('Check if it falls back to the default language when the requested language is not found', () => {
       const displayArray = [
         { language: 'en', value: 'English' },
         { language: 'fr', value: 'French' }

@@ -1,7 +1,7 @@
 import { storage } from '../../utils/storage';
-import { mockLocalStorage,mockStorageModule} from '../../test-utils/mockUtils';
+import { mockLocalStorage, mockStorageModule } from '../../test-utils/mockUtils';
 
-describe('storage class', () => {
+describe('Test storage class functionality', () => {
   let localStorageMock: ReturnType<typeof mockLocalStorage>;
 
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('storage class', () => {
     jest.clearAllMocks();
   });
 
-  test('should set and get an item correctly', () => {
+  test('Check if an item is set and retrieved correctly', () => {
     const key = storage.SELECTED_LANGUAGE;
     const value = 'en';
 
@@ -29,8 +29,7 @@ describe('storage class', () => {
     expect(storedValue).toBe(value);
   });
 
-
-  test('should return null for non-existent key', () => {
+  test('Check if null is returned for a non-existent key', () => {
     (storage.getItem as jest.Mock).mockImplementation((key) => {
       const data = localStorageMock.getItem(key);
       return data ? JSON.parse(data) : null;
@@ -40,7 +39,7 @@ describe('storage class', () => {
     expect(storedValue).toBeNull();
   });
   
-  test('should handle invalid JSON gracefully', () => {
+  test('Check if invalid JSON is handled gracefully', () => {
     const key = storage.SESSION_INFO;
     localStorageMock.setItem(key, 'invalid_json');
   
@@ -57,7 +56,7 @@ describe('storage class', () => {
     expect(storedValue).toBeNull();
   });
   
-  test('should not set an item if value is null or undefined', () => {
+  test('Check if setting null or undefined values is handled correctly', () => {
     const key = storage.SELECTED_LANGUAGE;
   
     (storage.setItem as jest.Mock).mockImplementation((key, value) => {
