@@ -66,7 +66,6 @@ describe('Test i18n configuration', () => {
   afterEach(() => {
     jest.resetModules();
     windowSpy.mockRestore();
-
   });
 
   describe('Testing initialization process', () => {

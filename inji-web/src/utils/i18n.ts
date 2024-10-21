@@ -25,7 +25,6 @@ export const defaultLanguage = window._env_ ? window._env_.DEFAULT_LANG : 'en';
 
 export const initializeI18n = () => {
     const selected_language = storage.getItem(storage.SELECTED_LANGUAGE);
-
     return i18n
         .use(initReactI18next)
         .init({
@@ -66,3 +65,4 @@ export const isRTL = (language:string) => {
 }
 
 export default i18n;
+

@@ -19,7 +19,7 @@ export class api {
 
     // static authorizationRedirectionUrl = window.location.origin + "/redirect";
     static authorizationRedirectionUrl = "https://api.collab.mossip.net" + "/redirect";
-
+  
     static fetchIssuers: ApiRequest = {
         url: () => (api.mimotoHost + "/issuers"),
         methodType: MethodType.GET,
