@@ -52,4 +52,5 @@ jobs:
     uses: mosip/kattu/.github/workflows/trivy.yml@develop
     with:
             service_name: 'inji-web'
+            service_location: 'inji-web'
             version: 'latest'
