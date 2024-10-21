@@ -34,7 +34,7 @@ exports[`Testing the Layout of LandingPageWrapper Check if the layout is matchin
         class="text-iw-primary font-bold py-2 px-4 rounded-lg border-2 border-iw-primary"
         data-testid="DownloadResult-Home-Button"
       >
-        Go To Home
+        navigateButton
       </button>
     </div>
   </div>

@@ -17,7 +17,7 @@ describe('api class', () => {
 
     Object.defineProperty(window, 'location', {
       value: {
-        origin: 'http://localhost:3010'
+        origin: 'https://api.collab.mossip.net'
       },
       writable: true
     });
@@ -31,16 +31,16 @@ describe('api class', () => {
   });
 
   test('should have the correct mimotoHost', () => {
-    expect(apiModule.api.mimotoHost).toBe('http://localhost:3010/v1/mimoto');
+    expect(apiModule.api.mimotoHost).toBe('https://api.collab.mossip.net/v1/mimoto');
   });
 
   test('should have the correct authorizationRedirectionUrl', () => {
-    expect(apiModule.api.authorizationRedirectionUrl).toBe('http://localhost:3010/redirect');
+    expect(apiModule.api.authorizationRedirectionUrl).toBe('https://api.collab.mossip.net/redirect');
   });
 
   test('should have the correct fetchIssuers request', () => {
     const fetchIssuers: ApiRequest = apiModule.api.fetchIssuers;
-    expect(fetchIssuers.url()).toBe('http://localhost:3010/v1/mimoto/issuers');
+    expect(fetchIssuers.url()).toBe('https://api.collab.mossip.net/v1/mimoto/issuers');
     expect(fetchIssuers.methodType).toBe(apiModule.MethodType.GET);
     expect(fetchIssuers.headers()).toEqual({
       'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ describe('api class', () => {
   test('should have the correct fetchSpecificIssuer request', () => {
     const issuerId = '123';
     const fetchSpecificIssuer: ApiRequest = apiModule.api.fetchSpecificIssuer;
-    expect(fetchSpecificIssuer.url(issuerId)).toBe('http://localhost:3010/v1/mimoto/issuers/123');
+    expect(fetchSpecificIssuer.url(issuerId)).toBe('https://api.collab.mossip.net/v1/mimoto/issuers/123');
     expect(fetchSpecificIssuer.methodType).toBe(apiModule.MethodType.GET);
     expect(fetchSpecificIssuer.headers()).toEqual({
       'Content-Type': 'application/json'
@@ -60,7 +60,7 @@ describe('api class', () => {
   test('should have the correct fetchIssuersWellknown request', () => {
     const issuerId = '123';
     const fetchIssuersWellknown: ApiRequest = apiModule.api.fetchIssuersWellknown;
-    expect(fetchIssuersWellknown.url(issuerId)).toBe('http://localhost:3010/v1/mimoto/issuers/123/well-known-proxy');
+    expect(fetchIssuersWellknown.url(issuerId)).toBe('https://api.collab.mossip.net/v1/mimoto/issuers/123/well-known-proxy');
     expect(fetchIssuersWellknown.methodType).toBe(apiModule.MethodType.GET);
     expect(fetchIssuersWellknown.headers()).toEqual({
       'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ describe('api class', () => {
 
   test('should have the correct fetchTokenAnddownloadVc request', () => {
     const fetchTokenAnddownloadVc: ApiRequest = apiModule.api.fetchTokenAnddownloadVc;
-    expect(fetchTokenAnddownloadVc.url()).toBe('http://localhost:3010/v1/mimoto/credentials/download');
+    expect(fetchTokenAnddownloadVc.url()).toBe('https://api.collab.mossip.net/v1/mimoto/credentials/download');
     expect(fetchTokenAnddownloadVc.methodType).toBe(apiModule.MethodType.POST);
     expect(fetchTokenAnddownloadVc.headers()).toEqual({
       'accept': 'application/json',
@@ -97,7 +97,7 @@ describe('api class', () => {
         }
       ],
       client_id: 'client123',
-      redirect_uri: 'http://localhost:3010/redirect',
+      redirect_uri: 'https://api.collab.mossip.net/redirect',
       token_endpoint: 'http://token.endpoint',
       proxy_token_endpoint: 'http://proxy.token.endpoint',
       client_alias: 'clientAlias',
@@ -158,7 +158,7 @@ describe('api class', () => {
       '?response_type=code&' +
       'client_id=client123&' +
       'scope=openid&' +
-      `redirect_uri=http://localhost:3010/redirect&` +
+      `redirect_uri=https://api.collab.mossip.net/redirect&` +
       'state=state123&' +
       'code_challenge=challenge123&' +
       'code_challenge_method=S256&' +

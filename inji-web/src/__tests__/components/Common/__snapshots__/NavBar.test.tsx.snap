@@ -70,7 +70,7 @@ exports[`Testing the Layout of NavBar Check the presence of the navbar container
           <input
             class="py-6 w-11/12 flex text-iw-searchTitle focus:outline-none overflow-ellipsis mr-10"
             data-testid="NavBar-Search-Input"
-            placeholder="Search Credential Type"
+            placeholder="searchText"
             type="text"
             value=""
           />

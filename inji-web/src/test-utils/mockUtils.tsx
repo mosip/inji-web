@@ -99,29 +99,22 @@ export const wrapUnderRouter = (children: React.ReactNode) => {
     return <Router>{children}</Router>;
 };
 
-export const mockUseToast = () => {
-    jest.mock('react-toastify', () => ({
-        toast: jest.fn(),
-        ToastContainer: jest.requireActual('react-toastify').ToastContainer,
-    }));
-};
-        
 // Component Mocks
 export const mockUseSearchCredentials = () => {
     jest.mock('../components/Credentials/SearchCredential', () => ({
-        SearchCredential: () => <div data-testid="mock-search-credential" />
+        SearchCredential: () => <></>,
     }));
 };
 
 export const mockUseSpinningLoader = () => {
     jest.mock('../components/Common/SpinningLoader', () => ({
-        SpinningLoader: () => <div data-testid="mock-spinning-loader" />
+        SpinningLoader: () => <></>,
     }));
 };
 
 export const mockUseLanguageSelector = () => {
     jest.mock('../components/Common/LanguageSelector', () => ({
-        LanguageSelector: () => <div data-testid="mock-language-selector" />
+        LanguageSelector: () => <></>,
     }));
 };
 

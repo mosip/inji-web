@@ -1,4 +1,3 @@
-
 import { initReactI18next } from 'react-i18next';
 import { setReduxState, clearReduxState } from '../../test-utils/reduxMockUtils';
 import en from '../../locales/en.json';
@@ -77,7 +76,7 @@ describe('i18n configuration', () => {
   });
 
   describe('initialization', () => {
-    it('should initialize with selected language', async () => {
+    test('should initialize with selected language', async () => {
       const selectedLanguage = 'ar';
       mockStorage.getItem.mockReturnValue(selectedLanguage);
       
@@ -97,7 +96,7 @@ describe('i18n configuration', () => {
       }));
     });
 
-    it('should initialize with default language when none selected', async () => {
+    test('should initialize with default language when none selected', async () => {
       mockStorage.getItem.mockReturnValue(null);
       
       await i18nModule.initializeI18n();
@@ -113,20 +112,20 @@ describe('i18n configuration', () => {
   });
 
   describe('language direction', () => {
-    it('should correctly identify RTL languages', () => {
+    test('should correctly identify RTL languages', () => {
       expect(i18nModule.isRTL('ar')).toBe(true);
       expect(i18nModule.isRTL('en')).toBe(false);
       expect(i18nModule.isRTL('fr')).toBe(false);
     });
 
-    it('should return correct direction for language', () => {
+    test('should return correct direction for language', () => {
       expect(i18nModule.getDirCurrentLanguage('ar')).toBe('rtl');
       expect(i18nModule.getDirCurrentLanguage('en')).toBe('ltr');
     });
   });
 
   describe('switching language', () => {
-    it('should store and change language', async () => {
+    test('should store and change language', async () => {
       const newLanguage = 'fr';
       await i18nModule.switchLanguage(newLanguage);
       
@@ -136,7 +135,7 @@ describe('i18n configuration', () => {
   });
 
   describe('getObjectForCurrentLanguage', () => {
-    it('should return object for current language', () => {
+    test('should return object for current language', () => {
       const displayArray = [
         { language: 'en', value: 'English' },
         { language: 'fr', value: 'French' }
@@ -146,7 +145,7 @@ describe('i18n configuration', () => {
       expect(result).toEqual({ language: 'fr', value: 'French' });
     });
 
-    it('should fall back to default language if requested language not found', () => {
+    test('should fall back to default language if requested language not found', () => {
       const displayArray = [
         { language: 'en', value: 'English' },
         { language: 'fr', value: 'French' }
