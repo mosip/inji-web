@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing the Layout of the Custom Expiry Content Check if the layout is matching with the snapshots 1`] = `
+<DocumentFragment>
+  <div
+    class="relative px-6 mx-4 flex flex-col justify-between"
+    data-testid="CustomExpiryTimesContent-Outer-Container"
+  >
+    <div
+      class="border-2 rounded-lg flex flex-row justify-between"
+    >
+      <div
+        class="flex flex-col px-2"
+        data-testid="CustomExpiryTimesContent-Times-Range-Container"
+      >
+        <button
+          data-testid="CustomExpiryTimesContent-Times-Range-Increase"
+        >
+          <svg
+            color="var(--iw-color-arrowDown)"
+            fill="currentColor"
+            height="20"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M11.9999 10.8284L7.0502 15.7782L5.63599 14.364L11.9999 8L18.3639 14.364L16.9497 15.7782L11.9999 10.8284Z"
+            />
+          </svg>
+        </button>
+        <button
+          data-testid="CustomExpiryTimesContent-Times-Range-Decrease"
+        >
+          <svg
+            color="var(--iw-color-arrowDown)"
+            fill="currentColor"
+            height="20"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M11.9999 13.1714L16.9497 8.22168L18.3639 9.63589L11.9999 15.9999L5.63599 9.63589L7.0502 8.22168L11.9999 13.1714Z"
+            />
+          </svg>
+        </button>
+      </div>
+      <div
+        class="px-2 flex w-full"
+      >
+        <input
+          class="appearance-none w-full p-2 focus:outline-none no-spinner"
+          data-testid="CustomExpiryTimesContent-Times-Value"
+          min="0"
+          placeholder="Enter Number here"
+          type="text"
+          value="1"
+        />
+      </div>
+      <div
+        class="px-2 flex items-center justify-center bg-iw-borderLight text-iw-subText"
+        data-testid="CustomExpiryTimesContent-Times-Metrics"
+      >
+        Times
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

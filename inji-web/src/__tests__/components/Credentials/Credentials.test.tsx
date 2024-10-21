@@ -1,64 +1,107 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
-import {Credential} from "../../../components/Credentials/Crendential";
-import {CredentialConfigurationObject, CredentialsSupportedObject, IssuerWellknownObject} from "../../../types/data";
-import {Provider} from "react-redux";
-import {reduxStore} from "../../../redux/reduxStore";
-import {getObjectForCurrentLanguage} from "../../../utils/i18n";
+import {  screen } from '@testing-library/react';
+import { Credential } from '../../../components/Credentials/Crendential';
+import { IssuerWellknownObject } from '../../../types/data';
+import { getObjectForCurrentLanguage } from '../../../utils/i18n';
+import { mockCredentials, mockDisplayArrayObject } from '../../../test-utils/mockObjects';
+import { renderWithProvider,mockUseSelector } from '../../../test-utils/mockUtils';
 
-global.window._env_ = {
-    DEFAULT_FAVICON: "favicon.ico",
-    DEFAULT_FONT_URL: "",
-    DEFAULT_THEME: "purple_theme",
-    DEFAULT_TITLE: "Inji Web Test",
-    DEFAULT_LANG: 'en'
-};
 
-const getCredentialObject = (): IssuerWellknownObject => {
-    return {
-        credential_issuer: "",
-        credential_endpoint: "",
-        authorization_servers: [""],
-        credential_configurations_supported: {
-            InsuranceCredential: {
-                format: "ldp_vc",
-                id: "id",
-                scope: "mosip_ldp_vc",
-                display: {
-                    name: "Name",
-                    language: "en",
-                    locale: "en",
-                    logo: {
-                        url: "https://url.com",
-                        alt_text: "alt text of the url"
-                    },
-                    title: "Title",
-                    description: "Description",
-                }
-            }
-        }
+// todo : extract the local method to mockUtils, which is added to bypass the problems
+// Mock the i18n configuration
+jest.mock('../../../utils/i18n', () => ({
+    getObjectForCurrentLanguage: jest.fn(),
+}));
+
+
+const credential: IssuerWellknownObject = {
+    ...mockCredentials,
+    credential_configurations_supported: {
+        InsuranceCredential: mockCredentials.credential_configurations_supported.InsuranceCredential
     }
 };
 
-describe.skip("Test Credentials Item Layout",() => {
-    test('check the presence of the container', () => {
-        const clickHandler = jest.fn();
-        const credential: IssuerWellknownObject = getCredentialObject();
+describe("Testing the Layout of Credentials", () => {
+    beforeEach(() => {
+        mockUseSelector();
+        const useSelectorMock = require('react-redux').useSelector;
+        useSelectorMock.mockImplementation((selector: any) => selector({
+            issuers: {
+                selected_issuer: "issuer1",
+            },
+            common: {
+                language: 'en',
+            },
+        }));
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    test('Check if the layout is matching with the snapshots', () => {
+        
         // @ts-ignore
-        jest.spyOn(require('../../../utils/i18n'), 'getObjectForCurrentLanguage').mockReturnValue(credential.credential_configurations_supported["InsuranceCredential"].display[0]);
-        render(
-            <Provider store={reduxStore}>
-                <Credential credential={""} index={1}  credentialWellknown={credential}/>
-            </Provider>
-        );
-        const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container");
+        getObjectForCurrentLanguage.mockReturnValue(mockDisplayArrayObject);
+
+        const { asFragment } = renderWithProvider(<Credential credentialId="InsuranceCredential" index={1} credentialWellknown={credential} />);
+
+        expect(asFragment()).toMatchSnapshot();
+    });
+});
+
+describe("Testing the Functionality of Credentials", () => {
+    let originalOpen: typeof window.open;
+
+    beforeAll(() => {
+        originalOpen = window.open;
+        window.open = jest.fn();
+    });
+    beforeEach(() => {
+        const useSelectorMock = require('react-redux').useSelector;
+        useSelectorMock.mockImplementation((selector: any) => selector({
+            issuers: {
+                selected_issuer: "issuer1",
+            },
+            common: {
+                language: 'en',
+            },
+        }));
+    });
+
+    test('Check the presence of the container', () => {
+        const credential: IssuerWellknownObject = {
+            ...mockCredentials,
+            credential_configurations_supported: {
+                InsuranceCredential: mockCredentials.credential_configurations_supported.InsuranceCredential
+            }
+        };
+        // @ts-ignore
+        getObjectForCurrentLanguage.mockReturnValue(mockDisplayArrayObject);
+
+        renderWithProvider(<Credential credentialId="InsuranceCredential" index={1} credentialWellknown={credential} />);
+
+        const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container-1");
         expect(itemBoxElement).toBeInTheDocument();
     });
-    // test('check if content is rendered properly', () => {
-    //     const clickHandler = jest.fn();
-    //     const credential:CredentialWellknownObject = getCredentialObject();
-    //     render(<Credential credential={credential} index={1} />);
-    //     const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container");
-    //     expect(itemBoxElement).toHaveTextContent("TitleOfItemBox")
-    // });
+
+    test('Check if content is rendered properly', () => {
+        const credential: IssuerWellknownObject = {
+            ...mockCredentials,
+            credential_configurations_supported: {
+                InsuranceCredential: mockCredentials.credential_configurations_supported.InsuranceCredential
+            }
+        };
+        // @ts-ignore
+        getObjectForCurrentLanguage.mockReturnValue(mockDisplayArrayObject);
+        renderWithProvider(<Credential credentialId="InsuranceCredential" index={1} credentialWellknown={credential} />);
+        const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container-1");
+        expect(itemBoxElement).toHaveTextContent("Name");
+    });
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+    afterAll(() => {
+        window.open = originalOpen;
+    });
 });

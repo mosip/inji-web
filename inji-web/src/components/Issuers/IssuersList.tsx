@@ -9,13 +9,14 @@ import {RequestStatus} from "../../hooks/useFetch";
 import {SpinningLoader} from "../Common/SpinningLoader";
 import {IssuersListProps} from "../../types/components";
 import {HeaderTile} from "../Common/HeaderTile";
+import {GradientWrapper} from "../Common/GradientWrapper";
 
 export const IssuersList: React.FC<IssuersListProps> = ({state}) => {
     const issuers = useSelector((state: RootState) => state.issuers);
     const {t} = useTranslation("HomePage");
 
     if (state === RequestStatus.LOADING) {
-        return <SpinningLoader/>
+        return <GradientWrapper><SpinningLoader/></GradientWrapper>
     }
 
     if(state === RequestStatus.ERROR || !issuers?.filtered_issuers || (issuers?.filtered_issuers && issuers?.filtered_issuers?.length === 0)) {

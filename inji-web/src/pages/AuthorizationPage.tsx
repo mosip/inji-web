@@ -20,7 +20,7 @@ export const AuthorizationPage: React.FC = () => {
     if(url.indexOf("error") == -1){
         return <div><LandingPageWrapper icon={<SpinningLoader/>} title={""} subTitle={""} gotoHome={false}/></div>
     }
-    return <div><LandingPageWrapper icon={<ErrorSheildIcon />} title={t(`error.code.${error}`)} subTitle={t(`error.message.${error}`)} gotoHome={false}/></div>
+    return <div><LandingPageWrapper icon={<ErrorSheildIcon />} title={t(`error.code.${error}`)} subTitle={t(`error.message.${error}`)} gotoHome={true}/></div>
 }
 
 

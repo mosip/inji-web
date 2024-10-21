@@ -9,6 +9,11 @@ module.exports = {
             fontFamily:{
                 base: 'var(--iw-font-base)',
             },
+            zIndex: {
+                '50': '50',
+                '40': '40',
+                '30': '30'
+            },
             colors: {
                 iw: {
                     background: 'var(--iw-color-background)',
@@ -18,6 +23,10 @@ module.exports = {
                     subTitle: 'var(--iw-color-subTitle)',
                     searchTitle: 'var(--iw-color-searchTitle)',
                     primary: 'var(--iw-color-primary)',
+                    secondary:'var(--iw-color-secondary)',
+                    tertiary:'var(--iw-color-tertiary)',
+                    lightPrimary: 'var(--iw-color-lightPrimary)',
+                    lightSecondary:'var(--iw-color-lightSecondary)',
                     helpAccordionHover: 'var(--iw-color-helpAccordionHover)',
                     shadow: 'var(--iw-color-shadow)',
                     selectedShadow: 'var(--iw-color-selected-shadow)',
@@ -36,6 +45,15 @@ module.exports = {
                     shieldSuccessShadow: 'var(--iw-color-shieldSuccessShadow)',
                     shieldErrorShadow: 'var(--iw-color-shieldErrorShadow)',
                     shieldLoadingShadow: 'var(--iw-color-shieldLoadingShadow)',
+                    backDrop: 'var(--iw-color-backDrop)',
+                    borderLight: 'var(--iw-color-borderLight)',
+                    borderDark: 'var(--iw-color-borderDark)',
+                    arrowDown: 'var(--iw-color-arrowDown)',
+                    hoverBackGround: 'var(--iw-color-hoverBackGround)',
+                    text: 'var(--iw-color-text)',
+                    subText: 'var(--iw-color-subText)',
+                    disclaimerBackGround: 'var(--iw-color-disclaimerBackGround)',
+                    disclaimerText: 'var(--iw-color-disclaimerText)'
                 }
             }
         },

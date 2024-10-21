@@ -72,5 +72,22 @@ $ docker-compose down
 - You can access the application in the below nginx server :  
 > Open URL http://localhost:81
 
+## Running Tests in Inji Web
+ - Snapshot testing has been implemented for layout tests to ensure consistent UI and detect changes.
+ - To run the test cases, use the following command:
+```bash
+npm test
+```
+ - To update the Snapshot based on the changes run the command:
+```bash
+npm test --u
+```
+ - To check the test coverage, use the following command:
+```bash
+npm test -- --coverage
+```
+
+
+
 
 ## **Mimoto Dependency Version :** v0.14.0

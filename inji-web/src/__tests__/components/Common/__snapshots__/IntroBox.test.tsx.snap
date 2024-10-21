@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing the Layout of IntroBox Check if the layout is matching with the snapshots 1`] = `
+<DocumentFragment>
+  <div
+    class="text-center pt-20 pb-10"
+    data-testid="IntroBox-Container"
+  >
+    <h2
+      class="text-3xl text-iw-title "
+      data-testid="IntroBox-Text"
+    >
+      Intro.title
+    </h2>
+    <p
+      class="mt-2 text-lg text-iw-subTitle"
+      data-testid="IntroBox-SubText"
+    >
+      Intro.subTitle
+    </p>
+  </div>
+</DocumentFragment>
+`;

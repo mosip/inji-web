@@ -14,7 +14,7 @@ export const Header: React.FC = () => {
     return (
         <header>
         <div data-testid="Header-Container"
-                className="fixed top-0 left-0 right-0 bg-iw-background py-4 shadow-sm">
+                className="fixed top-0 left-0 right-0 bg-iw-background py-7 shadow-sm">
             <div className="container mx-auto flex justify-between items-center px-4">
                 <div data-testid="Header-InjiWeb-Logo-Container" className={"flex flex-row justify-center items-center"}>
                     <div  role="button" tabIndex={0} className={"sm:hidden"} onClick={() => setIsOpen(open => !open)} onKeyUp={() => setIsOpen(open => !open)}>
@@ -25,7 +25,7 @@ export const Header: React.FC = () => {
                          onClick={() => navigate("/")}
                          onKeyUp={() => navigate("/")}>
                         <img src={require("../../assets/InjiWebLogo.png")}
-                             className={"h-13 w-28 cursor-pointer"}
+                             className={"h-13 w-28 scale-150 cursor-pointer"}
                              data-testid="Header-InjiWeb-Logo"
                              alt="Inji Web Logo"/>
                     </div>
