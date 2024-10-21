@@ -93,6 +93,8 @@ public class StepDef {
 
     @Then("User verify mosip national id by e-signet displayed")
     public void user_verify_mosip_national_id_by_e_signet_displayed() {
+
+        Assert.assertTrue(homePage.isIssuerLogoDisplayed());
         Assert.assertTrue(homePage.isMosipNationalIdDisplayed());
     }
 

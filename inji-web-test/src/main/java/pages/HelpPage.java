@@ -29,6 +29,7 @@ public class HelpPage extends BasePage {
     public boolean isUpArrowDisplayed() {
         return isElementIsVisible(driver, By.xpath("//*[@data-testid='Help-Item-UpArrow']"));
     }
+
     public int getUpArrowCount() {
         List<WebElement> upArrowElements = driver.findElements(By.xpath("//*[@data-testid='Help-Item-UpArrow']"));
         return upArrowElements.size();
@@ -40,9 +41,8 @@ public class HelpPage extends BasePage {
     }
 
     public void ClickOnDownArrow() {
-         clickOnElement(driver, By.xpath("//*[@data-testid='Help-Item-DownArrow']"));
+        clickOnElement(driver, By.xpath("//*[@data-testid='Help-Item-DownArrow']"));
     }
-
 
 
 }
