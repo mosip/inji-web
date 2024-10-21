@@ -9,12 +9,34 @@ exports[`Testing the Layout of Language Selector Check if the layout is matching
     tabindex="0"
   >
     <svg
+      height="0"
+      width="0"
+    >
+      <lineargradient
+        id="blue-gradient"
+        x1="0%"
+        x2="100%"
+        y1="0%"
+        y2="100%"
+      >
+        <stop
+          offset="0%"
+          stop-color="var(--iw-color-primary)"
+        />
+        <stop
+          offset="100%"
+          stop-color="var(--iw-color-secondary)"
+        />
+      </lineargradient>
+    </svg>
+    <svg
       color="var(--iw-color-languageGlobeIcon)"
       data-testid="Language-Selector-Icon"
       fill="currentColor"
       height="30"
       stroke="currentColor"
       stroke-width="0"
+      style="fill: url(#blue-gradient);"
       viewBox="0 0 16 16"
       width="30"
       xmlns="http://www.w3.org/2000/svg"
@@ -39,11 +61,33 @@ exports[`Testing the Layout of Language Selector Check if the layout is matching
           English
         </p>
         <svg
+          height="0"
+          width="0"
+        >
+          <lineargradient
+            id="blue-gradient"
+            x1="0%"
+            x2="100%"
+            y1="0%"
+            y2="100%"
+          >
+            <stop
+              offset="0%"
+              stop-color="var(--iw-color-primary)"
+            />
+            <stop
+              offset="100%"
+              stop-color="var(--iw-color-secondary)"
+            />
+          </lineargradient>
+        </svg>
+        <svg
           color="var(--iw-color-languageArrowIcon)"
           fill="currentColor"
           height="20"
           stroke="currentColor"
           stroke-width="0"
+          style="fill: url(#blue-gradient);"
           viewBox="0 0 24 24"
           width="20"
           xmlns="http://www.w3.org/2000/svg"

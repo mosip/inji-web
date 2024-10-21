@@ -9,7 +9,7 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
     const navigate = useNavigate();
     return <React.Fragment>
         <div data-testid="NavBar-Outer-Container"
-             className="bg-iw-navigationBar text-iw-title p-4 py-10">
+             className="bg-iw-navigationBar bg-gradient-to-r from-iw-lightPrimary to-iw-lightSecondary text-iw-title p-4 py-10">
             <nav data-testid="NavBar-Inner-Container"
                  className=" mx-auto flex flex-col justify-start container items-start
                              sm:flex-row sm:justify-start sm:items-center">

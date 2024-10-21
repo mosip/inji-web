@@ -3,12 +3,11 @@
 exports[`Testing the Layout of NavBar Check the presence of the navbar container 1`] = `
 <DocumentFragment>
   <div
-    class="bg-iw-navigationBar text-iw-title p-4 py-10"
+    class="bg-iw-navigationBar bg-gradient-to-r from-iw-lightPrimary to-iw-lightSecondary text-iw-title p-4 py-10"
     data-testid="NavBar-Outer-Container"
   >
     <nav
-      class=" mx-auto flex flex-col justify-start container items-start
- sm:flex-row sm:justify-start sm:items-center"
+      class=" mx-auto flex flex-col justify-start container items-start sm:flex-row sm:justify-start sm:items-center"
       data-testid="NavBar-Inner-Container"
     >
       <div

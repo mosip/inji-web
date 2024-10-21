@@ -3,7 +3,7 @@ import { AppToaster } from '../../../components/Common/AppToaster';
 import { reduxStore } from '../../../redux/reduxStore'; // Assuming the store is named reduxStore
 import { renderWithProvider } from '../../../test-utils/mockUtils';
 import { toast } from 'react-toastify';
- 
+
 // Mock the useTranslation hook
 jest.mock('react-i18next', () => ({
     useTranslation: () => ({
@@ -14,7 +14,7 @@ jest.mock('react-i18next', () => ({
       init: jest.fn(),
     },
   }));
- 
+
 // Mock the toast function
 jest.mock('react-toastify', () => ({
   toast: jest.fn(),
@@ -27,7 +27,7 @@ describe('Testing the Layout of AppToaster', () => {
     const { asFragment } = renderWithProvider(<AppToaster />);
     expect(asFragment()).toMatchSnapshot();
   });
- 
+
   test('Check if the layout is matching with the snapshots for Arabic language', () => {
     reduxStore.dispatch({ type: 'SET_LANGUAGE', payload: 'ar' });
     const { asFragment } = renderWithProvider(<AppToaster />);
@@ -42,15 +42,16 @@ describe('Testing the Functionality of AppToaster', () => {
     toast("AppToaster test message");
     expect(toast).toHaveBeenCalledWith("AppToaster test message");
   });
- 
+
   test('Check if toast is called with the correct message for Arabic language', () => {
     reduxStore.dispatch({ type: 'SET_LANGUAGE', payload: 'ar' });
     renderWithProvider(<AppToaster />);
     toast("AppToaster test message");
     expect(toast).toHaveBeenCalledWith("AppToaster test message");
   });
- 
+
   afterEach(() => {
     jest.clearAllMocks();
   });
 });
+

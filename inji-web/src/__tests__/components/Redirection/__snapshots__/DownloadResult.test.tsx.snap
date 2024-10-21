@@ -7,7 +7,7 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
     data-testid="DownloadResult-Outer-Container"
   >
     <div
-      class="rounded-full p-2 shadow"
+      class="rounded-full p-2 shadow bg-white"
     >
       <div
         class="rounded-full p-8 bg-iw-shieldErrorShadow"
@@ -47,13 +47,19 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
         SubTitle
       </p>
     </div>
-    <div>
-      <button
-        class="text-iw-primary font-bold py-2 px-4 rounded-lg border-2 border-iw-primary"
-        data-testid="DownloadResult-Home-Button"
+    <div
+      class="bg-gradient-to-r rounded-lg from-iw-primary to-iw-secondary p-0.5"
+    >
+      <div
+        class="py-2 px-4 rounded-lg bg-white"
       >
-        Go To Home
-      </button>
+        <button
+          class="text-iw-tertiary font-bold rounded-lg"
+          data-testid="DownloadResult-Home-Button"
+        >
+          Go To Home
+        </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -147,7 +153,7 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
     data-testid="DownloadResult-Outer-Container"
   >
     <div
-      class="rounded-full p-2 shadow"
+      class="rounded-full p-2 shadow bg-white"
     >
       <div
         class="rounded-full p-8 bg-iw-shieldSuccessShadow "
@@ -188,13 +194,19 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
         SubTitle
       </p>
     </div>
-    <div>
-      <button
-        class="text-iw-primary font-bold py-2 px-4 rounded-lg border-2 border-iw-primary"
-        data-testid="DownloadResult-Home-Button"
+    <div
+      class="bg-gradient-to-r rounded-lg from-iw-primary to-iw-secondary p-0.5"
+    >
+      <div
+        class="py-2 px-4 rounded-lg bg-white"
       >
-        Go To Home
-      </button>
+        <button
+          class="text-iw-tertiary font-bold rounded-lg"
+          data-testid="DownloadResult-Home-Button"
+        >
+          Go To Home
+        </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>

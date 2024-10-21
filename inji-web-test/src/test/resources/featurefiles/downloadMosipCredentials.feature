@@ -15,6 +15,7 @@ Feature: download mosip cridentials
     And User click on getOtp button
     And User enter the otp "<otp>"
     And User click on verify button
+    And User verify downloading in progress text
     And User verify go home button
     Then User verify Download Success text displayed
     And User verify go back button
@@ -39,7 +40,9 @@ Feature: download mosip cridentials
     Given Load application url "https://inji.qa-inji.mosip.net/"
     Then User gets the title of the page
     And User search the issuers with "National"
+    And User verify the logo of the issuer
     When User click on download mosip credentials button
+    And User verify the logo of the issuer
     Then User verify list of credential types displayed
     And User verify mosip national id by e-signet displayed
     When User click on mosip national id by e-signet button
