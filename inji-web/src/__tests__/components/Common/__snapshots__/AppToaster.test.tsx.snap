@@ -3,7 +3,6 @@
 exports[`Testing the Layout of AppToaster Check if the layout is matching with the snapshots for Arabic language 1`] = `
 <DocumentFragment>
   <div
-    class="text-center pt-20 pb-10 top-right"
     data-testid="Apptoaster-outer-container"
   >
     <div
@@ -16,7 +15,6 @@ exports[`Testing the Layout of AppToaster Check if the layout is matching with t
 exports[`Testing the Layout of AppToaster Check if the layout is matching with the snapshots for English language 1`] = `
 <DocumentFragment>
   <div
-    class="text-center pt-20 pb-10 top-right"
     data-testid="Apptoaster-outer-container"
   >
     <div
