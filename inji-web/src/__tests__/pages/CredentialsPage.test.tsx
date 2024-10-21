@@ -1,7 +1,7 @@
 import React from 'react';
 import { waitFor } from '@testing-library/react';
 import { CredentialsPage } from '../../pages/CredentialsPage';
-import { mockUseTranslation,mockUseFetch,renderWithRouter,mockUseParams} from '../../test-utils/mockUtils';
+import { mockUseTranslation, mockUseFetch, renderWithRouter, mockUseParams } from '../../test-utils/mockUtils';
 
 mockUseTranslation();
 mockUseFetch();
@@ -15,16 +15,13 @@ jest.mock('react-toastify', () => ({
 
 describe('Testing the Layout of CredentialsPage', () => {
   test('Check if the layout is matching with the snapshots', async () => {
-    jest.fn().mockReturnValue({ state: 'DONE', fetchRequest: jest.fn() });
     const { asFragment } = renderWithRouter(<CredentialsPage />);
     expect(asFragment()).toMatchSnapshot();
   });
 });
 
 describe('Testing the Functionality of CredentialsPage', () => {
-  test('check if it displays error message if state is ERROR', async () => {
-    jest.fn().mockReturnValue({ state: 'ERROR', fetchRequest: jest.fn() });
-
+  test('Check if it displays error message if state is ERROR', async () => {
     renderWithRouter(<CredentialsPage />);
     await waitFor(() => {
       expect(require('react-toastify').toast.error).toHaveBeenCalledWith('The service is currently unavailable now. Please try again later.');

@@ -5,14 +5,14 @@ import { mockUseTranslation,mockUseapiObject,renderWithRouter,mockWindowLocation
 mockUseTranslation();
 mockUseapiObject()
 describe('Testing the Layouts of AuthorizationPage', () => {
-  test('check if it renders properly if there is no error in URL', () => {
+  test('Check if it renders properly if there is no error in URL', () => {
     mockWindowLocation('https://api.collab.mosip.net');
     const {asFragment} = renderWithRouter(<AuthorizationPage />);
     expect(asFragment()).toMatchSnapshot();
 
   });
 
-  test('check if it shows error messages if error in URL', () => {
+  test('Check if it shows error messages if error in URL', () => {
     mockWindowLocation('https://api.collab.mosip.net?error=some_error');
     const{asFragment} = renderWithRouter(<AuthorizationPage />);
     expect(asFragment()).toMatchSnapshot();

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing the Layouts of AuthorizationPage check if it renders properly if there is no error in URL 1`] = `
+exports[`Testing the Layouts of AuthorizationPage Check if it renders properly if there is no error in URL 1`] = `
 <DocumentFragment>
   <div>
     <div
@@ -79,7 +79,7 @@ exports[`Testing the Layouts of AuthorizationPage check if it renders properly i
 </DocumentFragment>
 `;
 
-exports[`Testing the Layouts of AuthorizationPage check if it shows error messages if error in URL 1`] = `
+exports[`Testing the Layouts of AuthorizationPage Check if it shows error messages if error in URL 1`] = `
 <DocumentFragment>
   <div>
     <div

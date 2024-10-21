@@ -119,7 +119,7 @@ exports[`Testing the Functionality of HomePage Check if IntroBox and SearchIssue
 </DocumentFragment>
 `;
 
-exports[`Testing the Layout of HomePage check if the layout is matching with the snapshots 1`] = `
+exports[`Testing the Layout of HomePage Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
     data-testid="Home-Page-Container"

@@ -4,6 +4,7 @@ import { HomePage } from '../../pages/HomePage';
 import { reduxStore } from '../../redux/reduxStore';
 import { storeIssuers } from '../../redux/reducers/issuersReducer';
 import { renderWithRouter, mockusei18n,mockUseFetch,mockUseToast } from '../../test-utils/mockUtils';
+import { mockIssuerObject } from '../../test-utils/mockObjects';
 
 mockusei18n();
 const mockUseFetchHook = jest.fn();
@@ -18,7 +19,7 @@ jest.mock('react-toastify', () => ({
 }));
 
 describe('Testing the Layout of HomePage', () => {
-  test('check if the layout is matching with the snapshots', () => {
+  test('Check if the layout is matching with the snapshots', () => {
     mockUseFetchHook.mockReturnValue({ state: 'DONE', fetchRequest: jest.fn() });
     const { asFragment } = renderWithRouter(<HomePage />);
     expect(asFragment()).toMatchSnapshot();
@@ -28,24 +29,7 @@ describe('Testing the Layout of HomePage', () => {
 describe('Testing the Functionality of HomePage', () => {
   beforeEach(() => {
     mockusei18n();
-    reduxStore.dispatch(storeIssuers([
-      {
-        name: 'Test Issuer',
-        desc: 'Description',
-        protocol: 'OpenId4VCI',
-        credential_issuer: 'issuer1',
-        authorization_endpoint: 'https://auth.endpoint',
-        credentials_endpoint: 'https://credentials.endpoint',
-        display: [{ name: 'Test Issuer', language: 'en', locale: 'en-US', logo: { url: '', alt_text: '' }, title: 'Title', description: 'Description' }],
-        client_id: 'client1',
-        redirect_uri: 'https://redirect.uri',
-        token_endpoint: 'https://token.endpoint',
-        proxy_token_endpoint: 'https://proxy.token.endpoint',
-        client_alias: 'alias1',
-        ovp_qr_enabled: true,
-        scopes_supported: ['scope1', 'scope2']
-      }
-    ]));
+    reduxStore.dispatch(storeIssuers([mockIssuerObject]));
   });
 
   test('Check if IntroBox and SearchIssuer components are rendered', () => {
@@ -54,7 +38,7 @@ describe('Testing the Functionality of HomePage', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  test('check if it displays error message if state is ERROR', async () => {
+  test('Check if it displays error message if state is ERROR', async () => {
     mockUseFetchHook.mockReturnValue({ state: 'ERROR', fetchRequest: jest.fn() });
     renderWithRouter(<HomePage />);
     await waitFor(() => {

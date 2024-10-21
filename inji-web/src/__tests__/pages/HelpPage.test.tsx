@@ -5,7 +5,7 @@ import { renderWithRouter,mockusei18n } from '../../test-utils/mockUtils';
 
 mockusei18n();
 describe('Testing the Layout of HelpPage', () => {
-  test('check if the layout is matching with the snapshots', () => {
+  test('Check if the layout is matching with the snapshots', () => {
     const { asFragment } = renderWithRouter(<HelpPage />);
     expect(asFragment()).toMatchSnapshot();
   });

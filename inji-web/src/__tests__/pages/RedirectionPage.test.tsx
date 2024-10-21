@@ -42,7 +42,7 @@ describe('Testing the Functionality of RedirectionPage', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  test('check if it displays error message if state is ERROR', async () => {
+  test('Check if it displays error message if state is ERROR', async () => {
     mockUseFetchhook.mockReturnValue({ state: 'ERROR', fetchRequest: jest.fn(), error: true, response: {} });
     (getErrorObject as jest.Mock).mockReturnValue({ code: 'error.generic.title', message: 'error.generic.subTitle' });
     const{asFragment} =  renderWithRouter(<RedirectionPage />);
