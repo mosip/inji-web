@@ -34,7 +34,7 @@ export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId
     return {
         'grant_type': 'authorization_code',
         'code': code,
-        'redirect_uri': 'https://api.collab.mossip.net/redirect',
+        'redirect_uri': api.authorizationRedirectionUrl,
         'code_verifier': codeVerifier,
         'issuer': issuerId,
         'credential': credentialType,
