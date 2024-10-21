@@ -20,12 +20,11 @@ export const LanguagesSupported: LanguageObject[] = [
     {label: "عربي", value: 'ar'}
 ];
 
-// Move this into a function to delay execution
-export const getDefaultLanguage = () => window._env_?.DEFAULT_LANG || 'en';
+export const defaultLanguage = window._env_ ? window._env_.DEFAULT_LANG : 'en';
 
 export const initializeI18n = () => {
     const selected_language = storage.getItem(storage.SELECTED_LANGUAGE);
-    const defaultLanguage = getDefaultLanguage();
+
     return i18n
         .use(initReactI18next)
         .init({
@@ -38,6 +37,9 @@ export const initializeI18n = () => {
         });
 };
 
+// Immediately initialize i18n, but export the promise for testing
+export const i18nInitialized = initializeI18n();
+
 export const switchLanguage = async (language: string) => {
     storage.setItem(storage.SELECTED_LANGUAGE, language);
     await i18n.changeLanguage(language);
@@ -47,8 +49,8 @@ export const getObjectForCurrentLanguage = (displayArray: DisplayArrayObject[], 
     let resp = displayArray.filter(displayObj => (displayObj.language === language || displayObj.locale === language))[0];
     if (!resp) {
         resp = displayArray.filter(displayObj => (
-            displayObj.language === getDefaultLanguage() || 
-            displayObj.locale === getDefaultLanguage()
+            displayObj.language === defaultLanguage || 
+            displayObj.locale === defaultLanguage
         ))[0];
     }
     return resp;
