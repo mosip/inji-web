@@ -14,10 +14,12 @@ export enum MethodType {
 export class api {
 
     // static mimotoHost = "http://localhost:3010";
-     static mimotoHost = window.location.origin + "/v1/mimoto";
+    //  static mimotoHost = window.location.origin + "/v1/mimoto";
+    static mimotoHost="https://api.collab.mossip.net" + "/v1/mimoto";
 
-    static authorizationRedirectionUrl = window.location.origin + "/redirect";
-
+    // static authorizationRedirectionUrl = window.location.origin + "/redirect";
+    static authorizationRedirectionUrl = "https://api.collab.mossip.net" + "/redirect";
+  
     static fetchIssuers: ApiRequest = {
         url: () => (api.mimotoHost + "/issuers"),
         methodType: MethodType.GET,

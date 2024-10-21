@@ -4,21 +4,12 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { reduxStore } from '../redux/reduxStore';
 
-// Mock react-redux hooks
-jest.mock('react-redux', () => ({
-    ...jest.requireActual('react-redux'),
-    useSelector: (selector: any) => selector(mockReduxState),
-    useDispatch: () => jest.fn()
-}));
-
 // Mock for storage module
 export const mockStorageModule = () => {
     jest.mock('../utils/storage.ts', () => ({
         storage: {
             getItem: jest.fn(),
             setItem: jest.fn(),
-            removeItem: jest.fn(),
-            clear: jest.fn(),
             SESSION_INFO: 'SESSION_INFO',
             SELECTED_LANGUAGE: 'selectedLanguage'
         }
@@ -33,12 +24,6 @@ export const mockLocalStorage = () => {
       getItem: jest.fn((key: string) => store[key] || null),
       setItem: jest.fn((key: string, value: string) => {
         store[key] = value;
-      }),
-      clear: jest.fn(() => {
-        store = {};
-      }),
-      removeItem: jest.fn((key: string) => {
-        delete store[key];
       })
     };
   
