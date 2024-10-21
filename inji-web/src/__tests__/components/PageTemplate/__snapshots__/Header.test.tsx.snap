@@ -4,7 +4,7 @@ exports[`Header Container Layout Test Check if the layout is matching with the s
 <DocumentFragment>
   <header>
     <div
-      class="fixed top-0 left-0 right-0 bg-iw-background py-4 shadow-sm"
+      class="fixed top-0 left-0 right-0 bg-iw-background py-7 shadow-sm"
       data-testid="Header-Container"
     >
       <div
@@ -39,7 +39,7 @@ exports[`Header Container Layout Test Check if the layout is matching with the s
           >
             <img
               alt="Inji Web Logo"
-              class="h-13 w-28 cursor-pointer"
+              class="h-13 w-28 scale-150 cursor-pointer"
               data-testid="Header-InjiWeb-Logo"
               src="InjiWebLogo.png"
             />
@@ -84,12 +84,34 @@ exports[`Header Container Layout Test Check if the layout is matching with the s
                 tabindex="0"
               >
                 <svg
+                  height="0"
+                  width="0"
+                >
+                  <lineargradient
+                    id="blue-gradient"
+                    x1="0%"
+                    x2="100%"
+                    y1="0%"
+                    y2="100%"
+                  >
+                    <stop
+                      offset="0%"
+                      stop-color="var(--iw-color-primary)"
+                    />
+                    <stop
+                      offset="100%"
+                      stop-color="var(--iw-color-secondary)"
+                    />
+                  </lineargradient>
+                </svg>
+                <svg
                   color="var(--iw-color-languageGlobeIcon)"
                   data-testid="Language-Selector-Icon"
                   fill="currentColor"
                   height="30"
                   stroke="currentColor"
                   stroke-width="0"
+                  style="fill: url(#blue-gradient);"
                   viewBox="0 0 16 16"
                   width="30"
                   xmlns="http://www.w3.org/2000/svg"
@@ -114,11 +136,33 @@ exports[`Header Container Layout Test Check if the layout is matching with the s
                       English
                     </p>
                     <svg
+                      height="0"
+                      width="0"
+                    >
+                      <lineargradient
+                        id="blue-gradient"
+                        x1="0%"
+                        x2="100%"
+                        y1="0%"
+                        y2="100%"
+                      >
+                        <stop
+                          offset="0%"
+                          stop-color="var(--iw-color-primary)"
+                        />
+                        <stop
+                          offset="100%"
+                          stop-color="var(--iw-color-secondary)"
+                        />
+                      </lineargradient>
+                    </svg>
+                    <svg
                       color="var(--iw-color-languageArrowIcon)"
                       fill="currentColor"
                       height="20"
                       stroke="currentColor"
                       stroke-width="0"
+                      style="fill: url(#blue-gradient);"
                       viewBox="0 0 24 24"
                       width="20"
                       xmlns="http://www.w3.org/2000/svg"

@@ -62,17 +62,12 @@ public class SunbirdCredentials extends BasePage {
     }
 
     public void selectDateOfBirth() {
-//		 page.keyboard().press("Tab");
-//	page.fill("#_form_dob", "2024-01-01");
 
         driver.findElement(By.xpath("//input[@id='_form_fullName']")).sendKeys(Keys.TAB);
         driver.findElement(By.id("_form_dob")).sendKeys("01/01/2024");
 
 
         driver.findElement(By.xpath("//input[@id='_form_dob']")).click();
-//		WebElement ele = driver.findElement(By.xpath("//input[@id='_form_fullName']"));
-//		ele.sendKeys(Keys.TAB);
-//		ele.sendKeys(Keys.SPACE);
 
         try {
             Thread.sleep(2000);
@@ -80,24 +75,11 @@ public class SunbirdCredentials extends BasePage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-//      System.out.println(driver.getPageSource());
         System.out.println(driver.getWindowHandles());
 
 
-//		driver.findElement(By.xpath("//*[contains(@text,'SET')]")).click();
-
-//        JavascriptExecutor js = (JavascriptExecutor) driver;
-//
-//// Improved XPath with contains() for partial text match
-//        String xpath = "//*[contains(@text,'SET')]";
-//
-//// Execute the script to find and click the element
-//        js.executeScript("document.evaluate(arguments[0], document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()", xpath);
-//
-//
-
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        String xpath = "//*[contains(@text,'SET')]"; // Improved XPath (consider adding specificity)
+        String xpath = "//*[contains(@text,'SET')]";
 
         try {
             js.executeScript("document.evaluate(arguments[0], document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()", xpath);
@@ -107,7 +89,6 @@ public class SunbirdCredentials extends BasePage {
             System.out.println("JavaScript error: " + e.getMessage());
         }
     }
-
 
 
     public void clickOnLogin() {
@@ -135,7 +116,7 @@ public class SunbirdCredentials extends BasePage {
     }
 
     public Boolean isAuthenticationFailedDisplayed() {
-        return isElementIsVisible(driver, By.xpath("//div[contains(text(), 'Login failed, please enter correct credentials')]  "));
+        return isElementIsVisible(driver, By.xpath("//div[@class='error-banner-text text-sm font-semibold']"));
     }
 
     public Boolean isVehicleInsuranceDisplayed() {
@@ -151,4 +132,5 @@ public class SunbirdCredentials extends BasePage {
     public void clickOnVehicleInsurance() {
         clickOnElement(driver, By.xpath("(//div[@class='justify-center items-center'])[2]"));
     }
+
 }

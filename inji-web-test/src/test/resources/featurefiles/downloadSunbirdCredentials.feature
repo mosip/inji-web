@@ -14,8 +14,8 @@ Feature: Login using Sunbird Credentials
     And User enter the full name  "<full name>"
     And User enter the date of birth "<date of birth>"
     And User click on login button
-#    And User verify pdf is downloaded
     Then User verify Download Success text displayed
+    And User verify pdf is downloaded for Insurance
     And User verify go home button
     And User verify go back button
 
@@ -111,7 +111,6 @@ Feature: Login using Sunbird Credentials
     And User verify date of birth input box header
     And User enter the date of birth "<date of birth>"
     And User click on login button
-#    And User verify pdf is downloaded
     Then User verify Download Success text displayed
 
     Examples:

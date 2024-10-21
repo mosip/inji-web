@@ -6,6 +6,7 @@ import {storeLanguage} from "../../redux/reducers/commonReducer";
 import {RootState} from "../../types/redux";
 import {FaCheck} from "react-icons/fa6";
 import {RiArrowDownSFill, RiArrowUpSFill} from "react-icons/ri";
+import {GradientWrapper} from "./GradientWrapper";
 
 export const LanguageSelector: React.FC = () => {
     const dispatch = useDispatch();
@@ -30,9 +31,11 @@ export const LanguageSelector: React.FC = () => {
                 onBlur={()=>setIsOpen(false)}
                 tabIndex={0}
                 role="button">
-        <VscGlobe
-            data-testid="Language-Selector-Icon"
-            size={30} color={'var(--iw-color-languageGlobeIcon)'}/>
+        <GradientWrapper>
+            <VscGlobe data-testid="Language-Selector-Icon"
+                      size={30} color={'var(--iw-color-languageGlobeIcon)'}/>
+        </GradientWrapper>
+
         <div className="relative inline-block ms-1">
             <button
                 type="button"
@@ -40,7 +43,13 @@ export const LanguageSelector: React.FC = () => {
                 data-testid={"Language-Selector-Button"}
                 onMouseDown={() => setIsOpen(open => !isOpen)}>
                 <p data-testid={`Language-Selector-Selected-DropDown-${language}`}>{LanguagesSupported.find(lang => lang.value === language)?.label}</p>
-                {isOpen ? <RiArrowUpSFill size={20} color={'var(--iw-color-languageArrowIcon)'} /> : <RiArrowDownSFill size={20} color={'var(--iw-color-languageArrowIcon)'}/> }
+                {isOpen ?
+                    <GradientWrapper>
+                        <RiArrowUpSFill size={20} color={'var(--iw-color-languageArrowIcon)'} />
+                    </GradientWrapper> :
+                    <GradientWrapper>
+                        <RiArrowDownSFill size={20} color={'var(--iw-color-languageArrowIcon)'}/>
+                    </GradientWrapper> }
             </button>
 
             {isOpen && (
@@ -50,13 +59,13 @@ export const LanguageSelector: React.FC = () => {
                         {LanguagesSupported.map((item) => (
                             <li key={item.value}
                                 data-testid={`Language-Selector-DropDown-Item-${item.value}`}
-                                className={language === item.value ? "text-iw-primary" : ""}>
+                                className={language === item.value ? "text-iw-tertiary font-bold" : ""}>
                                 <button
                                     type="button"
                                     className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center justify-between flex-row"
                                     onMouseDown={(event) => {event.stopPropagation();handleChange(item)}}>
                                     {item.label}
-                                    {language === item.value && <FaCheck color={'var(--iw-color-languageCheckIcon)'}/>}
+                                    {language === item.value && <GradientWrapper><FaCheck color={'var(--iw-color-languageCheckIcon)'}/></GradientWrapper>}
                                 </button>
                             </li>
                         ))}

@@ -15,7 +15,7 @@ public class SetNetwork {
     public static String getKeyValueFromYaml(String filePath, String key) {
         FileReader reader = null;
         try {
-            reader = new FileReader(System.getProperty("user.dir")+filePath);
+            reader = new FileReader(System.getProperty("user.dir") + filePath);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -26,7 +26,7 @@ public class SetNetwork {
             @SuppressWarnings("unchecked")
             Map<String, String> map = (Map<String, String>) data;
             return (String) map.get(key);
-        }  else {
+        } else {
             throw new RuntimeException("Invalid YAML format, expected a map");
         }
     }
@@ -35,8 +35,8 @@ public class SetNetwork {
         String baseURL = "https://api-cloud.browserstack.com";
         String endpoint = "/app-automate/sessions/" + sessionID + "/update_network.json";
 
-        String accessKey = getKeyValueFromYaml("/browserstack.yml","accessKey");
-        String userName = getKeyValueFromYaml("/browserstack.yml","userName");
+        String accessKey = getKeyValueFromYaml("/browserstack.yml", "accessKey");
+        String userName = getKeyValueFromYaml("/browserstack.yml", "userName");
         String networkSettingsJson = "{\"networkProfile\":\"reset\"}";
 
         RequestSpecification requestSpec = RestAssured.given()
@@ -50,8 +50,8 @@ public class SetNetwork {
     public static void setNoNetworkProfile(String sessionID) {
         String baseURL = "https://api-cloud.browserstack.com";
         String endpoint = "/app-automate/sessions/" + sessionID + "/update_network.json";
-        String accessKey = getKeyValueFromYaml("/browserstack.yml","accessKey");
-        String userName = getKeyValueFromYaml("/browserstack.yml","userName");
+        String accessKey = getKeyValueFromYaml("/browserstack.yml", "accessKey");
+        String userName = getKeyValueFromYaml("/browserstack.yml", "userName");
         String networkSettingsJson = "{\"networkProfile\":\"no-network\"}";
         RequestSpecification requestSpec = RestAssured.given()
                 .auth().basic(userName, accessKey)
@@ -60,7 +60,5 @@ public class SetNetwork {
         Response response = requestSpec.put(baseURL + endpoint);
     }
 
-
-    
 
 }

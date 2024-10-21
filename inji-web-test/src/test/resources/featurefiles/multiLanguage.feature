@@ -137,3 +137,43 @@ Feature: Inji web multilanguage testing
     And User verify home screens in french
     And User search the issuers with "National Identity Department"
     And User verify mosip national id by e-signet displayed
+
+
+  @smoke @verifyingHomepageAndSearchInConfiguredLanguge
+  Scenario: Verify the Inji web homepage
+    Given User gets the title of the page
+    Then User validate the title of the page
+    And User verify that inji web logo is displayed
+    And User verify that langauge button is displayed
+    And User click on langauge button
+    And User click on arabic langauge
+    And User verify home screens in arabic
+    And User clicks on the help button
+    And User verify the FAQ header and its description
+    And User verify the only one FAQ is open
+    And User verify the only one FAQ is at a time
+    And User verify that inji web logo is displayed
+    And User click on langauge button
+    And User click on tamil langauge
+    And User verify the FAQ header and its description
+    And User verify the only one FAQ is open
+    And User verify the only one FAQ is at a time
+    And User verify that inji web logo is displayed
+    And User click on langauge button
+    And User click on kannada langauge
+    And User verify the FAQ header and its description
+    And User verify the only one FAQ is open
+    And User verify the only one FAQ is at a time
+    And User verify that inji web logo is displayed
+    And User click on langauge button
+    And User click on hindi langauge
+    And User verify the FAQ header and its description
+    And User verify the only one FAQ is open
+    And User verify the only one FAQ is at a time
+    And User verify that inji web logo is displayed
+    And User click on langauge button
+    And User click on french langauge
+    And User verify the FAQ header and its description
+    And User verify the only one FAQ is open
+    And User verify the only one FAQ is at a time
+    And User verify that inji web logo is displayed
