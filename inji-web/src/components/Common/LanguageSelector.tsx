@@ -7,6 +7,7 @@ import {RootState} from "../../types/redux";
 import {FaCheck} from "react-icons/fa6";
 import {RiArrowDownSFill, RiArrowUpSFill} from "react-icons/ri";
 import {GradientWrapper} from "./GradientWrapper";
+import {renderGradientText} from "../../utils/builder";
 
 export const LanguageSelector: React.FC = () => {
     const dispatch = useDispatch();
@@ -64,7 +65,7 @@ export const LanguageSelector: React.FC = () => {
                                     type="button"
                                     className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center justify-between flex-row"
                                     onMouseDown={(event) => {event.stopPropagation();handleChange(item)}}>
-                                    {item.label}
+                                    {language === item.value ? renderGradientText(item.label) : item.label}
                                     {language === item.value && <GradientWrapper><FaCheck color={'var(--iw-color-languageCheckIcon)'}/></GradientWrapper>}
                                 </button>
                             </li>

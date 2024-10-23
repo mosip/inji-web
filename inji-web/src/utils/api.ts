@@ -13,8 +13,8 @@ export enum MethodType {
 
 export class api {
 
-    // static mimotoHost = "http://localhost:3010";
-     static mimotoHost = window.location.origin + "/v1/mimoto";
+    static mimotoHost = "http://localhost:3010";
+     // static mimotoHost = window.location.origin + "/v1/mimoto";
 
     static authorizationRedirectionUrl = window.location.origin + "/redirect";
 

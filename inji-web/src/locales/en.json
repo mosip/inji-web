@@ -1,16 +1,18 @@
 {
   "PageTemplate": {
     "Header": {
-      "aboutInji": "About Inji Web",
+      "home": "Home",
       "help": "Help"
     },
     "Footer": {
+      "product": "A MOSIP Product",
       "copyRight": "© 2024 Inji. All rights reserved."
     }
   },
   "HomePage": {
     "Intro": {
-      "title": "Access your Verifiable Credentials with ease!",
+      "title": "Access your Verifiable Credentials",
+      "title2": "with ease!",
       "subTitle": "Securely download and share your credentials instantly.",
       "searchText": "Search Issuers by name"
     },

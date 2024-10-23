@@ -1,48 +1,15 @@
-import React, {useEffect} from "react";
-import {RequestStatus, useFetch} from "../hooks/useFetch";
-import {IntroBox} from "../components/Common/IntroBox";
-import {SearchIssuer} from "../components/Issuers/SearchIssuer";
-import {IssuersList} from "../components/Issuers/IssuersList";
-import {useDispatch} from "react-redux";
-import {storeFilteredIssuers, storeIssuers} from "../redux/reducers/issuersReducer";
-import {api} from "../utils/api";
-import {ApiRequest, IssuerObject} from "../types/data";
-import {useTranslation} from "react-i18next";
-import {toast} from "react-toastify";
+import React from "react";
+import {useNavigate} from "react-router-dom";
+import {HomeBanner} from "../components/Home/HomeBanner";
+import {HomeFeatures} from "../components/Home/HomeFeatures";
+import {HomeQuickTip} from "../components/Home/HomeQuickTip";
 
-export const HomePage: React.FC = () => {
+export const HomePage:React.FC = () => {
+    const navigate = useNavigate();
+    return <div className={"pb-20"}>
 
-    const {state, fetchRequest} = useFetch();
-    const dispatch = useDispatch();
-    const {t} = useTranslation("HomePage");
-
-    useEffect(() => {
-        const fetchCall = async () => {
-            const apiRequest: ApiRequest = api.fetchIssuers;
-            const response = await fetchRequest(
-                apiRequest.url(),
-                apiRequest.methodType,
-                apiRequest.headers()
-            );
-            const issuers = response?.response?.issuers.filter((issuer: IssuerObject) => issuer.protocol !== "OTP")
-            dispatch(storeFilteredIssuers(issuers));
-            dispatch(storeIssuers(issuers));
-        }
-        fetchCall();
-    }, [])
-
-    if (state === RequestStatus.ERROR) {
-        toast.error(t("errorContent"));
-    }
-    return <div data-testid="Home-Page-Container">
-        <div className="container mx-auto mt-8 flex flex-col px-10">
-            <div className={"mb-20"}>
-                <IntroBox/>
-                <SearchIssuer state={state} fetchRequest={fetchRequest}/>
-            </div>
-            <IssuersList state={state}/>
-        </div>
-
+        <HomeBanner onClick={() => navigate("/issuers")} />
+        <HomeFeatures />
+        <HomeQuickTip  onClick={() => navigate("/issuers")} />
     </div>
-
 }

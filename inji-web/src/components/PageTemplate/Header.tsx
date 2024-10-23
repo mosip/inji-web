@@ -14,7 +14,7 @@ export const Header: React.FC = () => {
     return (
         <header>
         <div data-testid="Header-Container"
-                className="fixed top-0 left-0 right-0 bg-iw-background py-7 shadow-sm">
+                className="fixed top-0 left-0 right-0 bg-iw-background py-7 ">
             <div className="container mx-auto flex justify-between items-center px-4">
                 <div data-testid="Header-InjiWeb-Logo-Container" className={"flex flex-row justify-center items-center"}>
                     <div  role="button" tabIndex={0} className={"sm:hidden"} onClick={() => setIsOpen(open => !open)} onKeyUp={() => setIsOpen(open => !open)}>
@@ -31,11 +31,14 @@ export const Header: React.FC = () => {
                     </div>
                 </div>
                 <nav>
-                    <ul className="flex space-x-4 items-center font-semibold" data-testid="Header-Menu-Elements">
-                        <li data-testid="Header-Menu-AboutInji"><a href="https://docs.mosip.io/inji/inji-web/overview"
-                                                                   target="_blank"
-                                                                   rel="noreferrer"
-                                                                   className="text-iw-title hidden sm:inline-block">{t("Header.aboutInji")}</a>
+                    <ul className="flex space-x-10 items-center font-semibold" data-testid="Header-Menu-Elements">
+                        <li data-testid="Header-Menu-Home">
+                            <div data-testid="Header-Menu-Home-div"
+                                 onClick={() => navigate("/") }
+                                 onKeyUp={() => navigate("/") }
+                                 role="button"
+                                 tabIndex={0}
+                                 className="text-iw-title cursor-pointer hidden sm:inline-block">{t("Header.home")}</div>
                         </li>
                         <li data-testid="Header-Menu-Help">
                             <div data-testid="Header-Menu-Help-div"
@@ -45,9 +48,9 @@ export const Header: React.FC = () => {
                                  tabIndex={0}
                                  className="text-iw-title cursor-pointer hidden sm:inline-block">{t("Header.help")}</div>
                         </li>
-                        <li data-testid="Header-Menu-LanguageSelector"><LanguageSelector/></li>
                     </ul>
                 </nav>
+                <div className={"font-semibold"} data-testid="Header-Menu-LanguageSelector"><LanguageSelector/></div>
             </div>
             { isOpen &&
                 <OutsideClickHandler onOutsideClick={()=>setIsOpen(false)} >
