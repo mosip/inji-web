@@ -16,7 +16,7 @@ export const Header: React.FC = () => {
         <div data-testid="Header-Container"
                 className="fixed top-0 left-0 right-0 bg-iw-background py-7 shadow-sm">
             <div className="container mx-auto flex justify-between items-center px-4">
-                <div data-testid="Header-InjiWeb-Logo-Container" className={"flex flex-row justify-center items-center"}>
+                <div data-testid="Header-InjiWeb-Logo-Container" className={"flex flex-row space-x-9 justify-center items-center"}>
                     <div  role="button" tabIndex={0} className={"sm:hidden"} onClick={() => setIsOpen(open => !open)} onKeyUp={() => setIsOpen(open => !open)}>
                         <GiHamburgerMenu size={32}/>
                     </div>
@@ -54,7 +54,7 @@ export const Header: React.FC = () => {
                     <div className="container mx-auto px-4 flex flex-col justify-start items-start font-semibold"
                          role="button"
                          tabIndex={0}
-                         onMouseDown={() => setIsOpen(false)}
+                         onClick={() => setIsOpen(false)}
                          onBlur={() => setIsOpen(false)}>
                         <div data-testid="Header-Menu-AboutInji"
                              className={"py-5 w-full"}
