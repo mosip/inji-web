@@ -48,8 +48,16 @@ jobs:
       ORG_KEY: ${{ secrets.ORG_KEY }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 
-  call-trivy-scan:
-    uses: mosip/kattu/.github/workflows/trivy.yml@develop
-    with:
-            service_name: 'inji-web'
-            version: 'latest'
+  trivy-scan:
+     needs: build-dockers-inji-web
+     uses: mosip/kattu/.github/workflows/trivy.yml@develop
+     strategy:
+      matrix:
+       include:
+        - SERVICE_NAME: 'inji-web'
+
+
+     with:
+      service_name: ${{ matrix.SERVICE_NAME }}
+      version: ${{ github.event.pull_request.base.ref }}
+
