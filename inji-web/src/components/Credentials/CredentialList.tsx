@@ -31,7 +31,7 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
 
     return <React.Fragment>
         <HeaderTile content={t("containerHeading")} subContent={t("containerSubHeading")}/>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 justify-center">
+        <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
             {credentials?.filtered_credentials && Object.keys(credentials?.filtered_credentials?.credential_configurations_supported).map((credentialId: string, index: number) => (
                 <Credential credentialId={credentialId} credentialWellknown={credentials?.filtered_credentials} key={index} index={index}/>
             ))}
