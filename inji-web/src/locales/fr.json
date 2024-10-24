@@ -243,6 +243,7 @@
   },
   "CustomExpiryModal": {
     "title": "Veuillez saisir le nombre de fois que vous souhaitez utiliser cet identifiant ",
+    "error": "Veuillez saisir un numéro d'expiration valide, supérieur à zéro, pour limiter le nombre de fois que vos informations d'identification peuvent être vérifiées.",
     "metrics": "Fois",
     "success": "Procéder",
     "cancel": "Annuler"
