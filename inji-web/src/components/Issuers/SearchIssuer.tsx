@@ -11,7 +11,7 @@ import {getObjectForCurrentLanguage} from "../../utils/i18n";
 
 export const SearchIssuer: React.FC<SearchIssuerProps> = (props) => {
 
-    const {t} = useTranslation("HomePage");
+    const {t} = useTranslation("IssuersPage");
     const dispatch = useDispatch();
     const [searchText, setSearchText] = useState("");
     const issuers = useSelector((state:RootState) => state.issuers.issuers);

@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import {renderGradientText} from "../../utils/builder";
 
 export const IntroBox: React.FC = () => {
-    const {t} = useTranslation("HomePage");
+    const {t} = useTranslation("IssuersPage");
     return <React.Fragment>
         <div data-testid="IntroBox-Container" className="text-center pt-20 pb-10">
             <h2 data-testid="IntroBox-Text"

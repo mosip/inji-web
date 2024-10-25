@@ -43,7 +43,8 @@ export const LanguageSelector: React.FC = () => {
                 className="inline-flex items-center"
                 data-testid={"Language-Selector-Button"}
                 onMouseDown={() => setIsOpen(open => !isOpen)}>
-                <p data-testid={`Language-Selector-Selected-DropDown-${language}`}>{LanguagesSupported.find(lang => lang.value === language)?.label}</p>
+                <p data-testid={`Language-Selector-Selected-DropDown-${language}`}>{LanguagesSupported.find(lang => lang.value === language)?.label}
+                </p>
                 {isOpen ?
                     <GradientWrapper>
                         <RiArrowUpSFill size={20} color={'var(--iw-color-languageArrowIcon)'} />

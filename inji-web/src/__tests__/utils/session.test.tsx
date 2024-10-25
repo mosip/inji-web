@@ -3,6 +3,7 @@ import { mockStorageModule } from '../../test-utils/mockUtils';
 import { SessionObject } from '../../types/data';
 
 // Set up the storage mock before the tests run
+jest.mock('../../utils/storage');
 mockStorageModule();
 
 // Import the mocked storage after setting up the mock

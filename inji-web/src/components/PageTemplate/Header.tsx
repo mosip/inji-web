@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import {LanguageSelector} from "../Common/LanguageSelector";
+import { HelpDropdown } from "../Common/HelpDropdown";
 import {GiHamburgerMenu} from "react-icons/gi";
 import OutsideClickHandler from 'react-outside-click-handler';
 
@@ -41,12 +42,7 @@ export const Header: React.FC = () => {
                                  className="text-iw-title cursor-pointer hidden sm:inline-block">{t("Header.home")}</div>
                         </li>
                         <li data-testid="Header-Menu-Help">
-                            <div data-testid="Header-Menu-Help-div"
-                                 onClick={() => navigate("/help") }
-                                 onKeyUp={() => navigate("/help") }
-                                 role="button"
-                                 tabIndex={0}
-                                 className="text-iw-title cursor-pointer hidden sm:inline-block">{t("Header.help")}</div>
+                        <div className={"font-semibold"} data-testid="Header-Menu-Help-div"><HelpDropdown/></div>
                         </li>
                     </ul>
                 </nav>

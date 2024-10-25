@@ -1,5 +1,4 @@
 import { initReactI18next } from 'react-i18next';
-import { setReduxState, clearReduxState } from '../../test-utils/reduxMockUtils';
 import en from '../../locales/en.json';
 import fr from '../../locales/fr.json';
 import ta from '../../locales/ta.json';
@@ -50,7 +49,6 @@ describe('Test i18n configuration', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     windowSpy.mockClear();
-    clearReduxState();
     mockStorage.getItem.mockReset();
     mockStorage.setItem.mockReset();
 
@@ -60,9 +58,6 @@ describe('Test i18n configuration', () => {
       },
     } as Window & typeof globalThis));
 
-    setReduxState({
-      language: 'en',
-    });
 
     jest.isolateModules(() => {
       i18nModule = jest.requireActual('../../utils/i18n');
@@ -72,7 +67,6 @@ describe('Test i18n configuration', () => {
   afterEach(() => {
     jest.resetModules();
     windowSpy.mockRestore();
-    clearReduxState();
   });
 
   describe('Testing initialization process', () => {
@@ -80,10 +74,6 @@ describe('Test i18n configuration', () => {
       const selectedLanguage = 'ar';
       mockStorage.getItem.mockReturnValue(selectedLanguage);
       
-      setReduxState({
-        language: selectedLanguage
-      });
-
       await i18nModule.initializeI18n();
 
       expect(mockStorage.getItem).toHaveBeenCalledWith('selectedLanguage');

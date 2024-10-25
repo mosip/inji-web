@@ -1,14 +1,66 @@
 {
   "PageTemplate": {
     "Header": {
-      "aboutInji": "À propos de Inji Web",
+      "home": "Accueil",
       "help": "Aide"
     },
     "Footer": {
-      "copyRight": "© 2024 Inji. "
+      "product": "Un produit MOSIP",
+      "copyRight": "© 2024 Inji. Tous droits réservés."
     }
   },
   "HomePage": {
+    "Banner": {
+      "heading": "Accédez et gérez facilement vos identifiants numériques",
+      "description": "Rendez vos données portables en toute confiance. Gérez en toute sécurité vos documents numériques avec notre portefeuille web facile à utiliser.",
+      "buttontext": "Commencer"
+    },
+    "Features": {
+      "heading": "Caractéristiques de Inji Web",
+      "description1": "Gestion transparente et sécurisée des identifiants vérifiables",
+      "description2": "pour des interactions numériques de confiance."
+    },
+    "FeatureItem1": {
+      "heading": "Accédez à vos identifiants, où que vous soyez",
+      "item1": "Identifiants simplifiés",
+      "description1": "Gardez tous vos documents essentiels",
+      "item2": "Plus de paperasse. Tout en un seul endroit",
+      "description2": "Téléchargez, stockez et récupérez facilement vos documents. Gagnant, gagnant, gagnant."
+    },
+    "FeatureItem2": {
+      "heading": "Vos documents téléchargés en une seconde",
+      "item1": "Téléchargez en toute confiance",
+      "description1": "Enregistrez instantanément vos documents importants",
+      "item2": "Sûr et sécurisé",
+      "description2": "Téléchargez des pièces d'identité, des licences et plus encore, en un seul endroit sécurisé."
+    },
+    "FeatureItem3": {
+      "heading": "Partage facile",
+      "item1": "Partagez avec un code QR",
+      "description1": "Partagez facilement vos pièces d'identité et certificats en déplacement. Présentez simplement le code QR de votre document, à scanner et partager.",
+      "item2": "Lire, définir, partager",
+      "description2": "Code QR vérifié en temps réel."
+    },
+    "FeatureItem4": {
+      "heading": "Sécurisé et privé",
+      "item1": "Vos identifiants, protégés",
+      "description1": "Vos données restent privées, grâce au mécanisme de sécurité intégré.",
+      "item2": "Restez tranquille",
+      "description2": "Gardez vos identifiants en sécurité, pour que vous puissiez vous concentrer sur l'essentiel."
+    },
+    "FeatureItem5": {
+      "heading": "Accès et compatibilité étendus",
+      "item1": "Disponible sur votre navigateur préféré",
+      "description1": "Inji Web fonctionne avec Chrome, Safari, Firefox et Edge.",
+      "item2": "Toujours à portée de main",
+      "description2": "La commodité rencontre l'accessibilité où que vous soyez, garantissant que vos documents sont toujours à portée de main."
+    },
+    "QuickTip": {
+      "heading": "Conseils rapides pour télécharger instantanément vos identifiants",
+      "buttontext": "Cliquez ici"
+    }
+  },
+  "IssuersPage": {
     "Intro": {
       "title": "Accédez facilement à vos informations d'identification vérifiables !",
       "subTitle": "Téléchargez et partagez en toute sécurité vos informations d'identification instantanément.",
@@ -92,6 +144,10 @@
   },
   "HelpPage": {
     "title": "Aide"
+  },
+  "HelpDropdown":{
+    "heading":"Aide",
+    "item1":"Questions fréquemment posées"
   },
   "Help": {
     "item1": {

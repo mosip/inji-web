@@ -1,9 +1,9 @@
 import {storage} from "../../utils/storage";
 import {CommonReducerActionType} from "../../types/redux";
-import {getDefaultLanguage} from "../../utils/i18n";
+import {defaultLanguage} from "../../utils/i18n";
 
 const initialState = {
-    language: storage.getItem(storage.SELECTED_LANGUAGE) ? storage.getItem(storage.SELECTED_LANGUAGE) : getDefaultLanguage(),
+    language: storage.getItem(storage.SELECTED_LANGUAGE) ? storage.getItem(storage.SELECTED_LANGUAGE) : defaultLanguage,
     vcStorageExpiryLimitInTimes: 1
 }
 

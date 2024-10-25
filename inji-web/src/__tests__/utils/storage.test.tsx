@@ -1,6 +1,8 @@
 import { storage } from '../../utils/storage';
 import { mockLocalStorage, mockStorageModule } from '../../test-utils/mockUtils';
 
+jest.mock('../../utils/storage');
+
 describe('Test storage class functionality', () => {
   let localStorageMock: ReturnType<typeof mockLocalStorage>;
 
