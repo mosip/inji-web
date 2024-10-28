@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import {BorderedButton} from "./Buttons/BorderedButton";
 
 export const LandingPageWrapper: React.FC<LandingPageWrapperProps> = (props) => {
     const navigate = useNavigate();
@@ -15,7 +14,17 @@ export const LandingPageWrapper: React.FC<LandingPageWrapperProps> = (props) => 
             <div className="mb-6 px-10 text-center" data-testid="DownloadResult-SubTitle">
                 <p>{props.subTitle}</p>
             </div>
-            { props.gotoHome && <BorderedButton testId={"DownloadResult-Home-Button"} onClick={() => navigate("/")} title={t("navigateButton")} />}
+            {props.gotoHome && (
+                <div>
+                    <button
+                        data-testid="DownloadResult-Home-Button"
+                        onClick={() => navigate("/")}
+                        className="text-iw-primary font-bold py-2 px-4 rounded-lg border-2 border-iw-primary"
+                    >
+                        {t("navigateButton")}
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

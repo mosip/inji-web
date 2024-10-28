@@ -18,7 +18,7 @@ export const LanguagesSupported: LanguageObject[] = [
     {label: "हिंदी", value: 'hi'},
     {label: "Français", value: 'fr'},
     {label: "عربي", value: 'ar'}
-];
+]
 
 export const defaultLanguage = window._env_.DEFAULT_LANG;
 
@@ -38,14 +38,10 @@ export const switchLanguage = async (language: string) => {
     storage.setItem(storage.SELECTED_LANGUAGE, language);
     await i18n.changeLanguage(language);
 }
-
 export const getObjectForCurrentLanguage = (displayArray: DisplayArrayObject[], language: string = i18n.language) => {
     let resp = displayArray.filter(displayObj => (displayObj.language === language || displayObj.locale === language))[0];
     if (!resp) {
-        resp = displayArray.filter(displayObj => (
-            displayObj.language === getDefaultLanguage() || 
-            displayObj.locale === getDefaultLanguage()
-        ))[0];
+        resp = displayArray.filter(displayObj => (displayObj.language === defaultLanguage || displayObj.locale === defaultLanguage))[0];
     }
     return resp;
 }

@@ -2,8 +2,9 @@ import React, { useTransition } from "react";
 import {FaRegCheckCircle} from "react-icons/fa";
 import {GradientWrapper} from "../Common/GradientWrapper";
 import { useTranslation } from "react-i18next";
+import { HomeFeatureItemProps } from "../../types/components"; 
 
-export const HomeFeatureItem:React.FC = (props) => {
+export const HomeFeatureItem:React.FC<HomeFeatureItemProps> = (props) => {
   const {t}=useTranslation("HomePage");
 
   return <div className={"bg-gray-50 p-7 max-w-96 shadow-sm"}>

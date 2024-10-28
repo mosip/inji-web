@@ -1,3 +1,6 @@
+//Fixed SaiRam's Snapshot tests.
+//need to fix i18n.tests only.
+
 import { initReactI18next } from 'react-i18next';
 import en from '../../locales/en.json';
 import fr from '../../locales/fr.json';
@@ -58,7 +61,6 @@ describe('Test i18n configuration', () => {
       },
     } as Window & typeof globalThis));
 
-
     jest.isolateModules(() => {
       i18nModule = jest.requireActual('../../utils/i18n');
     });
@@ -67,13 +69,14 @@ describe('Test i18n configuration', () => {
   afterEach(() => {
     jest.resetModules();
     windowSpy.mockRestore();
+
   });
 
   describe('Testing initialization process', () => {
     test('Check if it initializes with the selected language', async () => {
       const selectedLanguage = 'ar';
       mockStorage.getItem.mockReturnValue(selectedLanguage);
-      
+
       await i18nModule.initializeI18n();
 
       expect(mockStorage.getItem).toHaveBeenCalledWith('selectedLanguage');
