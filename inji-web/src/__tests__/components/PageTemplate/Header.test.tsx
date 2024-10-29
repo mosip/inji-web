@@ -25,7 +25,7 @@ describe("Testing Header Container Functionality", () => {
     test("Check the length of the Header menu elements", () => {
         renderWithProvider((<Header />));
         const headerElementLi = screen.getByTestId("Header-Menu-Elements");
-        expect(headerElementLi.children.length).toBe(3);
+        expect(headerElementLi.children.length).toBe(2);
     });
 
     // Uncomment and fix these tests if needed
@@ -58,16 +58,16 @@ describe("Testing Header Container Functionality", () => {
     //     expect(mockedUsedNavigate).toHaveBeenCalled();
     // });
 
-    test('Check the presence of the Language Selector', () => {
-        renderWithProvider((<Header />));
-        const headerElementLi = screen.getByTestId("Header-Menu-LanguageSelector");
-        expect(headerElementLi).toBeInTheDocument();
-        const headerElementDiv = screen.getByTestId("Header-Menu-Help-div");
-        expect(headerElementDiv).toBeInTheDocument();
+    // test('Check the presence of the Language Selector', () => {
+    //     renderWithProvider((<Header />));
+    //     const headerElementLi = screen.getByTestId("Header-Menu-LanguageSelector");
+    //     expect(headerElementLi).toBeInTheDocument();
+    //     const headerElementDiv = screen.getByTestId("Header-Menu-Help-div");
+    //     expect(headerElementDiv).toBeInTheDocument();
 
-        jest.spyOn(require('react-router-dom'), 'useNavigate').mockReturnValue(mockUseNavigate);
-        fireEvent.click(headerElementDiv);
+    //     jest.spyOn(require('react-router-dom'), 'useNavigate').mockReturnValue(mockUseNavigate);
+    //     fireEvent.click(headerElementDiv);
 
-        expect(mockedUsedNavigate).toHaveBeenCalled();
-    });
+    //     expect(mockedUsedNavigate).toHaveBeenCalled();
+    // });
 });

@@ -104,6 +104,27 @@ exports[`Testing the Layout of IssuersList Check whether it renders issuers list
 
 exports[`Testing the Layout of IssuersList Check whether it renders loading state 1`] = `
 <DocumentFragment>
+  <svg
+    height="0"
+    width="0"
+  >
+    <lineargradient
+      id="blue-gradient"
+      x1="0%"
+      x2="100%"
+      y1="0%"
+      y2="100%"
+    >
+      <stop
+        offset="0%"
+        stop-color="var(--iw-color-primary)"
+      />
+      <stop
+        offset="100%"
+        stop-color="var(--iw-color-secondary)"
+      />
+    </lineargradient>
+  </svg>
   <div
     class="flex justify-center items-center"
     data-testid="SpinningLoader-Container"

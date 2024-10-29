@@ -46,8 +46,8 @@ export const HelpDropdown: React.FC = () => {
                                 onMouseDown={
                                     () => {setIsOpen(open=>!open); navigate("/help");}}
                                     >
-                                    {renderGradientText(t("item1"))}
-                                <GradientWrapper><FaCheck color={'var(--iw-color-languageCheckIcon)'}/></GradientWrapper>
+                                        {t("item1")}
+                                    {<FaCheck color={'var(--iw-color-languageCheckIcon)'}/>}
                             </button>
                         </li>
                     </ul>

@@ -7,14 +7,29 @@ exports[`Testing the Layout of Footer Container Check if the layout is matching 
     data-testid="Footer-Container"
   >
     <div
-      class="container mx-auto"
+      class="container mx-auto flex flex-col sm:flex-row justify-between items-center"
     >
       <p
-        class="text-black transform rotate-180"
+        class="text-iw-subText transform rotate-180"
         data-testid="Footer-Text"
       >
         Footer.copyRight
       </p>
+      <div
+        class="flex flex-row items-center"
+      >
+        <p
+          class="text-black transform rotate-180 font-bold"
+          data-testid="Footer-Text"
+        >
+          Footer.product
+        </p>
+        <img
+          alt="a square mosip logo"
+          class="w-10 h-10 transform rotate-180 m-2"
+          src="https://api.collab.mosip.net/inji/mosip-logo.png"
+        />
+      </div>
     </div>
   </footer>
 </DocumentFragment>

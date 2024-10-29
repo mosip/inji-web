@@ -2,20 +2,23 @@ import React from "react";
 import {PlainButton} from "../Common/Buttons/PlainButton";
 import { useTranslation } from "react-i18next";
 
-export const HomeQuickTip:React.FC<HomeQuickTipProps> = (props) => {
-    const {t}=useTranslation("HomePage");
-
-    return <div className={"py-5"}>
-        <div className={"mt-20 container mx-auto rounded-xl p-24 py-16 flex justify-between items-center bg-gradient-to-r from-iw-primary to-iw-secondary h-1/6"}>
-            <span className={"text-3xl text-iw-text font-semibold text-wrap w-5/12 text-start pb-10 flex items-center"}>{t("QuickTip.heading")}</span>
-            <div className={"items-center flex"}>
-                <PlainButton testId={"HomeBanner-Get-Started"} onClick={props.onClick} title={t("QuickTip.buttontext")} />
+export const HomeQuickTip: React.FC<HomeQuickTipProps> = (props) => {
+    const { t } = useTranslation("HomePage");
+    return (
+        <div className="py-4 mb-5 pb-20">
+          <div className="flex flex-col sm:flex-row items-center mx-[4%] sm:mb-3 py-[10%] sm:py-[4%] px-[2%] rounded-xl bg-gradient-to-r from-iw-primary to-iw-secondary sm:w-[80%] sm:ml-auto sm:mr-auto">
+            <span className="w-full sm:w-1/2 text-2xl text-center sm:text-left px-[5%] text-iw-text font-semibold pb-10 sm:pb-0">
+              {t("QuickTip.heading")}
+            </span>
+            <div className="w-4/5 sm:w-1/6 sm:ml-auto">
+              <PlainButton testId={"HomeBanner-Get-Started"}  onClick={props.onClick}  title={t("QuickTip.buttontext")} 
+              />
             </div>
+          </div>
         </div>
-    </div>
-}
+      );
+  };
 
 export type HomeQuickTipProps = {
     onClick: () => void
 }
-
