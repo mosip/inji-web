@@ -22,13 +22,13 @@ app.all('*', async (req, res) => {
 
         let response = await axios({
             method: req.method,
-            responseType: PATH.indexOf("/download") !== -1 ? "arraybuffer" : "json",
+            responseType: PATH.indexOf("/download") === -1 ? "json" : "arraybuffer",
             url: `${API_URL + PATH}`,
             data: new URLSearchParams(req.body),
             headers: req.headers
         });
 
-        if(PATH.indexOf("/download") !== -1){
+        if(PATH.indexOf("/download") === -1){
             res.status(response.status).json(response.data);
         } else {
             res.setHeader('Access-Control-Allow-Origin', '*'); // Change '*' to specific origin if needed
