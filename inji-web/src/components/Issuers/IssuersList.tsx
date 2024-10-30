@@ -13,7 +13,7 @@ import {GradientWrapper} from "../Common/GradientWrapper";
 
 export const IssuersList: React.FC<IssuersListProps> = ({state}) => {
     const issuers = useSelector((state: RootState) => state.issuers);
-    const {t} = useTranslation("HomePage");
+    const {t} = useTranslation("IssuersPage");
 
     if (state === RequestStatus.LOADING) {
         return <GradientWrapper><SpinningLoader/></GradientWrapper>

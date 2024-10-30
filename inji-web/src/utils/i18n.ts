@@ -18,39 +18,30 @@ export const LanguagesSupported: LanguageObject[] = [
     {label: "हिंदी", value: 'hi'},
     {label: "Français", value: 'fr'},
     {label: "عربي", value: 'ar'}
-];
+]
 
-// Move this into a function to delay execution
-export const getDefaultLanguage = () => window._env_?.DEFAULT_LANG || 'en';
+export const defaultLanguage = window._env_.DEFAULT_LANG;
 
-export const initializeI18n = () => {
-    const selected_language = storage.getItem(storage.SELECTED_LANGUAGE);
-    const defaultLanguage = getDefaultLanguage();
-    return i18n
-        .use(initReactI18next)
-        .init({
-            resources,
-            lng: selected_language || defaultLanguage,
-            fallbackLng: defaultLanguage,
-            interpolation: {
-                escapeValue: false
-            },
-        });
-};
-initializeI18n();
+const selected_language = storage.getItem(storage.SELECTED_LANGUAGE);
+i18n
+    .use(initReactI18next) // passes i18n down to react-i18next
+    .init({
+        resources,
+        lng: selected_language ? selected_language : defaultLanguage,
+        fallbackLng: defaultLanguage,
+        interpolation: {
+            escapeValue: false // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
+        },
+    });
 
 export const switchLanguage = async (language: string) => {
     storage.setItem(storage.SELECTED_LANGUAGE, language);
     await i18n.changeLanguage(language);
 }
-
 export const getObjectForCurrentLanguage = (displayArray: DisplayArrayObject[], language: string = i18n.language) => {
     let resp = displayArray.filter(displayObj => (displayObj.language === language || displayObj.locale === language))[0];
     if (!resp) {
-        resp = displayArray.filter(displayObj => (
-            displayObj.language === getDefaultLanguage() || 
-            displayObj.locale === getDefaultLanguage()
-        ))[0];
+        resp = displayArray.filter(displayObj => (displayObj.language === defaultLanguage || displayObj.locale === defaultLanguage))[0];
     }
     return resp;
 }

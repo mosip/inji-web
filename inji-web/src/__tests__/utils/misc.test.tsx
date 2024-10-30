@@ -41,7 +41,7 @@ describe('Test misc.ts utility functions', () => {
     expect(requestBody).toEqual({
         'grant_type': 'authorization_code',
         'code': 'code',
-        'redirect_uri': 'https://api.collab.mossip.net/redirect', 
+        'redirect_uri': window.location.origin + "/redirect", 
         'code_verifier': 'verifier',
         'issuer': 'issuer',
         'credential': 'credential',

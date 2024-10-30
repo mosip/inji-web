@@ -20,7 +20,7 @@ jest.mock('react-toastify', () => ({
   toast: jest.fn(),
   ToastContainer: jest.requireActual('react-toastify').ToastContainer,
 }));
- 
+
 describe('Testing the Layout of AppToaster', () => {
   test('Check if the layout is matching with the snapshots for English language', () => {
     reduxStore.dispatch({ type: 'SET_LANGUAGE', payload: 'en' });
@@ -34,7 +34,7 @@ describe('Testing the Layout of AppToaster', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 });
- 
+
 describe('Testing the Functionality of AppToaster', () => {
   test('Check if toast is called with the correct message for English language', () => {
     reduxStore.dispatch({ type: 'SET_LANGUAGE', payload: 'en' });
@@ -54,4 +54,3 @@ describe('Testing the Functionality of AppToaster', () => {
     jest.clearAllMocks();
   });
 });
-

@@ -9,7 +9,7 @@ export const HomePage:React.FC = () => {
     return <div className={"pb-20"}>
 
         <HomeBanner onClick={() => navigate("/issuers")} />
-        <HomeFeatures />
+        <HomeFeatures/>
         <HomeQuickTip  onClick={() => navigate("/issuers")} />
     </div>
 }
