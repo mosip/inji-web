@@ -21,7 +21,10 @@ export const HomeFeatures: React.FC = () => {
       <div className="font-semibold text-3xl m-5">{t("Features.heading")}</div>
       <div className="font-extralight text-center">{t("Features.description1")}</div>
       <div className="font-extralight text-center mb-10">{t("Features.description2")}</div>
-      <img src={require("../../assets/InjiWebPreview.png")} alt="Inji Web Preview" />
+
+      <img className="block sm:hidden" src={require("../../assets/Content.png")} alt="Inji Web Mobile Preview" />
+      <img className="hidden sm:block" src={require("../../assets/InjiWebPreview.png")} alt="Inji Web Preview" />
+
       <div className="flex flex-wrap gap-8 container mx-auto pb-3 md:pb-20 justify-center">
         {/* Render all features in desktop view */}
         <div className="hidden md:flex flex-wrap gap-8 justify-center">
