@@ -6,8 +6,7 @@ import {HomeQuickTip} from "../components/Home/HomeQuickTip";
 
 export const HomePage:React.FC = () => {
     const navigate = useNavigate();
-    return <div className={"pb-20"}>
-
+    return <div className={"pb-20 flex flex-col gap-y-4 "}>
         <HomeBanner onClick={() => navigate("/issuers")} />
         <HomeFeatures/>
         <HomeQuickTip  onClick={() => navigate("/issuers")} />

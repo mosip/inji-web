@@ -5,7 +5,7 @@ import { IoArrowForwardCircleOutline, IoArrowBackCircleOutline } from "react-ico
  
 export const HomeFeatures: React.FC = () => {
   const { t } = useTranslation("HomePage");
-  const [currentFeature, setCurrentFeature] = useState(0);
+  const [currentFeature, setCurrentFeature] = useState(1);
   const totalFeatures = 5;
  
   const handleNext = () => {
@@ -35,7 +35,7 @@ export const HomeFeatures: React.FC = () => {
           <HomeFeatureItem itemno={5} />
         </div>
         {/* Render single feature in mobile view with fixed size */}
-        <div className="sm:hidden w-full flex justify-center">
+        <div className="sm:hidden mx-9 my-6 h-[32rem] w-full flex justify-center">
             <HomeFeatureItem itemno={currentFeature + 1} />
           </div>
         </div>
