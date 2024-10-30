@@ -24,7 +24,7 @@ public class StepDefMosipCredentials {
     public WebDriver driver;
     BaseTest baseTest;
     private GlobelConstants globelConstants;
-    //    private HomePage homePage;
+    //    private IssuersPage homePage;
 //    private HelpPage helpPage;
     private MosipCredentials mosipCredentials;
     //    private SunbirdCredentials sunbirdCredentials;

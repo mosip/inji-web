@@ -1,7 +1,7 @@
 # **Understanding the workflow**
 
 
-### **Inji Web HomePage**
+### **Inji Web IssuersPage**
 
 - The users navigate to the Inji Web portal from their web browser.
 - The portal features a user-friendly interface accessible to all.

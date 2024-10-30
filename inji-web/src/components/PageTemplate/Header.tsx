@@ -18,7 +18,7 @@ export const Header: React.FC = () => {
                 className="fixed top-0 left-0 right-0 bg-iw-background py-7 ">
             <div className="container mx-auto flex justify-between items-center px-4">
                 <div data-testid="Header-InjiWeb-Logo-Container" className={"flex flex-row space-x-9 justify-center items-center"}>
-                    <div  role="button" tabIndex={0} className={"sm:hidden"} onMouseDown={() => setIsOpen(open => !open)} onKeyUp={() => setIsOpen(open => !open)}>
+                    <div  role="button" tabIndex={0} className={"m-2 sm:hidden"} onMouseDown={() => setIsOpen(open => !open)} onKeyUp={() => setIsOpen(open => !open)}>
                         <GiHamburgerMenu size={32}/>
                     </div>
                     <div role={"button"}
@@ -55,14 +55,6 @@ export const Header: React.FC = () => {
                          tabIndex={0}
                          onMouseDown={() => setIsOpen(false)}
                          onBlur={() => setIsOpen(false)}>
-                        <div data-testid="Header-Menu-AboutInji"
-                             className={"py-5 w-full"}
-                             role="button"
-                             tabIndex={0}
-                             onKeyUp={() => {window.open("https://docs.mosip.io/inji/inji-web/overview", "_blank","noopener");setIsOpen(false)}}
-                             onMouseDown={() => {window.open("https://docs.mosip.io/inji/inji-web/overview", "_blank","noopener");setIsOpen(false)}}>
-                            {t("Header.aboutInji")}
-                        </div>
                         <div data-testid="Header-Menu-Help"
                              role="button"
                              tabIndex={0}
