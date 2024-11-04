@@ -44,11 +44,15 @@ export const LanguageSelector: React.FC = () => {
                 onMouseDown={() => setIsOpen(open => !isOpen)}>
                 <p data-testid={`Language-Selector-Selected-DropDown-${language}`}>{LanguagesSupported.find(lang => lang.value === language)?.label}</p>
                 {isOpen ?
-                   
+
+                   <GradientWrapper>
                         <RiArrowUpSFill size={20} color={'var(--iw-color-languageArrowIcon)'} />
+                    </GradientWrapper>
                     :
-                    
+                    <GradientWrapper>
                         <RiArrowDownSFill size={20} color={'var(--iw-color-languageArrowIcon)'}/>
+                    </GradientWrapper>
+                   
                     }
             </button>
 
