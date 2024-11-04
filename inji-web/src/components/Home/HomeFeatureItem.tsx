@@ -13,7 +13,7 @@ export const HomeFeatureItem:React.FC<HomeFeatureItemProps> = (props) => {
       <div className ={"flex flex-row container mx-auto py-2"}>
           <div className={"pe-3"}>
             <GradientWrapper> 
-                <FaRegCheckCircle size={20} />
+                <FaRegCheckCircle size={20} color={'var(--iw-color-languageArrowIcon'}/>
             </GradientWrapper>
           </div>
         <div className ={"flex flex-col"}>
@@ -24,7 +24,7 @@ export const HomeFeatureItem:React.FC<HomeFeatureItemProps> = (props) => {
       <div className ={"flex flex-row container mx-auto mt-10"}>
           <div className={"pe-3"}>
               <GradientWrapper>
-                  <FaRegCheckCircle size={20} />
+                  <FaRegCheckCircle size={20} color={'var(--iw-color-languageArrowIcon'}/>
               </GradientWrapper>
           </div>
           <div className ={"flex flex-col"}>

@@ -14,8 +14,7 @@ export const generateCodeChallenge = (verifier = generateRandomString()) => {
     };
 }
 
-export const generateRandomString = (length = 43) => {
-    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+export const generateRandomString = (length = 43, charset='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~') => {
     let randomString = '';
     for (let i = 0; i < 43; i++) {
         const array = new Uint32Array(1);
