@@ -33,7 +33,11 @@ export const LanguageSelector: React.FC = () => {
                 tabIndex={0}
                 role="button">
      
-        <GradientWrapper><VscGlobe size={30} /></GradientWrapper>
+        <GradientWrapper>
+            <VscGlobe
+            data-testid="Language-Selector-Icon"
+            size={30} color={'var(--iw-color-languageGlobeIcon)'}/>
+        </GradientWrapper>
         
 
         <div className="relative inline-block ms-1">
