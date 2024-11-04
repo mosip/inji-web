@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { HomeFeatureItem } from "./HomeFeatureItem";
 import { useTranslation } from "react-i18next";
 import { IoArrowForwardCircleOutline, IoArrowBackCircleOutline } from "react-icons/io5";
+import { isRTL } from "../../utils/i18n";
 
 export const HomeFeatures: React.FC = () => {
-  const { t } = useTranslation("HomePage");
+  const { t, i18n } = useTranslation("HomePage");
   const [currentFeature, setCurrentFeature] = useState(1);
   const totalFeatures = 5;
+  const rtl=isRTL(i18n.language);
 
   const handleNext = () => {
     setCurrentFeature((prev) => (prev + 1) % totalFeatures);
@@ -15,7 +17,7 @@ export const HomeFeatures: React.FC = () => {
   const handlePrev = () => {
     setCurrentFeature((prev) => (prev - 1 + totalFeatures) % totalFeatures);
   };
-
+ 
   return (
     <div className="flex justify-center items-center flex-col">
       <div className="font-semibold text-3xl m-5">{t("Features.heading")}</div>
@@ -33,20 +35,21 @@ export const HomeFeatures: React.FC = () => {
             <HomeFeatureItem itemno={currentFeature + 1} />
           </div>
         </div>
+      {/* Navigation buttons and pagination dots for mobile view */}
       <div className="flex justify-between w-full px-5 sm:hidden items-center">
         <div className="flex">
           <button onClick={handlePrev} className="bg-grey-300 p-1" aria-label="Previous feature">
-            <IoArrowBackCircleOutline size={50} className="text-gray-500" />
+            {rtl ? <IoArrowForwardCircleOutline size={50} className="text-gray-500" color={'var(--iw-color-searchIcon)'} /> : <IoArrowBackCircleOutline size={50} className="text-gray-500" color={'var(--iw-color-searchIcon)'} />}
           </button>
-          <button onClick={handleNext} className="bg-grey-300 rounded mr-1" aria-label="Next feature">
-            <IoArrowForwardCircleOutline size={50} className="text-gray-500" />
+          <button onClick={handleNext} className="bg-grey-300  rounded mr-1" aria-label="Next feature">
+           {rtl ? <IoArrowBackCircleOutline size={50} className="text-gray-500" color={'var(--iw-color-searchIcon)'} /> : <IoArrowForwardCircleOutline size={50} className="text-gray-500"  color={'var(--iw-color-searchIcon)'}/>}
           </button>
         </div>
         <div className="flex items-center px-5">
           {Array.from({ length: totalFeatures }, (_, index) => (
             <span
               key={index}
-              className={`w-2 h-2 rounded-md mx-1 transition duration-300 ${index === currentFeature ? 'scale-125 bg-gradient-to-r from-orange-500  to-purple-700 w-7 h-2 rounded-full' : 'bg-gray-300'}`}
+              className={`w-2 h-2 rounded-md mx-1 transition duration-300 ${index === currentFeature ? 'scale-125 bg-gradient-to-r from-orange-500 to-purple-700 w-7 h-2 rounded-full' : 'bg-gray-300'}`}
             ></span>
           ))}
         </div>
