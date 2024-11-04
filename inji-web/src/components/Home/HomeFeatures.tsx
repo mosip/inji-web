@@ -8,7 +8,7 @@ export const HomeFeatures: React.FC = () => {
   const { t, i18n } = useTranslation("HomePage");
   const [currentFeature, setCurrentFeature] = useState(1);
   const totalFeatures = 5;
-  const rtl=isRTL(i18n.language);
+  const rtl = isRTL(i18n.language);
 
   const handleNext = () => {
     setCurrentFeature((prev) => (prev + 1) % totalFeatures);
@@ -17,39 +17,57 @@ export const HomeFeatures: React.FC = () => {
   const handlePrev = () => {
     setCurrentFeature((prev) => (prev - 1 + totalFeatures) % totalFeatures);
   };
- 
+
   return (
-    <div className="flex justify-center items-center flex-col">
-      <div className="font-semibold text-3xl m-5">{t("Features.heading")}</div>
-      <div className="font-extralight text-center">{t("Features.description1")}</div>
-      <div className="font-extralight text-center mb-10">{t("Features.description2")}</div>
+    <div data-testid="HomeFeatures-Container" className="flex justify-center items-center flex-col">
+      <div data-testid="HomeFeatures-Heading" className="font-semibold text-3xl m-5">
+        {t("Features.heading")}
+      </div>
+      <div data-testid="HomeFeatures-Description1" className="font-extralight text-center">
+        {t("Features.description1")}
+      </div>
+      <div data-testid="HomeFeatures-Description2" className="font-extralight text-center mb-10">
+        {t("Features.description2")}
+      </div>
 
-      <img className="block sm:hidden" src={require("../../assets/Content.png")} alt="Inji Web Mobile Preview" />
-      <img className="hidden sm:block" src={require("../../assets/InjiWebPreview.png")} alt="Inji Web Preview" />
+      <img data-testid="HomeFeatures-MobileImage" className="block sm:hidden" src={require("../../assets/Content.png")} alt="Inji Web Mobile Preview" />
+      <img data-testid="HomeFeatures-DesktopImage" className="hidden sm:block" src={require("../../assets/InjiWebPreview.png")} alt="Inji Web Preview" />
 
-      <div className="flex flex-wrap gap-8 container mx-auto pb-3 md:pb-20 justify-center">
-        <div className="hidden md:flex flex-wrap gap-8 justify-center">
-            {[1,2,3,4,5].map( itemNo => <HomeFeatureItem itemno={itemNo} /> )}
+      <div data-testid="HomeFeatures-ItemsContainer" className="flex flex-wrap gap-8 container mx-auto pb-3 md:pb-20 justify-center">
+        <div data-testid="HomeFeatures-Items" className="hidden md:flex flex-wrap gap-8 justify-center">
+          {[1, 2, 3, 4, 5].map((itemNo) => (
+            <HomeFeatureItem key={itemNo} itemno={itemNo} />
+          ))}
         </div>
-        <div className="sm:hidden mx-9 my-6 h-[32rem] w-full flex justify-center">
-            <HomeFeatureItem itemno={currentFeature + 1} />
-          </div>
+        <div data-testid="HomeFeatures-MobileItem" className="sm:hidden mx-9 my-6 h-[32rem] w-full flex justify-center">
+          <HomeFeatureItem itemno={currentFeature + 1} />
         </div>
+      </div>
       {/* Navigation buttons and pagination dots for mobile view */}
-      <div className="flex justify-between w-full px-5 sm:hidden items-center">
-        <div className="flex">
+      <div data-testid="HomeFeatures-Navigation" className="flex justify-between w-full px-5 sm:hidden items-center">
+        <div data-testid="HomeFeatures-NavButtons" className="flex">
           <button onClick={handlePrev} className="bg-grey-300 p-1" aria-label="Previous feature">
-            {rtl ? <IoArrowForwardCircleOutline size={50} className="text-gray-500" color={'var(--iw-color-searchIcon)'} /> : <IoArrowBackCircleOutline size={50} className="text-gray-500" color={'var(--iw-color-searchIcon)'} />}
+            {rtl ? (
+              <IoArrowForwardCircleOutline size={50} className="text-gray-500" color={"var(--iw-color-searchIcon)"} />
+            ) : (
+              <IoArrowBackCircleOutline size={50} className="text-gray-500" color={"var(--iw-color-searchIcon)"} />
+            )}
           </button>
-          <button onClick={handleNext} className="bg-grey-300  rounded mr-1" aria-label="Next feature">
-           {rtl ? <IoArrowBackCircleOutline size={50} className="text-gray-500" color={'var(--iw-color-searchIcon)'} /> : <IoArrowForwardCircleOutline size={50} className="text-gray-500"  color={'var(--iw-color-searchIcon)'}/>}
+          <button onClick={handleNext} className="bg-grey-300 rounded mr-1" aria-label="Next feature">
+            {rtl ? (
+              <IoArrowBackCircleOutline size={50} className="text-gray-500" color={"var(--iw-color-searchIcon)"} />
+            ) : (
+              <IoArrowForwardCircleOutline size={50} className="text-gray-500" color={"var(--iw-color-searchIcon)"} />
+            )}
           </button>
         </div>
-        <div className="flex items-center px-5">
+        <div data-testid="HomeFeatures-Pagination" className="flex items-center px-5">
           {Array.from({ length: totalFeatures }, (_, index) => (
             <span
               key={index}
-              className={`w-2 h-2 rounded-md mx-1 transition duration-300 ${index === currentFeature ? 'scale-125 bg-gradient-to-r from-orange-500 to-purple-700 w-7 h-2 rounded-full' : 'bg-gray-300'}`}
+              className={`w-2 h-2 rounded-md mx-1 transition duration-300 ${
+                index === currentFeature ? "scale-125 bg-gradient-to-r from-orange-500 to-purple-700 w-7 h-2 rounded-full" : "bg-gray-300"
+              }`}
             ></span>
           ))}
         </div>
