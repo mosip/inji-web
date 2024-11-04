@@ -1,7 +1,7 @@
 {
   "PageTemplate": {
     "Header": {
-      "aboutInji": "About Inji Web",
+      "aboutInji": "About Inji Wallet",
       "help": "Help"
     },
     "Footer": {
@@ -75,7 +75,7 @@
       "description1": "Verifiable credentials are digital documents that help users to share information like identity or qualifications to the service provider which can be instantly verified. They're issued by trusted entities and can be cryptographically verified for authenticity. These credentials streamline identity verification processes."
     },
     "item3": {
-      "title": "How can I download a credential in Inji Web?",
+      "title": "How can I download a credential in Inji Wallet?",
       "description1": "Step 1: Search & choose an Issuer from the landing page and select a credential type.",
       "description2": "Step 2: In the authentication page, provide required details",
       "description3": "Step 3: PDF format of the verifiable credential will be downloaded into the system."
