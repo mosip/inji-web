@@ -4,7 +4,7 @@ exports[`Testing the Layouts of AuthorizationPage Check if it renders properly i
 <DocumentFragment>
   <div>
     <div
-      class="flex flex-col justify-center items-center pt-32"
+      class="flex flex-col justify-center items-center pt-32 "
       data-testid="DownloadResult-Outer-Container"
     >
       <div
@@ -83,11 +83,11 @@ exports[`Testing the Layouts of AuthorizationPage Check if it shows error messag
 <DocumentFragment>
   <div>
     <div
-      class="flex flex-col justify-center items-center pt-32"
+      class="flex flex-col justify-center items-center pt-32 "
       data-testid="DownloadResult-Outer-Container"
     >
       <div
-        class="rounded-full p-2 shadow"
+        class="rounded-full p-2 shadow bg-white"
       >
         <div
           class="rounded-full p-8 bg-iw-shieldErrorShadow"

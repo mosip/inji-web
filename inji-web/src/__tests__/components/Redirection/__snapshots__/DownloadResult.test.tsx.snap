@@ -3,11 +3,11 @@
 exports[`Testing the Layout of DownloadResult for Success Error and Loading Check if the layout is matching with the snapshots for the Error 1`] = `
 <DocumentFragment>
   <div
-    class="flex flex-col justify-center items-center pt-32"
+    class="flex flex-col justify-center items-center pt-32 "
     data-testid="DownloadResult-Outer-Container"
   >
     <div
-      class="rounded-full p-2 shadow"
+      class="rounded-full p-2 shadow bg-white"
     >
       <div
         class="rounded-full p-8 bg-iw-shieldErrorShadow"
@@ -47,13 +47,27 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
         SubTitle
       </p>
     </div>
-    <div>
-      <button
-        class="text-iw-primary font-bold py-2 px-4 rounded-lg border-2 border-iw-primary"
-        data-testid="DownloadResult-Home-Button"
+    <div
+      class=""
+    >
+      <div
+        class="bg-gradient-to-r rounded-lg text-center cursor-pointer shadow hover:shadow-lg from-iw-primary to-iw-secondary p-0.5"
       >
-        Go To Home
-      </button>
+        <div
+          class="py-2 px-4 rounded-lg bg-white"
+        >
+          <button
+            class="text-iw-tertiary font-bold rounded-lg"
+            data-testid="DownloadResult-Home-Button"
+          >
+            <span
+              class="bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
+            >
+              Go To Home
+            </span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -62,7 +76,7 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
 exports[`Testing the Layout of DownloadResult for Success Error and Loading Check if the layout is matching with the snapshots for the Loading 1`] = `
 <DocumentFragment>
   <div
-    class="flex flex-col justify-center items-center pt-32"
+    class="flex flex-col justify-center items-center pt-32 "
     data-testid="DownloadResult-Outer-Container"
   >
     <div
@@ -143,11 +157,11 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
 exports[`Testing the Layout of DownloadResult for Success Error and Loading Check if the layout is matching with the snapshots for the Success 1`] = `
 <DocumentFragment>
   <div
-    class="flex flex-col justify-center items-center pt-32"
+    class="flex flex-col justify-center items-center pt-32 "
     data-testid="DownloadResult-Outer-Container"
   >
     <div
-      class="rounded-full p-2 shadow"
+      class="rounded-full p-2 shadow bg-white"
     >
       <div
         class="rounded-full p-8 bg-iw-shieldSuccessShadow "
@@ -188,13 +202,27 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
         SubTitle
       </p>
     </div>
-    <div>
-      <button
-        class="text-iw-primary font-bold py-2 px-4 rounded-lg border-2 border-iw-primary"
-        data-testid="DownloadResult-Home-Button"
+    <div
+      class=""
+    >
+      <div
+        class="bg-gradient-to-r rounded-lg text-center cursor-pointer shadow hover:shadow-lg from-iw-primary to-iw-secondary p-0.5"
       >
-        Go To Home
-      </button>
+        <div
+          class="py-2 px-4 rounded-lg bg-white"
+        >
+          <button
+            class="text-iw-tertiary font-bold rounded-lg"
+            data-testid="DownloadResult-Home-Button"
+          >
+            <span
+              class="bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
+            >
+              Go To Home
+            </span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </DocumentFragment>

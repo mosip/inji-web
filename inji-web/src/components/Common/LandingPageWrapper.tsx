@@ -7,7 +7,7 @@ export const LandingPageWrapper: React.FC<LandingPageWrapperProps> = (props) => 
     const navigate = useNavigate();
     const { t } = useTranslation("RedirectionPage");
     return (
-        <div data-testid="DownloadResult-Outer-Container" className="flex flex-col justify-center items-center pt-32">
+        <div data-testid="DownloadResult-Outer-Container" className="flex flex-col justify-center items-center pt-32 ">
             {props.icon}
             <div className="my-4">
                 <p className="font-bold" data-testid="DownloadResult-Title">{props.title}</p>
