@@ -1,7 +1,7 @@
 {
   "PageTemplate": {
     "Header": {
-      "aboutInji": "À propos de Inji Web",
+      "aboutInji": "À propos de Inji Wallet",
       "help": "Aide"
     },
     "Footer": {
@@ -75,7 +75,7 @@
       "description1": "Les informations d'identification vérifiables sont des documents numériques qui aident les utilisateurs à partager des informations telles que l'identité ou les qualifications avec le fournisseur de services, qui peuvent être instantanément vérifiées. "
     },
     "item3": {
-      "title": "Comment puis-je télécharger un identifiant dans Inji Web ?",
+      "title": "Comment puis-je télécharger un identifiant dans Inji Wallet ?",
       "description1": "Étape 1 : Recherchez et choisissez un émetteur sur la page de destination et sélectionnez un type d'informations d'identification.",
       "description2": "Étape 2 : Sur la page d'authentification, fournissez les détails requis",
       "description3": "Étape 3 : Le format PDF des informations d'identification vérifiables sera téléchargé dans le système."
