@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {renderGradientText} from "../../utils/builder";
 import { useTranslation } from "react-i18next";
 
-export const HelpDropdown: React.FC = () => {    
+export const HelpDropdown: React.FC = () => {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const {t}=useTranslation("HelpDropdown");
@@ -42,12 +42,8 @@ export const HelpDropdown: React.FC = () => {
                         <li data-testid={`Help-DropDown-Item`}>
                             <button
                                 type="button"
-                                className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center justify-between flex-row"
-                                onMouseDown={
-                                    () => {setIsOpen(open=>!open); navigate("/help");}}
-                                    >
-                                        {t("item1")}
-                                    {<FaCheck color={'var(--iw-color-languageCheckIcon)'}/>}
+                                className="w-full px-4 py-2 text-left text-sm font-semibold hover:bg-gray-100 flex items-center justify-between flex-row"
+                                onMouseDown={() => {setIsOpen(open=>!open); navigate("/help");}}>{t("item1")}
                             </button>
                         </li>
                     </ul>
