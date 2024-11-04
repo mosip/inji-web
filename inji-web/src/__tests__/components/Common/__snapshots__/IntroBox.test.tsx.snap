@@ -10,7 +10,12 @@ exports[`Testing the Layout of IntroBox Check if the layout is matching with the
       class="text-3xl text-iw-title "
       data-testid="IntroBox-Text"
     >
-      Intro.title
+      Intro.title 
+      <span
+        class="bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
+      >
+        Intro.title2
+      </span>
     </h2>
     <p
       class="mt-2 text-lg text-iw-subTitle"

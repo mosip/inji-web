@@ -55,7 +55,7 @@ export const LanguageSelector: React.FC = () => {
 
             {isOpen && (
                 <div
-                    className="absolute w-40 right-0 mt-3 rounded-md shadow-lg bg-iw-background overflow-hidden font-normal">
+                    className="absolute w-60 z-40 right-0 mt-3 rounded-md shadow-lg bg-iw-background overflow-hidden font-normal">
                     <ul className="py-1 divide-y divide-gray-200">
                         {LanguagesSupported.map((item) => (
                             <li key={item.value}
@@ -66,7 +66,7 @@ export const LanguageSelector: React.FC = () => {
                                     className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 flex items-center justify-between flex-row"
                                     onMouseDown={(event) => {event.stopPropagation();handleChange(item)}}>
                                     {language === item.value ? renderGradientText(item.label) : item.label}
-                                    {language === item.value && <FaCheck color={'var(--iw-color-languageCheckIcon)'}/>}
+                                    {language === item.value && <GradientWrapper><FaCheck color={'var(--iw-color-languageCheckIcon)'}/></GradientWrapper>}
                                 </button>
                             </li>
                         ))}

@@ -6,12 +6,11 @@ exports[`Testing the Functionality of RedirectionPage Check if DownloadResult co
     data-testid="Redirection-Page-Container"
   >
     <div
-      class="bg-iw-navigationBar text-iw-title p-4 py-10"
+      class="bg-gradient-to-r from-iw-lightPrimary to-iw-lightSecondary text-iw-title p-4 py-10"
       data-testid="NavBar-Outer-Container"
     >
       <nav
-        class=" mx-auto flex flex-col justify-start container items-start
- sm:flex-row sm:justify-start sm:items-center"
+        class=" mx-auto flex flex-col justify-start container items-start sm:flex-row sm:justify-start sm:items-center"
         data-testid="NavBar-Inner-Container"
       >
         <div
@@ -47,7 +46,7 @@ exports[`Testing the Functionality of RedirectionPage Check if DownloadResult co
       </nav>
     </div>
     <div
-      class="flex flex-col justify-center items-center pt-32"
+      class="flex flex-col justify-center items-center pt-32 "
       data-testid="DownloadResult-Outer-Container"
     >
       <div
@@ -132,12 +131,11 @@ exports[`Testing the Functionality of RedirectionPage Check if DownloadResult co
     data-testid="Redirection-Page-Container"
   >
     <div
-      class="bg-iw-navigationBar text-iw-title p-4 py-10"
+      class="bg-gradient-to-r from-iw-lightPrimary to-iw-lightSecondary text-iw-title p-4 py-10"
       data-testid="NavBar-Outer-Container"
     >
       <nav
-        class=" mx-auto flex flex-col justify-start container items-start
- sm:flex-row sm:justify-start sm:items-center"
+        class=" mx-auto flex flex-col justify-start container items-start sm:flex-row sm:justify-start sm:items-center"
         data-testid="NavBar-Inner-Container"
       >
         <div
@@ -173,7 +171,7 @@ exports[`Testing the Functionality of RedirectionPage Check if DownloadResult co
       </nav>
     </div>
     <div
-      class="flex flex-col justify-center items-center pt-32"
+      class="flex flex-col justify-center items-center pt-32 "
       data-testid="DownloadResult-Outer-Container"
     >
       <div
@@ -258,12 +256,11 @@ exports[`Testing the Functionality of RedirectionPage Check if NavBar component 
     data-testid="Redirection-Page-Container"
   >
     <div
-      class="bg-iw-navigationBar text-iw-title p-4 py-10"
+      class="bg-gradient-to-r from-iw-lightPrimary to-iw-lightSecondary text-iw-title p-4 py-10"
       data-testid="NavBar-Outer-Container"
     >
       <nav
-        class=" mx-auto flex flex-col justify-start container items-start
- sm:flex-row sm:justify-start sm:items-center"
+        class=" mx-auto flex flex-col justify-start container items-start sm:flex-row sm:justify-start sm:items-center"
         data-testid="NavBar-Inner-Container"
       >
         <div
@@ -299,7 +296,7 @@ exports[`Testing the Functionality of RedirectionPage Check if NavBar component 
       </nav>
     </div>
     <div
-      class="flex flex-col justify-center items-center pt-32"
+      class="flex flex-col justify-center items-center pt-32 "
       data-testid="DownloadResult-Outer-Container"
     >
       <div
@@ -384,12 +381,11 @@ exports[`Testing the Functionality of RedirectionPage Check if it displays error
     data-testid="Redirection-Page-Container"
   >
     <div
-      class="bg-iw-navigationBar text-iw-title p-4 py-10"
+      class="bg-gradient-to-r from-iw-lightPrimary to-iw-lightSecondary text-iw-title p-4 py-10"
       data-testid="NavBar-Outer-Container"
     >
       <nav
-        class=" mx-auto flex flex-col justify-start container items-start
- sm:flex-row sm:justify-start sm:items-center"
+        class=" mx-auto flex flex-col justify-start container items-start sm:flex-row sm:justify-start sm:items-center"
         data-testid="NavBar-Inner-Container"
       >
         <div
@@ -425,7 +421,7 @@ exports[`Testing the Functionality of RedirectionPage Check if it displays error
       </nav>
     </div>
     <div
-      class="flex flex-col justify-center items-center pt-32"
+      class="flex flex-col justify-center items-center pt-32 "
       data-testid="DownloadResult-Outer-Container"
     >
       <div
@@ -510,12 +506,11 @@ exports[`Testing the Layout of RedirectionPage Check if the layout is matching w
     data-testid="Redirection-Page-Container"
   >
     <div
-      class="bg-iw-navigationBar text-iw-title p-4 py-10"
+      class="bg-gradient-to-r from-iw-lightPrimary to-iw-lightSecondary text-iw-title p-4 py-10"
       data-testid="NavBar-Outer-Container"
     >
       <nav
-        class=" mx-auto flex flex-col justify-start container items-start
- sm:flex-row sm:justify-start sm:items-center"
+        class=" mx-auto flex flex-col justify-start container items-start sm:flex-row sm:justify-start sm:items-center"
         data-testid="NavBar-Inner-Container"
       >
         <div
@@ -551,7 +546,7 @@ exports[`Testing the Layout of RedirectionPage Check if the layout is matching w
       </nav>
     </div>
     <div
-      class="flex flex-col justify-center items-center pt-32"
+      class="flex flex-col justify-center items-center pt-32 "
       data-testid="DownloadResult-Outer-Container"
     >
       <div
