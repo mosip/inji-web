@@ -5,7 +5,7 @@ export const ItemBox: React.FC<ItemBoxProps> = (props) => {
     return <React.Fragment>
         <div key={props.index}
              data-testid={`ItemBox-Outer-Container-${props.index}`}
-             className={`bg-iw-tileBackground w-48 h-48 flex flex-col shadow hover:shadow-lg hover:scale-110 hover:shadow-iw-selectedShadow p-5 m-4 rounded-md cursor-pointer items-center`}
+             className={`bg-iw-tileBackground w-48 h-48 flex flex-col shadow hover:shadow-lg hover:scale-105 hover:shadow-iw-selectedShadow p-5 m-4 rounded-md cursor-pointer items-center`}
              onClick={props.onClick}
              onKeyUp={props.onClick}
              tabIndex={0}

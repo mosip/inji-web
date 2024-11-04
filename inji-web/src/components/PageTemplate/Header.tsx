@@ -7,7 +7,6 @@ import {GiHamburgerMenu} from "react-icons/gi";
 import OutsideClickHandler from 'react-outside-click-handler';
 import { RootState } from "../../types/redux";
 import { useSelector } from "react-redux";
-import { isRTL } from "../../utils/i18n";
 export const Header: React.FC = () => {
 
     const language = useSelector((state: RootState) => state.common.language);
@@ -21,9 +20,7 @@ export const Header: React.FC = () => {
                 className="fixed top-0 left-0 right-0 bg-iw-background py-7 ">
             <div className="container mx-auto flex justify-between items-center px-4">
                 <div data-testid="Header-InjiWeb-Logo-Container" className={"flex flex-row space-x-9 justify-center items-center"}>
-                    <div  role="button" tabIndex={0} className={"m-3 sm:hidden"}
-
-                     onMouseDown={() => setIsOpen(open => !open)} onKeyUp={() => setIsOpen(open => !open)}>
+                    <div  role="button" tabIndex={0} className={"m-3 sm:hidden"} onMouseDown={() => setIsOpen(open => !open)} onKeyUp={() => setIsOpen(open => !open)}>
                         <GiHamburgerMenu size={32}/>
                     </div>
                     <div role={"button"}

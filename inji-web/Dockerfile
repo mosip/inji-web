@@ -9,11 +9,14 @@ ARG defaultTheme
 ARG defaultLang
 ARG defaultFavicon
 ARG defaultTitle
+ARG MIMOTO_HOST
 
 ENV DEFAULT_THEME=$defaultTheme
 ENV DEFAULT_LANG=$defaultLang
 ENV DEFAULT_FAVICON=$defaultFavicon
 ENV DEFAULT_TITLE=$defaultTitle
+ENV MIMOTO_HOST=$MIMOTO_HOST
+
 
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
@@ -81,6 +84,7 @@ RUN chmod +x configure_start.sh
 
 RUN echo "DEFAULT_THEME=$DEFAULT_THEME" >> ${work_dir}/env.env \
     && echo "DEFAULT_LANG=$DEFAULT_LANG" >> ${work_dir}/env.env \
+    && echo "MIMOTO_HOST=$MIMOTO_HOST" >> ${work_dir}/env.env \
     && echo "DEFAULT_FAVICON=$DEFAULT_FEVICON" >> ${work_dir}/env.env \
     && echo "DEFAULT_TITLE=$DEFAULT_TITLE" >> ${work_dir}/env.env
 
