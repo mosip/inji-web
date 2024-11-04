@@ -29,7 +29,7 @@ export const HomeFeatureItem:React.FC<HomeFeatureItemProps> = (props) => {
           </div>
           <div className ={"flex flex-col"}>
               <span className={"font-medium"}>{t("FeatureItem"+props.itemno+".item2")}</span>
-              <span className={"font-extralight "}>{t("FeatureItem"+props.itemno+".description1")}</span>
+              <span className={"font-extralight "}>{t("FeatureItem"+props.itemno+".description2")}</span>
           </div>
       </div>
   </div>
