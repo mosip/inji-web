@@ -57,6 +57,7 @@
     },
     "QuickTip": {
       "heading": "Conseils rapides pour télécharger instantanément vos identifiants",
+      "toastText":"à venir",
       "buttontext": "Cliquez ici"
     }
   },

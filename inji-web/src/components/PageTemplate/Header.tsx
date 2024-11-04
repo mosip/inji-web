@@ -7,7 +7,6 @@ import {GiHamburgerMenu} from "react-icons/gi";
 import OutsideClickHandler from 'react-outside-click-handler';
 import { RootState } from "../../types/redux";
 import { useSelector } from "react-redux";
-import { isRTL } from "../../utils/i18n";
 export const Header: React.FC = () => {
 
     const language = useSelector((state: RootState) => state.common.language);

@@ -57,6 +57,7 @@
     },
     "QuickTip":{
       "heading":"Quick Tips for Instantly Downloading Your Credentials",
+      "toastText":"Coming soon",
       "buttontext":"Click Here"
     }
   },
