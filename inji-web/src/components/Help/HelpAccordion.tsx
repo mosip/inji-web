@@ -41,11 +41,11 @@ export const HelpAccordion: React.FC = () =>{
         },
         {
             title: t("item8.title"),
-            content:constructContent([t("item8.description1"), t("item8.description2"), t("item8.description3"), t("item8.description4"), t("item8.description5"), t("item8.description6")],false),
+            content:constructContent([t("item8.description1"), t("item8.description2"), t("item8.description3"), t("item8.description4"), t("item8.description5")],false),
         },
         {
             title: t("item9.title"),
-            content:constructContent([t("item9.description1"), t("item9.description2"), t("item9.description3")],false),
+            content:constructContent([t("item9.description1")],false),
         },
         {
             title: t("item10.title"),
@@ -53,31 +53,31 @@ export const HelpAccordion: React.FC = () =>{
         },
         {
             title: t("item11.title"),
-            content:constructContent([t("item11.description1"), t("item11.description2"), t("item11.description3"), t("item11.description4"), t("item11.description5")],false),
+            content:constructContent([t("item11.description1"), t("item11.description2"), t("item11.description3"), t("item11.description4")],false),
         },
         {
             title: t("item12.title"),
-            content:constructContent([t("item12.description1"), t("item12.description2"), t("item12.description3")],false),
+            content:constructContent([t("item12.description1")],false),
         },
         {
             title: t("item13.title"),
-            content:constructContent([t("item13.description1"), t("item13.description2"), t("item13.description3")],false),
+            content:constructContent([t("item13.description1"), t("item13.description2")],false),
         },
         {
             title: t("item14.title"),
-            content:constructContent([t("item14.description1"), t("item14.description2"), t("item14.description3")],false),
+            content:constructContent([t("item14.description1")],false),
         },
         {
             title: t("item15.title"),
-            content:constructContent([t("item15.description1"), t("item15.description2"), t("item15.description3")],false),
+            content:constructContent([t("item15.description1")],false),
         },
         {
             title: t("item16.title"),
-            content:constructContent([t("item16.description1"), t("item16.description2"), t("item16.description3")],false),
+            content:constructContent([t("item16.description1")],false),
         },
         {
             title: t("item17.title"),
-            content:constructContent([t("item17.description1"), t("item17.description2"), t("item17.description3")],false),
+            content:constructContent([t("item17.description1")],false),
         },
         {
             title: t("item18.title"),
@@ -85,7 +85,7 @@ export const HelpAccordion: React.FC = () =>{
         },
         {
             title: t("item19.title"),
-            content:constructContent([t("item19.description1"), t("item19.description2"), t("item19.description3")],false),
+            content:constructContent([t("item19.description1")],false),
         },
         {
             title: t("item20.title"),
@@ -101,7 +101,7 @@ export const HelpAccordion: React.FC = () =>{
         },
         {
             title: t("item23.title"),
-            content:constructContent([t("item23.description1"),t("item23.description2"),t("item23.description3"),t("item23.description4")],false),
+            content:constructContent([t("item23.description1"),t("item23.description2"),t("item23.description3")],false),
         }
     ];
 
