@@ -74,9 +74,9 @@ WORKDIR /home/${container_user}
 # install packages and create user
 RUN groupadd -g ${container_user_gid} ${container_user_group} \
     && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user} \
-    && mkdir -p /var/run/nginx /var/tmp/nginx /temp \
-    && chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx /temp
-
+    && mkdir -p /var/run/nginx /var/tmp/nginx /temp /var/cache/nginx \
+    && touch /var/run/nginx.pid \
+    && chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx /temp /var/cache/nginx /var/run/nginx.pid
 
 ADD configure_start.sh configure_start.sh
 
@@ -88,15 +88,17 @@ RUN echo "DEFAULT_THEME=$DEFAULT_THEME" >> ${work_dir}/env.env \
     && echo "DEFAULT_FAVICON=$DEFAULT_FEVICON" >> ${work_dir}/env.env \
     && echo "DEFAULT_TITLE=$DEFAULT_TITLE" >> ${work_dir}/env.env
 
-RUN chown -R ${container_user}:${container_user} /home/${container_user}
-
-# change permissions of file inside working dir
-RUN chown -R ${container_user}:${container_user} ${work_dir}
-
-USER ${container_user_uid}:${container_user_gid}
-
 # Copy the built React app from the build container to the Nginx container
 COPY --from=build /app/build /usr/share/nginx/html
+
+# Change ownership of the HTML directory to mosip user
+RUN chown -R ${container_user}:${container_user} ${nginx_dir}/html
+
+# Change permissions of the configure_start.sh script
+RUN chown ${container_user}:${container_user} configure_start.sh
+
+# Switch to the mosip user
+USER ${container_user_uid}:${container_user_gid}
 
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
