@@ -17,7 +17,7 @@ export const Header: React.FC = () => {
     return (
         <header>
         <div data-testid="Header-Container"
-                className="fixed top-0 left-0 right-0 bg-iw-background py-7 ">
+                className="fixed top-0 left-0 right-0 bg-iw-background py-7 z-10">
             <div className="container mx-auto flex justify-between items-center px-4">
                 <div data-testid="Header-InjiWeb-Logo-Container" className={"flex flex-row space-x-9 justify-center items-center"}>
                     <div  role="button" tabIndex={0} className={"m-3 sm:hidden"} onMouseDown={() => setIsOpen(open => !open)} onKeyUp={() => setIsOpen(open => !open)}>
