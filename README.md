@@ -53,7 +53,7 @@ $ npm start
 - Build and run Docker for a service:
 ```
 $ cd ./inji-web
-$ docker build -f Dockerfile.local -t <dockerImageName>:<tag> .
+$ docker build -f Dockerfile -t <dockerImageName>:<tag> .
 $ docker run -p 3004:3004 <dockerImageName>:<tag>
 ```
 
