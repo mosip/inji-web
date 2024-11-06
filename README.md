@@ -54,7 +54,8 @@ $ npm start
 ```
 $ cd ./inji-web
 $ docker build -f Dockerfile -t <dockerImageName>:<tag> .
-$ docker run -p 3004:3004 <dockerImageName>:<tag>
+# add the environments you wish to update as env while running the docker image
+$ docker run -e DEFAULT_LANG=en  -it -p 3004:3004 <dockerImageName>:<tag>
 ```
 
 - Run Using Docker Compose 

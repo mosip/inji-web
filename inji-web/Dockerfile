@@ -1,111 +1,92 @@
-# Use an official Node.js runtime as the base image
-FROM node:14 as build
+# Use a more recent and secure Node.js version
+FROM node:lts as build
 
-# Set the working directory in the container
-WORKDIR /app
+# Set the working directory in the container to /home/mosip
+ARG container_user=mosip
+WORKDIR /home/${container_user}
 
-# Set a build-time environment variable (replace YOUR_ENV_VARIABLE_NAME with the desired variable name)
+# Set build-time environment variables
 ARG defaultTheme
 ARG defaultLang
 ARG defaultFavicon
 ARG defaultTitle
 ARG MIMOTO_HOST
 
+# Set environment variables
 ENV DEFAULT_THEME=$defaultTheme
 ENV DEFAULT_LANG=$defaultLang
 ENV DEFAULT_FAVICON=$defaultFavicon
 ENV DEFAULT_TITLE=$defaultTitle
 ENV MIMOTO_HOST=$MIMOTO_HOST
 
-
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Clean your cache
-RUN npm cache clean --force
-# Rebuild npm
-RUN npm rebuild
-# Reinstall node_modules
-RUN rm -rf node_modules
+# Install dependencies in a clean state
+RUN npm ci
 
-# Install Node.js dependencies
-RUN npm install
-
-# Copy the rest of the application code to the working directory
+# Copy the application code
 COPY . .
 
 # Build the React app
 RUN npm run build
 
-# Use an official Nginx image as the final production image
-FROM nginx:latest
+# Use a specific, secure Nginx version
+FROM nginx:stable
 
-# Add the ARGs as environment variables
+# Set ARGs as environment variables
 ARG SOURCE
 ARG COMMIT_HASH
 ARG COMMIT_ID
 ARG BUILD_TIME
 
-# Copy labels from build stage
 LABEL source=${SOURCE}
 LABEL commit_hash=${COMMIT_HASH}
 LABEL commit_id=${COMMIT_ID}
 LABEL build_time=${BUILD_TIME}
 
-
+# Define a non-root user
 ARG container_user=mosip
-
-# can be passed during Docker build as build time environment for github branch to pickup configuration from.
 ARG container_user_group=mosip
-
-# can be passed during Docker build as build time environment for github branch to pickup configuration from.
 ARG container_user_uid=1001
-
-# can be passed during Docker build as build time environment for github branch to pickup configuration from.
 ARG container_user_gid=1001
 
 ENV nginx_dir=/usr/share/nginx
-
 ENV work_dir=${nginx_dir}/html
 
-# set working directory for the user
-WORKDIR /home/${container_user}
-
-# install packages and create user
+# Set up a user with limited privileges
 RUN groupadd -g ${container_user_gid} ${container_user_group} \
     && useradd -u ${container_user_uid} -g ${container_user_group} -s /bin/sh -m ${container_user} \
     && mkdir -p /var/run/nginx /var/tmp/nginx /temp /var/cache/nginx \
     && touch /var/run/nginx.pid \
-    && chown -R ${container_user}:${container_user} /usr/share/nginx /var/run/nginx /var/tmp/nginx /temp /var/cache/nginx /var/run/nginx.pid
+    && chown -R ${container_user}:${container_user} /var/run/nginx /temp /var/cache/nginx /var/run/nginx.pid
 
-ADD configure_start.sh configure_start.sh
-
-RUN chmod +x configure_start.sh
-
-RUN echo "DEFAULT_THEME=$DEFAULT_THEME" >> ${work_dir}/env.env \
-    && echo "DEFAULT_LANG=$DEFAULT_LANG" >> ${work_dir}/env.env \
-    && echo "MIMOTO_HOST=$MIMOTO_HOST" >> ${work_dir}/env.env \
-    && echo "DEFAULT_FAVICON=$DEFAULT_FEVICON" >> ${work_dir}/env.env \
-    && echo "DEFAULT_TITLE=$DEFAULT_TITLE" >> ${work_dir}/env.env
-
-# Copy the built React app from the build container to the Nginx container
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Change ownership of the HTML directory to mosip user
-RUN chown -R ${container_user}:${container_user} ${nginx_dir}/html
-
-# Change permissions of the configure_start.sh script
-RUN chown ${container_user}:${container_user} configure_start.sh
-
-# Switch to the mosip user
-USER ${container_user_uid}:${container_user_gid}
-
+# Copy the built React app and Nginx configuration
+COPY --from=build /home/${container_user}/build ${work_dir}
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 80
+# Create the environment variables file in the new work directory
+RUN echo "DEFAULT_THEME=${DEFAULT_THEME}" >> ${work_dir}/env.env \
+    && echo "DEFAULT_LANG=${DEFAULT_LANG}" >> ${work_dir}/env.env \
+    && echo "MIMOTO_HOST=${MIMOTO_HOST}" >> ${work_dir}/env.env \
+    && echo "DEFAULT_FAVICON=${DEFAULT_FAVICON}" >> ${work_dir}/env.env \
+    && echo "DEFAULT_TITLE=${DEFAULT_TITLE}" >> ${work_dir}/env.env
+
+# Copy and set permissions for the startup script
+COPY configure_start.sh /home/${container_user}/configure_start.sh
+RUN chmod +x /home/${container_user}/configure_start.sh && chown ${container_user}:${container_user} /home/${container_user}/configure_start.sh
+
+# Set ownership of the HTML directory
+RUN chown -R ${container_user}:${container_user} ${work_dir}
+
+# Switch to the non-root user and set the working directory
+USER ${container_user_uid}:${container_user_gid}
+WORKDIR /home/${container_user}
+
+# Expose port 3004
 EXPOSE 3004
 
-ENTRYPOINT [ "./configure_start.sh" ]
+ENTRYPOINT ["./configure_start.sh"]
 
-# The main command to start Nginx when the container runs
+# Run Nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]
