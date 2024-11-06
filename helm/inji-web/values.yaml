@@ -140,7 +140,8 @@ additionalResources:
 container_user: 'mosip'
 containerSecurityContext:
   enabled: true
-  runAsUser: 0
+  runAsUser: 1001    # Adjust user ID as needed
+  runAsGroup: 1001   # Adjust group ID as needed
   allowPrivilegeEscalation: false
   # runAsNonRoot: true
 
