@@ -16,7 +16,7 @@
       "buttontext": "Commencer"
     },
     "Features": {
-      "heading": "Caractéristiques de Inji Web",
+      "heading": "Caractéristiques de Inji Wallet",
       "description1": "Gestion transparente et sécurisée des identifiants vérifiables",
       "description2": "pour des interactions numériques de confiance."
     },
@@ -51,7 +51,7 @@
     "FeatureItem5": {
       "heading": "Accès et compatibilité étendus",
       "item1": "Disponible sur votre navigateur préféré",
-      "description1": "Inji Web fonctionne avec Chrome, Safari, Firefox et Edge.",
+      "description1": "Inji Wallet fonctionne avec Chrome, Safari, Firefox et Edge.",
       "item2": "Toujours à portée de main",
       "description2": "La commodité rencontre l'accessibilité où que vous soyez, garantissant que vos documents sont toujours à portée de main."
     },
@@ -160,7 +160,7 @@
       "description1": "Les informations d'identification vérifiables sont des documents numériques qui aident les utilisateurs à partager des informations telles que l'identité ou les qualifications avec le fournisseur de services, qui peuvent être instantanément vérifiées. "
     },
     "item3": {
-      "title": "Comment puis-je télécharger un identifiant dans Inji Web ?",
+      "title": "Comment puis-je télécharger un identifiant dans Inji Wallet ?",
       "description1": "Étape 1 : Recherchez et choisissez un émetteur sur la page de destination et sélectionnez un type d'informations d'identification.",
       "description2": "Étape 2 : Sur la page d'authentification, fournissez les détails requis.",
       "description3": "Étape 3 : Le format PDF des informations d'identification vérifiables sera téléchargé dans le système."
@@ -184,100 +184,82 @@
       "description3": "2. Aucun émetteur n'a été configuré.",
       "description4": "Dans les deux cas, veuillez contacter votre équipe technique pour résoudre le problème."
     },
-    "item8": {
-      "title": "Que se passe-t-il lorsque je génère un identifiant vérifiable (VC) dans Inji Web ?",
-      "description1": "Lorsque vous générez un identifiant vérifiable (VC) dans Inji Web via le flux de partage en ligne :",
-      "description2": "1. Vous sélectionnez un émetteur et le type d'identifiant que vous souhaitez recevoir.",
-      "description3": "2. Inji Web vous redirige vers la page de connexion de l'émetteur pour vous authentifier.",
-      "description4": "3. Une fois la connexion réussie, l'émetteur fournit votre VC, qui est ensuite stocké en toute sécurité en tant qu'objet JSON à l'aide de l'intégration avec le service Data Share (Durian).",
-      "description5": "4. Un PDF est généré qui inclut les détails de votre VC et un code QR pour un partage facile.",
-      "description6": "5. Le code QR renvoie à l'URL de stockage VC, ce qui facilite le partage sans surcharger le code QR avec des données denses."
-    },
-    "item9": {
-      "title": "Quel est le rôle du QR code dans le PDF du badge ?",
-      "description1": "Le code QR intégré dans le PDF des informations d'identification sert de lien vers le stockage sécurisé de vos informations d'identification vérifiables (VC). ",
-      "description2": "1. Le code QR est facile à scanner.",
-      "description3": "2. Les informations d'identification peuvent être récupérées en toute sécurité par les vérificateurs lorsqu'ils scannent le code QR."
-    },
-    "item10": {
-      "title": "Comment Inji Web garantit-il que mes informations d'identification vérifiables (VC) sont stockées en toute sécurité ?",
-      "description1": "Inji Web s'intègre au service Data Share (Durian), qui fait partie de la plateforme MOSIP ID, pour stocker en toute sécurité vos informations d'identification vérifiables (VC). "
-    },
-    "item11": {
-      "title": "Comment fonctionne la fonctionnalité de partage en ligne avec Inji Verify ?",
-      "description1": "Inji Web permet un partage transparent de vos informations d'identification vérifiables en utilisant les normes OpenID4VP :",
-      "description2": "1. Lorsque vous téléchargez le VC au format PDF, il contient un code QR.",
-      "description3": "2. Vous pouvez soit imprimer le PDF, soit conserver une copie électronique sur votre téléphone.",
-      "description4": "3. Lorsqu'un vérificateur (par exemple, Inji Verify) scanne le code QR, il envoie une demande d'autorisation à Inji Web.",
-      "description5": "4. Inji Web vérifie le vérificateur, autorise l'accès, puis renvoie le VC au vérificateur pour validation."
-    },
-    "item12": {
-      "title": "Quel est l'avantage d'intégrer une URL dans le code QR au lieu des données complètes du VC ?",
-      "description1": "L'intégration de l'URL du stockage des informations d'identification vérifiables (VC) dans le code QR, plutôt que dans l'intégralité des données VC (JSON-LD), garantit :",
-      "description2": "1. Le code QR est moins dense et peut être facilement scanné par le système du vérificateur.",
-      "description3": "2. Le partage est plus efficace, en particulier lors de l'utilisation d'une vérification multi-appareils ou à distance."
-    },
-    "item13": {
-      "title": "Puis-je partager mes informations d'identification vérifiables (VC) en ligne et hors ligne ?",
-      "description1": "Oui, Inji Web prend en charge les deux :",
-      "description2": "1. Partage en ligne : un vérificateur, comme Inji Verify, peut scanner le code QR à partir de votre PDF ou de l'écran de votre smartphone. ",
-      "description3": "2. Partage hors ligne : vous pouvez imprimer le PDF et le présenter en personne. "
-    },
-    "item14": {
-      "title": "Comment Inji Web vérifie et autorise le vérificateur lors du partage en ligne ?",
-      "description1": "Lorsque le code QR est scanné par un vérificateur (par exemple, Inji Verify) :",
-      "description2": "1. Inji Web vérifie les informations d'identification du vérificateur à partir de son fichier de configuration interne, qui contient une liste de vérificateurs de confiance et leurs identifiants client.",
-      "description3": "2. Si le vérificateur est autorisé, Inji Web renvoie les informations d'identification vérifiables (VC) au vérificateur dans un jeton sécurisé (vp_token)."
-    },
-    "item15": {
-      "title": "Qu'est-ce qu'OpenID4VP et comment est-il utilisé dans Inji Web ?",
-      "description1": "OpenID4VP (OpenID for Verifiable Présentations) est une norme permettant de partager en toute sécurité des informations d'identification vérifiables (VC) avec les vérificateurs. ",
-      "description2": "1. Génération d'un code QR lié au stockage sécurisé de votre VC.",
-      "description3": "2. Permettre aux vérificateurs (comme Inji Verify) de demander et de recevoir votre VC à l'aide de mécanismes sécurisés d'autorisation et d'échange de jetons."
-    },
-    "item16": {
-      "title": "Comment puis-je savoir que mon VC a été partagé en toute sécurité à l'aide d'Inji Web ?",
-      "description1": "Une fois qu'un vérificateur scanne le code QR et qu'Inji Web autorise la demande :",
-      "description2": "1. Inji Web fournit en toute sécurité les informations d'identification vérifiables (VC) au vérificateur.",
-      "description3": "2. Le vérificateur valide ensuite les informations d'identification et confirme qu'elles ont été partagées et vérifiées avec succès."
-    },
-    "item17": {
-      "title": "Que se passe-t-il si le code QR est scanné sur un appareil différent de celui sur lequel le VC a été généré ?",
-      "description1": "Inji Web prend en charge le partage entre appareils :",
-      "description2": "1. Le vérificateur peut scanner le code QR à partir de n'importe quelle copie physique ou numérique du PDF VC.",
-      "description3": "2. Inji Web vérifiera la demande et partagera le VC avec le vérificateur, quel que soit l'appareil à partir duquel le VC a été initialement généré ou est stocké."
-    },
-    "item18": {
-      "title": "Inji Web peut-il prendre en charge différents formats pour le code QR ?",
-      "description1": "Oui, Inji Web propose une approche basée sur la configuration pour générer des codes QR. ",
-      "description2": "1. L'URL du stockage VC pour un partage facile, ou",
-      "description3": "2. Les données VC elles-mêmes au format JSON (bien qu'elles soient généralement plus denses et moins analysables)."
-    },
-    "item19": {
-      "title": "Comment Inji Web gère-t-il la vérification des informations d'identification après le partage ?",
-      "description1": "Une fois qu'Inji Web a partagé les informations d'identification vérifiables (VC) avec le vérificateur :",
-      "description2": "1. Le vérificateur (par exemple, Inji Verify) vérifie l'authenticité du VC.",
-      "description3": "2. Si les informations d'identification sont valides et correspondent à la demande du vérificateur, elles seront vérifiées avec succès et le statut des informations d'identification sera confirmé."
-    },
-    "item20": {
-      "title": "Quels types d’émetteurs de titres de compétences sont pris en charge ?",
-      "description1": "Tout émetteur d'informations d'identification qui adhère au protocole OpenID4VCI peut être répertorié comme émetteur de confiance dans Inji Web. "
-    },
-    "item21": {
-      "title": "Où puis-je trouver des informations plus détaillées sur les fonctionnalités introduites dans cette version ?",
-      "description1": "Pour des étapes plus détaillées, des présentations du système et une documentation supplémentaire sur les fonctionnalités, veuillez visiter les sections pertinentes du <a href=\"https://docs.mosip.io/inji/inji-web/overview\" target=\"_blank\">Documentation Web Inji</a>. "
-    },
-    "item22": {
-      "title": "Comment puis-je démarrer avec la fonctionnalité de partage en ligne dans Inji Web ?",
-      "description1": "Pour commencer, accédez simplement à vos informations d'identification vérifiables via Inji Web.  <a href=\"https://docs.mosip.io/inji/inji-web/functional-overview/end-user-guide\" target=\"_blank\"> guide d'utilisation </a> et <a href=\"https://docs.mosip.io/inji/inji-web/overview\" target=\"_blank\">  documentation</a>."
-    },
-    "item23": {
-      "title": "Comment puis-je basculer entre le VC intégré et le partage en ligne dans Inji Web ?",
-      "description1": "Dans Inji Web, vous pouvez basculer entre l'intégration des informations d'identification vérifiables (VC) complètes dans le code QR ou l'utilisation du partage en ligne en configurant la propriété qr_code_type dans la configuration des émetteurs mimoto. ",
-      "description2": "1. EmbeddedVC : Cette option intègre l'intégralité des données VC (au format JSON) directement dans le code QR. ",
-      "description3": "2. OnlineSharing : cette option génère un code QR avec une URL qui pointe vers le VC stocké en ligne de manière sécurisée. ",
-      "description4": "Ces configurations se trouvent dans la configuration de l'émetteur Mimoto. "
-    }
+    "item8":{
+      "title": "Que se passe-t-il lorsque je génère un justificatif vérifiable (VC) dans l'interface Web d'Inji Wallet ?",
+      "description1": "1. Vous sélectionnez un émetteur et le type de justificatif.",
+      "description2": "2. Redirige vers la page de connexion de l'émetteur pour l'authentification.",
+      "description3": "3. Après la connexion, l'émetteur fournit le VC, stocké de manière sécurisée au format JSON à l'aide de Durian. ",
+      "description4": "4. Un PDF avec les détails du VC et un code QR est généré.",
+      "description5": "5. Le code QR renvoie à l'URL de stockage du VC pour un partage facile."
+      },
+      "item9": {
+      "title": "Quel est le rôle du code QR dans le PDF des justificatifs ?",
+      "description1": "Le code QR dans le PDF renvoie à l'URL de stockage sécurisée du VC, ce qui facilite la numérisation et la récupération des justificatifs sans données denses."
+      },
+      "item10":{
+        "title": "Comment l'interface Web d'Inji Wallet garantit-elle que ma VC est stockée en toute sécurité ?",
+        "description1": "S'intègre au service de partage de données (Durian) de la plateforme d'identification MOSIP, stockant la VC sous forme d'objet JSON avec un accès protégé uniquement pour les vérificateurs autorisés."
+      },
+      "item11":{
+        "title": "Comment fonctionne la fonction de partage en ligne avec Inji Verify ?",
+        "description1": "1. Le PDF VC contient un code QR.",
+        "description2": "2. Le PDF peut être imprimé ou enregistré sur un téléphone. ",
+        "description3": "3. Le vérificateur (par exemple, Inji Verify) scanne le code QR. ",
+        "description4": "4. Inji Wallet autorise et partage la VC avec le vérificateur."
+      },
+      "item12":{
+        "title": "Pourquoi intégrer une URL dans le code QR au lieu des données VC complètes ?",
+        "description1": "L'intégration d'une URL réduit la densité du code QR pour une numérisation facile, permettant une vérification efficace entre appareils ou à distance."
+      },
+      "item13":{
+        "title": "Puis-je partager mon VC en ligne et hors ligne ?",
+        "description1": "1. En ligne : le vérificateur peut numériser à partir d'un PDF ou d'un écran de téléphone, et Inji Wallet autorise et partage le VC. ",
+        "description2": "2. Hors ligne : le PDF imprimé peut être présenté pour la numérisation et la récupération du VC."
+      },
+      "item14":{
+        "title": "Comment Inji Wallet vérifie-t-il et autorise-t-il le vérificateur pendant le partage en ligne ?",
+        "description1": "Les informations d'identification du vérificateur sont vérifiées à partir d'une liste interne. S'il est autorisé, Inji Wallet avec interface Web renvoie le VC au vérificateur en toute sécurité à l'aide d'un vp_token."
+      },
+      "item15":{
+        "title": "Qu'est-ce qu'OpenID4VP et comment est-il utilisé dans Inji Wallet ?",
+        "description1": "La norme OpenID4VP (OpenID for Verifiable Presentations) permet le partage sécurisé de VC. Inji Wallet génère un code QR pour le stockage des VC, permettant aux vérificateurs comme Inji Verify de demander et de recevoir des VC en toute sécurité."
+      },
+      "item16":{
+        "title": "Comment savoir si mon VC a été partagé en toute sécurité à l'aide d'Inji Wallet ??",
+        "description1": "Une fois que le vérificateur a scanné le code QR et qu'Inji Wallet l'a autorisé, le VC est fourni en toute sécurité au vérificateur, qui le valide et le confirme ensuite."
+      },
+      "item17":{
+        "title": "Que se passe-t-il si le code QR est scanné sur un appareil différent de celui sur lequel le VC a été généré ?",
+        "description1": "Prend en charge le partage entre appareils. Le vérificateur peut numériser à partir de n'importe quelle copie du PDF VC, et Inji Wallet vérifie et partage le VC en toute sécurité."
+      },
+      "item18":{
+        "title": "Inji Wallet peut-il prendre en charge différents formats de code QR ?",
+        "description1": "Oui. La génération basée sur la configuration permet aux codes QR de contenir : ",
+        "description2": "1. URL vers le stockage VC pour un partage facile, ou ",
+        "description3": "2. Données VC complètes au format JSON (format plus dense)."
+      },
+      "item19":{
+        "title": "Comment Inji Wallet gère-t-il la vérification des informations d'identification après le partage ?",
+        "description1": "Après le partage, Inji Verify vérifie l'authenticité du VC. Si elle est valide, le vérificateur confirme le statut de vérification des informations d'identification."
+      },
+      "item20":{
+        "title": "Quels types d'émetteurs d'informations d'identification sont pris en charge ?",
+        "description1": "Tout émetteur qui suit le protocole OpenID4VCI peut être approuvé dans Inji Wallet. Ces émetteurs fournissent les données nécessaires à l'émission et au téléchargement de VC."
+      },
+      "item21": {
+        "title": "Où puis-je trouver des informations plus détaillées sur les fonctionnalités introduites dans cette version ?",
+        "description1": "Consultez la <a href=\"https://docs.mosip.io/inji/inji-web/overview\" target=\"_blank\">documentation d'Inji Wallet</a> pour obtenir des étapes détaillées, des aperçus du système et des descriptions des nouvelles fonctionnalités."
+      },
+      "item22":{
+        "title": "Comment démarrer avec la fonctionnalité de partage en ligne dans Inji Wallet ?",
+        "description1": "Accédez aux VC via l'interface Web d'Inji Wallet, téléchargez et utilisez le code QR pour partager des informations d'identification en personne ou en ligne avec des vérificateurs. Détails dans le <a href=\"https://docs.mosip.io/inji/inji-web/function-overview/end-user-guide\" target=\"_blank\">guide de l'utilisateur </a>."
+      },
+      "item23":{
+        "title": "Comment puis-je basculer entre le VC intégré et le partage en ligne dans Inji Wallet ?",
+        "description1": "Configurer le qr_code_type dans les paramètres de l'émetteur Mimoto : ",
+        "description2": "1. EmbeddedVC : intègre le VC complet au format JSON (code QR plus dense) pour une utilisation hors ligne",
+        "description3": "2. OnlineSharing : génère un code QR avec une URL vers le stockage VC en ligne, ce qui facilite la numérisation et le partage en ligne."
+        }
   },
   "DataShareExpiryModal": {
     "title": "Validité du partage",

@@ -423,7 +423,7 @@ inji_web:
       DEFAULT_THEME: ''
       DEFAULT_LANG: 'en'
       DEFAULT_FEVICON: 'favicon.ico'
-      DEFAULT_TITLE: 'Inji Web'
+      DEFAULT_TITLE: 'Inji Wallet'
 esignet_redirect_url: 'esignet.sandbox.xyz.net'
 
 ## injiweb UI swagger should have only internal access. Hence linked to internal gateway

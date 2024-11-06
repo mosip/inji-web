@@ -28,7 +28,7 @@ export const HomeFeatures: React.FC = () => {
       </div>
       <div data-testid="HomeFeatures-Description2" className="font-extralight text-center">
         {t("Features.description2")}
-      </div>
+      </div> 
 
       <img data-testid="HomeFeatures-MobileImage" className="mx-auto container scale-[80%] block sm:hidden" src={require("../../assets/InjiWebMobilePreview.png")} alt="Inji Web Mobile Preview" />
       <img data-testid="HomeFeatures-DesktopImage" className="mx-auto container scale-[80%] hidden sm:block" src={require("../../assets/InjiWebDesktopPreview.png")} alt="Inji Web Preview" />

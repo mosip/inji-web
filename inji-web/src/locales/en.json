@@ -16,7 +16,7 @@
       "buttontext":"Get Started"
     },
     "Features":{
-      "heading":"Features of Inji Web",
+      "heading":"Features of Inji Wallet",
       "description1":"Seamless and secure management of verifiable credentials",
       "description2":"for trusted digital interactions."
     },
@@ -25,7 +25,7 @@
       "item1":"Credentials Simplified",
       "description1":"Keep all your essential documents",
       "item2":"No more Paperwork. All In One Place",
-      "description2":"Effortlessly download, store, and retrieve your documents with ease. WIn, win, win."
+      "description2":"Effortlessly download, store, and retrieve your documents with ease. Win, win, win."
     },
     "FeatureItem2":{
       "heading":"Your Documents Downloaded in Second",
@@ -51,7 +51,7 @@
     "FeatureItem5":{
       "heading":"Wider Access & Compatibility",
       "item1":"Available on Your Favourite Browser",
-      "description1":"Inji Web works with Chrome, Safari, Firefox, and Edge.",
+      "description1":"Inji Wallet works with Chrome, Safari, Firefox, and Edge.",
       "item2":"Always Within Reach",
       "description2":"Convenience meets accessibility wherever you are, ensuring your documents are always within reach."
     },
@@ -161,7 +161,7 @@
       "description1": "Verifiable credentials are digital documents that help users to share information like identity or qualifications to the service provider which can be instantly verified. They're issued by trusted entities and can be cryptographically verified for authenticity. These credentials streamline identity verification processes."
     },
     "item3": {
-      "title": "How can I download a credential in Inji Web?",
+      "title": "How can I download a credential in Inji Wallet?",
       "description1": "Step 1: Search & choose an Issuer from the landing page and select a credential type.",
       "description2": "Step 2: In the authentication page, provide required details.",
       "description3": "Step 3: PDF format of the verifiable credential will be downloaded into the system."
@@ -186,98 +186,80 @@
       "description4": "In either case, please contact your technical team to address the issue."
     },
     "item8":{
-      "title": "What happens when I generate a Verifiable Credential (VC) in Inji Web?",
-      "description1":"When you generate a Verifiable Credential (VC) in Inji Web via Online Sharing flow:",
-      "description2":"1. You select an issuer and the type of credential you want to receive.",
-      "description3":"2. Inji Web redirects you to the issuer's login page to authenticate yourself.",
-      "description4":"3. After successful login, the issuer provides your VC, which is then securely stored as a JSON object using the integration with the Data Share service (Durian).",
-      "description5":"4. A PDF is generated that includes the details of your VC and a QR code for easy sharing.",
-      "description6":"5. The QR code links to the VC storage URL, making it simple to share without overloading the QR code with dense data."
+      "title": "What happens when I generate a Verifiable Credential (VC) in Inji Wallet's Web Interface?",
+      "description1":"1. You select an issuer and the type of credential.",
+      "description2":"2. Redirects to the issuer's login page for authentication.",
+      "description3":"3. After login, the issuer provides the VC, stored securely as JSON using Durian. ",
+      "description4":"4.A PDF with VC details and a QR code is generated.",
+      "description5":"5.QR code links to VC storage URL for easy sharing."
     },
     "item9":{
       "title":"What is the role of the QR code in the credential PDF?",
-      "description1":"The QR code embedded in the credential PDF serves as a link to the secure storage of your Verifiable Credential (VC). Instead of storing the dense JSON-LD version of the VC, the QR code contains the URL to access the stored VC. This ensures:",
-      "description2":"1. The QR code is easy to scan.",
-      "description3":"2. The credentials can be securely retrieved by verifiers when they scan the QR code."
+      "description1":"The QR code in the PDF links to the secure VC storage URL, making it easy to scan and retrieve credentials without dense data."
     },
     "item10":{
-      "title":"How does Inji Web ensure my Verifiable Credential (VC) is stored securely?",
-      "description1":"Inji Web integrates with the Data Share service (Durian), part of the MOSIP ID platform, to securely store your Verifiable Credential (VC). The VC is stored as a JSON object, and access to it is protected, ensuring that it can only be retrieved by authorized verifiers."
+      "title":"How does Inji Wallet’s Web Interface ensure my VC is stored securely?",
+      "description1":"Integrates with the Data Share service (Durian) from the MOSIP ID platform, storing the VC as a JSON object with access protected for only authorized verifiers."
     },
     "item11":{
       "title":"How does the online sharing feature work with Inji Verify?",
-      "description1":"Inji Web allows seamless sharing of your Verifiable Credentials using OpenID4VP standards:",
-      "description2":"1. When you download the VC as a PDF, it contains a QR code.",
-      "description3":"2. You can either print the PDF or keep a soft copy on your phone.",
-      "description4":"3. When a verifier (e.g., Inji Verify) scans the QR code, it sends a request to Inji Web for authorization.",
-      "description5":"4. Inji Web verifies the verifier, authorizes access, and then sends the VC back to the verifier for validation."
+      "description1":"1. VC PDF contains a QR code.",
+      "description2":"2. PDF can be printed or saved on a phone. ",
+      "description3":"3. Verifier (e.g., Inji Verify) scans the QR code. ",
+      "description4":"4. Inji Wallet authorizes and shares the VC with the verifier."
     },
     "item12":{
-      "title":"What is the benefit of embedding a URL in the QR code instead of the full VC data?",
-      "description1":"Embedding the URL of the Verifiable Credential (VC) storage in the QR code, rather than the entire VC data (JSON-LD), ensures:",
-      "description2":"1. The QR code is less dense and can be easily scanned by the verifier's system.",
-      "description3":"2. Sharing is more efficient, especially when using cross-device or remote verification."
+      "title":"Why embed a URL in the QR code instead of full VC data?",
+      "description1":"Embedding a URL reduces QR code density for easy scanning, allowing efficient cross-device or remote verification."
     },
     "item13":{
-      "title":"Can I share my Verifiable Credential (VC) online and offline?",
-      "description1":"Yes, Inji Web supports both:",
-      "description2":"1. Online sharing: A verifier, like Inji Verify, can scan the QR code from your PDF or smartphone screen. Inji Web will then authorize access and share the VC with the verifier.",
-      "description3":"2. Offline sharing: You can print the PDF and present it in person. The verifier can scan the QR code and retrieve your VC."
+      "title":"Can I share my VC both online and offline?",
+      "description1":"1. Online : Verifier can scan from a PDF or phone screen, and Inji Wallet authorizes and shares the VC. ",
+      "description2":"2. Offline : Printed PDF can be presented for scanning and VC retrieval."
     },
     "item14":{
-      "title":"How does Inji Web verify and authorize the verifier during online sharing?",
-      "description1":"When the QR code is scanned by a verifier (e.g., Inji Verify):",
-      "description2":"1. Inji Web checks the verifier’s credentials from its internal config file, which contains a list of trusted verifiers and their client IDs.",
-      "description3":"2. If the verifier is authorized, Inji Web sends the Verifiable Credential (VC) back to the verifier in a secure token (vp_token)."
+      "title":"How does Inji Wallet verify and authorize the verifier during online sharing?",
+      "description1":"Verifier credentials are checked from an internal list. If authorized, Inji Wallet with web interface sends the VC back to the verifier securely using a vp_token."
     },
     "item15":{
-      "title":"What is OpenID4VP, and how is it used in Inji Web?",
-      "description1":"OpenID4VP (OpenID for Verifiable Presentations) is a standard for securely sharing Verifiable Credentials (VCs) with verifiers. Inji Web implements this standard by:",
-      "description2":"1. Generating a QR code linked to the secure storage of your VC.",
-      "description3":"2. Enabling verifiers (like Inji Verify) to request and receive your VC using secure authorization and token exchange mechanisms."
+      "title":"What is OpenID4VP, and how is it used in Inji Wallet?",
+      "description1":"OpenID4VP (OpenID for Verifiable Presentations) standard allows secure sharing of VCs. Inji Wallet generates a QR code for VC storage, enabling verifiers like Inji Verify to securely request and receive VCs."
     },
     "item16":{
-      "title":"How do I know my VC was securely shared using Inji Web?",
-      "description1":"Once a verifier scans the QR code and Inji Web authorizes the request:",
-      "description2":"1. Inji Web securely provides the Verifiable Credential (VC) to the verifier.",
-      "description3":"2. The verifier then validates the credential and confirms it has been successfully shared and verified."
+      "title":"How do I know my VC was securely shared using Inji Wallet??",
+      "description1":"After the verifier scans the QR code and Inji Wallet authorizes it, the VC is securely provided to the verifier, who then validates and confirms it."
     },
     "item17":{
-      "title":"What happens if the QR code is scanned on a different device from where the VC was generated?",
-      "description1":"Inji Web supports cross-device sharing:",
-      "description2":"1. The verifier can scan the QR code from any physical or digital copy of the VC PDF.",
-      "description3":"2. Inji Web will verify the request and share the VC with the verifier, regardless of the device from which the VC was originally generated or is stored."
+      "title":"What happens if the QR code is scanned on a different device than where the VC was generated?",
+      "description1":"Supports cross-device sharing. The verifier can scan from any copy of the VC PDF, and Inji Wallet verifies and shares the VC securely."
     },
     "item18":{
-      "title":"Can Inji Web support different formats for the QR code?",
-      "description1":"Yes, Inji Web offers a config-based approach for generating QR codes. Depending on the issuer and credential type, the QR code can either contain:",
-      "description2":"1. The URL to the VC storage for easy sharing, or",
-      "description3":"2. The VC data itself in a JSON format (though this is typically denser and less scannable)."
+      "title":"Can Inji Wallet support different QR code formats?",
+      "description1":"Yes. Config-based generation allows QR codes to either contain: ",
+      "description2":"1. URL to VC storage for easy sharing, or ",
+      "description3":"2. Full VC data in JSON (denser format)."
     },
     "item19":{
-      "title":"How does Inji Web handle credential verification after sharing?",
-      "description1":"After Inji Web shares the Verifiable Credential (VC) with the verifier:",
-      "description2":"1. The verifier (e.g., Inji Verify) checks the authenticity of the VC.",
-      "description3":"2. If the credential is valid and matches the verifier’s request, it will be successfully verified and the credential status will be confirmed."
+      "title":"How does Inji Wallet handle credential verification after sharing?",
+      "description1":"After sharing, Inji Verify checks VC authenticity. If valid, the verifier confirms the credential's verification status."
     },
     "item20":{
       "title":"What kind of credential issuers are supported?",
-      "description1":"Any credential issuer that adheres to the OpenID4VCI protocol can be listed as a trusted issuer in Inji Web. These trusted issuers are responsible for providing the necessary user data required to issue and download Verifiable Credentials."
+      "description1":"Any issuer that follows the OpenID4VCI protocol can be trusted in Inji Wallet. These issuers provide data required to issue and download VCs."
     },
     "item21": {
       "title": "Where can I find more detailed information about the features introduced in this release?",
-      "description1": "For more detailed steps, system overviews, and further documentation on the features, please visit the relevant sections of the <a href=\"https://docs.mosip.io/inji/inji-web/overview\" target=\"_blank\">Inji Web documentation</a>. This will guide you through all new updates and functionalities in depth."
+      "description1": "Refer to the <a href=\"https://docs.mosip.io/inji/inji-web/overview\" target=\"_blank\">Inji Wallet documentation</a> for detailed steps, system overviews, and descriptions of new features."
     },
     "item22":{
-      "title":"How do I get started with the online sharing feature in Inji Web?",
-      "description1":"To get started, simply access your Verifiable Credentials via Inji Web. Once downloaded, you can use the embedded QR code to share your credentials in person or online with verifiers. Detailed instructions can be found in the platform’s <a href=\"https://docs.mosip.io/inji/inji-web/functional-overview/end-user-guide\" target=\"_blank\"> user guide </a> and <a href=\"https://docs.mosip.io/inji/inji-web/overview\" target=\"_blank\">  documentation</a>."
+      "title":"How do I get started with the online sharing feature in Inji Wallet?",
+      "description1":"Access VCs via Inji Wallet’s Web Interface, download, and use the QR code to share credentials in person or online with verifiers. Details in the <a href=\"https://docs.mosip.io/inji/inji-web/functional-overview/end-user-guide\" target=\"_blank\"> user guide </a> ."
     },
     "item23":{
-      "title":"How can I toggle between embedded VC and Online Sharing in Inji Web?",
-      "description1":"In Inji Web, you can toggle between embedding the full Verifiable Credential (VC) within the QR code or using Online Sharing by configuring the qr_code_type property in mimoto issuers config. The qr_code_type can have two different values:",
-      "description2":"1. EmbeddedVC: This option embeds the entire VC data (in JSON format) directly into the QR code. This can be useful for offline scenarios but might result in a denser QR code.",
-      "description3":"2. OnlineSharing: This option generates a QR code with a URL that points to the VC stored securely online. This ensures a less dense QR code, making it easier to scan, and supports seamless online sharing.",
-      "description4":"These configurations can be found in the Mimoto issuer's configuration. Depending on your needs, you can switch between these two options to adjust how the VC is downloaded and shared."
+      "title":"How can I toggle between embedded VC and Online Sharing in Inji Wallet?",
+      "description1":"Configure qr_code_type in Mimoto issuer's settings: ",
+      "description2":"1. EmbeddedVC: Embeds the full VC in JSON format (denser QR code) for offline use",
+      "description3":"2. OnlineSharing: Generates a QR code with a URL to the online VC storage, making it easier to scan and share online."
     }
   },
   "DataShareExpiryModal": {
