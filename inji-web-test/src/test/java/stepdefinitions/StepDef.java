@@ -20,11 +20,10 @@ public class StepDef {
     String pageTitle;
     public WebDriver driver;
     BaseTest baseTest;
-    private GlobelConstants globelConstants;
     private HomePage homePage;
     private HelpPage helpPage;
     private SetNetwork setNetwork;
-
+    private GlobelConstants globelConstants;
     public StepDef(BaseTest baseTest) {
         this.baseTest = baseTest;
         this.homePage = new HomePage(baseTest.getDriver());
@@ -152,7 +151,7 @@ public class StepDef {
     @Then("User verify home screens in arabic")
     public void user_verify_home_screens_in_arabic() {
         Assert.assertEquals(homePage.isHomePageTextDisplayed(), globelConstants.HomePageTextInArabic);
-        Assert.assertEquals(homePage.getHomePageDescriptionTextDisplayed(), globelConstants.isHomePageDescriptionTextnArabic);
+        Assert.assertEquals(homePage.getHomePageDescriptionText(), globelConstants.isHomePageDescriptionTextnArabic);
         Assert.assertEquals(homePage.isListOfIssuersTextDisplayed(), globelConstants.ListOfCredentialTypeOnHomePageInArabic);
         Assert.assertEquals(homePage.isListOfIssuersDescriptionTextDisplayed(), globelConstants.ListOfCredentialDescriptionTextInArabic);
     }
@@ -165,7 +164,7 @@ public class StepDef {
     @Then("User verify home screens in tamil")
     public void user_verify_home_screens_in_tamil() {
         Assert.assertEquals(homePage.isHomePageTextDisplayed(), globelConstants.HomePageTextInTamil);
-        Assert.assertEquals(homePage.getHomePageDescriptionTextDisplayed(), globelConstants.isHomePageDescriptionTextnTamil);
+        Assert.assertEquals(homePage.getHomePageDescriptionText(), globelConstants.isHomePageDescriptionTextnTamil);
         Assert.assertEquals(homePage.isListOfIssuersTextDisplayed(), globelConstants.ListOfCredentialTypeOnHomePageInTamil);
         Assert.assertEquals(homePage.isListOfIssuersDescriptionTextDisplayed(), globelConstants.ListOfCredentialDescriptionTextInTamil);
     }
@@ -191,7 +190,7 @@ public class StepDef {
     @Then("User verify home screens in hindi")
     public void user_verify_home_screens_in_hindi() {
         Assert.assertEquals(homePage.isHomePageTextDisplayed(), globelConstants.HomePageTextInHindi);
-        Assert.assertEquals(homePage.getHomePageDescriptionTextDisplayed(),globelConstants.HomePageDescriptionTextInHindi);
+        Assert.assertEquals(homePage.getHomePageDescriptionText(),globelConstants.HomePageDescriptionTextInHindi);
         Assert.assertEquals(homePage.isListOfIssuersTextDisplayed(), globelConstants.ListOfCredentialTypeOnHomePageInHindi);
         Assert.assertEquals(homePage.isListOfIssuersDescriptionTextDisplayed(), globelConstants.ListOfCredentialDescriptionTextInHindi);
     }
@@ -203,10 +202,8 @@ public class StepDef {
 
     @Then("User verify home screens in french")
     public void user_verify_home_screens_in_french() {
-        System.out.println(homePage.isHomePageTextDisplayed());
-        System.out.println(homePage.getHomePageDescriptionTextDisplayed());
         Assert.assertEquals(homePage.isHomePageTextDisplayed(), globelConstants.HomePageTextInFrench);
-        Assert.assertEquals(homePage.getHomePageDescriptionTextDisplayed(), globelConstants.HomePageDescriptionTextInFrench);
+        Assert.assertEquals(homePage.getHomePageDescriptionText(), globelConstants.HomePageDescriptionTextInFrench);
         Assert.assertEquals(homePage.isListOfIssuersTextDisplayed(), globelConstants.ListOfCredentialTypeOnHomePageInFrench);
         Assert.assertEquals(homePage.isListOfIssuersDescriptionTextDisplayed(), globelConstants.ListOfCredentialDescriptionTextInFrench);
     }

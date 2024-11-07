@@ -53,3 +53,5 @@ export const getDirCurrentLanguage = (language: string) => {
 export const isRTL = (language:string) => {
     return language === 'ar';
 }
+
+export default i18n;

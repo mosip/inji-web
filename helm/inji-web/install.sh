@@ -64,6 +64,7 @@ function installing_inji-web() {
   echo Installing INJIWEB
   helm -n $NS install injiweb mosip/injiweb \
   -f values.yaml \
+  --set inji_web.configmaps.injiweb-ui.MIMOTO_HOST=https://$INJI_HOST/v1/mimoto \
   --set istio.hosts\[0\]=$INJI_HOST \
   --version $CHART_VERSION
 

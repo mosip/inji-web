@@ -9,7 +9,6 @@ import {CredentialProps} from "../../types/components";
 import {CodeChallengeObject, CredentialConfigurationObject} from "../../types/data";
 import {RootState} from "../../types/redux";
 import {DataShareExpiryModal} from "../../modals/DataShareExpiryModal";
-import {storage} from "../../utils/storage";
 
 export const Credential: React.FC<CredentialProps> = (props) => {
     const selectedIssuer = useSelector((state: RootState) => state.issuers);
@@ -19,24 +18,24 @@ export const Credential: React.FC<CredentialProps> = (props) => {
     const credentialObject = getObjectForCurrentLanguage(filteredCredentialConfig.display, language);
     const vcStorageExpiryLimitInTimes = useSelector((state: RootState) => state.common.vcStorageExpiryLimitInTimes);
 
-    const onSuccess = () => {
+    const onSuccess = (defaultVCStorageExpiryLimit: number = vcStorageExpiryLimitInTimes) => {
         const state = generateRandomString();
         const code_challenge: CodeChallengeObject = generateCodeChallenge(state);
-        window.open(api.authorization(selectedIssuer.selected_issuer, props.credentialWellknown, filteredCredentialConfig, state, code_challenge), '_self', 'noopener');
         addNewSession({
             selectedIssuer: selectedIssuer.selected_issuer,
             certificateId: props.credentialId,
             codeVerifier: state,
-            vcStorageExpiryLimitInTimes: vcStorageExpiryLimitInTimes ?? 1,
+            vcStorageExpiryLimitInTimes: isNaN(defaultVCStorageExpiryLimit) ? vcStorageExpiryLimitInTimes : defaultVCStorageExpiryLimit,
             state: state,
         });
+        window.open(api.authorization(selectedIssuer.selected_issuer, props.credentialWellknown, filteredCredentialConfig, state, code_challenge), '_self', 'noopener');
     }
 
     return <React.Fragment>
         <ItemBox index={props.index}
                  url={credentialObject.logo.url}
                  title={credentialObject.name}
-                 onClick={() => setCredentialExpiry(true)}/>
+                 onClick={() => {selectedIssuer.selected_issuer.qr_code_type === 'OnlineSharing' ? setCredentialExpiry(true) : onSuccess(-1)} } />
                         { credentialExpiry &&
                             <DataShareExpiryModal onCancel={() => setCredentialExpiry(false)}
                                                   onSuccess={onSuccess}

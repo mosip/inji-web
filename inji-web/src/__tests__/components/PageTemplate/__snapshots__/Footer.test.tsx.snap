@@ -3,18 +3,33 @@
 exports[`Testing the Layout of Footer Container Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <footer
-    class="fixed bottom-0 left-0 right-0 py-4 text-center transform rotate-180 shadow-sm shadow-iw-shadow bg-iw-footer"
+    class="fixed bottom-0 left-0 right-0 py-4 transform rotate-180 shadow-sm shadow-iw-shadow bg-iw-footer"
     data-testid="Footer-Container"
   >
     <div
-      class="container mx-auto"
+      class="container mx-auto flex flex-col sm:flex-row justify-between items-end sm:items-center"
     >
       <p
-        class="text-black transform rotate-180"
+        class="ps-7 text-iw-subText transform rotate-180"
         data-testid="Footer-Text"
       >
         Footer.copyRight
       </p>
+      <div
+        class="flex flex-row items-center me-4"
+      >
+        <p
+          class="text-black transform rotate-180 font-bold"
+          data-testid="Footer-Text"
+        >
+          Footer.product
+        </p>
+        <img
+          alt="a square mosip logo"
+          class="w-10 h-10 transform rotate-180 m-2"
+          src="https://api.collab.mosip.net/inji/mosip-logo.png"
+        />
+      </div>
     </div>
   </footer>
 </DocumentFragment>

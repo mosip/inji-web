@@ -6,6 +6,7 @@ import {RootState} from "../../types/redux";
 import {storevcStorageExpiryLimitInTimes} from "../../redux/reducers/commonReducer";
 import {useTranslation} from "react-i18next";
 import {DSContentProps} from "../../types/components";
+import { toast } from "react-toastify";
 
 export const DataShareContent:React.FC<DSContentProps> = (props) => {
 
@@ -13,7 +14,6 @@ export const DataShareContent:React.FC<DSContentProps> = (props) => {
     const vcStorageExpiryLimitInTimes = useSelector((state: RootState) => state.common.vcStorageExpiryLimitInTimes);
     const dispatch = useDispatch();
     const {t} = useTranslation("DataShareExpiryModal");
-
 
     const getExpiryDisplayName = (expiry: number) => {
         let expiryDisplayName = expiry.toString();
@@ -58,22 +58,29 @@ export const DataShareContent:React.FC<DSContentProps> = (props) => {
                     <span className="font-base text-iw-subTitle" data-testid={"DataShareContent-Consent-Option"}>{t("content.validityTimesHeader")}</span>
                 </label>
 
-                <label className="w-1/2 flex items-center space-x-2" data-testid={"DataShareContent-Validity-Date"}>
-                    <input
-                        type="radio"
-                        name="consentValidity"
-                        value="date"
-                        disabled={true}
-                        className="accent-iw-primary scale-150"
-                    />
-                    <span className="font-light text-iw-subTitle" data-testid={"DataShareContent-Validity-Date-Title"}>{t("content.validityDate")}</span>
+                <label onClick={()=>toast.warning(t("toastText"))} className="w-1/2 flex items-center space-x-2" data-testid={"DataShareContent-Validity-Date"}>  
+                    <div className="relative inline-block">
+                        <input 
+                            type="radio" 
+                            name="consentValidity" 
+                            value="date" 
+                            disabled={true} 
+                            className="accent-iw-primary scale-150" 
+                        />
+                        <div 
+                            className="absolute inset-0"
+                            onClick={(e) => {e.stopPropagation(); toast.warning(t("toastText")); }}
+                        />
+                    </div>
+                        <span className="font-light text-iw-subTitle" data-testid={"DataShareContent-Validity-Date-Title"}>
+                        {t("content.validityDate")}</span>
                 </label>
             </div>
         </div>
         <div className="relative flex mb-4" onClick={()=>setTimesDropDown(times => !times)}>
             <div className={"w-1/3"}></div>
             <div className={"w-2/3 py-4 px-4 rounded-lg border-2 border-iw-borderLight flex flex-row items-center"}>
-                <label className={"w-full h-full"} data-testId={"DataShareContent-Selected-Validity-Times"}>{getExpiryDisplayName(vcStorageExpiryLimitInTimes)}</label>
+                <label className={"w-full h-full"} data-testid={"DataShareContent-Selected-Validity-Times"}>{getExpiryDisplayName(vcStorageExpiryLimitInTimes)}</label>
                 <MdOutlineKeyboardArrowDown size={30} color={'var(--iw-color-arrowDown)'} />
             </div>
         </div>

@@ -84,19 +84,14 @@ public class HomePage extends BasePage {
     }
 
     public String isHomePageTextDisplayed() {
-
-        System.out.println(getElementText(driver, By.xpath("//h2[@data-testid='IntroBox-Text']")));
         return  getElementText(driver, By.xpath("//h2[@data-testid='IntroBox-Text']"));
     }
 
-    public String getHomePageDescriptionTextDisplayed() {
-
-        System.out.println(getElementText(driver, By.xpath("//p[@data-testid='IntroBox-SubText']")));
+    public String getHomePageDescriptionText() {
         return getElementText(driver, By.xpath("//p[@data-testid='IntroBox-SubText']"));
     }
 
     public boolean isHomePageDescriptionTextDisplayed() {
-
         return isElementIsVisible(driver, By.xpath("//p[@data-testid='IntroBox-SubText']"));
     }
 

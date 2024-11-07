@@ -104,13 +104,17 @@ spec:
             {{- end }}
             {{- end }}
             {{- if .Values.extraEnvVarsSecret }}
+            {{- range .Values.extraEnvVarsSecret }}
             - secretRef:
-                name: {{ include "common.tplvalues.render" (dict "value" .Values.extraEnvVarsSecret "context" $) }}
+                name: {{ . }}
+            {{- end }}
             {{- end }}
           volumeMounts:
             - name: nginx-config
               mountPath: /etc/nginx/nginx.conf
               subPath: nginx.conf
+            - mountPath: /var/log/nginx
+              name: nginx-logs
           ports:
             - name: spring-service
               containerPort: {{ .Values.inji_web.inji_web_port }}
@@ -136,6 +140,8 @@ spec:
         {{- include "common.tplvalues.render" ( dict "value" .Values.sidecars "context" $) | nindent 8 }}
         {{- end }}
       volumes:
+        - name: nginx-logs
+          emptyDir: {}
         - name: nginx-config
           configMap:
             name: {{ template "common.names.fullname" . }}-nginx-cm

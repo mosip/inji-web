@@ -4,6 +4,54 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { reduxStore } from '../redux/reduxStore';
 
+// Mock for storage module
+export const mockStorageModule = () => {
+    jest.mock('../utils/storage.ts', () => ({
+        storage: {
+            getItem: jest.fn(),
+            setItem: jest.fn(),
+            SESSION_INFO: 'SESSION_INFO',
+            SELECTED_LANGUAGE: 'selectedLanguage'
+        }
+    }));
+};
+
+// Mock for localStorage
+export const mockLocalStorage = () => {
+    let store: { [key: string]: string } = {};
+  
+    const localStorageMock = {
+      getItem: jest.fn((key: string) => store[key] || null),
+      setItem: jest.fn((key: string, value: string) => {
+        store[key] = value;
+      })
+    };
+  
+    Object.defineProperty(window, 'localStorage', { 
+      value: localStorageMock,
+      writable: true
+    });
+  
+    return localStorageMock;
+  };
+
+// API Mock
+export const mockApi = {
+    authorizationRedirectionUrl: 'http://mockurl.com'
+};
+
+// Crypto Mock
+export const mockCrypto = {
+    getRandomValues: (array: Uint32Array) => {
+        for (let i = 0; i < array.length; i++) {
+            array[i] = Math.floor(Math.random() * 4294967296);
+        }
+        return array;
+    },
+    subtle: {} as SubtleCrypto,
+    randomUUID: () => '123e4567-e89b-12d3-a456-426614174000'
+} as Crypto;
+
 export const mockUseTranslation = () => {
     jest.mock('react-i18next', () => ({
         useTranslation: () => ({
@@ -11,17 +59,12 @@ export const mockUseTranslation = () => {
         }),
     }));
 };
+
 export const mockUseNavigate = () => {
     const mockNavigate = jest.fn();
     jest.mock('react-router-dom', () => ({
         ...jest.requireActual('react-router-dom'),
         useNavigate: mockNavigate,
-    }));
-};
-
-export const mockUseSearchCredentials = () => {
-    jest.mock('../components/Credentials/SearchCredential', () => ({
-        SearchCredential: () => <></>,
     }));
 };
 
@@ -46,23 +89,34 @@ export const mockUseGetObjectForCurrentLanguage = () => {
 export const wrapUnderRouter = (children: React.ReactNode) => {
     return <Router>{children}</Router>;
 };
+
+export const mockUseSearchCredentials = () => {
+    jest.mock('../components/Credentials/SearchCredential', () => ({
+        SearchCredential: () => <></>,
+    }));
+ };
+
 export const mockUseDispatch = () => {
     jest.mock('react-redux', () => ({
         ...jest.requireActual('react-redux'),
         useDispatch: jest.fn(),
     }));
 };
+              
 export const mockUseSpinningLoader = () => {
     jest.mock('../components/Common/SpinningLoader', () => ({
         SpinningLoader: () => <></>,
     }));
 };
+
 export const mockUseLanguageSelector = () => {
     jest.mock('../components/Common/LanguageSelector', () => ({
         LanguageSelector: () => <></>,
     }));
 };
+
 interface RenderWithProviderOptions extends Omit<RenderOptions, 'queries'> {}
+
 export const renderWithProvider = (element: ReactElement, options?: RenderWithProviderOptions) => {
     return render(
         <Provider store={reduxStore}>
@@ -73,12 +127,14 @@ export const renderWithProvider = (element: ReactElement, options?: RenderWithPr
         options
     );
 };
+    
 export const mockUseParams = ()=>{
     jest.mock('react-router-dom', () => ({
         ...jest.requireActual('react-router-dom'),
         useParams: () => ({ issuerId: 'test-issuer-id' }),
       }));   
 };
+
 export const mockUseapiObject = () =>{
     jest.mock('../utils/api', () => ({
         api: {
@@ -86,6 +142,7 @@ export const mockUseapiObject = () =>{
         },
       }));
 };
+
 export const mockUseFetch = () =>{
     jest.mock('../hooks/useFetch', () => {
         const RequestStatus = {
@@ -107,13 +164,15 @@ export const mockUseToast = () =>{
       },
     }));
 };
+
 export const mockusemisc = ()=>{
     jest.mock('../utils/misc', () => ({
         downloadCredentialPDF: jest.fn(),
         getErrorObject: jest.fn(),
         getTokenRequestBody: jest.fn(),
       }));
-}
+};
+
 export const mockusei18n = ()=>{
     jest.mock('react-i18next', () => ({
         useTranslation: () => ({
@@ -125,7 +184,8 @@ export const mockusei18n = ()=>{
         },
       }));
 
-}
+};
+
 export const mockWindowLocation = (url: string) => {
     const location = new URL(url) as unknown as Location;
     Object.defineProperty(window, 'location', {
@@ -133,6 +193,7 @@ export const mockWindowLocation = (url: string) => {
       writable: true,
     });
   };
+
 export const renderWithRouter = (Element: React.ReactElement, { route = '/' } = {}) => {
     window.history.pushState({}, 'Test page', route);
     return render(

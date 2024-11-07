@@ -3,7 +3,7 @@
 exports[`Testing the layout of Issuer Component Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
-    class="bg-iw-tileBackground w-48 h-48 flex flex-col shadow hover:shadow-lg hover:scale-110 hover:shadow-iw-selectedShadow p-5 m-4 rounded-md cursor-pointer items-center"
+    class="bg-iw-tileBackground w-48 h-48 flex flex-col shadow hover:shadow-lg hover:scale-105 hover:shadow-iw-selectedShadow p-5 m-4 rounded-md cursor-pointer items-center"
     data-testid="ItemBox-Outer-Container-1"
     role="menuitem"
     tabindex="0"

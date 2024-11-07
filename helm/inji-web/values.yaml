@@ -140,7 +140,8 @@ additionalResources:
 container_user: 'mosip'
 containerSecurityContext:
   enabled: true
-  runAsUser: 0
+  runAsUser: 1001    # Adjust user ID as needed
+  runAsGroup: 1001   # Adjust group ID as needed
   allowPrivilegeEscalation: false
   # runAsNonRoot: true
 
@@ -250,7 +251,7 @@ extraEnvVarsCM:
 
 ## Secret with extra environment variables
 ##
-extraEnvVarsSecret:
+extraEnvVarsSecret: []
 
 ## Extra volumes to add to the deployment
 ##
@@ -422,7 +423,8 @@ inji_web:
       DEFAULT_THEME: ''
       DEFAULT_LANG: 'en'
       DEFAULT_FEVICON: 'favicon.ico'
-      DEFAULT_TITLE: 'Inji Web'
+      DEFAULT_TITLE: 'Inji Wallet'
+      MIMOTO_HOST: 'https://injiweb.sandbox.xyz.net/v1/mimoto'
 esignet_redirect_url: 'esignet.sandbox.xyz.net'
 
 ## injiweb UI swagger should have only internal access. Hence linked to internal gateway

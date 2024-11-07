@@ -3,7 +3,7 @@
 exports[`Testing the Layout of Help Accordion Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
-    class="rounded-md mb-2 shadow-md shadow-iw-shadow"
+    class="rounded-md mb-2 shadow-sm shadow-iw-shadow"
     data-testid="Help-Item-Container"
   >
     <button
@@ -36,7 +36,7 @@ exports[`Testing the Layout of Help Accordion Check if the layout is matching wi
       </div>
     </button>
     <div
-      class="p-5 bg-iw-background border-t"
+      class="p-5 bg-iw-background border-t-2"
       data-testid="Help-Item-Content-Text"
     >
       <p
