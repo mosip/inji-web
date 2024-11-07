@@ -1,17 +1,16 @@
 package utils;
 
 public class GlobelConstants {
-    public static final String HomePageTextInArabic = "تنزيل بيانات الاعتماد هو بنقرة واحدة!";
-    public static final String isHomePageDescriptionTextnArabic = "يرجى البحث عن جهة الإصدار وفي الخطوة التالية، حدد بيانات الاعتماد للتنزيل.";
-    public static final String HomePageTextInTamil = "நற்சான்றிதழைப் பதிவிறக்குவது ஒரே கிளிக்கில் உள்ளது!";
-    public static final String isHomePageDescriptionTextnTamil=   "வழங்குபவரைத் தேடி, அடுத்த கட்டத்தில், பதிவிறக்குவதற்கான நற்சான்றிதழைத் தேர்ந்தெடுக்கவும்.";
-    public static final String HomePageTextInKannada ="ರುಜುವಾತುಗಳನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡುವುದು ಒಂದು ಕ್ಲಿಕ್ ದೂರದಲ್ಲಿದೆ!";
-    public static final String HomePageDescriptionTextInKannada  = "ದಯವಿಟ್ಟು ನೀಡುವವರಿಗಾಗಿ ಹುಡುಕಿ ಮತ್ತು ಮುಂದಿನ ಹಂತದಲ್ಲಿ, ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ರುಜುವಾತುಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ.";
-    public static final String HomePageTextInHindi= "क्रेडेंशियल डाउनलोड करना एक-क्लिक दूर है!";
-    public static final String HomePageDescriptionTextInHindi = "कृपया जारीकर्ता को खोजें और अगले चरण में, डाउनलोड करने के लिए क्रेडेंशियल चुनें।";
-    public static final String HomePageTextInFrench="Le téléchargement d'un identifiant se fait en un seul clic !";
-    public static final String HomePageDescriptionTextInFrench ="Veuillez rechercher l'émetteur et, à l'étape suivante, sélectionnez les informations d'identification à télécharger.";
-
+    public static final String HomePageTextInArabic = "الوصول إلى بيانات الاعتماد الخاصة بك التي يمكن التحقق منها بكل سهولة! with ease!";
+    public static final String isHomePageDescriptionTextnArabic = "قم بتنزيل بيانات الاعتماد الخاصة بك ومشاركتها بشكل آمن على الفور.";
+    public static final String HomePageTextInTamil = "உங்கள் சரிபார்க்கக்கூடிய சான்றுகளை எளிதாக அணுகவும்! with ease!";
+    public static final String isHomePageDescriptionTextnTamil=   "உங்கள் நற்சான்றிதழ்களை உடனடியாகப் பாதுகாப்பாக பதிவிறக்கம் செய்து பகிரவும்.";
+    public static final String HomePageTextInKannada ="ನಿಮ್ಮ ಪರಿಶೀಲಿಸಬಹುದಾದ ರುಜುವಾತುಗಳನ್ನು ಸುಲಭವಾಗಿ ಪ್ರವೇಶಿಸಿ! with ease!";
+    public static final String HomePageDescriptionTextInKannada  = "ನಿಮ್ಮ ರುಜುವಾತುಗಳನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಡೌನ್\u200Cಲೋಡ್ ಮಾಡಿ ಮತ್ತು ತಕ್ಷಣವೇ ಹಂಚಿಕೊಳ್ಳಿ.";
+    public static final String HomePageTextInHindi= "अपने सत्यापन योग्य क्रेडेंशियल्स तक आसानी से पहुंचें! with ease!";
+    public static final String HomePageDescriptionTextInHindi = "अपने क्रेडेंशियल्स को सुरक्षित रूप से डाउनलोड करें और तुरंत साझा करें।";
+    public static final String HomePageTextInFrench="Accédez facilement à vos informations d'identification vérifiables ! with ease!";
+    public static final String HomePageDescriptionTextInFrench ="Téléchargez et partagez en toute sécurité vos informations d'identification instantanément.";
     public static final String ListOfCredentialType ="List of Credential Types";
     public static final String ListOfCredentialTypeInArabic ="قائمة أنواع الاعتمادات";
     public static final String ListOfCredentialTypeInHindi=  "क्रेडेंशियल प्रकारों की सूची";

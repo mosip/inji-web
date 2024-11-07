@@ -23,8 +23,11 @@ public class HomePage extends BasePage {
     }
 
     public void clickOnHelp() {
-        if (isElementIsVisible(driver, By.xpath("//div[@data-testid='Header-Menu-Help']"))) {
-            clickOnElement(driver, By.xpath("//div[@data-testid='Header-Menu-Help']"));
+        if (isElementIsVisible(driver, By.xpath("//*[@data-testid='Header-Menu-Help']"))) {
+            clickOnElement(driver, By.xpath("(//*[@data-testid='Header-Menu-Help'])[1]"));
+            clickOnElement(driver, By.xpath("//*[@data-testid='Help-DropDown-Item']"));
+
+
         } else {
             clickOnElement(driver, By.xpath("//li[@data-testid='Header-Menu-Help']"));
         }
@@ -81,11 +84,20 @@ public class HomePage extends BasePage {
     }
 
     public String isHomePageTextDisplayed() {
-        return getElementText(driver, By.xpath("//h2[@data-testid='IntroBox-Text']"));
+
+        System.out.println(getElementText(driver, By.xpath("//h2[@data-testid='IntroBox-Text']")));
+        return  getElementText(driver, By.xpath("//h2[@data-testid='IntroBox-Text']"));
     }
 
-    public String isHomePageDescriptionTextDisplayed() {
+    public String getHomePageDescriptionTextDisplayed() {
+
+        System.out.println(getElementText(driver, By.xpath("//p[@data-testid='IntroBox-SubText']")));
         return getElementText(driver, By.xpath("//p[@data-testid='IntroBox-SubText']"));
+    }
+
+    public boolean isHomePageDescriptionTextDisplayed() {
+
+        return isElementIsVisible(driver, By.xpath("//p[@data-testid='IntroBox-SubText']"));
     }
 
     public void clickOnDownloadMosipCredentials() {
@@ -269,10 +281,186 @@ public class HomePage extends BasePage {
     }
 
     public String isListOfIssuersDescriptionTextDisplayed() {
-        return getElementText(driver, By.xpath("(//*[@data-testid='HeaderTile-Text'])[2]"));
+        return getElementText(driver, By.xpath("//*[@data-testid='HeaderTile-Text-SubContent']"));
     }
 
     public boolean isAboutPageDisplayed() {
         return isElementIsVisible(driver, By.xpath("//p[text()='Overview']"));
     }
+
+
+    public boolean isHomeBannerHeadingDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeBanner-Heading']"));
+    }
+
+    public boolean isHomeBannerHeadingDescriptionDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeBanner-Description']"));
+    }
+
+    public boolean isGetStartedButtonDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeBanner-Get-Started']"));
+    }
+
+    public boolean isFeatureHeadingDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatures-Heading']"));
+    }
+
+    public boolean isFeatureDescriptionDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatures-Description1']"));
+    }
+
+    public boolean isFeatureMobileImageDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatures-MobileImage']"));
+    }
+
+    public boolean isFeatureDesktopImageDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatures-DesktopImage']"));
+    }
+
+    public boolean isAccessYourCredentialsTextHeaderDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem2-Heading']"));
+    }
+
+    public boolean isYourDocumentsDownloadedTextHeaderDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem2-Heading']"));
+    }
+
+    public boolean isEasySharingTextHeaderDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem3-Heading']"));
+    }
+
+    public boolean isSecureAndPrivateDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem4-Heading']"));
+    }
+
+    public boolean isWiderAccessAndCompatibilityDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem5-Heading']"));
+    }
+
+
+
+    public boolean isCredentialsSimplifiedTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem1-FirstFeature-Item']"));
+    }
+
+    public boolean isNoMorePaperworkTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem1-SecondFeature-Item']"));
+    }
+    public boolean isDownloadWithConfidenceTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem2-FirstFeature-Item']"));
+    }
+
+    public boolean isSafeAndSoundTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem2-SecondFeature-Item']"));
+    }
+
+    public boolean isShareWithQRCodeTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem3-FirstFeature-Item']"));
+    }
+
+    public boolean isReadSetShareTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem3-SecondFeature-Item']"));
+    }
+
+    public boolean isYourCredentialsProtectedTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem4-FirstFeature-Item']"));
+    }
+
+    public boolean isRestEasyTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem4-SecondFeature-Item']"));
+    }
+
+    public boolean isAvailableOnYourFavouriteBrowserTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem5-FirstFeature-Item']"));
+    }
+
+    public boolean isAlwaysWithinReachTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem5-SecondFeature-Item']"));
+    }
+
+    public void clickOnGetStartedButton() {
+        clickOnElement(driver, By.xpath("//*[@data-testid='HomeBanner-Get-Started']"));
+    }
+
+
+
+    public boolean isCredentialsSimplifiedDescriptionTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem1-FirstFeature-Description']"));
+    }
+
+    public boolean isNomorePaperworkDescriptionTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem1-SecondFeature-Description']"));
+    }
+
+    public boolean isDownloadwithConfidenceDescriptionTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem2-FirstFeature-Description']"));
+    }
+
+    public boolean isSafeAndSoundDescriptionTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem2-SecondFeature-Description']"));
+    }
+
+    public boolean isSharewithQRCodeDescriptionTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem3-FirstFeature-Description']"));
+    }
+
+    public boolean isReadSetShareDescriptionTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem3-SecondFeature-Description']"));
+    }
+
+    public boolean isYourCredentialsProtectedDescriptionTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem4-FirstFeature-Description']"));
+    }
+
+    public boolean isRestEasyDescriptionTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem4-SecondFeature-Description']"));
+    }
+
+    public boolean isAvailableOnYourFavouriteBrowserDescriptionTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem5-FirstFeature-Description']"));
+    }
+
+    public boolean isAlwaysWithinReachDescriptionTextDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem5-SecondFeature-Description']"));
+    }
+
+
+    public void clickOnConsentValidityButton() {
+        clickOnElement(driver, By.xpath("//*[@data-testid='DataShareContent-Selected-Validity-Times']"));
+    }
+
+    public void clickOnConsentValidityAsCustom() {
+        clickOnElement(driver, By.xpath("//*[@data-testid='DataShareContent-Validity-Times-DropDown-Custom']"));
+    }
+    public void enterConsentValidityAsCustom(String string) {
+        enterText(driver, By.xpath("//*[@data-testid='CustomExpiryTimesContent-Times-Value']"), string);
+    }
+
+    public void clickOnProccedCustomButton() {
+        clickOnElement(driver, By.xpath("(//*[@data-testid='DataShareFooter-Success-Button'])[2]"));
+    }
+    public void clickOnProccedConsentButton() {
+        clickOnElement(driver, By.xpath("(//*[@data-testid='DataShareFooter-Success-Button'])[1]"));
+    }
+    public boolean isAccessYourCredentialsImageDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem1-Image']"));
+    }
+
+    public boolean isYourDocumentsDownloadedImageDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem2-Image']"));
+    }
+
+    public boolean isEasySharingImageDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem3-Image']"));
+    }
+
+    public boolean isSecureAndPrivateImageDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem4-Image']"));
+    }
+
+    public boolean isWiderAccessAndCompatibilityImageDisplayed(){
+        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem5-Image']"));
+    }
+
+
 }

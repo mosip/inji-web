@@ -29,12 +29,12 @@ public class SunbirdCredentials extends BasePage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return isElementIsVisible(driver, By.xpath("(//div[@class='justify-center items-center'])[1]"));
+        return isElementIsVisible(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-0']"));
     }
 
     public void clickOnSunbirdInsurance() {
 
-        clickOnElement(driver, By.xpath("(//div[@class='justify-center items-center'])[1]"));
+        clickOnElement(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-0']"));
     }
 
     public void clickOnDownloadSunbird() {
@@ -96,11 +96,11 @@ public class SunbirdCredentials extends BasePage {
     }
 
     public Boolean isLifeInceranceDisplayed() {
-        return isElementIsVisible(driver, By.xpath("(//div[@class='justify-center items-center'])[2]"));
+        return isElementIsVisible(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-1']"));
     }
 
     public void clickOnLifeInsurance() {
-        clickOnElement(driver, By.xpath("(//div[@class='justify-center items-center'])[2]"));
+        clickOnElement(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-1']"));
     }
 
     public Boolean isEnterPolicyNumberHeaderDisplayed() {
@@ -126,11 +126,11 @@ public class SunbirdCredentials extends BasePage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return isElementIsVisible(driver, By.xpath("(//div[@class='justify-center items-center'])[2]"));
+        return isElementIsVisible(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-1']"));
     }
 
     public void clickOnVehicleInsurance() {
-        clickOnElement(driver, By.xpath("(//div[@class='justify-center items-center'])[2]"));
+        clickOnElement(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-1']"));
     }
 
 }

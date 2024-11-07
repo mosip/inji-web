@@ -4,6 +4,7 @@ Feature: Inji web multilanguage testing
   Scenario: Verify the Inji web configured language
   Given User gets the title of the page
   Then User validate the title of the page
+  Then User click on get started button
   And User verify that inji web logo is displayed
   And User verify that langauge button is displayed
   And User click on langauge button
@@ -13,6 +14,7 @@ Feature: Inji web multilanguage testing
   Scenario: Verify the Inji web homepage
     Given User gets the title of the page
     Then User validate the title of the page
+    Then User click on get started button
     And User verify that inji web logo is displayed
     And User verify that langauge button is displayed
     And User click on langauge button
@@ -45,6 +47,7 @@ Feature: Inji web multilanguage testing
   Scenario: Verify the Credential Details Page
     Given User gets the title of the page
     Then User validate the title of the page
+    Then User click on get started button
     And User verify that inji web logo is displayed
     And User search the issuers with "National"
     When User click on download mosip credentials button
@@ -69,6 +72,7 @@ Feature: Inji web multilanguage testing
   Scenario: Verify the Credential Details Page
     Given User gets the title of the page
     Then User validate the title of the page
+    Then User click on get started button
     And User verify that inji web logo is displayed
     And User search the issuers with "Insurance"
     And User verify sunbird cridentials button
@@ -99,6 +103,7 @@ Feature: Inji web multilanguage testing
   Scenario: Verify the Credential Details Page
     Given User gets the title of the page
     Then User validate the title of the page
+    Then User click on get started button
     And User verify that inji web logo is displayed
     And User search the issuers with "National"
     When User click on download mosip credentials button
@@ -143,6 +148,7 @@ Feature: Inji web multilanguage testing
   Scenario: Verify the Inji web homepage
     Given User gets the title of the page
     Then User validate the title of the page
+    Then User click on get started button
     And User verify that inji web logo is displayed
     And User verify that langauge button is displayed
     And User click on langauge button
