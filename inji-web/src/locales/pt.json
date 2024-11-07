@@ -1,0 +1,292 @@
+{
+  "PageTemplate": {
+    "Header": {
+      "home": "Página inicial",
+      "help": "Ajuda"
+    },
+    "Footer": {
+      "product": "Um produto MOSIP",
+      "copyRight": "© 2024 Inji. Todos os direitos reservados."
+    }
+  },
+  "HomePage": {
+    "Banner":{
+      "heading":"Acesse e gerencie suas credenciais digitais sem esforço",
+      "description":"Torne seus dados portáteis com confiança. Gerencie seus documentos digitais com segurança com nossa carteira baseada na web fácil de usar.",
+      "buttontext":"Comece"
+    },
+    "Features":{
+      "heading":"Recursos da Inji Wallet",
+      "description1":"Gerenciamento seguro e sem complicações de credenciais verificáveis",
+      "description2":"para interações digitais confiáveis."
+    },
+    "FeatureItem1":{
+      "heading":"Acesse suas credenciais em qualquer lugar que precisar",
+      "item1":"Credenciais simplificadas",
+      "description1":"Mantenha todos os seus documentos essenciais",
+      "item2":"Chega de papelada. Tudo em um só lugar",
+      "description2":"Baixe, armazene e recupere seus documentos com facilidade e sem esforço. Ganhe, ganhe, ganhe."
+    },
+    "FeatureItem2":{
+      "heading":"Seus documentos baixados em segundos",
+      "item1":"Baixe com confiança",
+      "description1":"Salve seus documentos importantes instantaneamente",
+      "item2":"Seguro e protegido",
+      "description2":"Baixe IDs, licenças e muito mais em um local seguro."
+    },
+    "FeatureItem3":{
+      "heading":"Compartilhamento fácil",
+      "item1":"Compartilhe com um código QR",
+      "description1":"Compartilhe facilmente suas identidades e certificados em qualquer lugar. Basta apresentar o código QR do seu documento para ser escaneado e compartilhado.",
+      "item2":"Ler, definir, compartilhar",
+      "description2":"Código QR verificado em tempo real."
+    },
+    "FeatureItem4":{
+      "heading":"Seguro e privado",
+      "item1":"Suas credenciais protegidas",
+      "description1":"Seus dados permanecem privados com o mecanismo de segurança integrado.",
+      "item2":"Fique tranquilo",
+      "description2":"Mantenha suas credenciais seguras para que você possa se concentrar no que importa."
+    },
+    "FeatureItem5":{
+      "heading":"Acesso e compatibilidade mais amplos",
+      "item1":"Disponível no seu navegador favorito",
+      "description1":"A Inji Wallet funciona com Chrome, Safari, Firefox e Edge.",
+      "item2":"Sempre ao alcance",
+      "description2":"A conveniência encontra a acessibilidade onde quer que você esteja, garantindo que seus documentos estejam sempre ao alcance."
+    },
+    "QuickTip":{
+      "heading":"Dicas rápidas para baixar suas credenciais instantaneamente",
+      "toastText":"Em breve",
+      "buttontext":"Clique aqui"
+    }
+  },
+  "IssuersPage": {
+    "Intro": {
+      "title": "Acesse suas credenciais verificáveis",
+      "title2": "com facilidade!",
+      "subTitle": "Baixe e compartilhe suas credenciais com segurança instantaneamente.",
+      "searchText": "Pesquisar emissores por nome"
+    },
+    "emptyContainerContent": "Nenhum emissor encontrado. Atualize a janela do navegador ou tente novamente mais tarde",
+    "containerHeading": "Lista de emissores",
+    "containerSubHeading": "Pesquise seu emissor confiável e escolha um tipo de credencial na próxima etapa.",
+    "errorContent": "O serviço não está disponível no momento. Tente novamente mais tarde."
+  },
+  "CredentialsPage": {
+    "searchText": "Pesquisar tipo de credencial",
+    "emptyContainerContent": "Nenhuma credencial encontrada. Atualize a janela do navegador ou tente novamente mais tarde",
+    "containerHeading": "Lista de tipos de credenciais",
+    "containerSubHeading": "Escolha uma credencial e confirme sua identidade na próxima etapa.",
+    "errorContent": "O serviço não está disponível no momento. Tente novamente mais tarde."
+  },
+  "RedirectionPage": {
+    "navigateButton": "Ir para a página inicial",
+    "loading": {
+      "title": "Download em andamento...",
+      "subTitle": "Aguarde um momento! Estamos convertendo suas credenciais verificáveis ​​para PDF"
+    },
+    "success": {
+      "title": "Sucesso!",
+      "subTitle": "Verifique sua pasta de downloads!"
+    },
+    "error": {
+      "invalidSession": {
+        "title": "Sessão inválida",
+        "subTitle": "a sessão não é válida ou a sessão foi concluída"
+      },
+      "verification": {
+        "proof_type_not_supported": {
+          "title": "Ocorreu um erro",
+          "subTitle": "Desculpe! Devido a um erro técnico, não conseguimos baixar sua credencial."
+        },
+        "json_parsing_failed": {
+          "title": "Ocorreu um erro",
+          "subTitle": "Desculpe, devido a um erro técnico, não conseguimos baixar o VC. Tente novamente mais tarde!"
+        },
+        "signature_verification_failed": {
+          "title": "Ocorreu um erro",
+          "subTitle": "Desculpe! Sua credencial não pôde ser baixada, pois há um problema com a validação da assinatura do emissor. Entre em contato com o administrador para obter mais assistência."
+        },
+        "unknown_exception": {
+          "title": "Ocorreu um erro",
+          "subTitle": "Desculpe, parece que nossos serviços estão temporariamente indisponíveis. Verifique novamente em breve e agradecemos sua paciência!"
+        },
+        "proof_document_not_found": {
+          "title": "Ocorreu um erro",
+          "subTitle": "Desculpe! Sua credencial não pôde ser baixada, pois há um problema com a validação da assinatura do emissor. Entre em contato com o administrador para obter mais assistência."
+        },
+        "public_key_not_found": {
+          "title": "Ocorreu um erro",
+          "subTitle": "Desculpe! Sua credencial não pôde ser baixada, pois há um problema com a validação da assinatura do emissor. Entre em contato com o administrador para obter mais assistência."
+        }
+      },
+      "generic": {
+        "title": "Ocorreu um erro",
+        "subTitle": "Desculpe, devido a um erro técnico, não conseguimos baixar o VC. Tente novamente mais tarde!"
+      }
+    }
+  },
+  "AuthorizationPage": {
+    "error": {
+      "code": {
+        "invalid_redirect_uri": "Acesso negado!",
+        "invalid_client": "Acesso negado!"
+      },
+      "message": {
+        "invalid_redirect_uri": "As credenciais não podem ser compartilhadas porque não conseguimos identificar quem as solicitou. Entre em contato com o administrador para obter ajuda.",
+        "invalid_client": "As credenciais não podem ser compartilhadas porque não conseguimos identificar quem as solicitou. Entre em contato com o administrador para obter ajuda."
+      }
+    }
+  },
+  "PageNotFound": {
+    "navigateButton": "Ir para a página inicial",
+    "heading": "Isso é um erro",
+    "subHeading": "A URL solicitada {{pathname}} não foi encontrada neste servidor."
+  },
+  "HelpPage": {
+    "title": "Ajuda"
+  },
+  "HelpDropdown":{
+    "heading":"Ajuda",
+    "item1":"Perguntas frequentes"
+  },
+  "Help": {
+    "item1": {
+      "title": "Quem são os emissores?",
+      "description1": "Os emissores são órgãos governamentais ou entidades confiáveis ​​pelo governo, responsáveis ​​por fornecer credenciais verificáveis ​​em formato PDF aos residentes mediante solicitação."
+    },
+    "item2": {
+      "title": "O que são credenciais verificáveis?",
+      "description1": "Credenciais verificáveis ​​são documentos digitais que ajudam os usuários a compartilhar informações como identidade ou qualificações com o provedor de serviços, que podem ser verificadas instantaneamente. Elas são emitidas por entidades confiáveis ​​e podem ser verificadas criptograficamente quanto à autenticidade. Essas credenciais agilizam os processos de verificação de identidade."
+    },
+    "item3": {
+      "title": "Como posso baixar uma credencial na Inji Wallet?",
+      "description1": "Etapa 1: Pesquise e escolha um Emissor na página de destino e selecione um tipo de credencial.",
+      "description2": "Etapa 2: Na página de autenticação, forneça os detalhes necessários.",
+      "description3": "Etapa 3: O formato PDF da credencial verificável será baixado no sistema."
+    },
+    "item4": {
+      "title": "Quais detalhes preciso fornecer para baixar minha credencial?",
+      "description1": "O emissor da credencial deve ter fornecido detalhes como UIN/VID no caso de MOSIP National ID ou número da apólice, nome e data de nascimento para um cartão de seguro. Essas informações devem ser alimentadas no sistema de autenticação para habilitar o download."
+    },
+    "item5": {
+      "title": "Onde posso encontrar minha credencial?",
+      "description1": "A credencial verificável será baixada para a pasta Downloads do seu sistema."
+    },
+    "item6": {
+      "title": "Quais detalhes estão presentes na credencial em PDF?",
+      "description1": "Os detalhes coletados como parte do processo de registro serão apresentados no PDF. Atualmente, para o caso de uso de Seguro, é possível encontrar detalhes da Apólice como Nome, Data de Nascimento."
+    },
+    "item7": {
+      "title": "Por que não estou encontrando a lista de emissores?",
+      "description1": "Possíveis motivos para esse problema incluem:",
+      "description2": "1. Erros técnicos podem tornar o serviço temporariamente indisponível, impedindo que você acesse a lista de emissores.",
+      "description3": "2. Nenhum emissor foi configurado.",
+      "description4": "Em ambos os casos, entre em contato com sua equipe técnica para resolver o problema."
+    },
+    "item8":{
+      "title": "O que acontece quando eu gero uma Credencial Verificável (VC) na Interface Web da Inji Wallet?",
+      "description1":"1. Você seleciona um emissor e o tipo de credencial.",
+      "description2":"2. Redireciona para a página de login do emissor para autenticação.",
+      "description3":"3. Após o login, o emissor fornece a VC, armazenada com segurança como JSON usando Durian. ",
+      "description4":"4. Um PDF com detalhes da VC e um código QR é gerado.",
+      "description5":"5. O código QR vincula-se à URL de armazenamento da VC para fácil compartilhamento."
+    },
+    "item9":{
+      "title":"Qual é a função do código QR no PDF da credencial?",
+      "description1":"O código QR no PDF vincula-se à URL de armazenamento seguro da VC, facilitando a digitalização e a recuperação de credenciais sem dados densos."
+    },
+    "item10":{
+      "title":"Como a interface da Web da Inji Wallet garante que meu VC seja armazenado com segurança?",
+      "description1":"Integra-se com o serviço Data Share (Durian) da plataforma MOSIP ID, armazenando o VC como um objeto JSON com acesso protegido apenas para verificadores autorizados."
+    },
+    "item11":{
+      "title":"Como o recurso de compartilhamento online funciona com o Inji Verify?",
+      "description1":"1. O PDF do VC contém um código QR.",
+      "description2":"2. O PDF pode ser impresso ou salvo em um telefone.",
+      "description3":"3. O verificador (por exemplo, Inji Verify) escaneia o código QR.",
+      "description4":"4. A Inji Wallet autoriza e compartilha o VC com o verificador."
+    },
+    "item12":{
+      "title":"Por que incorporar uma URL no código QR em vez de dados completos do VC?",
+      "description1":"A incorporação de uma URL reduz a densidade do código QR para facilitar a digitalização, permitindo uma verificação eficiente entre dispositivos ou remota."
+    },
+    "item13":{
+      "title":"Posso compartilhar meu VC on-line e off-line?",
+      "description1":"1. On-line: o verificador pode escanear de um PDF ou tela do telefone, e a Inji Wallet autoriza e compartilha o VC.",
+      "description2":"2. Off-line: o PDF impresso pode ser apresentado para escaneamento e recuperação do VC."
+    },
+    "item14":{
+      "title":"Como a Inji Wallet verifica e autoriza o verificador durante o compartilhamento on-line?",
+      "description1":"As credenciais do verificador são verificadas em uma lista interna. Se autorizadas, a Inji Wallet com interface da web envia o VC de volta ao verificador com segurança usando um vp_token."
+    },
+    "item15":{
+      "title":"O que é OpenID4VP e como ele é usado na Inji Wallet?",
+      "description1":"O padrão OpenID4VP (OpenID para apresentações verificáveis) permite o compartilhamento seguro de VCs. A Inji Wallet gera um código QR para armazenamento de VC, permitindo que verificadores como a Inji Verify solicitem e recebam VCs com segurança."
+    },
+    "item16":{
+      "title":"Como sei que meu VC foi compartilhado com segurança usando a Inji Wallet??",
+      "description1":"Depois que o verificador escaneia o código QR e a Inji Wallet o autoriza, o VC é fornecido com segurança ao verificador, que então o valida e confirma."
+    },
+    "item17":{
+      "title":"O que acontece se o código QR for escaneado em um dispositivo diferente daquele onde o VC foi gerado?",
+      "description1":"Suporta compartilhamento entre dispositivos. O verificador pode escanear qualquer cópia do PDF do VC, e a Inji Wallet verifica e compartilha o VC com segurança."
+    },
+    "item18":{
+      "title":"A Inji Wallet suporta diferentes formatos de código QR?",
+      "description1":"Sim. A geração baseada em configuração permite que os códigos QR contenham: ",
+      "description2":"1. URL para armazenamento de VC para fácil compartilhamento, ou ",
+      "description3":"2. Dados completos de VC em JSON (formato mais denso)."
+    },
+    "item19":{
+      "title":"Como a Inji Wallet lida com a verificação de credenciais após o compartilhamento?",
+      "description1":"Após o compartilhamento, a Inji Verify verifica a autenticidade do VC. Se válido, o verificador confirma o status de verificação da credencial."
+    },
+    "item20":{
+      "title":"Que tipo de emissores de credenciais são suportados?",
+      "description1":"Qualquer emissor que siga o protocolo OpenID4VCI pode ser confiável na Inji Wallet. Esses emissores fornecem os dados necessários para emitir e baixar VCs."
+    },
+    "item21": {
+      "title": "Onde posso encontrar informações mais detalhadas sobre os recursos introduzidos nesta versão?",
+      "description1": "Consulte a <a href=\"https://docs.mosip.io/inji/inji-web/overview\" target=\"_blank\">documentação da Inji Wallet</a> para obter etapas detalhadas, visões gerais do sistema e descrições de novos recursos."
+    },
+    "item22":{
+      "title":"Como começo a usar o recurso de compartilhamento online na Inji Wallet?",
+      "description1":"Acesse VCs pela interface da Web da Inji Wallet, baixe e use o código QR para compartilhar credenciais pessoalmente ou online com verificadores. Detalhes no <a href=\"https://docs.mosip.io/inji/inji-web/functional-overview/end-user-guide\" target=\"_blank\">guia do usuário</a>."
+    },
+    "item23":{
+      "title":"Como posso alternar entre VC incorporado e compartilhamento online na Inji Wallet?",
+      "description1":"Configurar qr_code_type nas configurações do emissor Mimoto: ",
+      "description2":"1. EmbeddedVC: incorpora o VC completo no formato JSON (código QR mais denso) para uso offline",
+      "description3":"2. OnlineSharing: gera um código QR com uma URL para o armazenamento de VC online, facilitando a digitalização e o compartilhamento online."
+    }
+  },
+  "DataShareExpiryModal": {
+    "title": "Compartilhar Validade",
+    "subTitle": "Por favor, dê seu consentimento para definir uma validade para compartilhar o {{credentialName}}",
+    "content": {
+      "selectedDocument": "Documento selecionado",
+      "consent" : "Consentimento Validade *",
+      "validityTimesHeader": "Número de vezes",
+      "validityTimesOptions": {
+        "once": "Uma vez",
+        "thrice": "Três vezes",
+        "noLimit": "Sem limite",
+        "custom": "Personalizado"
+      },
+      "validityDate": "Data"
+    },
+    "success": "Prosseguir",
+    "cancel": "Voltar",
+    "disclaimer": "Observe que o QR Code pode ser compartilhado apenas pelo número de vezes que você escolheu aqui. Para usar o QR Code para compartilhar novamente, você precisa baixar o PDF novamente."
+  },
+  "CustomExpiryModal": {
+    "title": "Por favor, insira o número de vezes que você deseja usar esta credencial ",
+    "error": "Por favor, insira um número de expiração válido, maior que zero, para limitar quantas vezes suas credenciais podem ser verificadas.",
+    "metrics": "Vezes",
+    "success": "Prosseguir",
+    "cancel": "Cancelar"
+  }
+}
+  
