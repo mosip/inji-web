@@ -95,34 +95,42 @@
         "subTitle": "la session n'est pas valide ou la session est terminée"
       },
       "verification": {
-        "proof_type_not_supported": {
-          "title": "Une erreur s'est produite",
-          "subTitle": "Désolé! "
+        "err_missing_issuancedate": {
+          "title": "Date d'émission invalide",
+          "subTitle": "La date d'émission est invalide ou fixée dans le futur. "
         },
-        "json_parsing_failed": {
-          "title": "Une erreur s'est produite",
-          "subTitle": "Désolé, en raison d'une erreur technique, nous ne pouvons pas télécharger le VC. "
+        "err_invalid_issuancedate": {
+          "title": "Date d'émission invalide",
+          "subTitle": "La date d'émission est invalide ou fixée dans le futur. "
         },
-        "signature_verification_failed": {
-          "title": "Une erreur s'est produite",
-          "subTitle": "Désolé! "
+        "err_issuance_date_is_future_date": {
+          "title": "Date d'émission invalide",
+          "subTitle": "La date d'émission est invalide ou fixée dans le futur. "
         },
-        "unknown_exception": {
-          "title": "Une erreur s'est produite",
-          "subTitle": "Désolé, il semble que nos services soient temporairement indisponibles. "
+        "err_invalid_expirationdate": {
+          "title": "Date d'expiration invalide",
+          "subTitle": "La date d'expiration n'est pas valide. "
         },
-        "proof_document_not_found": {
-          "title": "Une erreur s'est produite",
-          "subTitle": "Désolé! "
+        "err_vc_expired": {
+          "title": "Date d'expiration invalide",
+          "subTitle": "La date d'expiration n'est pas valide. "
         },
-        "public_key_not_found": {
-          "title": "Une erreur s'est produite",
-          "subTitle": "Désolé! "
+        "err_invalid_validfrom": {
+          "title": "Date de début invalide",
+          "subTitle": "La date n'est pas valide ou est définie dans le futur. "
+        },
+        "err_valid_from_is_future_date": {
+          "title": "Date de début invalide",
+          "subTitle": "La date n'est pas valide ou est définie dans le futur. "
+        },
+        "err_invalid_validuntil": {
+          "title": "Date de fin invalide",
+          "subTitle": "La date n'est pas valide. "
         }
       },
       "generic": {
         "title": "Une erreur s'est produite",
-        "subTitle": "Désolé, en raison d'une erreur technique, nous ne pouvons pas télécharger le VC. "
+        "subTitle": "En raison d'une erreur technique, nous n'avons pas pu télécharger la carte"
       }
     }
   },

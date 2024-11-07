@@ -56,7 +56,16 @@ export const downloadCredentialPDF = async (response: any, certificateId: string
 
 export const getErrorObject = (downloadResponse: any) => {
     const errorCode = downloadResponse?.errors ? downloadResponse?.errors[0]?.errorCode : "";
-    if(errorCode.indexOf("err") !== -1){
+    if([
+        "err_missing_issuancedate",
+        "err_invalid_issuancedate",
+        "err_issuance_date_is_future_date",
+        "err_invalid_expirationdate",
+        "err_vc_expired",
+        "err_invalid_validfrom",
+        "err_valid_from_is_future_date",
+        "err_invalid_validuntil"
+    ].indexOf(errorCode) != -1 ){
         return {
             code: `error.verification.${errorCode}.title`,
             message: `error.verification.${errorCode}.subTitle`

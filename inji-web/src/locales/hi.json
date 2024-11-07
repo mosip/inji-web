@@ -95,34 +95,42 @@
         "subTitle": "सत्र वैध नहीं है या सत्र पूरा हो गया है"
       },
       "verification": {
-        "proof_type_not_supported": {
-          "title": "एक त्रुटि पाई गई",
-          "subTitle": "क्षमा मांगना! "
+        "err_missing_issuancedate": {
+          "title": "अमान्य जारी करने की तारीख",
+          "subTitle": "जारी करने की तारीख अमान्य है या भविष्य में निर्धारित है। "
         },
-        "json_parsing_failed": {
-          "title": "एक त्रुटि पाई गई",
-          "subTitle": "क्षमा करें, तकनीकी त्रुटि के कारण हम वीसी डाउनलोड करने में असमर्थ हैं। "
+        "err_invalid_issuancedate": {
+          "title": "अमान्य जारी करने की तारीख",
+          "subTitle": "जारी करने की तारीख अमान्य है या भविष्य में निर्धारित है। "
         },
-        "signature_verification_failed": {
-          "title": "एक त्रुटि पाई गई",
-          "subTitle": "क्षमा मांगना! "
+        "err_issuance_date_is_future_date": {
+          "title": "अमान्य जारी करने की तारीख",
+          "subTitle": "जारी करने की तारीख अमान्य है या भविष्य में निर्धारित है। "
         },
-        "unknown_exception": {
-          "title": "एक त्रुटि पाई गई",
-          "subTitle": "क्षमा करें, ऐसा लगता है कि हमारी सेवाएँ अस्थायी रूप से अनुपलब्ध हैं। "
+        "err_invalid_expirationdate": {
+          "title": "अमान्य समाप्ति दिनांक",
+          "subTitle": "समाप्ति तिथि अमान्य है. "
         },
-        "proof_document_not_found": {
-          "title": "एक त्रुटि पाई गई",
-          "subTitle": "क्षमा मांगना! "
+        "err_vc_expired": {
+          "title": "अमान्य समाप्ति दिनांक",
+          "subTitle": "समाप्ति तिथि अमान्य है. "
         },
-        "public_key_not_found": {
-          "title": "एक त्रुटि पाई गई",
-          "subTitle": "क्षमा मांगना! "
+        "err_invalid_validfrom": {
+          "title": "अमान्य प्रारंभ दिनांक",
+          "subTitle": "दिनांक अमान्य है या भविष्य में सेट है. "
+        },
+        "err_valid_from_is_future_date": {
+          "title": "अमान्य प्रारंभ दिनांक",
+          "subTitle": "दिनांक अमान्य है या भविष्य में सेट है. "
+        },
+        "err_invalid_validuntil": {
+          "title": "अमान्य अंतिम तिथि",
+          "subTitle": "दिनांक अमान्य है. "
         }
       },
       "generic": {
         "title": "एक त्रुटि पाई गई",
-        "subTitle": "क्षमा करें, तकनीकी त्रुटि के कारण हम वीसी डाउनलोड करने में असमर्थ हैं। "
+        "subTitle": "तकनीकी त्रुटि के कारण हम कार्ड डाउनलोड नहीं कर सके"
       }
     }
   },

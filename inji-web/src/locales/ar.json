@@ -95,34 +95,42 @@
         "subTitle": "الجلسة غير صالحة أو الجلسة مكتملة"
       },
       "verification": {
-        "proof_type_not_supported": {
-          "title": "حدث خطأ",
-          "subTitle": "آسف! "
+        "err_missing_issuancedate": {
+          "title": "تاريخ الإصدار غير صالح",
+          "subTitle": "تاريخ الإصدار غير صالح أو تم تحديده في المستقبل. "
         },
-        "json_parsing_failed": {
-          "title": "حدث خطأ",
-          "subTitle": "عذرًا، بسبب خطأ فني، لا يمكننا تنزيل VC. "
+        "err_invalid_issuancedate": {
+          "title": "تاريخ الإصدار غير صالح",
+          "subTitle": "تاريخ الإصدار غير صالح أو تم تحديده في المستقبل. "
         },
-        "signature_verification_failed": {
-          "title": "حدث خطأ",
-          "subTitle": "آسف! "
+        "err_issuance_date_is_future_date": {
+          "title": "تاريخ الإصدار غير صالح",
+          "subTitle": "تاريخ الإصدار غير صالح أو تم تحديده في المستقبل. "
         },
-        "unknown_exception": {
-          "title": "حدث خطأ",
-          "subTitle": "عذرًا، يبدو أن خدماتنا غير متاحة مؤقتًا. "
+        "err_invalid_expirationdate": {
+          "title": "تاريخ انتهاء الصلاحية غير صالح",
+          "subTitle": "تاريخ انتهاء الصلاحية غير صالح. "
         },
-        "proof_document_not_found": {
-          "title": "حدث خطأ",
-          "subTitle": "آسف! "
+        "err_vc_expired": {
+          "title": "تاريخ انتهاء الصلاحية غير صالح",
+          "subTitle": "تاريخ انتهاء الصلاحية غير صالح. "
         },
-        "public_key_not_found": {
-          "title": "حدث خطأ",
-          "subTitle": "آسف! "
+        "err_invalid_validfrom": {
+          "title": "تاريخ البدء غير صالح",
+          "subTitle": "التاريخ غير صالح أو تم تعيينه في المستقبل. "
+        },
+        "err_valid_from_is_future_date": {
+          "title": "تاريخ البدء غير صالح",
+          "subTitle": "التاريخ غير صالح أو تم تعيينه في المستقبل. "
+        },
+        "err_invalid_validuntil": {
+          "title": "تاريخ الانتهاء غير صالح",
+          "subTitle": "التاريخ غير صالح. "
         }
       },
       "generic": {
         "title": "حدث خطأ",
-        "subTitle": "عذرًا، بسبب خطأ فني، لا يمكننا تنزيل VC. "
+        "subTitle": "بسبب خطأ فني، لم نتمكن من تنزيل البطاقة"
       }
     }
   },

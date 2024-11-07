@@ -96,34 +96,42 @@
         "subTitle": "session is not valid or session is completed"
       },
       "verification": {
-        "proof_type_not_supported": {
-          "title": "An Error Occurred",
-          "subTitle": "Sorry! Due to technical error we cannot download your credential."
+        "err_missing_issuancedate": {
+          "title": "Invalid Issuance Date",
+          "subTitle": "Issuance date is invalid or set in the future. Check for a valid date."
         },
-        "json_parsing_failed": {
-          "title": "An Error Occurred",
-          "subTitle": "Sorry, due to technical error, we are unable to download the VC. Please try again later!"
+        "err_invalid_issuancedate": {
+          "title": "Invalid Issuance Date",
+          "subTitle": "Issuance date is invalid or set in the future. Check for a valid date."
         },
-        "signature_verification_failed": {
-          "title": "An Error Occurred",
-          "subTitle": "Sorry! Your credential couldn’t be downloaded as there is an issue with validating the issuer's signature. Please contact the admin for further assistance."
+        "err_issuance_date_is_future_date": {
+          "title": "Invalid Issuance Date",
+          "subTitle": "Issuance date is invalid or set in the future. Check for a valid date."
         },
-        "unknown_exception": {
-          "title": "An Error Occurred",
-          "subTitle": "Sorry, it seems our services are temporarily unavailable. Please check back shortly, and we appreciate your patience!"
+        "err_invalid_expirationdate": {
+          "title": "Invalid Expiration Date",
+          "subTitle": "Expiration date is invalid. Check for a valid date"
         },
-        "proof_document_not_found": {
-          "title": "An Error Occurred",
-          "subTitle": "Sorry! Your credential couldn’t be downloaded as there is an issue with validating the issuer's signature. Please contact the admin for further assistance."
+        "err_vc_expired": {
+          "title": "Invalid Expiration Date",
+          "subTitle": "Expiration date is invalid. Check for a valid date"
         },
-        "public_key_not_found": {
-          "title": "An Error Occurred",
-          "subTitle": "Sorry! Your credential couldn’t be downloaded as there is an issue with validating the issuer's signature. Please contact the admin for further assistance."
+        "err_invalid_validfrom": {
+          "title": "Invalid Start Date",
+          "subTitle": "Date is invalid or set in the future. Check for a valid date."
+        },
+        "err_valid_from_is_future_date": {
+          "title": "Invalid Start Date",
+          "subTitle": "Date is invalid or set in the future. Check for a valid date."
+        },
+        "err_invalid_validuntil": {
+          "title": "Invalid End Date",
+          "subTitle": "Date is invalid. Check for a valid date"
         }
       },
       "generic": {
         "title": "An Error Occurred",
-        "subTitle": "Sorry, due to technical error, we are unable to download the VC. Please try again later!"
+        "subTitle": "Due to technical error, we were unable to download the card"
       }
     }
   },
