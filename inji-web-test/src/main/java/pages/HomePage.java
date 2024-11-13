@@ -157,7 +157,7 @@ public class HomePage extends BasePage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return isElementIsVisible(driver, By.xpath("//button[text()='Go To Home']"));
+        return isElementIsVisible(driver, By.xpath("//*[text()='Go To Home']"));
     }
 
     public Boolean isBackButtonDisplayed() {
@@ -185,7 +185,7 @@ public class HomePage extends BasePage {
     }
 
     public boolean verifyLanguagesInLanguageFilter() {
-        List<String> expectedLanguages = Arrays.asList("English", "தமிழ்", "ಕನ್ನಡ", "हिंदी", "Français", "عربي");
+        List<String> expectedLanguages = Arrays.asList("English", "தமிழ்", "ಕನ್ನಡ", "हिंदी", "Français", "عربي","Português");
         List<String> actualLanguages = null;
         try {
             actualLanguages = getElementTexts(driver, By.xpath("//ul[@class='py-1 divide-y divide-gray-200']//li"));
