@@ -18,7 +18,7 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
                         <IoArrowBack data-testid="NavBar-Back-Arrow" size={24} onClick={() => navigate(props.link)}/>
                     </div>
                     <span data-testid="NavBar-Text"
-                          className="text-2xl font-semibold ps-2 whitespace-nowrap">{props.title}</span>
+                          className="text-2xl font-semibold ps-2 pe-4 md:whitespace-nowrap whitespace-wrap">{props.title}</span>
                 </div>
                 {props.search && <SearchCredential />}
             </nav>

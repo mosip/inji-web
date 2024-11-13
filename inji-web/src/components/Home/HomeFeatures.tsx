@@ -26,25 +26,24 @@ export const HomeFeatures: React.FC = () => {
       <div data-testid="HomeFeatures-Description1" className="font-extralight text-center">
         {t("Features.description1")}
       </div>
-      <div data-testid="HomeFeatures-Description2" className="font-extralight text-center">
+      <div data-testid="HomeFeatures-Description2" className="font-extralight text-center pb-5">
         {t("Features.description2")}
       </div> 
 
       <img data-testid="HomeFeatures-MobileImage" className="mx-auto container scale-[80%] block sm:hidden" src={require("../../assets/InjiWebMobilePreview.png")} alt="Inji Web Mobile Preview" />
-      <img data-testid="HomeFeatures-DesktopImage" className="mx-auto container scale-[80%] hidden sm:block" src={require("../../assets/InjiWebDesktopPreview.png")} alt="Inji Web Preview" />
+      <img data-testid="HomeFeatures-DesktopImage" className="mx-auto container max-h-[700px] max-w-[1000px] hidden sm:block pb-8" src={require("../../assets/InjiWebDesktopPreview.png")} alt="Inji Web Preview" />
 
-      <div data-testid="HomeFeatures-ItemsContainer" className="flex flex-wrap gap-8 container mx-auto pb-3 md:pb-20 justify-center">
+      <div data-testid="HomeFeatures-ItemsContainer" className="flex flex-wrap gap-8 container mx-auto pb-3 md:pb-7 justify-center">
         <div data-testid="HomeFeatures-Items" className="hidden md:flex flex-wrap gap-8 justify-center">
           {[1, 2, 3, 4, 5].map((itemNo) => (
             <HomeFeatureItem key={itemNo} itemno={itemNo} />
           ))}
         </div>
-        <div data-testid="HomeFeatures-MobileItem" className="sm:hidden mx-9 my-6 h-[32rem] w-full flex justify-center">
+        <div data-testid="HomeFeatures-MobileItem" className="md:hidden mx-9 my-6 h-[32rem] w-full flex justify-center">
           <HomeFeatureItem itemno={currentFeature + 1} />
         </div>
       </div>
-      {/* Navigation buttons and pagination dots for mobile view */}
-      <div data-testid="HomeFeatures-Navigation" className="flex justify-between w-full px-5 sm:hidden items-center">
+      <div data-testid="HomeFeatures-Navigation" className="flex justify-between w-full px-5 md:hidden items-center">
         <div data-testid="HomeFeatures-NavButtons" className="flex">
           <button onClick={handlePrev} className="bg-grey-300 p-1" aria-label="Previous feature">
             {rtl ? (

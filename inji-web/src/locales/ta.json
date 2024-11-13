@@ -95,34 +95,42 @@
         "subTitle": "அமர்வு செல்லாது அல்லது அமர்வு முடிந்தது"
       },
       "verification": {
-        "proof_type_not_supported": {
-          "title": "ஒரு பிழை ஏற்பட்டது",
-          "subTitle": "மன்னிக்கவும்! "
+        "err_missing_issuancedate": {
+          "title": "தவறான வழங்கல் தேதி",
+          "subTitle": "வழங்கல் தேதி தவறானது அல்லது எதிர்காலத்தில் அமைக்கப்படும். "
         },
-        "json_parsing_failed": {
-          "title": "ஒரு பிழை ஏற்பட்டது",
-          "subTitle": "மன்னிக்கவும், தொழில்நுட்ப பிழை காரணமாக, எங்களால் VC ஐ பதிவிறக்க முடியவில்லை. "
+        "err_invalid_issuancedate": {
+          "title": "தவறான வழங்கல் தேதி",
+          "subTitle": "வழங்கல் தேதி தவறானது அல்லது எதிர்காலத்தில் அமைக்கப்படும். "
         },
-        "signature_verification_failed": {
-          "title": "ஒரு பிழை ஏற்பட்டது",
-          "subTitle": "மன்னிக்கவும்! "
+        "err_issuance_date_is_future_date": {
+          "title": "தவறான வழங்கல் தேதி",
+          "subTitle": "வழங்கல் தேதி தவறானது அல்லது எதிர்காலத்தில் அமைக்கப்படும். "
         },
-        "unknown_exception": {
-          "title": "ஒரு பிழை ஏற்பட்டது",
-          "subTitle": "மன்னிக்கவும், எங்கள் சேவைகள் தற்காலிகமாக கிடைக்கவில்லை. "
+        "err_invalid_expirationdate": {
+          "title": "தவறான காலாவதி தேதி",
+          "subTitle": "காலாவதி தேதி தவறானது. "
         },
-        "proof_document_not_found": {
-          "title": "ஒரு பிழை ஏற்பட்டது",
-          "subTitle": "மன்னிக்கவும்! "
+        "err_vc_expired": {
+          "title": "தவறான காலாவதி தேதி",
+          "subTitle": "காலாவதி தேதி தவறானது. "
         },
-        "public_key_not_found": {
-          "title": "ஒரு பிழை ஏற்பட்டது",
-          "subTitle": "மன்னிக்கவும்! "
+        "err_invalid_validfrom": {
+          "title": "தவறான தொடக்க தேதி",
+          "subTitle": "தேதி தவறானது அல்லது எதிர்காலத்தில் அமைக்கப்படும். "
+        },
+        "err_valid_from_is_future_date": {
+          "title": "தவறான தொடக்க தேதி",
+          "subTitle": "தேதி தவறானது அல்லது எதிர்காலத்தில் அமைக்கப்படும். "
+        },
+        "err_invalid_validuntil": {
+          "title": "தவறான முடிவுத் தேதி",
+          "subTitle": "தேதி தவறானது. "
         }
       },
       "generic": {
         "title": "ஒரு பிழை ஏற்பட்டது",
-        "subTitle": "மன்னிக்கவும், தொழில்நுட்ப பிழை காரணமாக, எங்களால் VC ஐ பதிவிறக்க முடியவில்லை. "
+        "subTitle": "தொழில்நுட்பப் பிழை காரணமாக, கார்டைப் பதிவிறக்க முடியவில்லை"
       }
     }
   },
