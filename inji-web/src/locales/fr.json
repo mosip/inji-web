@@ -63,7 +63,8 @@
   },
   "IssuersPage": {
     "Intro": {
-      "title": "Accédez facilement à vos informations d'identification vérifiables !",
+      "title": "Accéder à vos informations d’identification vérifiables",
+      "title2":"en toute simplicité !",
       "subTitle": "Téléchargez et partagez en toute sécurité vos informations d'identification instantanément.",
       "searchText": "Rechercher des émetteurs par nom"
     },
