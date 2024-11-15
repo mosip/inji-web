@@ -26,7 +26,7 @@ export const Header: React.FC = () => {
                             tabIndex={0}
                             onMouseDown={() => navigate("/")}
                             onKeyUp={() => navigate("/")}>
-                            <img src={require("../../assets/Cadastro Ambiental Rural 2.png")}
+                            <img src={require("../../assets/CAR Logo.png")}
                                 className={"h-13 w-28 scale-150 cursor-pointer"}
                                 data-testid="Header-InjiWeb-Logo"
                                 alt="CAR Logo"/>
