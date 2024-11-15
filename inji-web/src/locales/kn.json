@@ -1,11 +1,11 @@
 {
   "PageTemplate": {
     "Header": {
-      "aboutInji": "ಇಂಜಿ ವೆಬ್ ಬಗ್ಗೆ",
+      "home": "ಮುಖಪುಟ",
       "help": "ಸಹಾಯ"
     },
     "Footer": {
-      "copyRight": "© 2024 ಇಂಜಿ. "
+      "copyRight": "ಇಂಜಿಯಿಂದ ಚಾಲಿತವಾಗಿದೆ, MOSIP ಉತ್ಪನ್ನ"
     }
   },
   "HomePage": {

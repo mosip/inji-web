@@ -1,11 +1,11 @@
 {
   "PageTemplate": {
     "Header": {
-      "aboutInji": "حول إنجي ويب",
+      "home": "الصفحة الرئيسية",
       "help": "يساعد"
     },
     "Footer": {
-      "copyRight": "© 2024 إنجي. "
+      "copyRight": "مدعوم من Inji، منتج MOSIP"
     }
   },
   "HomePage": {

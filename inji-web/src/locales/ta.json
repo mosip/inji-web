@@ -1,11 +1,11 @@
 {
   "PageTemplate": {
     "Header": {
-      "aboutInji": "இன்ஜி வலை பற்றி",
+      "home": "முகப்பு",
       "help": "உதவி"
     },
     "Footer": {
-      "copyRight": "© 2024 இன்ஜி. "
+      "copyRight": "இன்ஜி மூலம் இயக்கப்படுகிறது, ஒரு MOSIP தயாரிப்பு"
     }
   },
   "HomePage": {
