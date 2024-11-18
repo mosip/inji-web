@@ -1,11 +1,11 @@
 {
   "PageTemplate": {
     "Header": {
-      "aboutInji": "About Inji Web",
+      "home": "Home",
       "help": "Help"
     },
     "Footer": {
-      "copyRight": "© 2024 Inji. All rights reserved."
+      "copyRight": "Powered by Inji,A MOSIP Product"
     }
   },
   "HomePage": {
