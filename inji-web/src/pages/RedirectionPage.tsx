@@ -9,6 +9,8 @@ import {SessionObject} from "../types/data";
 import {useTranslation} from "react-i18next";
 import {downloadCredentialPDF, getTokenRequestBody} from "../utils/misc";
 import {getObjectForCurrentLanguage} from "../utils/i18n";
+import {useSelector} from "react-redux";
+import {RootState} from "../types/redux";
 
 export const RedirectionPage: React.FC = () => {
 
@@ -31,8 +33,9 @@ export const RedirectionPage: React.FC = () => {
                 const codeVerifier = activeSessionInfo?.codeVerifier;
                 const issuerId = activeSessionInfo?.selectedIssuer.credential_issuer ?? "";
                 const certificateId = activeSessionInfo?.certificateId;
+                const language = useSelector((state: RootState) => state.common.language);
 
-                const requestBody = new URLSearchParams(getTokenRequestBody(code, codeVerifier, issuerId, certificateId));
+                const requestBody = new URLSearchParams(getTokenRequestBody(code, codeVerifier, issuerId, certificateId, language));
                 const apiRequest = api.fetchTokenAnddownloadVc;
                 let credentialDownloadResponse = await fetchRequest(
                     apiRequest.url(),
