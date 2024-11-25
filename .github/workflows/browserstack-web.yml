@@ -23,7 +23,7 @@ jobs:
       - name: Set up WireGuard tunnel
         run: |
           sudo apt-get update
-          sudo apt-get install -y wireguard-tools
+          sudo apt-get install -y wireguard-tools resolvconf
           echo "[Interface]
           PrivateKey = ${{ secrets.WG_PRIVATE_KEY }}
           Address = 10.0.0.2/24
