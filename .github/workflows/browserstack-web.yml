@@ -47,8 +47,11 @@ jobs:
         run: |
           sudo wg show
           sudo ip link show wg0
+          sudo ip addr show wg0
+          sudo ip route show
 
   browserstack-tests:
+    needs: inji-web-test  # This ensures that this job only runs after inji-web-test
     uses: mosip/kattu/.github/workflows/browserstack-web.yml@master-java21
     with:
       SERVICE_LOCATION: inji-web-test
@@ -60,4 +63,3 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
       S3_BUCKET: ${{ secrets.S3_BUCKET }}
-
