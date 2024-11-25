@@ -17,7 +17,7 @@ on:
       - develop
 
 jobs:
-  inji-web-test:
+  setup-wireguard:
     runs-on: ubuntu-latest
     steps:
       - name: Set up WireGuard tunnel
@@ -40,15 +40,16 @@ jobs:
         run: |
           sudo wg show
 
-      - name: Run BrowserStack Web Tests
-        uses: mosip/kattu/.github/workflows/browserstack-web.yml@master-java21
-        with:
-          SERVICE_LOCATION: inji-web-test
-          BUILD_ARTIFACT: test-output
-        secrets:
-          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          S3_BUCKET: ${{ secrets.S3_BUCKET }}
+  inji-web-test:
+    needs: setup-wireguard
+    uses: mosip/kattu/.github/workflows/browserstack-web.yml@master-java21
+    with:
+      SERVICE_LOCATION: inji-web-test
+      BUILD_ARTIFACT: test-output
+    secrets:
+      BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      S3_BUCKET: ${{ secrets.S3_BUCKET }}
