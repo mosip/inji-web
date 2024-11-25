@@ -46,8 +46,9 @@ services:
     container_name: 'inji-web'
     image: inji-web:local
     ports:
-      - '3001:80'
+      - '3001:3004'
     environment:
+      - DEFAULT_LANG=en
       - MIMOTO_HOST=http://localhost:3010
     depends_on:
       - inji-web-proxy

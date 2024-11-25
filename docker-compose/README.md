@@ -13,7 +13,7 @@ This is not for production use.
 
 ## Navigate to inji-web folder and Build the inji-web image locally.
 
-> docker build -f Dockerfile.local -t inji-web:local .
+> docker build -t inji-web:local .
 
 ## What is in the docker-compose folder?
 
