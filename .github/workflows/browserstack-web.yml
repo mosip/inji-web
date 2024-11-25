@@ -1,65 +1,31 @@
-name: BrowserStack Web Tests with WireGuard Setup
+  name: BrowserStack Web Tests
 
-on:
-  workflow_dispatch:
-    inputs:
-      message:
-        description: 'Message for manually triggering'
-        required: false
-        default: 'Triggered for Updates'
-        type: string
-  push:
-    branches:
-      - '!release-branch'
-      - release*
-      - master
-      - 1.*
-      - develop
-
-jobs:
-  inji-web-test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Set up WireGuard tunnel
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wireguard-tools resolvconf
-          
-          # Create WireGuard configuration file
-          echo "[Interface]
-          PrivateKey = ${{ secrets.WG_PRIVATE_KEY }}
-          ListenPort = 51820
-
-          [Peer]
-          PublicKey = ${{ secrets.WG_SERVER_PUBLIC_KEY }}
-          AllowedIPs = 0.0.0.0/0
-          Endpoint = ${{ secrets.WG_SERVER_ADDRESS }}
-          PersistentKeepalive = 25" | sudo tee /etc/wireguard/wg0.conf > /dev/null
-
-          # Manually bring up the interface (without systemd)
-          sudo ip link add dev wg0 type wireguard
-          sudo wg setconf wg0 /etc/wireguard/wg0.conf
-          sudo ip link set wg0 up
-          sudo ip address add 10.13.13.146/32 dev wg0
-
-      - name: Verify WireGuard status
-        run: |
-          sudo wg show
-          sudo ip link show wg0
-          sudo ip addr show wg0
-          sudo ip route show
-
-  browserstack-tests:
-    needs: inji-web-test  # This ensures that this job only runs after inji-web-test
-    uses: mosip/kattu/.github/workflows/browserstack-web.yml@master-java21
-    with:
-      SERVICE_LOCATION: inji-web-test
-      BUILD_ARTIFACT: test-output
-    secrets:
-      BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      S3_BUCKET: ${{ secrets.S3_BUCKET }}
+  on:
+   workflow_dispatch:
+     inputs:
+       message:
+         description: 'Message for manually triggering'
+         required: false
+         default: 'Triggered for Updates'
+         type: string
+   push:
+     branches:
+       - '!release-branch'
+       - release*
+       - master
+       - 1.*
+       - develop
+    
+  jobs:
+    inji-web-test:
+      uses: mosip/kattu/.github/workflows/browserstack-web.yml@master-java21
+      with:
+        SERVICE_LOCATION: inji-web-test
+        BUILD_ARTIFACT: test-output
+      secrets:
+        BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+        BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}         
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }} 
+        S3_BUCKET: ${{ secrets.S3_BUCKET }} 
