@@ -29,7 +29,7 @@ jobs:
           # Create WireGuard configuration file
           echo "[Interface]
           PrivateKey = ${{ secrets.WG_PRIVATE_KEY }}
-          Address = 10.0.0.2/24
+          Address = 10.13.13.146/32
           DNS = 8.8.8.8
 
           [Peer]
