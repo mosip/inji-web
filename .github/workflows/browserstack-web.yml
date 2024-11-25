@@ -29,3 +29,23 @@
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ${{ secrets.AWS_REGION }} 
         S3_BUCKET: ${{ secrets.S3_BUCKET }} 
+ steps:
+      - name: Set up WireGuard tunnel
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wireguard-tools
+          echo "[Interface]
+          PrivateKey = ${{ secrets.WG_PRIVATE_KEY }}
+          Address = 10.0.0.2/24
+          DNS = 8.8.8.8
+
+          [Peer]
+          PublicKey = ${{ secrets.WG_SERVER_PUBLIC_KEY }}
+          AllowedIPs = 0.0.0.0/0
+          Endpoint = ${{ secrets.WG_SERVER_ADDRESS }}
+          PersistentKeepalive = 25" | sudo tee /etc/wireguard/wg0.conf > /dev/null
+          sudo wg-quick up wg0
+
+      - name: Verify WireGuard status
+        run: |
+          sudo wg show
