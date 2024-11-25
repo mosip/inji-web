@@ -48,15 +48,16 @@ jobs:
           sudo wg show
           sudo ip link show wg0
 
-      - name: Run BrowserStack Web Tests
-        uses: mosip/kattu/.github/workflows/browserstack-web.yml@master-java21
-        with:
-          SERVICE_LOCATION: inji-web-test
-          BUILD_ARTIFACT: test-output
-        secrets:
-          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          S3_BUCKET: ${{ secrets.S3_BUCKET }}
+  browserstack-tests:
+    uses: mosip/kattu/.github/workflows/browserstack-web.yml@master-java21
+    with:
+      SERVICE_LOCATION: inji-web-test
+      BUILD_ARTIFACT: test-output
+    secrets:
+      BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      S3_BUCKET: ${{ secrets.S3_BUCKET }}
+
