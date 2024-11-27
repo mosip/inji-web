@@ -9,8 +9,9 @@ import {SessionObject} from "../types/data";
 import {useTranslation} from "react-i18next";
 import {downloadCredentialPDF, getErrorObject, getTokenRequestBody} from "../utils/misc";
 import {getObjectForCurrentLanguage} from "../utils/i18n";
-import {useSelector} from "react-redux";
+// import {useSelector} from "react-redux";
 import { RootState } from '../types/redux';
+import { useSelector } from 'react-redux';
 
 export const RedirectionPage: React.FC = () => {
 
@@ -24,6 +25,7 @@ export const RedirectionPage: React.FC = () => {
     const [session, setSession] = useState<SessionObject | null>(activeSessionInfo);
     const [completedDownload, setCompletedDownload] = useState<boolean>(false);
     const displayObject = getObjectForCurrentLanguage(session?.selectedIssuer?.display ?? []);
+    const language = useSelector((state: RootState) => state.common.language);
     const [errorObj, setErrorObj] = useState({
         code: "error.generic.title",
         message: "error.generic.subTitle"
@@ -39,7 +41,6 @@ export const RedirectionPage: React.FC = () => {
                 const codeVerifier = activeSessionInfo?.codeVerifier;
                 const issuerId = activeSessionInfo?.selectedIssuer?.credential_issuer ?? "";
                 const certificateId = activeSessionInfo?.certificateId;
-                const language = useSelector((state: RootState) => state.common.language);
                 const vcStorageExpiryLimitInTimes = activeSessionInfo?.vcStorageExpiryLimitInTimes ?? "-1";
 
                 const requestBody = new URLSearchParams(getTokenRequestBody(code, codeVerifier, issuerId, certificateId, vcStorageExpiryLimitInTimes,language));
