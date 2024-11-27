@@ -24,6 +24,7 @@ export const RedirectionPage: React.FC = () => {
     const [session, setSession] = useState<SessionObject | null>(activeSessionInfo);
     const [completedDownload, setCompletedDownload] = useState<boolean>(false);
     const displayObject = getObjectForCurrentLanguage(session?.selectedIssuer?.display ?? []);
+    const language = useSelector((state: RootState) => state.common.language);
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -33,7 +34,7 @@ export const RedirectionPage: React.FC = () => {
                 const codeVerifier = activeSessionInfo?.codeVerifier;
                 const issuerId = activeSessionInfo?.selectedIssuer.credential_issuer ?? "";
                 const certificateId = activeSessionInfo?.certificateId;
-                const language = useSelector((state: RootState) => state.common.language);
+
 
                 const requestBody = new URLSearchParams(getTokenRequestBody(code, codeVerifier, issuerId, certificateId, language));
                 const apiRequest = api.fetchTokenAnddownloadVc;

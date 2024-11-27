@@ -1,0 +1,103 @@
+{
+  "PageTemplate": {
+    "Header": {
+      "home": "Lar",
+      "help": "Ajuda"
+    },
+    "Footer": {
+      "copyRight": "Desenvolvido por Inji, um produto MOSIP"
+    }
+  },
+  "HomePage": {
+    "Intro": {
+      "title": "Baixar uma credencial está a apenas um clique de distância!",
+      "subTitle": "Procure o emissor e na próxima etapa selecione a credencial para fazer o download.",
+      "searchText": "Pesquisar emissores por nome"
+    },
+    "emptyContainerContent": "Nenhum emissor encontrado. ",
+    "containerHeading": "Lista de Emissores",
+    "errorContent": "O serviço não está disponível no momento. "
+  },
+  "CredentialsPage": {
+    "searchText": "Tipo de credencial de pesquisa",
+    "emptyContainerContent": "Nenhuma credencial encontrada. ",
+    "containerHeading": "Lista de tipos de credenciais",
+    "errorContent": "O serviço não está disponível no momento. "
+  },
+  "RedirectionPage": {
+    "navigateButton": "Vá para casa",
+    "loading": {
+      "title": "Download em andamento...",
+      "subTitle": "Por favor, espere um momento! "
+    },
+    "success": {
+      "title": "Sucesso!",
+      "subTitle": "Verifique sua pasta de downloads!"
+    },
+    "error": {
+      "invalidSession": {
+        "title": "Sessão inválida",
+        "subTitle": "a sessão não é válida ou a sessão foi concluída"
+      },
+      "generic": {
+        "title": "Ocorreu um erro",
+        "subTitle": "Desculpe, devido a um erro técnico, não foi possível fazer o download do VC. "
+      }
+    }
+  },
+  "AuthorizationPage": {
+    "error": {
+      "code": {
+        "invalid_redirect_uri": "Acesso negado!",
+        "invalid_client": "Acesso negado!"
+      },
+      "message": {
+        "invalid_redirect_uri": "As credenciais não podem ser compartilhadas porque não conseguimos identificar quem as solicitou. ",
+        "invalid_client": "As credenciais não podem ser compartilhadas porque não conseguimos identificar quem as solicitou. "
+      }
+    }
+  },
+  "PageNotFound": {
+    "navigateButton": "Vá para casa",
+    "heading": "Isso é um erro",
+    "subHeading": "O URL solicitado {{pathname}} não foi encontrado neste servidor."
+  },
+  "HelpPage": {
+    "title": "Ajuda"
+  },
+  "Help": {
+    "item1": {
+      "title": "Quem são os emissores?",
+      "description1": "Os emissores são órgãos governamentais ou entidades de confiança do governo, responsáveis ​​por fornecer credenciais verificáveis ​​em formato PDF aos residentes, mediante solicitação."
+    },
+    "item2": {
+      "title": "O que são credenciais verificáveis?",
+      "description1": "Credenciais verificáveis ​​são documentos digitais que ajudam os usuários a compartilhar informações como identidade ou qualificações com o provedor de serviços, que podem ser verificadas instantaneamente. "
+    },
+    "item3": {
+      "title": "Como posso baixar uma credencial no Inji Web?",
+      "description1": "Etapa 1: pesquise e escolha um emissor na página inicial e selecione um tipo de credencial.",
+      "description2": "Etapa 2: na página de autenticação, forneça os detalhes necessários",
+      "description3": "Etapa 3: O formato PDF da credencial verificável será baixado no sistema."
+    },
+    "item4": {
+      "title": "Quais detalhes preciso fornecer para baixar minha credencial?",
+      "description1": "O emissor da credencial teria fornecido detalhes como UIN/VID no caso de identificação nacional MOSIP ou número da apólice, nome e DoB para um cartão de seguro. "
+    },
+    "item5": {
+      "title": "Onde posso encontrar minha credencial?",
+      "description1": "A credencial verificável será baixada na pasta Downloads do seu sistema."
+    },
+    "item6": {
+      "title": "Quais detalhes estão presentes na credencial PDF?",
+      "description1": "Os detalhes coletados como parte do processo de inscrição serão apresentados no PDF. "
+    },
+    "item7": {
+      "title": "Por que não encontro a lista de emissores?",
+      "description1": "Os possíveis motivos para esse problema incluem:",
+      "description2": "1. Erros técnicos podem tornar o serviço temporariamente indisponível, impedindo o acesso à lista de emissores.",
+      "description3": "2. Nenhum emissor foi configurado.",
+      "description4": "Em ambos os casos, entre em contato com sua equipe técnica para resolver o problema."
+    }
+  }
+}
