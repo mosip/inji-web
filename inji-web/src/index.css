@@ -89,6 +89,48 @@
         --iw-color-disclaimerBackGround: #FFF7E5;
         --iw-color-disclaimerText: #8B6105;
     }
+    [class="CAR_theme"] {
+        --iw-font-base: "Inter", sans-serif;
+        --iw-color-background: #FFFFFF;
+        --iw-color-header: #000000;
+        --iw-color-footer: #FFFFFF;
+        --iw-color-title: #000000;
+        --iw-color-subTitle: #717171;
+        --iw-color-searchTitle: #3E3E3E;
+        --iw-color-primary: #52AE32;
+        --iw-color-secondary: #006535;
+        --iw-color-lightPrimary: #F2FAF7;
+        --iw-color-lightSecondary: #EEF5EF;
+        --iw-color-tertiary: #951F6F;
+        --iw-color-helpAccordionHover: #e0e0e0;
+        --iw-color-shadow: #18479329;
+        --iw-color-selected-shadow: #164EA840;
+        --iw-color-spinningLoaderPrimary: #278834;
+        --iw-color-spinningLoaderSecondary: #EEF5EF;
+        --iw-color-navigationBar: #EEF5EF;
+        --iw-color-languageGlobeIcon: #278834;
+        --iw-color-languageArrowIcon: #278834;
+        --iw-color-languageCheckIcon: #278834;
+        --iw-color-closeIcon: #8E8E8E;
+        --iw-color-searchIcon: #8E8E8E;
+        --iw-color-tileBackground: #FFFFFF;
+        --iw-color-shieldSuccessIcon: #4b9d1f;
+        --iw-color-shieldErrorIcon: #EF4444;
+        --iw-color-shieldLoadingIcon: #0FAC8B;
+        --iw-color-shieldSuccessShadow: #f1f7ee;
+        --iw-color-shieldErrorShadow: #FEF2F2;
+        --iw-color-shieldLoadingShadow: #f6dfbe;
+        --iw-color-backDrop: #000000;
+        --iw-color-borderDark: #717171;
+        --iw-color-borderLight: #E8EBEC;
+        --iw-color-arrowDown: #164EA840;
+        --iw-color-hoverBackGround: #164EA840;
+        --iw-color-text: #FFFFFF;
+        --iw-color-subText: #A0A8AC;
+        --iw-color-disclaimerBackGround: #FFF7E5;
+        --iw-color-disclaimerText: #8B6105;
+
+    }
 }
 
 @layer components {
@@ -99,7 +141,7 @@
         opacity: 1;
     }
     .bg-home-banner {
-        background-image: url('./assets/HomeBanner.png');
+        background-image: url('./assets/CAR Banner Background.png');
         background-size: 100% 100%;
         background-position: center;
     }

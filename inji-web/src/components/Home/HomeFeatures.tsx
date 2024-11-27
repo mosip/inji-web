@@ -30,8 +30,8 @@ export const HomeFeatures: React.FC = () => {
         {t("Features.description2")}
       </div> 
 
-      <img data-testid="HomeFeatures-MobileImage" className="mx-auto container scale-[80%] block sm:hidden" src={require("../../assets/InjiWebMobilePreview.png")} alt="Inji Web Mobile Preview" />
-      <img data-testid="HomeFeatures-DesktopImage" className="mx-auto container max-h-[700px] max-w-[1000px] hidden sm:block pb-8" src={require("../../assets/InjiWebDesktopPreview.png")} alt="Inji Web Preview" />
+      <img data-testid="HomeFeatures-MobileImage" className="mx-auto container scale-[80%] block sm:hidden" src={require("../../assets/CAR half phone mockup.png")} alt="Inji Web Mobile Preview" />
+      <img data-testid="HomeFeatures-DesktopImage" className="mx-auto container max-h-[700px] max-w-[1000px] hidden sm:block pb-8" src={require("../../assets/CAR landing page mockup.png")} alt="Inji Web Preview" />
 
       <div data-testid="HomeFeatures-ItemsContainer" className="flex flex-wrap gap-8 container mx-auto pb-3 md:pb-7 justify-center">
         <div data-testid="HomeFeatures-Items" className="hidden md:flex flex-wrap gap-8 justify-center">
