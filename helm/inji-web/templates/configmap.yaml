@@ -21,6 +21,12 @@ data:
     http {
       access_log /var/log/nginx/access1.log;
       error_log /var/log/nginx/error1.log;
+    
+      # Increase buffer sizes for reading response headers from the upstream server
+      proxy_buffer_size 16k;          # Buffer for the first part of the response header
+      proxy_buffers 4 16k;            # Number of buffers and their size for reading the response
+      proxy_busy_buffers_size 32k;    # Buffer size for busy buffers
+    
       server {
         listen {{ .Values.inji_web.inji_web_port }};
         server_name  localhost;
