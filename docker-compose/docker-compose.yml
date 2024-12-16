@@ -4,7 +4,7 @@ services:
 
   mimoto-service:
     container_name: 'mimoto-service'
-    image: mimoto:local #'mosipid/mimoto:0.14.0'
+    image: 'mosipid/mimoto:0.14.0'
     user: root
     ports:
       - '8099:8099'
@@ -21,10 +21,10 @@ services:
     container_name: 'inji-web'
     image: inji-web:local
     ports:
-      - '3001:3004'
+      - '3004:3004'
     environment:
       - DEFAULT_LANG=en
-      - MIMOTO_HOST=http://localhost:3001/v1/mimoto
+      - MIMOTO_HOST=http://localhost:3004/v1/mimoto
     volumes:
       - ./config/mimoto-default.properties:/home/mosip/mimoto-default.properties
       - ./config/mimoto-issuers-config.json:/home/mosip/mimoto-issuers-config.json
