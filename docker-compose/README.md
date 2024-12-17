@@ -3,13 +3,9 @@
 This is the docker-compose setup to run 
 
 - **mimoto-service** which act as BFF for Inji mobile and backend for Inji web.
-- **inji-web** and **inji-web-proxy** for frontend
+- **inji-web** for frontend
 
 This is not for production use.
-
-## Navigate to inji-web-proxy folder and Build the inji-web-proxy image locally.
-
-> cd inji-web-proxy && docker build -t inji-web-proxy:local .
 
 ## Navigate to inji-web folder and Build the inji-web image locally.
 

@@ -4,7 +4,8 @@ services:
 
   mimoto-service:
     container_name: 'mimoto-service'
-    image: 'mosipid/mimoto:0.14.0'
+    image: 'mosipqa/mimoto:0.15.x'
+    platform: linux/amd64
     user: root
     ports:
       - '8099:8099'
