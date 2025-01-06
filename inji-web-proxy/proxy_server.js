@@ -10,25 +10,36 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.all('*', async (req, res) => {
     delete req.headers.host
     delete req.headers.referer
 
-    const API_URL = process.env.MIMOTO_HOST;
-    const PATH = req.url
+    let targetHost;
+    switch (req.headers['target-server']) {
+        case 'oauth':
+            targetHost = req.headers['target-host'];
+            break;
+        default:
+            targetHost = process.env['MIMOTO_HOST'];
+    }
+    delete req.headers['target-server'];
+    delete req.headers['target-host'];
+    const path = req.url;
+
     try {
 
         let response = await axios({
             method: req.method,
-            responseType: PATH.indexOf("/download") === -1 ? "json" : "arraybuffer",
-            url: `${API_URL + PATH}`,
+            responseType:
+                path.indexOf("/download") === -1 ? "json" : "arraybuffer",
+            url: `${targetHost + path}`,
             data: new URLSearchParams(req.body),
             headers: req.headers
         });
 
-        if(PATH.indexOf("/download") === -1){
+        if (path.indexOf("/download") === -1) {
             res.status(response.status).json(response.data);
         } else {
             res.setHeader('Access-Control-Allow-Origin', '*'); // Change '*' to specific origin if needed
@@ -43,7 +54,7 @@ app.all('*', async (req, res) => {
         if (error.response) {
             res.status(error.response.status).json(error.response.data);
         } else {
-            res.status(500).json({ error: error.message });
+            res.status(500).json({error: error.message});
         }
     }
 });

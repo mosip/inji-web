@@ -6,42 +6,106 @@ import {addNewSession} from "../../utils/sessions";
 import {useSelector} from "react-redux";
 import {api} from "../../utils/api";
 import {CredentialProps} from "../../types/components";
-import {CodeChallengeObject, CredentialConfigurationObject} from "../../types/data";
+import {
+    AuthServerWellknownObject,
+    CodeChallengeObject,
+    CredentialConfigurationObject
+} from "../../types/data";
 import {RootState} from "../../types/redux";
 import {DataShareExpiryModal} from "../../modals/DataShareExpiryModal";
+import {useFetch} from "../../hooks/useFetch";
 
 export const Credential: React.FC<CredentialProps> = (props) => {
+    const {error, state, response, fetchRequest} = useFetch();
     const selectedIssuer = useSelector((state: RootState) => state.issuers);
     const [credentialExpiry, setCredentialExpiry] = useState<boolean>(false);
     const language = useSelector((state: RootState) => state.common.language);
-    const filteredCredentialConfig: CredentialConfigurationObject = props.credentialWellknown.credential_configurations_supported[props.credentialId];
-    const credentialObject = getObjectForCurrentLanguage(filteredCredentialConfig.display, language);
-    const vcStorageExpiryLimitInTimes = useSelector((state: RootState) => state.common.vcStorageExpiryLimitInTimes);
+    const filteredCredentialConfig: CredentialConfigurationObject =
+        props.credentialWellknown.credential_configurations_supported[
+            props.credentialId
+        ];
+    const credentialObject = getObjectForCurrentLanguage(
+        filteredCredentialConfig.display,
+        language
+    );
+    const vcStorageExpiryLimitInTimes = useSelector(
+        (state: RootState) => state.common.vcStorageExpiryLimitInTimes
+    );
 
-    const onSuccess = (defaultVCStorageExpiryLimit: number = vcStorageExpiryLimitInTimes) => {
+    const onSuccess = async (
+        defaultVCStorageExpiryLimit: number = vcStorageExpiryLimitInTimes
+    ) => {
         const state = generateRandomString();
-        const code_challenge: CodeChallengeObject = generateCodeChallenge(state);
+        const code_challenge: CodeChallengeObject =
+            generateCodeChallenge(state);
         addNewSession({
             selectedIssuer: selectedIssuer.selected_issuer,
             certificateId: props.credentialId,
             codeVerifier: state,
-            vcStorageExpiryLimitInTimes: isNaN(defaultVCStorageExpiryLimit) ? vcStorageExpiryLimitInTimes : defaultVCStorageExpiryLimit,
+            vcStorageExpiryLimitInTimes: isNaN(defaultVCStorageExpiryLimit)
+                ? vcStorageExpiryLimitInTimes
+                : defaultVCStorageExpiryLimit,
             state: state,
         });
-        window.open(api.authorization(selectedIssuer.selected_issuer, props.credentialWellknown, filteredCredentialConfig, state, code_challenge), '_self', 'noopener');
-    }
+        const apiRequest = api.fetchAuthorizationServerWellknown(
+            props.credentialWellknown.authorization_servers[0]
+        );
+        const authorizationServerWellknown = await fetchRequest(
+            apiRequest.url(),
+            apiRequest.methodType,
+            apiRequest.headers()
+        );
 
-    return <React.Fragment>
-        <ItemBox index={props.index}
-                 url={credentialObject.logo.url}
-                 title={credentialObject.name}
-                 onClick={() => {selectedIssuer.selected_issuer.qr_code_type === 'OnlineSharing' ? setCredentialExpiry(true) : onSuccess(-1)} } />
-                        { credentialExpiry &&
-                            <DataShareExpiryModal onCancel={() => setCredentialExpiry(false)}
-                                                  onSuccess={onSuccess}
-                                                  credentialName={credentialObject.name}
-                                                  credentialLogo={credentialObject.logo.url}/>
-                        }
-    </React.Fragment>
-}
+        if (
+            validateIfAuthServerSupportRequiredGrantTypes(
+                authorizationServerWellknown
+            )
+        ) {
+            window.open(
+                api.authorization(
+                    selectedIssuer.selected_issuer,
+                    filteredCredentialConfig,
+                    state,
+                    code_challenge,
+                    authorizationServerWellknown["authorization_endpoint"]
+                ),
+                "_self",
+                "noopener"
+            );
+        } else {
+        }
+    };
 
+    const validateIfAuthServerSupportRequiredGrantTypes = (
+        authorizationServerWellknown: AuthServerWellknownObject
+    ) => {
+        const SUPPORTED_GRANT_TYPES = ["authorization_code"];
+        return authorizationServerWellknown["grant_types_supported"].some(
+            (grantType: string) => SUPPORTED_GRANT_TYPES.includes(grantType)
+        );
+    };
+
+    return (
+        <React.Fragment>
+            <ItemBox
+                index={props.index}
+                url={credentialObject.logo.url}
+                title={credentialObject.name}
+                onClick={() => {
+                    selectedIssuer.selected_issuer.qr_code_type ===
+                    "OnlineSharing"
+                        ? setCredentialExpiry(true)
+                        : onSuccess(-1);
+                }}
+            />
+            {credentialExpiry && (
+                <DataShareExpiryModal
+                    onCancel={() => setCredentialExpiry(false)}
+                    onSuccess={onSuccess}
+                    credentialName={credentialObject.name}
+                    credentialLogo={credentialObject.logo.url}
+                />
+            )}
+        </React.Fragment>
+    );
+};

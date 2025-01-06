@@ -31,7 +31,7 @@ describe('Testing API Class', () => {
   });
 
   test('Check mimotoHost property', () => {
-    expect(apiModule.api.mimotoHost).toBe('https://api.collab.mossip.net/v1/mimoto');
+    expect(apiModule.api.proxyServerHost).toBe('https://api.collab.mossip.net/v1/mimoto');
   });
 
   test('Check authorizationRedirectionUrl property', () => {
@@ -152,7 +152,13 @@ describe('Testing API Class', () => {
       codeVerifier: 'verifier123'
     };
 
-    const url = apiModule.api.authorization(currentIssuer, credentialWellknown, filterCredentialWellknown, state, code_challenge);
+    const url = apiModule.api.authorization(
+      currentIssuer,
+      filterCredentialWellknown,
+      state,
+      code_challenge,
+      'http://auth.server/authorize'
+    );
     expect(url).toBe(
       'http://auth.server/authorize' +
       '?response_type=code&' +
