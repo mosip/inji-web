@@ -78,7 +78,13 @@
     "emptyContainerContent": "لم يتم العثور على بيانات الاعتماد. ",
     "containerHeading": "قائمة أنواع الاعتمادات",
     "containerSubHeading": "اختر بيانات الاعتماد، وأكد هويتك في الخطوة التالية.",
-    "errorContent": "الخدمة غير متاحة حالياً. "
+    "errorContent": "الخدمة غير متاحة حالياً.",
+    "errors": {
+      "authorizationGrantTypeNotSupportedByWallet": {
+        "title": "نوع المنحة غير مدعوم خطأ في التفويض!",
+        "message": "شكرًا على صبرك! نحن نواجه صعوبات تقنية في الوقت الحالي. يُرجى المحاولة مرة أخرى لاحقًا أو الاتصال بالمسؤول للحصول على مزيد من المساعدة!"
+      }
+    }
   },
   "RedirectionPage": {
     "navigateButton": "اذهب إلى المنزل",

@@ -78,7 +78,13 @@
     "emptyContainerContent": "Nenhuma credencial encontrada. Atualize a janela do navegador ou tente novamente mais tarde",
     "containerHeading": "Lista de tipos de credenciais",
     "containerSubHeading": "Escolha uma credencial e confirme sua identidade na próxima etapa.",
-    "errorContent": "O serviço não está disponível no momento. Tente novamente mais tarde."
+    "errorContent": "O serviço não está disponível no momento. Tente novamente mais tarde.",
+    "errors": {
+      "authorizationGrantTypeNotSupportedByWallet": {
+        "code": "Erro de autorização de tipo de concessão não suportado!",
+        "message": "Obrigado pela sua paciência! Estamos enfrentando dificuldades técnicas no momento. Tente novamente mais tarde ou entre em contato com o administrador para obter mais assistência!"
+      }
+    }
   },
   "RedirectionPage": {
     "navigateButton": "Ir para a página inicial",
