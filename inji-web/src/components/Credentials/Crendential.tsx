@@ -13,10 +13,12 @@ import {
 } from "../../types/data";
 import {RootState} from "../../types/redux";
 import {DataShareExpiryModal} from "../../modals/DataShareExpiryModal";
+import {useTranslation} from "react-i18next";
 import {useFetch} from "../../hooks/useFetch";
 
 export const Credential: React.FC<CredentialProps> = (props) => {
-    const {error, state, response, fetchRequest} = useFetch();
+    const {t} = useTranslation("CredentialsPage");
+    const {fetchRequest} = useFetch();
     const selectedIssuer = useSelector((state: RootState) => state.issuers);
     const [credentialExpiry, setCredentialExpiry] = useState<boolean>(false);
     const language = useSelector((state: RootState) => state.common.language);
@@ -35,6 +37,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
     const onSuccess = async (
         defaultVCStorageExpiryLimit: number = vcStorageExpiryLimitInTimes
     ) => {
+        setCredentialExpiry(false);
         const state = generateRandomString();
         const code_challenge: CodeChallengeObject =
             generateCodeChallenge(state);
@@ -73,15 +76,27 @@ export const Credential: React.FC<CredentialProps> = (props) => {
                 "noopener"
             );
         } else {
+            props.setErrorObj({
+                code: "errors.authorizationGrantTypeNotSupportedByWallet.code",
+                message:
+                    "errors.authorizationGrantTypeNotSupportedByWallet.message"
+            });
         }
     };
 
     const validateIfAuthServerSupportRequiredGrantTypes = (
         authorizationServerWellknown: AuthServerWellknownObject
     ) => {
-        const SUPPORTED_GRANT_TYPES = ["authorization_code"];
-        return authorizationServerWellknown["grant_types_supported"].some(
-            (grantType: string) => SUPPORTED_GRANT_TYPES.includes(grantType)
+        const supportedGrantTypes = ["authorization_code"];
+        let authorizationServerGrantTypes = ["authorization_code", "implicit"];
+
+        if ("grant_types_supported" in authorizationServerWellknown) {
+            authorizationServerGrantTypes =
+                authorizationServerWellknown["grant_types_supported"];
+        }
+
+        return authorizationServerGrantTypes.some((grantType: string) =>
+            supportedGrantTypes.includes(grantType)
         );
     };
 

@@ -18,11 +18,19 @@ export type NavBarProps = {
     search: boolean;
     fetchRequest?: any;
 }
+
+interface ErrorObj {
+    code: string;
+    message: string;
+}
+
 export type CredentialProps = {
     credentialId: string;
     credentialWellknown: IssuerWellknownObject;
     index: number;
+    setErrorObj: Dispatch<SetStateAction<ErrorObj>>;
 }
+
 export type HelpAccordionItemProps = {
     id: number;
     title: string;
@@ -50,7 +58,7 @@ export type HeaderTileProps = {
 }
 export type SearchIssuerProps = {
     state: RequestStatus;
-    fetchRequest: any
+    fetchRequest: any;
 }
 export type IssuersListProps = {
     state: RequestStatus;

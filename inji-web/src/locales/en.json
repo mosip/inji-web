@@ -78,7 +78,13 @@
     "emptyContainerContent": "No Credentials found. Please refresh your browser window or try again later",
     "containerHeading": "List of Credential Types",
     "containerSubHeading": "Choose a credential, and confirm your identity in the next step.",
-    "errorContent": "The service is currently unavailable now. Please try again later."
+    "errorContent": "The service is currently unavailable now. Please try again later.",
+    "errors": {
+      "authorizationGrantTypeNotSupportedByWallet": {
+        "code": "Grant type not supported authorization error!",
+        "message": "Thanks for your patience! We're experiencing technical difficulties right now. Please try again later or contact the admin for further assistance!"
+      }
+    }
   },
   "RedirectionPage": {
     "navigateButton": "Go To Home",
