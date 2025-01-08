@@ -9,17 +9,23 @@ import {SpinningLoader} from "../Common/SpinningLoader";
 import {CredentialListProps} from "../../types/components";
 import {HeaderTile} from "../Common/HeaderTile";
 import {DownloadResult} from "../Redirection/DownloadResult";
+import {toast} from "react-toastify";
 
 export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
     const [errorObj, setErrorObj] = useState({
         code: "",
         message: ""
     });
+    const [toastError, setToastError] = useState("");
     const credentials = useSelector((state: RootState) => state.credentials);
     const {t} = useTranslation("CredentialsPage");
 
     if (state === RequestStatus.LOADING) {
         return <SpinningLoader />;
+    }
+
+    if (toastError !== "") {
+        toast.error(t("errorContent"), {onClose: () => setToastError("")});
     }
 
     if (
@@ -64,6 +70,7 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
                                     key={index}
                                     index={index}
                                     setErrorObj={setErrorObj}
+                                    setToastError={setToastError}
                                 />
                             ))}
                     </div>

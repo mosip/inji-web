@@ -36,7 +36,9 @@ export const useFetch = () => {
                 throw new Error();
             }
             setState(RequestStatus.DONE);
-            return await response.json();
+            const responseJson = await response.json();
+            setResponse(responseJson);
+            return responseJson;
         } catch (e) {
             setState(RequestStatus.ERROR);
             setError("Error Happened");
@@ -44,6 +46,3 @@ export const useFetch = () => {
     };
     return {state, error, response, fetchRequest};
 }
-
-
-
