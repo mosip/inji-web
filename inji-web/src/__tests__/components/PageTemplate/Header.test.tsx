@@ -1,7 +1,6 @@
-import React from 'react';
-import { fireEvent, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { Header } from "../../../components/PageTemplate/Header";
-import { mockUseNavigate} from '../../../test-utils/mockUtils';
+import { mockCrypto } from '../../../test-utils/mockUtils';
 import { renderWithProvider,mockUseLanguageSelector } from '../../../test-utils/mockUtils';
 
 
@@ -16,6 +15,7 @@ jest.mock('react-router-dom', () => ({
 
 describe("Header Container Layout Test", () => {
     test('Check if the layout is matching with the snapshots', () => {
+        global.crypto = mockCrypto;
         const { asFragment } = renderWithProvider((<Header />));
         expect(asFragment()).toMatchSnapshot();
     });
