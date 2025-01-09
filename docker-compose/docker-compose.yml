@@ -2,6 +2,31 @@ version: '3.8'
 
 services:
 
+  minio:
+    container_name: 'minio-service'
+    image: bitnami/minio:2022.2.7-debian-10-r0
+    ports:
+      - "9001:9001"
+      - "9000:9000"
+    environment:
+      MINIO_ROOT_USER: minioadmin      # Access Key
+      MINIO_ROOT_PASSWORD: minioadmin  # Secret Key
+
+  datashare:
+    container_name: 'datashare-service'
+    image: mosipqa/data-share-service:1.3.x
+    ports:
+      - "8097:8097"
+    environment:
+      - active_profile_env=inji-default,standalone
+      - SPRING_CONFIG_NAME=data-share
+      - SPRING_CONFIG_LOCATION=/home/mosip/
+    volumes:
+      - ./config/data-share-inji-default.properties:/home/mosip/data-share-inji-default.properties
+      - ./config/data-share-standalone.properties:/home/mosip/data-share-standalone.properties
+    depends_on:
+      - minio
+
   mimoto-service:
     container_name: 'mimoto-service'
     image: 'mosipqa/mimoto:0.15.x'
@@ -13,9 +38,12 @@ services:
       - active_profile_env=default
       - SPRING_CONFIG_NAME=mimoto
       - SPRING_CONFIG_LOCATION=/home/mosip/
+      - oidc_p12_password=dummypassword
     volumes:
       - ./config/mimoto-default.properties:/home/mosip/mimoto-default.properties
       - ./certs/oidckeystore.p12:/home/mosip/certs/oidckeystore.p12
+    depends_on:
+      - datashare
 
   inji-web:
     container_name: 'inji-web'
@@ -26,7 +54,6 @@ services:
       - DEFAULT_LANG=en
       - MIMOTO_HOST=http://localhost:3004/v1/mimoto
     volumes:
-      - ./config/mimoto-default.properties:/home/mosip/mimoto-default.properties
       - ./config/mimoto-issuers-config.json:/home/mosip/mimoto-issuers-config.json
       - ./config/mimoto-trusted-verifiers.json:/home/mosip/mimoto-trusted-verifiers.json
       - ./config/credential-template.html:/home/mosip/credential-template.html
