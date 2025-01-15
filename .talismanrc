@@ -19,4 +19,14 @@ fileignoreconfig:
   checksum: 804e5bca5cb941dc8ef29eacd8122b7d18c34303d1a7326d3ba193ce064e5bb2
 - filename: inji-web/src/components/DataShare/DataShareContent.tsx
   checksum: 1af797cfef624b32692d625304f9a1403c1719578a0c48b4583ade529a60376d
+- filename: inji-web/src/utils/misc.ts
+  checksum: fa1fba107d4a8bb86f37ea4f022d1e6f320da816e90d0ebdd1276914d14550d5
+- filename: helm/inji-web/templates/configmap.yaml
+  checksum: f238e115674a518c94ea702831a02d41bc73124aa7852b8ef7d588eb27308f77
+- filename: inji-web/nginx.conf
+  checksum: ad2ad36daa595266c02e48f1dbc875ebcfe409fb57685c16b5e50df4a0c5ec08
+- filename: inji-web/src/__tests__/utils/misc.test.tsx
+  checksum: 6b70370a26d1556adeca568ab8269202a660af8bb7d095e7121314935e8bff18
+- filename: inji-web/src/test-utils/mockUtils.tsx
+  checksum: 9a3c5c6c81c6ff5cec1203004dde8a04c72425b13ca6eaec2fd15a50baf7fa02
 version: ""
