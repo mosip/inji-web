@@ -8,10 +8,6 @@ mockUseSelector();
 global.crypto = mockCrypto;
 
 describe("Testing the Layout of IssuersList", () => {
-    beforeAll(() => {
-        global.crypto = mockCrypto;
-    });
-
     beforeEach(() => {
         const useSelectorMock = require('react-redux').useSelector;
         useSelectorMock.mockImplementation((selector: any) => selector({
