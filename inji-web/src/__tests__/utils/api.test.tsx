@@ -38,7 +38,7 @@ describe('Testing API Class', () => {
   });
 
   test('Check mimotoHost property', () => {
-    expect(apiModule.api.proxyServerHost).toBe('https://api.collab.mossip.net/v1/mimoto');
+    expect(apiModule.api.mimotoHost).toBe('https://api.collab.mossip.net/v1/mimoto');
   });
 
   test('Check authorizationRedirectionUrl property', () => {

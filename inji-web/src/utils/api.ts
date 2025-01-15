@@ -12,12 +12,12 @@ export enum MethodType {
 }
 
 export class api {
-    static proxyServerHost = window._env_.MIMOTO_HOST;
+    static mimotoHost = window._env_.MIMOTO_HOST;
 
     static authorizationRedirectionUrl = window.location.origin + "/redirect";
 
     static fetchIssuers: ApiRequest = {
-        url: () => api.proxyServerHost + "/issuers",
+        url: () => api.mimotoHost + "/issuers",
         methodType: MethodType.GET,
         headers: () => {
             return {
@@ -26,7 +26,7 @@ export class api {
         }
     };
     static fetchSpecificIssuer: ApiRequest = {
-        url: (issuerId: string) => api.proxyServerHost + `/issuers/${issuerId}`,
+        url: (issuerId: string) => api.mimotoHost + `/issuers/${issuerId}`,
         methodType: MethodType.GET,
         headers: () => {
             return {
@@ -36,7 +36,7 @@ export class api {
     };
     static fetchIssuersWellknown: ApiRequest = {
         url: (issuerId: string) =>
-            api.proxyServerHost + `/issuers/${issuerId}/well-known-proxy`,
+            api.mimotoHost + `/issuers/${issuerId}/well-known-proxy`,
         methodType: MethodType.GET,
         headers: () => {
             return {
@@ -45,7 +45,7 @@ export class api {
         }
     };
     static fetchTokenAnddownloadVc: ApiRequest = {
-        url: () => api.proxyServerHost + `/credentials/download`,
+        url: () => api.mimotoHost + `/credentials/download`,
         methodType: MethodType.POST,
         headers: () => {
             return {
@@ -75,16 +75,18 @@ export class api {
         );
     };
 
-    static fetchAuthorizationServerWellknown = (authorizationServerUrl: String) => {
+    static fetchAuthorizationServerWellknown = (
+        authorizationServerUrl: String
+    ) => {
         return {
             url: () =>
-                api.proxyServerHost + `/.well-known/oauth-authorization-server`,
+                authorizationServerUrl +
+                `/.well-known/oauth-authorization-server`,
             methodType: MethodType.GET,
             headers: () => {
                 return {
                     "Content-Type": "application/json",
-                    "target-server": "oauth",
-                    "target-host": authorizationServerUrl
+                    "target-server": "oauth"
                 };
             }
         };

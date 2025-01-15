@@ -75,7 +75,7 @@ exports[`Testing  the Layout of the Expiry Content Check if the layout is matchi
             class="relative inline-block"
           >
             <input
-              class="accent-iw-primary scale-150"
+              class="accent-iw-primary scale-150 mx-2"
               disabled=""
               name="consentValidity"
               type="radio"

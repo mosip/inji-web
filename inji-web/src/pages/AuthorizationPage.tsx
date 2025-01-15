@@ -13,7 +13,7 @@ export const AuthorizationPage: React.FC = () => {
 
     useEffect( () => {
         if(url.indexOf("error") === -1) {
-            window.location.href = api.proxyServerHost + "/authorize" + window.location.search;
+            window.location.href = api.mimotoHost + "/authorize" + window.location.search;
         }
     },[])
 
