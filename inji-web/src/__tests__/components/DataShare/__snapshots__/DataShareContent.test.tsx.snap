@@ -75,7 +75,7 @@ exports[`Testing  the Layout of the Expiry Content Check if the layout is matchi
             class="relative inline-block"
           >
             <input
-              class="accent-iw-primary scale-150 mx-2"
+              class="accent-iw-primary scale-150"
               disabled=""
               name="consentValidity"
               type="radio"
@@ -96,6 +96,7 @@ exports[`Testing  the Layout of the Expiry Content Check if the layout is matchi
     </div>
     <div
       class="relative flex mb-4"
+      data-testid="times-dropdown"
     >
       <div
         class="w-1/3"

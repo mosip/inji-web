@@ -4,6 +4,7 @@ import { LanguageSelector } from '../../../components/Common/LanguageSelector';
 import { mockCrypto, renderWithProvider } from '../../../test-utils/mockUtils'; // Import from mockutils
 
 global.crypto = mockCrypto;
+
 describe("Testing the Layout of Language Selector", () => {
     test('Check if the layout is matching with the snapshots', () => {
         const { asFragment } = renderWithProvider(<LanguageSelector />);

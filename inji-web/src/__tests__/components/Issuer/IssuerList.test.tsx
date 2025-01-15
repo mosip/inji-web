@@ -1,15 +1,12 @@
 import { IssuersList } from '../../../components/Issuers/IssuersList';
 import { RequestStatus } from '../../../hooks/useFetch';
 import { mockIssuerObjectList } from '../../../test-utils/mockObjects';
-import {
-    renderWithProvider,
-    mockUseSelector,
-    mockUseTranslation,
-    mockCrypto
-} from '../../../test-utils/mockUtils';
+import { renderWithProvider,mockUseSelector,mockUseTranslation, mockCrypto } from '../../../test-utils/mockUtils';
 
 mockUseTranslation();
 mockUseSelector();
+global.crypto = mockCrypto;
+
 describe("Testing the Layout of IssuersList", () => {
     beforeAll(() => {
         global.crypto = mockCrypto;

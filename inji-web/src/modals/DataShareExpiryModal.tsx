@@ -14,7 +14,7 @@ export const DataShareExpiryModal: React.FC<DataShareExpiryModalProps> = (props)
     return <React.Fragment>
             <ModalWrapper header={<DataShareHeader title={t("title")} subTitle={t("subTitle", {credentialName: props.credentialName})}/>}
                        content={<DataShareContent credentialName={props.credentialName} credentialLogo={props.credentialLogo} setIsCustomExpiryInTimesModalOpen={setIsCustomExpiryInTimesModalOpen}/>}
-                       footer={<DataShareFooter cancelText={t("cancel")} successText={t("success")} onSuccess={props.onSuccess} onCancel={props.onCancel}/>}
+                       footer={<DataShareFooter parent = "data-share-expiry-modal" cancelText={t("cancel")} successText={t("success")} onSuccess={props.onSuccess} onCancel={props.onCancel}/>}
                        size={"3xl"}
                        zIndex={40}/>
             {isCustomExpiryInTimesModalOpen && <CustomExpiryModal onSuccess={() => setIsCustomExpiryInTimesModalOpen(false)} onCancel={() => setIsCustomExpiryInTimesModalOpen(false)}/>}

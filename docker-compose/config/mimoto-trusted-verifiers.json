@@ -2,7 +2,7 @@
   "verifiers": [
     {
       "client_id": "https://injiverify.collab.mosip.net",
-      "redirect_uri": [
+      "redirect_uris": [
         "https://injiverify.collab.mosip.net/redirect"
       ]
     }

@@ -22,6 +22,13 @@ describe('Testing API Class', () => {
       writable: true
     });
 
+    Object.defineProperty(window, "_env_", {
+        value: {
+            MIMOTO_HOST: "https://api.collab.mossip.net/v1/mimoto"
+        },
+        writable: true
+    });
+
     jest.resetModules();
     apiModule = require('../../utils/api') as ApiModule;
   });
@@ -72,7 +79,7 @@ describe('Testing API Class', () => {
     expect(fetchTokenAnddownloadVc.url()).toBe('https://api.collab.mossip.net/v1/mimoto/credentials/download');
     expect(fetchTokenAnddownloadVc.methodType).toBe(apiModule.MethodType.POST);
     expect(fetchTokenAnddownloadVc.headers()).toEqual({
-      'accept': 'application/json',
+      'accept': 'application/pdf',
       'Content-Type': 'application/x-www-form-urlencoded',
       'Cache-Control': 'no-cache, no-store, must-revalidate'
     });

@@ -72,13 +72,11 @@ describe('Test misc.ts utility functions', () => {
     });
 
     test('Check if getErrorObject returns correct error object', () => {
-        const downloadResponse = {
-            errors: [{errorCode: "err_missing_issuancedate"}]
-        };
+        const downloadResponse = { errors: [{ errorCode: 'err_invalid_issuancedate'}] };
         const errorObject = getErrorObject(downloadResponse);
         expect(errorObject).toEqual({
-            code: "error.verification.err_missing_issuancedate.title",
-            message: "error.verification.err_missing_issuancedate.subTitle"
+            code: 'error.verification.err_invalid_issuancedate.title',
+            message: 'error.verification.err_invalid_issuancedate.subTitle'
         });
     });
 

@@ -29,7 +29,7 @@ export const isObjectEmpty = (object: any) => {
     return object === null || object === undefined || Object.keys(object).length === 0;
 }
 
-export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialType: string, vcStorageExpiryLimitInTimes: string) => {
+export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialType: string, vcStorageExpiryLimitInTimes: string, locale: string) => {
     return {
         'grant_type': 'authorization_code',
         'code': code,
@@ -37,7 +37,8 @@ export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId
         'code_verifier': codeVerifier,
         'issuer': issuerId,
         'credential': credentialType,
-        'vcStorageExpiryLimitInTimes': vcStorageExpiryLimitInTimes
+        'vcStorageExpiryLimitInTimes': vcStorageExpiryLimitInTimes,
+        'locale':locale
     }
 }
 
