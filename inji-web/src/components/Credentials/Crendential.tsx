@@ -44,14 +44,14 @@ export const Credential: React.FC<CredentialProps> = (props) => {
         }
         if (response) {
             if (state === RequestStatus.DONE) {
-                if (validateIfAuthServerSupportRequiredGrantTypes(response)) {
+                if (validateIfAuthServerSupportRequiredGrantTypes(response.response)) {
                     window.open(
                         api.authorization(
                             selectedIssuer.selected_issuer,
                             filteredCredentialConfig,
                             authorizationReqState,
                             codeChallenge,
-                            response["authorization_endpoint"]
+                            response.response["authorization_endpoint"]
                         ),
                         "_self",
                         "noopener"

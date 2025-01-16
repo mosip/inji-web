@@ -80,13 +80,11 @@ export class api {
     ) => {
         return {
             url: () =>
-                authorizationServerUrl +
-                `/.well-known/oauth-authorization-server`,
+                `${api.mimotoHost}/issuers/oauth-server/well-known?oauth-server-url=${authorizationServerUrl}`,
             methodType: MethodType.GET,
             headers: () => {
                 return {
-                    "Content-Type": "application/json",
-                    "target-server": "oauth"
+                    "Content-Type": "application/json"
                 };
             }
         };
