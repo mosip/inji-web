@@ -8,6 +8,7 @@ import {api} from "../../utils/api";
 import {CredentialProps} from "../../types/components";
 import {
     AuthServerWellknownObject,
+    CodeChallengeObject,
     CredentialConfigurationObject
 } from "../../types/data";
 import {RootState} from "../../types/redux";
@@ -33,19 +34,13 @@ export const Credential: React.FC<CredentialProps> = (props) => {
     const vcStorageExpiryLimitInTimes = useSelector(
         (state: RootState) => state.common.vcStorageExpiryLimitInTimes
     );
-    const [authorizationReqState, setAuthorizationRequestState] = useState("");
-    const [codeChallenge, setCodeChallenge] = useState({
-        codeChallenge: "",
-        codeVerifier: ""
-    });
 
     const onSuccess = async (
         defaultVCStorageExpiryLimit: number = vcStorageExpiryLimitInTimes
     ) => {
         const state = generateRandomString();
-        setAuthorizationRequestState(state);
-        setCodeChallenge(generateCodeChallenge(state));
-        setCredentialExpiry(false);
+        const code_challenge: CodeChallengeObject =
+            generateCodeChallenge(state);
         addNewSession({
             selectedIssuer: selectedIssuer.selected_issuer,
             certificateId: props.credentialId,
@@ -64,8 +59,8 @@ export const Credential: React.FC<CredentialProps> = (props) => {
                 api.authorization(
                     selectedIssuer.selected_issuer,
                     filteredCredentialConfig,
-                    authorizationReqState,
-                    codeChallenge,
+                    state,
+                    code_challenge,
                     authServerWellknownResponse["authorization_endpoint"]
                 ),
                 "_self",
