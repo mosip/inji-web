@@ -36,9 +36,7 @@ export const useFetch = () => {
                 throw new Error();
             }
             setState(RequestStatus.DONE);
-            const responseJson = await response.json();
-            setResponse(responseJson);
-            return responseJson;
+            return await response.json();
         } catch (e) {
             setState(RequestStatus.ERROR);
             setError("Error Happened");

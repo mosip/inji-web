@@ -75,18 +75,4 @@ export class api {
         );
     };
 
-    static fetchAuthorizationServerWellknown = (
-        authorizationServerUrl: String
-    ) => {
-        return {
-            url: () =>
-                `${api.mimotoHost}/issuers/oauth-server/well-known?oauth-server-url=${authorizationServerUrl}`,
-            methodType: MethodType.GET,
-            headers: () => {
-                return {
-                    "Content-Type": "application/json"
-                };
-            }
-        };
-    };
 }
