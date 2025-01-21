@@ -21,16 +21,8 @@ export type IssuerWellknownObject = {
 };
 
 export type AuthServerWellknownObject = {
-    issuer: string;
     authorization_endpoint: string;
-    token_endpoint: string;
-    jwks_uri: string;
-    token_endpoint_auth_methods_supported: string[];
-    token_endpoint_auth_signing_alg_values_supported: string[];
-    scopes_supported: string[];
-    response_modes_supported: string[];
     grant_types_supported: string[];
-    response_types_supported: string[];
 };
 
 export type CredentialsSupportedObject = {

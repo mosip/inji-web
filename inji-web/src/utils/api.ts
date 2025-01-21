@@ -36,7 +36,7 @@ export class api {
     };
     static fetchIssuersWellknown: ApiRequest = {
         url: (issuerId: string) =>
-            api.mimotoHost + `/issuers/${issuerId}/well-known-proxy`,
+            api.mimotoHost + `/issuers/${issuerId}/configuration`,
         methodType: MethodType.GET,
         headers: () => {
             return {

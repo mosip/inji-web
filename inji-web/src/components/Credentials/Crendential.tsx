@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {getObjectForCurrentLanguage} from "../../utils/i18n";
 import {ItemBox} from "../Common/ItemBox";
 import {generateCodeChallenge, generateRandomString} from "../../utils/misc";
@@ -13,11 +13,12 @@ import {
 import {RootState} from "../../types/redux";
 import {DataShareExpiryModal} from "../../modals/DataShareExpiryModal";
 import {useTranslation} from "react-i18next";
-import {RequestStatus, useFetch} from "../../hooks/useFetch";
 
 export const Credential: React.FC<CredentialProps> = (props) => {
     const {t} = useTranslation("CredentialsPage");
-    const {state, response, fetchRequest} = useFetch();
+    const authServerWellknownResponse: AuthServerWellknownObject = useSelector(
+        (state: RootState) => state.credentials.credentials.authorization
+    );
     const selectedIssuer = useSelector((state: RootState) => state.issuers);
     const [credentialExpiry, setCredentialExpiry] = useState<boolean>(false);
     const language = useSelector((state: RootState) => state.common.language);
@@ -38,44 +39,14 @@ export const Credential: React.FC<CredentialProps> = (props) => {
         codeVerifier: ""
     });
 
-    useEffect(() => {
-        if (state === RequestStatus.ERROR) {
-            props.setToastError(t("errorContent"));
-        }
-        if (response) {
-            if (state === RequestStatus.DONE) {
-                if (validateIfAuthServerSupportRequiredGrantTypes(response.response)) {
-                    window.open(
-                        api.authorization(
-                            selectedIssuer.selected_issuer,
-                            filteredCredentialConfig,
-                            authorizationReqState,
-                            codeChallenge,
-                            response.response["authorization_endpoint"]
-                        ),
-                        "_self",
-                        "noopener"
-                    );
-                } else {
-                    props.setErrorObj({
-                        code: "errors.authorizationGrantTypeNotSupportedByWallet.code",
-                        message:
-                            "errors.authorizationGrantTypeNotSupportedByWallet.message"
-                    });
-                }
-            }
-        }
-    }, [response, state]);
-
     const onSuccess = async (
         defaultVCStorageExpiryLimit: number = vcStorageExpiryLimitInTimes
     ) => {
         const state = generateRandomString();
-		setAuthorizationRequestState(state);
+        setAuthorizationRequestState(state);
         setCodeChallenge(generateCodeChallenge(state));
         setCredentialExpiry(false);
-        
-		addNewSession({
+        addNewSession({
             selectedIssuer: selectedIssuer.selected_issuer,
             certificateId: props.credentialId,
             codeVerifier: state,
@@ -84,15 +55,29 @@ export const Credential: React.FC<CredentialProps> = (props) => {
                 : defaultVCStorageExpiryLimit,
             state: state
         });
-        const apiRequest = api.fetchAuthorizationServerWellknown(
-            props.credentialWellknown.authorization_servers[0]
-        );
-
-        await fetchRequest(
-            apiRequest.url(),
-            apiRequest.methodType,
-            apiRequest.headers()
-        );
+        if (
+            validateIfAuthServerSupportRequiredGrantTypes(
+                authServerWellknownResponse
+            )
+        ) {
+            window.open(
+                api.authorization(
+                    selectedIssuer.selected_issuer,
+                    filteredCredentialConfig,
+                    authorizationReqState,
+                    codeChallenge,
+                    authServerWellknownResponse["authorization_endpoint"]
+                ),
+                "_self",
+                "noopener"
+            );
+        } else {
+            props.setErrorObj({
+                code: "errors.authorizationGrantTypeNotSupportedByWallet.code",
+                message:
+                    "errors.authorizationGrantTypeNotSupportedByWallet.message"
+            });
+        }
     };
 
     const validateIfAuthServerSupportRequiredGrantTypes = (
