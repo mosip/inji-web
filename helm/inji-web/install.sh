@@ -60,7 +60,7 @@ kubectl label ns $NS istio-injection=enabled --overwrite
 helm repo add mosip https://mosip.github.io/mosip-helm
 helm repo update
 
-#./copy_cm.sh
+./copy_cm.sh
 
 INJI_DATASHARE_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-inji-datashare-host})
 echo "Installing datashare"
