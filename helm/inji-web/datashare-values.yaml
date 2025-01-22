@@ -1,23 +1,13 @@
-istio:
-  enabled: true
-  gateway:
-    enabled: true
-    selector:
-      istio: ingressgateway-internal
-    servers:
-      - hosts:
-          - datashare-inji.sandbox.xyz.net
-        port:
-          name: http
-          number: 80
-          protocol: HTTP
-  vs:
-    prefix: /v1/datashare-injiweb
-    rewrite: /v1/datashare
-    gateways:
-      - datashare-inji
-
 # Override the envFrom field to exclude 'artifactory-share'
 extraEnvVarsCM:
   - global
   - config-server-share
+  
+istio:
+  enabled: false  # Disables VirtualService creation if Istio is used
+
+virtualService:
+  enabled: false  # Explicitly disable VirtualService if applicable
+
+service:
+  enabled: true   # Ensure service is still enabled, if needed
