@@ -29,7 +29,6 @@ export type CredentialProps = {
     credentialWellknown: IssuerWellknownObject;
     index: number;
     setErrorObj: Dispatch<SetStateAction<ErrorObj>>;
-    setToastError: Dispatch<SetStateAction<string>>;
 }
 
 export type HelpAccordionItemProps = {

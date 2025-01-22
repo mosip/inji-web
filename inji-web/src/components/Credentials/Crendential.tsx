@@ -20,6 +20,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
     const authServerWellknownResponse: AuthServerWellknownObject = useSelector(
         (state: RootState) => state.credentials.credentials.authorization
     );
+    console.log("server resp::", authServerWellknownResponse);
     const selectedIssuer = useSelector((state: RootState) => state.issuers);
     const [credentialExpiry, setCredentialExpiry] = useState<boolean>(false);
     const language = useSelector((state: RootState) => state.common.language);
@@ -81,7 +82,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
         const supportedGrantTypes = ["authorization_code"];
         let authorizationServerGrantTypes = ["authorization_code", "implicit"];
 
-        if ("grant_types_supported" in authorizationServerWellknown) {
+        if (authorizationServerWellknown?.grant_types_supported) {
             authorizationServerGrantTypes =
                 authorizationServerWellknown["grant_types_supported"];
         }
