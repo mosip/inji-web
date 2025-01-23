@@ -20,7 +20,6 @@ export const Credential: React.FC<CredentialProps> = (props) => {
     const authServerWellknownResponse: AuthServerWellknownObject = useSelector(
         (state: RootState) => state.credentials.credentials.authorization
     );
-    console.log("server resp::", authServerWellknownResponse);
     const selectedIssuer = useSelector((state: RootState) => state.issuers);
     const [credentialExpiry, setCredentialExpiry] = useState<boolean>(false);
     const language = useSelector((state: RootState) => state.common.language);
