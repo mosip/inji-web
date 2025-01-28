@@ -46,8 +46,8 @@ export const CredentialsPage: React.FC = () => {
                 apiRequest.headers()
             );
 
-            dispatch(storeFilteredCredentials(response));
-            dispatch(storeCredentials(response));
+            dispatch(storeFilteredCredentials(response?.response));
+            dispatch(storeCredentials(response?.response));
         }
         fetchCall();
     }, [])
