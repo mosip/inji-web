@@ -20,7 +20,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
     const authServerWellknownResponse: AuthServerWellknownObject = useSelector(
         (state: RootState) => state.credentials.credentials.authorization
     );
-    const selectedIssuer = useSelector((state: RootState) => state.issuers);
+    const issuersConfig = useSelector((state: RootState) => state.issuers);
     const [credentialExpiry, setCredentialExpiry] = useState<boolean>(false);
     const language = useSelector((state: RootState) => state.common.language);
     const filteredCredentialConfig: CredentialConfigurationObject =
@@ -42,7 +42,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
         const code_challenge: CodeChallengeObject =
             generateCodeChallenge(state);
         addNewSession({
-            selectedIssuer: selectedIssuer.selected_issuer,
+            selectedIssuer: issuersConfig.selected_issuer,
             certificateId: props.credentialId,
             codeVerifier: state,
             vcStorageExpiryLimitInTimes: isNaN(defaultVCStorageExpiryLimit)
@@ -57,7 +57,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
         ) {
             window.open(
                 api.authorization(
-                    selectedIssuer.selected_issuer,
+                    issuersConfig?.selected_issuer,
                     filteredCredentialConfig,
                     state,
                     code_challenge,
@@ -79,16 +79,16 @@ export const Credential: React.FC<CredentialProps> = (props) => {
         authorizationServerWellknown: AuthServerWellknownObject
     ) => {
         const supportedGrantTypes = ["authorization_code"];
-        let authorizationServerGrantTypes = ["authorization_code", "implicit"];
+        let authorizationServerGrantTypes;
 
         if (authorizationServerWellknown?.grant_types_supported) {
             authorizationServerGrantTypes =
                 authorizationServerWellknown["grant_types_supported"];
+            return authorizationServerGrantTypes.some((grantType: string) =>
+                supportedGrantTypes.includes(grantType)
+            );
         }
-
-        return authorizationServerGrantTypes.some((grantType: string) =>
-            supportedGrantTypes.includes(grantType)
-        );
+        return false;
     };
 
     return (
@@ -98,7 +98,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
                 url={credentialObject.logo.url}
                 title={credentialObject.name}
                 onClick={() => {
-                    selectedIssuer.selected_issuer.qr_code_type ===
+                    issuersConfig?.selected_issuer?.qr_code_type ===
                     "OnlineSharing"
                         ? setCredentialExpiry(true)
                         : onSuccess(-1);
