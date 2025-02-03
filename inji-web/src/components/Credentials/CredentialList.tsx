@@ -9,12 +9,16 @@ import {SpinningLoader} from "../Common/SpinningLoader";
 import {CredentialListProps} from "../../types/components";
 import {HeaderTile} from "../Common/HeaderTile";
 import {DownloadResult} from "../Redirection/DownloadResult";
+import { IssuerObject } from "../../types/data";
 
 export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
     const [errorObj, setErrorObj] = useState({
         code: "",
         message: ""
     });
+    const selectedIssuer: IssuerObject | undefined = useSelector(
+        (state: RootState) => state.issuers.selected_issuer
+    );
     const credentials = useSelector((state: RootState) => state.credentials);
     const {t} = useTranslation("CredentialsPage");
 
@@ -23,7 +27,7 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
     }
 
     if (
-        state === RequestStatus.ERROR ||
+        state === RequestStatus.ERROR || !selectedIssuer ||
         !credentials?.filtered_credentials
             ?.credential_configurations_supported ||
         (credentials?.filtered_credentials
@@ -42,39 +46,39 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
         );
     }
 
+    if (errorObj.code) {
+        return (
+            <DownloadResult
+                title={t(errorObj.code)}
+                subTitle={t(errorObj.message)}
+                state={RequestStatus.ERROR}
+            />
+        );
+    }
+
     return (
-        <React.Fragment>
-            {errorObj.code === "" ? (
-                <React.Fragment>
-                    <HeaderTile
-                        content={t("containerHeading")}
-                        subContent={t("containerSubHeading")}
-                    />
-                    <div className="flex flex-wrap gap-3 p-4 pb-20 justify-start">
-                        {credentials?.filtered_credentials &&
-                            Object.keys(
+        <>
+            <HeaderTile
+                content={t("containerHeading")}
+                subContent={t("containerSubHeading")}
+            />
+            <div className="flex flex-wrap gap-3 p-4 pb-20 justify-start">
+                {credentials?.filtered_credentials &&
+                    Object.keys(
+                        credentials?.filtered_credentials
+                            ?.credential_configurations_supported
+                    ).map((credentialId: string, index: number) => (
+                        <Credential
+                            credentialId={credentialId}
+                            credentialWellknown={
                                 credentials?.filtered_credentials
-                                    ?.credential_configurations_supported
-                            ).map((credentialId: string, index: number) => (
-                                <Credential
-                                    credentialId={credentialId}
-                                    credentialWellknown={
-                                        credentials?.filtered_credentials
-                                    }
-                                    key={index}
-                                    index={index}
-                                    setErrorObj={setErrorObj}
-                                />
-                            ))}
-                    </div>
-                </React.Fragment>
-            ) : (
-                <DownloadResult
-                    title={t(errorObj.code)}
-                    subTitle={t(errorObj.message)}
-                    state={RequestStatus.ERROR}
-                />
-            )}
-        </React.Fragment>
+                            }
+                            key={index}
+                            index={index}
+                            setErrorObj={setErrorObj}
+                        />
+                    ))}
+            </div>
+        </>
     );
 };

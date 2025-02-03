@@ -20,7 +20,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
     const authServerWellknownResponse: AuthServerWellknownObject = useSelector(
         (state: RootState) => state.credentials.credentials.authorization
     );
-    const issuersConfig = useSelector((state: RootState) => state.issuers);
+    const selectedIssuer = useSelector((state: RootState) => state.issuers.selected_issuer);
     const [credentialExpiry, setCredentialExpiry] = useState<boolean>(false);
     const language = useSelector((state: RootState) => state.common.language);
     const filteredCredentialConfig: CredentialConfigurationObject =
@@ -42,7 +42,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
         const code_challenge: CodeChallengeObject =
             generateCodeChallenge(state);
         addNewSession({
-            selectedIssuer: issuersConfig.selected_issuer,
+            selectedIssuer: selectedIssuer,
             certificateId: props.credentialId,
             codeVerifier: state,
             vcStorageExpiryLimitInTimes: isNaN(defaultVCStorageExpiryLimit)
@@ -57,7 +57,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
         ) {
             window.open(
                 api.authorization(
-                    issuersConfig?.selected_issuer,
+                    selectedIssuer,
                     filteredCredentialConfig,
                     state,
                     code_challenge,
@@ -98,7 +98,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
                 url={credentialObject.logo.url}
                 title={credentialObject.name}
                 onClick={() => {
-                    issuersConfig?.selected_issuer?.qr_code_type ===
+                    selectedIssuer.qr_code_type ===
                     "OnlineSharing"
                         ? setCredentialExpiry(true)
                         : onSuccess(-1);
