@@ -147,4 +147,3 @@ public class StepDefSunbirdCredentials {
         Assert.assertTrue(sunbirdCredentials.isEnterFullNameHeaderDisplayed());
     }
 }
-

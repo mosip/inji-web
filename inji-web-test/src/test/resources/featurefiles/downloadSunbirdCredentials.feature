@@ -26,7 +26,7 @@ Feature: Login using Sunbird Credentials
 
     Examples:
       | policy number | full name | date of birth | Vailidty |
-      | 120786786    | PolicyTestAutomation     | 01-01-2024    |3|
+      | 120-720-24    | PolicyTestAutomation      | 01-01-2024    |3|
 
   @smoke @VerifyAndDownloadVcViaSunbirdLife
   Scenario Outline: download vc via sunbird
@@ -56,7 +56,7 @@ Feature: Login using Sunbird Credentials
 
     Examples:
       | policy number | full name | date of birth | Vailidty |
-      |    120786786 | PolicyTestAutomation     | 01-01-2024    |3|
+      |    120-720-24 | PolicyTestAutomation      | 01-01-2024    |3|
 #
   @smoke @VerifyAndDownloadVcViaSunbirdLifeWithInvalidPolicyNumber
   Scenario Outline: download vc via sunbird
@@ -84,7 +84,7 @@ Feature: Login using Sunbird Credentials
 
     Examples:
       | policy number | full name | date of birth | Vailidty |
-      |     1207202 | PolicyTestName     | 01-01-2024    |  3 |
+      |     1207202 | PolicyTestAutomation      | 01-01-2024    |  3 |
 #
   @smoke @VerifyAndDownloadVcViaVehicleInsuranceWithInvaildName
   Scenario Outline: download vc via sunbird
@@ -112,7 +112,7 @@ Feature: Login using Sunbird Credentials
 
     Examples:
       | policy number | full name | date of birth | Vailidty |
-      |     120786786 | PolicyTestNam     | 01-01-2024    | 3 |
+      |     120-720-24 | PolicyTestNam     | 01-01-2024    | 3 |
 
   @smoke @VerifyAndDownloadVcViaVehicleInsurance
   Scenario Outline: download vc via sunbird
@@ -140,4 +140,4 @@ Feature: Login using Sunbird Credentials
 
     Examples:
       | policy number | full name | date of birth | Vailidty |
-      |    120786786 | PolicyTestAutomation     | 01-01-2024    | 3 |
+      |    120-720-24 | PolicyTestAutomation      | 01-01-2024    | 3 |

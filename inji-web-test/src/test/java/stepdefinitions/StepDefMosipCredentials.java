@@ -73,7 +73,7 @@ public class StepDefMosipCredentials {
 
     @When("User verify login page lables")
     public void user_verify_login_page_lables() {
-        mosipCredentials.clickOnLoginWithOtp();
+        mosipCredentials.clickOnLoginWithotpButton();
         Assert.assertTrue(mosipCredentials.isLoginPageLableDisplayed());
     }
 
@@ -107,5 +107,4 @@ public class StepDefMosipCredentials {
     public void user_VerifyDownloadingInProgressDisplaed() {
         Assert.assertTrue(mosipCredentials.isDownloadingDescriptionTextDisplayed());
     }
-
 }

@@ -1,15 +1,15 @@
 package utils;
 
 public class GlobelConstants {
-    public static final String HomePageTextInArabic = "الوصول إلى بيانات الاعتماد الخاصة بك التي يمكن التحقق منها بكل سهولة! with ease!";
+    public static final String HomePageTextInArabic = "الوصول إلى بيانات الاعتماد التي يمكن التحقق منها بكل سهولة!";
     public static final String isHomePageDescriptionTextnArabic = "قم بتنزيل بيانات الاعتماد الخاصة بك ومشاركتها بشكل آمن على الفور.";
-    public static final String HomePageTextInTamil = "உங்கள் சரிபார்க்கக்கூடிய சான்றுகளை எளிதாக அணுகவும்! with ease!";
+    public static final String HomePageTextInTamil = "உங்கள் சரிபார்க்கக்கூடிய சான்றுகளை அணுகவும் எளிதாக!";
     public static final String isHomePageDescriptionTextnTamil=   "உங்கள் நற்சான்றிதழ்களை உடனடியாகப் பாதுகாப்பாக பதிவிறக்கம் செய்து பகிரவும்.";
-    public static final String HomePageTextInKannada ="ನಿಮ್ಮ ಪರಿಶೀಲಿಸಬಹುದಾದ ರುಜುವಾತುಗಳನ್ನು ಸುಲಭವಾಗಿ ಪ್ರವೇಶಿಸಿ! with ease!";
+    public static final String HomePageTextInKannada ="ನಿಮ್ಮ ಪರಿಶೀಲಿಸಬಹುದಾದ ರುಜುವಾತುಗಳನ್ನು ಪ್ರವೇಶಿಸಿ ಸುಲಭವಾಗಿ!";
     public static final String HomePageDescriptionTextInKannada  = "ನಿಮ್ಮ ರುಜುವಾತುಗಳನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ಡೌನ್\u200Cಲೋಡ್ ಮಾಡಿ ಮತ್ತು ತಕ್ಷಣವೇ ಹಂಚಿಕೊಳ್ಳಿ.";
-    public static final String HomePageTextInHindi= "अपने सत्यापन योग्य क्रेडेंशियल्स तक आसानी से पहुंचें! with ease!";
+    public static final String HomePageTextInHindi= "अपने सत्यापन योग्य क्रेडेंशियल्स तक आसानी से पहुंचें!";
     public static final String HomePageDescriptionTextInHindi = "अपने क्रेडेंशियल्स को सुरक्षित रूप से डाउनलोड करें और तुरंत साझा करें।";
-    public static final String HomePageTextInFrench="Accédez facilement à vos informations d'identification vérifiables ! with ease!";
+    public static final String HomePageTextInFrench="Accéder à vos informations d’identification vérifiables en toute simplicité !";
     public static final String HomePageDescriptionTextInFrench ="Téléchargez et partagez en toute sécurité vos informations d'identification instantanément.";
     public static final String ListOfCredentialType ="List of Credential Types";
     public static final String ListOfCredentialTypeInArabic ="قائمة أنواع الاعتمادات";
