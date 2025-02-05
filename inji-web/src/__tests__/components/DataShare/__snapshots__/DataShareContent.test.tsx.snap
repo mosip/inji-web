@@ -71,13 +71,20 @@ exports[`Testing  the Layout of the Expiry Content Check if the layout is matchi
           class="w-1/2 flex items-center space-x-2"
           data-testid="DataShareContent-Validity-Date"
         >
-          <input
-            class="accent-iw-primary scale-150"
-            disabled=""
-            name="consentValidity"
-            type="radio"
-            value="date"
-          />
+          <div
+            class="relative inline-block"
+          >
+            <input
+              class="accent-iw-primary scale-150"
+              disabled=""
+              name="consentValidity"
+              type="radio"
+              value="date"
+            />
+            <div
+              class="absolute inset-0"
+            />
+          </div>
           <span
             class="font-light text-iw-subTitle"
             data-testid="DataShareContent-Validity-Date-Title"
@@ -89,6 +96,7 @@ exports[`Testing  the Layout of the Expiry Content Check if the layout is matchi
     </div>
     <div
       class="relative flex mb-4"
+      data-testid="times-dropdown"
     >
       <div
         class="w-1/3"

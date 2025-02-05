@@ -44,7 +44,7 @@ export const mockApi = {
 export const mockCrypto = {
     getRandomValues: (array: Uint32Array) => {
         for (let i = 0; i < array.length; i++) {
-            array[i] = Math.floor(Math.random() * 4294967296);
+            array[i] = 4294967296;
         }
         return array;
     },

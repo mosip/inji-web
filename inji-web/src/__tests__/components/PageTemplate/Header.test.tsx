@@ -1,12 +1,11 @@
 import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import { Header } from "../../../components/PageTemplate/Header";
-import { mockUseNavigate} from '../../../test-utils/mockUtils';
+import { mockCrypto } from '../../../test-utils/mockUtils';
 import { renderWithProvider,mockUseLanguageSelector } from '../../../test-utils/mockUtils';
 
-
-
 mockUseLanguageSelector();
+global.crypto = mockCrypto;
 //todo : extract the local method to mockUtils, which is added to bypass the routing problems
 const mockedUsedNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({

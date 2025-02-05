@@ -106,7 +106,7 @@ exports[`Testing the Layout of IssuersList Check whether it renders loading stat
     width="0"
   >
     <lineargradient
-      id="blue-gradient"
+      id="blue-gradient-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
       x1="0%"
       x2="100%"
       y1="0%"

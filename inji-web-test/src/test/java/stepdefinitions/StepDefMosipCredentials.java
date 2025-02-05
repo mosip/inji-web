@@ -107,5 +107,4 @@ public class StepDefMosipCredentials {
     public void user_VerifyDownloadingInProgressDisplaed() {
         Assert.assertTrue(mosipCredentials.isDownloadingDescriptionTextDisplayed());
     }
-
 }

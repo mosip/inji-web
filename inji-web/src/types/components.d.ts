@@ -78,6 +78,7 @@ export type DSFooterProps = {
     onSuccess: () => void;
     cancelText: string;
     onCancel: () => void;
+    parent?: string;
 }
 export type DSHeaderProps = {
     title: string;

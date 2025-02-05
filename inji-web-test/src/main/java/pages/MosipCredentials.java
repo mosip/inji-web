@@ -64,6 +64,18 @@ public class MosipCredentials extends BasePage {
         return isElementIsVisible(driver, By.xpath("//label[@for='Mosip vid']"));
     }
 
+
+    public void clickOnLoginWithOtp() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        clickOnElement(driver, By.xpath("//*[@id='login_with_otp']"));
+    }
+
+
     public Boolean isVidInputBoxHeaderDisplayed() {
 
         return isElementIsVisible(driver, By.xpath("//label[text() = 'UIN/VID']"));
@@ -73,6 +85,7 @@ public class MosipCredentials extends BasePage {
 
         return isElementIsVisible(driver, By.xpath("//*[@data-testid='DownloadResult-SubTitle']"));
     }
+
     public Boolean isDownloadingloginWithotpDisplayed() {
 
         return isElementIsVisible(driver, By.xpath("//*[@id='login_with_otp']"));

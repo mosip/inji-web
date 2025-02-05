@@ -21,6 +21,7 @@ data:
     http {
       access_log /var/log/nginx/access1.log;
       error_log /var/log/nginx/error1.log;
+    
       server {
         listen {{ .Values.inji_web.inji_web_port }};
         server_name  localhost;

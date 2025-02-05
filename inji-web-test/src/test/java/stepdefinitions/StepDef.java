@@ -25,6 +25,7 @@ public class StepDef {
     private HelpPage helpPage;
     private SetNetwork setNetwork;
     private GlobelConstants globelConstants;
+
     public StepDef(BaseTest baseTest) {
         this.baseTest = baseTest;
         this.homePage = new HomePage(baseTest.getDriver());
@@ -188,7 +189,7 @@ public class StepDef {
     @Then("User verify home screens in hindi")
     public void user_verify_home_screens_in_hindi() {
         Assert.assertEquals(homePage.isHomePageTextDisplayed(), globelConstants.HomePageTextInHindi);
-        Assert.assertEquals(homePage.getHomePageDescriptionText(),globelConstants.HomePageDescriptionTextInHindi);
+        Assert.assertEquals(homePage.getHomePageDescriptionText(), globelConstants.HomePageDescriptionTextInHindi);
         Assert.assertEquals(homePage.isListOfIssuersTextDisplayed(), globelConstants.ListOfCredentialTypeOnHomePageInHindi);
         Assert.assertEquals(homePage.isListOfIssuersDescriptionTextDisplayed(), globelConstants.ListOfCredentialDescriptionTextInHindi);
     }
@@ -245,7 +246,7 @@ public class StepDef {
 
     @Then("User validate the list of credential types title of the page in arabic laguage for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_arabic_laguage_for_sunbird() {
-        Assert.assertEquals(homePage.isCredentialTypesDisplayed(),globelConstants.ListOfCredentialTypeInArabic );
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInArabic);
     }
 
     @Then("User validate the list of credential types title of the page in tamil laguage for sunbird")
@@ -282,7 +283,7 @@ public class StepDef {
     public void user_open_new_tab() {
         ((JavascriptExecutor) baseTest.getDriver()).executeScript("window.open('" + baseTest.url + "')");
 
-        Set<String> allWindowHandles =baseTest.getDriver().getWindowHandles();
+        Set<String> allWindowHandles = baseTest.getDriver().getWindowHandles();
         System.out.println(allWindowHandles);
         if (allWindowHandles.size() >= 2) {
             String secondWindowHandle = allWindowHandles.toArray(new String[0])[1];
@@ -291,6 +292,7 @@ public class StepDef {
 
         }
     }
+
     @Then("User verify About inji open")
     public void UserSwitchToAboutInjiTab() throws InterruptedException {
         Set<String> allWindowHandles = baseTest.getDriver().getWindowHandles();
@@ -315,41 +317,46 @@ public class StepDef {
         Assert.assertTrue(helpPage.isHelpPageFAQDescriptionTextDisplayed());
         Assert.assertTrue(helpPage.isHelpPageFAQTitelTextDisplayed());
     }
+
     @When("User verify the only one FAQ is open")
     public void user_verify_the_only_one_faq_is_open() {
         Assert.assertTrue(helpPage.isUpArrowDisplayed());
-        Assert.assertEquals(helpPage.getUpArrowCount(),1);
+        Assert.assertEquals(helpPage.getUpArrowCount(), 1);
     }
 
     @When("User verify the only one FAQ is at a time")
     public void user_verify_the_only_one_faq_is_at_a_time() {
         helpPage.ClickOnDownArrow();
-        Assert.assertEquals(helpPage.getUpArrowCount(),1);
-        Assert.assertEquals(helpPage.getDownArrowCount(),22);
+        Assert.assertEquals(helpPage.getUpArrowCount(), 1);
+        Assert.assertEquals(helpPage.getDownArrowCount(), 22);
     }
 
     @Then("User verify that help button displayed")
     public void user_verify_that_help_button_displayed() {
         Assert.assertTrue(homePage.isHelpPageDisplayed());
     }
+
     @Then("User verify header displayed")
     public void user_verify_header_displayed() {
         Assert.assertTrue(homePage.isHeaderContanerDisplayed());
     }
+
     @Then("User verify that home page container displayed")
     public void user_verify_that_home_page_container_displayed() {
         Assert.assertTrue(homePage.isHomePageContainerDisplayed());
     }
+
     @Then("User verify the footer on home page")
     public void user_verify_the_footer_on_home_page() {
         Assert.assertTrue(homePage.isFooterIsDisplayedOnHomePage());
-        Assert.assertEquals(homePage.getFooterText(),globelConstants.FooterText);
+        Assert.assertEquals(homePage.getFooterText(), globelConstants.FooterText);
     }
 
     @Then("User verify that about inji web displayed")
     public void user_verify_that_about_inji_web_displayed() {
         Assert.assertTrue(homePage.isAboutDisplayed());
     }
+
     @Then("User verify that on home page searchbox is present")
     public void user_verify_that_on_home_page_searchbox_is_present() {
         Assert.assertTrue(homePage.isSerchBoxDisplayed());
@@ -370,30 +377,37 @@ public class StepDef {
     public void user_verify_that_home_banner_heading() {
         homePage.isHomeBannerHeadingDisplayed();
     }
+
     @Then("User verify that home banner description")
     public void user_verify_that_home_banner_description() {
         homePage.isHomeBannerHeadingDescriptionDisplayed();
     }
+
     @Then("User verify that home banner get started")
     public void user_verify_that_home_banner_get_started() {
         homePage.isGetStartedButtonDisplayed();
     }
+
     @Then("User verify that home features heading")
     public void user_verify_that_home_features_heading() {
         homePage.isFeatureHeadingDisplayed();
     }
+
     @Then("User verify that home features description1")
     public void user_verify_that_home_features_description1() {
         homePage.isFeatureDescriptionDisplayed();
     }
+
     @Then("User verify that home features mobile image")
     public void user_verify_that_home_features_mobile_image() {
         homePage.isFeatureMobileImageDisplayed();
     }
+
     @Then("User verify that home features desktop image")
     public void user_verify_that_home_features_desktop_image() {
         homePage.isFeatureDesktopImageDisplayed();
     }
+
     @Then("User verify that home feature item image")
     public void user_verify_that_home_feature_item_image() {
         Assert.assertTrue(homePage.isAccessYourCredentialsImageDisplayed());
@@ -402,6 +416,7 @@ public class StepDef {
         Assert.assertTrue(homePage.isSecureAndPrivateImageDisplayed());
         Assert.assertTrue(homePage.isWiderAccessAndCompatibilityImageDisplayed());
     }
+
     @Then("User verify that home feature Heading")
     public void user_verify_that_home_feature_item_heading() {
 
@@ -411,6 +426,7 @@ public class StepDef {
         Assert.assertTrue(homePage.isSecureAndPrivateDisplayed());
         Assert.assertTrue(homePage.isWiderAccessAndCompatibilityDisplayed());
     }
+
     @Then("User verify that home feature item header for all")
     public void user_verify_that_home_feature_first_item() {
         Assert.assertTrue(homePage.isCredentialsSimplifiedTextDisplayed());
@@ -424,6 +440,7 @@ public class StepDef {
         Assert.assertTrue(homePage.isAvailableOnYourFavouriteBrowserTextDisplayed());
         Assert.assertTrue(homePage.isAlwaysWithinReachTextDisplayed());
     }
+
     @Then("User verify that home feature feature description")
     public void user_verify_that_home_feature_first_feature_description() {
         Assert.assertTrue(homePage.isCredentialsSimplifiedDescriptionTextDisplayed());
@@ -447,14 +464,17 @@ public class StepDef {
     public void user_click_on_data_share_content_validity() {
         homePage.clickOnConsentValidityButton();
     }
+
     @Then("User click on select custom validity button")
     public void user_click_on_select_custom_validity_button() {
         homePage.clickOnConsentValidityAsCustom();
     }
+
     @Then("user enter validity for data share content {string}")
     public void user_enter_validity_for_data_share_content(String string) {
         homePage.enterConsentValidityAsCustom(string);
     }
+
     @Then("Use click on procced button")
     public void use_click_on_procced_button() {
         homePage.clickOnProccedCustomButton();
