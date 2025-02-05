@@ -73,5 +73,12 @@ public class MosipCredentials extends BasePage {
 
         return isElementIsVisible(driver, By.xpath("//*[@data-testid='DownloadResult-SubTitle']"));
     }
+    public Boolean isDownloadingloginWithotpDisplayed() {
 
+        return isElementIsVisible(driver, By.xpath("//*[@id='login_with_otp']"));
+    }
+
+    public void clickOnLoginWithotpButton() {
+        clickOnElement(driver, By.xpath("//*[@id='login_with_otp']"));
+    }
 }

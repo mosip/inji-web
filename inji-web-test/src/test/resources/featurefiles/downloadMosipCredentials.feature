@@ -27,7 +27,7 @@ Feature: download mosip cridentials
 
     Examples:
       | vid              | otp    | Vailidty |
-      | 4391082978460254 | 111111 |   3      |
+      | 2405782960 | 111111 |   3      |
 
 
   @smoke @VerifySearchWithInvalidString
@@ -70,7 +70,7 @@ Feature: download mosip cridentials
 
     Examples:
       | vid              | otp    | Vailidty |
-      | 4391082978460254 | 111111 |     3    |
+      | 2405782960 | 111111 |     3    |
 
   @smoke @VerifyAndDownloadVcViaMosipNatinalIdAndRfreshPage
   Scenario Outline: Mosip Natonal Id by e-Signet
@@ -100,5 +100,5 @@ Feature: download mosip cridentials
 
     Examples:
       | vid              | otp    | Vailidty |
-      | 4391082978460254 | 111111 |     3     |
+      | 2405782960 | 111111 |     3     |
 
