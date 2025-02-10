@@ -13,6 +13,7 @@
     "@types/react-outside-click-handler": "^1.3.3",
     "@types/react-redux": "^7.1.33",
     "autoprefixer": "^9.8.6",
+    "cross-env": "^7.0.3",
     "crypto-js": "^4.2.0",
     "i18next": "^23.11.2",
     "postcss-cli": "^11.0.0",
@@ -33,7 +34,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "set PORT=3001 && react-scripts start",
+    "start": "cross-env PORT=3004 react-scripts start",
     "build": "CI=false react-scripts build",
     "test": "react-scripts test --silent --testPathPattern=__tests__",
     "eject": "react-scripts eject",

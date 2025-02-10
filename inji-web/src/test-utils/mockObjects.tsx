@@ -126,7 +126,7 @@ export const mockIssuerObject = {
         name: 'Test Issuer',
         desc: 'Test Description',
         protocol: 'OTP' as 'OTP', // Explicitly set the type to 'OTP' or 'OpenId4VCI'
-        credential_issuer: 'test-issuer',
+        issuer_id: 'test-issuer',
         authorization_endpoint: 'https://auth.test.com',
         credentials_endpoint: 'https://credentials.test.com',
         display: [{
@@ -154,7 +154,7 @@ export const mockIssuerObjectList =  [
         name: 'Issuer 1',
         desc: 'Description 1',
         protocol: 'OpenId4VCI',
-        credential_issuer: 'issuer1',
+        issuer_id: 'issuer1',
         authorization_endpoint: 'https://issuer1.com/auth',
         credentials_endpoint: 'https://issuer1.com/credentials',
         display: [
@@ -179,7 +179,7 @@ export const mockIssuerObjectList =  [
         name: 'Issuer 2',
         desc: 'Description 2',
         protocol: 'OpenId4VCI',
-        credential_issuer: 'issuer2',
+        issuer_id: 'issuer2',
         authorization_endpoint: 'https://issuer2.com/auth',
         credentials_endpoint: 'https://issuer2.com/credentials',
         display: [

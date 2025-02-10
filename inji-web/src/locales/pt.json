@@ -78,7 +78,13 @@
     "emptyContainerContent": "Nenhuma credencial encontrada. Atualize a janela do navegador ou tente novamente mais tarde",
     "containerHeading": "Lista de tipos de credenciais",
     "containerSubHeading": "Escolha uma credencial e confirme sua identidade na próxima etapa.",
-    "errorContent": "O serviço não está disponível no momento. Tente novamente mais tarde."
+    "errorContent": "O serviço não está disponível no momento. Tente novamente mais tarde.",
+    "errors": {
+      "authorizationGrantTypeNotSupportedByWallet": {
+        "code": "Erro de autorização de tipo de concessão não suportado!",
+        "message": "Obrigado pela sua paciência! Estamos enfrentando dificuldades técnicas no momento. Tente novamente mais tarde ou entre em contato com o administrador para obter mais assistência!"
+      }
+    }
   },
   "RedirectionPage": {
     "navigateButton": "Ir para a página inicial",
@@ -258,7 +264,7 @@
     "item23":{
       "title":"Como posso alternar entre VC incorporado e compartilhamento online na Inji Wallet?",
       "description1":"Configurar qr_code_type nas configurações do emissor Mimoto: ",
-      "description2":"1. EmbeddedVC: incorpora o VC completo no formato JSON (código QR mais denso) para uso offline",
+      "description2":"1. EmbeddedVC: incorpora o VC completo no formato JSON (código QR mais denso) para uso offline.",
       "description3":"2. OnlineSharing: gera um código QR com uma URL para o armazenamento de VC online, facilitando a digitalização e o compartilhamento online."
     }
   },

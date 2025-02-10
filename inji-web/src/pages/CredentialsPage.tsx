@@ -5,7 +5,10 @@ import {NavBar} from "../components/Common/NavBar";
 import {CredentialList} from "../components/Credentials/CredentialList";
 import {useDispatch, useSelector} from "react-redux";
 import {storeSelectedIssuer} from "../redux/reducers/issuersReducer";
-import {storeCredentials, storeFilteredCredentials} from "../redux/reducers/credentialsReducer";
+import {
+    storeCredentials,
+    storeFilteredCredentials
+} from "../redux/reducers/credentialsReducer";
 import {api} from "../utils/api";
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
@@ -16,41 +19,37 @@ import {RootState} from "../types/redux";
 import {isObjectEmpty} from "../utils/misc";
 
 export const CredentialsPage: React.FC = () => {
-
     const {state, fetchRequest} = useFetch();
     const params = useParams<CredentialParamProps>();
     const dispatch = useDispatch();
     const {t} = useTranslation("CredentialsPage");
     const language = useSelector((state: RootState) => state.common.language);
-    let displayObject= {} as DisplayArrayObject;
-    let [selectedIssuer, setSelectedIssuer] = useState({} as IssuerObject)
-    if(!isObjectEmpty(selectedIssuer)){
-        displayObject = getObjectForCurrentLanguage(selectedIssuer.display, language);
+    let displayObject = {} as DisplayArrayObject;
+    const selectedIssuer: IssuerObject | undefined = useSelector(
+        (state: RootState) => state.issuers.selected_issuer
+    );
+    if (!isObjectEmpty(selectedIssuer)) {
+        displayObject = getObjectForCurrentLanguage(
+            selectedIssuer?.display,
+            language
+        );
     }
 
     useEffect(() => {
         const fetchCall = async () => {
-            let apiRequest: ApiRequest = api.fetchSpecificIssuer;
+            dispatch(storeSelectedIssuer(params.issuerId ?? ""));
+            let apiRequest = api.fetchIssuersWellknown;
             let response = await fetchRequest(
                 apiRequest.url(params.issuerId ?? ""),
                 apiRequest.methodType,
                 apiRequest.headers()
             );
-            dispatch(storeSelectedIssuer(response?.response));
-            setSelectedIssuer(response?.response);
 
-            apiRequest = api.fetchIssuersWellknown;
-            response = await fetchRequest(
-                apiRequest.url(params.issuerId ?? ""),
-                apiRequest.methodType,
-                apiRequest.headers()
-            );
-
-            dispatch(storeFilteredCredentials(response));
-            dispatch(storeCredentials(response));
-        }
+            dispatch(storeFilteredCredentials(response?.response));
+            dispatch(storeCredentials(response?.response));
+        };
         fetchCall();
-    }, [])
+    }, []);
 
     if (state === RequestStatus.ERROR) {
         toast.error(t("errorContent"));

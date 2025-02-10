@@ -13,7 +13,7 @@ exports[`Testing the Layout of Language Selector Check if the layout is matching
       width="0"
     >
       <lineargradient
-        id="blue-gradient"
+        id="blue-gradient-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         x1="0%"
         x2="100%"
         y1="0%"
@@ -36,7 +36,7 @@ exports[`Testing the Layout of Language Selector Check if the layout is matching
       height="30"
       stroke="currentColor"
       stroke-width="0"
-      style="fill: url(#blue-gradient);"
+      style="fill: url(#blue-gradient-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA);"
       viewBox="0 0 16 16"
       width="30"
       xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@ exports[`Testing the Layout of Language Selector Check if the layout is matching
           width="0"
         >
           <lineargradient
-            id="blue-gradient"
+            id="blue-gradient-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
             x1="0%"
             x2="100%"
             y1="0%"
@@ -87,7 +87,7 @@ exports[`Testing the Layout of Language Selector Check if the layout is matching
           height="20"
           stroke="currentColor"
           stroke-width="0"
-          style="fill: url(#blue-gradient);"
+          style="fill: url(#blue-gradient-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA);"
           viewBox="0 0 24 24"
           width="20"
           xmlns="http://www.w3.org/2000/svg"

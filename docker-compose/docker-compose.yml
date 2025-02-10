@@ -1,20 +1,35 @@
 version: '3.8'
 
 services:
-  nginx:
-    container_name: nginx
-    image: nginx:alpine
+
+  minio:
+    container_name: 'minio-service'
+    image: bitnami/minio:2022.2.7-debian-10-r0
     ports:
-      - '80:80'
+      - "9001:9001"
+      - "9000:9000"
+    environment:
+      MINIO_ROOT_USER: minioadmin      # Access Key
+      MINIO_ROOT_PASSWORD: minioadmin  # Secret Key
+
+  datashare:
+    container_name: 'datashare-service'
+    image: mosipqa/data-share-service:1.3.x
+    ports:
+      - "8097:8097"
+    environment:
+      - active_profile_env=inji-default,standalone
+      - SPRING_CONFIG_NAME=data-share
+      - SPRING_CONFIG_LOCATION=/home/mosip/
     volumes:
-      - ./config/mimoto-issuers-config.json:/config/server/mimoto-issuers-config.json
-      - ./config/mimoto-trusted-verifiers.json:/config/server/mimoto-trusted-verifiers.json
-      - ./config/credential-template.html:/config/server/credential-template.html
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./config/data-share-inji-default.properties:/home/mosip/data-share-inji-default.properties
+      - ./config/data-share-standalone.properties:/home/mosip/data-share-standalone.properties
+    depends_on:
+      - minio
 
   mimoto-service:
     container_name: 'mimoto-service'
-    image: 'mosipid/mimoto:0.14.0'
+    image: 'mosipqa/mimoto:0.15.x'
     user: root
     ports:
       - '8099:8099'
@@ -23,34 +38,24 @@ services:
       - active_profile_env=default
       - SPRING_CONFIG_NAME=mimoto
       - SPRING_CONFIG_LOCATION=/home/mosip/
+      - oidc_p12_password=dummypassword
     volumes:
       - ./config/mimoto-default.properties:/home/mosip/mimoto-default.properties
-      - ./config/mimoto-issuers-config.json:/home/mosip/mimoto-issuers-config.json
-      - ./config/mimoto-trusted-verifiers.json:/home/mosip/mimoto-trusted-verifiers.json
       - ./certs/oidckeystore.p12:/home/mosip/certs/oidckeystore.p12
     depends_on:
-      - nginx
-
-  inji-web-proxy:
-    container_name: 'inji-web-proxy'
-    image: inji-web-proxy:local
-    ports:
-      - '3010:3010'
-    environment:
-      - MIMOTO_HOST=http://mimoto-service:8099/v1/mimoto
-      - PORT=3010
-    depends_on:
-      - mimoto-service
+      - datashare
 
   inji-web:
     container_name: 'inji-web'
     image: inji-web:local
     ports:
-      - '3001:3004'
+      - '3004:3004'
     environment:
       - DEFAULT_LANG=en
-      - MIMOTO_HOST=http://localhost:3010
+      - MIMOTO_HOST=http://localhost:3004/v1/mimoto
+    volumes:
+      - ./config/mimoto-issuers-config.json:/home/mosip/mimoto-issuers-config.json
+      - ./config/mimoto-trusted-verifiers.json:/home/mosip/mimoto-trusted-verifiers.json
+      - ./config/credential-template.html:/home/mosip/credential-template.html
     depends_on:
-      - inji-web-proxy
-
-
+      - mimoto-service

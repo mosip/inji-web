@@ -39,7 +39,7 @@ exports[`Testing the Functionality of RedirectionPage Check if DownloadResult co
             </svg>
           </div>
           <span
-            class="text-2xl font-semibold ps-2 whitespace-nowrap"
+            class="text-2xl font-semibold ps-2 pe-4 md:whitespace-nowrap whitespace-wrap"
             data-testid="NavBar-Text"
           />
         </div>
@@ -164,7 +164,7 @@ exports[`Testing the Functionality of RedirectionPage Check if DownloadResult co
             </svg>
           </div>
           <span
-            class="text-2xl font-semibold ps-2 whitespace-nowrap"
+            class="text-2xl font-semibold ps-2 pe-4 md:whitespace-nowrap whitespace-wrap"
             data-testid="NavBar-Text"
           />
         </div>
@@ -289,7 +289,7 @@ exports[`Testing the Functionality of RedirectionPage Check if NavBar component 
             </svg>
           </div>
           <span
-            class="text-2xl font-semibold ps-2 whitespace-nowrap"
+            class="text-2xl font-semibold ps-2 pe-4 md:whitespace-nowrap whitespace-wrap"
             data-testid="NavBar-Text"
           />
         </div>
@@ -414,7 +414,7 @@ exports[`Testing the Functionality of RedirectionPage Check if it displays error
             </svg>
           </div>
           <span
-            class="text-2xl font-semibold ps-2 whitespace-nowrap"
+            class="text-2xl font-semibold ps-2 pe-4 md:whitespace-nowrap whitespace-wrap"
             data-testid="NavBar-Text"
           />
         </div>
@@ -539,7 +539,7 @@ exports[`Testing the Layout of RedirectionPage Check if the layout is matching w
             </svg>
           </div>
           <span
-            class="text-2xl font-semibold ps-2 whitespace-nowrap"
+            class="text-2xl font-semibold ps-2 pe-4 md:whitespace-nowrap whitespace-wrap"
             data-testid="NavBar-Text"
           />
         </div>

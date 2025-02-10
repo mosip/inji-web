@@ -30,7 +30,7 @@
     "FeatureItem2":{
       "heading":"Your Documents Downloaded in Second",
       "item1":"Download with Confidence",
-      "description1":"Save you rimportant documents instantly",
+      "description1":"Save your important documents instantly",
       "item2":"Safe and Sound",
       "description2":"Download IDs, licenses, and more, in one secure location."
     },
@@ -78,7 +78,13 @@
     "emptyContainerContent": "No Credentials found. Please refresh your browser window or try again later",
     "containerHeading": "List of Credential Types",
     "containerSubHeading": "Choose a credential, and confirm your identity in the next step.",
-    "errorContent": "The service is currently unavailable now. Please try again later."
+    "errorContent": "The service is currently unavailable now. Please try again later.",
+    "errors": {
+      "authorizationGrantTypeNotSupportedByWallet": {
+        "code": "Grant type not supported authorization error!",
+        "message": "Thanks for your patience! We're experiencing technical difficulties right now. Please try again later or contact the admin for further assistance!"
+      }
+    }
   },
   "RedirectionPage": {
     "navigateButton": "Go To Home",
@@ -266,7 +272,7 @@
     "item23":{
       "title":"How can I toggle between embedded VC and Online Sharing in Inji Wallet?",
       "description1":"Configure qr_code_type in Mimoto issuer's settings: ",
-      "description2":"1. EmbeddedVC: Embeds the full VC in JSON format (denser QR code) for offline use",
+      "description2":"1. EmbeddedVC: Embeds the full VC in JSON format (denser QR code) for offline use.",
       "description3":"2. OnlineSharing: Generates a QR code with a URL to the online VC storage, making it easier to scan and share online."
     }
   },

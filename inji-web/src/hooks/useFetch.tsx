@@ -44,6 +44,3 @@ export const useFetch = () => {
     };
     return {state, error, response, fetchRequest};
 }
-
-
-

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {VscGlobe} from "react-icons/vsc";
-import {LanguagesSupported, switchLanguage} from "../../utils/i18n";
+import {isRTL, LanguagesSupported, switchLanguage} from "../../utils/i18n";
 import {useDispatch, useSelector} from "react-redux";
 import {storeLanguage} from "../../redux/reducers/commonReducer";
 import {RootState} from "../../types/redux";
@@ -14,7 +14,6 @@ export const LanguageSelector: React.FC = () => {
     let language = useSelector((state: RootState) => state.common.language);
     language = language ?? window._env_.DEFAULT_LANG;
     const [isOpen, setIsOpen] = useState(false);
-
 
     interface DropdownItem {
         label: string;
@@ -62,7 +61,7 @@ export const LanguageSelector: React.FC = () => {
 
             {isOpen && (
                 <div
-                    className="absolute w-60 z-40 right-0 mt-3 rounded-md shadow-lg bg-iw-background overflow-hidden font-normal">
+                    className={`absolute w-60 z-40 ${isRTL(language) ? "left-0" : "right-0"} mt-3 rounded-md shadow-lg bg-iw-background overflow-hidden font-normal`}>
                     <ul className="py-1 divide-y divide-gray-200">
                         {LanguagesSupported.map((item) => (
                             <li key={item.value}

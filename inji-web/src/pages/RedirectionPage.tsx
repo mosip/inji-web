@@ -9,6 +9,8 @@ import {SessionObject} from "../types/data";
 import {useTranslation} from "react-i18next";
 import {downloadCredentialPDF, getErrorObject, getTokenRequestBody} from "../utils/misc";
 import {getObjectForCurrentLanguage} from "../utils/i18n";
+import { RootState } from '../types/redux';
+import { useSelector } from 'react-redux'
 
 export const RedirectionPage: React.FC = () => {
 
@@ -22,12 +24,11 @@ export const RedirectionPage: React.FC = () => {
     const [session, setSession] = useState<SessionObject | null>(activeSessionInfo);
     const [completedDownload, setCompletedDownload] = useState<boolean>(false);
     const displayObject = getObjectForCurrentLanguage(session?.selectedIssuer?.display ?? []);
+    const language = useSelector((state: RootState) => state.common.language);
     const [errorObj, setErrorObj] = useState({
         code: "error.generic.title",
         message: "error.generic.subTitle"
     })
-
-
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -35,11 +36,11 @@ export const RedirectionPage: React.FC = () => {
                 const code = searchParams.get("code") ?? "";
                 const urlState = searchParams.get("state") ?? "";
                 const codeVerifier = activeSessionInfo?.codeVerifier;
-                const issuerId = activeSessionInfo?.selectedIssuer?.credential_issuer ?? "";
+                const issuerId = activeSessionInfo?.selectedIssuer?.issuer_id ?? "";
                 const certificateId = activeSessionInfo?.certificateId;
                 const vcStorageExpiryLimitInTimes = activeSessionInfo?.vcStorageExpiryLimitInTimes ?? "-1";
 
-                const requestBody = new URLSearchParams(getTokenRequestBody(code, codeVerifier, issuerId, certificateId, vcStorageExpiryLimitInTimes));
+                const requestBody = new URLSearchParams(getTokenRequestBody(code, codeVerifier, issuerId, certificateId, vcStorageExpiryLimitInTimes,language));
                 const apiRequest = api.fetchTokenAnddownloadVc;
                 let credentialDownloadResponse = await fetchRequest(
                     apiRequest.url(),
@@ -87,7 +88,7 @@ export const RedirectionPage: React.FC = () => {
     }
 
     return <div data-testid="Redirection-Page-Container">
-        {activeSessionInfo?.selectedIssuer?.credential_issuer && <NavBar title={displayObject?.name ?? ""} search={false} link={`/issuers/${activeSessionInfo?.selectedIssuer?.credential_issuer}`}/>}
+        {activeSessionInfo?.selectedIssuer?.issuer_id && <NavBar title={displayObject?.name ?? ""} search={false} link={`/issuers/${activeSessionInfo?.selectedIssuer?.issuer_id}`}/>}
         {loadStatusOfRedirection()}
     </div>
 }

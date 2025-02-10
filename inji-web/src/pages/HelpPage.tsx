@@ -5,7 +5,7 @@ import {useTranslation} from "react-i18next";
 
 export const HelpPage: React.FC = () => {
     const {t} = useTranslation("HelpPage")
-    return <div className={"bg-iw-background pb-20"} data-testid="Help-Page-Container">
+    return <div className={"bg-iw-background pb-28"} data-testid="Help-Page-Container">
             <NavBar title={t("title")} search={false} link={"/"}/>
             <div className="container mx-auto mt-8 px-10 sm:px-0 ">
                 <HelpAccordion/>

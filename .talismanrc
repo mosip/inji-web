@@ -7,4 +7,26 @@ fileignoreconfig:
   checksum: df001d17335c68fb4e3703e0622baf454dbcce4bd1869f67502c399ef876ea1f
 - filename: inji-web/src/components/Common/LanguageSelector.tsx
   checksum: 66f81412745594459c006fb681e28091a5287b30c37dd8afd8491ef2a209ea41
+- filename: inji-web/public/env.config.js
+  checksum: 0ffabe95d3271bb98bea2cb4e2ee67c7b351e567a9ebb3cae003de9d7e28de8f
+- filename: inji-web/package-lock.json
+  checksum: f6d0983f7ea3228725d38f9f8d7c2409c032417e248d5a30ebac5346e5d72f8a
+- filename: docker-compose/config/mimoto-default.properties
+  checksum: 1b2d78eae3f3b63600fb39121dd6fabb56893edbe5888b41d775dde74afe5e85
+- filename: docker-compose/config/data-share-inji-default.properties
+  checksum: 8b59432cb8d33b61f2d510f4f5abf1d7c3de1dbb3ddb90a2dda39337f3a45f4e
+- filename: docker-compose/docker-compose.yml
+  checksum: 804e5bca5cb941dc8ef29eacd8122b7d18c34303d1a7326d3ba193ce064e5bb2
+- filename: inji-web/src/components/DataShare/DataShareContent.tsx
+  checksum: 1af797cfef624b32692d625304f9a1403c1719578a0c48b4583ade529a60376d
+- filename: inji-web/src/utils/misc.ts
+  checksum: fa1fba107d4a8bb86f37ea4f022d1e6f320da816e90d0ebdd1276914d14550d5
+- filename: helm/inji-web/templates/configmap.yaml
+  checksum: f238e115674a518c94ea702831a02d41bc73124aa7852b8ef7d588eb27308f77
+- filename: inji-web/nginx.conf
+  checksum: ad2ad36daa595266c02e48f1dbc875ebcfe409fb57685c16b5e50df4a0c5ec08
+- filename: inji-web/src/__tests__/utils/misc.test.tsx
+  checksum: 6b70370a26d1556adeca568ab8269202a660af8bb7d095e7121314935e8bff18
+- filename: inji-web/src/test-utils/mockUtils.tsx
+  checksum: 9a3c5c6c81c6ff5cec1203004dde8a04c72425b13ca6eaec2fd15a50baf7fa02
 version: ""
