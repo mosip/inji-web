@@ -14,6 +14,7 @@ import utils.BaseTest;
 import utils.GlobelConstants;
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 
 public class StepDef {
@@ -81,12 +82,9 @@ public class StepDef {
     }
 
     @Then("User verify Download Success text displayed")
-    public void user_verify_download_success_text_displayed() {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    public void user_verify_download_success_text_displayed() throws InterruptedException {
+        Thread.sleep(10000);
+        baseTest.getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         Assert.assertTrue(homePage.isSuccessMessageDisplayed());
     }
 

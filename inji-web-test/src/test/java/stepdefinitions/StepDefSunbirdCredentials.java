@@ -63,12 +63,21 @@ public class StepDefSunbirdCredentials {
 
     @Then("User enter the date of birth {string}")
     public void user_enter_the_date_of_birth(String string) {
-        sunbirdCredentials.selectDateOfBirth();
+        sunbirdCredentials.selectDateOfBirth(string);
     }
 
     @Then("User click on login button")
-    public void user_click_on_login_button() {
-        sunbirdCredentials.clickOnLogin();
+    public void user_click_on_login_button() throws InterruptedException {
+        int retryCount = 0;
+
+        while (retryCount < 3 && sunbirdCredentials.isLoginButtonDisplayed()) {
+            Thread.sleep(5000);
+            sunbirdCredentials.clickOnLogin();
+            if (!sunbirdCredentials.isLoginFailedDisplayed()) {
+                break;
+            }
+            retryCount++;
+        }
     }
 
     @Then("User verify life Insurance displayed")

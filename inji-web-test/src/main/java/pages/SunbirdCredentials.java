@@ -61,10 +61,10 @@ public class SunbirdCredentials extends BasePage {
         enterText(driver, By.xpath("//input[@id='_form_fullName']"), string);
     }
 
-    public void selectDateOfBirth() {
+    public void selectDateOfBirth(String string) {
 
         driver.findElement(By.xpath("//input[@id='_form_fullName']")).sendKeys(Keys.TAB);
-        driver.findElement(By.id("_form_dob")).sendKeys("01/01/2024");
+        driver.findElement(By.id("_form_dob")).sendKeys(string);
 
 
         driver.findElement(By.xpath("//input[@id='_form_dob']")).click();
@@ -90,13 +90,19 @@ public class SunbirdCredentials extends BasePage {
         }
     }
 
-
     public void clickOnLogin() {
         clickOnElement(driver, By.xpath("//button[@id='verify_form']"));
     }
 
+    public Boolean isLoginButtonDisplayed() {
+        return isElementIsVisible(driver, By.xpath("//button[@id='verify_form']"));
+    }
     public Boolean isLifeInceranceDisplayed() {
         return isElementIsVisible(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-1']"));
+    }
+
+    public Boolean isLoginFailedDisplayed() {
+        return isElementIsVisible(driver, By.xpath("//*[contains(text(), 'Login failed')]"));
     }
 
     public void clickOnLifeInsurance() {
@@ -132,5 +138,8 @@ public class SunbirdCredentials extends BasePage {
     public void clickOnVehicleInsurance() {
         clickOnElement(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-1']"));
     }
+
+
+
 
 }
