@@ -2,7 +2,6 @@ Feature: download mosip cridentials
 
   @smoke @VerifyAndDownloadVcViaMosipNatinalId
   Scenario Outline: Mosip Natonal Id by e-Signet
-    Given Load application url "https://inji.qa-inji.mosip.net/"
     Then User gets the title of the page
     Then User click on get started button
     And User search the issuers with "National"
@@ -27,12 +26,11 @@ Feature: download mosip cridentials
 
     Examples:
       | vid              | otp    | Vailidty |
-      | 4391082978460254 | 111111 |   3      |
+      | 2405782960 | 111111 |   3      |
 
 
   @smoke @VerifySearchWithInvalidString
   Scenario: Mosip Natonal Id by e-Signet
-    Given Load application url "https://inji.qa-inji.mosip.net/"
     Then User gets the title of the page
     Then User click on get started button
     And User search the issuers with "qewqdda"
@@ -43,7 +41,6 @@ Feature: download mosip cridentials
 
   @smoke @VerifyAndDownloadVcViaMosipNatinalId
   Scenario Outline: Mosip Natonal Id by e-Signet
-    Given Load application url "https://inji.qa-inji.mosip.net/"
     Then User gets the title of the page
     Then User click on get started button
     And User search the issuers with "National"
@@ -70,11 +67,10 @@ Feature: download mosip cridentials
 
     Examples:
       | vid              | otp    | Vailidty |
-      | 4391082978460254 | 111111 |     3    |
+      | 2405782960 | 111111 |     3    |
 
   @smoke @VerifyAndDownloadVcViaMosipNatinalIdAndRfreshPage
   Scenario Outline: Mosip Natonal Id by e-Signet
-    Given Load application url "https://inji.qa-inji.mosip.net/"
     Then User gets the title of the page
     Then User click on get started button
     And User search the issuers with "National"
@@ -100,5 +96,5 @@ Feature: download mosip cridentials
 
     Examples:
       | vid              | otp    | Vailidty |
-      | 4391082978460254 | 111111 |     3     |
+      | 2405782960 | 111111 |     3     |
 
