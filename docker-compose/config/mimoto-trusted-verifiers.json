@@ -4,6 +4,9 @@
       "client_id": "https://injiverify.collab.mosip.net",
       "redirect_uris": [
         "https://injiverify.collab.mosip.net/redirect"
+      ],
+      "response_uris": [
+        "https://injiverify.collab.mosip.net/redirect"
       ]
     }
   ]
