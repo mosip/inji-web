@@ -18,8 +18,11 @@
       "protocol": "OpenId4VCI",
       "client_id": "wallet-demo",
       "client_alias": "wallet-demo-client",
+      "wellknown_endpoint": "https://injicertify-insurance.collab.mosip.net/v1/certify/issuance/.well-known/openid-credential-issuer",
       "redirect_uri": "io.mosip.residentapp.inji://oauthredirect",
+      "authorization_audience": "https://esignet-insurance.collab.mosip.net/v1/esignet/oauth/v2/token",
       "token_endpoint": "https://localhost:8099/v1/mimoto/get-token/StayProtected",
+      "proxy_token_endpoint": "https://esignet-insurance.collab.mosip.net/v1/esignet/oauth/v2/token",
       "qr_code_type": "OnlineSharing",
       "credential_issuer_host": "https://injicertify-insurance.dev1.mosip.net",
       "enabled": "true"
