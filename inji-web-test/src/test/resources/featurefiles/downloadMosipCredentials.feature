@@ -97,4 +97,3 @@ Feature: download mosip cridentials
     Examples:
       | vid              | otp    | Vailidty |
       | 2405782960 | 111111 |     3     |
-
