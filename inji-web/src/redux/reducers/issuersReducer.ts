@@ -1,5 +1,6 @@
 import {IssuerObject} from "../../types/data";
 import {IssuersReducerActionType} from "../../types/redux";
+import {REHYDRATE} from "redux-persist";
 
 const initialState = {
     issuers: [],
@@ -33,6 +34,15 @@ export const issuersReducer = (state = initialState, action: any) => {
                 ...state,
                 selected_issuer: selectedIssuer
             };
+        case REHYDRATE:
+            if (action.payload?.issuers) {
+                const res = {
+                    ...state,
+                    issuers: action.payload.issuers // Merge persisted state (issuers) into Redux state
+                };
+                return res
+            }
+            return state;
         default:
             return state;
     }
