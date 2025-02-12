@@ -32,4 +32,3 @@ public class GlobelConstants {
     public static final String ListOfCredentialDescriptionTextInArabic = "ابحث عن جهة الإصدار الموثوق بها واختر نوع بيانات الاعتماد في الخطوة التالية.";
     public static final String FooterText = "© 2024 Inji. All rights reserved.";
 }
-
