@@ -204,7 +204,22 @@ public class StepDef {
         Assert.assertEquals(homePage.getHomePageDescriptionText(), globelConstants.HomePageDescriptionTextInFrench);
         Assert.assertEquals(homePage.isListOfIssuersTextDisplayed(), globelConstants.ListOfCredentialTypeOnHomePageInFrench);
         Assert.assertEquals(homePage.isListOfIssuersDescriptionTextDisplayed(), globelConstants.ListOfCredentialDescriptionTextInFrench);
+    }    
+    
+    
+    @Then("User click on portugues langauge")
+    public void user_click_on_portugues_langauge() {
+        homePage.clickOnPortuguesLanguage();
     }
+
+    @Then("User verify home screens in portugues")
+    public void user_verify_home_screens_in_portugues() {
+        Assert.assertEquals(homePage.isHomePageTextDisplayed(), globelConstants.HomePageTextInPortugues);
+        Assert.assertEquals(homePage.getHomePageDescriptionText(), globelConstants.HomePageDescriptionTextInPortugues);
+        Assert.assertEquals(homePage.isListOfIssuersTextDisplayed(), globelConstants.ListOfCredentialTypeOnHomePageInPortugues);
+        Assert.assertEquals(homePage.isListOfIssuersDescriptionTextDisplayed(), globelConstants.ListOfCredentialDescriptionTextInPortugues);
+    }
+    
 
     @Then("User validate the list of credential types title of the page")
     public void user_validate_the_list_of_credential_types_title_of_the_page() {
@@ -236,6 +251,11 @@ public class StepDef {
         Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInFrench);
     }
 
+    @Then("User validate the list of credential types title of the page in portugues laguage")
+    public void user_validate_the_list_of_credential_types_title_of_the_portugues_in_portugues_laguage() {
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInPortugues);
+    }
+    
     @Then("User validate the list of credential types title of the page for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_for_sunbird() {
         System.out.println(homePage.isVeridoniaInsuranceCompanyTextDisplayed());
@@ -266,6 +286,11 @@ public class StepDef {
     @Then("User validate the list of credential types title of the page in french laguage for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_french_laguage_for_sunbird() {
         Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInFrench);
+    }
+    
+    @Then("User validate the list of credential types title of the page in portugues laguage for sunbird")
+    public void user_validate_the_list_of_credential_types_title_of_the_page_in_portugues_laguage_for_sunbird() {
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInPortugues);
     }
 
     @Then("User verify All the languages")
