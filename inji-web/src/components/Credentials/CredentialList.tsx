@@ -9,16 +9,14 @@ import {SpinningLoader} from "../Common/SpinningLoader";
 import {CredentialListProps} from "../../types/components";
 import {HeaderTile} from "../Common/HeaderTile";
 import {DownloadResult} from "../Redirection/DownloadResult";
-import { IssuerObject } from "../../types/data";
+import {IssuerObject} from "../../types/data";
 
 export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
     const [errorObj, setErrorObj] = useState({
         code: "",
         message: ""
     });
-    const selectedIssuer: IssuerObject | undefined = useSelector(
-        (state: RootState) => state.issuers.selected_issuer
-    );
+    
     const credentials = useSelector((state: RootState) => state.credentials);
     const {t} = useTranslation("CredentialsPage");
 
@@ -27,7 +25,7 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
     }
 
     if (
-        state === RequestStatus.ERROR || !selectedIssuer ||
+        state === RequestStatus.ERROR ||
         !credentials?.filtered_credentials
             ?.credential_configurations_supported ||
         (credentials?.filtered_credentials

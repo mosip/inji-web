@@ -34,7 +34,7 @@ export class api {
             };
         }
     };
-    static fetchIssuersWellknown: ApiRequest = {
+    static fetchIssuersConfiguration: ApiRequest = {
         url: (issuerId: string) =>
             api.mimotoHost + `/issuers/${issuerId}/configuration`,
         methodType: MethodType.GET,
