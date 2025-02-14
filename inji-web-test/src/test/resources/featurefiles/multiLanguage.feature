@@ -42,6 +42,11 @@ Feature: Inji web multilanguage testing
     And User verify home screens in french
     And User search the issuers with "National Identity Department"
     And User verify mosip national id by e-signet displayed
+    And User click on langauge button
+    And User click on portugues langauge
+    And User verify home screens in portugues
+    And User search the issuers with "National Identity Department"
+    And User verify mosip national id by e-signet displayed
 
   @smoke @verifyingCredentialDetailsPageForMosipInConfiguredLanguge
   Scenario: Verify the Credential Details Page
@@ -67,6 +72,9 @@ Feature: Inji web multilanguage testing
     And User click on langauge button
     And User click on tamil langauge
     Then User validate the list of credential types title of the page in tamil laguage
+    And User click on langauge button
+    And User click on portugues langauge
+    Then User validate the list of credential types title of the page in portugues laguage
 
   @smoke @verifyingCredentialDetailsPageForSunbirdInConfiguredLanguge
   Scenario: Verify the Credential Details Page
@@ -98,6 +106,10 @@ Feature: Inji web multilanguage testing
     And User click on french langauge
     And User search the issuers with "life"
     Then User validate the list of credential types title of the page in french laguage for sunbird
+    And User click on langauge button
+    And User click on portugues langauge
+    And User search the issuers with "life"
+    Then User validate the list of credential types title of the page in portugues laguage for sunbird
 
   @smoke @verifyingChangeLanguageOnCredentialDetailsPageAndVerifyHomePage
   Scenario: Verify the Credential Details Page
@@ -142,6 +154,13 @@ Feature: Inji web multilanguage testing
     And User verify home screens in french
     And User search the issuers with "National Identity Department"
     And User verify mosip national id by e-signet displayed
+    When User click on download mosip credentials button
+    And User click on langauge button
+    And User click on portugues langauge
+    And User click on back button
+    And User verify home screens in portugues
+    And User search the issuers with "National Identity Department"
+    And User verify mosip national id by e-signet displayed
 
 
   @smoke @verifyingHomepageAndSearchInConfiguredLanguge
@@ -179,6 +198,12 @@ Feature: Inji web multilanguage testing
     And User verify that inji web logo is displayed
     And User click on langauge button
     And User click on french langauge
+    And User verify the FAQ header and its description
+    And User verify the only one FAQ is open
+    And User verify the only one FAQ is at a time
+    And User verify that inji web logo is displayed
+    And User click on langauge button
+    And User click on portugues langauge
     And User verify the FAQ header and its description
     And User verify the only one FAQ is open
     And User verify the only one FAQ is at a time
