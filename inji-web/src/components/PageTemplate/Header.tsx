@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import {LanguageSelector} from "../Common/LanguageSelector";
@@ -13,6 +13,24 @@ export const Header: React.FC = () => {
     const { t, i18n } = useTranslation("PageTemplate");
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+    useEffect(() => {
+            setIsLoggedIn(!!localStorage.getItem("displayName"));
+    }, []);
+    const handleAuthAction = async () => {
+            if (isLoggedIn) {
+                localStorage.removeItem("displayName"); // Remove displayName from localStorage
+                try {
+                    await fetch("/v1/mimoto/logout", { method: "POST", credentials: "include" });
+                } catch (error) {
+                    console.error("Logout failed:", error);
+                }
+                window.location.replace("/");
+            } else {
+                navigate("/login"); // Redirect to login page
+            }
+        };
 
     return (
         <header>
@@ -46,6 +64,15 @@ export const Header: React.FC = () => {
                         <li data-testid="Header-Menu-Help">
                         <div className={" hidden sm:block font-semibold"} data-testid="Header-Menu-Help-div"><HelpDropdown/></div>
                         </li>
+                        <li data-testid="Header-Menu-Auth">
+                                                        <div data-testid="Header-Menu-Auth-div"
+                                                            onMouseDown={handleAuthAction}
+                                                            onKeyUp={handleAuthAction}
+                                                            role="button" tabIndex={0}
+                                                            className="text-iw-title cursor-pointer hidden sm:inline-block">
+                                                            {isLoggedIn ? t("Header.logout") : t("Header.login")}
+                                                        </div>
+                                                    </li>
                     </ul>
                 </nav>
                 <div className={"font-semibold"} data-testid="Header-Menu-LanguageSelector"><LanguageSelector/></div>

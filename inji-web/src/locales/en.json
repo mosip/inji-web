@@ -2,7 +2,9 @@
   "PageTemplate": {
     "Header": {
       "home": "Home",
-      "help": "Help"
+      "help": "Help",
+      "login": "Login",
+      "logout": "Logout"
     },
     "Footer": {
       "product": "A MOSIP Product",

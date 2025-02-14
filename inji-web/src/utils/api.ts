@@ -67,6 +67,16 @@ export class api {
             `code_challenge_method=S256&`+
             `ui_locales=${i18n.language}`;
     }
+    // method to fetch user profile
+    static fetchUserProfile: ApiRequest = {
+        url: () => api.mimotoHost + "/secure/user/profile",
+        methodType: MethodType.GET,
+        headers: () => {
+        return {
+            "Content-Type": "application/json"
+            }
+        }
+    }
 }
 
 

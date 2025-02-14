@@ -12,6 +12,7 @@ import {getDirCurrentLanguage} from "./utils/i18n";
 import {PageNotFound} from "./pages/PageNotFound";
 import {AuthorizationPage} from "./pages/AuthorizationPage";
 import {HomePage} from "./pages/HomePage";
+import Login from './pages/users/login/Login';
 
 export const AppRouter = () => {
     const language = useSelector((state: RootState) => state.common.language);
@@ -35,6 +36,7 @@ export const AppRouter = () => {
             <Route path="/help" element={wrapElement(<HelpPage/>)}/>
             <Route path="/redirect" element={wrapElement(<RedirectionPage/>)}/>
             <Route path="/authorize" element={wrapElement(<AuthorizationPage/>)}/>
+            <Route path="/login" element={wrapElement(<Login/>)}/>
             <Route path="/*" element={wrapElement(<PageNotFound/>)}/>
         </Routes>
     </BrowserRouter>)
