@@ -66,10 +66,10 @@ describe('Testing API Class', () => {
 
   test('Check fetchIssuersWellknown request', () => {
     const issuerId = '123';
-    const fetchIssuersWellknown: ApiRequest = apiModule.api.fetchIssuersWellknown;
-    expect(fetchIssuersWellknown.url(issuerId)).toBe('https://api.collab.mossip.net/v1/mimoto/issuers/123/configuration');
-    expect(fetchIssuersWellknown.methodType).toBe(apiModule.MethodType.GET);
-    expect(fetchIssuersWellknown.headers()).toEqual({
+    const fetchIssuersConfig: ApiRequest = apiModule.api.fetchIssuersConfiguration;
+    expect(fetchIssuersConfig.url(issuerId)).toBe('https://api.collab.mossip.net/v1/mimoto/issuers/123/configuration');
+    expect(fetchIssuersConfig.methodType).toBe(apiModule.MethodType.GET);
+    expect(fetchIssuersConfig.headers()).toEqual({
       'Content-Type': 'application/json'
     });
   });
