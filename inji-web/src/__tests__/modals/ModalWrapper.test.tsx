@@ -14,7 +14,7 @@ describe("Test the Layout of the Modal Wrapper", () => {
         render(
             <Provider store={reduxStore}>
             <ModalWrapper header={<DataShareHeader title={"title"} subTitle={"subTitle"}/>}
-                             content={<DataShareContent credentialName={"credentialName"} credentialLogo={"credentialLogo"} setCustom={jest.fn()}/>}
+                             content={<DataShareContent credentialName={"credentialName"} credentialLogo={"credentialLogo"} setIsCustomExpiryInTimesModalOpen={jest.fn()}/>}
                              footer={<DataShareFooter cancelText={"cancel"} successText={"success"} onSuccess={jest.fn()} onCancel={jest.fn()}/>}
                              size={"3xl"}
                              zIndex={40} />

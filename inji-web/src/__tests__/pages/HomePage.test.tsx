@@ -1,8 +1,27 @@
-import React, { useTransition } from 'react';
-import { render, screen, fireEvent, waitFor,act } from '@testing-library/react';
+import React from 'react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import { HomePage } from '../../pages/HomePage';
-import { toast} from 'react-toastify';
+import { toast } from 'react-toastify';
+import { AppToaster } from '../../components/Common/AppToaster';
+
+// Mock redux store
+const mockStore = {
+  getState: () => ({
+    common: {
+      language: 'en'
+    }
+  }),
+  subscribe: jest.fn(),
+  dispatch: jest.fn(),
+};
+
+// Mock react-redux
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(selector => selector(mockStore.getState()))
+}));
 
 // Mock the toast function
 jest.mock('react-toastify', () => {
@@ -38,24 +57,29 @@ jest.mock('react-i18next', () => ({
   }),
 }));
 
+// Mock isRTL utility
+jest.mock('../../utils/i18n', () => ({
+  isRTL: jest.fn().mockReturnValue(false)
+}));
 
 describe('HomePage', () => {
   const renderComponent = () => {
     return render(
-      <BrowserRouter>
+      <Provider store={mockStore}>
+        <BrowserRouter>
+          <AppToaster />
           <HomePage />
-      </BrowserRouter>
+        </BrowserRouter>
+      </Provider>
     );
   };
 
   beforeEach(() => {
-    // Clear mock before each test
     jest.clearAllMocks(); 
   });
 
   test('renders HomeBanner, HomeFeatures, and HomeQuickTip components', () => {
     renderComponent();
- 
     expect(screen.getByTestId('HomeBanner')).toBeInTheDocument();
     expect(screen.getByTestId('HomeFeatures')).toBeInTheDocument();
     expect(screen.getByTestId('HomeQuickTip')).toBeInTheDocument();
@@ -63,22 +87,22 @@ describe('HomePage', () => {
  
   test('navigates to /issuers when HomeBanner is clicked', () => {
     renderComponent();
- 
+
     const homeBanner = screen.getByTestId('HomeBanner');
     fireEvent.click(homeBanner);
- 
-    expect(window.location.pathname).toBe('/issuers');
-  });
- 
-  test('navigates to /issuers when HomeQuickTip is clicked', () => {
-    renderComponent();
- 
-    const homeQuickTip = screen.getByTestId('HomeQuickTip');
-    fireEvent.click(homeQuickTip);
- 
+
     expect(window.location.pathname).toBe('/issuers');
   });
   
+  test('navigates to /issuers when HomeQuickTip is clicked', () => {
+    renderComponent();
+
+    const homeQuickTip = screen.getByTestId('HomeQuickTip');
+    fireEvent.click(homeQuickTip); 
+
+    expect(window.location.pathname).toBe('/issuers');
+  });
+
   test('shows toast only once when HomeQuickTip is clicked multiple times', async() => {
     renderComponent();
     const homeQuickTip = screen.getByTestId('HomeQuickTip');
@@ -94,6 +118,7 @@ describe('HomePage', () => {
       'QuickTip.toastText', // String as the message
       expect.objectContaining({
         onClose: expect.any(Function),
+        toastId: 'toast-wrapper'
       })
     );
 
@@ -106,21 +131,12 @@ describe('HomePage', () => {
   
   // Snapshot test cases
   test('matches snapshot for HomePage', () => {
-    const { asFragment } = render(
-      <BrowserRouter>
-        <HomePage />
-      </BrowserRouter>
-    );
+    const { asFragment } = renderComponent();
     expect(asFragment()).toMatchSnapshot();
   });
   
   test('matches snapshot for HomePage with toast visible', () => {
-    const { asFragment } = render(
-      <BrowserRouter>
-        <HomePage />
-      </BrowserRouter>
-    );
-    // Simulate toast visibility
+    const { asFragment } = renderComponent();
     fireEvent.click(screen.getByTestId('HomeQuickTip'));
     expect(asFragment()).toMatchSnapshot();
   });
@@ -152,7 +168,8 @@ describe('HomePage', () => {
       expect(toast.warning).toHaveBeenCalledWith(
         'QuickTip.toastText',
         expect.objectContaining({
-          onClose: expect.any(Function)
+          onClose: expect.any(Function),
+          toastId: 'toast-wrapper'
         })
       );
     }, { timeout: 6000 });
@@ -195,18 +212,19 @@ describe('HomePage', () => {
     fireEvent.click(homeQuickTip);
 
     // Verify toast is shown again
-    await waitFor(() => {
+    await waitFor(()=>{
       expect(toast.warning).toHaveBeenCalledTimes(1);
-    });
+    })
 
-    await waitFor(() => {
+    await waitFor(()=>{
       expect(toast.warning).toHaveBeenCalledWith(
         'QuickTip.toastText',
         expect.objectContaining({
-          onClose: expect.any(Function)
+          onClose: expect.any(Function),
+          toastId: 'toast-wrapper'
         })
       );
-    });
+    })
 
     // Cleanup timers
     jest.useRealTimers();
