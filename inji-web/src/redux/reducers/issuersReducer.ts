@@ -1,5 +1,6 @@
 import {IssuerObject} from "../../types/data";
 import {IssuersReducerActionType} from "../../types/redux";
+import {REHYDRATE} from "redux-persist";
 
 const initialState = {
     issuers: [],
@@ -26,12 +27,9 @@ export const issuersReducer = (state = initialState, action: any) => {
                 filtered_issuers: action.issuers
             };
         case IssuersReducerAction.STORE_SELECTED_ISSUER:
-            const selectedIssuer = state.issuers.find(
-                (issuer) => issuer["issuer_id"] === action.issuerId
-            );
             return {
                 ...state,
-                selected_issuer: selectedIssuer
+                selected_issuer: action.issuerConfig
             };
         default:
             return state;
@@ -52,9 +50,9 @@ export const storeFilteredIssuers = (issuers: any) => {
     };
 };
 
-export const storeSelectedIssuer = (issuerId: any) => {
+export const storeSelectedIssuer = (issuerConfig: any) => {
     return {
         type: "STORE_SELECTED_ISSUER",
-        issuerId: issuerId
+        issuerConfig: issuerConfig
     };
 };

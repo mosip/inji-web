@@ -13,8 +13,6 @@ import { RootState } from '../types/redux';
 import { useSelector } from 'react-redux'
 
 export const RedirectionPage: React.FC = () => {
-
-
     const {error, state, response,  fetchRequest} = useFetch();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
@@ -28,7 +26,7 @@ export const RedirectionPage: React.FC = () => {
     const [errorObj, setErrorObj] = useState({
         code: "error.generic.title",
         message: "error.generic.subTitle"
-    })
+    });
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -60,10 +58,9 @@ export const RedirectionPage: React.FC = () => {
             } else {
                 setSession(null);
             }
-        }
+        };
         fetchToken();
-
-    }, [])
+    }, []);
 
     const loadStatusOfRedirection = () => {
         if (!session) {

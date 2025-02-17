@@ -8,5 +8,5 @@ export const reduxStore = configureStore({
         issuers: issuersReducer,
         credentials: credentialsReducer,
         common: commonReducer
-    },
-})
+    }
+});

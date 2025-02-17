@@ -25,21 +25,27 @@ export const CredentialsPage: React.FC = () => {
     const {t} = useTranslation("CredentialsPage");
     const language = useSelector((state: RootState) => state.common.language);
     let displayObject = {} as DisplayArrayObject;
-    const selectedIssuer: IssuerObject | undefined = useSelector(
-        (state: RootState) => state.issuers.selected_issuer
-    );
+    let [selectedIssuer, setSelectedIssuer] = useState({} as IssuerObject);
     if (!isObjectEmpty(selectedIssuer)) {
         displayObject = getObjectForCurrentLanguage(
-            selectedIssuer?.display,
+            selectedIssuer.display,
             language
         );
     }
 
     useEffect(() => {
         const fetchCall = async () => {
-            dispatch(storeSelectedIssuer(params.issuerId ?? ""));
-            let apiRequest = api.fetchIssuersWellknown;
+            let apiRequest: ApiRequest = api.fetchSpecificIssuer;
             let response = await fetchRequest(
+                apiRequest.url(params.issuerId ?? ""),
+                apiRequest.methodType,
+                apiRequest.headers()
+            );
+            dispatch(storeSelectedIssuer(response?.response));
+            setSelectedIssuer(response?.response);
+
+            apiRequest = api.fetchIssuersConfiguration;
+            response = await fetchRequest(
                 apiRequest.url(params.issuerId ?? ""),
                 apiRequest.methodType,
                 apiRequest.headers()
@@ -55,15 +61,25 @@ export const CredentialsPage: React.FC = () => {
         toast.error(t("errorContent"));
     }
 
-
-    return <React.Fragment>
-        <div className="bg-iw-background min-h-screen"
-             data-testid="Credentials-Page-Container">
-            <NavBar title={displayObject?.name} search={true} fetchRequest={fetchRequest} link={"/issuers"}/>
-            <div data-testid="Credential-List-Container" className="container mx-auto mt-8 px-10 sm:px-0">
-                <CredentialList state={state}/>
+    return (
+        <React.Fragment>
+            <div
+                className="bg-iw-background min-h-screen"
+                data-testid="Credentials-Page-Container"
+            >
+                <NavBar
+                    title={displayObject?.name}
+                    search={true}
+                    fetchRequest={fetchRequest}
+                    link={"/issuers"}
+                />
+                <div
+                    data-testid="Credential-List-Container"
+                    className="container mx-auto mt-8 px-10 sm:px-0"
+                >
+                    <CredentialList state={state} />
+                </div>
             </div>
-        </div>
-    </React.Fragment>
-}
-
+        </React.Fragment>
+    );
+};

@@ -26,10 +26,10 @@ interface ErrorObj {
 
 export type CredentialProps = {
     credentialId: string;
-    credentialWellknown: IssuerWellknownObject;
+    credentialWellknown: CredentialConfigurationObject;
     index: number;
     setErrorObj: Dispatch<SetStateAction<ErrorObj>>;
-}
+};
 
 export type HelpAccordionItemProps = {
     id: number;
