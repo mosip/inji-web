@@ -242,6 +242,10 @@ public class HomePage extends BasePage {
     public void clickOnFranchLanguage() {
         clickOnElement(driver, By.xpath("//button[contains(text(), 'Français')]"));
     }
+    
+    public void clickOnPortuguesLanguage() {
+        clickOnElement(driver, By.xpath("//button[contains(text(), 'Português')]"));
+    }
 
     public String isCredentialTypesDisplayed() {
         return getElementText(driver, By.xpath("//div[@data-testid='HeaderTile-Text']"));
