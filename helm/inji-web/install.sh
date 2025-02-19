@@ -7,7 +7,7 @@ if [ $# -ge 1 ] ; then
 fi
 
 NS=injiweb
-CHART_VERSION=0.11.0-develop
+CHART_VERSION=0.11.1
 DATASHARE_CHART_VERSION=1.3.0-beta.2-develop
 ##The value of INJI_DATASHARE_HOST is set to a fixed value: "datashare-inji.injiweb".
 INJI_DATASHARE_HOST="datashare-inji.injiweb"
