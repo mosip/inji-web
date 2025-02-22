@@ -38,7 +38,7 @@ const Login: React.FC = () => {
             });
 
             if (response.ok) {
-                const userProfile = await response.json();
+                const userProfile = JSON.parse((await response.json())?.response);
                 if (userProfile.displayName) {
                     localStorage.setItem('displayName', userProfile.displayName);
                 }
