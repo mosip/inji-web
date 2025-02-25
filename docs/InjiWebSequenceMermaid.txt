@@ -1,20 +1,44 @@
 sequenceDiagram
-actor User
-    User->>+Inji Web: Launches Inji Web in browser
-    Inji Web->>+Mimoto: Fetch trusted issuers
-    Mimoto->>+Inji Web: List of Issuers
-    User->>Inji Web: User chooses an issuer
-    Mimoto->>+Certify: Fetches issuers' well-known details
-    Mimoto->>+Inji Web: Provide List of Credential types
-    User->>Inji Web: User chooses a credential type
-    Inji Web->>+eSignet: Authentication request
+    actor User
+    participant InjiWeb as Inji Web
+    participant Mimoto
+    participant Certify
+    participant eSignet
+    participant VCVerifier as VC Verifier
+    participant DataShare as Data Share
+
+    User->>+InjiWeb: Launches Inji Web in browser
+    InjiWeb->>+Mimoto: Fetch trusted Issuers
+    Mimoto->>+InjiWeb: Returns list of Issuers
+
+    User->>+InjiWeb: User selects an Issuer
+    InjiWeb->>+Mimoto: Fetch Issuer's Configurations
+    Mimoto->>+Certify: Fetch Issuer's well-known details
+    Certify->>+Mimoto: Returns well-known details
+    Mimoto->>+eSignet: Fetch eSignet / Authorization server well-known details
+    eSignet->>+Mimoto: Returns well-known details
+
+    Mimoto->>+InjiWeb: Returns Issuer's Configuration with required fields from Issuer well-known and Authorization Server well-known
+    InjiWeb->>+InjiWeb: Displays List of Credential types.<br>Credential types without display properties for the user selected and app default language will be hidden.<br>If none are available, "No Credentials Found" is shown.
+    User->>InjiWeb: User selects a credential type
+
+    InjiWeb->>+eSignet: Sends Authentication request
     User->>eSignet: User provides details for authentication
-    eSignet->>+Inji Web: Authentication response with auth code
-    Inji Web->>+Mimoto: Initiate Token & Credential Download request
-    Mimoto->>+eSignet: Access Token request with client details
-    eSignet->>+Mimoto: Token response with access token
-    Mimoto->>+Certify: Credential request with token
-    Certify->>+Mimoto: VC sent in response
-    Mimoto->>+Data Share: Store the VC only when the QRCode Type is OnlineSharing and not for EmbeddedVC
-    Mimoto->>+Mimoto: QR Code generation & PDF creation
-    Mimoto->>+Inji Web: PDF
+    eSignet->>+InjiWeb: Returns Authentication response with auth code
+
+    InjiWeb->>+Mimoto: Initiates Token & Credential Download request
+    Mimoto->>+eSignet: Sends Access Token request with client details
+    eSignet->>+Mimoto: Returns Token response with access token
+    Mimoto->>+Certify: Sends credential request with token
+    Certify->>+Mimoto: Returns Verifiable Credential(VC) in response
+
+
+    Mimoto->>+VCVerifier: Sends received Verifiable Credential for verification
+    VCVerifier->>+Mimoto: Returns Verification status
+
+    Mimoto->>+DataShare: Stores the VC only when the QRCode Type is OnlineSharing and not for EmbeddedVC
+
+    Mimoto->>+Mimoto: Generates QR code & PDF will be generated based on locale.<br>If locale is provided, uses corresponding display object from Issuer's well-known.<br>If not, uses the first object from display property of Issuer's well-known containing a locale.
+
+    Mimoto->>+InjiWeb: Sends generated PDF
+    InjiWeb->>+User: Downloads PDF
