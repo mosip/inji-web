@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {HomeBanner} from "../components/Home/HomeBanner";
 import {HomeFeatures} from "../components/Home/HomeFeatures";
 import {HomeQuickTip} from "../components/Home/HomeQuickTip";
-import {toast,ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
 
 export const HomePage:React.FC = () => {
@@ -16,7 +16,7 @@ export const HomePage:React.FC = () => {
         setToastVisible(true);
         toast.warning(message, {
             onClose: () => setToastVisible(false),
-            toastId: 'toast-warning'
+            toastId: 'toast-wrapper'
         });
     };
 
@@ -24,6 +24,5 @@ export const HomePage:React.FC = () => {
         <HomeBanner onClick={() => navigate("/issuers")} />
         <HomeFeatures/>
         <HomeQuickTip  onClick={() => showToast(t("QuickTip.toastText"))} />
-        <ToastContainer/>
     </div>
 }
