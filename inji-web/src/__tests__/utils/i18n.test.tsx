@@ -127,14 +127,17 @@ describe('Test i18n configuration', () => {
     });
   });
 
-  describe('Test getObjectForCurrentLanguage functionality', () => {
+  describe('Test getIssuerDisplayObjectForCurrentLanguage functionality', () => {
     test('Check if it returns the correct object for the current language', () => {
       const displayArray = [
         { language: 'en', value: 'English' },
         { language: 'fr', value: 'French' }
       ];
       
-      const result = i18nModule.getObjectForCurrentLanguage(displayArray, 'fr');
+      const result = i18nModule.getIssuerDisplayObjectForCurrentLanguage(
+          displayArray,
+          "fr"
+      );
       expect(result).toEqual({ language: 'fr', value: 'French' });
     });
 
@@ -144,7 +147,10 @@ describe('Test i18n configuration', () => {
         { language: 'fr', value: 'French' }
       ];
       
-      const result = i18nModule.getObjectForCurrentLanguage(displayArray, 'es');
+      const result = i18nModule.getIssuerDisplayObjectForCurrentLanguage(
+          displayArray,
+          "es"
+      );
       expect(result).toEqual({ language: 'en', value: 'English' });
     });
   });

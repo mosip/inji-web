@@ -289,7 +289,7 @@
   },
   "CustomExpiryModal": {
     "title": "Por favor, insira o número de vezes que você deseja usar esta credencial ",
-    "error": "Por favor, insira um número de expiração válido, maior que zero, para limitar quantas vezes suas credenciais podem ser verificadas.",
+    "error": "Insira um número de validade válido acima de zero. O limite máximo é 50 para controlar tentativas de verificação.",
     "metrics": "Vezes",
     "success": "Prosseguir",
     "cancel": "Cancelar"

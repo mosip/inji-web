@@ -13,8 +13,8 @@ import {api} from "../utils/api";
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 
-import {ApiRequest, DisplayArrayObject, IssuerObject} from "../types/data";
-import {getObjectForCurrentLanguage} from "../utils/i18n";
+import {ApiRequest, IssuerWellknownDisplayArrayObject, IssuerObject} from "../types/data";
+import {getIssuerDisplayObjectForCurrentLanguage} from "../utils/i18n";
 import {RootState} from "../types/redux";
 import {isObjectEmpty} from "../utils/misc";
 
@@ -24,10 +24,10 @@ export const CredentialsPage: React.FC = () => {
     const dispatch = useDispatch();
     const {t} = useTranslation("CredentialsPage");
     const language = useSelector((state: RootState) => state.common.language);
-    let displayObject = {} as DisplayArrayObject;
+    let displayObject = {} as IssuerWellknownDisplayArrayObject;
     let [selectedIssuer, setSelectedIssuer] = useState({} as IssuerObject);
     if (!isObjectEmpty(selectedIssuer)) {
-        displayObject = getObjectForCurrentLanguage(
+        displayObject = getIssuerDisplayObjectForCurrentLanguage(
             selectedIssuer.display,
             language
         );

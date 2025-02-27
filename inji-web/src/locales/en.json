@@ -298,7 +298,7 @@
   },
   "CustomExpiryModal": {
     "title": "Please enter the number of times you want to use this credential ",
-    "error": "Please enter a valid expiry number, greater than zero, to limit how many times your credentials can be verified.",
+    "error": "Please enter a valid expiry number above zero. The maximum limit is 50 to control verification attempts.",
     "metrics": "Times",
     "success": "Proceed",
     "cancel": "Cancel"

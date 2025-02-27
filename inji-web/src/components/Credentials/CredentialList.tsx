@@ -24,34 +24,33 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
     const credentials = useSelector((state: RootState) => state.credentials);
 
     const filterCredentialsBySelectedOrDefaultLanguage = () => {
-        const missingLanguageSupport: string[] = [];
+        const missingLanguageSupport: CredentialConfigurationObject[] = [];
 
-        const filteredCredentialsList = Object.entries(
-            credentials?.filtered_credentials
-                ?.credential_configurations_supported || {}
-        ).filter(([credentialType, credential]) => {
-            const {display, credential_definition} =
-                credential as CredentialConfigurationObject; // Destructure
+        const filteredCredentialsList = (
+            credentials?.filtered_credentials?.credentials_supported || []
+        ).filter((credential: CredentialConfigurationObject) => {
+            const display = credential.display;
             const hasMatchingDisplay = display?.some(
                 ({locale}) =>
                     locale === selectedLanguage || locale === defaultLanguage
             );
 
             if (!hasMatchingDisplay) {
-                missingLanguageSupport.push(credential_definition.type[1]);
+                missingLanguageSupport.push(credential);
             }
-            
+
             return hasMatchingDisplay;
         });
 
         if (missingLanguageSupport.length) {
             console.error(
-                `Language support missing for these credential types of issuer: ${missingLanguageSupport.join(
-                    ", "
-                )}`
+                `Language support missing for these credential types of issuer: ${missingLanguageSupport
+                    .map((credential) => credential.name)
+                    .join(", ")}`
             );
         }
-        return Object.fromEntries(filteredCredentialsList);
+
+        return filteredCredentialsList;
     };
 
     const filteredCredentialsWithLangSupport =
@@ -66,12 +65,10 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
     if (
         state === RequestStatus.ERROR ||
         Object.keys(filteredCredentialsWithLangSupport).length == 0 ||
-        !credentials?.filtered_credentials
-            ?.credential_configurations_supported ||
-        (credentials?.filtered_credentials
-            ?.credential_configurations_supported &&
-            credentials?.filtered_credentials
-                ?.credential_configurations_supported.length === 0)
+        !credentials?.filtered_credentials?.credentials_supported ||
+        (credentials?.filtered_credentials?.credentials_supported &&
+            credentials?.filtered_credentials?.credentials_supported.length ===
+                0)
     ) {
         return (
             <div>
@@ -101,17 +98,15 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
                 subContent={t("containerSubHeading")}
             />
             <div className="flex flex-wrap gap-3 p-4 pb-20 justify-start">
-                {Object.keys(filteredCredentialsWithLangSupport).map(
-                    (credentialId: string, index: number) => (
+                {filteredCredentialsWithLangSupport.map(
+                    (
+                        credentialConfig: CredentialConfigurationObject,
+                        index: number
+                    ) => (
                         <Credential
-                            credentialId={credentialId}
-                            credentialWellknown={
-                                credentials?.filtered_credentials
-                                    ?.credential_configurations_supported[
-                                    credentialId
-                                ]
-                            }
                             key={index}
+                            credentialId={credentialConfig.name}
+                            credentialWellknown={credentialConfig}
                             index={index}
                             setErrorObj={setErrorObj}
                         />
