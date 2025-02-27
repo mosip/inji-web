@@ -8,7 +8,11 @@ import kn from '../locales/kn.json';
 import ar from '../locales/ar.json';
 import pt from '../locales/pt.json';
 import {storage} from "./storage";
-import {DisplayArrayObject, LanguageObject} from "../types/data";
+import {
+    CredentialTypeDisplayArrayObject,
+    IssuerWellknownDisplayArrayObject,
+    LanguageObject
+} from "../types/data";
 
 const resources = {en, ta, kn, hi, fr, ar, pt};
 
@@ -40,13 +44,22 @@ export const switchLanguage = async (language: string) => {
     storage.setItem(storage.SELECTED_LANGUAGE, language);
     await i18n.changeLanguage(language);
 }
-export const getObjectForCurrentLanguage = (displayArray: DisplayArrayObject[], language: string = i18n.language) => {
-    let resp = displayArray.filter(displayObj => (displayObj.language === language || displayObj.locale === language))[0];
+export const getIssuerDisplayObjectForCurrentLanguage = (displayArray: IssuerWellknownDisplayArrayObject[], language: string = i18n.language) => {
+    let resp = displayArray.filter(displayObj => (displayObj.language === language))[0];
     if (!resp) {
-        resp = displayArray.filter(displayObj => (displayObj.language === defaultLanguage || displayObj.locale === defaultLanguage))[0];
+        resp = displayArray.filter(displayObj => (displayObj.language === defaultLanguage))[0];
     }
     return resp;
-}
+};
+
+export const getCredentialTypeDisplayObjectForCurrentLanguage = (
+    displayArray: CredentialTypeDisplayArrayObject[],language: string = i18n.language) => {
+    let resp = displayArray.filter((displayObj) => displayObj.locale === language)[0];
+    if (!resp) {
+        resp = displayArray.filter(displayObj => displayObj.locale === defaultLanguage)[0];
+    }
+    return resp;
+};
 
 export const getDirCurrentLanguage = (language: string) => {
     return isRTL(language) ? 'rtl' : 'ltr';

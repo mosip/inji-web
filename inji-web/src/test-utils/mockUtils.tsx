@@ -80,9 +80,9 @@ export const setMockUseSelectorState = (state: any) => {
     useSelectorMock.mockImplementation((selector: any) => selector(state));
 };
 
-export const mockUseGetObjectForCurrentLanguage = () => {
+export const mockUseGetIssuerDisplayObjectForCurrentLanguage = () => {
     jest.mock('../utils/i18n', () => ({
-        getObjectForCurrentLanguage: jest.fn(),
+        getIssuerDisplayObjectForCurrentLanguage: jest.fn(),
     }));
 };
 

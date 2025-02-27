@@ -1,6 +1,6 @@
 import {MethodType} from "../utils/api";
 
-export type DisplayArrayObject = {
+export type IssuerWellknownDisplayArrayObject = {
     name: string;
     language: string;
     locale: string;
@@ -8,41 +8,28 @@ export type DisplayArrayObject = {
     title: string;
     description: string;
 };
+
+export type CredentialTypeDisplayArrayObject = {
+    name: string;
+    locale: string;
+    logo: string;
+};
+
 type LogoObject = {
     url: string;
     alt_text: string;
 };
 
-export type IssuerWellknownObject = {
-    credential_issuer: string;
-    credential_endpoint: string;
-    authorization_servers: string[];
-    credential_configurations_supported: CredentialsSupportedObject;
-};
-
-export type AuthServerWellknownObject = {
+export type IssuerConfigurationObject = {
+    credentials_supported: CredentialConfigurationObject[];
     authorization_endpoint: string;
     grant_types_supported: string[];
 };
 
-export type CredentialsSupportedObject = {
-    [type: string]: CredentialConfigurationObject;
-};
-
 export type CredentialConfigurationObject = {
-    format: string;
+    "name": string;
     "scope": string;
-    "display": DisplayArrayObject[];
-    "order": string[];
-    "proof_types_supported": string[];
-    "credential_definition": {
-        "type": string[];
-        "credentialSubject": {
-            [name: any]: {
-                "display": DisplayArrayObject[];
-            };
-        };
-    };
+    "display": CredentialTypeDisplayArrayObject[];
 };
 export type CodeChallengeObject = {
     codeChallenge: string;
@@ -55,7 +42,7 @@ export type IssuerObject = {
     issuer_id: string;
     authorization_endpoint: string;
     credentials_endpoint: string;
-    display: DisplayArrayObject[];
+    display: IssuerWellknownDisplayArrayObject[];
     client_id: string;
     redirect_uri: string;
     token_endpoint: string;

@@ -1,4 +1,4 @@
-import { ApiRequest, CodeChallengeObject, CredentialConfigurationObject, IssuerObject, IssuerWellknownObject } from "../../types/data";
+import { ApiRequest, CodeChallengeObject, CredentialConfigurationObject, IssuerObject, IssuerConfigurationObject } from "../../types/data";
 import i18n from "i18next";
 import { api as originalApi, MethodType } from '../../utils/api';
 
@@ -112,45 +112,45 @@ describe('Testing API Class', () => {
       scopes_supported: ['openid', 'profile']
     };
 
-    const credentialWellknown: IssuerWellknownObject = {
-      credential_issuer: 'issuer123',
-      credential_endpoint: 'http://credential.endpoint',
-      authorization_servers: ['http://auth.server'],
-      credential_configurations_supported: {}
+    const credentialWellknown: IssuerConfigurationObject = {
+        credentials_supported: [
+            {
+                name: "InsuranceCredential",
+                scope: "mosip_vc_ldp",
+                display: [
+                    {
+                        name: "Health Insurance",
+                        locale: "en",
+                        logo: "https://url.com"
+                    }
+                ]
+            },
+            {
+                name: "AnotherCredential",
+                scope: "mosip_ldp_vc",
+                display: [
+                    {
+                        name: "Another Credential",
+                        locale: "en",
+                        logo: "https://url.com"
+                    }
+                ]
+            }
+        ],
+        "authorization_endpoint": "https://env.net/authorize",
+        "grant_types_supported": ["authorization_code"]
     };
 
     const filterCredentialWellknown: CredentialConfigurationObject = {
-      format: 'jwt',
+      name: "InsuranceCredential",
       scope: 'openid',
       display: [
         {
           name: 'Credential Name',
-          language: 'en',
           locale: 'en-US',
-          logo: { url: 'http://example.com/logo.png', alt_text: 'Logo' },
-          title: 'Credential Title',
-          description: 'Description of the credential'
+          logo: 'http://example.com/logo.png',
         }
       ],
-      order: ['name', 'dateOfBirth'],
-      proof_types_supported: ['jwt', 'ldp'],
-      credential_definition: {
-        type: ['VerifiableCredential'],
-        credentialSubject: {
-          name: {
-            display: [
-              {
-                name: 'Name',
-                language: 'en',
-                locale: 'en-US',
-                logo: { url: 'http://example.com/logo.png', alt_text: 'Logo' },
-                title: 'Name Title',
-                description: 'Description of the name'
-              }
-            ]
-          }
-        }
-      }
     };
 
     const state = 'state123';
