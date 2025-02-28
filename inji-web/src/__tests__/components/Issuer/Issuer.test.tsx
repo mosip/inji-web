@@ -9,7 +9,10 @@ reduxStore.dispatch({ type: 'STORE_COMMON_LANGUAGE', language: 'en' });
 const mockIssuer : IssuerObject = mockIssuerObject;
 describe("Testing the layout of Issuer Component",()=> {
     test('Check if the layout is matching with the snapshots', () => {
-        jest.spyOn(require('../../../utils/i18n'), 'getObjectForCurrentLanguage').mockReturnValue(mockIssuer.display[0]);
+        jest.spyOn(
+            require("../../../utils/i18n"),
+            "getIssuerDisplayObjectForCurrentLanguage"
+        ).mockReturnValue(mockIssuer.display[0]);
         const {asFragment} =  renderWithProvider(<Issuer index={1} issuer={mockIssuer} />)
         expect(asFragment()).toMatchSnapshot();
     });
@@ -23,7 +26,10 @@ describe('Testing the Functionality of Issuer Component', () => {
         window.open = jest.fn();
     });
     beforeEach(()=>{
-        jest.spyOn(require('../../../utils/i18n'), 'getObjectForCurrentLanguage').mockReturnValue(mockIssuer.display[0]);
+        jest.spyOn(
+            require("../../../utils/i18n"),
+            "getIssuerDisplayObjectForCurrentLanguage"
+        ).mockReturnValue(mockIssuer.display[0]);
     })
 
     test('Check if content is rendered properly', () => {

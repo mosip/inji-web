@@ -24,7 +24,7 @@
 
 - When the user selects any credential type, user is redirected to the authorization page for that specific issuer.
 - Authorization server configurations such as authorize_endpoint and grant_types_supported are sourced from its wellknown **"/.well-known/oauth-authorization-server"** and if Authorization Server doesn't support required grnat types then Inji Web will show the error screen.
-- If Authorization Server supports required grant types and authorization is successful then authorization server return the **"authorizationCode"**
+- If Authorization Server supports required grant types and authorization is successful then authorization server return the **"authorizationCode"**.
 - Inji Web Send the authorization Code to authorization Server through Mimoto to perform the client assertions.
 - Once Authorized, Authorization Server issues Token response, which include **access_token**.
 - The "access_token" will be used to download the credential through VCI.
@@ -37,7 +37,7 @@
 
 ### **PDF Download**
 
-- Mimoto uses the download credential data on the [VC PDF template](https://github.com/mosip/mosip-config/blob/collab1/credential-template.html)
+- Mimoto generates the PDF by applying the downloaded credential data to the Credential Template. It fetches the Credential Template file using the issuerId and credentialType, with the file name being in the format "issuerId-credentialType-template.html." If this file does not exist, it falls back to the default Credential Template file (https://github.com/mosip/mosip-config/blob/collab1/credential-template.html).
 - It applies the Issuer's well-known display properties based on the received locale value to adjust the template text and background color. If a locale is provided, it uses the corresponding display object from the Issuer's well-known otherwise, it selects the first display object that includes a locale.
 - It also uses order field in wellknown to render the fields in the same order.
 

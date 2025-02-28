@@ -1,4 +1,4 @@
-import {IssuerObject, IssuerWellknownObject} from "./data";
+import {IssuerObject, IssuerConfigurationObject} from "./data";
 import React from "react";
 import {RequestStatus} from "../hooks/useFetch";
 export type HomeFeatureItemProps={

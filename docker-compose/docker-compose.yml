@@ -14,7 +14,7 @@ services:
 
   datashare:
     container_name: 'datashare-service'
-    image: mosipqa/data-share-service:1.3.x
+    image: mosipid/data-share-service:1.3.0-beta.2
     ports:
       - "8097:8097"
     environment:
@@ -29,7 +29,7 @@ services:
 
   mimoto-service:
     container_name: 'mimoto-service'
-    image: 'mosipqa/mimoto:0.15.x'
+    image: 'mosipdev/mimoto:release-0.17.x'
     user: root
     ports:
       - '8099:8099'
@@ -47,7 +47,7 @@ services:
 
   inji-web:
     container_name: 'inji-web'
-    image: inji-web:local
+    image: 'mosipdev/inji-web:release-0.12.x'
     ports:
       - '3004:3004'
     environment:

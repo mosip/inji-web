@@ -1,5 +1,7 @@
 import React, {useState} from "react";
-import {getObjectForCurrentLanguage} from "../../utils/i18n";
+import {
+    getCredentialTypeDisplayObjectForCurrentLanguage,
+} from "../../utils/i18n";
 import {ItemBox} from "../Common/ItemBox";
 import {generateCodeChallenge, generateRandomString} from "../../utils/misc";
 import {addNewSession} from "../../utils/sessions";
@@ -7,19 +9,23 @@ import {useSelector} from "react-redux";
 import {api} from "../../utils/api";
 import {CredentialProps} from "../../types/components";
 import {
-    AuthServerWellknownObject,
     CodeChallengeObject,
     CredentialConfigurationObject
 } from "../../types/data";
+
 import {RootState} from "../../types/redux";
 import {DataShareExpiryModal} from "../../modals/DataShareExpiryModal";
 import {useTranslation} from "react-i18next";
 
 export const Credential: React.FC<CredentialProps> = (props) => {
     const {t} = useTranslation("CredentialsPage");
-    const authServerWellknownResponse: AuthServerWellknownObject = useSelector(
-        (state: RootState) => state.credentials.credentials.authorization
+    const credentials = useSelector(
+        (state: RootState) => state.credentials.credentials
     );
+
+    const authorizationEndpoint = credentials?.authorization_endpoint;
+    const grantTypesSupported = credentials?.grant_types_supported;
+
     const selectedIssuer = useSelector(
         (state: RootState) => state.issuers.selected_issuer
     );
@@ -27,7 +33,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
     const language = useSelector((state: RootState) => state.common.language);
     const filteredCredentialConfig: CredentialConfigurationObject =
         props.credentialWellknown;
-    const credentialObject = getObjectForCurrentLanguage(
+    const credentialObject = getCredentialTypeDisplayObjectForCurrentLanguage(
         filteredCredentialConfig.display,
         language
     );
@@ -43,17 +49,16 @@ export const Credential: React.FC<CredentialProps> = (props) => {
             generateCodeChallenge(state);
         addNewSession({
             selectedIssuer: selectedIssuer,
-            certificateId: props.credentialId,
+            certificateId: filteredCredentialConfig.name,
             codeVerifier: state,
             vcStorageExpiryLimitInTimes: isNaN(defaultVCStorageExpiryLimit)
                 ? vcStorageExpiryLimitInTimes
                 : defaultVCStorageExpiryLimit,
             state: state
         });
+
         if (
-            validateIfAuthServerSupportRequiredGrantTypes(
-                authServerWellknownResponse
-            )
+            validateIfAuthServerSupportRequiredGrantTypes(grantTypesSupported)
         ) {
             window.open(
                 api.authorization(
@@ -61,7 +66,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
                     filteredCredentialConfig,
                     state,
                     code_challenge,
-                    authServerWellknownResponse["authorization_endpoint"]
+                    authorizationEndpoint
                 ),
                 "_self",
                 "noopener"
@@ -76,15 +81,12 @@ export const Credential: React.FC<CredentialProps> = (props) => {
     };
 
     const validateIfAuthServerSupportRequiredGrantTypes = (
-        authorizationServerWellknown: AuthServerWellknownObject
+        grantTypesSupported: string[] | undefined
     ) => {
         const supportedGrantTypes = ["authorization_code"];
-        let authorizationServerGrantTypes;
 
-        if (authorizationServerWellknown?.grant_types_supported) {
-            authorizationServerGrantTypes =
-                authorizationServerWellknown["grant_types_supported"];
-            return authorizationServerGrantTypes.some((grantType: string) =>
+        if (grantTypesSupported) {
+            return grantTypesSupported.some((grantType: string) =>
                 supportedGrantTypes.includes(grantType)
             );
         }
@@ -95,7 +97,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
         <React.Fragment>
             <ItemBox
                 index={props.index}
-                url={credentialObject.logo.url}
+                url={credentialObject.logo}
                 title={credentialObject.name}
                 onClick={() => {
                     selectedIssuer.qr_code_type === "OnlineSharing"
@@ -108,7 +110,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
                     onCancel={() => setCredentialExpiry(false)}
                     onSuccess={onSuccess}
                     credentialName={credentialObject.name}
-                    credentialLogo={credentialObject.logo.url}
+                    credentialLogo={credentialObject.logo}
                 />
             )}
         </React.Fragment>

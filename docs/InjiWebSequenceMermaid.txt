@@ -38,7 +38,7 @@ sequenceDiagram
 
     Mimoto->>+DataShare: Stores the VC only when the QRCode Type is OnlineSharing and not for EmbeddedVC
 
-    Mimoto->>+Mimoto: Generates QR code & PDF will be generated based on locale.<br>If locale is provided, uses corresponding display object from Issuer's well-known.<br>If not, uses the first object from display property of Issuer's well-known containing a locale.
-    
+    Mimoto->>+Mimoto: Generates a QR code & PDF based on locale.<br>If the locale is provided, the corresponding display object from the Issuer's well-known is used.<br>Otherwise, it defaults to the first display object.<br>The PDF template is selected using issuerID and credentialType, or defaults if not found.
+
     Mimoto->>+InjiWeb: Sends generated PDF
     InjiWeb->>+User: Downloads PDF
