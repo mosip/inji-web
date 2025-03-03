@@ -10,7 +10,7 @@ sequenceDiagram
     User->>+InjiWeb: Launches Inji Web in browser
     InjiWeb->>+Mimoto: Fetch trusted Issuers
     Mimoto->>+InjiWeb: Returns list of Issuers
-
+    
     User->>+InjiWeb: User selects an Issuer
     InjiWeb->>+Mimoto: Fetch Issuer's Configurations
     Mimoto->>+Certify: Fetch Issuer's well-known details
