@@ -7,7 +7,7 @@ import {IssuerObject} from "../../types/data";
 import {IoCloseCircleSharp} from "react-icons/io5";
 import {SearchIssuerProps} from "../../types/components";
 import {RootState} from "../../types/redux";
-import {getObjectForCurrentLanguage} from "../../utils/i18n";
+import {getIssuerDisplayObjectForCurrentLanguage} from "../../utils/i18n";
 
 export const SearchIssuer: React.FC<SearchIssuerProps> = (props) => {
 
@@ -19,8 +19,8 @@ export const SearchIssuer: React.FC<SearchIssuerProps> = (props) => {
     const filterIssuers = async (searchText: string) => {
         setSearchText(searchText);
         const filteredIssuers = issuers.filter( (issuer:IssuerObject) => {
-            const displayObject = getObjectForCurrentLanguage(issuer.display, language);
-            return (displayObject.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1 && issuer.protocol !== 'OTP')
+            const displayObject = getIssuerDisplayObjectForCurrentLanguage(issuer.display, language);
+            return (displayObject?.name?.toLowerCase().indexOf(searchText.toLowerCase()) !== -1 && issuer.protocol !== 'OTP')
         })
         dispatch(storeFilteredIssuers(filteredIssuers));
     }

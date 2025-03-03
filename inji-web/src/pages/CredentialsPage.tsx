@@ -5,27 +5,32 @@ import {NavBar} from "../components/Common/NavBar";
 import {CredentialList} from "../components/Credentials/CredentialList";
 import {useDispatch, useSelector} from "react-redux";
 import {storeSelectedIssuer} from "../redux/reducers/issuersReducer";
-import {storeCredentials, storeFilteredCredentials} from "../redux/reducers/credentialsReducer";
+import {
+    storeCredentials,
+    storeFilteredCredentials
+} from "../redux/reducers/credentialsReducer";
 import {api} from "../utils/api";
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 
-import {ApiRequest, DisplayArrayObject, IssuerObject} from "../types/data";
-import {getObjectForCurrentLanguage} from "../utils/i18n";
+import {ApiRequest, IssuerWellknownDisplayArrayObject, IssuerObject} from "../types/data";
+import {getIssuerDisplayObjectForCurrentLanguage} from "../utils/i18n";
 import {RootState} from "../types/redux";
 import {isObjectEmpty} from "../utils/misc";
 
 export const CredentialsPage: React.FC = () => {
-
     const {state, fetchRequest} = useFetch();
     const params = useParams<CredentialParamProps>();
     const dispatch = useDispatch();
     const {t} = useTranslation("CredentialsPage");
     const language = useSelector((state: RootState) => state.common.language);
-    let displayObject= {} as DisplayArrayObject;
-    let [selectedIssuer, setSelectedIssuer] = useState({} as IssuerObject)
-    if(!isObjectEmpty(selectedIssuer)){
-        displayObject = getObjectForCurrentLanguage(selectedIssuer.display, language);
+    let displayObject = {} as IssuerWellknownDisplayArrayObject;
+    let [selectedIssuer, setSelectedIssuer] = useState({} as IssuerObject);
+    if (!isObjectEmpty(selectedIssuer)) {
+        displayObject = getIssuerDisplayObjectForCurrentLanguage(
+            selectedIssuer.display,
+            language
+        );
     }
 
     useEffect(() => {
@@ -39,32 +44,42 @@ export const CredentialsPage: React.FC = () => {
             dispatch(storeSelectedIssuer(response?.response));
             setSelectedIssuer(response?.response);
 
-            apiRequest = api.fetchIssuersWellknown;
+            apiRequest = api.fetchIssuersConfiguration;
             response = await fetchRequest(
                 apiRequest.url(params.issuerId ?? ""),
                 apiRequest.methodType,
                 apiRequest.headers()
             );
 
-            dispatch(storeFilteredCredentials(response));
-            dispatch(storeCredentials(response));
-        }
+            dispatch(storeFilteredCredentials(response?.response));
+            dispatch(storeCredentials(response?.response));
+        };
         fetchCall();
-    }, [])
+    }, []);
 
     if (state === RequestStatus.ERROR) {
         toast.error(t("errorContent"));
     }
 
-
-    return <React.Fragment>
-        <div className="bg-iw-background min-h-screen"
-             data-testid="Credentials-Page-Container">
-            <NavBar title={displayObject?.name} search={true} fetchRequest={fetchRequest} link={"/issuers"}/>
-            <div data-testid="Credential-List-Container" className="container mx-auto mt-8 px-10 sm:px-0">
-                <CredentialList state={state}/>
+    return (
+        <React.Fragment>
+            <div
+                className="bg-iw-background min-h-screen"
+                data-testid="Credentials-Page-Container"
+            >
+                <NavBar
+                    title={displayObject?.name}
+                    search={true}
+                    fetchRequest={fetchRequest}
+                    link={"/issuers"}
+                />
+                <div
+                    data-testid="Credential-List-Container"
+                    className="container mx-auto mt-8 px-10 sm:px-0"
+                >
+                    <CredentialList state={state} />
+                </div>
             </div>
-        </div>
-    </React.Fragment>
-}
-
+        </React.Fragment>
+    );
+};

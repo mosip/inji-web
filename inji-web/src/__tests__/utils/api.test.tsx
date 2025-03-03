@@ -1,4 +1,4 @@
-import { ApiRequest, CodeChallengeObject, CredentialConfigurationObject, IssuerObject, IssuerWellknownObject } from "../../types/data";
+import { ApiRequest, CodeChallengeObject, CredentialConfigurationObject, IssuerObject, IssuerConfigurationObject } from "../../types/data";
 import i18n from "i18next";
 import { api as originalApi, MethodType } from '../../utils/api';
 
@@ -20,6 +20,13 @@ describe('Testing API Class', () => {
         origin: 'https://api.collab.mossip.net'
       },
       writable: true
+    });
+
+    Object.defineProperty(window, "_env_", {
+        value: {
+            MIMOTO_HOST: "https://api.collab.mossip.net/v1/mimoto"
+        },
+        writable: true
     });
 
     jest.resetModules();
@@ -59,10 +66,10 @@ describe('Testing API Class', () => {
 
   test('Check fetchIssuersWellknown request', () => {
     const issuerId = '123';
-    const fetchIssuersWellknown: ApiRequest = apiModule.api.fetchIssuersWellknown;
-    expect(fetchIssuersWellknown.url(issuerId)).toBe('https://api.collab.mossip.net/v1/mimoto/issuers/123/well-known-proxy');
-    expect(fetchIssuersWellknown.methodType).toBe(apiModule.MethodType.GET);
-    expect(fetchIssuersWellknown.headers()).toEqual({
+    const fetchIssuersConfig: ApiRequest = apiModule.api.fetchIssuersConfiguration;
+    expect(fetchIssuersConfig.url(issuerId)).toBe('https://api.collab.mossip.net/v1/mimoto/issuers/123/configuration');
+    expect(fetchIssuersConfig.methodType).toBe(apiModule.MethodType.GET);
+    expect(fetchIssuersConfig.headers()).toEqual({
       'Content-Type': 'application/json'
     });
   });
@@ -72,7 +79,7 @@ describe('Testing API Class', () => {
     expect(fetchTokenAnddownloadVc.url()).toBe('https://api.collab.mossip.net/v1/mimoto/credentials/download');
     expect(fetchTokenAnddownloadVc.methodType).toBe(apiModule.MethodType.POST);
     expect(fetchTokenAnddownloadVc.headers()).toEqual({
-      'accept': 'application/json',
+      'accept': 'application/pdf',
       'Content-Type': 'application/x-www-form-urlencoded',
       'Cache-Control': 'no-cache, no-store, must-revalidate'
     });
@@ -83,7 +90,7 @@ describe('Testing API Class', () => {
       name: 'Issuer Name',
       desc: 'Issuer Description',
       protocol: 'OpenId4VCI',
-      credential_issuer: 'issuer123',
+      issuer_id: 'issuer123',
       authorization_endpoint: 'http://auth.server/authorize',
       credentials_endpoint: 'http://credentials.endpoint',
       display: [
@@ -105,45 +112,45 @@ describe('Testing API Class', () => {
       scopes_supported: ['openid', 'profile']
     };
 
-    const credentialWellknown: IssuerWellknownObject = {
-      credential_issuer: 'issuer123',
-      credential_endpoint: 'http://credential.endpoint',
-      authorization_servers: ['http://auth.server'],
-      credential_configurations_supported: {}
+    const credentialWellknown: IssuerConfigurationObject = {
+        credentials_supported: [
+            {
+                name: "InsuranceCredential",
+                scope: "mosip_vc_ldp",
+                display: [
+                    {
+                        name: "Health Insurance",
+                        locale: "en",
+                        logo: "https://url.com"
+                    }
+                ]
+            },
+            {
+                name: "AnotherCredential",
+                scope: "mosip_ldp_vc",
+                display: [
+                    {
+                        name: "Another Credential",
+                        locale: "en",
+                        logo: "https://url.com"
+                    }
+                ]
+            }
+        ],
+        "authorization_endpoint": "https://env.net/authorize",
+        "grant_types_supported": ["authorization_code"]
     };
 
     const filterCredentialWellknown: CredentialConfigurationObject = {
-      format: 'jwt',
+      name: "InsuranceCredential",
       scope: 'openid',
       display: [
         {
           name: 'Credential Name',
-          language: 'en',
           locale: 'en-US',
-          logo: { url: 'http://example.com/logo.png', alt_text: 'Logo' },
-          title: 'Credential Title',
-          description: 'Description of the credential'
+          logo: 'http://example.com/logo.png',
         }
       ],
-      order: ['name', 'dateOfBirth'],
-      proof_types_supported: ['jwt', 'ldp'],
-      credential_definition: {
-        type: ['VerifiableCredential'],
-        credentialSubject: {
-          name: {
-            display: [
-              {
-                name: 'Name',
-                language: 'en',
-                locale: 'en-US',
-                logo: { url: 'http://example.com/logo.png', alt_text: 'Logo' },
-                title: 'Name Title',
-                description: 'Description of the name'
-              }
-            ]
-          }
-        }
-      }
     };
 
     const state = 'state123';
@@ -152,7 +159,13 @@ describe('Testing API Class', () => {
       codeVerifier: 'verifier123'
     };
 
-    const url = apiModule.api.authorization(currentIssuer, credentialWellknown, filterCredentialWellknown, state, code_challenge);
+    const url = apiModule.api.authorization(
+      currentIssuer,
+      filterCredentialWellknown,
+      state,
+      code_challenge,
+      'http://auth.server/authorize'
+    );
     expect(url).toBe(
       'http://auth.server/authorize' +
       '?response_type=code&' +

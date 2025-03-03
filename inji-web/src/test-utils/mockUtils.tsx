@@ -44,7 +44,7 @@ export const mockApi = {
 export const mockCrypto = {
     getRandomValues: (array: Uint32Array) => {
         for (let i = 0; i < array.length; i++) {
-            array[i] = Math.floor(Math.random() * 4294967296);
+            array[i] = 4294967296;
         }
         return array;
     },
@@ -80,9 +80,9 @@ export const setMockUseSelectorState = (state: any) => {
     useSelectorMock.mockImplementation((selector: any) => selector(state));
 };
 
-export const mockUseGetObjectForCurrentLanguage = () => {
+export const mockUseGetIssuerDisplayObjectForCurrentLanguage = () => {
     jest.mock('../utils/i18n', () => ({
-        getObjectForCurrentLanguage: jest.fn(),
+        getIssuerDisplayObjectForCurrentLanguage: jest.fn(),
     }));
 };
 

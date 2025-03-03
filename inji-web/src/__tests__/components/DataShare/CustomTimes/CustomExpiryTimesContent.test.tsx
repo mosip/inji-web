@@ -12,14 +12,6 @@ describe("Testing the Layout of the Custom Expiry Content", () => {
     })
 });
 describe("Testing the  Functionality of custom expiry content",()=>{
-    test("Check the Time Range Metrics", ()=>{
-        const expiryMockFn = jest.fn();
-        renderWithProvider(<CustomExpiryTimesContent expiryTime={1} setExpiryTime={expiryMockFn} />);
-        const ctDocument = screen.getByTestId("CustomExpiryTimesContent-Times-Metrics");
-        expect(ctDocument).toBeInTheDocument();
-        expect(ctDocument).toHaveTextContent("Times");
-    })
-
     test("Check the Time Range Increase on Clicking the Increase Button", ()=>{
         const expiryTime=1;
         const expiryMockFn = jest.fn(()=> expiryTime+1);

@@ -14,6 +14,7 @@ import utils.BaseTest;
 import utils.GlobelConstants;
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 
 public class StepDef {
@@ -81,12 +82,9 @@ public class StepDef {
     }
 
     @Then("User verify Download Success text displayed")
-    public void user_verify_download_success_text_displayed() {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    public void user_verify_download_success_text_displayed() throws InterruptedException {
+        Thread.sleep(10000);
+        baseTest.getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         Assert.assertTrue(homePage.isSuccessMessageDisplayed());
     }
 
@@ -206,7 +204,22 @@ public class StepDef {
         Assert.assertEquals(homePage.getHomePageDescriptionText(), globelConstants.HomePageDescriptionTextInFrench);
         Assert.assertEquals(homePage.isListOfIssuersTextDisplayed(), globelConstants.ListOfCredentialTypeOnHomePageInFrench);
         Assert.assertEquals(homePage.isListOfIssuersDescriptionTextDisplayed(), globelConstants.ListOfCredentialDescriptionTextInFrench);
+    }    
+    
+    
+    @Then("User click on portugues langauge")
+    public void user_click_on_portugues_langauge() {
+        homePage.clickOnPortuguesLanguage();
     }
+
+    @Then("User verify home screens in portugues")
+    public void user_verify_home_screens_in_portugues() {
+        Assert.assertEquals(homePage.isHomePageTextDisplayed(), globelConstants.HomePageTextInPortugues);
+        Assert.assertEquals(homePage.getHomePageDescriptionText(), globelConstants.HomePageDescriptionTextInPortugues);
+        Assert.assertEquals(homePage.isListOfIssuersTextDisplayed(), globelConstants.ListOfCredentialTypeOnHomePageInPortugues);
+        Assert.assertEquals(homePage.isListOfIssuersDescriptionTextDisplayed(), globelConstants.ListOfCredentialDescriptionTextInPortugues);
+    }
+    
 
     @Then("User validate the list of credential types title of the page")
     public void user_validate_the_list_of_credential_types_title_of_the_page() {
@@ -238,6 +251,11 @@ public class StepDef {
         Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInFrench);
     }
 
+    @Then("User validate the list of credential types title of the page in portugues laguage")
+    public void user_validate_the_list_of_credential_types_title_of_the_portugues_in_portugues_laguage() {
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInPortugues);
+    }
+    
     @Then("User validate the list of credential types title of the page for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_for_sunbird() {
         System.out.println(homePage.isVeridoniaInsuranceCompanyTextDisplayed());
@@ -268,6 +286,11 @@ public class StepDef {
     @Then("User validate the list of credential types title of the page in french laguage for sunbird")
     public void user_validate_the_list_of_credential_types_title_of_the_page_in_french_laguage_for_sunbird() {
         Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInFrench);
+    }
+    
+    @Then("User validate the list of credential types title of the page in portugues laguage for sunbird")
+    public void user_validate_the_list_of_credential_types_title_of_the_page_in_portugues_laguage_for_sunbird() {
+        Assert.assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInPortugues);
     }
 
     @Then("User verify All the languages")

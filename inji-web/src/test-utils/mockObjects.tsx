@@ -1,7 +1,7 @@
-import { IssuerWellknownObject } from '../types/data';
+import { IssuerConfigurationObject } from '../types/data';
 import { LandingPageWrapperProps } from '../components/Common/LandingPageWrapper';
 import { NavBarProps } from '../types/components';
-export const mockDisplayArrayObject = {
+export const mockIssuerDisplayArrayObject = {
     name: "Name",
     language: "en",
     locale: "en",
@@ -13,120 +13,47 @@ export const mockDisplayArrayObject = {
     description: "Description",
 };
 
-export const mockCredentials: IssuerWellknownObject = {
-    credential_issuer: "",
-    credential_endpoint: "",
-    authorization_servers: [""],
-    credential_configurations_supported: {
-        InsuranceCredential: {
-            format: "ldp_vc",
-            scope: "mosip_ldp_vc",
-            order: [],
-            display: [{
-                name: "Name1",
-                language: "en",
-                locale: "en",
-                logo: {
-                    url: "https://url.com",
-                    alt_text: "alt text of the url"
-                },
-                title: "Title",
-                description: "Description",
-            }],
-            proof_types_supported: [],
-            credential_definition: {
-                type: [],
-                credentialSubject: {
-                    fullName: {
-                        display: [{
-                            name: "Name1",
-                            language: "en",
-                            locale: "en",
-                            logo: {
-                                url: "https://url.com",
-                                alt_text: "alt text of the url"
-                            },
-                            title: "Title",
-                            description: "Description",
-                        }],
-                    }
-                }
-            }
-        },
-        AnotherCredential: {
-            format: "ldp_vc",
-            scope: "mosip_ldp_vc",
-            order: [],
-            display: [{
-                name: "Name2",
-                language: "en",
-                locale: "en",
-                logo: {
-                    url: "https://url.com",
-                    alt_text: "alt text of the url"
-                },
-                title: "Title",
-                description: "Description",
-            }],
-            proof_types_supported: [],
-            credential_definition: {
-                type: [],
-                credentialSubject: {
-                    fullName: {
-                        display: [{
-                            name: "Name2",
-                            language: "en",
-                            locale: "en",
-                            logo: {
-                                url: "https://url.com",
-                                alt_text: "alt text of the url"
-                            },
-                            title: "Title",
-                            description: "Description",
-                        }],
-                    }
-                }
-            }
-        }
-    }
+export const mockCredentialTypeDisplayArrayObject = {
+    name: "Name",
+    locale: "en",
+    logo: "https://url.com",
 };
 
-export const mockSearchCredential ={
-    credential_configurations_supported: {
-        InsuranceCredential: {
-            display: [{
-                name: "Insurance Credential",
-                language: "en",
-                locale: "en",
-                logo: {
-                    url: "https://url.com",
-                    alt_text: "alt text of the url"
-                },
-                title: "Title",
-                description: "Description",
-            }],
+export const mockCredentials: IssuerConfigurationObject = {
+    credentials_supported: [
+        {
+            name: "InsuranceCredential",
+            scope: "mosip_vc_ldp",
+            display: [
+                {
+                    name: "Health Insurance",
+                    locale: "en",
+                    logo: "https://url.com"
+                }
+            ]
         },
-        AnotherCredential: {
-            display: [{
-                name: "Another Credential",
-                language: "en",
-                locale: "en",
-                logo: {
-                    url: "https://url.com",
-                    alt_text: "alt text of the url"
-                },
-                title: "Title",
-                description: "Description",
-            }],
+        {
+            name: "AnotherCredential",
+            scope: "mosip_ldp_vc",
+            display: [
+                {
+                    name: "Another Credential",
+                    locale: "en",
+                    logo: "https://url.com"
+                }
+            ]
         }
-    }
+    ],
+    "authorization_endpoint": "https://env.net/authorize",
+    "grant_types_supported": ["authorization_code"]
 };
+
 
 export const mockIssuerObject = {
         name: 'Test Issuer',
         desc: 'Test Description',
         protocol: 'OTP' as 'OTP', // Explicitly set the type to 'OTP' or 'OpenId4VCI'
-        credential_issuer: 'test-issuer',
+        issuer_id: 'test-issuer',
         authorization_endpoint: 'https://auth.test.com',
         credentials_endpoint: 'https://credentials.test.com',
         display: [{
@@ -154,7 +81,7 @@ export const mockIssuerObjectList =  [
         name: 'Issuer 1',
         desc: 'Description 1',
         protocol: 'OpenId4VCI',
-        credential_issuer: 'issuer1',
+        issuer_id: 'issuer1',
         authorization_endpoint: 'https://issuer1.com/auth',
         credentials_endpoint: 'https://issuer1.com/credentials',
         display: [
@@ -179,7 +106,7 @@ export const mockIssuerObjectList =  [
         name: 'Issuer 2',
         desc: 'Description 2',
         protocol: 'OpenId4VCI',
-        credential_issuer: 'issuer2',
+        issuer_id: 'issuer2',
         authorization_endpoint: 'https://issuer2.com/auth',
         credentials_endpoint: 'https://issuer2.com/credentials',
         display: [

@@ -1,4 +1,4 @@
-import {IssuerObject, IssuerWellknownObject} from "./data";
+import {IssuerObject, IssuerConfigurationObject} from "./data";
 import React from "react";
 import {RequestStatus} from "../hooks/useFetch";
 export type HomeFeatureItemProps={
@@ -18,11 +18,19 @@ export type NavBarProps = {
     search: boolean;
     fetchRequest?: any;
 }
+
+interface ErrorObj {
+    code: string;
+    message: string;
+}
+
 export type CredentialProps = {
     credentialId: string;
-    credentialWellknown: IssuerWellknownObject;
+    credentialWellknown: CredentialConfigurationObject;
     index: number;
-}
+    setErrorObj: Dispatch<SetStateAction<ErrorObj>>;
+};
+
 export type HelpAccordionItemProps = {
     id: number;
     title: string;
@@ -50,7 +58,7 @@ export type HeaderTileProps = {
 }
 export type SearchIssuerProps = {
     state: RequestStatus;
-    fetchRequest: any
+    fetchRequest: any;
 }
 export type IssuersListProps = {
     state: RequestStatus;
@@ -78,6 +86,7 @@ export type DSFooterProps = {
     onSuccess: () => void;
     cancelText: string;
     onCancel: () => void;
+    parent?: string;
 }
 export type DSHeaderProps = {
     title: string;

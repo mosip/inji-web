@@ -23,7 +23,7 @@ public class BaseTest {
     }
     public WebDriver driver;
 
-    public String url ="https://injiweb.qa-inji.mosip.net/";
+    public String url ="https://injiweb.qa-inji1.mosip.net/";
 
     public JavascriptExecutor jse;
     public String  PdfNameForMosip="MosipVerifiableCredential.pdf";

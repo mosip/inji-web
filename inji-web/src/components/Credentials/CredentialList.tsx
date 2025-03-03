@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Credential} from "./Crendential";
 import {useSelector} from "react-redux";
 import {RootState} from "../../types/redux";
@@ -8,35 +8,111 @@ import {RequestStatus} from "../../hooks/useFetch";
 import {SpinningLoader} from "../Common/SpinningLoader";
 import {CredentialListProps} from "../../types/components";
 import {HeaderTile} from "../Common/HeaderTile";
+import {DownloadResult} from "../Redirection/DownloadResult";
+import {CredentialConfigurationObject} from "../../types/data";
+import {defaultLanguage} from "../../utils/i18n";
 
 export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
+    const [errorObj, setErrorObj] = useState({
+        code: "",
+        message: ""
+    });
+    const selectedLanguage = useSelector(
+        (state: RootState) => state.common.language
+    );
 
     const credentials = useSelector((state: RootState) => state.credentials);
+
+    const filterCredentialsBySelectedOrDefaultLanguage = () => {
+        const missingLanguageSupport: CredentialConfigurationObject[] = [];
+
+        const filteredCredentialsList = (
+            credentials?.filtered_credentials?.credentials_supported || []
+        ).filter((credential: CredentialConfigurationObject) => {
+            const display = credential.display;
+            const hasMatchingDisplay = display?.some(
+                ({locale}) =>
+                    locale === selectedLanguage || locale === defaultLanguage
+            );
+
+            if (!hasMatchingDisplay) {
+                missingLanguageSupport.push(credential);
+            }
+
+            return hasMatchingDisplay;
+        });
+
+        if (missingLanguageSupport.length) {
+            console.error(
+                `Language support missing for these credential types of issuer: ${missingLanguageSupport
+                    .map((credential) => credential.name)
+                    .join(", ")}`
+            );
+        }
+
+        return filteredCredentialsList;
+    };
+
+    const filteredCredentialsWithLangSupport =
+        filterCredentialsBySelectedOrDefaultLanguage();
+
     const {t} = useTranslation("CredentialsPage");
 
     if (state === RequestStatus.LOADING) {
-        return <SpinningLoader />
+        return <SpinningLoader />;
     }
 
-    if (state === RequestStatus.ERROR ||
-        !credentials?.filtered_credentials?.credential_configurations_supported ||
-        (credentials?.filtered_credentials?.credential_configurations_supported &&
-            credentials?.filtered_credentials?.credential_configurations_supported.length === 0 )
+    if (
+        state === RequestStatus.ERROR ||
+        Object.keys(filteredCredentialsWithLangSupport).length == 0 ||
+        !credentials?.filtered_credentials?.credentials_supported ||
+        (credentials?.filtered_credentials?.credentials_supported &&
+            credentials?.filtered_credentials?.credentials_supported.length ===
+                0)
     ) {
-        return <div>
-                <HeaderTile content={t("containerHeading")} subContent={t("containerSubHeading")}/>
-                <EmptyListContainer content={t("emptyContainerContent")}/>
+        return (
+            <div>
+                <HeaderTile
+                    content={t("containerHeading")}
+                    subContent={t("containerSubHeading")}
+                />
+                <EmptyListContainer content={t("emptyContainerContent")} />
             </div>
+        );
     }
 
-    return <React.Fragment>
-        <HeaderTile content={t("containerHeading")} subContent={t("containerSubHeading")}/>
-        <div className="flex flex-wrap gap-3 p-4 pb-20 justify-start">
-            {credentials?.filtered_credentials && Object.keys(credentials?.filtered_credentials?.credential_configurations_supported).map((credentialId: string, index: number) => (
-                <Credential credentialId={credentialId} credentialWellknown={credentials?.filtered_credentials} key={index} index={index}/>
-            ))}
-        </div>
-    </React.Fragment>
-}
+    if (errorObj.code) {
+        return (
+            <DownloadResult
+                title={t(errorObj.code)}
+                subTitle={t(errorObj.message)}
+                state={RequestStatus.ERROR}
+            />
+        );
+    }
 
-
+    return (
+        <>
+            <HeaderTile
+                content={t("containerHeading")}
+                subContent={t("containerSubHeading")}
+            />
+            <div className="flex flex-wrap gap-3 p-4 pb-20 justify-start">
+                {filteredCredentialsWithLangSupport.map(
+                    (
+                        credentialConfig: CredentialConfigurationObject,
+                        index: number
+                    ) => (
+                        <Credential
+                            key={index}
+                            credentialId={credentialConfig.name}
+                            credentialWellknown={credentialConfig}
+                            index={index}
+                            setErrorObj={setErrorObj}
+                        />
+                    )
+                )}
+            </div>
+        </>
+    );
+};

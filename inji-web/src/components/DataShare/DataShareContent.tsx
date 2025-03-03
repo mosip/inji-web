@@ -33,17 +33,17 @@ export const DataShareContent:React.FC<DSContentProps> = (props) => {
 
 
     return <div className="relative px-6 flex flex-col justify-between border-b border-solid border-iw-borderLight" data-testid={"DataShareContent-Outer-Container"}>
-        <div className="relative flex border-b-2">
-            <div className="my-4 text-iw-subTitle text-lg w-1/3 leading-relaxed py-5" data-testid={"DataShareContent-Outer-Title"}>{t("content.selectedDocument")}</div>
+        <div className="relative flex border-b-2 space-x-2">
+            <div className="my-4 break-words text-iw-subTitle text-lg w-1/3 leading-relaxed py-5" data-testid={"DataShareContent-Outer-Title"}>{t("content.selectedDocument")}</div>
             <div className={"my-4 text-center shadow-md rounded-lg w-2/3 flex flex-row py-5 items-center"}>
-                <div className={"px-6"} data-testid={"DataShareContent-Issuer-Logo-Container"}>
+                <div className={"px-4"} data-testid={"DataShareContent-Issuer-Logo-Container"}>
                     <img data-testid={"DataShareContent-Issuer-Logo"} src={props.credentialLogo} alt="Issuer Logo"
-                         className="w-12 h-12 flex"/>
+                         className="w-12 h-12 min-w-[36px]"/>
                 </div>
-                <div className="text-center text-lg" data-testid={"DataShareContent-Issuer-Name"}>{props.credentialName}</div>
+                <div className="text-center text-lg w-full sm:w-auto break-words min-w-[100px]" data-testid={"DataShareContent-Issuer-Name"}>{props.credentialName}</div>
             </div>
         </div>
-        <div className="relative flex">
+        <div className="relative flex space-x-10">
             <div className="my-4 w-1/3 text-iw-subTitle text-lg leading-relaxed py-5" data-testid={"DataShareContent-Consent-Container"}>{t("content.consent")}</div>
             <div className={"my-4 w-2/3 flex flex-row py-5 items-center"}>
                 <label className="w-1/2 flex items-center">
@@ -77,25 +77,25 @@ export const DataShareContent:React.FC<DSContentProps> = (props) => {
                 </label>
             </div>
         </div>
-        <div className="relative flex mb-4">
-            <div className={"w-1/3"}></div>
-            <div className={"w-2/3 py-4 px-4 rounded-lg border-2 border-iw-borderLight flex flex-row items-center"} onClick={()=>setTimesDropDown(times => !times)}>
-                <label className={"w-full h-full"} data-testid={"DataShareContent-Selected-Validity-Times"}>{getExpiryDisplayName(vcStorageExpiryLimitInTimes)}</label>
-                <MdOutlineKeyboardArrowDown size={30} color={'var(--iw-color-arrowDown)'} />
-            </div>
-        </div>
+        <div className="relative flex mb-4" data-testid={"times-dropdown"} onClick={()=>setTimesDropDown(times => !times)}>
+                    <div className={"w-1/3"}></div>
+                    <div className={"w-2/3 py-4 px-4 rounded-lg border-2 border-iw-borderLight flex flex-row items-center"}>
+                        <label className={"w-full h-full"} data-testid={"DataShareContent-Selected-Validity-Times"}>{getExpiryDisplayName(vcStorageExpiryLimitInTimes)}</label>
+                        <MdOutlineKeyboardArrowDown size={30} color={'var(--iw-color-arrowDown)'} />
+                    </div>
+                </div>
 
-        {timesDropDown && <div className="relative flex mb-4">
-            <div className={"w-1/3"}></div>
-            <div
-                className={"w-2/3 py-4 px-2 border-2 border-iw-borderLight rounded-lg shadow-lg shadow-iw-shadow flex flex-col justify-center items-center"} data-testid={"DataShareContent-Validity-Times-DropDown"}>
-                <label data-testid={"DataShareContent-Validity-Times-DropDown-Once"} onClick={()=>{dispatch(storevcStorageExpiryLimitInTimes(1)); setTimesDropDown(false)} } className={"w-full h-full py-3 px-4 hover:bg-iw-borderLight hover:rounded-lg"}>{t("content.validityTimesOptions.once")}</label>
-                <label data-testid={"DataShareContent-Validity-Times-DropDown-Thrice"} onClick={()=>{dispatch(storevcStorageExpiryLimitInTimes(3)); setTimesDropDown(false)} } className={"w-full h-full py-3 px-4 hover:bg-iw-borderLight hover:rounded-lg"}>{t("content.validityTimesOptions.thrice")}</label>
-                <label data-testid={"DataShareContent-Validity-Times-DropDown-NoLimit"} onClick={()=>{dispatch(storevcStorageExpiryLimitInTimes(-1)); setTimesDropDown(false)} } className={"w-full h-full py-3 px-4 hover:bg-iw-borderLight hover:rounded-lg"}>{t("content.validityTimesOptions.noLimit")}</label>
-                <label data-testid={"DataShareContent-Validity-Times-DropDown-Custom"} onClick={()=>{setTimesDropDown(false); props.setIsCustomExpiryInTimesModalOpen(true)} }
-                       className={"w-full h-full py-3 px-4 hover:bg-iw-borderLight hover:rounded-lg"}>{t("content.validityTimesOptions.custom")}</label>
-            </div>
-        </div>}
+                {timesDropDown && <div className="relative flex mb-4">
+                    <div className={"w-1/3"}></div>
+                    <div
+                        className={"w-2/3 py-4 px-2 border-2 border-iw-borderLight rounded-lg shadow-lg shadow-iw-shadow flex flex-col justify-center items-center"} data-testid={"DataShareContent-Validity-Times-DropDown"}>
+                        <label data-testid={"DataShareContent-Validity-Times-DropDown-Once"} onClick={()=>{dispatch(storevcStorageExpiryLimitInTimes(1)); setTimesDropDown(false)} } className={"w-full h-full py-3 px-4 hover:bg-iw-borderLight hover:rounded-lg"}>{t("content.validityTimesOptions.once")}</label>
+                        <label data-testid={"DataShareContent-Validity-Times-DropDown-Thrice"} onClick={()=>{dispatch(storevcStorageExpiryLimitInTimes(3)); setTimesDropDown(false)} } className={"w-full h-full py-3 px-4 hover:bg-iw-borderLight hover:rounded-lg"}>{t("content.validityTimesOptions.thrice")}</label>
+                        <label data-testid={"DataShareContent-Validity-Times-DropDown-NoLimit"} onClick={()=>{dispatch(storevcStorageExpiryLimitInTimes(-1)); setTimesDropDown(false)} } className={"w-full h-full py-3 px-4 hover:bg-iw-borderLight hover:rounded-lg"}>{t("content.validityTimesOptions.noLimit")}</label>
+                        <label data-testid={"DataShareContent-Validity-Times-DropDown-Custom"} onClick={()=>{setTimesDropDown(false); props.setIsCustomExpiryInTimesModalOpen(true)} }
+                               className={"w-full h-full py-3 px-4 hover:bg-iw-borderLight hover:rounded-lg"}>{t("content.validityTimesOptions.custom")}</label>
+                    </div>
+                </div>}
         <DataShareDisclaimer content={t("disclaimer")}/>
     </div>;
 }

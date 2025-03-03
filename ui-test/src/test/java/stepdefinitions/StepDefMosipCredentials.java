@@ -73,6 +73,7 @@ public class StepDefMosipCredentials {
 
     @When("User verify login page lables")
     public void user_verify_login_page_lables() {
+        mosipCredentials.clickOnLoginWithOtp();
         Assert.assertTrue(mosipCredentials.isLoginPageLableDisplayed());
     }
 

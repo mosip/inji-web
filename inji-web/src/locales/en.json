@@ -32,7 +32,7 @@
     "FeatureItem2":{
       "heading":"Your Documents Downloaded in Second",
       "item1":"Download with Confidence",
-      "description1":"Save you rimportant documents instantly",
+      "description1":"Save your important documents instantly",
       "item2":"Safe and Sound",
       "description2":"Download IDs, licenses, and more, in one secure location."
     },
@@ -80,7 +80,13 @@
     "emptyContainerContent": "No Credentials found. Please refresh your browser window or try again later",
     "containerHeading": "List of Credential Types",
     "containerSubHeading": "Choose a credential, and confirm your identity in the next step.",
-    "errorContent": "The service is currently unavailable now. Please try again later."
+    "errorContent": "The service is currently unavailable now. Please try again later.",
+    "errors": {
+      "authorizationGrantTypeNotSupportedByWallet": {
+        "code": "Grant type not supported authorization error!",
+        "message": "Thanks for your patience! We're experiencing technical difficulties right now. Please try again later or contact the admin for further assistance!"
+      }
+    }
   },
   "RedirectionPage": {
     "navigateButton": "Go To Home",
@@ -294,7 +300,7 @@
   },
   "CustomExpiryModal": {
     "title": "Please enter the number of times you want to use this credential ",
-    "error": "Please enter a valid expiry number, greater than zero, to limit how many times your credentials can be verified.",
+    "error": "Please enter a valid expiry number above zero. The maximum limit is 50 to control verification attempts.",
     "metrics": "Times",
     "success": "Proceed",
     "cancel": "Cancel"

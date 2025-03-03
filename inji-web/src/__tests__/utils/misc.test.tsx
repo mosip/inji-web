@@ -72,11 +72,11 @@ describe('Test misc.ts utility functions', () => {
     });
 
     test('Check if getErrorObject returns correct error object', () => {
-        const downloadResponse = { errors: [{ errorCode: 'proof_type_not_supported' }] };
+        const downloadResponse = { errors: [{ errorCode: 'err_invalid_issuancedate'}] };
         const errorObject = getErrorObject(downloadResponse);
         expect(errorObject).toEqual({
-            code: 'error.verification.proof_type_not_supported.title',
-            message: 'error.verification.proof_type_not_supported.subTitle'
+            code: 'error.verification.err_invalid_issuancedate.title',
+            message: 'error.verification.err_invalid_issuancedate.subTitle'
         });
     });
 

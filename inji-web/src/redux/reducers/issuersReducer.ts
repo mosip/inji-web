@@ -1,57 +1,58 @@
+import {IssuerObject} from "../../types/data";
 import {IssuersReducerActionType} from "../../types/redux";
+import {REHYDRATE} from "redux-persist";
 
 const initialState = {
     issuers: [],
     filtered_issuers: [],
-    selected_issuer: {}
-}
+    selected_issuer: {} as IssuerObject | undefined
+};
 
 const IssuersReducerAction: IssuersReducerActionType = {
     STORE_ISSUERS: "STORE_ISSUERS",
     STORE_FILTERED_ISSUERS: "STORE_FILTERED_ISSUERS",
     STORE_SELECTED_ISSUER: "STORE_SELECTED_ISSUER"
-}
+};
 
 export const issuersReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case IssuersReducerAction.STORE_ISSUERS :
+        case IssuersReducerAction.STORE_ISSUERS:
             return {
                 ...state,
                 issuers: action.issuers
-            }
-        case IssuersReducerAction.STORE_FILTERED_ISSUERS :
+            };
+        case IssuersReducerAction.STORE_FILTERED_ISSUERS:
             return {
                 ...state,
                 filtered_issuers: action.issuers
-            }
-        case IssuersReducerAction.STORE_SELECTED_ISSUER :
+            };
+        case IssuersReducerAction.STORE_SELECTED_ISSUER:
             return {
                 ...state,
-                selected_issuer: action.issuers
-            }
+                selected_issuer: action.issuerConfig
+            };
         default:
-            return state
+            return state;
     }
-}
+};
 
 export const storeIssuers = (issuers: any) => {
     return {
         type: "STORE_ISSUERS",
         issuers: issuers
-    }
-}
+    };
+};
 
 export const storeFilteredIssuers = (issuers: any) => {
     return {
         type: "STORE_FILTERED_ISSUERS",
         issuers: issuers
-    }
-}
+    };
+};
 
-export const storeSelectedIssuer = (issuer: any) => {
+export const storeSelectedIssuer = (issuerConfig: any) => {
     return {
         type: "STORE_SELECTED_ISSUER",
-        issuers: issuer
-    }
-}
-
+        issuerConfig: issuerConfig
+    };
+};

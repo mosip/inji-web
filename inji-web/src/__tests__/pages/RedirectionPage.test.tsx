@@ -22,7 +22,7 @@ describe('Testing the Layout of RedirectionPage', () => {
   mockUseFetch();
   test('Check if the layout is matching with the snapshots', () => {
     mockUseFetchhook.mockReturnValue({ state: 'DONE', fetchRequest: jest.fn() });
-    (getActiveSession as jest.Mock).mockReturnValue({ selectedIssuer: { credential_issuer: 'issuer1', display: [{ name: 'Test Issuer' }] } });
+    (getActiveSession as jest.Mock).mockReturnValue({ selectedIssuer: { issuer_id: 'issuer1', display: [{ name: 'Test Issuer' }] } });
     const { asFragment } = renderWithRouter(<RedirectionPage />);
     expect(asFragment()).toMatchSnapshot();
   });
@@ -33,7 +33,7 @@ describe('Testing the Functionality of RedirectionPage', () => {
     mockusei18n();
     mockUseFetch();
     jest.clearAllMocks();
-    (getActiveSession as jest.Mock).mockReturnValue({ selectedIssuer: { credential_issuer: 'issuer1', display: [{ name: 'Test Issuer' }] } });
+    (getActiveSession as jest.Mock).mockReturnValue({ selectedIssuer: { issuer_id: 'issuer1', display: [{ name: 'Test Issuer' }] } });
   });
 
   test('Check if NavBar component is rendered', () => {
