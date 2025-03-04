@@ -84,4 +84,14 @@ export class api {
             };
         }
     };
+
+    static fetchUserLoginStatus: ApiRequest = {
+        url: () => api.mimotoHost + "/session/status",
+        methodType: MethodType.GET,
+        headers: () => {
+            return {
+                "Content-Type": "application/json"
+            };
+        }
+    };
 }

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import {LanguageSelector} from "../Common/LanguageSelector";
@@ -22,11 +22,13 @@ export const Header: React.FC = () => {
             if (isLoggedIn) {
                 localStorage.removeItem("displayName"); // Remove displayName from localStorage
                 try {
-                    await fetch("/v1/mimoto/logout", { method: "POST", credentials: "include" });
+                    console.log("before logout::")
+                    await fetch("v1/mimoto/logout", { method: "POST", credentials: "include" });
+                    console.log("after logout::")
                 } catch (error) {
                     console.error("Logout failed:", error);
                 }
-                window.location.replace("/");
+                // window.location.replace("/"); // Uncomment this post fixing logout issuer
             } else {
                 navigate("/login"); // Redirect to login page
             }
