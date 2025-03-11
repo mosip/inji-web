@@ -164,6 +164,8 @@ public class BaseTest {
     	executeLsCommand(System.getProperty("user.dir")+"/test-output/ExtentReport.html");
     	
     	executeLsCommand(System.getProperty("user.dir")+"/utils/");
+
+		executeLsCommand(System.getProperty("user.dir")+"/screenshots/");
     	
     	try {
   	      Thread.sleep(20000); 
