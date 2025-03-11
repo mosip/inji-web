@@ -14,8 +14,8 @@ Feature: Login using Sunbird Credentials
     Then User click on select custom validity button
     Then user enter validity for data share content "<Vailidty>"
     Then Use click on procced button
-    And User enter the policy number "<policy number>"
-    And User enter the full name  "<full name>"
+    And User enter the policy number
+    And User enter the full name
     And User enter the date of birth "<date of birth>"
     And User click on login button
     Then User verify Download Success text displayed
@@ -25,10 +25,10 @@ Feature: Login using Sunbird Credentials
 
     Examples:
       | policy number | full name | date of birth | Vailidty |
-      | 120-720-24    | PolicyTestAutomation      | 01-01-2024    |3|
+      | 1207205244    | automationtest1      | 01-01-2024    |3|
 
   @smoke @VerifyAndDownloadVcViaSunbirdLife
-  Scenario Outline: download vc via sunbird
+  Scenario Outline: download vc via sunbird life
     Then User gets the title of the page
     Then User click on get started button
     And User search the issuers with "Insurance"
@@ -42,9 +42,9 @@ Feature: Login using Sunbird Credentials
     Then user enter validity for data share content "<Vailidty>"
     Then Use click on procced button
     And User verify policy number input box header
-    And User enter the policy number "<policy number>"
+    And User enter the policy number
     And User verify full name input box header
-    And User enter the full name  "<full name>"
+    And User enter the full name
     And User verify date of birth input box header
     And User enter the date of birth "<date of birth>"
     And User click on login button
@@ -54,10 +54,10 @@ Feature: Login using Sunbird Credentials
 
     Examples:
       | policy number | full name | date of birth | Vailidty |
-      |    120-720-24 | PolicyTestAutomation      | 01-01-2024    |3|
+      |    1207205244 | automationtest1      | 01-01-2024    |3|
 #
   @smoke @VerifyAndDownloadVcViaSunbirdLifeWithInvalidPolicyNumber
-  Scenario Outline: download vc via sunbird
+  Scenario Outline: download vc via sunbird with invalid policy number
     Then User gets the title of the page
     Then User click on get started button
     And User search the issuers with "Insurance"
@@ -73,7 +73,7 @@ Feature: Login using Sunbird Credentials
     And User verify policy number input box header
     And User enter the policy number "<policy number>"
     And User verify full name input box header
-    And User enter the full name  "<full name>"
+    And User enter the full name
     And User verify date of birth input box header
     And User enter the date of birth "<date of birth>"
     And User click on login button
@@ -81,10 +81,10 @@ Feature: Login using Sunbird Credentials
 
     Examples:
       | policy number | full name | date of birth | Vailidty |
-      |     1207202 | PolicyTestAutomation      | 01-01-2024    |  3 |
+      |     1207202 | automationtest1      | 01-01-2024    |  3 |
 #
   @smoke @VerifyAndDownloadVcViaVehicleInsuranceWithInvaildName
-  Scenario Outline: download vc via sunbird
+  Scenario Outline: download vc via sunbird with invalid name
     Then User gets the title of the page
     Then User click on get started button
     And User search the issuers with "Insurance"
@@ -98,7 +98,7 @@ Feature: Login using Sunbird Credentials
     Then user enter validity for data share content "<Vailidty>"
     Then Use click on procced button
     And User verify policy number input box header
-    And User enter the policy number "<policy number>"
+    And User enter the policy number
     And User verify full name input box header
     And User enter the full name  "<full name>"
     And User verify date of birth input box header
@@ -108,10 +108,10 @@ Feature: Login using Sunbird Credentials
 
     Examples:
       | policy number | full name | date of birth | Vailidty |
-      |     120-720-24 | PolicyTestNam     | 01-01-2024    | 3 |
+      |     1207205244 | PolicyTestNam     | 01-01-2024    | 3 |
 
   @smoke @VerifyAndDownloadVcViaVehicleInsurance
-  Scenario Outline: download vc via sunbird
+  Scenario Outline: download vc via sunbird vehicle insurance
     Then User gets the title of the page
     Then User click on get started button
     And User search the issuers with "Insurance"
@@ -125,9 +125,9 @@ Feature: Login using Sunbird Credentials
     Then user enter validity for data share content "<Vailidty>"
     Then Use click on procced button
     And User verify policy number input box header
-    And User enter the policy number "<policy number>"
+    And User enter the policy number
     And User verify full name input box header
-    And User enter the full name  "<full name>"
+    And User enter the full name
     And User verify date of birth input box header
     And User enter the date of birth "<date of birth>"
     And User click on login button
@@ -135,4 +135,4 @@ Feature: Login using Sunbird Credentials
 
     Examples:
       | policy number | full name | date of birth | Vailidty |
-      |    120-720-24 | PolicyTestAutomation      | 01-01-2024    | 3 |
+      |    1207205244 | automationtest1      | 01-01-2024    | 3 |

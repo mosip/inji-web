@@ -24,14 +24,14 @@ Feature: Inji web homepage testing
     And User verify that langauge button is displayed
 
   @smoke @verifyingHomepageInArabic
-  Scenario: Verify the Inji web homepage
+  Scenario: Verify the Inji web homepage in arabic
     Given User gets the title of the page
     Then User validate the title of the page
     And User verify that inji web logo is displayed
     And User verify that langauge button is displayed
 
   @smoke @verifyingHomepageInMultipleTabs
-  Scenario: Verify the Inji web homepage
+  Scenario: Verify the Inji web homepage in multitabs
     Given User gets the title of the page
     Then User validate the title of the page
     And User verify that inji web logo is displayed

@@ -15,7 +15,7 @@ Feature: download mosip cridentials
     Then Use click on procced button
     And User verify login page lables
     And User verify vid input box header
-    And User enter the  "<vid>"
+    And User enter the uin
     And User click on getOtp button
     And User enter the otp "<otp>"
     And User click on verify button
@@ -30,7 +30,7 @@ Feature: download mosip cridentials
 
 
   @smoke @VerifySearchWithInvalidString
-  Scenario: Mosip Natonal Id by e-Signet
+  Scenario: Verify Search With Invalid String
     Then User gets the title of the page
     Then User click on get started button
     And User search the issuers with "qewqdda"
@@ -40,7 +40,7 @@ Feature: download mosip cridentials
 
 
   @smoke @VerifyAndDownloadVcViaMosipNatinalId
-  Scenario Outline: Mosip Natonal Id by e-Signet
+  Scenario Outline: Verify And DownloadVc Via Mosip NatinalId
     Then User gets the title of the page
     Then User click on get started button
     And User search the issuers with "National"
@@ -56,7 +56,7 @@ Feature: download mosip cridentials
     Then Use click on procced button
     And User verify login page lables
     And User verify vid input box header
-    And User enter the  "<vid>"
+    And User enter the uin
     And User click on getOtp button
     And User enter the otp "<otp>"
     And User click on verify button
@@ -70,7 +70,7 @@ Feature: download mosip cridentials
       | 2405782960 | 111111 |     3    |
 
   @smoke @VerifyAndDownloadVcViaMosipNatinalIdAndRfreshPage
-  Scenario Outline: Mosip Natonal Id by e-Signet
+  Scenario Outline: Verify And DownloadVc Via Mosip NatinalId And rfreshPage
     Then User gets the title of the page
     Then User click on get started button
     And User search the issuers with "National"
@@ -84,7 +84,7 @@ Feature: download mosip cridentials
     Then Use click on procced button
     And User verify login page lables
     And User verify vid input box header
-    And User enter the  "<vid>"
+    And User enter the uin
     And User click on getOtp button
     And User enter the otp "<otp>"
     And User click on verify button

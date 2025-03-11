@@ -3,6 +3,7 @@
     <test name="Cucumber Tests">
         <classes>
             <class name="runnerfiles.Runner"/>
+            <class name="utils.BaseTest"/>
         </classes>
     </test>
 </suite>

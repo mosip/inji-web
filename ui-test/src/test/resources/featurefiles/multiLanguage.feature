@@ -8,10 +8,10 @@ Feature: Inji web multilanguage testing
   And User verify that inji web logo is displayed
   And User verify that langauge button is displayed
   And User click on langauge button
-  And User verify All the languages
+  And User verify all the languages
 
   @smoke @verifyingHomepageAndSearchInConfiguredLanguge
-  Scenario: Verify the Inji web homepage
+  Scenario: Verify the Inji web homepage and search in configured language
     Given User gets the title of the page
     Then User validate the title of the page
     Then User click on get started button
@@ -49,7 +49,7 @@ Feature: Inji web multilanguage testing
     And User verify mosip national id by e-signet displayed
 
   @smoke @verifyingCredentialDetailsPageForMosipInConfiguredLanguge
-  Scenario: Verify the Credential Details Page
+  Scenario: Verify the Credential Details Page for mosip in configured langauge
     Given User gets the title of the page
     Then User validate the title of the page
     Then User click on get started button
@@ -77,7 +77,7 @@ Feature: Inji web multilanguage testing
     Then User validate the list of credential types title of the page in portugues laguage
 
   @smoke @verifyingCredentialDetailsPageForSunbirdInConfiguredLanguge
-  Scenario: Verify the Credential Details Page
+  Scenario: Verify the Credential Details Page for sunbird in configured languge
     Given User gets the title of the page
     Then User validate the title of the page
     Then User click on get started button
@@ -112,7 +112,7 @@ Feature: Inji web multilanguage testing
     Then User validate the list of credential types title of the page in portugues laguage for sunbird
 
   @smoke @verifyingChangeLanguageOnCredentialDetailsPageAndVerifyHomePage
-  Scenario: Verify the Credential Details Page
+  Scenario: Verify the Credential Details Page and verify home page
     Given User gets the title of the page
     Then User validate the title of the page
     Then User click on get started button
@@ -164,7 +164,7 @@ Feature: Inji web multilanguage testing
 
 
   @smoke @verifyingHomepageAndSearchInConfiguredLanguge
-  Scenario: Verify the Inji web homepage
+  Scenario: Verify the Inji web homepage  and search in configured langauge
     Given User gets the title of the page
     Then User validate the title of the page
     Then User click on get started button
