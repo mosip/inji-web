@@ -32,7 +32,6 @@ import java.util.Collections;
 						"summary","com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}
 		//tags = "@smoke"		
 		)
-
 public class Runner extends AbstractTestNGCucumberTests{
 	public static void main(String[] args) {
 	      try {
