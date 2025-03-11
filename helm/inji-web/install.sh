@@ -70,7 +70,7 @@ helm -n $NS install datashare-inji mosip/datashare \
 
 INJI_HOST=$(kubectl get cm global -o jsonpath={.data.mosip-injiweb-host})
 echo "Installing INJIWEB"
-helm -n $NS install injiweb mosip/inji-web \
+helm -n $NS install injiweb mosip/injiweb \
   -f values.yaml \
   --set inji_web.configmaps.injiweb-ui.MIMOTO_HOST=https://$MOSIP_INJIWEB_HOST/v1/mimoto \
   --set istio.hosts[0]=$MOSIP_INJIWEB_HOST \
