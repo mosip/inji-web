@@ -35,13 +35,13 @@ export const HomePage: React.FC = () => {
                 console.log("status:", loginSessionStatus);
                 setSessionStatus(loginSessionStatus);
             } else {
-                setSessionStatus(loginSessionStatus);
-                throw new Error("Failed to fetch user profile");
+                setSessionStatus("invalid");
+                throw new Error("Failed to fetch user session");
             }
         } catch (error) {
             console.error("Error fetching user profile:", error);
             localStorage.removeItem("displayName");
-            window.location.replace("/");
+            navigate("/");
         }
     };
 

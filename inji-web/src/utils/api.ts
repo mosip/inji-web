@@ -94,4 +94,14 @@ export class api {
             };
         }
     };
+
+    static userLogout: ApiRequest = {
+        url: () => api.mimotoHost + "/logout",
+        methodType: MethodType.POST,
+        headers: () => {
+            return {
+            "Content-Type": "application/json"
+            };
+        }
+    };
 }

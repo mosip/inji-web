@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {RequestStatus, useFetch} from "../../hooks/useFetch";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import {LanguageSelector} from "../Common/LanguageSelector";
@@ -8,6 +9,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import { RootState } from "../../types/redux";
 import { useSelector } from "react-redux";
 import { isRTL } from "../../utils/i18n";
+import {api} from "../../utils/api";
 export const Header: React.FC = () => {
     const language = useSelector((state: RootState) => state.common.language);
     const { t, i18n } = useTranslation("PageTemplate");
@@ -19,20 +21,32 @@ export const Header: React.FC = () => {
             setIsLoggedIn(!!localStorage.getItem("displayName"));
     }, []);
     const handleAuthAction = async () => {
-            if (isLoggedIn) {
-                localStorage.removeItem("displayName"); // Remove displayName from localStorage
-                try {
-                    console.log("before logout::")
-                    await fetch("v1/mimoto/logout", { method: "POST", credentials: "include" });
-                    console.log("after logout::")
-                } catch (error) {
-                    console.error("Logout failed:", error);
-                }
-                // window.location.replace("/"); // Uncomment this post fixing logout issuer
-            } else {
-                navigate("/login"); // Redirect to login page
-            }
-        };
+        if (isLoggedIn) {
+            try {
+                        const apiRequest = api.userLogout;
+                        const response = await fetch(apiRequest.url(), {
+                            method: "POST",
+                            credentials: "include",
+                        });
+
+                        if (response.ok) {
+                            localStorage.removeItem("displayName"); // Remove after successful API call
+                            window.location.replace("/"); // Redirect after successful logout
+                        } else if (response.status === 401){
+                            console.error("Logout failed: Unauthorized");
+                            window.location.replace("/login");
+                        } else {
+                            throw new Error("Logout failed with status: " + response.status);
+                        }
+
+                    } catch (error) {
+                        console.error("Logout failed:", error);
+                        // Optionally, handle the error (e.g., show a message to the user)
+                    }
+        } else {
+            navigate("/login"); // Redirect to login page
+        }
+    };
 
     return (
         <header>
