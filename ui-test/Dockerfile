@@ -54,6 +54,7 @@ COPY --chown=${container_user}:${container_user} ./src/test/resources/featurefil
 COPY --chown=${container_user}:${container_user} ./src/test/resources/config/ /home/mosip/src/test/resources/config/
 COPY --chown=${container_user}:${container_user} ./src/test/resources/extent.properties /home/mosip/src/test/resources/extent.properties
 COPY --chown=${container_user}:${container_user} ./src/main/java/utils/ /home/mosip/src/main/java/utils/
+COPY --chown=${container_user}:${container_user} ./screenshots/ /home/mosip/screenshots/
 
 COPY --chown=${container_user_uid}:${container_user} ./browserstack.yml /home/mosip/
 COPY --chown=${container_user_uid}:${container_user} ./target/*.jar ${work_dir}
