@@ -43,7 +43,7 @@ RUN mkdir -p /home/mosip/test-output/SparkReport/
 RUN chmod -R 777 /home/mosip/test-output
 
 RUN mkdir -p /home/mosip/screenshots/
-RUN chmod 644 /home/mosip/screenshots/*.png
+RUN chmod 644 /home/mosip/screenshots/
 
 
 
