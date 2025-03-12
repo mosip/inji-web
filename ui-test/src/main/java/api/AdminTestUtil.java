@@ -379,11 +379,18 @@ public class AdminTestUtil extends BaseTestCase {
 		return serverComponentsCommitDetails;
 	}
 
+
+	public static String getCommitDetails(String path) {
+
+		return path + "- No Response";
+	}
+
 	public static void closeBufferedReader(BufferedReader bufferedReader) {
 		if (bufferedReader != null) {
 			try {
 				bufferedReader.close();
 			} catch (IOException e) {
+				// logger.error(GlobalConstants.EXCEPTION_STRING_2 + e.getMessage());
 			}
 		}
 	}
