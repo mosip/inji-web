@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.mosip.injiweb</groupId>
-    <artifactId>uitest-injiweb</artifactId>
+    <groupId>io.mosip.uiautomation.injiweb</groupId>
+    <artifactId>inji-web-test</artifactId>
     <version>0.12.0-SNAPSHOT</version>
     <name>inji-web-test</name>
     <description>Parent project of ui automation of injiweb</description>
