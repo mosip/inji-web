@@ -31,8 +31,6 @@ public class ConfigManager {
 	private static String ReportIgnoredTestCases = "reportIgnoredTestCases";
 	private static String ReportKnownIssueTestCases = "reportKnownIssueTestCases";
 
-
-
 	private static final String MOSIP_AUTOMATION_CLIENT_SECRET = "mosip_testrig_client_secret";
 	private static final String MOSIP_AUTOMATION_CLIENT_ID = "mosip_testrig_client_id";
 	private static final String MOSIP_AUTOMATION_APP_ID = "mosip_automation_app_id";
@@ -171,7 +169,6 @@ public class ConfigManager {
 	public static Properties propsKernel;
 	private static String reportExpirationInDays;
 	public static void setProperty(String key, String value) {
-		// Overwrite the value with only if the key exists
 		if (propsKernel.containsKey(key)) {
 			propsKernel.setProperty(key, value);
 		}
@@ -185,8 +182,6 @@ public class ConfigManager {
 	}
 
 	public static void init() {
-		// Loading Kernel property
-		//LOGGER.info("file location"+TestRunner.getResourcePath() + "/config/));
 		propsKernel = getproperty(UinGenerationUtil.getResourcePath() + "/config/"+ UinGenerationUtil.getKernalFilename());
 		System.out.println(propsKernel);
 
@@ -306,10 +301,6 @@ public class ConfigManager {
 		langselect =System.getenv(LANG_SELECT) == null ? propsKernel.getProperty(LANG_SELECT) : System.getenv(LANG_SELECT);
 		propsKernel.setProperty(LANG_SELECT, langselect);
 
-
-
-		//enableDebug threadCount  langselect
-
 	}
 
 	public static String getAuthDemoServicePort() {
@@ -321,7 +312,6 @@ public class ConfigManager {
 
 	}
 
-
 	public static String getLangselect() {
 		return langselect;
 
@@ -331,8 +321,6 @@ public class ConfigManager {
 		return threadCount;
 
 	}
-
-
 
 	public static String getEnableDebug() {
 		return enableDebug;
@@ -360,7 +348,6 @@ public class ConfigManager {
 
 		return propsKernel;
 	}
-
 
 	public static String getAdminClientSecret() {
 		return admin_client_secret;
@@ -401,7 +388,6 @@ public class ConfigManager {
 	public static String getRegprocAppId() {
 		return regproc_app_id;
 	}
-
 
 	public static String getAutomationClientSecret() {
 		return automation_client_secret;
@@ -491,7 +477,6 @@ public class ConfigManager {
 		System.out.println("DB Password from ENV::: " + System.getenv(AUDIT_DB_PASS));
 		return audit_db_pass;
 	}
-
 	public static String getAuditDbSchema() {
 		return audit_db_schema;
 	}
@@ -583,9 +568,7 @@ public class ConfigManager {
 
 	public static String getPreConfiguredOtp() {
 		return preconfiguredOtp;
-
 	}
-	
 	public static Boolean reportIgnoredTestCases() {
 		return reportIgnoredTestCases.equalsIgnoreCase("yes");
 	}

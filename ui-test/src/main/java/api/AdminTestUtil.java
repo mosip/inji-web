@@ -269,49 +269,9 @@ public class AdminTestUtil extends BaseTestCase {
 
 		return "";
 	}
-	
-	
-	
-//	public static String generateInsurance() {
-//
-//		Response response = null;
-//		JSONArray benefitsArray = new JSONArray();
-//		JSONObject requestJson = new JSONObject();
-//
-//		requestJson.put("policyNumber", "1207205244");
-//		requestJson.put("policyName", "automationtest1");
-//		requestJson.put("policyExpiresOn", "2033-04-20T20:48:17.684Z");
-//		requestJson.put("policyIssuedOn", "2023-04-20T20:48:17.684Z");
-//		requestJson.put("fullName", "automationtest1");
-//		requestJson.put("dob", "2024-01-01");
-//
-//		benefitsArray.put("Critical Surgery");
-//		benefitsArray.put("Full body checkup");
-//
-//		requestJson.put("benefits", benefitsArray);
-//		requestJson.put("gender", "Male");
-//		requestJson.put("mobile", "0123456789");
-//		requestJson.put("email", "abcd@gmail.com");
-//
-//		response = RestClient.postRequestWithCookie(insuranceUrl, requestJson.toString(), MediaType.APPLICATION_JSON,
-//				MediaType.APPLICATION_JSON, BaseTestCase.COOKIENAME, token);
-//		JSONObject responseJson = new JSONObject(response.asString());
-//
-//
-//		System.out.println("responseJson = " + responseJson);
-//
-//		   if (responseJson.getJSONObject("params").getString("status").equalsIgnoreCase("SUCCESSFUL")) {
-//		        generateInsurance = responseJson.getJSONObject("result").getJSONObject("Insurance").getString("osid");
-//		        return generateInsurance;
-//		    }
-//
-//		    generateInsurance = "";
-//		    return generateInsurance;
-//	}
-	
+
 	public static String generateInsurance() {
 	    if (!insuranceId.isEmpty()) {
-	        // If insuranceId is already set, return it directly without hitting the API
 	        return insuranceId;
 	    }
 
@@ -350,7 +310,6 @@ public class AdminTestUtil extends BaseTestCase {
 	        return insuranceId;
 	    }
 
-	    // Return empty string if API response is not successful
 	    return "";
 	}
 	
@@ -380,8 +339,6 @@ public class AdminTestUtil extends BaseTestCase {
 		if (!initialized) {
 			ConfigManager.init();
 			BaseTestCase.initialize();
-
-			// Generate Keycloak Users
 			KeycloakUserManager.createUsers();
 			initialized = true;
 		}
@@ -421,29 +378,12 @@ public class AdminTestUtil extends BaseTestCase {
 		serverComponentsCommitDetails = stringBuilder.toString();
 		return serverComponentsCommitDetails;
 	}
-	
-	
-	public static String getCommitDetails(String path) {
-
-//		Response response = null;
-//		response = given().contentType(ContentType.JSON).get(path);
-//		if (response != null && response.getStatusCode() == 200) {
-//			logger.info(response.getBody().asString());
-//			JSONObject jsonResponse = new JSONObject(response.getBody().asString());
-//			return "Group: " + jsonResponse.getJSONObject("build").getString("group") + ", Artifact: "
-//					+ jsonResponse.getJSONObject("build").getString("artifact") + ", version: "
-//					+ jsonResponse.getJSONObject("build").getString("version") + ", Commit ID: "
-//					+ jsonResponse.getJSONObject("git").getJSONObject("commit").getString("id");
-//		}
-		return path + "- No Response";
-	}
 
 	public static void closeBufferedReader(BufferedReader bufferedReader) {
 		if (bufferedReader != null) {
 			try {
 				bufferedReader.close();
 			} catch (IOException e) {
-				// logger.error(GlobalConstants.EXCEPTION_STRING_2 + e.getMessage());
 			}
 		}
 	}
