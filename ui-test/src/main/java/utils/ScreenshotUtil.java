@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
+import java.util.Base64;
+
 import utils.ExtentReportManager;
 
 public class ScreenshotUtil  {
@@ -36,13 +38,18 @@ public class ScreenshotUtil  {
             File screenshotFile = new File(screenshotPath);
             if (screenshotFile.exists()) {
                 ExtentReportManager.getTest().info("Screenshot Captured",
-                        MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(encodeFileToBase64Binary(screenshotPath)).build());
             } else {
                 ExtentReportManager.getTest().warning("Screenshot file not found: " + screenshotPath);
             }
         } catch (IOException e) {
             ExtentReportManager.getTest().warning("Failed to attach screenshot to report: " + e.getMessage());
         }
+    }
+
+    public static String encodeFileToBase64Binary(String filePath) throws IOException {
+        byte[] fileContent = FileUtils.readFileToByteArray(new File(filePath));
+        return Base64.getEncoder().encodeToString(fileContent);
     }
 }
 
