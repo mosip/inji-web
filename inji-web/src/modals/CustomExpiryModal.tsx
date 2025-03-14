@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ModalWrapper} from "./ModalWrapper";
 import {DataShareFooter} from "../components/DataShare/DataShareFooter";
 import {CustomExpiryTimesContent} from "../components/DataShare/CustomExpiryTimes/CustomExpiryTimesContent";
@@ -14,6 +14,7 @@ export const CustomExpiryModal: React.FC<CustomExpiryModalProps> = (props) => {
     const vcStorageExpiryLimitInTimes = useSelector(
         (state: RootState) => state.common.vcStorageExpiryLimitInTimes
     );
+    const [toastVisible, setToastVisible] = useState(false);
     const [expiryTime, setExpiryTime] = useState<number>(
         vcStorageExpiryLimitInTimes > 1 ? vcStorageExpiryLimitInTimes : 1
     );
@@ -22,7 +23,12 @@ export const CustomExpiryModal: React.FC<CustomExpiryModalProps> = (props) => {
 
     const onSuccess = () => {
         if (expiryTime < 1 || expiryTime > 50) {
-            toast.error(t("error"));
+            if (toastVisible) return;
+            setToastVisible(true);
+            toast.error(t("error"), {
+                onClose: () => setToastVisible(false),
+                toastId: "max-verification-exceed"
+            });
         } else {
             dispatch(storevcStorageExpiryLimitInTimes(expiryTime));
             props.onSuccess();
