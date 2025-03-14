@@ -27,11 +27,11 @@ import java.math.BigDecimal;
 import io.restassured.http.ContentType;
 
 
-public class AdminTestUtil extends BaseTestCase {
+public class InjiWebTestUtil extends BaseTestCase {
 
 	private static String serverComponentsCommitDetails;
 	public static String propsHealthCheckURL = "";
-	private static final Logger logger = Logger.getLogger(AdminTestUtil.class);
+	private static final Logger logger = Logger.getLogger(InjiWebTestUtil.class);
 	public static String token;
 	public static final int OTP_CHECK_INTERVAL = 10000;
 	public static String tokenRoleIdRepo = "idrepo";
@@ -218,17 +218,17 @@ public class AdminTestUtil extends BaseTestCase {
 		String rid = "27847" + RandomStringUtils.randomNumeric(10) + timestampValue;
 
 		// Make Unused UIN Api call to get the UIN Number
-		uin = AdminTestUtil.getUnUsedUIN(tokenRoleIdRepo);
+		uin = InjiWebTestUtil.getUnUsedUIN(tokenRoleIdRepo);
 
 		// Call Masterdata Schema API To get the Schema Data Of the Env
-		String responseString = AdminTestUtil.getMasterDataSchema(tokenRoleAdmin);
+		String responseString = InjiWebTestUtil.getMasterDataSchema(tokenRoleAdmin);
 
 		// Build request body for add identity API
-		String requestjson = AdminTestUtil.buildaddIdentityRequestBody(responseString, uin, rid);
+		String requestjson = InjiWebTestUtil.buildaddIdentityRequestBody(responseString, uin, rid);
 
 
 		// Make Add Identity API Call and activate the UIN
-		if (!AdminTestUtil.activateUIN(requestjson, tokenRoleIdRepo)) {
+		if (!InjiWebTestUtil.activateUIN(requestjson, tokenRoleIdRepo)) {
 			// UIN activation failed
 			return "";
 		}
@@ -250,7 +250,7 @@ public class AdminTestUtil extends BaseTestCase {
 
 		requestJson.put("id", "mosip.vid.create");
 		requestJson.put("metadata", new HashMap<>());
-		requestJson.put("requesttime", AdminTestUtil.generateCurrentUTCTimeStamp());
+		requestJson.put("requesttime", InjiWebTestUtil.generateCurrentUTCTimeStamp());
 		requestJson.put("version", "v1");
 		requestJson.put("request", new HashMap<>());
 		requestJson.getJSONObject("request").put("UIN", uin);
@@ -372,8 +372,8 @@ public class AdminTestUtil extends BaseTestCase {
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		} finally {
-			AdminTestUtil.closeBufferedReader(bufferedReader);
-			AdminTestUtil.closeFileReader(fileReader);
+			InjiWebTestUtil.closeBufferedReader(bufferedReader);
+			InjiWebTestUtil.closeFileReader(fileReader);
 		}
 		serverComponentsCommitDetails = stringBuilder.toString();
 		return serverComponentsCommitDetails;

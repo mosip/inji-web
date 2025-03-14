@@ -17,7 +17,7 @@ import utils.ScreenshotUtil;
 import utils.ExtentReportManager;
 import com.aventstack.extentreports.Status;
 
-import api.AdminTestUtil;
+import api.InjiWebTestUtil;
 import api.InsuranceDetails;
 
 import com.aventstack.extentreports.ExtentTest;
@@ -125,8 +125,8 @@ public class StepDefSunbirdCredentials {
     public void user_enter_the_policy_number() {
         try {
             Thread.sleep(3000); // Consider using WebDriverWait instead of Thread.sleep for better efficiency.
-            sunbirdCredentials.enterPolicyNumer(AdminTestUtil.policyNumber);
-            test.log(Status.PASS, "User successfully entered the policy number: " + AdminTestUtil.policyNumber);
+            sunbirdCredentials.enterPolicyNumer(InjiWebTestUtil.policyNumber);
+            test.log(Status.PASS, "User successfully entered the policy number: " + InjiWebTestUtil.policyNumber);
         } catch (NoSuchElementException e) {
             test.log(Status.FAIL, "Element not found while entering the policy number: " + e.getMessage());
             test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
@@ -148,8 +148,8 @@ public class StepDefSunbirdCredentials {
     @Then("User enter the full name")
     public void user_enter_the_full_name() {
         try {
-            sunbirdCredentials.enterFullName(AdminTestUtil.fullName);
-            test.log(Status.PASS, "User successfully entered the full name: " + AdminTestUtil.fullName);
+            sunbirdCredentials.enterFullName(InjiWebTestUtil.fullName);
+            test.log(Status.PASS, "User successfully entered the full name: " + InjiWebTestUtil.fullName);
         } catch (NoSuchElementException e) {
             test.log(Status.FAIL, "Element not found while entering the full name: " + e.getMessage());
             test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));

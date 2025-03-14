@@ -60,14 +60,14 @@ public class BaseTestCase {
 	}
 
 	public static void intiateUINGenration() {
-		uin = AdminTestUtil.generateUIN();
-		InsuranceNum= AdminTestUtil.generateInsurance();
+		uin = InjiWebTestUtil.generateUIN();
+		InsuranceNum= InjiWebTestUtil.generateInsurance();
 		
 
 		if (uin != null) {
-			perpetualVid = AdminTestUtil.generateVID(uin, "perpetual");
-			onetimeuseVid = AdminTestUtil.generateVID(uin, "onetimeuse");
-			temporaryVid= AdminTestUtil.generateVID(uin, "temporary");
+			perpetualVid = InjiWebTestUtil.generateVID(uin, "perpetual");
+			onetimeuseVid = InjiWebTestUtil.generateVID(uin, "onetimeuse");
+			temporaryVid= InjiWebTestUtil.generateVID(uin, "temporary");
 			
 //			mockSMTPListener = new MockSMTPListener();
 //			mockSMTPListener.run();

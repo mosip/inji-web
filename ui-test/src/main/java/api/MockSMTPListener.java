@@ -104,8 +104,8 @@ public class MockSMTPListener{
 	}
 
 	public static String getOtp(String emailId) {
-		int otpExpTime = AdminTestUtil.getOtpExpTimeFromActuator();
-		int otpCheckLoopCount = (otpExpTime * 1000) / AdminTestUtil.OTP_CHECK_INTERVAL;
+		int otpExpTime = InjiWebTestUtil.getOtpExpTimeFromActuator();
+		int otpCheckLoopCount = (otpExpTime * 1000) / InjiWebTestUtil.OTP_CHECK_INTERVAL;
 
 		int counter = 0;
 
@@ -130,7 +130,7 @@ public class MockSMTPListener{
 			counter++;
 			try {
 				logger.info("Not received Otp yet, waiting for 10 Sec");
-				Thread.sleep(AdminTestUtil.OTP_CHECK_INTERVAL);
+				Thread.sleep(InjiWebTestUtil.OTP_CHECK_INTERVAL);
 			} catch (InterruptedException e) {
 				logger.info(e.getMessage());
 				Thread.currentThread().interrupt();
@@ -166,7 +166,7 @@ public class MockSMTPListener{
 			counter++;
 			try {
 				logger.info("Not received additionalRequestId yet, waiting for 10 Sec");
-				Thread.sleep(AdminTestUtil.OTP_CHECK_INTERVAL);
+				Thread.sleep(InjiWebTestUtil.OTP_CHECK_INTERVAL);
 			} catch (InterruptedException e) {
 				logger.info(e.getMessage());
 				Thread.currentThread().interrupt();

@@ -12,7 +12,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
-import api.AdminTestUtil;
+import api.InjiWebTestUtil;
 import api.ConfigManager;
 import api.S3Adapter;
 
@@ -143,7 +143,7 @@ public class BaseTest {
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			System.out.println("Shutdown hook triggered. Uploading report...");
 //            pushReportsToMinio();
-            AdminTestUtil.deleteInsurance();
+			InjiWebTestUtil.deleteInsurance();
             if (extent != null) {
                 extent.flush();
             }
