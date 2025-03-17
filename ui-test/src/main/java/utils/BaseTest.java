@@ -176,7 +176,7 @@ public class BaseTest {
 		executeLsCommand(System.getProperty("user.dir") + "/test-output/");
 
 		// Generate day and formatted date
-		String timestamp = new SimpleDateFormat("EEEE-yyyy-MM-dd").format(new Date());
+		String timestamp = new SimpleDateFormat("EEEE-yyyy-MM-dd-HH-mm").format(new Date());
 		String newFileName = "ExtentReport_" + timestamp + ".html";
 		File originalReportFile = new File(System.getProperty("user.dir") + "/test-output/ExtentReport.html");
 		File newReportFile = new File(System.getProperty("user.dir") + "/test-output/" + newFileName);
