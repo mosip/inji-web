@@ -198,7 +198,7 @@ public class BaseTest {
 						ConfigManager.getS3Account(),
 						System.getProperty("modules"),
 						null, null,
-                        String.valueOf(newReportFile),
+						newFileName,
 						newReportFile
 				);
 				System.out.println("isStoreSuccess:: " + isStoreSuccess);
