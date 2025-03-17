@@ -22,7 +22,7 @@ import java.util.Collections;
 @RunWith(Cucumber.class)
 @CucumberOptions(
 
-		features = {"/home/mosip/featurefiles/helpPage.feature"},
+		features = {"/home/mosip/featurefiles/"},
 		dryRun = false,
 		glue = {"stepdefinitions", "utils"},
 		snippets = SnippetType.CAMELCASE,
