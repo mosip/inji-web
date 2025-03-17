@@ -17,8 +17,24 @@ export const Header: React.FC = () => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
     useEffect(() => {
-        setIsLoggedIn(!!localStorage.getItem("displayName"));
-    }, [localStorage.getItem("displayName")]);
+        const handleStorageChange = () => {
+            console.log(
+                "displayNameUpdated event triggered, updating Home...",
+                localStorage.getItem("displayName")
+            );
+            setIsLoggedIn(!!localStorage.getItem("displayName"));
+        };
+
+        window.addEventListener("displayNameUpdated", handleStorageChange);
+
+        return () => {
+            window.removeEventListener(
+                "displayNameUpdated",
+                handleStorageChange
+            );
+        };
+    }, []);
+    
     const handleAuthAction = async () => {
         if (isLoggedIn) {
             try {

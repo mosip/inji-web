@@ -1,5 +1,5 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import React from "react";
+import {BrowserRouter, Route, Routes, useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from "react";
 import {IssuersPage} from "./pages/IssuersPage";
 import {Header} from "./components/PageTemplate/Header";
 import {Footer} from "./components/PageTemplate/Footer";
@@ -12,34 +12,54 @@ import {getDirCurrentLanguage} from "./utils/i18n";
 import {PageNotFound} from "./pages/PageNotFound";
 import {AuthorizationPage} from "./pages/AuthorizationPage";
 import {HomePage} from "./pages/HomePage";
-import Login from './pages/users/login/Login';
+import Login from "./pages/users/login/Login";
+import LoginSessionStatusChecker from "./pages/users/login/LoginSessionStatusChecker";
 
 export const AppRouter = () => {
     const language = useSelector((state: RootState) => state.common.language);
     const wrapElement = (element: JSX.Element, isBGNeeded: boolean = true) => {
-        return <React.Fragment>
-            <div className={!isBGNeeded ? `h-screen min-h-72 bg-iw-background font-base` : `h-screen min-h-72 bg bg-iw-background font-base` } dir={getDirCurrentLanguage(language)}>
-                <Header/>
-                <div className={"top-20 h-full mt-20 my-auto flex-grow"}>
-                    {element}
+        return (
+            <React.Fragment>
+                <div
+                    className={
+                        !isBGNeeded
+                            ? `h-screen min-h-72 bg-iw-background font-base`
+                            : `h-screen min-h-72 bg bg-iw-background font-base`
+                    }
+                    dir={getDirCurrentLanguage(language)}
+                >
+                    <Header />
+                    <div className={"top-20 h-full mt-20 my-auto flex-grow"}>
+                        {element}
+                    </div>
+                    <Footer />
                 </div>
-                <Footer/>
-            </div>
-        </React.Fragment>
-    }
+            </React.Fragment>
+        );
+    };
 
-    return (<BrowserRouter>
-        <Routes>
-            <Route path="/" element={wrapElement(<HomePage/>, false)}/>
-            <Route path="/issuers" element={wrapElement(<IssuersPage/>)}/>
-            <Route path="/issuers/:issuerId" element={wrapElement(<CredentialsPage/>)}/>
-            <Route path="/help" element={wrapElement(<HelpPage/>)}/>
-            <Route path="/redirect" element={wrapElement(<RedirectionPage/>)}/>
-            <Route path="/authorize" element={wrapElement(<AuthorizationPage/>)}/>
-            <Route path="/login" element={wrapElement(<Login/>)}/>
-            <Route path="/*" element={wrapElement(<PageNotFound/>)}/>
-        </Routes>
-    </BrowserRouter>)
-}
-
-
+    return (
+        <BrowserRouter>
+            <LoginSessionStatusChecker />
+            <Routes>
+                <Route path="/" element={wrapElement(<HomePage />, false)} />
+                <Route path="/issuers" element={wrapElement(<IssuersPage />)} />
+                <Route
+                    path="/issuers/:issuerId"
+                    element={wrapElement(<CredentialsPage />)}
+                />
+                <Route path="/help" element={wrapElement(<HelpPage />)} />
+                <Route
+                    path="/redirect"
+                    element={wrapElement(<RedirectionPage />)}
+                />
+                <Route
+                    path="/authorize"
+                    element={wrapElement(<AuthorizationPage />)}
+                />
+                <Route path="/login" element={wrapElement(<Login />)} />
+                <Route path="/*" element={wrapElement(<PageNotFound />)} />
+            </Routes>
+        </BrowserRouter>
+    );
+};
