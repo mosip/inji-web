@@ -30,4 +30,4 @@ echo "/home/mosip/src/main/java/utils/"
 ls -l /home/mosip/src/main/java/utils/
 
 java --version
-java -jar uitest-injiweb-0.12.0-SNAPSHOT.jar
+java -jar uitest-injiweb-*.jar
