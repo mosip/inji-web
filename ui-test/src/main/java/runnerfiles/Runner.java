@@ -21,7 +21,8 @@ import java.util.Collections;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = {"/home/mosip/featurefiles/"},
+
+		features = {"/home/mosip/featurefiles/helpPage.feature"},
 		dryRun = false,
 		glue = {"stepdefinitions", "utils"},
 		snippets = SnippetType.CAMELCASE,

@@ -25,6 +25,8 @@ import com.aventstack.extentreports.Status;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.io.*;
@@ -160,35 +162,52 @@ public class BaseTest {
 		return jse;
 	}
 
-    public static void pushReportsToS3() {
-    	executeLsCommand(System.getProperty("user.dir")+"/test-output/ExtentReport.html");
-    	
-    	executeLsCommand(System.getProperty("user.dir")+"/utils/");
+	public static void pushReportsToS3() {
+		executeLsCommand(System.getProperty("user.dir") + "/test-output/ExtentReport.html");
+		executeLsCommand(System.getProperty("user.dir") + "/utils/");
+		executeLsCommand(System.getProperty("user.dir") + "/screenshots/");
 
-		executeLsCommand(System.getProperty("user.dir")+"/screenshots/");
-    	
-    	try {
-  	      Thread.sleep(20000); 
-  	  } catch (InterruptedException e) {
-  	      e.printStackTrace();
-  	  }
-    	
-    	executeLsCommand(System.getProperty("user.dir")+"/test-output/");
-    	File newReportFile = new File(System.getProperty("user.dir")+"/test-output/ExtentReport.html");
-    	executeLsCommand(System.getProperty("user.dir")+"/test-output/ExtentReport.html");
-    	if (ConfigManager.getPushReportsToS3().equalsIgnoreCase("yes")) {
+		try {
+			Thread.sleep(20000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		executeLsCommand(System.getProperty("user.dir") + "/test-output/");
+
+		// Generate day and formatted date
+		String timestamp = new SimpleDateFormat("EEEE-yyyy-MM-dd").format(new Date());
+		String newFileName = "ExtentReport_" + timestamp + ".html";
+		File originalReportFile = new File(System.getProperty("user.dir") + "/test-output/ExtentReport.html");
+		File newReportFile = new File(System.getProperty("user.dir") + "/test-output/" + newFileName);
+
+		// Rename the file
+		if (originalReportFile.renameTo(newReportFile)) {
+			System.out.println("Report renamed to: " + newFileName);
+		} else {
+			System.out.println("Failed to rename the report file.");
+		}
+
+		executeLsCommand(newReportFile.getAbsolutePath());
+
+		if (ConfigManager.getPushReportsToS3().equalsIgnoreCase("yes")) {
 			S3Adapter s3Adapter = new S3Adapter();
 			boolean isStoreSuccess = false;
 			try {
-				isStoreSuccess = s3Adapter.putObject(ConfigManager.getS3Account(),
-						System.getProperty("modules"), null, null, "injiwebtest",newReportFile );
+				isStoreSuccess = s3Adapter.putObject(
+						ConfigManager.getS3Account(),
+						System.getProperty("modules"),
+						null, null,
+                        String.valueOf(newReportFile),
+						newReportFile
+				);
 				System.out.println("isStoreSuccess:: " + isStoreSuccess);
 			} catch (Exception e) {
-				System.out.println("error occured while pushing the object" + e.getLocalizedMessage());
+				System.out.println("Error occurred while pushing the object: " + e.getLocalizedMessage());
 				System.out.println(e.getMessage());
 			}
-    }
-    }
+		}
+	}
 
 	private static void executeLsCommand(String directoryPath) {
 		try {
