@@ -26,7 +26,7 @@ const LoginSessionStatusChecker = () => {
                 const loginSessionStatus = sessionData?.response;
 
                 if (!sessionResponse.ok) {
-                    throw new Error(sessionData?.errors[0].error_message);
+                    throw new Error(sessionData?.errors[0].errorMessage);
                 }
 
                 let storedDisplayName = localStorage.getItem("displayName");
