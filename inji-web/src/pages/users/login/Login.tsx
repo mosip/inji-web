@@ -53,10 +53,14 @@ const Login: React.FC = () => {
                 }
                 setIsProfileFetched(true);
             } else {
+                console.error(
+                    "Error occurred while fetching user profile::",
+                    userProfileData?.errors[0]?.errorMessage
+                );
                 setError(userProfileData?.errors[0]?.errorMessage);
             }
         } catch (error) {
-            console.error("Error fetching user profile:", error);
+            console.error("Error occurred while fetching user profile:", error);
             setError("Failed to fetch user profile");
         }
     };

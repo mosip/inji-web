@@ -26,7 +26,7 @@ const LoginSessionStatusChecker = () => {
                 const loginSessionStatus = sessionData?.response;
 
                 if (!sessionResponse.ok) {
-                    throw new Error("Session expired");
+                    throw new Error(sessionData?.errors[0].error_message);
                 }
 
                 let storedDisplayName = localStorage.getItem("displayName");
@@ -49,30 +49,30 @@ const LoginSessionStatusChecker = () => {
                     const userProfileData = await userProfileResponse.json();
 
                     if (userProfileResponse.ok) {
-                        try {
-                            const userInfo = JSON.parse(
-                                userProfileData.response
+                        const userInfo = JSON.parse(userProfileData.response);
+                        if (userInfo?.displayName) {
+                            localStorage.setItem(
+                                "displayName",
+                                userInfo.displayName
                             );
-                            if (userInfo?.displayName) {
-                                localStorage.setItem(
-                                    "displayName",
-                                    userInfo.displayName
-                                );
-                                storedDisplayName = userInfo.displayName;
-                            }
-                        } catch (error) {
-                            console.error("Error parsing user info:", error);
+                            storedDisplayName = userInfo.displayName;
                         }
                     } else {
                         console.error(
                             "Failed to fetch user profile:",
                             userProfileData.errors
                         );
+                        throw new Error(
+                            userProfileData?.errors[0]?.errorMessage
+                        );
                     }
                 }
                 window.dispatchEvent(new Event("displayNameUpdated"));
             } catch (error) {
-                console.error("Error fetching user session : ", error);
+                console.error(
+                    "Error occurred while fetching session or user metadata : ",
+                    error
+                );
                 localStorage.removeItem("displayName");
                 window.dispatchEvent(new Event("displayNameUpdated"));
                 navigate("/");
