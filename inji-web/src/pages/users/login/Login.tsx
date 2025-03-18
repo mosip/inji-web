@@ -24,7 +24,7 @@ const Login: React.FC = () => {
             fetchUserProfile();
         } else if (status === "error") {
             setIsLoading(false);
-            setError("Login failed");
+            setError(params.get("error_message"));
         }
     }, [navigate]);
 
