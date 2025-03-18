@@ -47,16 +47,21 @@ export const Header: React.FC = () => {
                 if (response.ok) {
                     localStorage.removeItem("displayName");
                     window.location.replace("/");
-                } else if (response.status === 401) {
-                    console.error("Logout failed: Unauthorized");
-                    window.location.replace("/login");
                 } else {
-                    throw new Error(
-                        "Logout failed with status: " + response.status
-                    );
+                    const parsedResponse = await response.json();
+
+                    const errorMessage = parsedResponse?.errors[0].errorMessage;
+                    if (
+                        errorMessage ===
+                        "Logout request was sent for an invalid or expired session"
+                    ) {
+                        localStorage.removeItem("displayName");
+                        window.location.replace("/login");
+                    }
+                    throw new Error(parsedResponse?.errors[0]?.errorMessage);
                 }
             } catch (error) {
-                console.error("Logout failed:", error);
+                console.error("Logout failed with error:", error);
             }
         } else {
             navigate("/login");

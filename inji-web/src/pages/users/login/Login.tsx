@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { api } from "../../../utils/api";
+import React, {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
+import {api} from "../../../utils/api";
 
 const Login: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -11,44 +11,53 @@ const Login: React.FC = () => {
     const handleGoogleLogin = () => {
         setIsLoading(true);
         setError(null);
-        window.location.href = "http://localhost:8099/v1/mimoto/oauth2/authorize/google";
+        window.location.href =
+            "http://localhost:8099/v1/mimoto/oauth2/authorize/google";
     };
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
-        const status = params.get('status');
+        const status = params.get("status");
 
-        if (status === 'success') {
+        if (status === "success") {
             setIsLoading(false);
             fetchUserProfile();
-        } else if (status === 'error') {
+        } else if (status === "error") {
             setIsLoading(false);
-            setError('Login failed');
+            setError("Login failed");
         }
     }, [navigate]);
 
     const fetchUserProfile = async () => {
         try {
-            const response = await fetch(api.fetchUserProfile.url(), {
-                method: api.fetchUserProfile.methodType === 0 ? 'GET' : 'POST',
-                headers: {
-                    ...api.fetchUserProfile.headers(),
-                },
-                credentials: 'include',
-            });
+            const userProfileResponse = await fetch(
+                api.fetchUserProfile.url(),
+                {
+                    method:
+                        api.fetchUserProfile.methodType === 0 ? "GET" : "POST",
+                    headers: {
+                        ...api.fetchUserProfile.headers()
+                    },
+                    credentials: "include"
+                }
+            );
 
-            if (response.ok) {
-                const userProfile = JSON.parse((await response.json())?.response);
+            const userProfileData = await userProfileResponse.json();
+            if (userProfileResponse.ok) {
+                const userProfile = JSON.parse(userProfileData?.response);
                 if (userProfile.displayName) {
-                    localStorage.setItem('displayName', userProfile.displayName);
+                    localStorage.setItem(
+                        "displayName",
+                        userProfile.displayName
+                    );
                 }
                 setIsProfileFetched(true);
             } else {
-                throw new Error('Failed to fetch user profile');
+                setError(userProfileData?.errors[0]?.errorMessage);
             }
         } catch (error) {
-            console.error('Error fetching user profile:', error);
-            setError('Failed to fetch user profile');
+            console.error("Error fetching user profile:", error);
+            setError("Failed to fetch user profile");
         }
     };
 
@@ -59,40 +68,40 @@ const Login: React.FC = () => {
     }, [isProfileFetched, navigate]);
 
     const containerStyle: React.CSSProperties = {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        backgroundColor: '#f4f7fc',
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        backgroundColor: "#f4f7fc"
     };
 
     const buttonStyle: React.CSSProperties = {
-        padding: '10px 20px',
-        fontSize: '16px',
-        color: 'white',
-        backgroundColor: '#4285f4',
-        border: 'none',
-        borderRadius: '5px',
-        cursor: 'pointer',
-        transition: 'background-color 0.3s ease',
+        padding: "10px 20px",
+        fontSize: "16px",
+        color: "white",
+        backgroundColor: "#4285f4",
+        border: "none",
+        borderRadius: "5px",
+        cursor: "pointer",
+        transition: "background-color 0.3s ease"
     };
 
     const buttonHoverStyle: React.CSSProperties = {
         ...buttonStyle,
-        backgroundColor: '#357ae8',
+        backgroundColor: "#357ae8"
     };
 
     const buttonDisabledStyle: React.CSSProperties = {
         ...buttonStyle,
-        backgroundColor: '#cccccc',
-        cursor: 'not-allowed',
+        backgroundColor: "#cccccc",
+        cursor: "not-allowed"
     };
 
     const errorStyle: React.CSSProperties = {
-        color: 'red',
-        marginTop: '10px',
-        fontSize: '14px',
+        color: "red",
+        marginTop: "10px",
+        fontSize: "14px"
     };
 
     return (
@@ -103,12 +112,14 @@ const Login: React.FC = () => {
                 style={isLoading ? buttonDisabledStyle : buttonStyle}
                 onMouseEnter={(e) => {
                     if (!isLoading) {
-                        (e.target as HTMLElement).style.backgroundColor = '#357ae8';
+                        (e.target as HTMLElement).style.backgroundColor =
+                            "#357ae8";
                     }
                 }}
                 onMouseLeave={(e) => {
                     if (!isLoading) {
-                        (e.target as HTMLElement).style.backgroundColor = '#4285f4';
+                        (e.target as HTMLElement).style.backgroundColor =
+                            "#4285f4";
                     }
                 }}
             >
