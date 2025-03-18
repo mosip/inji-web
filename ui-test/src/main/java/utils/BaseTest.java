@@ -31,12 +31,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.io.*;
 
+import static api.ConfigManager.getiam_apienvuser;
+
 public class BaseTest {
 	public void setDriver(WebDriver driver) {
 		this.driver = driver;
 	}
-	
-	
+
+	private static int passedCount = 0;
+	private static int failedCount = 0;
+	private static int totalCount = 0;
 
 	public static WebDriver driver;
 
@@ -59,7 +63,8 @@ public class BaseTest {
 
 	@Before
 	public void beforeAll(Scenario scenario) throws MalformedURLException {
-		
+
+		totalCount++;
 		   ExtentReportManager.initReport();
 	        ExtentReportManager.createTest(scenario.getName()); // Start logging for the scenario
 	        ExtentReportManager.logStep("Scenario Started: " + scenario.getName());
@@ -96,17 +101,19 @@ public class BaseTest {
             ExtentCucumberAdapter.getCurrentStep().log(Status.PASS, "✅ Step Passed: " + stepName);
         }
     }
-	
+
 	@After
-	public void after(Scenario scenario) {
-		
-        if (scenario.isFailed()) {
-            ExtentReportManager.logStep("Scenario Failed: " + scenario.getName());
-        } else {
-            ExtentReportManager.logStep("Scenario Passed: " + scenario.getName());
-        }
-        ExtentReportManager.flushReport();
-    }
+	public void afterScenario(Scenario scenario) {
+		if (scenario.isFailed()) {
+			failedCount++;
+			ExtentReportManager.getTest().fail("❌ Scenario Failed: " + scenario.getName());
+		} else {
+			passedCount++;
+			ExtentReportManager.getTest().pass("✅ Scenario Passed: " + scenario.getName());
+		}
+
+		ExtentReportManager.flushReport();
+	}
 
 
 	
@@ -174,10 +181,9 @@ public class BaseTest {
 		}
 
 		executeLsCommand(System.getProperty("user.dir") + "/test-output/");
-
-		// Generate day and formatted date
-		String timestamp = new SimpleDateFormat("EEEE-yyyy-MM-dd-HH-mm").format(new Date());
-		String newFileName = "InjiWebUi-" + timestamp + ".html";
+		String timestamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm").format(new Date());
+		String name = getiam_apienvuser() + "-"+timestamp + "-T-" + totalCount + "-P-" + passedCount + "-F-" + failedCount + ".html";
+		String newFileName = "InjiWebUi-" +name;
 		File originalReportFile = new File(System.getProperty("user.dir") + "/test-output/ExtentReport.html");
 		File newReportFile = new File(System.getProperty("user.dir") + "/test-output/" + newFileName);
 

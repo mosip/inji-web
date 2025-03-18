@@ -21,7 +21,6 @@ import java.util.Collections;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-
 		features = {"/home/mosip/featurefiles/"},
 		dryRun = false,
 		glue = {"stepdefinitions", "utils"},
@@ -36,6 +35,16 @@ import java.util.Collections;
 public class Runner extends AbstractTestNGCucumberTests{
 	public static void main(String[] args) {
 	      try {
+
+			  String os = System.getProperty("os.name").toLowerCase();
+			  String featurePath;
+
+			  if (os.contains("win")) {
+				  featurePath = "src/test/resources/featurefiles/";
+			  } else {
+				  featurePath = "/home/mosip/featurefiles/";
+			  }
+			  System.setProperty("cucumber.features", featurePath);
 	            BaseTestCase.intiateUINGenration();
 	            Thread.sleep(18000);
 	            TestNG testng = new TestNG();
