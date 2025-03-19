@@ -4,7 +4,7 @@ Feature: Login using Sunbird Credentials
   Scenario Outline: download vc via sunbird
     Then User gets the title of the page
     Then User click on get started button
-    And User search the issuers with "Insurance"
+    And User search the issuers sunbird
     And User verify sunbird cridentials button
     And User click on sunbird cridentials button
     Then User verify list of credential types displayed
@@ -31,7 +31,7 @@ Feature: Login using Sunbird Credentials
   Scenario Outline: download vc via sunbird
     Then User gets the title of the page
     Then User click on get started button
-    And User search the issuers with "Insurance"
+    And User search the issuers sunbird
     And User verify sunbird cridentials button
     And User click on sunbird cridentials button
     Then User verify list of credential types displayed
@@ -60,7 +60,7 @@ Feature: Login using Sunbird Credentials
   Scenario Outline: download vc via sunbird
     Then User gets the title of the page
     Then User click on get started button
-    And User search the issuers with "Insurance"
+    And User search the issuers sunbird
     And User verify sunbird cridentials button
     And User click on sunbird cridentials button
     Then User verify list of credential types displayed
@@ -87,7 +87,7 @@ Feature: Login using Sunbird Credentials
   Scenario Outline: download vc via sunbird
     Then User gets the title of the page
     Then User click on get started button
-    And User search the issuers with "Insurance"
+    And User search the issuers sunbird
     And User verify sunbird cridentials button
     And User click on sunbird cridentials button
     Then User verify list of credential types displayed
@@ -114,7 +114,7 @@ Feature: Login using Sunbird Credentials
   Scenario Outline: download vc via sunbird
     Then User gets the title of the page
     Then User click on get started button
-    And User search the issuers with "Insurance"
+    And User search the issuers sunbird
     And User verify sunbird cridentials button
     And User click on sunbird cridentials button
     Then User verify list of credential types displayed

@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 
+
 public class StepDef {
     String pageTitle;
     public WebDriver driver;
@@ -102,12 +103,19 @@ public class StepDef {
 
     @Then("User search the issuers with {string}")
     public void user_search_the_issuers_with(String string) {
-        try {
-            Thread.sleep(6000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         homePage.enterIssuersInSearchBox(string);
+    }
+
+    @Then("User search the issuers mosip")
+    public void user_search_the_issuers_mosip() {
+        String [] string= baseTest.fetchIssuerTexts();
+        homePage.enterIssuersInSearchBox(string[0]);
+    }
+
+    @Then("User search the issuers sunbird")
+    public void user_search_the_issuers_sunbird() {
+        String [] string= baseTest.fetchIssuerTexts();
+        homePage.enterIssuersInSearchBox(string[1]);
     }
 
     @Then("User verify go home button")

@@ -1,15 +1,14 @@
 package utils;
 
 import io.cucumber.java.*;
-import org.json.JSONObject;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.yaml.snakeyaml.Yaml;
-
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.MalformedURLException;
@@ -82,5 +81,21 @@ public class BaseTest {
         }  else {
             throw new RuntimeException("Invalid YAML format, expected a map");
         }
+    }
+
+    public static String[] fetchIssuerTexts() {
+        String issuerSearchText = null;
+        String issuerSearchTextforSunbird = null;
+        String propertyFilePath = System.getProperty("user.dir") + "/src/test/resources/config.properties";
+        Properties properties = new Properties();
+
+        try (FileInputStream fileInputStream = new FileInputStream(propertyFilePath)) {
+            properties.load(fileInputStream);
+            issuerSearchText = properties.getProperty("issuerSearchText");
+            issuerSearchTextforSunbird = properties.getProperty("issuerSearchTextforSunbird");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new String[]{issuerSearchText, issuerSearchTextforSunbird};
     }
 }

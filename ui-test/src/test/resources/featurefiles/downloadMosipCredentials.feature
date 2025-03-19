@@ -4,7 +4,7 @@ Feature: download mosip cridentials
   Scenario Outline: Mosip Natonal Id by e-Signet
     Then User gets the title of the page
     Then User click on get started button
-    And User search the issuers with "National"
+    And User search the issuers mosip
     When User click on download mosip credentials button
     Then User verify list of credential types displayed
     And User verify mosip national id by e-signet displayed
@@ -35,7 +35,7 @@ Feature: download mosip cridentials
     Then User click on get started button
     And User search the issuers with "qewqdda"
     And User Verify the no issuer found message
-    And User search the issuers with "National"
+    And User search the issuers mosip
     When User click on download mosip credentials button
 
 
@@ -43,7 +43,7 @@ Feature: download mosip cridentials
   Scenario Outline: Mosip Natonal Id by e-Signet
     Then User gets the title of the page
     Then User click on get started button
-    And User search the issuers with "National"
+    And User search the issuers mosip
     And User verify the logo of the issuer
     When User click on download mosip credentials button
     And User verify the logo of the issuer
@@ -73,7 +73,7 @@ Feature: download mosip cridentials
   Scenario Outline: Mosip Natonal Id by e-Signet
     Then User gets the title of the page
     Then User click on get started button
-    And User search the issuers with "National"
+    And User search the issuers mosip
     When User click on download mosip credentials button
     Then User verify list of credential types displayed
     And User verify mosip national id by e-signet displayed
