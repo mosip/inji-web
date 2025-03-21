@@ -1,9 +1,13 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Cucumber Test Suite">
-    <test name="Cucumber Tests">
-        <classes>
-            <class name="runnerfiles.Runner"/>
-            <class name="utils.BaseTest"/>
-        </classes>
-    </test>
-</suite>
+<!--<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">-->
+
+<!--<suite name="Cucumber Test Suite">-->
+<!--    <suite-files>-->
+<!--        <suite-file path="mimotoPrerequisiteSuite.xml" />-->
+<!--    </suite-files>-->
+<!--    <test name="Cucumber Tests">-->
+<!--        <classes>-->
+<!--            <class name="runnerfiles.Runner"/>-->
+<!--            <class name="utils.BaseTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--</suite>-->
