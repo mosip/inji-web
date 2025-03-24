@@ -7,7 +7,10 @@ import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
 
 export const HomePage: React.FC = () => {
+    const {t} = useTranslation("HomePage");
+    const [toastVisible, setToastVisible] = useState(false);
     const [displayName, setDisplayName] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleStorageChange = () => {
@@ -28,17 +31,21 @@ export const HomePage: React.FC = () => {
         };
     }, []);
 
-    const navigate = useNavigate();
-    const {t} = useTranslation("HomePage");
+    const showToast = (message: string) => {
+        if (toastVisible) return;
+        setToastVisible(true);
+        toast.warning(message, {
+            onClose: () => setToastVisible(false),
+            toastId: "toast-wrapper"
+        });
+    };
 
     return (
         <div className={"pb-20 flex flex-col gap-y-4 "}>
             {displayName && <div className="greeting">Hi {displayName}</div>}
             <HomeBanner onClick={() => navigate("/issuers")} />
             <HomeFeatures />
-            <HomeQuickTip
-                onClick={() => toast.warning(t("QuickTip.toastText"))}
-            />
+            <HomeQuickTip onClick={() => showToast(t("QuickTip.toastText"))} />
         </div>
     );
 };
