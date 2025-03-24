@@ -23,7 +23,6 @@ const LoginSessionStatusChecker = () => {
                 );
 
                 const sessionData = await sessionResponse.json();
-                const loginSessionStatus = sessionData?.response;
 
                 if (!sessionResponse.ok) {
                     throw new Error(sessionData?.errors[0].errorMessage);
@@ -49,13 +48,13 @@ const LoginSessionStatusChecker = () => {
                     const userProfileData = await userProfileResponse.json();
 
                     if (userProfileResponse.ok) {
-                        const userInfo = JSON.parse(userProfileData.response);
-                        if (userInfo?.displayName) {
+                        const userInfo = userProfileData?.response;
+                        if (userInfo?.display_name) {
                             localStorage.setItem(
                                 "displayName",
-                                userInfo.displayName
+                                userInfo.display_name
                             );
-                            storedDisplayName = userInfo.displayName;
+                            storedDisplayName = userInfo.display_name;
                         }
                     } else {
                         console.error(

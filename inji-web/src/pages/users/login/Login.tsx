@@ -44,11 +44,11 @@ const Login: React.FC = () => {
 
             const userProfileData = await userProfileResponse.json();
             if (userProfileResponse.ok) {
-                const userProfile = JSON.parse(userProfileData?.response);
-                if (userProfile.displayName) {
+                const userProfile = userProfileData?.response;
+                if (userProfile.display_name) {
                     localStorage.setItem(
                         "displayName",
-                        userProfile.displayName
+                        userProfile.display_name
                     );
                 }
                 setIsProfileFetched(true);
