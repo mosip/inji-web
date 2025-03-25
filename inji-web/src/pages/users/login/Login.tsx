@@ -67,7 +67,7 @@ const Login: React.FC = () => {
 
     useEffect(() => {
         if (isProfileFetched) {
-            window.location.replace("/");
+            window.location.replace("/pin");
         }
     }, [isProfileFetched, navigate]);
 

@@ -14,6 +14,7 @@ import {AuthorizationPage} from "./pages/AuthorizationPage";
 import {HomePage} from "./pages/HomePage";
 import Login from "./pages/users/login/Login";
 import LoginSessionStatusChecker from "./pages/users/login/LoginSessionStatusChecker";
+import PinForm from './pages/users/PinPage'
 
 export const AppRouter = () => {
     const language = useSelector((state: RootState) => state.common.language);
@@ -58,6 +59,7 @@ export const AppRouter = () => {
                     element={wrapElement(<AuthorizationPage />)}
                 />
                 <Route path="/login" element={wrapElement(<Login />)} />
+                <Route path="/pin" element={wrapElement(<PinForm/>)}/>
                 <Route path="/*" element={wrapElement(<PageNotFound />)} />
             </Routes>
         </BrowserRouter>

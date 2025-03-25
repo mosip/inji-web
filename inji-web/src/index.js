@@ -7,11 +7,14 @@ import "../src/utils/i18n";
 import {Provider} from "react-redux";
 import {reduxStore} from "./redux/reduxStore";
 import {AppToaster} from "./components/Common/AppToaster";
+import { CookiesProvider } from 'react-cookie';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <Provider store={reduxStore}>
-        <AppToaster />
-        <AppRouter />
+        <CookiesProvider>
+            <AppToaster />
+            <AppRouter />
+        </CookiesProvider>
     </Provider>
 );

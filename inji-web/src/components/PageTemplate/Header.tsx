@@ -1,20 +1,24 @@
-import React, {useEffect, useState} from "react";
-import {useTranslation} from "react-i18next";
-import {useNavigate} from "react-router-dom";
-import {LanguageSelector} from "../Common/LanguageSelector";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { LanguageSelector } from "../Common/LanguageSelector";
 import { HelpDropdown } from "../Common/HelpDropdown";
-import {GiHamburgerMenu} from "react-icons/gi";
+import { GiHamburgerMenu } from "react-icons/gi";
 import OutsideClickHandler from 'react-outside-click-handler';
 import { RootState } from "../../types/redux";
 import { useSelector } from "react-redux";
 import { isRTL } from "../../utils/i18n";
-import {api} from "../../utils/api";
+import { api } from "../../utils/api";
+import { useCookies } from 'react-cookie';
+
+
 export const Header: React.FC = () => {
     const language = useSelector((state: RootState) => state.common.language);
     const { t, i18n } = useTranslation("PageTemplate");
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [cookies] = useCookies(['XSRF-TOKEN']);
 
     useEffect(() => {
         const handleStorageChange = () => {
@@ -34,7 +38,7 @@ export const Header: React.FC = () => {
             );
         };
     }, []);
-    
+
     const handleAuthAction = async () => {
         if (isLoggedIn) {
             try {
@@ -42,6 +46,9 @@ export const Header: React.FC = () => {
                 const response = await fetch(apiRequest.url(), {
                     method: "POST",
                     credentials: "include",
+                    headers: {
+                        'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
+                    },
                 });
 
                 if (response.ok) {

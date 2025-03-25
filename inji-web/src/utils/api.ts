@@ -76,7 +76,7 @@ export class api {
     };
     // method to fetch user profile
     static fetchUserProfile: ApiRequest = {
-        url: () => api.mimotoHost + "/secure/user/profile",
+        url: () => api.mimotoHost + "/users/me",
         methodType: MethodType.GET,
         headers: () => {
             return {
@@ -104,4 +104,38 @@ export class api {
             };
         }
     };
+
+    // Fetch wallets API
+    static fetchWallets: ApiRequest = {
+        url: () => api.mimotoHost + "/users/me/wallets",
+        methodType: MethodType.GET,
+        headers: () => {
+            return {
+            "Content-Type": "application/json"
+            };
+        }
+    };
+
+// Post wallet API with PIN
+    static createWalletWithPin: ApiRequest = {
+        url: () => api.mimotoHost + "/users/me/wallets",
+        methodType: MethodType.POST,
+        headers: () => {
+            return {
+            "Content-Type": "application/json"
+            };
+        }
+    };
+
+// Fetch wallet details by walletId
+    static fetchWalletDetails: ApiRequest = {
+        url: (walletId: string) => api.mimotoHost + `/users/me/wallets/${walletId}`,
+        methodType: MethodType.POST,
+        headers: () => {
+            return {
+            "Content-Type": "application/json"
+            };
+        }
+    };
+
 }
