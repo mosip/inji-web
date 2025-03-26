@@ -14,14 +14,6 @@ import java.util.Random;
 public class UinGenerationUtil {
 
     public static String getResourcePath() {
-//        if (checkRunType().equalsIgnoreCase("JAR"))
-//            return (new File(jarUrl)).getParentFile().getAbsolutePath() + "/resources/";
-//        if (checkRunType().equalsIgnoreCase("IDE")) {
-//            String path = System.getProperty("user.dir") + "/src/main/resources";
-//            if (path.contains("test-classes"))
-//                path = path.replace("test-classes", "classes");
-//            return path;
-//        }
         return System.getProperty("user.dir") + "/src/main/resources";
     }
 

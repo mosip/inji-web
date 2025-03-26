@@ -148,39 +148,6 @@ public class Runner extends AbstractTestNGCucumberTests{
 			LOGGER.error("No files found in directory: " + homeDir);
 		}
 	}
-		
-	
-	
-
-
-
-//		try {
-//
-////			  String os = System.getProperty("os.name").toLowerCase();
-////			  String featurePath;
-////
-////			  if (os.contains("win")) {
-////				  featurePath = "src/test/resources/featurefiles/";
-////			  } else {
-////				  featurePath = "/home/mosip/featurefiles/";
-////			  }
-////			  System.setProperty("cucumber.features", featurePath);
-////	            BaseTestCase.intiateUINGenration();
-////	            Thread.sleep(18000);
-////	            TestNG testng = new TestNG();
-////
-////	            String testNgXmlPath = System.getProperty("user.dir") + "/TestNg.xml";
-////	            System.out.println("Path of the TestNG XML: " + testNgXmlPath);
-////	            testng.setTestSuites(Collections.singletonList(testNgXmlPath));
-////
-////	            testng.run();
-//
-//			System.out.println("Test execution completed. Check reports for details.");
-//		} catch (Exception e) {
-//			System.err.println("Error occurred during test execution: " + e.getMessage());
-//			e.printStackTrace();
-//		}
-//	}
 
 	public static String getRunType() {
 		if (Runner.class.getResource("Runner.class").getPath().contains(".jar"))

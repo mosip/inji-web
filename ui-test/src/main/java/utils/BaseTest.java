@@ -149,8 +149,6 @@ public class BaseTest {
 	public static void afterAll() {
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			System.out.println("Shutdown hook triggered. Uploading report...");
-//            pushReportsToMinio();
-//			InjiWebTestUtil.deleteInsurance();
             if (extent != null) {
                 extent.flush();
             }
