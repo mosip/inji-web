@@ -51,7 +51,7 @@ RUN chmod -R 777 /home/mosip/screenshots/
 # Copy files
 COPY --chown=${container_user_uid}:${container_user} --chmod=771 ./entrypoint.sh ${work_dir}/entrypoint.sh
 #COPY --chown=${container_user}:${container_user} ./src/test ${work_dir}/
-COPY ./ui-test/target $work_dir/
+COPY --chown=${container_user}:${container_user} ./target $work_dir/
 COPY --chown=${container_user}:${container_user} ./src/test/resources/TestNg.xml /home/mosip/TestNg.xml
 COPY --chown=${container_user}:${container_user} ./src/test/resources/featurefiles/ /home/mosip/featurefiles/
 COPY --chown=${container_user}:${container_user} ./src/main/resources/ /home/mosip/src/test/resources/
