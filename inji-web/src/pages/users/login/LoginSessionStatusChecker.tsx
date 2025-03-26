@@ -13,7 +13,10 @@ const fetchUserProfile = async () => {
         const userProfileData = await userProfileResponse.json();
 
         if (!userProfileResponse.ok) {
-            console.error("Failed to fetch user profile:", userProfileData.errors);
+            console.error(
+                "Failed to fetch user profile:",
+                userProfileData.errors
+            );
             throw new Error(userProfileData?.errors?.[0]?.errorMessage);
         }
 
@@ -44,11 +47,10 @@ const LoginSessionStatusChecker = () => {
                     credentials: "include"
                 }
             );
-
-            const sessionData = await sessionResponse.json();
-
+            
             if (!sessionResponse.ok) {
-                throw new Error(sessionData?.errors?.[0]?.errorMessage);
+                const sessionData = await sessionResponse.json();
+                throw new Error(sessionData?.errorMessage);
             }
 
             let storedDisplayName = localStorage.getItem("displayName");
