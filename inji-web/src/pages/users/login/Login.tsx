@@ -30,34 +30,26 @@ const Login: React.FC = () => {
 
     const fetchUserProfile = async () => {
         try {
-            const userProfileResponse = await fetch(
-                api.fetchUserProfile.url(),
-                {
-                    method:
-                        api.fetchUserProfile.methodType === 0 ? "GET" : "POST",
-                    headers: {
-                        ...api.fetchUserProfile.headers()
-                    },
-                    credentials: "include"
-                }
-            );
+            const response = await fetch(api.fetchUserProfile.url(), {
+                method: api.fetchUserProfile.methodType === 0 ? "GET" : "POST",
+                headers: {
+                    ...api.fetchUserProfile.headers()
+                },
+                credentials: "include"
+            });
 
-            const userProfileData = await userProfileResponse.json();
-            if (userProfileResponse.ok) {
-                const userProfile = userProfileData?.response;
-                if (userProfile.display_name) {
+            const responseData = await response.json();
+            if (response.ok) {
+                if (responseData.display_name) {
                     localStorage.setItem(
                         "displayName",
-                        userProfile.display_name
+                        responseData.display_name
                     );
                 }
                 setIsProfileFetched(true);
             } else {
-                console.error(
-                    "Error occurred while fetching user profile::",
-                    userProfileData?.errors[0]?.errorMessage
-                );
-                setError(userProfileData?.errors[0]?.errorMessage);
+                setError(responseData.errorMessage);
+                throw responseData;
             }
         } catch (error) {
             console.error("Error occurred while fetching user profile:", error);

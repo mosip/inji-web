@@ -4,29 +4,23 @@ import {api} from "../../../utils/api";
 
 const fetchUserProfile = async () => {
     try {
-        const userProfileResponse = await fetch(api.fetchUserProfile.url(), {
+        const response = await fetch(api.fetchUserProfile.url(), {
             method: api.fetchUserProfile.methodType === 0 ? "GET" : "POST",
             headers: { ...api.fetchUserProfile.headers() },
             credentials: "include"
         });
 
-        const userProfileData = await userProfileResponse.json();
+        const responseData = await response.json();
 
-        if (!userProfileResponse.ok) {
-            console.error(
-                "Failed to fetch user profile:",
-                userProfileData.errors
-            );
-            throw new Error(userProfileData?.errors?.[0]?.errorMessage);
+        if (!response.ok) {
+            throw responseData;
         }
 
-        const userInfo = userProfileData?.response;
-        if (userInfo?.display_name) {
-            localStorage.setItem("displayName", userInfo.display_name);
-            return userInfo.display_name;
+        if (responseData.display_name) {
+            localStorage.setItem("displayName", responseData.display_name);
+            return responseData.display_name;
         }
     } catch (error) {
-        console.error("Error fetching user profile:", error);
         throw error;
     }
 };
@@ -47,7 +41,7 @@ const LoginSessionStatusChecker = () => {
                     credentials: "include"
                 }
             );
-            
+
             if (!sessionResponse.ok) {
                 const sessionData = await sessionResponse.json();
                 throw new Error(sessionData?.errorMessage);
