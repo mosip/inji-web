@@ -30,4 +30,4 @@ echo "/home/mosip/src/main/java/utils/"
 ls -l /home/mosip/src/main/java/utils/
 
 java --version
-java -jar uitest-injiweb-*.jar
+java -jar -Dmodules="$MODULES" -Denv.user="$ENV_USER" -Denv.endpoint="$ENV_ENDPOINT" -Denv.testLevel="$ENV_TESTLEVEL" uitest-injiweb-*.jar
