@@ -44,11 +44,7 @@ public class AddIdentity extends AdminTestUtil implements ITest {
 	private static final Logger logger = Logger.getLogger(AddIdentity.class);
 	protected String testCaseName = "";
 	public Response response = null;
-//	public static String newuin =null;
 
-	/**
-	 * get current testcaseName
-	 */
 	@Override
 	public String getTestName() {
 		return testCaseName;

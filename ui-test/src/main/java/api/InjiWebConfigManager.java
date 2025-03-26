@@ -30,7 +30,7 @@ public class InjiWebConfigManager extends ConfigManager{
 	}
 	
 	
-	public static Boolean IsDebugEnabled() { return getproperty("enableDebug").equalsIgnoreCase("yes"); }  
+//	public static Boolean IsDebugEnabled() { return getproperty("enableDebug").equalsIgnoreCase("yes"); }
 	
 	public static String getapiEndUser() { return getproperty("apiEnvUser"); }
 	

@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-
 	<suite name="Mimoto Pre-requisite API Test">
-	<!-- Passing Group as parmeter unsing "testType" Possible Groups are: smoke 
-		regression smokeAndRegression -->
-<!--	<listeners>-->
-<!--		<listener class-name="io.mosip.testrig.apirig.report.EmailableReport" />-->
-<!--	</listeners>-->
-		
+
 	<test name="DeletePolicySunBirdR">
 		<parameter name="ymlFile"
 			value="injiweb/SunBirdR/DeletePolicySunBirdR/DeletePolicySunBirdR.yml" />

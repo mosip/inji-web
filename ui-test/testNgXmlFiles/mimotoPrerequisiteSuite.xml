@@ -2,12 +2,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 	<suite name="Mimoto Pre-requisite API Test">
-	<!-- Passing Group as parmeter unsing "testType" Possible Groups are: smoke 
-		regression smokeAndRegression -->
-<!--	<listeners>-->
-<!--		<listener class-name="io.mosip.testrig.apirig.report.EmailableReport" />-->
-<!--	</listeners>-->
-		
 	<test name="Adding Identity">
 		<parameter name="ymlFile" value="injiweb/AddIdentity/AddIdentity.yml" />
 		<parameter name="prerequisite" value="Yes" />

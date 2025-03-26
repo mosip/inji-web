@@ -1,9 +1,17 @@
 package runnerfiles;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
+import api.InjiWebConfigManager;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
+import io.cucumber.testng.CucumberOptions.SnippetType;
+import io.cucumber.testng.FeatureWrapper;
+import io.cucumber.testng.PickleWrapper;
+import io.mosip.testrig.apirig.dataprovider.BiometricDataProvider;
+import io.mosip.testrig.apirig.testrunner.BaseTestCase;
+import io.mosip.testrig.apirig.testrunner.ExtractResource;
+import io.mosip.testrig.apirig.testrunner.HealthChecker;
+import io.mosip.testrig.apirig.utils.*;
 import org.apache.log4j.Logger;
 import org.junit.runner.RunWith;
 import org.testng.ITestResult;
@@ -12,30 +20,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import api.InjiWebConfigManager;
-import api.InjiWebUtil;
-import io.cucumber.junit.Cucumber;
-import io.cucumber.testng.AbstractTestNGCucumberTests;
-import io.cucumber.testng.CucumberOptions;
-import io.cucumber.testng.CucumberOptions.SnippetType;
-import io.cucumber.testng.FeatureWrapper;
-import io.cucumber.testng.PickleWrapper;
-import io.mosip.testrig.apirig.dataprovider.BiometricDataProvider;
-import io.mosip.testrig.apirig.dbaccess.DBManager;
-import io.mosip.testrig.apirig.testrunner.BaseTestCase;
-import io.mosip.testrig.apirig.testrunner.ExtractResource;
-import io.mosip.testrig.apirig.testrunner.HealthChecker;
-import io.mosip.testrig.apirig.utils.AdminTestUtil;
-import io.mosip.testrig.apirig.utils.AuthTestsUtil;
-import io.mosip.testrig.apirig.utils.CertsUtil;
-import io.mosip.testrig.apirig.utils.GlobalConstants;
-import io.mosip.testrig.apirig.utils.JWKKeyUtil;
-import io.mosip.testrig.apirig.utils.KernelAuthentication;
-import io.mosip.testrig.apirig.utils.KeyCloakUserAndAPIKeyGeneration;
-import io.mosip.testrig.apirig.utils.KeycloakUserManager;
-import io.mosip.testrig.apirig.utils.MispPartnerAndLicenseKeyGeneration;
-import io.mosip.testrig.apirig.utils.OutputValidationUtil;
-import io.mosip.testrig.apirig.utils.PartnerRegistration;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
@@ -59,12 +46,10 @@ public class Runner extends AbstractTestNGCucumberTests{
 	public static List<String> languageList = new ArrayList<>();
 	public static boolean skipAll = false;
 	
-	
-	
-	
+
 	public static void main(String[] args) {
 		try {
-			LOGGER.info("** ------------- API Test Rig Run Started for prerequisite creation---------------------------- **");
+			LOGGER.info("** ------------- Inji web ui Run Started for prerequisite creation---------------------------- **");
 			
 			BaseTestCase.setRunContext(getRunType(), jarUrl);
 			ExtractResource.removeOldMosipTestTestResource();
