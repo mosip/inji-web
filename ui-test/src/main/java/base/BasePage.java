@@ -25,26 +25,6 @@ public class BasePage {
         element.click();
     }
 
-
-
-//	public void clickOnElement(WebDriver driver, WebElement ele) {
-//
-//		Actions act = new Actions(driver);
-//		act.moveToElement(ele).click().build().perform();
-//
-//	}
-
-
-//	public Boolean isElementIsVisible(WebDriver driver, By locator) {
-//		try {
-//			WebElement element = new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.presenceOfElementLocated(locator));
-//			return element.isDisplayed();
-//		} catch (NoSuchElementException | TimeoutException e) {
-//			// Handle element not found or timeout exceptions here (e.g., log the error)
-//			return false;
-//		}
-//	}
-
 	public static boolean isElementIsVisible(WebDriver driver ,By by) {
 		try {
 			(new WebDriverWait(driver, Duration.ofSeconds(10))).until(ExpectedConditions.visibilityOfElementLocated(by));
@@ -53,7 +33,6 @@ public class BasePage {
 			return false;
 		}
 	}
-
 
 	public void enterText(WebDriver driver, By locator, String text) {
 		WebElement element = new WebDriverWait(driver, Duration.ofSeconds(30)).until(ExpectedConditions.presenceOfElementLocated(locator));
