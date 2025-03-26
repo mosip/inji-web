@@ -39,7 +39,7 @@ import io.mosip.testrig.apirig.utils.PartnerRegistration;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = {"src/test/resources/featurefiles/"},
+		features = {"/home/mosip/featurefiles/"},
 		dryRun = false,
 		glue = {"stepdefinitions", "utils"},
 		snippets = SnippetType.CAMELCASE,
@@ -87,7 +87,7 @@ public class Runner extends AbstractTestNGCucumberTests{
 			KeycloakUserManager.removeUser();
 			KeycloakUserManager.createUsers();
 			KeycloakUserManager.closeKeycloakInstance();
-			InjiWebUtil.getRequiredField();
+			AdminTestUtil.getRequiredField();
 			
 			// Generate device certificates to be consumed by Mock-MDS
 			PartnerRegistration.deleteCertificates();
