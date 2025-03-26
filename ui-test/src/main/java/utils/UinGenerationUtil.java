@@ -22,7 +22,7 @@ public class UinGenerationUtil {
 //                path = path.replace("test-classes", "classes");
 //            return path;
 //        }
-        return System.getProperty("user.dir") + "/src/test/resources";
+        return System.getProperty("user.dir") + "/src/main/resources";
     }
 
     public static String checkRunType() {

@@ -53,10 +53,15 @@ COPY --chown=${container_user_uid}:${container_user} --chmod=771 ./entrypoint.sh
 #COPY --chown=${container_user}:${container_user} ./src/test ${work_dir}/
 COPY --chown=${container_user}:${container_user} ./src/test/resources/TestNg.xml /home/mosip/TestNg.xml
 COPY --chown=${container_user}:${container_user} ./src/test/resources/featurefiles/ /home/mosip/featurefiles/
-COPY --chown=${container_user}:${container_user} ./src/test/resources/config/ /home/mosip/src/test/resources/config/
+COPY --chown=${container_user}:${container_user} ./src/main/resources/ /home/mosip/src/test/resources/
 COPY --chown=${container_user}:${container_user} ./src/test/resources/extent.properties /home/mosip/src/test/resources/extent.properties
 COPY --chown=${container_user}:${container_user} ./src/main/java/utils/ /home/mosip/src/main/java/utils/
 COPY --chown=${container_user}:${container_user} ./screenshots/ /home/mosip/screenshots/
+COPY --chown=${container_user}:${container_user} ./Biometric Devices/ /home/mosip/Biometric Devices/
+COPY --chown=${container_user}:${container_user} ./resource/ /home/mosip/resource/
+
+COPY --chown=${container_user}:${container_user} ./testNgXmlFiles/ /home/mosip/testNgXmlFiles/
+
 
 COPY --chown=${container_user_uid}:${container_user} ./browserstack.yml /home/mosip/
 COPY --chown=${container_user_uid}:${container_user} ./target/*.jar ${work_dir}
