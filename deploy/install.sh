@@ -14,8 +14,8 @@ INJI_DATASHARE_HOST="datashare-inji.injiweb"
 
 DEFAULT_MOSIP_INJIWEB_HOST=$( kubectl get cm global -n config-server -o jsonpath={.data.mosip-injiweb-host} )
 # Check if MOSIP_INJIWEB_HOST is present under configmap/global of configserver
-if echo "$DEFAULT_MOSIP_INJIWEB_HOST" | grep -q "mosip-injiweb-host"; then
-    echo "mosip-injiweb-host is already present in configmap/global of configserver"
+if echo "$DEFAULT_MOSIP_INJIWEB_HOST" | grep -q "MOSIP_INJIWEB_HOST"; then
+    echo "MOSIP_INJIWEB_HOST is already present in configmap/global of configserver"
     MOSIP_INJIWEB_HOST=DEFAULT_MOSIP_INJIWEB_HOST
 else
     read -p "Please provide injiwebhost (eg: injiweb.sandbox.xyz.net ) : " MOSIP_INJIWEB_HOST
@@ -34,8 +34,8 @@ fi
 
 echo "MOSIP_INJIWEB_HOST is not present in configmap/global of configserver"
     # Add injiweb host to global
-    kubectl patch configmap global -n config-server --type merge -p "{\"data\": {\"mosip-injiweb-host\": \"$MOSIP_INJIWEBB_HOST\"}}"
-    kubectl patch configmap global -n default --type merge -p "{\"data\": {\"mosip-injiweb-host\": \"$MOSIP_INJIWEBB_HOST\"}}"
+    kubectl patch configmap global -n config-server --type merge -p "{\"data\": {\"mosip-injiweb-host\": \"$MOSIP_INJIWEB_HOST\"}}"
+    kubectl patch configmap global -n default --type merge -p "{\"data\": {\"mosip-injiweb-host\": \"$MOSIP_INJIWEB_HOST\"}}"
     # Add the host
     kubectl -n config-server set env --keys=mosip-injiweb-host --from configmap/global deployment/config-server --prefix=SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_
     # Restart the configserver deployment
