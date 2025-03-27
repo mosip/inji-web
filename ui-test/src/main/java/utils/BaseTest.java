@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.io.*;
+import java.util.Properties;
 
 
 public class BaseTest {
@@ -247,7 +248,21 @@ public class BaseTest {
 			System.err.println("Error executing directory listing command: " + e.getMessage());
 		}
 	}
+	public static String[] fetchIssuerTexts() {
+		String issuerSearchText = null;
+		String issuerSearchTextforSunbird = null;
+		String propertyFilePath = System.getProperty("user.dir") + "/src/test/resources/config.properties";
+		Properties properties = new Properties();
 
+		try (FileInputStream fileInputStream = new FileInputStream(propertyFilePath)) {
+			properties.load(fileInputStream);
+			issuerSearchText = properties.getProperty("issuerSearchText");
+			issuerSearchTextforSunbird = properties.getProperty("issuerSearchTextforSunbird");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new String[]{issuerSearchText, issuerSearchTextforSunbird};
+	}
 
 
 }

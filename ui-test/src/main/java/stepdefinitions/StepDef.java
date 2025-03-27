@@ -258,6 +258,54 @@ public class StepDef {
         }
     }
 
+    @Then("User search the issuers mosip")
+    public void user_search_the_issuers_mosip() throws Exception {
+        try {
+            String issuerText = System.getenv("Issuer_Text_Mosip");
+            if (issuerText == null || issuerText.isEmpty()) {
+                String[] string = baseTest.fetchIssuerTexts();
+                issuerText = string[0];
+            }
+            homePage.enterIssuersInSearchBox(issuerText);
+            Thread.sleep(6000);
+            test.log(Status.PASS, "Searched issuers with: " + issuerText);
+        } catch (NoSuchElementException e) {
+            test.log(Status.FAIL, "Element not found while searching issuers: " + e.getMessage());
+            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+            throw e;
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Unexpected error: " + e.getMessage());
+            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+            throw e;
+        }
+    }
+
+    @Then("User search the issuers sunbird")
+    public void user_search_the_issuers_sunbird() throws Exception {
+        try {
+            String issuerText = System.getenv("Issuer_Text_sunbird");
+            if (issuerText == null || issuerText.isEmpty()) {
+                String[] string = baseTest.fetchIssuerTexts();
+                issuerText = string[0];
+            }
+            homePage.enterIssuersInSearchBox(issuerText);
+            Thread.sleep(6000);
+            test.log(Status.PASS, "Searched issuers with: " + issuerText);
+        } catch (NoSuchElementException e) {
+            test.log(Status.FAIL, "Element not found while searching issuers: " + e.getMessage());
+            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+            throw e;
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Unexpected error: " + e.getMessage());
+            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+            throw e;
+        }
+    }
+
     @Then("User verify go home button")
     public void user_verify_go_home_button() throws Exception {
         try {
