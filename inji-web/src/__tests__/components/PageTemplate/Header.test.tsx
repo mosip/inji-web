@@ -1,29 +1,57 @@
-import { screen } from '@testing-library/react';
-import { Header } from "../../../components/PageTemplate/Header";
-import { mockCrypto } from '../../../test-utils/mockUtils';
-import { renderWithProvider,mockUseLanguageSelector } from '../../../test-utils/mockUtils';
+import {screen} from "@testing-library/react";
+import {Header} from "../../../components/PageTemplate/Header";
+import {mockCrypto} from "../../../test-utils/mockUtils";
+import {
+    renderWithProvider,
+    mockUseLanguageSelector
+} from "../../../test-utils/mockUtils";
+import {useCookies} from "react-cookie";
 
 mockUseLanguageSelector();
 global.crypto = mockCrypto;
 //todo : extract the local method to mockUtils, which is added to bypass the routing problems
 const mockedUsedNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useNavigate: () => mockedUsedNavigate,
+jest.mock("react-router-dom", () => ({
+    ...jest.requireActual("react-router-dom"),
+    useNavigate: () => mockedUsedNavigate
 }));
 
+jest.mock("react-cookie", () => {
+    return {
+        ...jest.requireActual("react-cookie"),
+        useCookies: jest.fn().mockReturnValue([{},jest.fn()])
+    };
+});
+
+global.fetch = jest.fn(() =>
+    Promise.resolve(
+        new Response(JSON.stringify({success: true}), {
+            status: 200,
+            headers: {"Content-Type": "application/json"}
+        })
+    )
+);
+
 describe("Header Container Layout Test", () => {
-    test('Check if the layout is matching with the snapshots', () => {
-        const { asFragment } = renderWithProvider((<Header />));
+    test("Check if the layout is matching with the snapshots", () => {
+        (useCookies as jest.Mock).mockReturnValue([
+            {"XSRF-TOKEN": "test-xsrf-token"},
+            jest.fn()
+        ]);
+        const {asFragment} = renderWithProvider(<Header />);
         expect(asFragment()).toMatchSnapshot();
     });
 });
 
 describe("Testing Header Container Functionality", () => {
     test("Check the length of the Header menu elements", () => {
-        renderWithProvider((<Header />));
+        (useCookies as jest.Mock).mockReturnValue([
+            {"XSRF-TOKEN": "test-xsrf-token"},
+            jest.fn()
+        ]);
+        renderWithProvider(<Header />);
         const headerElementLi = screen.getByTestId("Header-Menu-Elements");
-        expect(headerElementLi.children.length).toBe(2);
+        expect(headerElementLi.children.length).toBe(3);
     });
 
     // Uncomment and fix these tests if needed

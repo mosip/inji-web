@@ -22,10 +22,6 @@ export const Header: React.FC = () => {
 
     useEffect(() => {
         const handleStorageChange = () => {
-            console.log(
-                "displayNameUpdated event triggered, updating Home...",
-                localStorage.getItem("displayName")
-            );
             setIsLoggedIn(!!localStorage.getItem("displayName"));
         };
 

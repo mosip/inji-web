@@ -13,23 +13,8 @@ export const HomePage: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const handleStorageChange = () => {
-            console.log(
-                "displayNameUpdated event triggered, updating Home...",
-                localStorage.getItem("displayName")
-            );
-            setDisplayName(localStorage.getItem("displayName"));
-        };
-
-        window.addEventListener("displayNameUpdated", handleStorageChange);
-
-        return () => {
-            window.removeEventListener(
-                "displayNameUpdated",
-                handleStorageChange
-            );
-        };
-    }, []);
+        setDisplayName(localStorage.getItem("displayName"));
+    }, [localStorage.getItem("displayName")]);
 
     const showToast = (message: string) => {
         if (toastVisible) return;
