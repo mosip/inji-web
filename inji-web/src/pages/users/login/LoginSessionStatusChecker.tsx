@@ -1,6 +1,6 @@
-import {useEffect} from "react";
-import {useNavigate} from "react-router-dom";
-import {api} from "../../../utils/api";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { api } from "../../../utils/api";
 
 const fetchUserProfile = async () => {
     try {
@@ -28,37 +28,14 @@ const fetchUserProfile = async () => {
 const LoginSessionStatusChecker = () => {
     const navigate = useNavigate();
 
-    const fetchSessionAndUserInfo = async (shouldFetchUserDetails = false) => {
+    const fetchSessionAndUserInfo = async () => {
         try {
-            const sessionResponse = await fetch(
-                api.fetchUserLoginStatus.url(),
-                {
-                    method:
-                        api.fetchUserLoginStatus.methodType === 0
-                            ? "GET"
-                            : "POST",
-                    headers: {...api.fetchUserLoginStatus.headers()},
-                    credentials: "include"
-                }
-            );
-
-            if (!sessionResponse.ok) {
-                const sessionData = await sessionResponse.json();
-                throw new Error(sessionData?.errorMessage);
+            const displayName = await fetchUserProfile();
+            if (displayName) {
+                window.dispatchEvent(new Event("displayNameUpdated"));
             }
-
-            let storedDisplayName = localStorage.getItem("displayName");
-
-            if (!storedDisplayName || shouldFetchUserDetails) {
-                storedDisplayName = await fetchUserProfile();
-            }
-
-            window.dispatchEvent(new Event("displayNameUpdated"));
         } catch (error) {
-            console.error(
-                "Error occurred while fetching session or user metadata:",
-                error
-            );
+            console.error("Error occurred while fetching user profile:", error);
             localStorage.removeItem("displayName");
             window.dispatchEvent(new Event("displayNameUpdated"));
             navigate("/");
@@ -72,7 +49,7 @@ const LoginSessionStatusChecker = () => {
     useEffect(() => {
         const handleStorageChange = (event: any) => {
             if (event.key === "displayName") {
-                fetchSessionAndUserInfo(true);
+                fetchSessionAndUserInfo();
             }
         };
 
