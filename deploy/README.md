@@ -1,10 +1,8 @@
 # injiweb ui
 
-## Install 
+## Installing DataShare and injiweb
 ```
 ./install.sh
 ```
 
-# Installing DataShare Service : 
-
-Set the active profile to **default,inji-default,standalone** in the config server.
+Set the active profile to **default,inji-default,standalone** in the ConfigMap **config-server-share**.
