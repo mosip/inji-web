@@ -1,0 +1,17 @@
+GetPolicySunBirdR:
+   Mimoto_ESignet_SunBirdR_GetPolicy_NOAUTH_Valid_Smoke:
+      endPoint: $SUNBIRDBASEURL$/api/v1/Insurance/{insuranceid}
+      description: Getting sunbird policy with valid parameters
+      uniqueIdentifier: TC_Mimoto_GetPolicySunBirdR_01
+      role: resident
+      restMethod: get
+      checkErrorsOnlyInResponse: true
+      validityCheckRequired: true
+      inputTemplate: injiweb/SunBirdR/GetPolicySunBirdR/GetPolicySunBirdR
+      outputTemplate: injiweb/SunBirdR/GetPolicySunBirdR/GetPolicySunBirdRResult
+      input: '{
+        "insuranceid": "$ID:ESignet_SunBirdR_CreatePolicy_NOAUTH_Valid_Smoke_Sid_osid$"
+    }'
+      output: '{
+	"policyNumber": "$POLICYNUMBERFORSUNBIRDRC$"
+}'

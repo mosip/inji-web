@@ -4,7 +4,7 @@ Feature: download mosip cridentials
   Scenario Outline: Mosip Natonal Id by e-Signet
     Then User gets the title of the page
     Then User click on get started button
-    And User search the issuers with "National"
+    And User search the issuers mosip
     When User click on download mosip credentials button
     Then User verify list of credential types displayed
     And User verify mosip national id by e-signet displayed
@@ -15,7 +15,7 @@ Feature: download mosip cridentials
     Then Use click on procced button
     And User verify login page lables
     And User verify vid input box header
-    And User enter the  "<vid>"
+    And User enter the uin
     And User click on getOtp button
     And User enter the otp "<otp>"
     And User click on verify button
@@ -30,20 +30,20 @@ Feature: download mosip cridentials
 
 
   @smoke @VerifySearchWithInvalidString
-  Scenario: Mosip Natonal Id by e-Signet
+  Scenario: Verify Search With Invalid String
     Then User gets the title of the page
     Then User click on get started button
     And User search the issuers with "qewqdda"
     And User Verify the no issuer found message
-    And User search the issuers with "National"
+    And User search the issuers mosip
     When User click on download mosip credentials button
 
 
   @smoke @VerifyAndDownloadVcViaMosipNatinalId
-  Scenario Outline: Mosip Natonal Id by e-Signet
+  Scenario Outline: Verify And DownloadVc Via Mosip NatinalId
     Then User gets the title of the page
     Then User click on get started button
-    And User search the issuers with "National"
+    And User search the issuers mosip
     And User verify the logo of the issuer
     When User click on download mosip credentials button
     And User verify the logo of the issuer
@@ -56,7 +56,7 @@ Feature: download mosip cridentials
     Then Use click on procced button
     And User verify login page lables
     And User verify vid input box header
-    And User enter the  "<vid>"
+    And User enter the uin
     And User click on getOtp button
     And User enter the otp "<otp>"
     And User click on verify button
@@ -70,10 +70,10 @@ Feature: download mosip cridentials
       | 2405782960 | 111111 |     3    |
 
   @smoke @VerifyAndDownloadVcViaMosipNatinalIdAndRfreshPage
-  Scenario Outline: Mosip Natonal Id by e-Signet
+  Scenario Outline: Verify And DownloadVc Via Mosip NatinalId And rfreshPage
     Then User gets the title of the page
     Then User click on get started button
-    And User search the issuers with "National"
+    And User search the issuers mosip
     When User click on download mosip credentials button
     Then User verify list of credential types displayed
     And User verify mosip national id by e-signet displayed
@@ -84,7 +84,7 @@ Feature: download mosip cridentials
     Then Use click on procced button
     And User verify login page lables
     And User verify vid input box header
-    And User enter the  "<vid>"
+    And User enter the uin
     And User click on getOtp button
     And User enter the otp "<otp>"
     And User click on verify button
