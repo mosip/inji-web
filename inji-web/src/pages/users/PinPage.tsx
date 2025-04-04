@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 
 const PinPage: React.FC = () => {
     const [pin, setPin] = useState<string>("");
-    const [name, setWalletName] = useState<string>("");
+    const [name, setName] = useState<string>("");
     const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [wallets, setWallets] = useState<any[]>([]);
@@ -29,7 +29,7 @@ const PinPage: React.FC = () => {
 
                 setWallets(responseData);
                 if (responseData.length > 0) {
-                    setWalletId(responseData[0]);
+                    setWalletId(responseData[0].walletId);
                 }
             } catch (error) {
                 console.error("Error occurred while fetching wallets:", error);
@@ -43,14 +43,13 @@ const PinPage: React.FC = () => {
     const fetchWalletDetails = async (walletId: string, pin: string) => {
         try {
             const response = await fetch(api.fetchWalletDetails.url(walletId), {
-                method:
-                    api.fetchWalletDetails.methodType === 0 ? "GET" : "POST",
+                method: api.fetchWalletDetails.methodType === 0 ? "GET" : "POST",
                 headers: {
                     ...api.fetchWalletDetails.headers(),
                     "X-XSRF-TOKEN": cookies["XSRF-TOKEN"]
                 },
                 credentials: "include",
-                body: JSON.stringify({ pin })
+                body: JSON.stringify({ walletPin: pin })
             });
 
             if (!response.ok) {
@@ -61,7 +60,7 @@ const PinPage: React.FC = () => {
             return await response.text(); // This line will give walletId in response if wallet details are fetched properly
         } catch (error) {
             console.error(
-                "Error occured while fetching wallet details:",
+                "Error occurred while fetching wallet details:",
                 JSON.stringify(error, null, 2)
             );
             throw error;
@@ -73,14 +72,19 @@ const PinPage: React.FC = () => {
         setLoading(true);
         setIsPinCorrect(null);
 
-        if (!pin || !name) {
-            setError("Please enter both a PIN and wallet name.");
+        if (!pin) {
+            setError("Please enter a PIN.");
             setLoading(false);
             return;
         }
 
         try {
             if (wallets.length === 0) {
+                if (!name) {
+                    setError("Please enter a name.");
+                    setLoading(false);
+                    return;
+                }
                 // No wallets found, create a new wallet
                 const response = await fetch(api.createWalletWithPin.url(), {
                     method: "POST",
@@ -90,7 +94,7 @@ const PinPage: React.FC = () => {
                         "X-XSRF-TOKEN": cookies["XSRF-TOKEN"]
                     },
                     credentials: "include",
-                    body: JSON.stringify({ pin, name })
+                    body: JSON.stringify({ walletPin: pin, walletName: name })
                 });
 
                 if (!response.ok) {
@@ -100,8 +104,7 @@ const PinPage: React.FC = () => {
                         errorData
                     );
                     setError(
-                        `Failed to create wallet: ${errorData.errorMessage || "Unknown error"
-                        }`
+                        `Failed to create wallet: ${errorData.errorMessage || "Unknown error"}`
                     );
                     setIsPinCorrect(false);
                     return;
@@ -109,6 +112,7 @@ const PinPage: React.FC = () => {
 
                 const walletId = await response.text();
                 setWalletId(walletId);
+                setWallets([{ walletId }]); // Update wallets state to reflect the new wallet
 
                 setIsPinCorrect(true);
                 setError(`Wallet created successfully! Wallet ID: ${walletId}`);
@@ -120,7 +124,7 @@ const PinPage: React.FC = () => {
         } catch (error) {
             setIsPinCorrect(false);
             setError("An error occurred. Please try again.");
-            console.error("An error occurred while creating wallet :", error);
+            console.error("An error occurred while creating wallet:", error);
         } finally {
             setLoading(false);
         }
@@ -128,26 +132,46 @@ const PinPage: React.FC = () => {
 
     return (
         <div className="pin-container">
-            {wallets.length > 0 && walletId && <p>Wallet ID: {walletId}</p>}
-            <h2>Enter PIN and Wallet Name</h2>
-
-            <input
-                type="password"
-                placeholder="Enter your PIN"
-                value={pin}
-                onChange={(e) => setPin(e.target.value)}
-                disabled={loading}
-            />
+            {wallets.length > 0 ? (
+                <>
+                    <br />
+                    <br />
+                    <h2>Unlock Wallet : {walletId}</h2>
+                    <h3>Enter PIN</h3>
+                    <input
+                        type="password"
+                        placeholder="Enter your PIN"
+                        value={pin}
+                        onChange={(e) => setPin(e.target.value)}
+                        disabled={loading}
+                    />
+                </>
+            ) : (
+                <>
+                    <br />
+                    <br />
+                    <h2>Create Wallet</h2>
+                    <h3>Enter Name and PIN</h3>
+                    <input
+                        type="text"
+                        placeholder="Enter your Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        disabled={loading}
+                    />
+                    <br />
+                    <br />
+                    <input
+                        type="password"
+                        placeholder="Enter your PIN"
+                        value={pin}
+                        onChange={(e) => setPin(e.target.value)}
+                        disabled={loading}
+                    />
+                </>
+            )}
             <br />
             <br />
-            <input
-                type="text"
-                placeholder="Enter your wallet name"
-                value={name}
-                onChange={(e) => setWalletName(e.target.value)}
-                disabled={loading}
-            />
-
             <button onClick={handleSubmit} disabled={loading}>
                 {loading ? "Submitting..." : "Submit"}
             </button>
