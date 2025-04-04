@@ -90,7 +90,7 @@ export class api {
         methodType: MethodType.POST,
         headers: () => {
             return {
-            "Content-Type": "application/json"
+                "Content-Type": "application/json"
             };
         }
     };
@@ -101,31 +101,62 @@ export class api {
         methodType: MethodType.GET,
         headers: () => {
             return {
-            "Content-Type": "application/json"
+                "Content-Type": "application/json"
             };
         }
     };
 
-// Post wallet API with PIN
+    // Post wallet API with PIN
     static createWalletWithPin: ApiRequest = {
         url: () => api.mimotoHost + "/wallets",
         methodType: MethodType.POST,
         headers: () => {
             return {
-            "Content-Type": "application/json"
+                "Content-Type": "application/json"
             };
         }
     };
 
-// Fetch wallet details by walletId
+    // Fetch wallet details by walletId
     static fetchWalletDetails: ApiRequest = {
-        url: (walletId: string) => api.mimotoHost + `/wallets/${walletId}/unlock`,
+        url: (walletId: string) =>
+            api.mimotoHost + `/wallets/${walletId}/unlock`,
         methodType: MethodType.POST,
         headers: () => {
             return {
-            "Content-Type": "application/json"
+                "Content-Type": "application/json"
             };
         }
     };
 
+    static downloadVCInloginFlow: ApiRequest = {
+        url: () => {
+            const walletId = localStorage.getItem("walletId");
+            return api.mimotoHost + `/wallets/${walletId}/credentials`;
+        },
+        methodType: MethodType.POST,
+        headers: () => {
+            return {
+                "accept": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Cache-Control": "no-cache, no-store, must-revalidate"
+            };
+        }
+    };
+
+    static fetchWalletVCs: ApiRequest = {
+        url: (locale: String) => {
+            const walletId = localStorage.getItem("walletId");
+            return (
+                api.mimotoHost +
+                `/wallets/${walletId}/credentials?locale=${locale}`
+            );
+        },
+        methodType: MethodType.GET,
+        headers: () => {
+            return {
+                "Content-Type": "application/json"
+            };
+        }
+    };
 }

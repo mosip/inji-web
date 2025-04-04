@@ -30,6 +30,7 @@ const PinPage: React.FC = () => {
                 setWallets(responseData);
                 if (responseData.length > 0) {
                     setWalletId(responseData[0].walletId);
+                    localStorage.setItem("walletId",responseData[0].walletId)
                 }
             } catch (error) {
                 console.error("Error occurred while fetching wallets:", error);
