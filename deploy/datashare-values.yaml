@@ -1,6 +1,6 @@
 # Override the envFrom field to exclude 'artifactory-share'
 extraEnvVarsCM:
-  - global
+  - inji-stack-config
   - config-server-share
 
 istio:
