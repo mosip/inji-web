@@ -29,7 +29,7 @@ services:
 
   mimoto-service:
     container_name: 'mimoto-service'
-    image: 'mosipqa/mimoto:release-0.17.x'
+    image: 'mosipqa/mimoto:0.17.x'
     user: root
     ports:
       - '8099:8099'
@@ -47,7 +47,7 @@ services:
 
   inji-web:
     container_name: 'inji-web'
-    image: 'mosipqa/inji-web:release-0.12.x'
+    image: 'mosipqa/inji-web:0.12.x'
     ports:
       - '3004:3004'
     environment:
