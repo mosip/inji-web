@@ -30,7 +30,7 @@ const PinPage: React.FC = () => {
                 setWallets(responseData);
                 if (responseData.length > 0) {
                     setWalletId(responseData[0].walletId);
-                    localStorage.setItem("walletId",responseData[0].walletId)
+                    localStorage.setItem("walletId", responseData[0].walletId);
                 }
             } catch (error) {
                 console.error("Error occurred while fetching wallets:", error);
@@ -53,12 +53,11 @@ const PinPage: React.FC = () => {
                 body: JSON.stringify({ walletPin: pin })
             });
 
+            const responseData = await response.json();
             if (!response.ok) {
-                const responseData = await response.json();
                 throw responseData;
             }
-
-            return await response.text(); // This line will give walletId in response if wallet details are fetched properly
+            return responseData.walletId; // This line will give walletId in response if wallet details are fetched properly
         } catch (error) {
             console.error(
                 "Error occurred while fetching wallet details:",
@@ -117,15 +116,18 @@ const PinPage: React.FC = () => {
 
                 setIsPinCorrect(true);
                 setError(`Wallet created successfully! Wallet ID: ${walletId}`);
+                localStorage.setItem("walletId", walletId);
             } else {
                 const walletData = await fetchWalletDetails(walletId!, pin);
                 console.log("wallet data::", walletData);
                 setIsPinCorrect(true);
+                localStorage.setItem("walletId", walletData);
             }
         } catch (error) {
             setIsPinCorrect(false);
             setError("An error occurred. Please try again.");
             console.error("An error occurred while creating wallet:", error);
+            localStorage.removeItem("walletId");
         } finally {
             setLoading(false);
         }

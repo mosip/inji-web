@@ -49,6 +49,7 @@ export const Header: React.FC = () => {
 
                 if (response.ok) {
                     localStorage.removeItem("displayName");
+                    localStorage.removeItem("walletId");
                     window.location.replace("/");
                 } else {
                     const parsedResponse = await response.json();
