@@ -76,17 +76,7 @@ export class api {
     };
     // method to fetch user profile
     static fetchUserProfile: ApiRequest = {
-        url: () => api.mimotoHost + "/users/me",
-        methodType: MethodType.GET,
-        headers: () => {
-            return {
-                "Content-Type": "application/json"
-            };
-        }
-    };
-
-    static fetchUserLoginStatus: ApiRequest = {
-        url: () => api.mimotoHost + "/session/status",
+        url: () => api.mimotoHost + "/users/me/cache",
         methodType: MethodType.GET,
         headers: () => {
             return {
@@ -107,7 +97,7 @@ export class api {
 
     // Fetch wallets API
     static fetchWallets: ApiRequest = {
-        url: () => api.mimotoHost + "/users/me/wallets",
+        url: () => api.mimotoHost + "/wallets",
         methodType: MethodType.GET,
         headers: () => {
             return {
@@ -118,7 +108,7 @@ export class api {
 
 // Post wallet API with PIN
     static createWalletWithPin: ApiRequest = {
-        url: () => api.mimotoHost + "/users/me/wallets",
+        url: () => api.mimotoHost + "/wallets",
         methodType: MethodType.POST,
         headers: () => {
             return {
@@ -129,7 +119,7 @@ export class api {
 
 // Fetch wallet details by walletId
     static fetchWalletDetails: ApiRequest = {
-        url: (walletId: string) => api.mimotoHost + `/users/me/wallets/${walletId}`,
+        url: (walletId: string) => api.mimotoHost + `/wallets/${walletId}/unlock`,
         methodType: MethodType.POST,
         headers: () => {
             return {

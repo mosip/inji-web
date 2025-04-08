@@ -129,6 +129,18 @@ exports[`Header Container Layout Test Check if the layout is matching with the s
                 </div>
               </div>
             </li>
+            <li
+              data-testid="Header-Menu-Auth"
+            >
+              <div
+                class="text-iw-title cursor-pointer hidden sm:inline-block"
+                data-testid="Header-Menu-Auth-div"
+                role="button"
+                tabindex="0"
+              >
+                Login
+              </div>
+            </li>
           </ul>
         </nav>
         <div
