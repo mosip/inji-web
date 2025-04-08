@@ -49,6 +49,7 @@ export const Header: React.FC = () => {
 
                 if (response.ok) {
                     localStorage.removeItem("displayName");
+                    localStorage.removeItem("walletId");
                     window.location.replace("/");
                 } else {
                     const parsedResponse = await response.json();
@@ -150,6 +151,24 @@ export const Header: React.FC = () => {
                                         : t("Header.login")}
                                 </div>
                             </li>
+                            {isLoggedIn && (
+                                <li data-testid="Header-Menu-View-Credentials">
+                                    <div
+                                        data-testid="Header-Menu-View-Credentials-div"
+                                        onMouseDown={() =>
+                                            navigate("/view/wallet/credentials")
+                                        }
+                                        onKeyUp={() =>
+                                            navigate("/view/wallet/credentials")
+                                        }
+                                        role="button"
+                                        tabIndex={0}
+                                        className="text-iw-title cursor-pointer hidden sm:inline-block"
+                                    >
+                                        {"Credentials"}
+                                    </div>
+                                </li>
+                            )}
                         </ul>
                     </nav>
                     <div

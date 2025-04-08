@@ -1,16 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from "react";
 import {getActiveSession, removeActiveSession} from "../utils/sessions";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {NavBar} from "../components/Common/NavBar";
 import {RequestStatus, useFetch} from "../hooks/useFetch";
 import {DownloadResult} from "../components/Redirection/DownloadResult";
 import {api} from "../utils/api";
 import {SessionObject} from "../types/data";
 import {useTranslation} from "react-i18next";
-import {downloadCredentialPDF, getErrorObject, getTokenRequestBody} from "../utils/misc";
+import {
+    downloadCredentialPDF,
+    getErrorObject,
+    getTokenRequestBody
+} from "../utils/misc";
 import {getIssuerDisplayObjectForCurrentLanguage} from "../utils/i18n";
-import { RootState } from '../types/redux';
-import { useSelector } from 'react-redux'
+import {RootState} from "../types/redux";
+import {useSelector} from "react-redux";
+import {useCookies} from "react-cookie";
 
 export const RedirectionPage: React.FC = () => {
     const {error, state, response,  fetchRequest} = useFetch();
@@ -27,6 +32,15 @@ export const RedirectionPage: React.FC = () => {
         code: "error.generic.title",
         message: "error.generic.subTitle"
     });
+    const [loginErrorObj, setLoginErrorObj] = useState({
+        code: "",
+        message: ""
+    });
+    const [cookies] = useCookies(["XSRF-TOKEN"]);
+    const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        return !!localStorage.getItem("displayName");
+    });
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchToken = async () => {
@@ -38,22 +52,62 @@ export const RedirectionPage: React.FC = () => {
                 const certificateId = activeSessionInfo?.certificateId;
                 const vcStorageExpiryLimitInTimes = activeSessionInfo?.vcStorageExpiryLimitInTimes ?? "-1";
 
-                const requestBody = new URLSearchParams(getTokenRequestBody(code, codeVerifier, issuerId, certificateId, vcStorageExpiryLimitInTimes,language));
-                const apiRequest = api.fetchTokenAnddownloadVc;
-                let credentialDownloadResponse = await fetchRequest(
-                    apiRequest.url(),
-                    apiRequest.methodType,
-                    apiRequest.headers(),
-                    requestBody
+                const requestBody = new URLSearchParams(
+                    getTokenRequestBody(
+                        code,
+                        codeVerifier,
+                        issuerId,
+                        certificateId,
+                        vcStorageExpiryLimitInTimes,
+                        language
+                    )
                 );
-                if (state !== RequestStatus.ERROR) {
-                    await downloadCredentialPDF(credentialDownloadResponse, certificateId);
-                    setCompletedDownload(true);
+
+                let apiRequest, credentialDownloadResponse;
+                if (isLoggedIn) {
+                    apiRequest = api.downloadVCInloginFlow;
+                    let credentialDownloadResponse = await fetch(
+                        apiRequest.url(),
+                        {
+                            method: "POST",
+                            headers: {
+                                ...apiRequest.headers,
+                                "X-XSRF-TOKEN": cookies["XSRF-TOKEN"]
+                            },
+                            credentials: "include",
+                            body: requestBody
+                        }
+                    );
+                    if (credentialDownloadResponse.ok) {
+                        navigate("/view/wallet/credentials");
+                    } else {
+                        const responseData =
+                            await credentialDownloadResponse.json();
+                        setLoginErrorObj({
+                            code: "Downlaoding Credential Failed",
+                            message: responseData.errorMessage
+                        });
+                    }
                 } else {
-                    setErrorObj(getErrorObject(credentialDownloadResponse));
-                }
-                if (urlState != null) {
-                    removeActiveSession(urlState);
+                    apiRequest = api.fetchTokenAnddownloadVc;
+                    credentialDownloadResponse = await fetchRequest(
+                        apiRequest.url(),
+                        apiRequest.methodType,
+                        apiRequest.headers(),
+                        requestBody
+                    );
+                    if (state !== RequestStatus.ERROR) {
+                        await downloadCredentialPDF(
+                            credentialDownloadResponse,
+                            certificateId
+                        );
+                        setCompletedDownload(true);
+                    } else {
+                        setErrorObj(getErrorObject(credentialDownloadResponse));
+                    }
+                    if (urlState != null) {
+                        removeActiveSession(urlState);
+                    }
                 }
             } else {
                 setSession(null);
@@ -68,6 +122,17 @@ export const RedirectionPage: React.FC = () => {
                                    subTitle={t("error.invalidSession.subTitle")}
                                    state={RequestStatus.ERROR}/>
         }
+
+        if (loginErrorObj.code !== "") {
+            return (
+                <DownloadResult
+                    title={t(loginErrorObj.code)}
+                    subTitle={t(loginErrorObj.message)}
+                    state={RequestStatus.ERROR}
+                />
+            );
+        }
+
         if (state === RequestStatus.ERROR && error) {
             const errorObject = getErrorObject(response);
             return <DownloadResult title={t(errorObject.code)}
