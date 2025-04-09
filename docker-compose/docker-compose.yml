@@ -27,9 +27,26 @@ services:
     depends_on:
       - minio
 
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./mimoto_init.sql:/docker-entrypoint-initdb.d/mimoto_init.sql
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
   mimoto-service:
     container_name: 'mimoto-service'
-    image: 'mosipdev/mimoto:release-0.17.x'
+    image: 'mosipdev/mimoto:develop'
     user: root
     ports:
       - '8099:8099'
@@ -39,15 +56,22 @@ services:
       - SPRING_CONFIG_NAME=mimoto
       - SPRING_CONFIG_LOCATION=/home/mosip/
       - oidc_p12_password=dummypassword
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inji_mimoto # Add Postgres
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+      - GOOGLE_OAUTH_CLIENT_ID=clientId
+      - GOOGLE_OAUTH_CLIENT_SECRET=clientSecret
     volumes:
       - ./config/mimoto-default.properties:/home/mosip/mimoto-default.properties
       - ./certs/oidckeystore.p12:/home/mosip/certs/oidckeystore.p12
     depends_on:
       - datashare
+      - postgres
+      - redis
 
   inji-web:
     container_name: 'inji-web'
-    image: 'mosipdev/inji-web:release-0.12.x'
+    image: 'mosipdev/inji-web:develop'
     ports:
       - '3004:3004'
     environment:
@@ -59,3 +83,6 @@ services:
       - ./config/credential-template.html:/home/mosip/credential-template.html
     depends_on:
       - mimoto-service
+volumes:
+  postgres-data:
+  redis-data:
