@@ -32,7 +32,6 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: mimoto_db #database for mimoto
     ports:
       - "5432:5432"
     volumes:

@@ -116,7 +116,6 @@ CREATE TABLE IF NOT EXISTS verifiable_credentials (
     id character varying(36) PRIMARY KEY,  -- Primary key for the table
     wallet_id character varying(36) NOT NULL,  -- Foreign key referring to the wallet table (wallet.id)
     credential TEXT NOT NULL,  -- Encrypted credential (using wallet_key for encryption/decryption)
-    credential_format character varying(255) NOT NULL,  -- Format of the credential (e.g., JSON, JWT, etc.)
     credential_metadata JSONB NOT NULL,  -- Metadata about the credential
     created_at TIMESTAMP DEFAULT now(),  -- Timestamp of record creation (defaults to current time)
     updated_at TIMESTAMP DEFAULT now(),  -- Timestamp of last update (defaults to current time)
