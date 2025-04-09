@@ -19,7 +19,7 @@ This is not for production use.
 
 ## How to run this setup?
 
-1. Add Id providers as an issuer in mimoto-issuers-config.json
+1. Add Id providers as issuers in mimoto-issuers-config.json. For each provider, include the token_endpoint property, which should be an HTTPS URL. This can either be an exposed domain or, for local setups, an ngrok URL if you're using mimoto for local testing with the Inji mobile wallet.
 
 2. Add verifiers clientId and redirect Uri in mimoto-trusted-verifiers.json for Online Sharing
 
