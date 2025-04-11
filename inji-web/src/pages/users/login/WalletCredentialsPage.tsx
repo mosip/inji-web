@@ -5,7 +5,9 @@ import {api} from "../../../utils/api";
 import {WalletCredential} from "../../../types/data";
 import {DownloadResult} from "../../../components/Redirection/DownloadResult";
 import {RequestStatus} from "../../../hooks/useFetch";
-import {downloadCredentialPDF, previewCredentialPDF} from "../../../utils/misc";
+import {downloadCredentialPDF} from "../../../utils/misc";
+import {Worker, Viewer} from "@react-pdf-viewer/core";
+import "@react-pdf-viewer/core/lib/styles/index.css";
 
 const WalletCredentialsPage = () => {
     const [credentials, setCredentials] = useState<WalletCredential[]>([]);
@@ -15,6 +17,8 @@ const WalletCredentialsPage = () => {
         code: "",
         message: ""
     });
+    const [pdfPreviewUrl, setPdfPreviewUrl] = useState<string | null>(null);
+
     const fetchWalletCredentials = async () => {
         try {
             const apiRequest = api.fetchWalletVCs;
@@ -72,9 +76,7 @@ const WalletCredentialsPage = () => {
                         api.fetchWalletCredentialPreview.methodType === 0
                             ? "GET"
                             : "POST",
-                    headers: {
-                        ...api.fetchWalletCredentialPreview.headers()
-                    },
+                    headers: {...api.fetchWalletCredentialPreview.headers()},
                     credentials: "include"
                 }
             );
@@ -84,24 +86,29 @@ const WalletCredentialsPage = () => {
                 throw responseData;
             }
 
-            const fileData = await response.blob();
-            const disposition = response.headers.get("Content-Disposition");
-            const fileNameMatch = /filename="(.+)"/.exec(disposition);
-            const fileName = fileNameMatch?.[1] || "download.pdf";
+            const pdfContent = await response.blob();
 
-            if (action == "download") {
-                await downloadCredentialPDF(fileData, fileName);
+            if (action === "download") {
+                console.log("inside download::")
+                const disposition = response.headers.get("Content-Disposition");
+                const fileNameMatch = /filename="(.+)"/.exec(disposition);
+                const fileName = fileNameMatch?.[1] || "download.pdf";
+
+                await downloadCredentialPDF(pdfContent, fileName);
             } else {
-                await previewCredentialPDF(fileData, fileName);
+                console.log("inside preview::");
+                const pdfUrl = URL.createObjectURL(pdfContent);
+                setPdfPreviewUrl(pdfUrl);
             }
         } catch (error) {
             console.error(
                 "Error occurred while fetching credential details:",
-                JSON.stringify(error, null, 2)
+                error
             );
         }
     };
 
+    console.log("pdfPreviewUrl::",pdfPreviewUrl)
     return (
         <div style={{padding: "2rem"}}>
             <div
@@ -113,14 +120,46 @@ const WalletCredentialsPage = () => {
                     width: "100%"
                 }}
             >
+                {pdfPreviewUrl && (
+                    <div
+                        className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50"
+                        style={{display: pdfPreviewUrl ? "flex" : "none"}}
+                    >
+                        <div
+                            className="relative bg-white p-5 rounded-lg w-4/5 md:w-2/3 flex flex-col gap-4"
+                            style={{
+                                height: "80vh",
+                                maxWidth: "1200px"
+                            }}
+                        >
+                            <div className="flex justify-end">
+                                <button
+                                    onClick={() => setPdfPreviewUrl(null)}
+                                    className="text-white bg-red-500 px-3 py-1 rounded-full"
+                                >
+                                    X
+                                </button>
+                            </div>
+
+                            <div className="flex-1 overflow-y-auto">
+                                <Worker
+                                    workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}
+                                >
+                                    <Viewer fileUrl={pdfPreviewUrl} />
+                                </Worker>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 {credentials.map((credential) => (
                     <div
                         key={credential.credential_id}
-                        className={`bg-iw-tileBackground flex flex-col shadow hover:shadow-lg hover:scale-105 hover:shadow-iw-selectedShadow p-5 m-4 rounded-md cursor-pointer items-center`}
+                        className="bg-iw-tileBackground flex flex-col shadow hover:shadow-lg hover:scale-105 hover:shadow-iw-selectedShadow p-5 m-4 rounded-md cursor-pointer items-center"
                         tabIndex={0}
                         role="menuitem"
                         onClick={() =>
-                            fetchCredential(credential.credential_id, "download")
+                            fetchCredential(credential.credential_id, "preview")
                         }
                         style={{
                             width: "85%",
@@ -154,6 +193,18 @@ const WalletCredentialsPage = () => {
                             >
                                 {credential.credential_type}
                             </span>
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    fetchCredential(
+                                        credential.credential_id,
+                                        "download"
+                                    );
+                                }}
+                                className="mt-3 bg-grey-600 hover:bg-green-700 text-blank font-semibold py-1 px-4 rounded shadow"
+                            >
+                                Download
+                            </button>
                         </div>
 
                         <span className="text-sm font-semibold text-gray-500 mt-2">
