@@ -5,6 +5,7 @@ import {api} from "../../../utils/api";
 import {WalletCredential} from "../../../types/data";
 import {DownloadResult} from "../../../components/Redirection/DownloadResult";
 import {RequestStatus} from "../../../hooks/useFetch";
+import {downloadCredentialPDF, previewCredentialPDF} from "../../../utils/misc";
 
 const WalletCredentialsPage = () => {
     const [credentials, setCredentials] = useState<WalletCredential[]>([]);
@@ -62,6 +63,45 @@ const WalletCredentialsPage = () => {
         );
     }
 
+    const fetchCredential = async (credentialId: string, action: string) => {
+        try {
+            const response = await fetch(
+                api.fetchWalletCredentialPreview.url(credentialId, language),
+                {
+                    method:
+                        api.fetchWalletCredentialPreview.methodType === 0
+                            ? "GET"
+                            : "POST",
+                    headers: {
+                        ...api.fetchWalletCredentialPreview.headers()
+                    },
+                    credentials: "include"
+                }
+            );
+
+            if (!response.ok) {
+                let responseData = await response.json();
+                throw responseData;
+            }
+
+            const fileData = await response.blob();
+            const disposition = response.headers.get("Content-Disposition");
+            const fileNameMatch = /filename="(.+)"/.exec(disposition);
+            const fileName = fileNameMatch?.[1] || "download.pdf";
+
+            if (action == "download") {
+                await downloadCredentialPDF(fileData, fileName);
+            } else {
+                await previewCredentialPDF(fileData, fileName);
+            }
+        } catch (error) {
+            console.error(
+                "Error occurred while fetching credential details:",
+                JSON.stringify(error, null, 2)
+            );
+        }
+    };
+
     return (
         <div style={{padding: "2rem"}}>
             <div
@@ -79,6 +119,9 @@ const WalletCredentialsPage = () => {
                         className={`bg-iw-tileBackground flex flex-col shadow hover:shadow-lg hover:scale-105 hover:shadow-iw-selectedShadow p-5 m-4 rounded-md cursor-pointer items-center`}
                         tabIndex={0}
                         role="menuitem"
+                        onClick={() =>
+                            fetchCredential(credential.credential_id, "download")
+                        }
                         style={{
                             width: "85%",
                             height: "auto",
