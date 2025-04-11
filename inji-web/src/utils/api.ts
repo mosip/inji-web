@@ -162,9 +162,10 @@ export class api {
 
     static fetchWalletCredentialPreview: ApiRequest = {
         url: (credentialId: string, locale: string) => {
+            const walletId = localStorage.getItem("walletId");
             return (
                 api.mimotoHost +
-                `/credentials/${credentialId}?locale=${locale}&action=preview`
+                `/wallets/${walletId}/credentials/${credentialId}?locale=${locale}&action=preview`
             );
         },
         methodType: MethodType.GET,
