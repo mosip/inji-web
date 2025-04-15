@@ -65,16 +65,16 @@ public class BaseTest {
 	public void beforeAll(Scenario scenario) throws MalformedURLException {
 		Local bsLocal = new Local();
 		HashMap<String, String> bsLocalArgs = new HashMap<>();
-		bsLocalArgs.put("key", accessKey); // Your access key
+		bsLocalArgs.put("key", accessKey);
 		try {
 			bsLocal.start(bsLocalArgs);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 		totalCount++;
 		   ExtentReportManager.initReport();
-	        ExtentReportManager.createTest(scenario.getName()); // Start logging for the scenario
+	        ExtentReportManager.createTest(scenario.getName()); 
 	        ExtentReportManager.logStep("Scenario Started: " + scenario.getName());
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability("browserName", "Chrome");
