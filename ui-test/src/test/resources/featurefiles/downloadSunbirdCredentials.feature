@@ -16,7 +16,7 @@ Feature: Login using Sunbird Credentials
     Then Use click on procced button
     And User enter the policy number
     And User enter the full name
-    And User enter the date of birth "<date of birth>"
+    And User enter the date of birth
     And User click on login button
     Then User verify Download Success text displayed
     And User verify pdf is downloaded for Insurance
@@ -46,7 +46,7 @@ Feature: Login using Sunbird Credentials
     And User verify full name input box header
     And User enter the full name
     And User verify date of birth input box header
-    And User enter the date of birth "<date of birth>"
+    And User enter the date of birth
     And User click on login button
     Then User verify Download Success text displayed
     And User verify go home button
@@ -75,7 +75,7 @@ Feature: Login using Sunbird Credentials
     And User verify full name input box header
     And User enter the full name
     And User verify date of birth input box header
-    And User enter the date of birth "<date of birth>"
+    And User enter the date of birth
     And User click on login button
     Then User verify authentication failed message
 
@@ -102,7 +102,7 @@ Feature: Login using Sunbird Credentials
     And User verify full name input box header
     And User enter the full name  "<full name>"
     And User verify date of birth input box header
-    And User enter the date of birth "<date of birth>"
+    And User enter the date of birth
     And User click on login button
     Then User verify authentication failed message
 
@@ -129,7 +129,7 @@ Feature: Login using Sunbird Credentials
     And User verify full name input box header
     And User enter the full name
     And User verify date of birth input box header
-    And User enter the date of birth "<date of birth>"
+    And User enter the date of birth
     And User click on login button
     Then User verify Download Success text displayed
 

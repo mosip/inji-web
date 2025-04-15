@@ -288,7 +288,7 @@ public class StepDef {
             String issuerText = System.getenv("Issuer_Text_sunbird");
             if (issuerText == null || issuerText.isEmpty()) {
                 String[] string = baseTest.fetchIssuerTexts();
-                issuerText = string[0];
+                issuerText = string[1];
             }
             homePage.enterIssuersInSearchBox(issuerText);
             Thread.sleep(6000);

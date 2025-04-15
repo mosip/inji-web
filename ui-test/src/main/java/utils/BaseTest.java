@@ -11,6 +11,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.browserstack.local.Local;
 
 import api.InjiWebConfigManager;
 import io.cucumber.java.Scenario;
@@ -54,26 +55,34 @@ public class BaseTest {
 	 private static ExtentReports extent;
 	 private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
-	String username = System.getenv("BROWSERSTACK_USERNAME");
-	String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
+	String username = "anupnehe_w1PZQx";
+	String accessKey = "Zenzg8a3RikxvTUmELFm";
 	public final String URL = "https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
 
 	private Scenario scenario;
 
 	@Before
 	public void beforeAll(Scenario scenario) throws MalformedURLException {
-
+		Local bsLocal = new Local();
+		HashMap<String, String> bsLocalArgs = new HashMap<>();
+		bsLocalArgs.put("key", accessKey); // Your access key
+		try {
+			bsLocal.start(bsLocalArgs);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		totalCount++;
 		   ExtentReportManager.initReport();
 	        ExtentReportManager.createTest(scenario.getName()); // Start logging for the scenario
 	        ExtentReportManager.logStep("Scenario Started: " + scenario.getName());
-
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability("browserName", "Chrome");
 		capabilities.setCapability("browserVersion", "latest");
 		HashMap<String, Object> browserstackOptions = new HashMap<String, Object>();
 		browserstackOptions.put("os", "Windows");
-		browserstackOptions.put("osVersion", "10");
+		browserstackOptions.put("local", true);
+		browserstackOptions.put("interactiveDebugging", true);
 		capabilities.setCapability("bstack:options", browserstackOptions);
 
 		driver = new RemoteWebDriver(new URL(URL), capabilities);
