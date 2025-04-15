@@ -145,11 +145,27 @@ export class api {
     };
 
     static fetchWalletVCs: ApiRequest = {
-        url: (locale: String) => {
+        url: (locale: string) => {
             const walletId = localStorage.getItem("walletId");
             return (
                 api.mimotoHost +
                 `/wallets/${walletId}/credentials?locale=${locale}`
+            );
+        },
+        methodType: MethodType.GET,
+        headers: () => {
+            return {
+                "Content-Type": "application/json"
+            };
+        }
+    };
+
+    static fetchWalletCredentialPreview: ApiRequest = {
+        url: (credentialId: string, locale: string) => {
+            const walletId = localStorage.getItem("walletId");
+            return (
+                api.mimotoHost +
+                `/wallets/${walletId}/credentials/${credentialId}?locale=${locale}&action=preview`
             );
         },
         methodType: MethodType.GET,
