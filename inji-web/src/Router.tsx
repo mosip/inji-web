@@ -1,5 +1,5 @@
-import {BrowserRouter, Route, Routes, useNavigate} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import React from "react";
 import {IssuersPage} from "./pages/IssuersPage";
 import {Header} from "./components/PageTemplate/Header";
 import {Footer} from "./components/PageTemplate/Footer";
@@ -15,6 +15,7 @@ import {HomePage} from "./pages/HomePage";
 import Login from "./pages/users/login/Login";
 import LoginSessionStatusChecker from "./pages/users/login/LoginSessionStatusChecker";
 import PinForm from './pages/users/PinPage'
+import WalletCredentialsPage from "./pages/users/login/WalletCredentialsPage";
 
 export const AppRouter = () => {
     const language = useSelector((state: RootState) => state.common.language);
@@ -60,6 +61,7 @@ export const AppRouter = () => {
                 />
                 <Route path="/login" element={wrapElement(<Login />)} />
                 <Route path="/pin" element={wrapElement(<PinForm/>)}/>
+                <Route path="/view/wallet/credentials" element={wrapElement(<WalletCredentialsPage/>)}/>
                 <Route path="/*" element={wrapElement(<PageNotFound />)} />
             </Routes>
         </BrowserRouter>
