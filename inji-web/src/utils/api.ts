@@ -165,7 +165,7 @@ export class api {
             const walletId = localStorage.getItem("walletId");
             return (
                 api.mimotoHost +
-                `/wallets/${walletId}/credentials/${credentialId}?locale=${locale}&action=preview`
+                `/wallets/${walletId}/credentials/${credentialId}?locale=${locale}&action=inline`
             );
         },
         methodType: MethodType.GET,
