@@ -38,7 +38,6 @@ const LoginSessionStatusChecker = () => {
             console.error("Error occurred while fetching user profile:", error);
             localStorage.removeItem("displayName");
             window.dispatchEvent(new Event("displayNameUpdated"));
-            navigate("/");
         }
     };
 
