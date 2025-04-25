@@ -75,19 +75,6 @@ public class SunbirdCredentials extends BasePage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-//        System.out.println(driver.getWindowHandles());
-//
-//
-//        JavascriptExecutor js = (JavascriptExecutor) driver;
-//        String xpath = "//*[contains(@text,'SET')]";
-//
-//        try {
-//            js.executeScript("document.evaluate(arguments[0], document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.click()", xpath);
-//        } catch (NoSuchElementException e) {
-//            System.out.println("Element not found with XPath: " + xpath);
-//        } catch (JavascriptException e) {
-//            System.out.println("JavaScript error: " + e.getMessage());
-//        }
     }
 
     public void clickOnLogin() {
