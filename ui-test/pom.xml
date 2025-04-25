@@ -129,7 +129,7 @@
         <dependency>
             <groupId>com.browserstack</groupId>
             <artifactId>browserstack-java-sdk</artifactId>
-            <version>LATEST</version>
+            <version>1.31.0</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
