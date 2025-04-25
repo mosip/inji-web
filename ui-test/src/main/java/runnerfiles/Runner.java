@@ -26,7 +26,7 @@ import java.util.List;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = {"/home/mosip/featurefiles/downloadMosipCredentials.feature"},
+		features = {"/home/mosip/featurefiles/"},
 		dryRun = false,
 		glue = {"stepdefinitions", "utils"},
 		snippets = SnippetType.CAMELCASE,
