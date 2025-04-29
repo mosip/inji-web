@@ -53,12 +53,8 @@ export const Header: React.FC = () => {
                     window.location.replace("/");
                 } else {
                     const parsedResponse = await response.json();
-
-                    const errorMessage = parsedResponse?.errors[0].errorMessage;
-                    if (
-                        errorMessage ===
-                        "Logout request was sent for an invalid or expired session"
-                    ) {
+                    const errorCode = parsedResponse?.errors[0].errorCode;
+                    if (errorCode === "user_logout_error") {
                         localStorage.removeItem("displayName");
                         window.location.replace("/login");
                     }
