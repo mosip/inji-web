@@ -32,6 +32,8 @@ import java.util.concurrent.TimeUnit;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
 
@@ -46,6 +48,9 @@ public class StepDefSunbirdCredentials {
     public static String policynumber =SimplePostForAutoGenId.policyNumber;
     public static String fullname =SimplePostForAutoGenId.fullName;
     public static String dob =SimplePostForAutoGenId.dob;
+    static LocalDate date = LocalDate.parse(dob);
+    public static String formattedDate = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    
     
     public static String screenshotPath = System.getProperty("user.dir")+"/test-output/screenshots";
     public StepDefSunbirdCredentials() {
@@ -185,8 +190,8 @@ public class StepDefSunbirdCredentials {
     @Then("User enter the date of birth")
     public void user_enter_the_date_of_birth() {
         try {
-            sunbirdCredentials.selectDateOfBirth(dob);
-            test.log(Status.PASS, "User successfully entered the date of birth: " + dob);
+            sunbirdCredentials.selectDateOfBirth(formattedDate);
+            test.log(Status.PASS, "User successfully entered the date of birth: " + formattedDate);
         } catch (NoSuchElementException e) {
             test.log(Status.FAIL, "Element not found while entering the date of birth: " + e.getMessage());
             test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));

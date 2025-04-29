@@ -72,7 +72,9 @@ public class MosipCredentials extends BasePage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        if(isElementIsVisible(driver, By.xpath("//*[@id='login_with_otp']"))) {
         clickOnElement(driver, By.xpath("//*[@id='login_with_otp']"));
+        }
     }
 
 
