@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { api } from "../../utils/api";
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const PinPage: React.FC = () => {
+    const navigate = useNavigate();
     const [pin, setPin] = useState<string>("");
     const [name, setName] = useState<string>("");
     const [error, setError] = useState<string>("");
@@ -117,11 +119,29 @@ const PinPage: React.FC = () => {
                 setIsPinCorrect(true);
                 setError(`Wallet created successfully! Wallet ID: ${walletId}`);
                 localStorage.setItem("walletId", walletId);
+                localStorage.setItem("displayName", name);
+                // Dispatch event to update isLoggedIn state in Router
+                window.dispatchEvent(new Event("displayNameUpdated"));
+                // Redirect to dashboard home page
+                setTimeout(() => {
+                    navigate("/");
+                    window.location.reload(); // Force reload to ensure the dashboard is shown
+                }, 1000);
             } else {
                 const walletData = await fetchWalletDetails(walletId!, pin);
                 console.log("wallet data::", walletData);
                 setIsPinCorrect(true);
                 localStorage.setItem("walletId", walletData);
+                // Get the wallet name and store it as displayName
+                const walletName = wallets.find(w => w.walletId === walletData)?.walletName || "User";
+                localStorage.setItem("displayName", walletName);
+                // Dispatch event to update isLoggedIn state in Router
+                window.dispatchEvent(new Event("displayNameUpdated"));
+                // Redirect to dashboard home page
+                setTimeout(() => {
+                    navigate("/");
+                    window.location.reload(); // Force reload to ensure the dashboard is shown
+                }, 1000);
             }
         } catch (error) {
             setIsPinCorrect(false);
@@ -133,6 +153,92 @@ const PinPage: React.FC = () => {
         }
     };
 
+    const handleDelete = async () => {
+        setError("");
+        setLoading(true);
+        setIsPinCorrect(null);
+
+        if (!pin) {
+            setError("Please enter a PIN.");
+            setLoading(false);
+            return;
+        }
+
+        if (!walletId) {
+            setError("No wallet selected for deletion.");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            // First verify the PIN is correct
+            await fetchWalletDetails(walletId, pin);
+
+            // If PIN verification is successful, proceed with deletion
+            const response = await fetch(api.deleteWallet.url(walletId), {
+                method: "DELETE",
+                headers: {
+                    ...api.deleteWallet.headers(),
+                    "X-XSRF-TOKEN": cookies["XSRF-TOKEN"]
+                },
+                credentials: "include",
+                body: JSON.stringify({ walletPin: pin })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error(
+                    "Error occurred while deleting the wallet:",
+                    errorData
+                );
+                setError(
+                    `Failed to delete wallet: ${errorData.errorMessage || "Unknown error"}`
+                );
+                setIsPinCorrect(false);
+                return;
+            }
+
+            // If deletion is successful
+            setWallets([]);
+            setWalletId(null);
+            setIsPinCorrect(true);
+            setError("Wallet deleted successfully!");
+            localStorage.removeItem("walletId");
+
+            // Refresh the wallet list
+            const fetchWallets = async () => {
+                try {
+                    const response = await fetch(api.fetchWallets.url(), {
+                        method: api.fetchWallets.methodType === 0 ? "GET" : "POST",
+                        headers: api.fetchWallets.headers(),
+                        credentials: "include"
+                    });
+
+                    const responseData = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(responseData);
+                    }
+
+                    setWallets(responseData);
+                    if (responseData.length > 0) {
+                        setWalletId(responseData[0].walletId);
+                        localStorage.setItem("walletId", responseData[0].walletId);
+                    }
+                } catch (error) {
+                    console.error("Error occurred while fetching wallets:", error);
+                }
+            };
+
+            fetchWallets();
+        } catch (error) {
+            setIsPinCorrect(false);
+            setError("Incorrect PIN or an error occurred. Please try again.");
+            console.error("An error occurred while deleting wallet:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
     return (
         <div className="pin-container">
             {wallets.length > 0 ? (
@@ -179,6 +285,11 @@ const PinPage: React.FC = () => {
                 {loading ? "Submitting..." : "Submit"}
             </button>
 
+            <br />
+            <button onClick={handleDelete} disabled={loading}>
+                {loading ? "Deleting..." : "Delete"}
+            </button>
+
             {error && <p className="error-message">{error}</p>}
 
             {isPinCorrect !== null && (
@@ -192,8 +303,9 @@ const PinPage: React.FC = () => {
                         : "Incorrect PIN. Please try again."}
                 </p>
             )}
+
         </div>
     );
-};
+}
 
 export default PinPage;

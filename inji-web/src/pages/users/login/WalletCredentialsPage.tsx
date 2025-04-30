@@ -108,6 +108,35 @@ const WalletCredentialsPage = () => {
         }
     };
 
+    const deleteCredential = async (credentialId: string) => {
+        if (!window.confirm("Are you sure you want to delete this credential?")) {
+            return;
+        }
+
+        try {
+            const response = await fetch(api.deleteCredential.url(credentialId), {
+                method: "DELETE",
+                headers: api.deleteCredential.headers(),
+                credentials: "include"
+            });
+
+            if (response.ok) {
+                // Remove the deleted credential from the state
+                setCredentials(prevCredentials =>
+                    prevCredentials.filter(cred => cred.credential_id !== credentialId)
+                );
+                alert("Credential deleted successfully");
+            } else {
+                const errorData = await response.json();
+                console.error("Error deleting credential:", errorData);
+                alert(`Failed to delete credential: ${errorData.errorMessage || "Unknown error"}`);
+            }
+        } catch (error) {
+            console.error("Error occurred while deleting credential:", error);
+            alert("An error occurred while deleting the credential. Please try again.");
+        }
+    };
+
     console.log("pdfPreviewUrl::",pdfPreviewUrl)
     return (
         <div style={{padding: "2rem"}}>
@@ -193,18 +222,29 @@ const WalletCredentialsPage = () => {
                             >
                                 {credential.credential_type}
                             </span>
-                            <button
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    fetchCredential(
-                                        credential.credential_id,
-                                        "download"
-                                    );
-                                }}
-                                className="mt-3 bg-grey-600 hover:bg-green-700 text-blank font-semibold py-1 px-4 rounded shadow"
-                            >
-                                Download
-                            </button>
+                            <div className="flex space-x-2">
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        fetchCredential(
+                                            credential.credential_id,
+                                            "download"
+                                        );
+                                    }}
+                                    className="mt-3 bg-grey-600 hover:bg-green-700 text-blank font-semibold py-1 px-4 rounded shadow"
+                                >
+                                    Download
+                                </button>
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        deleteCredential(credential.credential_id);
+                                    }}
+                                    className="mt-3 bg-red-500 hover:bg-red-700 text-white font-semibold py-1 px-4 rounded shadow"
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </div>
 
                         <span className="text-sm font-semibold text-gray-500 mt-2">

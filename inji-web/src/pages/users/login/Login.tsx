@@ -59,6 +59,9 @@ const Login: React.FC = () => {
 
     useEffect(() => {
         if (isProfileFetched) {
+            // Trigger event to update the router state
+            window.dispatchEvent(new Event("displayNameUpdated"));
+            // Redirect to PIN page
             window.location.replace("/pin");
         }
     }, [isProfileFetched, navigate]);

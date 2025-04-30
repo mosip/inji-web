@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { api } from "../../../utils/api";
+import { toast } from "react-toastify";
 
 const fetchUserProfile = async () => {
     try {
@@ -27,6 +28,7 @@ const fetchUserProfile = async () => {
 
 const LoginSessionStatusChecker = () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const fetchSessionAndUserInfo = async () => {
         try {
@@ -38,6 +40,13 @@ const LoginSessionStatusChecker = () => {
             console.error("Error occurred while fetching user profile:", error);
             localStorage.removeItem("displayName");
             window.dispatchEvent(new Event("displayNameUpdated"));
+
+            // Check if user is trying to access protected routes
+            const protectedRoutes = ["/view/wallet/credentials"];
+            if (protectedRoutes.includes(location.pathname)) {
+                toast.error("You are not logged in. Please login to continue.");
+                navigate("/login");
+            }
         }
     };
 

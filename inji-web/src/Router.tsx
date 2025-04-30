@@ -1,5 +1,5 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import React from "react";
+import {BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import {IssuersPage} from "./pages/IssuersPage";
 import {Header} from "./components/PageTemplate/Header";
 import {Footer} from "./components/PageTemplate/Footer";
@@ -16,10 +16,39 @@ import Login from "./pages/users/login/Login";
 import LoginSessionStatusChecker from "./pages/users/login/LoginSessionStatusChecker";
 import PinForm from './pages/users/PinPage'
 import WalletCredentialsPage from "./pages/users/login/WalletCredentialsPage";
+import { DashboardLayout } from "./components/Dashboard/DashboardLayout";
+import { DashboardHome } from "./pages/Dashboard/DashboardHome";
+import { DocumentsPage } from "./pages/Dashboard/DocumentsPage";
 
 export const AppRouter = () => {
     const language = useSelector((state: RootState) => state.common.language);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [hasPinVerified, setHasPinVerified] = useState<boolean>(false);
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            const hasDisplayName = !!localStorage.getItem("displayName");
+            const hasWalletId = !!localStorage.getItem("walletId");
+            setIsLoggedIn(hasDisplayName && hasWalletId);
+            setHasPinVerified(hasWalletId);
+        };
+
+        // Initial check
+        handleStorageChange();
+
+        window.addEventListener("displayNameUpdated", handleStorageChange);
+        return () => {
+            window.removeEventListener("displayNameUpdated", handleStorageChange);
+        };
+    }, []);
+
     const wrapElement = (element: JSX.Element, isBGNeeded: boolean = true) => {
+        // If user is logged in and not on specific pages, use dashboard layout
+        if (isLoggedIn) {
+            return <DashboardLayout>{element}</DashboardLayout>;
+        }
+
+        // Otherwise use the standard layout
         return (
             <React.Fragment>
                 <div
@@ -44,7 +73,13 @@ export const AppRouter = () => {
         <BrowserRouter>
             <LoginSessionStatusChecker />
             <Routes>
-                <Route path="/" element={wrapElement(<HomePage />, false)} />
+                <Route path="/" element={
+                    isLoggedIn ?
+                        wrapElement(<DashboardHome />, false) :
+                        (localStorage.getItem("displayName") && !hasPinVerified ?
+                            <Navigate to="/pin" replace /> :
+                            wrapElement(<HomePage />, false))
+                } />
                 <Route path="/issuers" element={wrapElement(<IssuersPage />)} />
                 <Route
                     path="/issuers/:issuerId"
@@ -61,7 +96,7 @@ export const AppRouter = () => {
                 />
                 <Route path="/login" element={wrapElement(<Login />)} />
                 <Route path="/pin" element={wrapElement(<PinForm/>)}/>
-                <Route path="/view/wallet/credentials" element={wrapElement(<WalletCredentialsPage/>)}/>
+                <Route path="/view/wallet/credentials" element={isLoggedIn ? wrapElement(<DocumentsPage />, false) : wrapElement(<WalletCredentialsPage/>, false)}/>
                 <Route path="/*" element={wrapElement(<PageNotFound />)} />
             </Routes>
         </BrowserRouter>

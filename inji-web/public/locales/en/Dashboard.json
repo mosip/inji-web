@@ -1,0 +1,22 @@
+{
+  "Sidebar": {
+    "home": "Home",
+    "documents": "Stored Credentials"
+  },
+  "Header": {
+    "profile": "My Profile",
+    "credentials": "My Credentials",
+    "logout": "Logout"
+  },
+  "Home": {
+    "title": "Downloading a certificate is one-click away!",
+    "subtitle": "Please search for the issuer and in the next step, select certificate to download.",
+    "searchPlaceholder": "Search issuer (e.g. Name 1, Name 2, Name 3)",
+    "issuersListTitle": "List of Issuers",
+    "noIssuersFound": "No issuers found matching your search."
+  },
+  "Documents": {
+    "emptyTitle": "No Documents Yet",
+    "emptyDescription": "You don't have any documents stored yet. Download certificates from issuers to see them here."
+  }
+}

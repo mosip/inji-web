@@ -103,4 +103,21 @@
         background-size: 100% 100%;
         background-position: center;
     }
+    .bg-dashboard {
+        background: linear-gradient(to bottom, var(--iw-color-lightPrimary), var(--iw-color-lightSecondary));
+        background-size: cover;
+        background-position: top;
+        background-attachment: fixed;
+        opacity: 0.3;
+    }
+    .inji-gradient-text {
+        background: linear-gradient(90deg, #FF5300 0%, #FB5103 16%, #F04C0F 31%, #DE4322 46%, #C5363C 61%, #A4265F 75%, #7C1389 90%, #5B03AD 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+    }
+    .inji-gradient-bg {
+        background: linear-gradient(90deg, #FF5300 0%, #FB5103 16%, #F04C0F 31%, #DE4322 46%, #C5363C 61%, #A4265F 75%, #7C1389 90%, #5B03AD 100%);
+    }
 }
