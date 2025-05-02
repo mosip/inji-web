@@ -24,7 +24,7 @@ describe('Testing API Class', () => {
 
     Object.defineProperty(window, "_env_", {
         value: {
-            MIMOTO_HOST: "https://api.collab.mossip.net/v1/mimoto"
+            MIMOTO_URL: "https://api.collab.mossip.net/v1/mimoto"
         },
         writable: true
     });
