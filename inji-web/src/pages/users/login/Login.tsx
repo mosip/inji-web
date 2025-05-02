@@ -103,7 +103,7 @@ const Login: React.FC = () => {
     return (
         <div style={containerStyle}>
             <button
-                onClick={handleEsignetLogin}
+                onClick={handleGoogleLogin}
                 disabled={isLoading}
                 style={isLoading ? buttonDisabledStyle : buttonStyle}
                 onMouseEnter={(e) => {
