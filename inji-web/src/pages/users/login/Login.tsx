@@ -15,13 +15,6 @@ const Login: React.FC = () => {
             window._env_.MIMOTO_URL + "/oauth2/authorize/google";
     };
 
-     const handleEsignetLogin = () => {
-            setIsLoading(true);
-            setError(null);
-            window.location.href =
-                window._env_.MIMOTO_URL + "/oauth2/authorize/esignet";
-        };
-
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const status = params.get("status");
