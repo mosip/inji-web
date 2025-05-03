@@ -12,7 +12,7 @@ const Login: React.FC = () => {
         setIsLoading(true);
         setError(null);
         window.location.href =
-            window._env_.MIMOTO_HOST + "/oauth2/authorize/google";
+            window._env_.MIMOTO_URL + "/oauth2/authorize/google";
     };
 
     useEffect(() => {

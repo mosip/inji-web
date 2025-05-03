@@ -8,7 +8,7 @@ declare global {
             DEFAULT_FAVICON: string;
             DEFAULT_TITLE: string;
             DEFAULT_FONT_URL: string;
-            MIMOTO_HOST: string;
+            MIMOTO_URL: string;
         }
     }
 }
