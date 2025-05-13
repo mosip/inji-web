@@ -41,9 +41,8 @@ const LoginSessionStatusChecker = () => {
             localStorage.removeItem("displayName");
             window.dispatchEvent(new Event("displayNameUpdated"));
 
-            // Check if user is trying to access protected routes
-            const protectedRoutes = ["/view/wallet/credentials"];
-            if (protectedRoutes.includes(location.pathname)) {
+            // Check if the error occurred due to invalid or expired session
+            if (error.errorCode === "session_invalid_or_expired") {
                 toast.error("You are not logged in. Please login to continue.");
                 navigate("/login");
             }

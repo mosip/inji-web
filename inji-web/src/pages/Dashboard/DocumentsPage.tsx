@@ -5,6 +5,8 @@ import { EmptyDocuments } from "../../components/Dashboard/EmptyDocuments";
 import { api } from "../../utils/api";
 import { toast } from "react-toastify";
 import backgroundImage from "../../assets/Background.svg";
+import { useSelector } from "react-redux";
+import { RootState } from "../../types/redux";
 
 export const DocumentsPage: React.FC = () => {
   const { t } = useTranslation("Dashboard");
@@ -13,28 +15,25 @@ export const DocumentsPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const language = useSelector((state: RootState) => state.common.language);
 
-  const fetchCredentials = async () => {
+  const fetchWalletCredentials = async () => {
     try {
-      const walletId = localStorage.getItem("walletId");
-      if (!walletId) {
-        throw new Error("Wallet ID not found");
-      }
-
-      const apiRequest = api.fetchCredentials;
-      const response = await fetch(apiRequest.url(walletId), {
+      const apiRequest = api.fetchWalletVCs;
+      const response = await fetch(apiRequest.url(language), {
         method: "GET",
         headers: apiRequest.headers(),
+        credentials: "include"
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch credentials");
+      const responseData = await response.json();
+      if (response.ok) {
+        setCredentials(responseData);
+      } else {
+        throw responseData.errorMessage;
       }
-
-      const data = await response.json();
-      setCredentials(data);
-    } catch (err) {
-      console.error("Error fetching credentials:", err);
+    } catch (error) {
+      console.error("Failed to fetch credentials:", error);
       setError("Failed to load documents. Please try again later.");
     } finally {
       setLoading(false);
@@ -68,7 +67,7 @@ export const DocumentsPage: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchCredentials();
+    fetchWalletCredentials();
   }, []);
 
   if (loading) {
@@ -87,12 +86,10 @@ export const DocumentsPage: React.FC = () => {
     );
   }
 
-  // If no credentials, show empty state
   if (!credentials || credentials.length === 0) {
     return <EmptyDocuments />;
   }
 
-  // Otherwise, render the credentials list
   return (
     <div className="min-h-screen bg-[#F9FAFB] relative">
       <div className="container mx-auto px-4 py-6 relative z-10">
