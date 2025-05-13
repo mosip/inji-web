@@ -119,29 +119,12 @@ const PinPage: React.FC = () => {
                 setIsPinCorrect(true);
                 setError(`Wallet created successfully! Wallet ID: ${walletId}`);
                 localStorage.setItem("walletId", walletId);
-                localStorage.setItem("displayName", name);
-                // Dispatch event to update isLoggedIn state in Router
-                window.dispatchEvent(new Event("displayNameUpdated"));
-                // Redirect to dashboard home page
-                setTimeout(() => {
-                    navigate("/");
-                    window.location.reload(); // Force reload to ensure the dashboard is shown
-                }, 1000);
+                navigate("/dashboard/home");
             } else {
                 const walletData = await fetchWalletDetails(walletId!, pin);
-                console.log("wallet data::", walletData);
                 setIsPinCorrect(true);
                 localStorage.setItem("walletId", walletData);
-                // Get the wallet name and store it as displayName
-                const walletName = wallets.find(w => w.walletId === walletData)?.walletName || "User";
-                localStorage.setItem("displayName", walletName);
-                // Dispatch event to update isLoggedIn state in Router
-                window.dispatchEvent(new Event("displayNameUpdated"));
-                // Redirect to dashboard home page
-                setTimeout(() => {
-                    navigate("/");
-                    window.location.reload(); // Force reload to ensure the dashboard is shown
-                }, 1000);
+                navigate("/dashboard/home");
             }
         } catch (error) {
             setIsPinCorrect(false);

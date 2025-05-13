@@ -304,5 +304,14 @@
     "metrics": "Times",
     "success": "Proceed",
     "cancel": "Cancel"
+  },
+  "Dashboard": {
+    "Home": {
+      "title": "Home",
+      "welcome": "Welcome"
+    },
+    "StoredCredentials": {
+      "title": "Stored Credentials"
+    }
   }
 }
