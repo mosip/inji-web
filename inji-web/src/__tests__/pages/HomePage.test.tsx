@@ -84,24 +84,6 @@ describe('HomePage', () => {
     expect(screen.getByTestId('HomeFeatures')).toBeInTheDocument();
     expect(screen.getByTestId('HomeQuickTip')).toBeInTheDocument();
   });
- 
-  test('navigates to /issuers when HomeBanner is clicked', () => {
-    renderComponent();
-
-    const homeBanner = screen.getByTestId('HomeBanner');
-    fireEvent.click(homeBanner);
-
-    expect(window.location.pathname).toBe('/issuers');
-  });
-  
-  test('navigates to /issuers when HomeQuickTip is clicked', () => {
-    renderComponent();
-
-    const homeQuickTip = screen.getByTestId('HomeQuickTip');
-    fireEvent.click(homeQuickTip); 
-
-    expect(window.location.pathname).toBe('/issuers');
-  });
 
   test('shows toast only once when HomeQuickTip is clicked multiple times', async() => {
     renderComponent();

@@ -1,8 +1,8 @@
 {
   "PageTemplate": {
     "Header": {
-      "home": "الصفحة الرئيسية",
-      "help": "مساعدة"
+      "home": "الرئيسية",
+      "faq": "الأسئلة الشائعة"
     },
     "Footer": {
       "product": "منتج MOSIP",
@@ -59,6 +59,38 @@
       "heading": "نصائح سريعة لتنزيل بياناتك فورًا",
       "toastText":"قريباً",
       "buttontext": "انقر هنا"
+    },
+    "Login": {
+    "login-title": "تسجيل الدخول",
+    "login-description":"قم بتسجيل الدخول باستخدام حسابك أو تابع كضيف للوصول إلى بيانات الاعتماد الخاصة بك.",
+    "login-note":"قد تكون بعض الميزات محدودة في وضع الضيف.",
+    "logging-in": "جاري تسجيل الدخول",
+    "login-google": "متابعة باستخدام Google",
+    "login-guest": "متابعة كزائر"
+    },
+    "LoginFailedModal": {
+      "failure-message": "فشل تسجيل الدخول",
+      "failure-description": "فشل محاولة تسجيل الدخول الخاصة بك. يرجى التحقق من بيانات اعتمادك والمحاولة مرة أخرى",
+      "retry": "إعادة المحاولة"
+    }
+  },
+  "PinPage": {
+    "submit": "إرسال",
+    "submitting": "جاري الإرسال",
+    "set-passcode": "تعيين رمز المرور",
+    "enter-passcode": "أدخل رمز المرور",
+    "confirm-passcode": "تأكيد رمز المرور",
+    "reset-passcode": "إعادة تعيين رمز المرور",
+    "set-passcode-description": "قم بتعيين رمز المرور للبدء",
+    "enter-passcode-description": "أدخل رمز المرور المكون من 6 أرقام",
+    "passcode-warning": "تأكد من تذكر كلمة المرور لتسجيل الدخول في المستقبل",
+    "error": {
+      "wallet-not-found-error": "لم يتم العثور على محفظة. يرجى إنشاء واحدة.",
+      "pin-length-error": "يجب أن يكون الرقم السري 6 أرقام.",
+      "passcode-mismatch-error": "الرمز السري غير متطابق.",
+      "create-wallet-error": "فشل إنشاء المحفظة.",
+      "incorrect-pin-error": "تم إدخال رمز خاطئ.",
+      "fetch-wallets-error": "فشل في جلب المحافظ."
     }
   },
   "IssuersPage": {

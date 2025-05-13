@@ -1,8 +1,8 @@
 {
   "PageTemplate": {
     "Header": {
-      "home": "घर",
-      "help": "मदद"
+      "home": "मुखपृष्ठ",
+      "faq": "सामान्य प्रश्न"
     },
     "Footer": {
       "product": "एक MOSIP उत्पाद",
@@ -59,6 +59,38 @@
       "heading": "अपने क्रेडेंशियल्स को तुरंत डाउनलोड करने के लिए त्वरित सुझाव",
       "toastText":"जल्द आ रहा है",
       "buttontext": "यहां क्लिक करें"
+    },
+    "Login": {
+    "login-title": "लॉग इन करें",
+    "login-description":"अपने खाते से लॉग इन करें या अपनी साख तक पहुंचने के लिए अतिथि के रूप में जारी रखें।",
+    "login-note":"अतिथि मोड में कुछ सुविधाएँ सीमित हो सकती हैं।",
+    "logging-in": "लॉगिन हो रहा है",
+    "login-google": "Google के साथ जारी रखें",
+    "login-guest": "अतिथि के रूप में जारी रखें"
+    },
+    "LoginFailedModal": {
+      "failure-message": "लॉगिन विफल",
+      "failure-description": "आपका लॉगिन प्रयास विफल हो गया है। कृपया अपनी क्रेडेंशियल्स जांचें और फिर से प्रयास करें",
+      "retry": "फिर से प्रयास करें"
+    }
+  },
+  "PinPage": {
+    "submit": "सबमिट करें",
+    "submitting": "सबमिट हो रहा है",
+    "set-passcode": "पासकोड सेट करें",
+    "enter-passcode": "पासकोड दर्ज करें",
+    "confirm-passcode": "पासकोड की पुष्टि करें",
+    "reset-passcode": "पासकोड रीसेट करें",
+    "set-passcode-description": "शुरू करने के लिए अपना पासकोड सेट करें",
+    "enter-passcode-description": "अपना 6 अंकों का पासकोड दर्ज करें",
+    "passcode-warning": "भविष्य में लॉगिन के लिए पासकोड याद रखें",
+    "error": {
+      "wallet-not-found-error": "कोई वॉलेट नहीं मिला। कृपया नया बनाएँ।",
+      "pin-length-error": "पिन 6 अंकों का होना चाहिए।",
+      "passcode-mismatch-error": "पिन मेल नहीं खाता।",
+      "create-wallet-error": "वॉलेट निर्माण असफल हुआ।",
+      "incorrect-pin-error": "गलत पिन दर्ज किया गया।",
+      "fetch-wallets-error": "वॉलेट लाने में त्रुटि।"
     }
   },
   "IssuersPage": {

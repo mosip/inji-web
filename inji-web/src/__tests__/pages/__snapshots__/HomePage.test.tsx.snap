@@ -9,23 +9,25 @@ exports[`HomePage matches snapshot for HomePage 1`] = `
       data-testid="toast-wrapper"
     />
   </div>
-  <div
-    class="pb-20 flex flex-col gap-y-4 "
-  >
+  <div>
     <div
-      data-testid="HomeBanner"
+      class="pb-20 flex flex-col gap-y-4 "
     >
-      HomeBanner
-    </div>
-    <div
-      data-testid="HomeFeatures"
-    >
-      HomeFeatures
-    </div>
-    <div
-      data-testid="HomeQuickTip"
-    >
-      HomeQuickTip
+      <div
+        data-testid="HomeBanner"
+      >
+        HomeBanner
+      </div>
+      <div
+        data-testid="HomeFeatures"
+      >
+        HomeFeatures
+      </div>
+      <div
+        data-testid="HomeQuickTip"
+      >
+        HomeQuickTip
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -40,23 +42,25 @@ exports[`HomePage matches snapshot for HomePage with toast visible 1`] = `
       data-testid="toast-wrapper"
     />
   </div>
-  <div
-    class="pb-20 flex flex-col gap-y-4 "
-  >
+  <div>
     <div
-      data-testid="HomeBanner"
+      class="pb-20 flex flex-col gap-y-4 "
     >
-      HomeBanner
-    </div>
-    <div
-      data-testid="HomeFeatures"
-    >
-      HomeFeatures
-    </div>
-    <div
-      data-testid="HomeQuickTip"
-    >
-      HomeQuickTip
+      <div
+        data-testid="HomeBanner"
+      >
+        HomeBanner
+      </div>
+      <div
+        data-testid="HomeFeatures"
+      >
+        HomeFeatures
+      </div>
+      <div
+        data-testid="HomeQuickTip"
+      >
+        HomeQuickTip
+      </div>
     </div>
   </div>
 </DocumentFragment>

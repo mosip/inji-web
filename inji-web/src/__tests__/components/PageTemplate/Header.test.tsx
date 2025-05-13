@@ -44,56 +44,53 @@ describe("Header Container Layout Test", () => {
 });
 
 describe("Testing Header Container Functionality", () => {
-    test("Check the length of the Header menu elements", () => {
+    test("Check the presence of all Header elements", () => {
         (useCookies as jest.Mock).mockReturnValue([
             {"XSRF-TOKEN": "test-xsrf-token"},
             jest.fn()
         ]);
         renderWithProvider(<Header />);
-        const headerElementLi = screen.getByTestId("Header-Menu-Elements");
-        expect(headerElementLi.children.length).toBe(3);
+        
+        // Check Logo
+        expect(screen.getByTestId("Header-InjiWeb-Logo")).toBeInTheDocument();
+        
+        // Check FAQ
+        expect(screen.getByTestId("Header-Menu-FAQ")).toBeInTheDocument();
+        
+        // Check Language Selector
+        expect(screen.getByTestId("Header-Menu-LanguageSelector")).toBeInTheDocument();
     });
 
-    // Uncomment and fix these tests if needed
-    // test('check the presence of the help', () => {
-    //     render(wrapUnderRouter(<Header />));
-    //     const headerElementLi = screen.getByTestId("Header-Menu-Help");
-    //     expect(headerElementLi).toBeInTheDocument();
-    //     expect(headerElementLi).toHaveTextContent("Header.help");
-    //     const headerElementDiv = screen.getByTestId("Header-Menu-Help-div");
-    //     expect(headerElementDiv).toBeInTheDocument();
+    // Should match Logo and FAQ/Language Selector container.
+    test("Check the length of Header elements", () => {
+            (useCookies as jest.Mock).mockReturnValue([
+                    {"XSRF-TOKEN": "test-xsrf-token"},
+                    jest.fn()
+                ]);
+                renderWithProvider(<Header />);
+                const headerContainer = screen.getByTestId("Header-Container");
+            expect(headerContainer.children.length).toBe(2); 
+    });
 
-    //     jest.spyOn(require('react-router-dom'), 'useNavigate').mockReturnValue(mockUseNavigate);
-    //     fireEvent.click(headerElementDiv);
+    // Should match FAQ and Language-Selector Containers.
+    test("Check the length of FAQ-LanguageSelector container elements", () => {
+        (useCookies as jest.Mock).mockReturnValue([
+                {"XSRF-TOKEN": "test-xsrf-token"},
+                jest.fn()
+            ]);
+            renderWithProvider(<Header />);
+            const headerContainer = screen.getByTestId("Header-FAQ-LanguageSelector-Container");
+        expect(headerContainer.children.length).toBe(2); 
+    });
 
-    //     expect(mockedUsedNavigate).toHaveBeenCalled();
-    //     expect(mockedUsedNavigate).toHaveBeenCalledWith("/help");
-    // });
-
-    // test('check the presence of the About Inji', () => {
-    //     render(wrapUnderRouter(<Header />));
-    //     const headerElementLi = screen.getByTestId("Header-Menu-AboutInji");
-    //     expect(headerElementLi).toBeInTheDocument();
-    //     expect(headerElementLi).toHaveTextContent("Header.aboutInji");
-    //     const headerElementDiv = screen.getByTestId("Header-Menu-Help-div");
-    //     expect(headerElementDiv).toBeInTheDocument();
-
-    //     jest.spyOn(require('react-router-dom'), 'useNavigate').mockReturnValue(mockUseNavigate);
-    //     fireEvent.click(headerElementDiv);
-
-    //     expect(mockedUsedNavigate).toHaveBeenCalled();
-    // });
-
-    // test('Check the presence of the Language Selector', () => {
-    //     renderWithProvider((<Header />));
-    //     const headerElementLi = screen.getByTestId("Header-Menu-LanguageSelector");
-    //     expect(headerElementLi).toBeInTheDocument();
-    //     const headerElementDiv = screen.getByTestId("Header-Menu-Help-div");
-    //     expect(headerElementDiv).toBeInTheDocument();
-
-    //     jest.spyOn(require('react-router-dom'), 'useNavigate').mockReturnValue(mockUseNavigate);
-    //     fireEvent.click(headerElementDiv);
-
-    //     expect(mockedUsedNavigate).toHaveBeenCalled();
-    // });
+    // Should match Logo and Hamburger menu.
+    test("Check the length of Logo-HamburgerMenu container elements", () => {
+        (useCookies as jest.Mock).mockReturnValue([
+                {"XSRF-TOKEN": "test-xsrf-token"},
+                jest.fn()
+            ]);
+            renderWithProvider(<Header />);
+            const headerContainer = screen.getByTestId("Header-InjiWeb-Logo-Container");
+        expect(headerContainer.children.length).toBe(2); 
+    });
 });

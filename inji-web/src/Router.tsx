@@ -12,7 +12,6 @@ import {getDirCurrentLanguage} from "./utils/i18n";
 import {PageNotFound} from "./pages/PageNotFound";
 import {AuthorizationPage} from "./pages/AuthorizationPage";
 import {HomePage} from "./pages/HomePage";
-import Login from "./pages/users/login/Login";
 import LoginSessionStatusChecker from "./pages/users/login/LoginSessionStatusChecker";
 import PinForm from './pages/users/PinPage'
 import WalletCredentialsPage from "./pages/users/login/WalletCredentialsPage";
@@ -25,8 +24,8 @@ export const AppRouter = () => {
                 <div
                     className={
                         !isBGNeeded
-                            ? `h-screen min-h-72 bg-iw-background font-base`
-                            : `h-screen min-h-72 bg bg-iw-background font-base`
+                            ? `min-h-72 bg-iw-background font-base`
+                            : `min-h-72 bg bg-iw-background font-base`
                     }
                     dir={getDirCurrentLanguage(language)}
                 >
@@ -42,7 +41,9 @@ export const AppRouter = () => {
 
     return (
         <BrowserRouter>
-            <LoginSessionStatusChecker />
+        {/* This component is redundant as of now, it's core functionalities are in Pin Page already. */}
+        {/* Kept for future use or Alternate Implementations */}
+            {/* <LoginSessionStatusChecker /> */}
             <Routes>
                 <Route path="/" element={wrapElement(<HomePage />, false)} />
                 <Route path="/issuers" element={wrapElement(<IssuersPage />)} />
@@ -59,7 +60,8 @@ export const AppRouter = () => {
                     path="/authorize"
                     element={wrapElement(<AuthorizationPage />)}
                 />
-                <Route path="/login" element={wrapElement(<Login />)} />
+                {/* Login Modal is part of homepage only, so a separate route is not required. */}
+                {/* <Route path="/login" element={wrapElement(<Login />)} /> */}
                 <Route path="/pin" element={wrapElement(<PinForm/>)}/>
                 <Route path="/view/wallet/credentials" element={wrapElement(<WalletCredentialsPage/>)}/>
                 <Route path="/*" element={wrapElement(<PageNotFound />)} />

@@ -2,9 +2,7 @@
   "PageTemplate": {
     "Header": {
       "home": "Home",
-      "help": "Help",
-      "login": "Login",
-      "logout": "Logout"
+      "faq": "FAQ"
     },
     "Footer": {
       "product": "A MOSIP Product",
@@ -61,6 +59,38 @@
       "heading":"Quick Tips for Instantly Downloading Your Credentials",
       "toastText":"Coming soon",
       "buttontext":"Click Here"
+    },
+    "Login":{
+      "login-title":"Log In",
+      "login-description":"Log in with your account or continue as a guest to access your credentials.",
+      "login-note":"Some features may be limited in guest mode.",
+      "logging-in":"Logging in",
+      "login-google":"Continue with Google",
+      "login-guest":"Continue as Guest"
+    },
+    "LoginFailedModal":{
+      "failure-message":"Login Failed",
+      "failure-description":"Your login attempt has failed. Please check your credentials and try again",
+      "retry":"Retry"
+    }
+  },
+  "PinPage":{
+    "submit":"Submit",
+    "submitting":"Submitting",
+    "set-passcode":"Set Passcode",
+    "enter-passcode":"Enter Passcode",
+    "confirm-passcode":"Confirm Passcode",
+    "reset-passcode":"Reset Passcode",
+    "set-passcode-description":"Set your passcode to get started",
+    "enter-passcode-description":"Enter your 6 digit passcode",
+    "passcode-warning":"Make sure you remember the password for future login",
+    "error":{
+      "wallet-not-found-error":"Wallet not found",
+      "pin-length-error":"Please Enter 6 digits in the Pin",
+      "passcode-mismatch-error":"Pin did not match",
+      "create-wallet-error":"Wallet creation unsuccessful",
+      "incorrect-pin-error":"Incorrect pin entered",
+      "fetch-wallets-error":"Error in fetching wallets"
     }
   },
   "IssuersPage": {

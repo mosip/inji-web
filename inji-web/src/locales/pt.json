@@ -1,8 +1,8 @@
 {
   "PageTemplate": {
     "Header": {
-      "home": "Página inicial",
-      "help": "Ajuda"
+      "home": "Início",
+      "faq": "Perguntas Frequentes"
     },
     "Footer": {
       "product": "Um produto MOSIP",
@@ -59,6 +59,38 @@
       "heading":"Dicas rápidas para baixar suas credenciais instantaneamente",
       "toastText":"Em breve",
       "buttontext":"Clique aqui"
+    },
+    "Login": {
+    "login-title": "Entrar",
+    "login-description":"Faça login com sua conta ou continue como convidado para acessar suas credenciais.",
+    "login-note":"Alguns recursos podem ser limitados no modo convidado.",
+    "logging-in": "Entrando",
+    "login-google": "Continuar com o Google",
+    "login-guest": "Continuar como convidado"
+    },
+    "LoginFailedModal": {
+      "failure-message": "Falha no login",
+      "failure-description": "Sua tentativa de login falhou. Verifique suas credenciais e tente novamente",
+      "retry": "Tentar novamente"
+    }
+  },
+  "PinPage": {
+    "submit": "Enviar",
+    "submitting": "Enviando",
+    "set-passcode": "Definir código de acesso",
+    "enter-passcode": "Digite o código de acesso",
+    "confirm-passcode": "Confirmar código de acesso",
+    "reset-passcode": "Redefinir código de acesso",
+    "set-passcode-description": "Defina seu código de acesso para começar",
+    "enter-passcode-description": "Digite seu código de 6 dígitos",
+    "passcode-warning": "Certifique-se de lembrar a senha para login futuro",
+    "error": {
+      "wallet-not-found-error": "Nenhuma carteira encontrada. Crie uma.",
+      "pin-length-error": "O PIN deve ter 6 dígitos.",
+      "passcode-mismatch-error": "Os PINs não coincidem.",
+      "create-wallet-error": "Falha na criação da carteira.",
+      "incorrect-pin-error": "PIN incorreto.",
+      "fetch-wallets-error": "Erro ao buscar carteiras."
     }
   },
   "IssuersPage": {
