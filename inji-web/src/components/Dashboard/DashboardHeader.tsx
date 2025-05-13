@@ -1,28 +1,24 @@
 import React, {useState, useEffect, useRef} from "react";
-import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import {LanguageSelector} from "../Common/LanguageSelector";
-import {useSelector} from "react-redux";
-import {RootState} from "../../types/redux";
 import {api} from "../../utils/api";
 import {useCookies} from "react-cookie";
 import {toast} from "react-toastify";
 import {RiArrowDownSFill, RiArrowUpSFill} from "react-icons/ri";
 import {GradientWrapper} from "../Common/GradientWrapper";
-import { convertStringIntoPascalCase } from "../../pages/Dashboard/utils";
+import {convertStringIntoPascalCase} from "../../pages/Dashboard/utils";
 
 export const DashboardHeader: React.FC = () => {
-    const language = useSelector((state: RootState) => state.common.language);
-    const {t} = useTranslation("Dashboard");
     const navigate = useNavigate();
     const [displayName, setDisplayName] = useState<string | null>(null);
     const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
     const [cookies] = useCookies(["XSRF-TOKEN"]);
     const dropdownRef = useRef<HTMLDivElement>(null);
-
+    const displayNameFromLocalStorage = localStorage.getItem("displayName");
+    
     useEffect(() => {
         setDisplayName(localStorage.getItem("displayName"));
-    }, [localStorage.getItem("displayName")]);
+    }, [displayNameFromLocalStorage]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -73,13 +69,18 @@ export const DashboardHeader: React.FC = () => {
     const dropdownItems: DropdownItem[] = [
         {
             label: "Profile",
-            onClick: () => navigate("profile"),
+            onClick: () => {
+                setIsProfileDropdownOpen(false);
+                navigate("profile");
+            },
             textColor: "text-gray-700"
         },
         {
             label: "FAQ",
-            onClick: () =>
-                navigate("faq", {state: {from: window.location.pathname}}),
+            onClick: () => {
+                setIsProfileDropdownOpen(false);
+                navigate("faq", {state: {from: window.location.pathname}});
+            },
             textColor: "text-gray-700"
         },
         {

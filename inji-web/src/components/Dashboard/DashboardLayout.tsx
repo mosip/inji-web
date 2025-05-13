@@ -7,10 +7,6 @@ import {RootState} from "../../types/redux";
 import {getDirCurrentLanguage} from "../../utils/i18n";
 import {Outlet} from "react-router-dom";
 
-type DashboardLayoutProps = {
-    children: React.ReactNode;
-};
-
 export const DashboardLayout: React.FC = () => {
     const language = useSelector((state: RootState) => state.common.language);
 

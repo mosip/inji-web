@@ -23,14 +23,12 @@ import {DocumentsPage} from "./pages/Dashboard/DocumentsPage";
 export const AppRouter = () => {
     const language = useSelector((state: RootState) => state.common.language);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const [hasPinVerified, setHasPinVerified] = useState<boolean>(false);
 
     useEffect(() => {
         const handleStorageChange = () => {
             const hasDisplayName = !!localStorage.getItem("displayName");
             const hasWalletId = !!localStorage.getItem("walletId");
             setIsLoggedIn(hasDisplayName && hasWalletId);
-            setHasPinVerified(hasWalletId);
         };
 
         // Initial check
