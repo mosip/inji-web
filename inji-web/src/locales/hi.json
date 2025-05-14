@@ -302,5 +302,20 @@
     "metrics": "टाइम्स",
     "success": "आगे बढ़ना",
     "cancel": "रद्द करना"
+  },
+  "Dashboard": {
+    "Home": {
+      "title": "घर",
+      "welcome": "स्वागत"
+    },
+    "StoredCredentials": {
+      "title": "संग्रहीत क्रेडेंशियल्स",
+      "header": {
+        "addCredential": "क्रेडेंशियल जोड़ें"
+      },
+      "emptyScreen": {
+        "title": "कोई क्रेडेंशियल संग्रहीत नहीं!"
+      }
+    }
   }
 }

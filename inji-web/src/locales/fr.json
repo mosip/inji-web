@@ -302,5 +302,20 @@
     "metrics": "Fois",
     "success": "Procéder",
     "cancel": "Annuler"
+  },
+  "Dashboard": {
+    "Home": {
+      "title": "Maison",
+      "welcome": "Bienvenu"
+    },
+    "StoredCredentials": {
+      "title": "Informations d'identification stockées",
+      "header": {
+        "addCredential": "Ajouter un identifiant"
+      },
+      "emptyScreen": {
+        "title": "Aucune information d'identification stockée !"
+      }
+    }
   }
 }

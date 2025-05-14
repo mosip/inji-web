@@ -293,6 +293,21 @@
     "metrics": "Vezes",
     "success": "Prosseguir",
     "cancel": "Cancelar"
+  },
+  "Dashboard": {
+    "Home": {
+      "title": "Lar",
+      "welcome": "Bem-vindo"
+    },
+    "StoredCredentials": {
+      "title": "Credenciais armazenadas",
+      "header": {
+        "addCredential": "Adicionar credencial"
+      },
+      "emptyScreen": {
+        "title": "Nenhuma credencial armazenada!"
+      }
+    }
   }
 }
   

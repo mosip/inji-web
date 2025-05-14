@@ -302,5 +302,20 @@
     "metrics": "مرات",
     "success": "يتابع",
     "cancel": "يلغي"
+  },
+  "Dashboard": {
+    "Home": {
+      "title": "بيت",
+      "welcome": "مرحباً"
+    },
+    "StoredCredentials": {
+      "title": "بيانات الاعتماد المخزنة",
+      "header": {
+        "addCredential": "إضافة بيانات الاعتماد"
+      },
+      "emptyScreen": {
+        "title": "لم يتم تخزين أي بيانات اعتماد!"
+      }
+    }
   }
 }

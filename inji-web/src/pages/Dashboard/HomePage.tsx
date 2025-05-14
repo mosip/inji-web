@@ -8,14 +8,15 @@ export const HomePage: React.FC = () => {
     const [displayName, setDisplayName] = useState<string | null>(null);
 
     useEffect(() => {
-        console.log("inside useEffect", localStorage.getItem("displayName"));
         setDisplayName(localStorage.getItem("displayName"));
     }, [localStorage.getItem("displayName")]);
 
     return (
-        <div className="m-10">
-            <h1 className="text-3xl font-medium text-[#04051D] flex justify-center items-center mb-10">
-                {`${t("Home.welcome")} ${convertStringIntoPascalCase(displayName)}!`}
+        <div className="px-4 sm:px-6 md:px-10 lg:px-20 max-w-screen-xl mx-auto my-10">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-medium text-[#04051D] text-center mb-10">
+                {`${t("Home.welcome")} ${convertStringIntoPascalCase(
+                    displayName
+                )}!`}
             </h1>
             <IssuersPage />
         </div>

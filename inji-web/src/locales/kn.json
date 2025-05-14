@@ -302,5 +302,20 @@
     "metrics": "ಟೈಮ್ಸ್",
     "success": "ಮುಂದುವರೆಯಿರಿ",
     "cancel": "ರದ್ದುಮಾಡು"
+  },
+  "Dashboard": {
+    "Home": {
+      "title": "ಮನೆ",
+      "welcome": "ಸ್ವಾಗತ"
+    },
+    "StoredCredentials": {
+      "title": "ಸಂಗ್ರಹಿಸಲಾದ ರುಜುವಾತುಗಳು",
+      "header": {
+        "addCredential": "ರುಜುವಾತು ಸೇರಿಸಿ"
+      },
+      "emptyScreen": {
+        "title": "ಯಾವುದೇ ರುಜುವಾತುಗಳನ್ನು ಸಂಗ್ರಹಿಸಲಾಗಿಲ್ಲ!"
+      }
+    }
   }
 }
