@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import {useTranslation} from "react-i18next";
+import CollapseIcon from "../../assets/CollapseIcon.svg";
 
 type SidebarItemProps = {
     icon: React.ReactNode;
@@ -19,18 +20,13 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 }) => {
     const navigate = useNavigate();
 
-    const itemPaddingLeft = isCollapsed ? "pl-2" : "pl-4";
-    const iconContainerMarginLeft = isCollapsed ? "ml-2" : "ml-4";
-    const iconContainerStyle = {marginLeft: "-2px"};
-
     return (
         <div
-            className={`relative flex items-center w-full h-12 cursor-pointer transition-all duration-200 rounded-lg ${itemPaddingLeft} pr-2`}
+            className={`relative flex items-center w-full h-12 cursor-pointer transition-all duration-200 rounded-lg pr-2`}
             onClick={() => navigate(path)}
         >
             <div
-                className={`flex items-center justify-center w-10 h-10 rounded-lg ${iconContainerMarginLeft} bg-white shadow-[0_-0.5px_4px_-1px_rgba(0,0,0,0.078),_0_4px_4px_-1px_rgba(0,0,0,0.078)]`}
-                style={iconContainerStyle}
+                className={`flex items-center justify-center p-2 rounded-lg mx-6 shadow-[0_-0.5px_4px_-1px_rgba(0,0,0,0.078),_0_4px_4px_-1px_rgba(0,0,0,0.078)]`}
             >
                 {icon}
             </div>
@@ -41,7 +37,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 
             {!isCollapsed && (
                 <span
-                    className={`ml-3 font-medium text-sm ${
+                    className={`font-medium text-sm ${
                         isActive ? "text-[#2B011C]" : "text-[#6F6F6F]"
                     } flex-1 truncate`}
                 >
@@ -119,35 +115,23 @@ export const Sidebar: React.FC = () => {
             }}
             className={`${
                 isCollapsed ? "w-24" : "w-64"
-            } bg-white h-full transition-all duration-300 border-r border-gray-100 flex flex-col items-start relative`} // Added relative for absolute positioning of button
+            } py-4 bg-white h-full transition-all duration-300 border-r border-gray-100 flex flex-col items-start relative`} // Added relative for absolute positioning of button
         >
             {/* Collapse button */}
             <button
                 onClick={toggleSidebar}
-                className="absolute top-4 right-[-10px] bg-white rounded-full border-2 border-[#2B011C] text-[#2B011C] p-2 focus:outline-none focus:ring-[#2B011C] shadow-md z-10"
-                style={{right: isCollapsed ? "-2px" : "-10px"}} // Adjust right position based on collapsed state
+                className="absolute top-6 right-[-20px] p-2"
             >
-                <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                <img
+                    src={CollapseIcon}
+                    alt="Collapse"
                     className={`transform ${
-                        isCollapsed ? "" : "rotate-180"
+                        isCollapsed && "rotate-180"
                     } transition-transform duration-300`}
-                >
-                    <path
-                        d="M9 19l7-7-7-7"
-                        stroke="#2B011C"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    />
-                </svg>
+                />
             </button>
 
-            <div className="flex flex-col space-y-2 mt-2 w-full px-4">
+            <div className="flex flex-col space-y-2 mt-2 w-full pr-4">
                 {sidebarItems.map((item, index) => (
                     <SidebarItem
                         key={index}

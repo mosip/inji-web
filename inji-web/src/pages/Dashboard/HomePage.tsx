@@ -14,8 +14,8 @@ export const HomePage: React.FC = () => {
 
     return (
         <div className="m-10">
-            <h1 className="text-2xl sm:text-3xl font-medium text-[#04051D] flex justify-center items-center mb-10">
-                {t("Home.welcome") + " " + convertStringIntoPascalCase(displayName)}!
+            <h1 className="text-3xl font-medium text-[#04051D] flex justify-center items-center mb-10">
+                {`${t("Home.welcome")} ${convertStringIntoPascalCase(displayName)}!`}
             </h1>
             <IssuersPage />
         </div>

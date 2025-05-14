@@ -7,7 +7,7 @@ export const IntroBox: React.FC = () => {
     return <React.Fragment>
         <div data-testid="IntroBox-Container" className="text-center pb-10">
             <h2 data-testid="IntroBox-Text"
-                className="text-3xl text-iw-title ">{t("Intro.title")} {renderGradientText(t('Intro.title2'))}</h2>
+                className="text-2xl font-medium text-iw-title ">{t("Intro.title")} {renderGradientText(t('Intro.title2'))}</h2>
             <p data-testid="IntroBox-SubText"
                className="mt-2 text-lg text-iw-subTitle">{t("Intro.subTitle")}</p>
         </div>

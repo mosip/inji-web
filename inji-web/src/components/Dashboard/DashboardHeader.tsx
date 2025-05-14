@@ -95,7 +95,7 @@ export const DashboardHeader: React.FC = () => {
     };
 
     return (
-        <header className="bg-transparent">
+        <header className="bg-transparent shadow-[0_4px_5px_0_rgba(0,0,0,0.051)] z-10">
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 <div className="flex items-center">
                     <img
@@ -114,7 +114,7 @@ export const DashboardHeader: React.FC = () => {
                             className="flex items-center space-x-2 cursor-pointer"
                             onClick={toggleProfileDropdown}
                         >
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-iw-primary to-iw-secondary flex items-center justify-center text-white font-medium text-sm">
+                            <div className="w-12 h-12 rounded-full bg-[#DDDDDD] flex items-center justify-center text-1A001D font-medium text-lg">
                                 {getProfileInitials(displayName)}
                             </div>
                             <span className="font-medium text-gray-800">
