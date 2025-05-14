@@ -41,9 +41,7 @@ export const AppRouter = () => {
 
     return (
         <BrowserRouter>
-        {/* This component is redundant as of now, it's core functionalities are in Pin Page already. */}
-        {/* Kept for future use or Alternate Implementations */}
-            {/* <LoginSessionStatusChecker /> */}
+            <LoginSessionStatusChecker />
             <Routes>
                 <Route path="/" element={wrapElement(<HomePage />, false)} />
                 <Route path="/issuers" element={wrapElement(<IssuersPage />)} />

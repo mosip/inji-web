@@ -147,7 +147,6 @@ export const PinPage: React.FC = () => {
 
         } else {
           // If no wallet is found
-          alert("No wallets found");
           console.warn("No wallets found, prompting creation...");
           navigate("/pin"); // Redirect to wallet creation
         }

@@ -20,10 +20,6 @@ export const Login: React.FC = () => {
             window._env_.MIMOTO_URL + "/oauth2/authorize/google";
     };
 
-
-    // The below part is now being handled in PinPage only. 
-    // It is redundant here. as after google login, backend will navigate to Pin Page directly.
-/*
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const status = params.get("status");
@@ -50,7 +46,7 @@ export const Login: React.FC = () => {
       });
 
       const responseData = await response.json();
-      console.log("This is the response of fetchUserProfile  "+responseData.display_name+"  "+responseData.wallet_id);
+      // console.log("This is the response of fetchUserProfile  "+responseData.display_name+"  "+responseData.wallet_id);
       if (response.ok) {
         if (responseData.display_name) {
           localStorage.setItem(
@@ -76,20 +72,6 @@ export const Login: React.FC = () => {
       window.location.replace("/pin");
     }
   }, [isProfileFetched, navigate]);
-
-*/
-
-
-// in case of failure in google login, redirect to login failure page
-useEffect(() => {
-  const params = new URLSearchParams(window.location.search);
-  const status = params.get("status");
-  if (status === "error") {
-    setIsLoading(false);
-    setError(params.get("error_message"));
-    window.location.replace("/?loginFailed=true");
-  }
-}, [navigate]);
 
   const errorStyle: React.CSSProperties = {
     color: "red",
