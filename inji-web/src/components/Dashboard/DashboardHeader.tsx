@@ -6,7 +6,7 @@ import {useCookies} from "react-cookie";
 import {toast} from "react-toastify";
 import {RiArrowDownSFill, RiArrowUpSFill} from "react-icons/ri";
 import {GradientWrapper} from "../Common/GradientWrapper";
-import {convertStringIntoPascalCase} from "../../pages/Dashboard/utils";
+import {convertStringIntoPascalCase, getProfileInitials} from "../../pages/Dashboard/utils";
 
 export const DashboardHeader: React.FC = () => {
     const navigate = useNavigate();
@@ -115,14 +115,7 @@ export const DashboardHeader: React.FC = () => {
                             onClick={toggleProfileDropdown}
                         >
                             <div className="w-10 h-10 rounded-full bg-gradient-to-r from-iw-primary to-iw-secondary flex items-center justify-center text-white font-medium text-sm">
-                                {displayName
-                                    ? displayName
-                                          .split(" ")
-                                          .map((name) =>
-                                              name.charAt(0).toUpperCase()
-                                          )
-                                          .join("")
-                                    : "U"}
+                                {getProfileInitials(displayName)}
                             </div>
                             <span className="font-medium text-gray-800">
                                 {convertStringIntoPascalCase(displayName)}

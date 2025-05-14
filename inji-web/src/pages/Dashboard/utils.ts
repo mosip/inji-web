@@ -1,9 +1,19 @@
 export const convertStringIntoPascalCase = (text: string | null) => {
-    if (text != null) {
-        return text
+    return (
+        text &&
+        text
             .toLocaleLowerCase()
             .split(" ")
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" ");
-    }
+            .join(" ")
+    );
+};
+
+export const getProfileInitials = (displayName: string | null) => {
+    return displayName
+        ? displayName
+              .split(" ")
+              .map((name) => name.charAt(0).toUpperCase())
+              .join("")
+        : "U";
 };
