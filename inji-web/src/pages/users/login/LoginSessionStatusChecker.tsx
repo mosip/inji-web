@@ -1,44 +1,22 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { api } from "../../../utils/api";
 import { toast } from "react-toastify";
-
-const fetchUserProfile = async () => {
-    try {
-        const response = await fetch(api.fetchUserProfile.url(), {
-            method: api.fetchUserProfile.methodType === 0 ? "GET" : "POST",
-            headers: { ...api.fetchUserProfile.headers() },
-            credentials: "include"
-        });
-
-        const responseData = await response.json();
-
-        if (!response.ok) {
-            throw responseData;
-        }
-
-        if (responseData.display_name) {
-            localStorage.setItem("displayName", responseData.display_name);
-            return responseData.display_name;
-        }
-    } catch (error) {
-        throw error;
-    }
-};
+import { useUser } from "../../../hooks/useUser";
 
 const LoginSessionStatusChecker = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const {user, removeUser, fetchUserProfile} = useUser();
 
     const fetchSessionAndUserInfo = async () => {
         try {
-            const displayName = await fetchUserProfile();
-            if (displayName) {
+            await fetchUserProfile();
+            if (user?.displayName) {
                 window.dispatchEvent(new Event("displayNameUpdated"));
             }
         } catch (error) {
             console.error("Error occurred while fetching user profile:", error);
-            localStorage.removeItem("displayName");
+            removeUser();
             window.dispatchEvent(new Event("displayNameUpdated"));
 
             // Check if the error occurred due to invalid or expired session

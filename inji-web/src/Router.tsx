@@ -19,14 +19,16 @@ import WalletCredentialsPage from "./pages/users/login/WalletCredentialsPage";
 import {DashboardLayout} from "./components/Dashboard/DashboardLayout";
 import {HomePage as DashboardHomePage} from "./pages/Dashboard/HomePage";
 import {DocumentsPage} from "./pages/Dashboard/DocumentsPage";
+import { useUser } from "./hooks/useUser";
 
 export const AppRouter = () => {
     const language = useSelector((state: RootState) => state.common.language);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const {user} = useUser();
 
     useEffect(() => {
         const handleStorageChange = () => {
-            const hasDisplayName = !!localStorage.getItem("displayName");
+            const hasDisplayName = !!user?.displayName;
             const hasWalletId = !!localStorage.getItem("walletId");
             setIsLoggedIn(hasDisplayName && hasWalletId);
         };

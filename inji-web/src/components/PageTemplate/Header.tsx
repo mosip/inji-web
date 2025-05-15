@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { isRTL } from "../../utils/i18n";
 import { api } from "../../utils/api";
 import { useCookies } from 'react-cookie';
+import { useUser } from "../../hooks/useUser";
 
 
 export const Header: React.FC = () => {
@@ -19,10 +20,11 @@ export const Header: React.FC = () => {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [cookies] = useCookies(['XSRF-TOKEN']);
+    const {user, removeUser} = useUser();
 
     useEffect(() => {
         const handleStorageChange = () => {
-            setIsLoggedIn(!!localStorage.getItem("displayName"));
+            setIsLoggedIn(!!user?.displayName);
         };
 
         window.addEventListener("displayNameUpdated", handleStorageChange);
@@ -48,14 +50,14 @@ export const Header: React.FC = () => {
                 });
 
                 if (response.ok) {
-                    localStorage.removeItem("displayName");
+                    removeUser()
                     localStorage.removeItem("walletId");
                     window.location.replace("/");
                 } else {
                     const parsedResponse = await response.json();
                     const errorCode = parsedResponse?.errors[0].errorCode;
                     if (errorCode === "user_logout_error") {
-                        localStorage.removeItem("displayName");
+                        removeUser();
                         window.location.replace("/login");
                     }
                     throw new Error(parsedResponse?.errors[0]?.errorMessage);

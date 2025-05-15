@@ -5,16 +5,19 @@ import {HomeFeatures} from "../components/Home/HomeFeatures";
 import {HomeQuickTip} from "../components/Home/HomeQuickTip";
 import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
+import {useUser} from "../hooks/useUser";
 
 export const HomePage: React.FC = () => {
     const {t} = useTranslation("HomePage");
     const [toastVisible, setToastVisible] = useState(false);
-    const [displayName, setDisplayName] = useState<string | null>(null);
+    const [displayName, setDisplayName] = useState<string | undefined>(undefined);
     const navigate = useNavigate();
-
+    const {user} = useUser();
+    const userDisplayName = user?.displayName;
+    
     useEffect(() => {
-        setDisplayName(localStorage.getItem("displayName"));
-    }, [localStorage.getItem("displayName")]);
+        setDisplayName(userDisplayName);
+    }, [userDisplayName]);
 
     const showToast = (message: string) => {
         if (toastVisible) return;

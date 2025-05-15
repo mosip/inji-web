@@ -1,4 +1,4 @@
-export const convertStringIntoPascalCase = (text: string | null) => {
+export const convertStringIntoPascalCase = (text: string | undefined) => {
     return (
         text &&
         text
@@ -9,7 +9,7 @@ export const convertStringIntoPascalCase = (text: string | null) => {
     );
 };
 
-export const getProfileInitials = (displayName: string | null) => {
+export const getProfileInitials = (displayName: string | undefined) => {
     return displayName
         ? displayName
               .split(" ")

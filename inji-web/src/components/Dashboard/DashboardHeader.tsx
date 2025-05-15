@@ -6,18 +6,26 @@ import {useCookies} from "react-cookie";
 import {toast} from "react-toastify";
 import {RiArrowDownSFill, RiArrowUpSFill} from "react-icons/ri";
 import {GradientWrapper} from "../Common/GradientWrapper";
-import {convertStringIntoPascalCase, getProfileInitials} from "../../pages/Dashboard/utils";
+import {
+    convertStringIntoPascalCase,
+    getProfileInitials
+} from "../../pages/Dashboard/utils";
+import {useUser} from "../../hooks/useUser";
 
 export const DashboardHeader: React.FC = () => {
     const navigate = useNavigate();
-    const [displayName, setDisplayName] = useState<string | null>(null);
+    const [displayName, setDisplayName] = useState<string | undefined>(
+        undefined
+    );
     const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
     const [cookies] = useCookies(["XSRF-TOKEN"]);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const displayNameFromLocalStorage = localStorage.getItem("displayName");
-    
+    const {user, removeUser} = useUser();
+    const displayNameFromLocalStorage = user?.displayName;
+    const hasProfilePictureUrl = user?.profilePictureUrl;
+
     useEffect(() => {
-        setDisplayName(localStorage.getItem("displayName"));
+        setDisplayName(displayNameFromLocalStorage);
     }, [displayNameFromLocalStorage]);
 
     useEffect(() => {
@@ -48,14 +56,14 @@ export const DashboardHeader: React.FC = () => {
             });
 
             if (response.ok) {
-                localStorage.removeItem("displayName");
+                removeUser();
                 localStorage.removeItem("walletId");
                 window.location.replace("/");
             } else {
                 const parsedResponse = await response.json();
                 const errorCode = parsedResponse?.errors[0].errorCode;
                 if (errorCode === "user_logout_error") {
-                    localStorage.removeItem("displayName");
+                    removeUser();
                     window.location.replace("/login");
                 }
                 throw new Error(parsedResponse?.errors[0]?.errorMessage);
@@ -114,8 +122,22 @@ export const DashboardHeader: React.FC = () => {
                             className="flex items-center space-x-2 cursor-pointer"
                             onClick={toggleProfileDropdown}
                         >
-                            <div className="w-12 h-12 rounded-full bg-[#DDDDDD] flex items-center justify-center text-1A001D font-medium text-lg">
-                                {getProfileInitials(displayName)}
+                            <div
+                                className={`aspect-square w-12 sm:w-13 md:w-14 rounded-full bg-[#DDDDDD] overflow-hidden flex items-center justify-center text-[#1A001D] font-medium text-lg ${
+                                    !hasProfilePictureUrl
+                                        ? "p-2 sm:p-3 md:p-4"
+                                        : ""
+                                }`}
+                            >
+                                {hasProfilePictureUrl ? (
+                                    <img
+                                        src={user.profilePictureUrl}
+                                        alt="Profile Pic"
+                                        className="w-full h-full object-cover rounded-full"
+                                    />
+                                ) : (
+                                    getProfileInitials(displayName)
+                                )}
                             </div>
                             <span className="font-medium text-gray-800">
                                 {convertStringIntoPascalCase(displayName)}

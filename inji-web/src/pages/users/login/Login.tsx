@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {api} from "../../../utils/api";
+import {useUser} from "../../../hooks/useUser";
 
 const Login: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [isProfileFetched, setIsProfileFetched] = useState(false);
     const navigate = useNavigate();
+    const {fetchUserProfile, errorObj} = useUser();
 
     const handleGoogleLogin = () => {
         setIsLoading(true);
@@ -16,46 +18,27 @@ const Login: React.FC = () => {
     };
 
     useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        const status = params.get("status");
+        const fetchProfileIfLoginIsSuccess = async () => {
+            const params = new URLSearchParams(window.location.search);
+            const status = params.get("status");
 
-        if (status === "success") {
-            setIsLoading(false);
-            fetchUserProfile();
-        } else if (status === "error") {
-            setIsLoading(false);
-            setError(params.get("error_message"));
-        }
+            if (status === "success") {
+                setIsLoading(false);
+                try {
+                    await fetchUserProfile();
+                    setIsProfileFetched(true);
+                } catch (error) {
+                    setError("Failed to fetch user profile");
+                }
+            } else if (status === "error") {
+                setIsLoading(false);
+                setError(params.get("error_message"));
+            }
+        };
+
+        fetchProfileIfLoginIsSuccess();
     }, [navigate]);
 
-    const fetchUserProfile = async () => {
-        try {
-            const response = await fetch(api.fetchUserProfile.url(), {
-                method: api.fetchUserProfile.methodType === 0 ? "GET" : "POST",
-                headers: {
-                    ...api.fetchUserProfile.headers()
-                },
-                credentials: "include"
-            });
-
-            const responseData = await response.json();
-            if (response.ok) {
-                if (responseData.display_name) {
-                    localStorage.setItem(
-                        "displayName",
-                        responseData.display_name
-                    );
-                }
-                setIsProfileFetched(true);
-            } else {
-                setError(responseData.errorMessage);
-                throw responseData;
-            }
-        } catch (error) {
-            console.error("Error occurred while fetching user profile:", error);
-            setError("Failed to fetch user profile");
-        }
-    };
 
     useEffect(() => {
         if (isProfileFetched) {

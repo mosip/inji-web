@@ -16,9 +16,10 @@ import {getIssuerDisplayObjectForCurrentLanguage} from "../utils/i18n";
 import {RootState} from "../types/redux";
 import {useSelector} from "react-redux";
 import {useCookies} from "react-cookie";
+import { useUser } from "../hooks/useUser";
 
 export const RedirectionPage: React.FC = () => {
-    const {error, state, response,  fetchRequest} = useFetch();
+    const {error, state, response, fetchRequest} = useFetch();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const redirectedSessionId = searchParams.get("state");
@@ -37,8 +38,9 @@ export const RedirectionPage: React.FC = () => {
         message: ""
     });
     const [cookies] = useCookies(["XSRF-TOKEN"]);
+    const {user} = useUser();
     const [isLoggedIn, setIsLoggedIn] = useState(() => {
-        return !!localStorage.getItem("displayName");
+        return !!user?.displayName;
     });
     const navigate = useNavigate();
 
