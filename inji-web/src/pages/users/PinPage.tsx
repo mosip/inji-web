@@ -117,8 +117,7 @@ export const PinPage: React.FC = () => {
         if (responseData.length > 0) {
           setWalletId(responseData[0].wallet_id);
           localStorage.setItem("walletId", responseData[0].walletId);
-          localStorage.setItem("displayName",responseData[0].displayName);
-          console.log("Fetch wallets responseData[0] "+responseData[0].walletId);
+          // console.log("Fetch wallets responseData[0] "+responseData[0].walletId);
 
           // Fetch user cache to check wallet unlock status
           const userResponse = await fetch(api.fetchUserProfile.url(), {
