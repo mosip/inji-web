@@ -108,7 +108,7 @@ export const Sidebar: React.FC = () => {
             }}
             className={`${
                 isCollapsed ? "w-24" : "w-64"
-            } py-6 bg-white h-full transition-all duration-300 shadow-iw-side-bar flex flex-col items-start relative`}
+            } py-6 bg-white h-full transition-all duration-300 shadow-iw-sidebar flex flex-col items-start relative`}
         >
             <button
                 onClick={toggleSidebar}

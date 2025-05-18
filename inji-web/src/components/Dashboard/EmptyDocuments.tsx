@@ -48,7 +48,7 @@ export const EmptyDocuments: React.FC = () => {
                 </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center min-h-[500px] my-4 sm:my-8 md:my-16">
+            <div className="bg-white rounded-lg shadow-iw-emptyDocuments p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center min-h-[500px] my-4 sm:my-8 md:my-16">
                 <svg
                     width="88"
                     height="88"

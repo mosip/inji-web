@@ -60,8 +60,9 @@ module.exports = {
             boxShadow: {
                 'iw': '0 3px 8px rgba(24, 71, 147, 0.15)',
                 'iw-hover': '0 5px 8px rgba(24, 71, 147, 0.2)',
-                'iw-side-bar': '2px 0 8px rgb(0,0,0,0.051)'
-            }
+                'iw-sidebar': '2px 0 8px rgb(0,0,0,0.051)',
+                'iw-emptyDocuments': `0px -2px 4px -2px rgba(16, 24, 40, 0.06), 0px 4px 8px -2px rgba(16, 24, 40, 0.10)`
+            },
         }
     },
     plugins: [require('tailwindcss-rtl')]
