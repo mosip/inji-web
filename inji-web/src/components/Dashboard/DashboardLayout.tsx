@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Sidebar} from "./Sidebar";
 import {DashboardHeader} from "./DashboardHeader";
 import {Footer} from "../PageTemplate/Footer";
@@ -6,26 +6,61 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../types/redux";
 import {getDirCurrentLanguage} from "../../utils/i18n";
 import {Outlet} from "react-router-dom";
+import DashboardBgTop from "../../assets/Background.svg";
+import DashboardBgBottom from "../../assets/DashboardBgBottom.svg";
 
 export const DashboardLayout: React.FC = () => {
     const language = useSelector((state: RootState) => state.common.language);
+    const headerRef = useRef<HTMLDivElement>(null);
+    const footerRef = useRef<HTMLDivElement>(null);
+    const [headerHeight, setHeaderHeight] = useState(0);
+    const [footerHeight, setFooterHeight] = useState(0);
+
+    useEffect(() => {
+        if (headerRef.current) {
+            setHeaderHeight(headerRef.current.getBoundingClientRect().height);
+        }
+        if (footerRef.current) {
+            setFooterHeight(footerRef.current.getBoundingClientRect().height);
+        }
+    }, []);
 
     return (
         <div
-            className="h-screen flex flex-col bg-iw-background font-base overflow-hidden"
+            className="h-screen flex flex-col bg-iw-background font-base overflow-hidden w-full relative"
             dir={getDirCurrentLanguage(language)}
         >
-            <DashboardHeader />
+            <DashboardHeader ref={headerRef} headerHeight={headerHeight} />
 
-            <div className="flex flex-1 overflow-hidden">
+            <div
+                className="flex flex-1 overflow-hidden w-full relative"
+                style={{
+                    marginTop: headerHeight,
+                    marginBottom: footerHeight,
+                    zIndex: 0
+                }}
+            >
                 <Sidebar />
-                <main className="flex-1 bg overflow-y-auto -mt-1">
-                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div className="relative h-screen flex flex-col overflow-hidden w-full">
+                    <img
+                        src={DashboardBgTop}
+                        alt="Dashboard Top Bg Image"
+                        className="absolute top-0 left-0 w-full z-[-1]"
+                    />
+
+                    <img
+                        src={DashboardBgBottom}
+                        alt="Dashboard Bottom Bg Image"
+                        className="absolute bottom-0 left-0 w-full z-[-1]"
+                    />
+
+                    <div className="flex-1 overflow-y-auto relative z-10 p-4">
                         <Outlet />
                     </div>
-                </main>
+                </div>
             </div>
-            <Footer />
+
+            <Footer ref={footerRef} />
         </div>
     );
 };

@@ -5,7 +5,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
     :root {
         --iw-font-base: "Inter", sans-serif;
@@ -22,6 +21,7 @@
         --iw-color-tertiary: #951F6F;
         --iw-color-helpAccordionHover: #e0e0e0;
         --iw-color-shadow: #18479329;
+        --iw-color-shadow-with-opacity: #1847930F;
         --iw-color-selected-shadow: #164EA840;
         --iw-color-spinningLoaderPrimary: #951F6F;
         --iw-color-spinningLoaderSecondary: #5B03AD;

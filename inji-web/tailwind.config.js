@@ -1,13 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     darkMode: 'selector',
-    content: [
-        "./src/**/**/*.{js,jsx,ts,tsx}",
-    ],
+    content: ['./src/**/**/*.{js,jsx,ts,tsx}'],
     theme: {
         extend: {
-            fontFamily:{
-                base: 'var(--iw-font-base)',
+            fontFamily: {
+                base: 'var(--iw-font-base)'
             },
             zIndex: {
                 '50': '50',
@@ -23,15 +21,17 @@ module.exports = {
                     subTitle: 'var(--iw-color-subTitle)',
                     searchTitle: 'var(--iw-color-searchTitle)',
                     primary: 'var(--iw-color-primary)',
-                    secondary:'var(--iw-color-secondary)',
-                    tertiary:'var(--iw-color-tertiary)',
+                    secondary: 'var(--iw-color-secondary)',
+                    tertiary: 'var(--iw-color-tertiary)',
                     lightPrimary: 'var(--iw-color-lightPrimary)',
-                    lightSecondary:'var(--iw-color-lightSecondary)',
+                    lightSecondary: 'var(--iw-color-lightSecondary)',
                     helpAccordionHover: 'var(--iw-color-helpAccordionHover)',
                     shadow: 'var(--iw-color-shadow)',
                     selectedShadow: 'var(--iw-color-selected-shadow)',
-                    spinningLoaderPrimary: 'var(--iw-color-spinningLoaderPrimary)',
-                    spinningLoaderSecondary: 'var(--iw-color-spinningLoaderSecondary)',
+                    spinningLoaderPrimary:
+                        'var(--iw-color-spinningLoaderPrimary)',
+                    spinningLoaderSecondary:
+                        'var(--iw-color-spinningLoaderSecondary)',
                     navigationBar: 'var(--iw-color-navigationBar)',
                     languageGlobeIcon: 'var(--iw-color-languageGlobeIcon)',
                     languageArrowIcon: 'var(--iw-color-languageArrowIcon)',
@@ -52,11 +52,17 @@ module.exports = {
                     hoverBackGround: 'var(--iw-color-hoverBackGround)',
                     text: 'var(--iw-color-text)',
                     subText: 'var(--iw-color-subText)',
-                    disclaimerBackGround: 'var(--iw-color-disclaimerBackGround)',
+                    disclaimerBackGround:
+                        'var(--iw-color-disclaimerBackGround)',
                     disclaimerText: 'var(--iw-color-disclaimerText)'
                 }
+            },
+            boxShadow: {
+                'iw': '0 3px 8px rgba(24, 71, 147, 0.15)',
+                'iw-hover': '0 5px 8px rgba(24, 71, 147, 0.2)',
+                'iw-side-bar': '2px 0 8px rgb(0,0,0,0.051)'
             }
-        },
+        }
     },
-    plugins: [require('tailwindcss-rtl')],
-}
+    plugins: [require('tailwindcss-rtl')]
+};

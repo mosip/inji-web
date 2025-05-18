@@ -29,7 +29,7 @@ export const SearchIssuer: React.FC<SearchIssuerProps> = (props) => {
         <div className="flex justify-center items-center w-full">
             <div
                 data-testid="Search-Issuer-Container"
-                className="w-full sm:w-8/12 md:w-3/4 lg:w-1/2 flex justify-start items-center bg-iw-background shadow-md shadow-iw-shadow rounded-lg"
+                className="w-full sm:w-8/12 md:w-3/4 flex justify-start items-center bg-iw-background shadow-iw rounded-lg"
             >
                 <FaSearch
                     data-testid="Search-Issuer-Search-Icon"

@@ -1,5 +1,5 @@
 import {BrowserRouter, Route, Routes, Navigate} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import React, {useEffect,useRef, useState} from "react";
 import {IssuersPage} from "./pages/IssuersPage";
 import {Header} from "./components/PageTemplate/Header";
 import {Footer} from "./components/PageTemplate/Footer";
@@ -25,41 +25,77 @@ export const AppRouter = () => {
     const language = useSelector((state: RootState) => state.common.language);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const {user} = useUser();
+    const headerRef = useRef<HTMLDivElement>(null);
+    const footerRef = useRef<HTMLDivElement>(null);
+
+    const [headerHeight, setHeaderHeight] = useState(0);
+    const [footerHeight, setFooterHeight] = useState(0);
+
+    const getHeaderFooterHeights = (
+        headerRef: React.RefObject<HTMLElement>,
+        footerRef: React.RefObject<HTMLElement>
+    ) => {
+        const headerHeight =
+            headerRef.current?.getBoundingClientRect().height || 0;
+        const footerHeight =
+            footerRef.current?.getBoundingClientRect().height || 0;
+        return {headerHeight, footerHeight};
+    };
+
+    useEffect(() => {
+        const updateHeights = () => {
+            const {headerHeight, footerHeight} = getHeaderFooterHeights(
+                headerRef,
+                footerRef
+            );
+            setHeaderHeight(headerHeight);
+            setFooterHeight(footerHeight);
+        };
+
+        updateHeights();
+        window.addEventListener('resize', updateHeights);
+        return () => window.removeEventListener('resize', updateHeights);
+    }, []);
 
     useEffect(() => {
         const handleStorageChange = () => {
             const hasDisplayName = !!user?.displayName;
-            const hasWalletId = !!localStorage.getItem("walletId");
+            const hasWalletId = !!localStorage.getItem('walletId');
             setIsLoggedIn(hasDisplayName && hasWalletId);
         };
 
         // Initial check
         handleStorageChange();
 
-        window.addEventListener("displayNameUpdated", handleStorageChange);
+        window.addEventListener('displayNameUpdated', handleStorageChange);
         return () => {
-            window.removeEventListener("displayNameUpdated", handleStorageChange);
+            window.removeEventListener(
+                'displayNameUpdated',
+                handleStorageChange
+            );
         };
     }, []);
 
     const wrapElement = (element: JSX.Element, isBGNeeded: boolean = true) => {
         return (
-            <React.Fragment>
+            <div
+                className={`flex flex-col h-screen ${
+                    !isBGNeeded ? 'bg-iw-background' : 'bg bg-iw-background'
+                } font-base`}
+                dir={getDirCurrentLanguage(language)}
+            >
+                <Header ref={headerRef} />
                 <div
-                    className={
-                        !isBGNeeded
-                            ? `h-screen min-h-72 bg-iw-background font-base`
-                            : `h-screen min-h-72 bg bg-iw-background font-base`
-                    }
-                    dir={getDirCurrentLanguage(language)}
+                    className="flex-grow overflow-y-auto"
+                    style={{
+                        marginTop: headerHeight,
+                        marginBottom: footerHeight
+                    }}
                 >
-                    <Header />
-                    <div className={"top-20 h-full mt-20 my-auto flex-grow"}>
-                        {element}
-                    </div>
-                    <Footer />
+                    {element}
                 </div>
-            </React.Fragment>
+                <Footer ref={footerRef} />
+            </div>
         );
     };
 
@@ -103,8 +139,12 @@ export const AppRouter = () => {
                 <Route path="/*" element={wrapElement(<PageNotFound />)} />
                 <Route path="/dashboard" element={<DashboardLayout />}>
                     <Route path="home" element={<DashboardHomePage />} />
+                    <Route
+                        path="issuers/:issuerId"
+                        element={wrapElement(<CredentialsPage />)}
+                    />
                     <Route path="credentials" element={<DocumentsPage />} />
-                    <Route path="faq" element={<HelpPage />} />
+                    <Route path="faq" element={<HelpPage withHome={true} />} />
                 </Route>
             </Routes>
         </BrowserRouter>

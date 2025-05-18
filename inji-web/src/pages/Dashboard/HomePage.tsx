@@ -15,7 +15,7 @@ export const HomePage: React.FC = () => {
     }, [userDisplayName]);
 
     return (
-        <div className="px-4 sm:px-6 md:px-10 lg:px-20 max-w-screen-xl mx-auto my-10">
+        <div className="px-4 sm:px-6 md:px-10 lg:px-20 max-w-screen-xl mx-auto my-12">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-medium text-[#04051D] text-center mb-10">
                 {`${t("Home.welcome")} ${convertStringIntoPascalCase(
                     displayName
