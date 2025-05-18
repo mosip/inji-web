@@ -16,7 +16,7 @@ import Login from "./pages/users/login/Login";
 import LoginSessionStatusChecker from "./pages/users/login/LoginSessionStatusChecker";
 import PinForm from "./pages/users/PinPage";
 import WalletCredentialsPage from "./pages/users/login/WalletCredentialsPage";
-import {DashboardLayout} from "./components/Dashboard/DashboardLayout";
+import {Layout} from "./components/Dashboard/Layout";
 import {HomePage as DashboardHomePage} from "./pages/Dashboard/HomePage";
 import {DocumentsPage} from "./pages/Dashboard/DocumentsPage";
 import { useUser } from "./hooks/useUser";
@@ -137,7 +137,7 @@ export const AppRouter = () => {
                     }
                 />
                 <Route path="/*" element={wrapElement(<PageNotFound />)} />
-                <Route path="/dashboard" element={<DashboardLayout />}>
+                <Route path="/dashboard" element={<Layout />}>
                     <Route path="home" element={<DashboardHomePage />} />
                     <Route
                         path="issuers/:issuerId"

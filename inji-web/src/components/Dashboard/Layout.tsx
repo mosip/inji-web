@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Sidebar} from "./Sidebar";
-import {DashboardHeader} from "./DashboardHeader";
+import {Header} from "./Header";
 import {Footer} from "../PageTemplate/Footer";
 import {useSelector} from "react-redux";
 import {RootState} from "../../types/redux";
@@ -9,7 +9,7 @@ import {Outlet} from "react-router-dom";
 import DashboardBgTop from "../../assets/Background.svg";
 import DashboardBgBottom from "../../assets/DashboardBgBottom.svg";
 
-export const DashboardLayout: React.FC = () => {
+export const Layout: React.FC = () => {
     const language = useSelector((state: RootState) => state.common.language);
     const headerRef = useRef<HTMLDivElement>(null);
     const footerRef = useRef<HTMLDivElement>(null);
@@ -30,7 +30,7 @@ export const DashboardLayout: React.FC = () => {
             className="h-screen flex flex-col bg-iw-background font-base overflow-hidden w-full relative"
             dir={getDirCurrentLanguage(language)}
         >
-            <DashboardHeader ref={headerRef} headerHeight={headerHeight} />
+            <Header ref={headerRef} headerHeight={headerHeight} />
 
             <div
                 className="flex flex-1 overflow-hidden w-full relative"

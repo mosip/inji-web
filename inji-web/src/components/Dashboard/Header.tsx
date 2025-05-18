@@ -14,7 +14,7 @@ import {useUser} from "../../hooks/useUser";
 import {DropdownItem} from "./types";
 import HamburgerMenu from "../../assets/HamburgerMenu.svg";
 
-export const DashboardHeader = forwardRef<HTMLDivElement, any>((props, ref) => {
+export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
     const navigate = useNavigate();
     const [displayName, setDisplayName] = useState<string | undefined>(
         undefined
@@ -245,4 +245,4 @@ export const DashboardHeader = forwardRef<HTMLDivElement, any>((props, ref) => {
     );
 });
 
-DashboardHeader.displayName = "DashboardHeader";
+Header.displayName = "DashboardHeader";
