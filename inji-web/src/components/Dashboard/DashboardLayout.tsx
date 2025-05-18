@@ -41,7 +41,7 @@ export const DashboardLayout: React.FC = () => {
                 }}
             >
                 <Sidebar />
-                <div className="relative h-screen flex flex-col overflow-hidden w-full">
+                <div className="relative flex flex-col overflow-hidden w-full">
                     <img
                         src={DashboardBgTop}
                         alt="Dashboard Top Bg Image"

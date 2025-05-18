@@ -108,11 +108,11 @@ export const Sidebar: React.FC = () => {
             }}
             className={`${
                 isCollapsed ? "w-24" : "w-64"
-            } py-4 bg-white h-full transition-all duration-300 shadow-iw-side-bar flex flex-col items-start relative`}
+            } py-6 bg-white h-full transition-all duration-300 shadow-iw-side-bar flex flex-col items-start relative`}
         >
             <button
                 onClick={toggleSidebar}
-                className="absolute top-6 right-[-20px] p-2 z-10"
+                className="absolute top-9 right-[-20px] p-2 z-10"
             >
                 <img
                     src={CollapseIcon}
