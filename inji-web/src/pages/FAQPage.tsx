@@ -55,7 +55,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
                         )}
                     </div>
                     <div
-                        data-testid="faq-accordion-container"
+                        data-testid="Faq-Accordion-Container"
                         className="w-full"
                     >
                         <FAQAccordion />

@@ -39,7 +39,7 @@ exports[`Testing the Layout of FaqPage Check if the layout is matching with the 
         </div>
         <div
           class="w-full"
-          data-testid="faq-accordion-container"
+          data-testid="Faq-Accordion-Container"
         >
           <div
             data-testid="Faq-Accordion-Container"
@@ -87,7 +87,7 @@ exports[`Testing the Layout of FaqPage Check if the layout is matching with the 
                 >
                   <div
                     class="border-t border-gray-200 py-5 sm:py-6 text-sm sm:text-base text-iw-title leading-relaxed"
-                    data-testid="faq-item-content-text"
+                    data-testid="Faq-Item-Content-Text"
                   >
                     <p
                       class="mb-3 last:mb-0"

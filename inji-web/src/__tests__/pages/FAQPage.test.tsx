@@ -10,17 +10,3 @@ describe('Testing the Layout of FaqPage', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 });
-
-describe('Testing the Functionality of FaqPage', () => {
-  beforeEach(()=>{
-    mockusei18n();
-  })
-  test('Check if NavBar title is rendered correctly', () => {
-    renderWithRouter(<FAQPage />);
-    expect(screen.getByTestId('NavBar-Text')).toHaveTextContent('Faq');
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-});

@@ -19,7 +19,7 @@ public class HelpPage extends BasePage {
     }
 
     public boolean isHelpPageFAQDescriptionTextDisplayed() {
-        return isElementIsVisible(driver, By.xpath("//*[@data-testid='faq-item-content-text']"));
+        return isElementIsVisible(driver, By.xpath("//*[@data-testid='Faq-Item-Content-Text']"));
     }
 
     public boolean isHelpPageFAQTitelTextDisplayed() {

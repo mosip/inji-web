@@ -48,7 +48,7 @@ exports[`Testing the layout of Faq Accordion Check if the layout is matching wit
         >
           <div
             class="border-t border-gray-200 py-5 sm:py-6 text-sm sm:text-base text-iw-title leading-relaxed"
-            data-testid="faq-item-content-text"
+            data-testid="Faq-Item-Content-Text"
           >
             <p
               class="mb-3 last:mb-0"

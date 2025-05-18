@@ -22,7 +22,7 @@ describe("Testing the Layout of Faq Accordion",() => {
                 setOpen={openHandler}
             />
         );
-        const faqElement = screen.getByTestId('faq-Item-Container');
+        const faqElement = screen.getByTestId('Faq-Item-Container');
         expect(faqElement.childElementCount).toBe(1);
     });
     test('Check if current Faq item is open, it should show description', () => {
