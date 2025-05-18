@@ -25,7 +25,7 @@ module.exports = {
                     tertiary: 'var(--iw-color-tertiary)',
                     lightPrimary: 'var(--iw-color-lightPrimary)',
                     lightSecondary: 'var(--iw-color-lightSecondary)',
-                    helpAccordionHover: 'var(--iw-color-helpAccordionHover)',
+                    faqAccordionHover: 'var(--iw-color-faqAccordionHover)',
                     shadow: 'var(--iw-color-shadow)',
                     selectedShadow: 'var(--iw-color-selected-shadow)',
                     spinningLoaderPrimary:

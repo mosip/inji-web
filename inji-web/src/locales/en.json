@@ -2,7 +2,7 @@
   "PageTemplate": {
     "Header": {
       "home": "Home",
-      "help": "Help",
+      "faq": "FAQ",
       "login": "Login",
       "logout": "Logout"
     },
@@ -160,14 +160,14 @@
     "heading": "That's an error",
     "subHeading": "The requested URL {{pathname}} was not found on this server."
   },
-  "HelpPage": {
-    "title": "Help"
+  "FAQPage": {
+    "title": "FAQ"
   },
-  "HelpDropdown": {
-    "heading": "Help",
+  "FAQDropdown": {
+    "heading": "FAQ",
     "item1": "FAQs"
   },
-  "Help": {
+  "FAQ": {
     "item1": {
       "title": "Who are issuers?",
       "description1": "Issuers are either governmental bodies or entities trusted by the government, responsible for providing verifiable credentials in PDF format to residents upon request."

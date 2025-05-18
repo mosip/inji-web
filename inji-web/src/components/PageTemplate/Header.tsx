@@ -2,7 +2,7 @@ import React, {forwardRef, useEffect, useState} from 'react';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { LanguageSelector } from "../Common/LanguageSelector";
-import { HelpDropdown } from "../Common/HelpDropdown";
+import { FAQDropdown } from "../Faq/FAQDropdown";
 import { GiHamburgerMenu } from "react-icons/gi";
 import OutsideClickHandler from 'react-outside-click-handler';
 import { RootState } from "../../types/redux";
@@ -127,12 +127,12 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
                                 {t("Header.home")}
                             </div>
                         </li>
-                        <li data-testid="Header-Menu-Help">
+                        <li data-testid="Header-Menu-Faq">
                             <div
-                                className={" hidden sm:block font-semibold"}
-                                data-testid="Header-Menu-Help-div"
+                                className={'hidden sm:block font-semibold'}
+                                data-testid="Header-Menu-Faq-div"
                             >
-                                <HelpDropdown />
+                                <FAQDropdown />
                             </div>
                         </li>
                         <li data-testid="Header-Menu-Auth">
@@ -186,20 +186,20 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
                         onBlur={() => setIsOpen(false)}
                     >
                         <div
-                            data-testid="Header-Menu-Help"
+                            data-testid="Header-Menu-Faq"
                             role="button"
                             tabIndex={0}
                             onKeyUp={() => {
-                                navigate("/help");
+                                navigate('/faq');
                                 setIsOpen(false);
                             }}
                             onMouseDown={() => {
-                                navigate("/help");
+                                navigate('/faq');
                                 setIsOpen(false);
                             }}
                             className="text-iw-title cursor-pointer py-5 w-full inline-block"
                         >
-                            {t("Header.help")}
+                            {t('Header.faq')}
                         </div>
                     </div>
                 </OutsideClickHandler>

@@ -1,10 +1,8 @@
 fileignoreconfig:
 - filename: inji-web/src/components/Common/ItemBox.tsx
-  checksum: 7d10caab5f94bbac7c430a8ca2800c503fff99bd4e0e6c856a140bd83907d137
-- filename: inji-web/src/components/Help/HelpAccordionItem.tsx
-  checksum: 7ef35d440ca186530b761db064cde7c47dbdba4023681bd2b7abb7c0926ad4e1
+  checksum: 2a7e352e5f86da0881c1cf73a12fe9cd36307ee6f4a543ee883df0440bc4fa1b
 - filename: inji-web/src/components/PageTemplate/Header.tsx
-  checksum: df001d17335c68fb4e3703e0622baf454dbcce4bd1869f67502c399ef876ea1f
+  checksum: 465f92922047b25a8350e61c4fedbea9c5f87411ed6867a4555117db6e41095b
 - filename: inji-web/src/components/Common/LanguageSelector.tsx
   checksum: 66f81412745594459c006fb681e28091a5287b30c37dd8afd8491ef2a209ea41
 - filename: inji-web/public/env.config.js
@@ -29,4 +27,8 @@ fileignoreconfig:
   checksum: 6b70370a26d1556adeca568ab8269202a660af8bb7d095e7121314935e8bff18
 - filename: inji-web/src/test-utils/mockUtils.tsx
   checksum: 9a3c5c6c81c6ff5cec1203004dde8a04c72425b13ca6eaec2fd15a50baf7fa02
+- filename: inji-web/src/components/Dashboard/DashboardHeader.tsx
+  checksum: 51ddf3d80bcb077ac4da04ba1261aabfd11ba8b36ca57c4cba751a00e239d16b
+- filename: inji-web/src/components/Faq/FAQAccordionItem.tsx
+  checksum: 7370bbddebbdb831b72133faaeaa64bcfad4439e629fcec1342f1acb216a292c
 version: ""

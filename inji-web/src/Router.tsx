@@ -3,7 +3,7 @@ import React, {useEffect,useRef, useState} from "react";
 import {IssuersPage} from "./pages/IssuersPage";
 import {Header} from "./components/PageTemplate/Header";
 import {Footer} from "./components/PageTemplate/Footer";
-import {HelpPage} from "./pages/HelpPage";
+import {FAQPage} from "./pages/FAQPage";
 import {CredentialsPage} from "./pages/CredentialsPage";
 import {RedirectionPage} from "./pages/RedirectionPage";
 import {useSelector} from "react-redux";
@@ -115,8 +115,8 @@ export const AppRouter = () => {
                     element={wrapElement(<CredentialsPage />)}
                 />
                 <Route
-                    path="/help"
-                    element={wrapElement(<HelpPage backUrl="/" />)}
+                    path="/faq"
+                    element={wrapElement(<FAQPage backUrl="/" />)}
                 />
                 <Route
                     path="/redirect"
@@ -144,7 +144,7 @@ export const AppRouter = () => {
                         element={wrapElement(<CredentialsPage />)}
                     />
                     <Route path="credentials" element={<DocumentsPage />} />
-                    <Route path="faq" element={<HelpPage withHome={true} />} />
+                    <Route path="faq" element={<FAQPage withHome={true} />} />
                 </Route>
             </Routes>
         </BrowserRouter>

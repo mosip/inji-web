@@ -55,19 +55,19 @@ describe("Testing Header Container Functionality", () => {
     });
 
     // Uncomment and fix these tests if needed
-    // test('check the presence of the help', () => {
+    // test('check the presence of the Faq', () => {
     //     render(wrapUnderRouter(<Header />));
-    //     const headerElementLi = screen.getByTestId("Header-Menu-Help");
+    //     const headerElementLi = screen.getByTestId("Header-Menu-Faq");
     //     expect(headerElementLi).toBeInTheDocument();
-    //     expect(headerElementLi).toHaveTextContent("Header.help");
-    //     const headerElementDiv = screen.getByTestId("Header-Menu-Help-div");
+    //     expect(headerElementLi).toHaveTextContent("Header.faq");
+    //     const headerElementDiv = screen.getByTestId("Header-Menu-Faq-div");
     //     expect(headerElementDiv).toBeInTheDocument();
 
     //     jest.spyOn(require('react-router-dom'), 'useNavigate').mockReturnValue(mockUseNavigate);
     //     fireEvent.click(headerElementDiv);
 
     //     expect(mockedUsedNavigate).toHaveBeenCalled();
-    //     expect(mockedUsedNavigate).toHaveBeenCalledWith("/help");
+    //     expect(mockedUsedNavigate).toHaveBeenCalledWith("/faq");
     // });
 
     // test('check the presence of the About Inji', () => {
@@ -75,7 +75,7 @@ describe("Testing Header Container Functionality", () => {
     //     const headerElementLi = screen.getByTestId("Header-Menu-AboutInji");
     //     expect(headerElementLi).toBeInTheDocument();
     //     expect(headerElementLi).toHaveTextContent("Header.aboutInji");
-    //     const headerElementDiv = screen.getByTestId("Header-Menu-Help-div");
+    //     const headerElementDiv = screen.getByTestId("Header-Menu-Faq-div");
     //     expect(headerElementDiv).toBeInTheDocument();
 
     //     jest.spyOn(require('react-router-dom'), 'useNavigate').mockReturnValue(mockUseNavigate);
@@ -88,7 +88,7 @@ describe("Testing Header Container Functionality", () => {
     //     renderWithProvider((<Header />));
     //     const headerElementLi = screen.getByTestId("Header-Menu-LanguageSelector");
     //     expect(headerElementLi).toBeInTheDocument();
-    //     const headerElementDiv = screen.getByTestId("Header-Menu-Help-div");
+    //     const headerElementDiv = screen.getByTestId("Header-Menu-Faq-div");
     //     expect(headerElementDiv).toBeInTheDocument();
 
     //     jest.spyOn(require('react-router-dom'), 'useNavigate').mockReturnValue(mockUseNavigate);

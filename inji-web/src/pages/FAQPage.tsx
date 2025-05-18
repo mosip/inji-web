@@ -1,11 +1,10 @@
 import React from "react";
-import {HelpAccordion} from "../components/Help/HelpAccordion";
-import {NavBar} from "../components/Common/NavBar";
+import {FAQAccordion} from "../components/Faq/FAQAccordion";
 import {useTranslation} from "react-i18next";
 import {useLocation, useNavigate} from "react-router-dom";
 
-export const HelpPage: React.FC<HelpPageProps> = ({backUrl, withHome}) => {
-    const {t} = useTranslation(["HelpPage", "Dashboard"]);
+export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
+    const {t} = useTranslation(["FAQPage", "Dashboard"]);
     const navigate = useNavigate();
     const location = useLocation();
     const previousPagePath = location.state?.from;
@@ -56,10 +55,10 @@ export const HelpPage: React.FC<HelpPageProps> = ({backUrl, withHome}) => {
                         )}
                     </div>
                     <div
-                        data-testid="Help-Accordion-Container"
+                        data-testid="faq-accordion-container"
                         className="w-full"
                     >
-                        <HelpAccordion />
+                        <FAQAccordion />
                     </div>
                 </div>
             </div>
@@ -67,7 +66,7 @@ export const HelpPage: React.FC<HelpPageProps> = ({backUrl, withHome}) => {
     );
 };
 
-type HelpPageProps = {
+type FAQPageProps = {
     backUrl?: string;
     withHome?: boolean;
 };

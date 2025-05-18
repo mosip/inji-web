@@ -19,7 +19,7 @@ public class HelpPage extends BasePage {
     }
 
     public boolean isHelpPageFAQDescriptionTextDisplayed() {
-        return isElementIsVisible(driver, By.xpath("//*[@data-testid='Help-Item-Content-Text']"));
+        return isElementIsVisible(driver, By.xpath("//*[@data-testid='faq-item-content-text']"));
     }
 
     public boolean isHelpPageFAQTitelTextDisplayed() {
@@ -41,7 +41,7 @@ public class HelpPage extends BasePage {
     }
 
     public void ClickOnDownArrow() {
-        clickOnElement(driver, By.xpath("//*[@data-testid='Help-Item-DownArrow']"));
+        clickOnElement(driver, By.xpath("//*[@data-testid='Faq-Item-DownArrow']"));
     }
 
 

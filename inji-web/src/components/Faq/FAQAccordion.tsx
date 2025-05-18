@@ -1,14 +1,12 @@
 import React, {useState} from "react";
-import {HelpAccordionItem} from "./HelpAccordionItem";
-import { HelpAccordionItemProps } from "../../types/components";
+import {FAQAccordionItem} from "./FAQAccordionItem";
 import {useTranslation} from "react-i18next";
-import { title } from "process";
 import { constructContent } from "../../utils/builder";
 
-export const HelpAccordion: React.FC = () =>{
+export const FAQAccordion: React.FC = () =>{
     
     const [open, setOpen] = useState(0);
-    const {t} = useTranslation("Help");
+    const {t} = useTranslation("FAQ");
 
     const accordionItems = [
         {
@@ -107,9 +105,9 @@ export const HelpAccordion: React.FC = () =>{
 
     return (
         <React.Fragment>
-            <div data-testid="Help-Accordion-Container">
+            <div data-testid="Faq-Accordion-Container">
                 {accordionItems.map((item, index) => (
-                    <HelpAccordionItem
+                    <FAQAccordionItem
                         id={index}
                         key={index}
                         title={item.title}
