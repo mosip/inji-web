@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { EmptyDocuments } from "../../components/Dashboard/EmptyDocuments";
+import { EmptyDocument } from "../../components/Dashboard/EmptyDocument";
 import { api } from "../../utils/api";
 import { toast } from "react-toastify";
 import backgroundImage from "../../assets/Background.svg";
@@ -87,7 +87,7 @@ export const DocumentsPage: React.FC = () => {
   }
 
   if (!credentials || credentials.length === 0) {
-    return <EmptyDocuments />;
+    return <EmptyDocument />;
   }
 
   return (
