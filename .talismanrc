@@ -30,5 +30,5 @@ fileignoreconfig:
 - filename: inji-web/src/components/Dashboard/DashboardHeader.tsx
   checksum: 51ddf3d80bcb077ac4da04ba1261aabfd11ba8b36ca57c4cba751a00e239d16b
 - filename: inji-web/src/components/Faq/FAQAccordionItem.tsx
-  checksum: 7370bbddebbdb831b72133faaeaa64bcfad4439e629fcec1342f1acb216a292c
+  checksum: 8351daf96cf7850bda477ad9828a76640742c4d9c0918c1270966980ee191e7a
 version: ""

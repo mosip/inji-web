@@ -11,7 +11,7 @@ describe("Testing the layout of Faq Accordion",() => {
     test('Check if renders the correct number of Faq item containers', () => {
         renderWithProvider(<FAQAccordion />);
         const faqItemElement = screen.getAllByTestId(
-            'Faq-Accordion-Container'
+            'Faq-Item-Container'
         );
         expect(faqItemElement.length).toBe(23)
     });
@@ -30,7 +30,7 @@ describe("Testing the layout of Faq Accordion",() => {
 describe("Testing the Functionality of Faq Accordion",() => {
     test('Check whether Description should open when we press on the title', () => {
         renderWithProvider(<FAQAccordion />);
-        const faqItemElement = screen.getAllByTestId("Faq-Accordion-Container")[1];
+        const faqItemElement = screen.getAllByTestId("Faq-Item-Container")[1];
         const button = screen.getAllByTestId("Faq-Item-Title-Button")[1];
         expect(faqItemElement.childElementCount).toBe(1)
         fireEvent.click(button);
@@ -39,7 +39,7 @@ describe("Testing the Functionality of Faq Accordion",() => {
 
     test('Check only one description should be open at a time, rest should close', () => {
         renderWithProvider(<FAQAccordion />);
-        const faqItemElement = screen.getAllByTestId("Faq-Accordion-Container")[1];
+        const faqItemElement = screen.getAllByTestId("Faq-Item-Container")[1];
         const button = screen.getAllByTestId("Faq-Item-Title-Button")[1];
         expect(faqItemElement.childElementCount).toBe(1)
         fireEvent.click(button);

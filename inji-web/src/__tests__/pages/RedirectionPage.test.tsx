@@ -3,7 +3,7 @@ import { RedirectionPage } from '../../pages/RedirectionPage';
 import { getActiveSession} from '../../utils/sessions';
 import { downloadCredentialPDF, getErrorObject } from '../../utils/misc';
 import { renderWithRouter,mockusei18n,mockUseFetch} from '../../test-utils/mockUtils';
-
+import {useCookies} from 'react-cookie';
 
 //todo : extract the local method to mockUtils, which is added to bypass the routing problems
 // Mock the utility functions
@@ -16,11 +16,23 @@ jest.mock('../../utils/misc', () => ({
   getErrorObject: jest.fn(),
   getTokenRequestBody: jest.fn(),
 }));
+
+jest.mock('react-cookie', () => {
+    return {
+        ...jest.requireActual('react-cookie'),
+        useCookies: jest.fn().mockReturnValue([{}, jest.fn()])
+    };
+});
+
 const mockUseFetchhook = jest.fn();
 describe('Testing the Layout of RedirectionPage', () => {
   mockusei18n();
   mockUseFetch();
   test('Check if the layout is matching with the snapshots', () => {
+    (useCookies as jest.Mock).mockReturnValue([
+        {'XSRF-TOKEN': 'test-xsrf-token'},
+        jest.fn()
+    ]);
     mockUseFetchhook.mockReturnValue({ state: 'DONE', fetchRequest: jest.fn() });
     (getActiveSession as jest.Mock).mockReturnValue({ selectedIssuer: { issuer_id: 'issuer1', display: [{ name: 'Test Issuer' }] } });
     const { asFragment } = renderWithRouter(<RedirectionPage />);
@@ -34,6 +46,10 @@ describe('Testing the Functionality of RedirectionPage', () => {
     mockUseFetch();
     jest.clearAllMocks();
     (getActiveSession as jest.Mock).mockReturnValue({ selectedIssuer: { issuer_id: 'issuer1', display: [{ name: 'Test Issuer' }] } });
+    (useCookies as jest.Mock).mockReturnValue([
+        {'XSRF-TOKEN': 'test-xsrf-token'},
+        jest.fn()
+    ]);
   });
 
   test('Check if NavBar component is rendered', () => {
