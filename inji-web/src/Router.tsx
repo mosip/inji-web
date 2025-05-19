@@ -18,7 +18,7 @@ import PinForm from './pages/users/PinPage';
 import WalletCredentialsPage from './pages/users/login/WalletCredentialsPage';
 import {Layout} from './components/Dashboard/Layout';
 import {HomePage as DashboardHomePage} from './pages/Dashboard/HomePage';
-import {DocumentsPage} from './pages/Dashboard/DocumentsPage';
+import {StoredDocumentsPage} from './pages/Dashboard/StoredDocumentsPage';
 import {useUser} from './hooks/useUser';
 import {CredentialTypesPage} from './pages/Dashboard/CredentialTypesPage';
 
@@ -133,7 +133,7 @@ export const AppRouter = () => {
                     path="/view/wallet/credentials"
                     element={
                         isLoggedIn
-                            ? wrapElement(<DocumentsPage />, false)
+                            ? wrapElement(<StoredDocumentsPage />, false)
                             : wrapElement(<WalletCredentialsPage />, false)
                     }
                 />
@@ -144,7 +144,7 @@ export const AppRouter = () => {
                         path="issuers/:issuerId"
                         element={<CredentialTypesPage backUrl='/dashboard/home' />}
                     />
-                    <Route path="credentials" element={<DocumentsPage />} />
+                    <Route path="credentials" element={<StoredDocumentsPage />} />
                     <Route path="faq" element={<FAQPage withHome={true} />} />
                 </Route>
             </Routes>
