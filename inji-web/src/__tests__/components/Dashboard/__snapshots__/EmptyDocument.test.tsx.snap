@@ -92,7 +92,7 @@ exports[`Testing the Layout and Functionalities of EmptyDocument component check
       >
         <button
           class="bg-gradient-to-r from-[#FF5300] via-[#C5363C] to-[#5B03AD] text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-sm transition-shadow"
-          data-testid="'Blank-Document-Add-Credential"
+          data-testid="Blank-Document-Add-Credential"
         >
           StoredCredentials.header.addCredential
         </button>
