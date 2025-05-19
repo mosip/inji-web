@@ -1,13 +1,13 @@
-import React, {useEffect, useRef, useState} from "react";
-import {Sidebar} from "./Sidebar";
-import {Header} from "./Header";
-import {Footer} from "../PageTemplate/Footer";
-import {useSelector} from "react-redux";
-import {RootState} from "../../types/redux";
-import {getDirCurrentLanguage} from "../../utils/i18n";
-import {Outlet} from "react-router-dom";
-import DashboardBgTop from "../../assets/Background.svg";
-import DashboardBgBottom from "../../assets/DashboardBgBottom.svg";
+import React, {useEffect, useRef, useState} from 'react';
+import {Sidebar} from './Sidebar';
+import {Header} from './Header';
+import {Footer} from '../PageTemplate/Footer';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../types/redux';
+import {getDirCurrentLanguage} from '../../utils/i18n';
+import {Outlet} from 'react-router-dom';
+import DashboardBgTop from '../../assets/Background.svg';
+import DashboardBgBottom from '../../assets/DashboardBgBottom.svg';
 
 export const Layout: React.FC = () => {
     const language = useSelector((state: RootState) => state.common.language);
@@ -41,7 +41,10 @@ export const Layout: React.FC = () => {
                 }}
             >
                 <Sidebar />
-                <div className="relative flex flex-col overflow-hidden w-full">
+                <div
+                    className={'relative flex flex-col overflow-hidden w-full transition-all duration-300'}
+                    style={{zIndex: 1}}
+                >
                     <img
                         src={DashboardBgTop}
                         alt="Dashboard Top Bg Image"

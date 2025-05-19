@@ -12,7 +12,7 @@ export const EmptyDocument: React.FC = () => {
                 <div className="flex items-start">
                     <div className="flex items-start">
                         <svg
-                            data-testid="Back-Arrow-Icon"
+                            data-testid={'Back-Arrow-Icon'}
                             width="29"
                             height="29"
                             viewBox="0 0 24 18"
@@ -55,11 +55,11 @@ export const EmptyDocument: React.FC = () => {
             </div>
 
             <div
-                data-testid="Blank-Document"
+                data-testid={'Blank-Document'}
                 className="bg-white rounded-lg shadow-iw-emptyDocuments p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center min-h-[500px] my-4 sm:my-8 md:my-16"
             >
                 <svg
-                    data-testid="Document-Icon"
+                    data-testid={'Document-Icon'}
                     width="88"
                     height="88"
                     viewBox="0 0 68 88"
@@ -73,13 +73,13 @@ export const EmptyDocument: React.FC = () => {
                     />
                 </svg>
                 <h2
-                    data-testid="No-Credentials-Title"
+                    data-testid={'No-Credentials-Title'}
                     className="text-xl text-center sm:text-2xl font-medium text-gray-800 mb-2"
                 >
                     {t('StoredCredentials.emptyScreen.title')}
                 </h2>
                 <p
-                    data-testid="No-Credentials-Subtitle"
+                    data-testid={'No-Credentials-Subtitle'}
                     className="text-gray-500 text-center max-w-md font-small"
                 >
                     Lorem ipsum dolor sit amet consectetur. Ut nis facilisi
@@ -87,7 +87,7 @@ export const EmptyDocument: React.FC = () => {
                 </p>
                 <div className="block sm:hidden mt-6">
                     <button
-                        data-testid="'Blank-Document-Add-Credential"
+                        data-testid={'Blank-Document-Add-Credential'}
                         onClick={() => navigate('/dashboard/home')}
                         className="bg-gradient-to-r from-[#FF5300] via-[#C5363C] to-[#5B03AD] text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-sm transition-shadow"
                     >

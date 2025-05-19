@@ -1,8 +1,8 @@
-import React, {useState} from "react";
-import {useNavigate, useLocation} from "react-router-dom";
-import {useTranslation} from "react-i18next";
-import CollapseIcon from "../../assets/CollapseIcon.svg";
-import { SidebarItemProps } from "./types";
+import React, {useState} from 'react';
+import {useNavigate, useLocation} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
+import CollapseIcon from '../../assets/CollapseIcon.svg';
+import {SidebarItemProps} from './types';
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
     icon,
@@ -19,7 +19,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
             onClick={() => navigate(path)}
         >
             <div
-                className={`flex items-center justify-center p-2 rounded-lg mx-6 shadow-[0_-0.5px_4px_-1px_rgba(0,0,0,0.078),_0_4px_4px_-1px_rgba(0,0,0,0.078)]`}
+                className={`${isCollapsed ? "hidden sm:block": "block"} flex items-center justify-center p-2 rounded-lg mx-6 shadow-[0_-0.5px_4px_-1px_rgba(0,0,0,0.078),_0_4px_4px_-1px_rgba(0,0,0,0.078)]`}
             >
                 {icon}
             </div>
@@ -31,7 +31,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
             {!isCollapsed && (
                 <span
                     className={`font-medium text-md ${
-                        isActive ? "text-[#2B011C]" : "text-[#6F6F6F]"
+                        isActive ? 'text-[#2B011C]' : 'text-[#6F6F6F]'
                     } flex-1 truncate`}
                 >
                     {text}
@@ -42,7 +42,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 };
 
 export const Sidebar: React.FC = () => {
-    const {t} = useTranslation("Dashboard");
+    const {t} = useTranslation('Dashboard');
     const location = useLocation();
     const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -51,7 +51,7 @@ export const Sidebar: React.FC = () => {
     };
 
     const getIconColor = (path: string) => {
-        return location.pathname === path ? "#2B011C" : "#6F6F6F";
+        return location.pathname === path ? '#2B011C' : '#6F6F6F';
     };
 
     const sidebarItems = [
@@ -65,15 +65,15 @@ export const Sidebar: React.FC = () => {
                 >
                     <path
                         d="M3 12L5 10M5 10L12 3L19 10M5 10V20C5 20.5523 5.44772 21 6 21H9M19 10L21 12M19 10V20C19 20.5523 18.5523 21 18 21H15M9 21C9.55228 21 10 20.5523 10 20V16C10 15.4477 10.4477 15 11 15H13C13.5523 15 14 15.4477 14 16V20C14 20.5523 14.4477 21 15 21M9 21H15"
-                        stroke={getIconColor("/dashboard/home")}
+                        stroke={getIconColor('/dashboard/home')}
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                     />
                 </svg>
             ),
-            text: t("Home.title"),
-            path: "/dashboard/home"
+            text: t('Home.title'),
+            path: '/dashboard/home'
         },
         {
             icon: (
@@ -85,55 +85,54 @@ export const Sidebar: React.FC = () => {
                 >
                     <path
                         d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z"
-                        stroke={getIconColor("/dashboard/credentials")}
+                        stroke={getIconColor('/dashboard/credentials')}
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                     />
                 </svg>
             ),
-            text: t("StoredCredentials.title"),
-            path: "/dashboard/credentials"
+            text: t('StoredCredentials.title'),
+            path: '/dashboard/credentials'
         }
     ];
 
     return (
         <div
-            style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "flex-start",
-                justifyContent: "flex-start",
-                alignContent: "flex-start"
-            }}
-            className={`${
-                isCollapsed ? "w-24" : "w-64"
-            } py-6 bg-white h-full transition-all duration-300 shadow-iw-sidebar flex flex-col items-start relative`}
+            className={`bg-white h-full transition-all duration-300 shadow-iw-sidebar flex flex-col items-start absolute top-0 left-0 z-30 sm:relative sm:w-64 ${
+                isCollapsed ? 'w-5 sm:w-[96px]' : 'w-64'
+            }`}
         >
             <button
                 onClick={toggleSidebar}
-                className="absolute top-9 right-[-20px] p-2 z-10"
+                className="absolute top-1/4 sm:top-9 right-[-20px] p-2 z-40"
             >
                 <img
                     src={CollapseIcon}
                     alt="Collapse"
                     className={`transform ${
-                        isCollapsed && "rotate-180"
-                    } transition-transform duration-300`}
+                        isCollapsed && 'rotate-180'
+                    } transition-transform duration-300 min-w-[26px] min-h-[26px]`}
                 />
             </button>
 
-            <div className="flex flex-col space-y-2 mt-2 w-full pr-4">
-                {sidebarItems.map((item, index) => (
-                    <SidebarItem
-                        key={index}
-                        icon={item.icon}
-                        text={item.text}
-                        path={item.path}
-                        isActive={location.pathname === item.path}
-                        isCollapsed={isCollapsed}
-                    />
-                ))}
+            <div
+                className="flex flex-col space-y-2 mt-6 sm:mt-7 w-full pr-4"
+            >
+                {(!isCollapsed || window.innerWidth >= 640) && (
+                    <>
+                        {sidebarItems.map((item, index) => (
+                            <SidebarItem
+                                key={index}
+                                icon={item.icon}
+                                text={item.text}
+                                path={item.path}
+                                isActive={location.pathname === item.path}
+                                isCollapsed={isCollapsed}
+                            />
+                        ))}
+                    </>
+                )}
             </div>
         </div>
     );
