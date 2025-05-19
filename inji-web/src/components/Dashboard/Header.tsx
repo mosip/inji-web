@@ -127,6 +127,7 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
                         src={user.profilePictureUrl}
                         alt="Profile Pic"
                         className="w-full h-full object-cover rounded-full"
+                        referrerPolicy="no-referrer"
                     />
                 ) : (
                     getProfileInitials(displayName)
@@ -176,12 +177,12 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
                         className="hidden sm:block relative"
                         ref={dropdownRef}
                     >
-                        <div
-                            className="flex items-center space-x-2 cursor-pointer"
-                            onClick={toggleProfileDropdown}
-                        >
+                        <div className="flex items-center space-x-2">
                             {getUserProfileIconWithName()}
-                            <div className="relative inline-block">
+                            <div
+                                className="relative inline-block cursor-pointer"
+                                onClick={toggleProfileDropdown}
+                            >
                                 {isProfileDropdownOpen ? (
                                     <GradientWrapper>
                                         <RiArrowUpSFill

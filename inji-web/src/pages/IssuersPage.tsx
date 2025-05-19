@@ -52,5 +52,5 @@ export const IssuersPage: React.FC<IssuerPageProps> = ({className}) => {
 };
 
 type IssuerPageProps = {
-    className?: string
+    className?: string;
 };
