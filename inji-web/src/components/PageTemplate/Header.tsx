@@ -136,9 +136,8 @@ export const Header: React.FC = () => {
                               testId="Header-Menu-FAQ"
                               title={t("Header.faq")}
                               disableGradient={true}
-                        >                              
-                        </PlainButton>
-                            <LanguageSelector data-testid="Header-Menu-LanguageSelector"/>
+                        />                              
+                        <LanguageSelector data-testid="Header-Menu-LanguageSelector"/>
                     </div>
                 </div>
                 {isOpen && (
