@@ -12,7 +12,7 @@ export enum MethodType {
 }
 
 export class api {
-    static mimotoHost = window._env_.MIMOTO_HOST;
+    static mimotoHost = window._env_.MIMOTO_URL;
 
     static authorizationRedirectionUrl = window.location.origin + "/redirect";
 

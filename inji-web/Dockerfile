@@ -10,14 +10,14 @@ ARG defaultTheme
 ARG defaultLang
 ARG defaultFavicon
 ARG defaultTitle
-ARG MIMOTO_HOST
+ARG MIMOTO_URL
 
 # Set environment variables
 ENV DEFAULT_THEME=$defaultTheme
 ENV DEFAULT_LANG=$defaultLang
 ENV DEFAULT_FAVICON=$defaultFavicon
 ENV DEFAULT_TITLE=$defaultTitle
-ENV MIMOTO_HOST=$MIMOTO_HOST
+ENV MIMOTO_URL=$MIMOTO_URL
 
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
@@ -68,7 +68,7 @@ COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 # Create the environment variables file in the new work directory
 RUN echo "DEFAULT_THEME=${DEFAULT_THEME}" >> ${work_dir}/env.env \
     && echo "DEFAULT_LANG=${DEFAULT_LANG}" >> ${work_dir}/env.env \
-    && echo "MIMOTO_HOST=${MIMOTO_HOST}" >> ${work_dir}/env.env \
+    && echo "MIMOTO_URL=${MIMOTO_URL}" >> ${work_dir}/env.env \
     && echo "DEFAULT_FAVICON=${DEFAULT_FAVICON}" >> ${work_dir}/env.env \
     && echo "DEFAULT_TITLE=${DEFAULT_TITLE}" >> ${work_dir}/env.env
 
