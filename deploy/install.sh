@@ -72,7 +72,7 @@ INJI_HOST=$(kubectl get cm inji-stack-config -o jsonpath={.data.injiweb-host})
 echo "Installing INJIWEB"
 helm -n $NS install injiweb mosip/injiweb \
   -f values.yaml \
-  --set inji_web.configmaps.injiweb-ui.MIMOTO_HOST=https://$INJIWEB_HOST/v1/mimoto \
+  --set inji_web.configmaps.injiweb-ui.MIMOTO_URL=https://$INJIWEB_HOST/v1/mimoto \
   --set istio.hosts[0]=$INJIWEB_HOST \
   --version $CHART_VERSION
 
