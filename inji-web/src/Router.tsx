@@ -58,8 +58,6 @@ export const AppRouter = () => {
                     path="/authorize"
                     element={wrapElement(<AuthorizationPage />)}
                 />
-                {/* Login Modal is part of homepage only, so a separate route is not required. */}
-                {/* <Route path="/login" element={wrapElement(<Login />)} /> */}
                 <Route path="/pin" element={wrapElement(<PinForm/>)}/>
                 <Route path="/view/wallet/credentials" element={wrapElement(<WalletCredentialsPage/>)}/>
                 <Route path="/*" element={wrapElement(<PageNotFound />)} />

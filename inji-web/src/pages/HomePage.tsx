@@ -12,19 +12,11 @@ export const HomePage: React.FC = () => {
     const {t} = useTranslation("HomePage");
     const [toastVisible, setToastVisible] = useState(false);
     const location = useLocation();
-    const [isModalVisible, setModalVisible] = useState(false);
-
-    // Not Displaying Name after login for now
-    // const [displayName, setDisplayName] = useState<string | null>(null);
-
-    // useEffect(() => {
-    //     setDisplayName(localStorage.getItem("displayName"));
-    // }, [localStorage.getItem("displayName")]);
-
+    const [isLoginFailed, setLoginFailed] = useState(false);
 
     // to stop scrolling the blurred background when login failed modal is showing up, scrolling is locked.
     useEffect(() => {
-        if (isModalVisible) {
+        if (isLoginFailed) {
             document.body.classList.add('no-scroll');
         } else {
             document.body.classList.remove('no-scroll');
@@ -33,13 +25,13 @@ export const HomePage: React.FC = () => {
         return () => {
             document.body.classList.remove('no-scroll');
         };
-    }, [isModalVisible]);
+    }, [isLoginFailed]);
 
     // If google login is failing,show login failed modal 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         if (params.get('loginFailed') === 'true') {
-          setModalVisible(true);
+          setLoginFailed(true);
         }
       }, [location]);
 
@@ -55,13 +47,12 @@ export const HomePage: React.FC = () => {
     return (
         <div>
         <div className={"pb-20 flex flex-col gap-y-4 "}>
-        {/* {displayName && <div className="greeting">Hi {displayName}</div>} */}
             <HomeBanner />
             <HomeFeatures />
             <HomeQuickTip onClick={() => showToast(t("QuickTip.toastText"))} />
         </div>
 
-        {isModalVisible && <LoginFailedModal/>}
+        {isLoginFailed && <LoginFailedModal/>}
     </div>
     
     );

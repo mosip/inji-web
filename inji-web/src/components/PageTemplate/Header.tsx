@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { isRTL } from "../../utils/i18n";
 import { api } from "../../utils/api";
 import { useCookies } from 'react-cookie';
-
+import { PlainButton } from "../Common/Buttons/PlainButton";
 
 export const Header: React.FC = () => {
     const language = useSelector((state: RootState) => state.common.language);
@@ -92,7 +92,10 @@ export const Header: React.FC = () => {
                         <div
                             role={"button"}
                             tabIndex={0}
-                            onMouseDown={() => navigate("/")}
+                            onMouseDown={
+                                !isLoggedIn?
+                                () => navigate("/"):()=>navigate("/issuers")
+                            }
                             onKeyUp={() => navigate("/")}
                         >
                             <img
@@ -127,20 +130,15 @@ export const Header: React.FC = () => {
                             )} */}
                     
                     <div className="flex flex-row space-x-4" data-testid="Header-FAQ-LanguageSelector-Container">
-                        <button 
-                              className="font-semibold hidden sm:block" 
+                        <PlainButton
+                              fullWidth={true}
                               onClick={()=>navigate('/help')}
-                              data-testid="Header-Menu-FAQ"
-                        >
-                            {t("Header.faq")}
-                        </button>
-                        
-                        <div
-                            className={"flex font-semibold"}
-                            data-testid="Header-Menu-LanguageSelector"
-                        >
-                            <LanguageSelector />
-                        </div>
+                              testId="Header-Menu-FAQ"
+                              title={t("Header.faq")}
+                              disableGradient={true}
+                        >                              
+                        </PlainButton>
+                            <LanguageSelector data-testid="Header-Menu-LanguageSelector"/>
                     </div>
                 </div>
                 {isOpen && (

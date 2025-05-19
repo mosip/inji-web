@@ -21,7 +21,6 @@ const fetchUserProfile = async () => {
 
         // Store walletId for authentication verification
         if (!!responseData.wallet_id) {
-            // localStorage.setItem("walletId", JSON.stringify(responseData.walletId));
             localStorage.setItem("walletId", responseData.wallet_id);
         } else {
             localStorage.removeItem("walletId"); // Ensure proper validation

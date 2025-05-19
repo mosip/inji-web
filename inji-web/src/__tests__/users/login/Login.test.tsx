@@ -8,12 +8,12 @@ import { useTranslation } from "react-i18next";
 jest.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key: string) => ({
-      "Login.login-title": "Log In",
-      "Login.login-description": "Log in with your account or continue as a guest to access your credentials.",
-      "Login.login-note": "Some features may be limited in guest mode.",
-      "Login.logging-in": "Logging in",
-      "Login.login-google": "Continue with Google",
-      "Login.login-guest": "Continue as Guest"
+      "Login.loginTitle": "Log In",
+      "Login.loginDescription": "Log in with your account or continue as a guest to access your credentials.",
+      "Login.loginNote": "Some features may be limited in guest mode.",
+      "Login.loggingIn": "Logging in",
+      "Login.loginGoogle": "Continue with Google",
+      "Login.loginGuest": "Continue as Guest"
     }[key] || key),
   }),
 }));

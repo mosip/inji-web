@@ -61,36 +61,36 @@
       "buttontext": "இங்கே கிளிக் செய்யவும்"
     },
     "Login": {
-    "login-title": "உள்நுழையவும்",
-    "login-description":"உங்கள் கணக்கில் உள்நுழையவோ அல்லது உங்கள் சான்றுகளுக்கு அணுக விருந்தினராக தொடரவோ செய்யுங்கள்.",
-    "login-note":"விருந்தினர் பயன்முறையில் சில அம்சங்கள் கட்டுப்படுத்தப்பட்டிருக்கலாம்.",
-    "logging-in": "உள்நுழைகிறது",
-    "login-google": "Google மூலம் தொடரவும்",
-    "login-guest": "விருந்தினராக தொடரவும்"
+    "loginTitle": "உள்நுழையவும்",
+    "loginDescription":"உங்கள் கணக்கில் உள்நுழையவோ அல்லது உங்கள் சான்றுகளுக்கு அணுக விருந்தினராக தொடரவோ செய்யுங்கள்.",
+    "loginNote":"விருந்தினர் பயன்முறையில் சில அம்சங்கள் கட்டுப்படுத்தப்பட்டிருக்கலாம்.",
+    "loggingIn": "உள்நுழைகிறது",
+    "loginGoogle": "Google மூலம் தொடரவும்",
+    "loginGuest": "விருந்தினராக தொடரவும்"
   },
   "LoginFailedModal": {
-    "failure-message": "உள்நுழைவு தோல்வி",
-    "failure-description": "உங்கள் உள்நுழைவு முயற்சி தோல்வியடைந்தது. உங்கள் சான்றுகளை சரிபார்க்கவும், மீண்டும் முயற்சிக்கவும்",
+    "failureMessage": "உள்நுழைவு தோல்வி",
+    "failureDescription": "உங்கள் உள்நுழைவு முயற்சி தோல்வியடைந்தது. உங்கள் சான்றுகளை சரிபார்க்கவும், மீண்டும் முயற்சிக்கவும்",
     "retry": "மீண்டும் முயற்சிக்கவும்"
   }
   },
   "PinPage": {
     "submit": "சமர்ப்பிக்கவும்",
     "submitting": "சமர்ப்பிக்கப்படுகின்றது",
-    "set-passcode": "பாஸ்கோடு அமைக்கவும்",
-    "enter-passcode": "பாஸ்கோடு உள்ளிடவும்",
-    "confirm-passcode": "பாஸ்கோடு உறுதிப்படுத்தவும்",
-    "reset-passcode": "பாஸ்கோடு மீட்டமைக்கவும்",
-    "set-passcode-description": "தொடங்க உங்கள் பாஸ்கோடு அமைக்கவும்",
-    "enter-passcode-description": "உங்கள் 6 இலக்க பாஸ்கோடு உள்ளிடவும்",
-    "passcode-warning": "எதிர்கால உள்நுழைவுக்கு பாஸ்கோடு நினைவில் வைக்கவும்",
+    "setPasscode": "பாஸ்கோடு அமைக்கவும்",
+    "enterPasscode": "பாஸ்கோடு உள்ளிடவும்",
+    "confirmPasscode": "பாஸ்கோடு உறுதிப்படுத்தவும்",
+    "resetPasscode": "பாஸ்கோடு மீட்டமைக்கவும்",
+    "setPasscodeDescription": "தொடங்க உங்கள் பாஸ்கோடு அமைக்கவும்",
+    "enterPasscodeDescription": "உங்கள் 6 இலக்க பாஸ்கோடு உள்ளிடவும்",
+    "passcodeWarning": "எதிர்கால உள்நுழைவுக்கு பாஸ்கோடு நினைவில் வைக்கவும்",
     "error": {
-      "wallet-not-found-error": "பணப்பை காணவில்லை. தயவுசெய்து ஒன்றை உருவாக்கவும்.",
-      "pin-length-error": "பின் 6 இலக்கமாக இருக்க வேண்டும்.",
-      "passcode-mismatch-error": "பாஸ்கோடு பொருந்தவில்லை.",
-      "create-wallet-error": "பணப்பை உருவாக்கம் தோல்வியடைந்தது.",
-      "incorrect-pin-error": "தவறான பின் உள்ளிடப்பட்டது.",
-      "fetch-wallets-error": "பணப்பைகளை மீட்கத் தவறியது."
+      "walletNotFoundError": "பணப்பை காணவில்லை. தயவுசெய்து ஒன்றை உருவாக்கவும்.",
+      "pinLengthError": "பின் 6 இலக்கமாக இருக்க வேண்டும்.",
+      "passcodeMismatchError": "பாஸ்கோடு பொருந்தவில்லை.",
+      "createWalletError": "பணப்பை உருவாக்கம் தோல்வியடைந்தது.",
+      "incorrectPinError": "தவறான பின் உள்ளிடப்பட்டது.",
+      "fetchWalletsError": "பணப்பைகளை மீட்கத் தவறியது."
     }
   },
   "IssuersPage": {
@@ -134,35 +134,35 @@
         "subTitle": "அமர்வு செல்லாது அல்லது அமர்வு முடிந்தது"
       },
       "verification": {
-        "err_missing_issuancedate": {
+        "errMissingIssuanceDate": {
           "title": "தவறான வழங்கல் தேதி",
           "subTitle": "வழங்கல் தேதி தவறானது அல்லது எதிர்காலத்தில் அமைக்கப்படும். "
         },
-        "err_invalid_issuancedate": {
+        "errInvalidIssuanceDate": {
           "title": "தவறான வழங்கல் தேதி",
           "subTitle": "வழங்கல் தேதி தவறானது அல்லது எதிர்காலத்தில் அமைக்கப்படும். "
         },
-        "err_issuance_date_is_future_date": {
+        "errIssuanceDateIsFutureDate": {
           "title": "தவறான வழங்கல் தேதி",
           "subTitle": "வழங்கல் தேதி தவறானது அல்லது எதிர்காலத்தில் அமைக்கப்படும். "
         },
-        "err_invalid_expirationdate": {
+        "errInvalidExpirationDate": {
           "title": "தவறான காலாவதி தேதி",
           "subTitle": "காலாவதி தேதி தவறானது. "
         },
-        "err_vc_expired": {
+        "errVcExpired": {
           "title": "தவறான காலாவதி தேதி",
           "subTitle": "காலாவதி தேதி தவறானது. "
         },
-        "err_invalid_validfrom": {
+        "errInvalidValidFrom": {
           "title": "தவறான தொடக்க தேதி",
           "subTitle": "தேதி தவறானது அல்லது எதிர்காலத்தில் அமைக்கப்படும். "
         },
-        "err_valid_from_is_future_date": {
+        "errValidFromIsFutureDate": {
           "title": "தவறான தொடக்க தேதி",
           "subTitle": "தேதி தவறானது அல்லது எதிர்காலத்தில் அமைக்கப்படும். "
         },
-        "err_invalid_validuntil": {
+        "errInvalidValidUntil": {
           "title": "தவறான முடிவுத் தேதி",
           "subTitle": "தேதி தவறானது. "
         }
@@ -176,12 +176,12 @@
   "AuthorizationPage": {
     "error": {
       "code": {
-        "invalid_redirect_uri": "அணுகல் மறுக்கப்பட்டது!",
-        "invalid_client": "அணுகல் மறுக்கப்பட்டது!"
+        "invalidRedirectUri": "அணுகல் மறுக்கப்பட்டது!",
+        "invalidClient": "அணுகல் மறுக்கப்பட்டது!"
       },
       "message": {
-        "invalid_redirect_uri": "நற்சான்றிதழ்களைப் பகிர முடியாது, ஏனெனில் அவற்றைக் கோரியது யார் என்பதை எங்களால் அடையாளம் காண முடியவில்லை. ",
-        "invalid_client": "நற்சான்றிதழ்களைப் பகிர முடியாது, ஏனெனில் அவற்றைக் கோரியது யார் என்பதை எங்களால் அடையாளம் காண முடியவில்லை. "
+        "invalidRedirectUri": "நற்சான்றிதழ்களைப் பகிர முடியாது, ஏனெனில் அவற்றைக் கோரியது யார் என்பதை எங்களால் அடையாளம் காண முடியவில்லை. ",
+        "invalidClient": "நற்சான்றிதழ்களைப் பகிர முடியாது, ஏனெனில் அவற்றைக் கோரியது யார் என்பதை எங்களால் அடையாளம் காண முடியவில்லை. "
       }
     }
   },

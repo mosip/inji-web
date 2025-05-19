@@ -61,36 +61,36 @@
       "buttontext": "Cliquez ici"
     },
     "Login": {
-    "login-title": "Se connecter",
-    "login-description":"Connectez-vous avec votre compte ou continuez en tant qu'invité pour accéder à vos identifiants.",
-    "login-note":"Certaines fonctionnalités peuvent être limitées en mode invité.",
-    "logging-in": "Connexion en cours",
-    "login-google": "Continuer avec Google",
-    "login-guest": "Continuer en tant qu'invité"
+    "loginTitle": "Se connecter",
+    "loginDescription":"Connectez-vous avec votre compte ou continuez en tant qu'invité pour accéder à vos identifiants.",
+    "loginNote":"Certaines fonctionnalités peuvent être limitées en mode invité.",
+    "loggingIn": "Connexion en cours",
+    "loginGoogle": "Continuer avec Google",
+    "loginGuest": "Continuer en tant qu'invité"
     },
     "LoginFailedModal": {
-      "failure-message": "Échec de la connexion",
-      "failure-description": "Votre tentative de connexion a échoué. Veuillez vérifier vos identifiants et réessayer",
+      "failureMessage": "Échec de la connexion",
+      "failureDescription": "Votre tentative de connexion a échoué. Veuillez vérifier vos identifiants et réessayer",
       "retry": "Réessayer"
     }
   },
   "PinPage": {
     "submit": "Soumettre",
     "submitting": "Soumission en cours",
-    "set-passcode": "Définir le code d'accès",
-    "enter-passcode": "Entrer le code d'accès",
-    "confirm-passcode": "Confirmer le code d'accès",
-    "reset-passcode": "Réinitialiser le code d'accès",
-    "set-passcode-description": "Définissez votre code d'accès pour commencer",
-    "enter-passcode-description": "Entrez votre code d'accès à 6 chiffres",
-    "passcode-warning": "Assurez-vous de vous souvenir du mot de passe pour une future connexion",
+    "setPasscode": "Définir le code d'accès",
+    "enterPasscode": "Entrer le code d'accès",
+    "confirmPasscode": "Confirmer le code d'accès",
+    "resetPasscode": "Réinitialiser le code d'accès",
+    "setPasscodeDescription": "Définissez votre code d'accès pour commencer",
+    "enterPasscodeDescription": "Entrez votre code d'accès à 6 chiffres",
+    "passcodeWarning": "Assurez-vous de vous souvenir du mot de passe pour une future connexion",
     "error": {
-      "wallet-not-found-error": "Aucun portefeuille trouvé. Veuillez en créer un.",
-      "pin-length-error": "Le code PIN doit comporter 6 chiffres.",
-      "passcode-mismatch-error": "Les codes PIN ne correspondent pas.",
-      "create-wallet-error": "Échec de la création du portefeuille.",
-      "incorrect-pin-error": "Code PIN incorrect.",
-      "fetch-wallets-error": "Échec du chargement des portefeuilles."
+      "walletNotFoundError": "Aucun portefeuille trouvé. Veuillez en créer un.",
+      "pinLengthError": "Le code PIN doit comporter 6 chiffres.",
+      "passcodeMismatchError": "Les codes PIN ne correspondent pas.",
+      "createWalletError": "Échec de la création du portefeuille.",
+      "incorrectPinError": "Code PIN incorrect.",
+      "fetchWalletsError": "Échec du chargement des portefeuilles."
     }
   },
   "IssuersPage": {
@@ -134,35 +134,35 @@
         "subTitle": "la session n'est pas valide ou la session est terminée"
       },
       "verification": {
-        "err_missing_issuancedate": {
+        "errMissingIssuanceDate": {
           "title": "Date d'émission invalide",
           "subTitle": "La date d'émission est invalide ou fixée dans le futur. "
         },
-        "err_invalid_issuancedate": {
+        "errInvalidIssuanceDate": {
           "title": "Date d'émission invalide",
           "subTitle": "La date d'émission est invalide ou fixée dans le futur. "
         },
-        "err_issuance_date_is_future_date": {
+        "errIssuanceDateIsFutureDate": {
           "title": "Date d'émission invalide",
           "subTitle": "La date d'émission est invalide ou fixée dans le futur. "
         },
-        "err_invalid_expirationdate": {
+        "errInvalidExpirationDate": {
           "title": "Date d'expiration invalide",
           "subTitle": "La date d'expiration n'est pas valide. "
         },
-        "err_vc_expired": {
+        "errVcExpired": {
           "title": "Date d'expiration invalide",
           "subTitle": "La date d'expiration n'est pas valide. "
         },
-        "err_invalid_validfrom": {
+        "errInvalidValidFrom": {
           "title": "Date de début invalide",
           "subTitle": "La date n'est pas valide ou est définie dans le futur. "
         },
-        "err_valid_from_is_future_date": {
+        "errValidFromIsFutureDate": {
           "title": "Date de début invalide",
           "subTitle": "La date n'est pas valide ou est définie dans le futur. "
         },
-        "err_invalid_validuntil": {
+        "errInvalidValidUntil": {
           "title": "Date de fin invalide",
           "subTitle": "La date n'est pas valide. "
         }
@@ -176,12 +176,12 @@
   "AuthorizationPage": {
     "error": {
       "code": {
-        "invalid_redirect_uri": "Accès refusé!",
-        "invalid_client": "Accès refusé!"
+        "invalidRedirectUri": "Accès refusé!",
+        "invalidClient": "Accès refusé!"
       },
       "message": {
-        "invalid_redirect_uri": "Les informations d’identification ne peuvent pas être partagées car nous n’avons pas pu identifier qui les a demandées. ",
-        "invalid_client": "Les informations d’identification ne peuvent pas être partagées car nous n’avons pas pu identifier qui les a demandées. "
+        "invalidRedirectUri": "Les informations d’identification ne peuvent pas être partagées car nous n’avons pas pu identifier qui les a demandées. ",
+        "invalidClient": "Les informations d’identification ne peuvent pas être partagées car nous n’avons pas pu identifier qui les a demandées. "
       }
     }
   },

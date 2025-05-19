@@ -106,7 +106,6 @@ export const PinPage: React.FC = () => {
         });
   
         const responseData = await response.json();
-  
         if (!response.ok) {
           throw new Error(responseData);
         }
@@ -117,7 +116,6 @@ export const PinPage: React.FC = () => {
         if (responseData.length > 0) {
           setWalletId(responseData[0].wallet_id);
           localStorage.setItem("walletId", responseData[0].walletId);
-          // console.log("Fetch wallets responseData[0] "+responseData[0].walletId);
 
           // Fetch user cache to check wallet unlock status
           const userResponse = await fetch(api.fetchUserProfile.url(), {
@@ -135,7 +133,6 @@ export const PinPage: React.FC = () => {
           const cachedWalletId = userData.wallet_id;
           if (!cachedWalletId || cachedWalletId !== responseData[0].walletId) {
             // If Wallet is Locked then unlock it on pin page
-            console.warn("Wallet is locked or missing, redirecting to unlock...");
             navigate("/pin"); // Redirect user to unlock page
           } 
           else {
@@ -152,18 +149,13 @@ export const PinPage: React.FC = () => {
       } catch (error) {
         // in case wallet-fetch fails
         console.error("Error occurred while fetching wallets:", error);
-        setError(t("error.fetch-wallets-error"));
+        setError(t("error.fetchWalletsError"));
         navigate("/"); // Redirect to home page for wallet re-creationg
       }
     };
   
     fetchWallets();
   }, []);
-
-
-  useEffect(() => {
-    setDisplayName(localStorage.getItem("displayName"));
-  }, [localStorage.getItem("displayName")]);
 
 
   const handleUnlock = async () => {
@@ -174,9 +166,8 @@ export const PinPage: React.FC = () => {
     const walletId = localStorage.getItem("walletId");
     const pin = passcode.join("");
 
-    // Optional Error Handling, already handled in handle submit
     if (!walletId) {
-        setError(t("error.wallet-not-found-error"));
+        setError(t("error.walletNotFoundError"));
         setLoading(false);
         navigate('/');
         return null;
@@ -203,9 +194,7 @@ export const PinPage: React.FC = () => {
         navigate("/issuers"); // Redirect upon successful unlock
     } catch (error) {
         setIsPinCorrect(false);
-        setError(t("error.incorrect-pin-error"));
-        // should I clear the local-storage in case of wrong input?
-        // localStorage.removeItem("walletId");
+        setError(t("error.incorrectPinError"));
     } finally {
         setLoading(false);
     }
@@ -219,19 +208,19 @@ export const PinPage: React.FC = () => {
 
     if (wallets.length !== 0) {
         if (pin.length !== 6) {
-            setError(t("error.pin-length-error"));
+            setError(t("error.pinLengthError"));
             setLoading(false);
             return;
         }
     } else {
         const confirmPin = confirmPasscode.join("");
         if (pin.length !== 6 || confirmPin.length !== 6) {
-            setError(t("error.pin-length-error"));
+            setError(t("error.pinLengthError"));
             setLoading(false);
             return;
         }
         if (wallets.length === 0 && pin !== confirmPin) {
-            setError(t("error.passcode-mismatch-error"));
+            setError(t("error.passcodeMismatchError"));
             setLoading(false);
             return;
         }
@@ -251,7 +240,7 @@ export const PinPage: React.FC = () => {
             });
             if (!response.ok) {
                 const errorData = await response.json();
-                setError(`${t("error.create-wallet-error")}: ${errorData.errorMessage || t("unknown-error")}`);
+                setError(`${t("error.createWalletError")}: ${errorData.errorMessage || t("unknown-error")}`);
                 setIsPinCorrect(false);
                 return;
             }
@@ -266,9 +255,7 @@ export const PinPage: React.FC = () => {
         }
     } catch (error) {
         setIsPinCorrect(false);
-        setError(t("error.incorrect-pin-error"));
-        // should I clear the local-storage in case of worng input?
-        // localStorage.removeItem("walletId");
+        setError(t("error.incorrectPinError"));
     } finally {
         setLoading(false);
     }
@@ -283,17 +270,17 @@ export const PinPage: React.FC = () => {
                 <img src={require("../../assets/Logomark.png")} alt="Inji Web Logo"/>
                 </div>
                 <h1 className="text-xl sm:text-3xl font-semibold text-gray-800 p-4 " data-testid="pin-title">
-                    {wallets.length === 0 ? t("set-passcode") : t("enter-passcode")}
+                    {wallets.length === 0 ? t("setPasscode") : t("enterPasscode")}
                 </h1>
                 <p className="text-gray-600 text-sm sm:text-lg" data-testid="pin-description">
-                {wallets.length===0? t("set-passcode-description"): t("enter-passcode-description")}
+                {wallets.length===0? t("setPasscodeDescription"): t("enterPasscodeDescription")}
                 </p>
             </div>
 
             <div className="bg-white rounded-lg shadow-2xl p-6 max-w-sm text-center" data-testid="pin-container">
                 {wallets.length===0 &&
                     <p className="text-center mx-5 my-4 w-[85%] text-gray-500 text-xs sm:text-sm" data-testid="pin-warning">
-                    {t("passcode-warning")}
+                    {t("passcodeWarning")}
                     </p>
                 }
 
@@ -308,20 +295,19 @@ export const PinPage: React.FC = () => {
                 }
 
                 <div className="mb-2" data-testid="pin-passcode-input">
-                <p className="text-xs sm:text-sm text-left font-medium text-gray-700 mb-2">{t("enter-passcode")}</p>
+                <p className="text-xs sm:text-sm text-left font-medium text-gray-700 mb-2">{t("enterPasscode")}</p>
                 {renderInputs("passcode", showPasscode, () => setShowPasscode((prev) => !prev))}
                 </div>
 
                 {wallets.length === 0 && (
                     <div className="mb-2" data-testid="pin-confirm-passcode-input">
-                    <p className="text-xs sm:text-sm text-left font-medium text-gray-700 mb-2">{t("confirm-passcode")}</p>
+                    <p className="text-xs sm:text-sm text-left font-medium text-gray-700 mb-2">{t("confirmPasscode")}</p>
                     {renderInputs("confirm", showConfirm, () => setShowConfirm((prev) => !prev))}
                 </div>
                 )}
 
-                {/* Reset Passcode, to be completed in next ticket. Backend architecture unavaliable as of now */}
                 {wallets.length !==0 &&(
-                    <p className="text-xs sm:text-sm text-left font-semibold text-purple-800 my-3">{t("reset-passcode")}</p>
+                    <p className="text-xs sm:text-sm text-left font-semibold text-purple-800 my-3">{t("resetPasscode")}</p>
                 )}
 
                 <SolidButton

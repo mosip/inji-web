@@ -61,36 +61,36 @@
       "buttontext": "انقر هنا"
     },
     "Login": {
-    "login-title": "تسجيل الدخول",
-    "login-description":"قم بتسجيل الدخول باستخدام حسابك أو تابع كضيف للوصول إلى بيانات الاعتماد الخاصة بك.",
-    "login-note":"قد تكون بعض الميزات محدودة في وضع الضيف.",
-    "logging-in": "جاري تسجيل الدخول",
-    "login-google": "متابعة باستخدام Google",
-    "login-guest": "متابعة كزائر"
+    "loginTitle": "تسجيل الدخول",
+    "loginDescription":"قم بتسجيل الدخول باستخدام حسابك أو تابع كضيف للوصول إلى بيانات الاعتماد الخاصة بك.",
+    "loginNote":"قد تكون بعض الميزات محدودة في وضع الضيف.",
+    "loggingIn": "جاري تسجيل الدخول",
+    "loginGoogle": "متابعة باستخدام Google",
+    "loginGuest": "متابعة كزائر"
     },
     "LoginFailedModal": {
-      "failure-message": "فشل تسجيل الدخول",
-      "failure-description": "فشل محاولة تسجيل الدخول الخاصة بك. يرجى التحقق من بيانات اعتمادك والمحاولة مرة أخرى",
+      "failureMessage": "فشل تسجيل الدخول",
+      "failureDescription": "فشل محاولة تسجيل الدخول الخاصة بك. يرجى التحقق من بيانات اعتمادك والمحاولة مرة أخرى",
       "retry": "إعادة المحاولة"
     }
   },
   "PinPage": {
     "submit": "إرسال",
     "submitting": "جاري الإرسال",
-    "set-passcode": "تعيين رمز المرور",
-    "enter-passcode": "أدخل رمز المرور",
-    "confirm-passcode": "تأكيد رمز المرور",
-    "reset-passcode": "إعادة تعيين رمز المرور",
-    "set-passcode-description": "قم بتعيين رمز المرور للبدء",
-    "enter-passcode-description": "أدخل رمز المرور المكون من 6 أرقام",
-    "passcode-warning": "تأكد من تذكر كلمة المرور لتسجيل الدخول في المستقبل",
+    "setPasscode": "تعيين رمز المرور",
+    "enterPasscode": "أدخل رمز المرور",
+    "confirmPasscode": "تأكيد رمز المرور",
+    "resetPasscode": "إعادة تعيين رمز المرور",
+    "setPasscodeDescription": "قم بتعيين رمز المرور للبدء",
+    "enterPasscodeDescription": "أدخل رمز المرور المكون من 6 أرقام",
+    "passcodeWarning": "تأكد من تذكر كلمة المرور لتسجيل الدخول في المستقبل",
     "error": {
-      "wallet-not-found-error": "لم يتم العثور على محفظة. يرجى إنشاء واحدة.",
-      "pin-length-error": "يجب أن يكون الرقم السري 6 أرقام.",
-      "passcode-mismatch-error": "الرمز السري غير متطابق.",
-      "create-wallet-error": "فشل إنشاء المحفظة.",
-      "incorrect-pin-error": "تم إدخال رمز خاطئ.",
-      "fetch-wallets-error": "فشل في جلب المحافظ."
+      "walletNotFoundError": "لم يتم العثور على محفظة. يرجى إنشاء واحدة.",
+      "pinLengthError": "يجب أن يكون الرقم السري 6 أرقام.",
+      "passcodeMismatchError": "الرمز السري غير متطابق.",
+      "createWalletError": "فشل إنشاء المحفظة.",
+      "incorrectPinError": "تم إدخال رمز خاطئ.",
+      "fetchWalletsError": "فشل في جلب المحافظ."
     }
   },
   "IssuersPage": {
@@ -134,35 +134,35 @@
         "subTitle": "الجلسة غير صالحة أو الجلسة مكتملة"
       },
       "verification": {
-        "err_missing_issuancedate": {
+        "errMissingIssuanceDate": {
           "title": "تاريخ الإصدار غير صالح",
           "subTitle": "تاريخ الإصدار غير صالح أو تم تحديده في المستقبل. "
         },
-        "err_invalid_issuancedate": {
+        "errInvalidIssuanceDate": {
           "title": "تاريخ الإصدار غير صالح",
           "subTitle": "تاريخ الإصدار غير صالح أو تم تحديده في المستقبل. "
         },
-        "err_issuance_date_is_future_date": {
+        "errIssuanceDateIsFutureDate": {
           "title": "تاريخ الإصدار غير صالح",
           "subTitle": "تاريخ الإصدار غير صالح أو تم تحديده في المستقبل. "
         },
-        "err_invalid_expirationdate": {
+        "errInvalidExpirationDate": {
           "title": "تاريخ انتهاء الصلاحية غير صالح",
           "subTitle": "تاريخ انتهاء الصلاحية غير صالح. "
         },
-        "err_vc_expired": {
+        "errVcExpired": {
           "title": "تاريخ انتهاء الصلاحية غير صالح",
           "subTitle": "تاريخ انتهاء الصلاحية غير صالح. "
         },
-        "err_invalid_validfrom": {
+        "errInvalidValidFrom": {
           "title": "تاريخ البدء غير صالح",
           "subTitle": "التاريخ غير صالح أو تم تعيينه في المستقبل. "
         },
-        "err_valid_from_is_future_date": {
+        "errValidFromIsFutureDate": {
           "title": "تاريخ البدء غير صالح",
           "subTitle": "التاريخ غير صالح أو تم تعيينه في المستقبل. "
         },
-        "err_invalid_validuntil": {
+        "errInvalidValidUntil": {
           "title": "تاريخ الانتهاء غير صالح",
           "subTitle": "التاريخ غير صالح. "
         }
@@ -176,12 +176,12 @@
   "AuthorizationPage": {
     "error": {
       "code": {
-        "invalid_redirect_uri": "تم الرفض!",
-        "invalid_client": "تم الرفض!"
+        "invalidRedirectUri": "تم الرفض!",
+        "invalidClient": "تم الرفض!"
       },
       "message": {
-        "invalid_redirect_uri": "لا يمكن مشاركة بيانات الاعتماد لأننا لم نتمكن من تحديد من طلبها. ",
-        "invalid_client": "لا يمكن مشاركة بيانات الاعتماد لأننا لم نتمكن من تحديد من طلبها. "
+        "invalidRedirectUri": "لا يمكن مشاركة بيانات الاعتماد لأننا لم نتمكن من تحديد من طلبها. ",
+        "invalidClient": "لا يمكن مشاركة بيانات الاعتماد لأننا لم نتمكن من تحديد من طلبها. "
       }
     }
   },

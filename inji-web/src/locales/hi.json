@@ -61,36 +61,36 @@
       "buttontext": "यहां क्लिक करें"
     },
     "Login": {
-    "login-title": "लॉग इन करें",
-    "login-description":"अपने खाते से लॉग इन करें या अपनी साख तक पहुंचने के लिए अतिथि के रूप में जारी रखें।",
-    "login-note":"अतिथि मोड में कुछ सुविधाएँ सीमित हो सकती हैं।",
-    "logging-in": "लॉगिन हो रहा है",
-    "login-google": "Google के साथ जारी रखें",
-    "login-guest": "अतिथि के रूप में जारी रखें"
+    "loginTitle": "लॉग इन करें",
+    "loginDescription":"अपने खाते से लॉग इन करें या अपनी साख तक पहुंचने के लिए अतिथि के रूप में जारी रखें।",
+    "loginNote":"अतिथि मोड में कुछ सुविधाएँ सीमित हो सकती हैं।",
+    "loggingIn": "लॉगिन हो रहा है",
+    "loginGoogle": "Google के साथ जारी रखें",
+    "loginGuest": "अतिथि के रूप में जारी रखें"
     },
     "LoginFailedModal": {
-      "failure-message": "लॉगिन विफल",
-      "failure-description": "आपका लॉगिन प्रयास विफल हो गया है। कृपया अपनी क्रेडेंशियल्स जांचें और फिर से प्रयास करें",
+      "failureMessage": "लॉगिन विफल",
+      "failureDescription": "आपका लॉगिन प्रयास विफल हो गया है। कृपया अपनी क्रेडेंशियल्स जांचें और फिर से प्रयास करें",
       "retry": "फिर से प्रयास करें"
     }
   },
   "PinPage": {
     "submit": "सबमिट करें",
     "submitting": "सबमिट हो रहा है",
-    "set-passcode": "पासकोड सेट करें",
-    "enter-passcode": "पासकोड दर्ज करें",
-    "confirm-passcode": "पासकोड की पुष्टि करें",
-    "reset-passcode": "पासकोड रीसेट करें",
-    "set-passcode-description": "शुरू करने के लिए अपना पासकोड सेट करें",
-    "enter-passcode-description": "अपना 6 अंकों का पासकोड दर्ज करें",
-    "passcode-warning": "भविष्य में लॉगिन के लिए पासकोड याद रखें",
+    "setPasscode": "पासकोड सेट करें",
+    "enterPasscode": "पासकोड दर्ज करें",
+    "confirmPasscode": "पासकोड की पुष्टि करें",
+    "resetPasscode": "पासकोड रीसेट करें",
+    "setPasscodeDescription": "शुरू करने के लिए अपना पासकोड सेट करें",
+    "enterPasscodeDescription": "अपना 6 अंकों का पासकोड दर्ज करें",
+    "passcodeWarning": "भविष्य में लॉगिन के लिए पासकोड याद रखें",
     "error": {
-      "wallet-not-found-error": "कोई वॉलेट नहीं मिला। कृपया नया बनाएँ।",
-      "pin-length-error": "पिन 6 अंकों का होना चाहिए।",
-      "passcode-mismatch-error": "पिन मेल नहीं खाता।",
-      "create-wallet-error": "वॉलेट निर्माण असफल हुआ।",
-      "incorrect-pin-error": "गलत पिन दर्ज किया गया।",
-      "fetch-wallets-error": "वॉलेट लाने में त्रुटि।"
+      "walletNotFoundError": "कोई वॉलेट नहीं मिला। कृपया नया बनाएँ।",
+      "pinLengthError": "पिन 6 अंकों का होना चाहिए।",
+      "passcodeMismatchError": "पिन मेल नहीं खाता।",
+      "createWalletError": "वॉलेट निर्माण असफल हुआ।",
+      "incorrectPinError": "गलत पिन दर्ज किया गया।",
+      "fetchWalletsError": "वॉलेट लाने में त्रुटि।"
     }
   },
   "IssuersPage": {
@@ -134,35 +134,35 @@
         "subTitle": "सत्र वैध नहीं है या सत्र पूरा हो गया है"
       },
       "verification": {
-        "err_missing_issuancedate": {
+        "errMissingIssuanceDate": {
           "title": "अमान्य जारी करने की तारीख",
           "subTitle": "जारी करने की तारीख अमान्य है या भविष्य में निर्धारित है। "
         },
-        "err_invalid_issuancedate": {
+        "errInvalidIssuanceDate": {
           "title": "अमान्य जारी करने की तारीख",
           "subTitle": "जारी करने की तारीख अमान्य है या भविष्य में निर्धारित है। "
         },
-        "err_issuance_date_is_future_date": {
+        "errIssuanceDateIsFutureDate": {
           "title": "अमान्य जारी करने की तारीख",
           "subTitle": "जारी करने की तारीख अमान्य है या भविष्य में निर्धारित है। "
         },
-        "err_invalid_expirationdate": {
+        "errInvalidExpirationDate": {
           "title": "अमान्य समाप्ति दिनांक",
           "subTitle": "समाप्ति तिथि अमान्य है. "
         },
-        "err_vc_expired": {
+        "errVcExpired": {
           "title": "अमान्य समाप्ति दिनांक",
           "subTitle": "समाप्ति तिथि अमान्य है. "
         },
-        "err_invalid_validfrom": {
+        "errInvalidValidFrom": {
           "title": "अमान्य प्रारंभ दिनांक",
           "subTitle": "दिनांक अमान्य है या भविष्य में सेट है. "
         },
-        "err_valid_from_is_future_date": {
+        "errValidFromIsFutureDate": {
           "title": "अमान्य प्रारंभ दिनांक",
           "subTitle": "दिनांक अमान्य है या भविष्य में सेट है. "
         },
-        "err_invalid_validuntil": {
+        "errInvalidValidUntil": {
           "title": "अमान्य अंतिम तिथि",
           "subTitle": "दिनांक अमान्य है. "
         }
@@ -176,12 +176,12 @@
   "AuthorizationPage": {
     "error": {
       "code": {
-        "invalid_redirect_uri": "पहुंच अस्वीकृत!",
-        "invalid_client": "पहुंच अस्वीकृत!"
+        "invalidRedirectUri": "पहुंच अस्वीकृत!",
+        "invalidClient": "पहुंच अस्वीकृत!"
       },
       "message": {
-        "invalid_redirect_uri": "क्रेडेंशियल साझा नहीं किए जा सकते क्योंकि हम यह नहीं पहचान सके कि उनका अनुरोध किसने किया था। ",
-        "invalid_client": "क्रेडेंशियल साझा नहीं किए जा सकते क्योंकि हम यह नहीं पहचान सके कि उनका अनुरोध किसने किया था। "
+        "invalidRedirectUri": "क्रेडेंशियल साझा नहीं किए जा सकते क्योंकि हम यह नहीं पहचान सके कि उनका अनुरोध किसने किया था। ",
+        "invalidClient": "क्रेडेंशियल साझा नहीं किए जा सकते क्योंकि हम यह नहीं पहचान सके कि उनका अनुरोध किसने किया था। "
       }
     }
   },

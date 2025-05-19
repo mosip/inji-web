@@ -9,13 +9,13 @@ jest.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key: string) => {
       const translations: Record<string, string> = {
-        "set-passcode":"Set Passcode",
-        "enter-passcode":"Enter Passcode",
-        "confirm-passcode":"Confirm Passcode",
-        "reset-passcode":"Reset Passcode",
-        "set-passcode-description":"Set your passcode to get started",
-        "enter-passcode-description":"Enter your 6 digit passcode",
-        "passcode-warning":"Make sure you remember the password for future login",
+        "setPasscode":"Set Passcode",
+        "enterPasscode":"Enter Passcode",
+        "confirmPasscode":"Confirm Passcode",
+        "resetasscode":"Reset Passcode",
+        "setPasscodeDescription":"Set your passcode to get started",
+        "enterPasscodeDescription":"Enter your 6 digit passcode",
+        "passcodeWarning":"Make sure you remember the password for future login",
       };
       return translations[key] || key;
     }

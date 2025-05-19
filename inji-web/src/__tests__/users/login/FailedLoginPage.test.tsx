@@ -7,8 +7,8 @@ import { LoginFailedModal } from '../../../pages/users/login/LoginFailedModal';
 jest.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key: string) => ({
-      "LoginFailedModal.failure-message": "Login Failed!",
-      "LoginFailedModal.failure-description": "Your login request could not be completed. Please click on the retry button to login again.",
+      "LoginFailedModal.failureMessage": "Login Failed!",
+      "LoginFailedModal.failureDescription": "Your login request could not be completed. Please click on the retry button to login again.",
       "LoginFailedModal.retry": "Retry"
     }[key] || key),
   }),
