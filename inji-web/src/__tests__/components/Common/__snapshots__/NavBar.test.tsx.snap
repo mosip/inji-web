@@ -47,7 +47,7 @@ exports[`Testing the Layout of NavBar Check the presence of the navbar container
         data-testid="NavBar-Search-Container"
       >
         <div
-          class="w-full sm:w-96 flex justify-center items-center bg-iw-background shadow-md shadow-iw-shadow"
+          class="w-full sm:w-96 flex justify-center items-center bg-iw-background shadow-iw undefined"
           data-testid="Search-Issuer-Container"
         >
           <svg

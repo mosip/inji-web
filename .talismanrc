@@ -27,10 +27,11 @@ fileignoreconfig:
   checksum: 6b70370a26d1556adeca568ab8269202a660af8bb7d095e7121314935e8bff18
 - filename: inji-web/src/test-utils/mockUtils.tsx
   checksum: 9a3c5c6c81c6ff5cec1203004dde8a04c72425b13ca6eaec2fd15a50baf7fa02
-- filename: inji-web/src/components/Dashboard/DashboardHeader.tsx
-  checksum: 51ddf3d80bcb077ac4da04ba1261aabfd11ba8b36ca57c4cba751a00e239d16b
 - filename: inji-web/src/components/Faq/FAQAccordionItem.tsx
   checksum: 8351daf96cf7850bda477ad9828a76640742c4d9c0918c1270966980ee191e7a
 - filename: inji-web/src/__tests__/components/Dashboard/EmptyDocument.test.tsx
   checksum: 04480270c63a07a1fea5fbe505d23531153cd26d37aa925571f4e3dadbb36e9c
+- filename: inji-web/src/components/Dashboard/Header.tsx
+  checksum: 5f47edd85bf6f95ee5a1cedb6f929ac3ccb8ac8a237215e230d53ddec28568f3
+
 version: ""

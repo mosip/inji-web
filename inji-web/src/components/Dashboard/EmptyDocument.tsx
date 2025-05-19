@@ -7,7 +7,7 @@ export const EmptyDocument: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="container mx-auto sm:px-2 md:px-4 lg:px-6 py-6 relative">
+        <div className="container mx-auto sm:px-2 md:px-4 lg:px-6 py-6 relative ml-3 sm:ml-0">
             <div className="flex flex-col sm:flex-row justify-between items-start mb-4 sm:mb-6 gap-4 sm:gap-0">
                 <div className="flex items-start">
                     <div className="flex items-start">

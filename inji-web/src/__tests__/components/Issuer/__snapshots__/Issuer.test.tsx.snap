@@ -3,14 +3,14 @@
 exports[`Testing the layout of Issuer Component Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
-    class="bg-white w-full h-full flex flex-col shadow-iw hover:shadow-iw-hover hover:scale-105 transition-all duration-300 p-5 rounded-lg cursor-pointer items-center"
+    class="bg-white w-48 h-full flex flex-col shadow-iw hover:shadow-iw-hover hover:scale-105 transition-all duration-300 p-5 rounded-lg cursor-pointer items-center"
     data-testid="ItemBox-Outer-Container-1"
     role="menuitem"
     tabindex="0"
   >
     <img
       alt="Issuer Logo"
-      class="w-20 h-20 object-contain mb-4"
+      class="w-20 h-20 object-contain mb-3"
       data-testid="ItemBox-Logo"
       src="https://url.com"
     />

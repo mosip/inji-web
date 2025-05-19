@@ -11,3 +11,16 @@ export type SidebarItemProps = {
     isActive: boolean;
     isCollapsed: boolean;
 };
+
+export type SearchCredentialProps = {
+    issuerContainerBorderRadius?: string;
+}
+
+export type FAQPageProps = {
+    backUrl?: string;
+    withHome?: boolean;
+};
+
+export type CredentialTypesPageProps = {
+    backUrl?: string;
+};

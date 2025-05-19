@@ -2,6 +2,7 @@ import React from "react";
 import {FAQAccordion} from "../components/Faq/FAQAccordion";
 import {useTranslation} from "react-i18next";
 import {useLocation, useNavigate} from "react-router-dom";
+import { FAQPageProps } from "../components/Dashboard/types";
 
 export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
     const {t} = useTranslation(["FAQPage", "Dashboard"]);
@@ -64,9 +65,4 @@ export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
             </div>
         </div>
     );
-};
-
-type FAQPageProps = {
-    backUrl?: string;
-    withHome?: boolean;
 };

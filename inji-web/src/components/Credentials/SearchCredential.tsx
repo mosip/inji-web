@@ -7,8 +7,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {getCredentialTypeDisplayObjectForCurrentLanguage} from "../../utils/i18n";
 import {RootState} from "../../types/redux";
 import {CredentialConfigurationObject} from "../../types/data";
+import { SearchCredentialProps } from "../Dashboard/types";
 
-export const SearchCredential: React.FC = () => {
+export const SearchCredential: React.FC<SearchCredentialProps> = ({
+    issuerContainerBorderRadius
+}) => {
     const {t} = useTranslation("CredentialsPage");
     const dispatch = useDispatch();
     const [searchText, setSearchText] = useState("");
@@ -22,8 +25,16 @@ export const SearchCredential: React.FC = () => {
         const filteredConfigurations = credentials.credentials_supported.filter(
             (credentialConfig: CredentialConfigurationObject) => {
                 // @ts-ignore
-                const displayObject = getCredentialTypeDisplayObjectForCurrentLanguage(credentialConfig.display,language);
-                return displayObject.name.toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
+                const displayObject =
+                    getCredentialTypeDisplayObjectForCurrentLanguage(
+                        credentialConfig.display,
+                        language
+                    );
+                return (
+                    displayObject.name
+                        .toLowerCase()
+                        .indexOf(searchText.toLowerCase()) !== -1
+                );
             }
         );
         const filteredCredential = {
@@ -41,7 +52,7 @@ export const SearchCredential: React.FC = () => {
         >
             <div
                 data-testid="Search-Issuer-Container"
-                className="w-full sm:w-96 flex justify-center items-center bg-iw-background shadow-md shadow-iw-shadow"
+                className={`w-full sm:w-96 flex justify-center items-center bg-iw-background shadow-iw ${issuerContainerBorderRadius}`}
             >
                 <FaSearch
                     data-testid="NavBar-Search-Icon"

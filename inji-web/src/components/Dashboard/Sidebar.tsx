@@ -19,13 +19,19 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
             onClick={() => navigate(path)}
         >
             <div
-                className={`${isCollapsed ? "hidden sm:block": "block"} flex items-center justify-center p-2 rounded-lg mx-6 shadow-[0_-0.5px_4px_-1px_rgba(0,0,0,0.078),_0_4px_4px_-1px_rgba(0,0,0,0.078)]`}
+                className={`${
+                    isCollapsed ? 'hidden sm:block' : 'block'
+                } flex items-center justify-center p-2 rounded-lg mx-6 shadow-[0_-0.5px_4px_-1px_rgba(0,0,0,0.078),_0_4px_4px_-1px_rgba(0,0,0,0.078)]`}
             >
                 {icon}
             </div>
 
             {isActive && (
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-[#2B011C] rounded-r-md" />
+                <div
+                    className={`${
+                        isCollapsed ? 'hidden sm:block' : 'block'
+                    } absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-[#2B011C] rounded-r-md`}
+                />
             )}
 
             {!isCollapsed && (
@@ -116,23 +122,17 @@ export const Sidebar: React.FC = () => {
                 />
             </button>
 
-            <div
-                className="flex flex-col space-y-2 mt-6 sm:mt-7 w-full pr-4"
-            >
-                {(!isCollapsed || window.innerWidth >= 640) && (
-                    <>
-                        {sidebarItems.map((item, index) => (
-                            <SidebarItem
-                                key={index}
-                                icon={item.icon}
-                                text={item.text}
-                                path={item.path}
-                                isActive={location.pathname === item.path}
-                                isCollapsed={isCollapsed}
-                            />
-                        ))}
-                    </>
-                )}
+            <div className="flex flex-col space-y-2 mt-6 sm:mt-7 w-full pr-4">
+                {sidebarItems.map((item, index) => (
+                    <SidebarItem
+                        key={index}
+                        icon={item.icon}
+                        text={item.text}
+                        path={item.path}
+                        isActive={location.pathname === item.path}
+                        isCollapsed={isCollapsed}
+                    />
+                ))}
             </div>
         </div>
     );
