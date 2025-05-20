@@ -1,13 +1,15 @@
 import { FaExclamationCircle } from "react-icons/fa";
 import React, { useState, useEffect, useRef, CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../../utils/api";
+import { api, MethodType } from "../../utils/api";
 import { useCookies } from "react-cookie";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { SolidButton } from "../../components/Common/Buttons/SolidButton";
 import { useTranslation } from "react-i18next";
+import {useFetch} from "../../hooks/useFetch";
 
 export const PinPage: React.FC = () => {
+  const {state, fetchRequest} = useFetch();
   const { t, i18n } = useTranslation("PinPage");
   const navigate = useNavigate();
   const [displayName, setDisplayName] = useState<string | null>(null);
@@ -98,17 +100,14 @@ export const PinPage: React.FC = () => {
   useEffect(() => {  
     const fetchWallets = async () => {
       try {
-        // Fetch list of wallets present 
-        const response = await fetch(api.fetchWallets.url(), {
-          method: "GET",
-          headers: api.fetchWallets.headers(),
-          credentials: "include",
-        });
-  
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(responseData);
-        }
+
+        // Fetch list of wallets present
+        let responseData = await fetchRequest(
+            api.fetchWallets.url(),
+            api.fetchWallets.methodType,
+            api.fetchWallets.headers(),
+            api.fetchWallets.credentials
+        );
 
         setWallets(responseData);
 
@@ -118,16 +117,12 @@ export const PinPage: React.FC = () => {
           localStorage.setItem("walletId", responseData[0].walletId);
 
           // Fetch user cache to check wallet unlock status
-          const userResponse = await fetch(api.fetchUserProfile.url(), {
-            method: "GET",
-            headers: api.fetchUserProfile.headers(),
-            credentials: "include",
-          });
-  
-          const userData = await userResponse.json();
-          if (!userResponse.ok) {
-            throw new Error(userData);
-          }
+          const userData= await fetchRequest(
+            api.fetchUserProfile.url(),
+            api.fetchUserProfile.methodType,
+            api.fetchUserProfile.headers(),
+            api.fetchUserProfile.credentials
+          )
           
           // Storing cached wallet Id
           const cachedWalletId = userData.wallet_id;
@@ -174,21 +169,16 @@ export const PinPage: React.FC = () => {
     }
 
     try {
-        const response = await fetch(api.fetchWalletDetails.url(walletId), {
-          method: api.fetchWalletDetails.methodType === 0 ? "GET" : "POST",
-            headers: {
-                ...api.fetchWalletDetails.headers(),
-                "X-XSRF-TOKEN": cookies["XSRF-TOKEN"]
-            },
-            credentials: "include",
-            body: JSON.stringify({ walletPin: pin })
-        });
-
-        if (!response.ok) {
-            throw new Error("Wallet unlock failed");
-        }
-
-        const unlockedWalletId = await response.json();
+        const unlockedWalletId=await fetchRequest(
+          api.fetchWalletDetails.url(walletId),
+          api.fetchWalletDetails.methodType,
+          api.fetchWalletDetails.headers({
+                    ...api.fetchWalletDetails.headers(),
+                    "X-XSRF-TOKEN": cookies["XSRF-TOKEN"]
+                }),
+          api.fetchWalletDetails.credentials,
+          JSON.stringify({ walletPin: pin })
+        )
         localStorage.setItem("walletId", unlockedWalletId);
         setIsPinCorrect(true);
         navigate("/issuers"); // Redirect upon successful unlock
