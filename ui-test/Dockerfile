@@ -1,4 +1,4 @@
-FROM selenium/standalone-chrome:latest
+FROM eclipse-temurin:21-jdk
 
 USER root
 RUN apt-get update && apt-get install -y git

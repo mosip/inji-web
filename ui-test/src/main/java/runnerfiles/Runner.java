@@ -82,7 +82,7 @@ public class Runner extends AbstractTestNGCucumberTests{
 
 			// Generating biometric details with mock MDS
 			BiometricDataProvider.generateBiometricTestData("Registration");
-
+			updateFeaturesPath();
 			startTestRunner();
 		} catch (Exception e) {
 			LOGGER.error("Exception " + e.getMessage());
@@ -210,6 +210,15 @@ public class Runner extends AbstractTestNGCucumberTests{
 		CertsUtil.setLogLevel();
 	}
 
+	public static void updateFeaturesPath() {
+		File homeDir = null;
+	    String os = System.getProperty("os.name").toLowerCase();
+	    if (os.contains("windows")) {
+	        System.setProperty("cucumber.features", "src\\test\\resources\\featurefiles\\");
+	    } else {
+	        System.setProperty("cucumber.features", "/home/mosip/featurefiles/");
+	    }
+	} 
 
 
 }
