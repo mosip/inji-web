@@ -3,6 +3,9 @@ import {useNavigate, useLocation} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import CollapseIcon from '../../assets/CollapseIcon.svg';
 import {SidebarItemProps} from './types';
+import {isRTL} from '../../utils/i18n';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../types/redux';
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
     icon,
@@ -12,16 +15,21 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     isCollapsed
 }) => {
     const navigate = useNavigate();
+    const language = useSelector((state: RootState) => state.common.language);
 
     return (
         <div
-            className={`relative flex items-center w-full h-12 cursor-pointer transition-all duration-200 rounded-lg pr-2`}
+            className={`relative flex items-center w-full h-12 cursor-pointer transition-all duration-200 rounded-lg ${
+                isRTL(language) ? 'pl-2' : 'pr-2'
+            }`}
             onClick={() => navigate(path)}
         >
             <div
                 className={`${
                     isCollapsed ? 'hidden sm:block' : 'block'
-                } flex items-center justify-center p-2 rounded-lg mx-6 shadow-[0_-0.5px_4px_-1px_rgba(0,0,0,0.078),_0_4px_4px_-1px_rgba(0,0,0,0.078)]`}
+                } flex items-center justify-center p-2 rounded-lg shadow-[0_-0.5px_4px_-1px_rgba(0,0,0,0.078),_0_4px_4px_-1px_rgba(0,0,0,0.078)] ${
+                    isRTL(language) ? 'mr-6' : 'ml-6'
+                }`}
             >
                 {icon}
             </div>
@@ -30,7 +38,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
                 <div
                     className={`${
                         isCollapsed ? 'hidden sm:block' : 'block'
-                    } absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-[#2B011C] rounded-r-md`}
+                    } absolute top-1/2 -translate-y-1/2 w-1 h-8 bg-[#2B011C] rounded-r-md ${
+                        isRTL(language) ? 'right-0 rounded-l-md rounded-r-none' : 'left-0'
+                    }`}
                 />
             )}
 
@@ -38,7 +48,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
                 <span
                     className={`font-medium text-md ${
                         isActive ? 'text-[#2B011C]' : 'text-[#6F6F6F]'
-                    } flex-1 truncate`}
+                    } flex-1 truncate ${isRTL(language) ? 'text-right' : ''}`}
                 >
                     {text}
                 </span>
@@ -48,9 +58,12 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 };
 
 export const Sidebar: React.FC = () => {
-    const {t} = useTranslation('Dashboard');
+    const {t, i18n} = useTranslation('Dashboard');
     const location = useLocation();
     const [isCollapsed, setIsCollapsed] = useState(false);
+
+    const currentDirection = i18n.dir();
+    const isRTL = currentDirection === 'rtl';
 
     const toggleSidebar = () => {
         setIsCollapsed(!isCollapsed);
@@ -105,24 +118,36 @@ export const Sidebar: React.FC = () => {
 
     return (
         <div
-            className={`bg-white h-full transition-all duration-300 shadow-iw-sidebar flex flex-col items-start absolute top-0 left-0 z-30 sm:relative sm:w-64 ${
-                isCollapsed ? 'w-5 sm:w-[96px]' : 'w-64'
-            }`}
+            className={`bg-white h-full transition-all duration-300 shadow-iw-sidebar flex flex-col items-start absolute top-0 z-30 sm:relative sm:w-64 ${
+                isRTL ? 'right-0' : 'left-0'
+            } ${isCollapsed ? 'w-5 sm:w-[96px]' : 'w-64'}`}
         >
             <button
                 onClick={toggleSidebar}
-                className="absolute top-1/4 sm:top-9 right-[-20px] p-2 z-40"
+                className={`absolute top-1/4 sm:top-9 p-2 z-40 ${
+                    isRTL ? 'left-[-20px]' : 'right-[-20px]'
+                }`}
             >
                 <img
                     src={CollapseIcon}
                     alt="Collapse"
                     className={`transform ${
-                        isCollapsed && 'rotate-180'
+                        isCollapsed
+                            ? isRTL
+                                ? ''
+                                : 'rotate-180'
+                            : isRTL
+                            ? 'rotate-180'
+                            : ''
                     } transition-transform duration-300 min-w-[26px] min-h-[26px]`}
                 />
             </button>
 
-            <div className="flex flex-col space-y-2 mt-6 sm:mt-7 w-full pr-4">
+            <div
+                className={`flex flex-col space-y-2 mt-6 sm:mt-7 w-full ${
+                    isRTL ? 'pl-4' : 'pr-4'
+                }`}
+            >
                 {sidebarItems.map((item, index) => (
                     <SidebarItem
                         key={index}
