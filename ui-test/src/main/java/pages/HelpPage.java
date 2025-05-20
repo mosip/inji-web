@@ -23,20 +23,20 @@ public class HelpPage extends BasePage {
     }
 
     public boolean isHelpPageFAQTitelTextDisplayed() {
-        return isElementIsVisible(driver, By.xpath("//*[@data-testid='Help-Item-Title-Text']"));
+        return isElementIsVisible(driver, By.xpath("//*[@data-testid='Faq-Item-Title-Text']"));
     }
 
     public boolean isUpArrowDisplayed() {
-        return isElementIsVisible(driver, By.xpath("//*[@data-testid='Help-Item-UpArrow']"));
+        return isElementIsVisible(driver, By.xpath("//*[@data-testid='Faq-Item-UpArrow']"));
     }
 
     public int getUpArrowCount() {
-        List<WebElement> upArrowElements = driver.findElements(By.xpath("//*[@data-testid='Help-Item-UpArrow']"));
+        List<WebElement> upArrowElements = driver.findElements(By.xpath("//*[@data-testid='Faq-Item-UpArrow']"));
         return upArrowElements.size();
     }
 
     public int getDownArrowCount() {
-        List<WebElement> upArrowElements = driver.findElements(By.xpath("//*[@data-testid='Help-Item-DownArrow']"));
+        List<WebElement> upArrowElements = driver.findElements(By.xpath("//*[@data-testid='Faq-Item-DownArrow']"));
         return upArrowElements.size();
     }
 
