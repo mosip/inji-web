@@ -13,8 +13,13 @@ import {
 import {useUser} from '../../hooks/useUser';
 import {DropdownItem} from './types';
 import HamburgerMenu from '../../assets/HamburgerMenu.svg';
+import {isRTL} from '../../utils/i18n';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../types/redux';
+import { useTranslation } from 'react-i18next';
 
 export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
+    const language = useSelector((state: RootState) => state.common.language);
     const navigate = useNavigate();
     const [displayName, setDisplayName] = useState<string | undefined>(
         undefined
@@ -27,6 +32,7 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
     const {user, removeUser} = useUser();
     const displayNameFromLocalStorage = user?.displayName;
     const hasProfilePictureUrl = user?.profilePictureUrl;
+    const {t} = useTranslation('Dashboard');
 
     useEffect(() => {
         setDisplayName(displayNameFromLocalStorage);
@@ -67,7 +73,6 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
             if (response.ok) {
                 removeUser();
                 localStorage.removeItem('walletId');
-                localStorage.setItem('isLoggedOutManually', 'true');
                 window.location.replace('/');
             } else {
                 const parsedResponse = await response.json();
@@ -86,7 +91,7 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
 
     const dropdownItems: DropdownItem[] = [
         {
-            label: 'Profile',
+            label: t('ProfileDropdown.profile'),
             onClick: () => {
                 setIsProfileDropdownOpen(false);
                 navigate('profile');
@@ -94,7 +99,7 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
             textColor: 'text-gray-700'
         },
         {
-            label: 'FAQ',
+            label: t('ProfileDropdown.faq'),
             onClick: () => {
                 setIsProfileDropdownOpen(false);
                 navigate('faq', {state: {from: window.location.pathname}});
@@ -102,7 +107,7 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
             textColor: 'text-gray-700'
         },
         {
-            label: 'Logout',
+            label: t('ProfileDropdown.logout'),
             onClick: handleLogout,
             textColor: 'text-red-700'
         }
@@ -147,10 +152,10 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
             className="fixed top-0 left-0 right-0 z-20 bg-iw-background bg-transparent shadow-[0_4px_5px_0_rgba(0,0,0,0.051)]"
         >
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                <div className="flex items-center gap-7">
+                <div className="flex justify-start items-center gap-2">
                     <div
                         data-testid="Hamburger-Menu"
-                        className="block sm:hidden w-full"
+                        className="block sm:hidden"
                     >
                         <img
                             data-testid="Hamburger-Menu-icon"
@@ -161,13 +166,22 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
                             className="cursor-pointer"
                         />
                     </div>
-                    <img
-                        data-testid="Inji-Wallet-Logo"
-                        src={require('../../assets/InjiWebLogo.png')}
-                        className="h-13 w-28 scale-150 cursor-pointer"
-                        alt="Inji Web Logo"
-                        onClick={() => navigate('/')}
-                    />
+                    <div
+                        className="w-[130px] sm:w-[160px] md:w-[170px]"
+                        role={'button'}
+                        tabIndex={0}
+                        onMouseDown={() => navigate('/')}
+                        onKeyUp={() => navigate('/')}
+                    >
+                        <img
+                            src={require('../../assets/InjiWebLogo.png')}
+                            className={`max-w-full h-auto object-contain cursor-pointer ${
+                                isRTL(language) ? 'mr-4' : ''
+                            }`}
+                            data-testid="Header-InjiWeb-Logo"
+                            alt="Inji Web Logo"
+                        />
+                    </div>
                 </div>
 
                 <div className="flex items-center space-x-6">

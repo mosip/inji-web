@@ -59,6 +59,7 @@ export function useUser() {
             saveUser(userData);
         } catch (error) {
             console.error("Error occurred while fetching user profile:", error);
+            setUser(null);
             setErrorObj(error as ErrorObj)
             throw error;
         }

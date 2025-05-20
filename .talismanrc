@@ -32,6 +32,6 @@ fileignoreconfig:
 - filename: inji-web/src/__tests__/components/Dashboard/EmptyDocument.test.tsx
   checksum: 04480270c63a07a1fea5fbe505d23531153cd26d37aa925571f4e3dadbb36e9c
 - filename: inji-web/src/components/Dashboard/Header.tsx
-  checksum: 5f47edd85bf6f95ee5a1cedb6f929ac3ccb8ac8a237215e230d53ddec28568f3
+  checksum: 17e83d03f4de5a55cad578058375557fb4971c1ad43141cec18d55938aafa01d
 
 version: ""

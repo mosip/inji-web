@@ -318,6 +318,11 @@
       "emptyScreen": {
         "title": "No Credentials Stored!"
       }
+    },
+    "ProfileDropdown": {
+      "profile": "Profile",
+      "faq": "FAQ",
+      "logout": "Logout"
     }
   }
 }

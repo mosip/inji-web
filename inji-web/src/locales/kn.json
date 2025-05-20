@@ -318,6 +318,11 @@
       "emptyScreen": {
         "title": "ಯಾವುದೇ ರುಜುವಾತುಗಳನ್ನು ಸಂಗ್ರಹಿಸಲಾಗಿಲ್ಲ!"
       }
+    },
+    "ProfileDropdown": {
+      "profile": "ಪ್ರೊಫೈಲ್",
+      "faq": "FAQ",
+      "logout": "ಲಾಗ್ಔಟ್"
     }
   }
 }

@@ -1,13 +1,10 @@
-import { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useUser } from "../../../hooks/useUser";
+import {useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useUser} from '../../../hooks/useUser';
 
 const LoginSessionStatusChecker = () => {
     const navigate = useNavigate();
-    const location = useLocation();
     const {user, removeUser, fetchUserProfile} = useUser();
-    const isLoggedOutManually = localStorage.getItem('isLoggedOutManually');
     const fetchSessionAndUserInfo = async () => {
         try {
             await fetchUserProfile();
@@ -21,14 +18,7 @@ const LoginSessionStatusChecker = () => {
 
             // Check if the error occurred due to invalid or expired session
             if (error.errorCode === 'session_invalid_or_expired') {
-                if (isLoggedOutManually) {
-                    localStorage.removeItem('isLoggedOutManually');
-                } else {
-                    toast.error(
-                        'You are not logged in. Please login to continue.'
-                    );
-                    navigate('/login');
-                }
+                navigate('/login');
             }
         }
     };

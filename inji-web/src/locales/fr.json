@@ -318,6 +318,11 @@
       "emptyScreen": {
         "title": "Aucune information d'identification stockée !"
       }
+    },
+    "ProfileDropdown": {
+      "profile": "Profil",
+      "faq": "FAQ",
+      "logout": "Déconnexion"
     }
   }
 }
