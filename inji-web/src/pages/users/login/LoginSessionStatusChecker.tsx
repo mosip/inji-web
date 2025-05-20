@@ -7,7 +7,7 @@ const LoginSessionStatusChecker = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const {user, removeUser, fetchUserProfile} = useUser();
-
+    const isLoggedOutManually = localStorage.getItem('isLoggedOutManually');
     const fetchSessionAndUserInfo = async () => {
         try {
             await fetchUserProfile();
@@ -20,9 +20,15 @@ const LoginSessionStatusChecker = () => {
             window.dispatchEvent(new Event("displayNameUpdated"));
 
             // Check if the error occurred due to invalid or expired session
-            if (error.errorCode === "session_invalid_or_expired") {
-                toast.error("You are not logged in. Please login to continue.");
-                navigate("/login");
+            if (error.errorCode === 'session_invalid_or_expired') {
+                if (isLoggedOutManually) {
+                    localStorage.removeItem('isLoggedOutManually');
+                } else {
+                    toast.error(
+                        'You are not logged in. Please login to continue.'
+                    );
+                    navigate('/login');
+                }
             }
         }
     };
@@ -33,7 +39,7 @@ const LoginSessionStatusChecker = () => {
 
     useEffect(() => {
         const handleStorageChange = (event: any) => {
-            if (event.key === "displayName") {
+            if (event.key === 'displayName') {
                 fetchSessionAndUserInfo();
             }
         };

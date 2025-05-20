@@ -67,6 +67,7 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
             if (response.ok) {
                 removeUser();
                 localStorage.removeItem('walletId');
+                localStorage.setItem('isLoggedOutManually', 'true');
                 window.location.replace('/');
             } else {
                 const parsedResponse = await response.json();
