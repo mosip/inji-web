@@ -23,8 +23,7 @@ export class api {
             return {
                 "Content-Type": "application/json"
             };
-        },
-        credentials:"include"
+        }
     };
     static fetchSpecificIssuer: ApiRequest = {
         url: (issuerId: string) => api.mimotoHost + `/issuers/${issuerId}`,
@@ -33,8 +32,7 @@ export class api {
             return {
                 "Content-Type": "application/json"
             };
-        },
-        credentials:"include"
+        }
     };
     static fetchIssuersConfiguration: ApiRequest = {
         url: (issuerId: string) =>
@@ -44,8 +42,7 @@ export class api {
             return {
                 "Content-Type": "application/json"
             };
-        },
-        credentials:"include"
+        }
     };
     static fetchTokenAnddownloadVc: ApiRequest = {
         url: () => api.mimotoHost + `/credentials/download`,
@@ -56,8 +53,7 @@ export class api {
                 "Content-Type": "application/x-www-form-urlencoded",
                 "Cache-Control": "no-cache, no-store, must-revalidate"
             };
-        },
-        credentials:"include"
+        }
     };
     static authorization = (
         currentIssuer: IssuerObject,
@@ -97,8 +93,7 @@ export class api {
             return {
                 "Content-Type": "application/json"
             };
-        },
-        credentials:"include"
+        }
     };
 
     // Fetch wallets API
@@ -121,8 +116,7 @@ export class api {
             return {
                 "Content-Type": "application/json"
             };
-        },
-        credentials:"include"
+        }
     };
 
     // Fetch wallet details by walletId
@@ -150,8 +144,7 @@ export class api {
                 "Content-Type": "application/x-www-form-urlencoded",
                 "Cache-Control": "no-cache, no-store, must-revalidate"
             };
-        },
-        credentials:"include"
+        }
     };
 
     static fetchWalletVCs: ApiRequest = {
@@ -167,8 +160,7 @@ export class api {
             return {
                 "Content-Type": "application/json"
             };
-        },
-        credentials:"include"
+        }
     };
 
     static fetchWalletCredentialPreview: ApiRequest = {
@@ -184,7 +176,6 @@ export class api {
             return {
                 "Content-Type": "application/json"
             };
-        },
-        credentials:"include"
+        }
     };
 }

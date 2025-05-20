@@ -77,7 +77,7 @@ export type ApiRequest = {
     url: (...args: string[]) => string;
     methodType: MethodType;
     headers: (...args: string[]) => any;
-    credentials:RequestCredentials;
+    credentials?:RequestCredentials;
 };
 
 export type LanguageObject = {

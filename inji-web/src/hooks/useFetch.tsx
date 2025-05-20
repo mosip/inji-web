@@ -12,13 +12,13 @@ export const useFetch = () => {
     const [error, setError] = useState<string>("");
     const [response, setResponse] = useState<any>("");
 
-    const fetchRequest = async (uri: string, method: MethodType, header: any, credential:RequestCredentials, body?: any) => {
+    const fetchRequest = async (uri: string, method: MethodType, header: any, credential?:RequestCredentials, body?: any) => {
         try {
             setState(RequestStatus.LOADING);
             const requestOptions = {
                 method: MethodType[method],
                 headers: header,
-                credentials: credential,
+                credentials: credential ?? "same-origin",
                 body: body
             }
             const response = await fetch(uri, requestOptions);
