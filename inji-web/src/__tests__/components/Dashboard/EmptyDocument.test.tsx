@@ -53,7 +53,7 @@ describe('Testing the Layout and Functionalities of EmptyDocument component', ()
     });
 
     it('should navigate to dashboard home when Add credential button is clicked in larger screens', () => {
-        setScreenWidth(400);
+        setScreenWidth(764);
 
         fireEvent.click(screen.getByTestId('Add-Credential'));
 
@@ -61,7 +61,7 @@ describe('Testing the Layout and Functionalities of EmptyDocument component', ()
     });
 
     it('should navigate to dashboard home when Add credential button in blank document is clicked in smaller screens', () => {
-        setScreenWidth(764);
+        setScreenWidth(400);
 
         fireEvent.click(screen.getByTestId('Add-Credential'));
 
