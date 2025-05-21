@@ -4,8 +4,8 @@ import {useTranslation} from 'react-i18next';
 import CollapseIcon from '../../assets/CollapseIcon.svg';
 import {SidebarItemProps} from './types';
 import {isRTL} from '../../utils/i18n';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../types/redux';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../types/redux';
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
     icon,
@@ -28,7 +28,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
                 className={`${
                     isCollapsed ? 'hidden sm:block' : 'block'
                 } flex items-center justify-center p-2 rounded-lg shadow-[0_-0.5px_4px_-1px_rgba(0,0,0,0.078),_0_4px_4px_-1px_rgba(0,0,0,0.078)] ${
-                    isRTL(language) ? 'mr-6' : 'ml-6'
+                    isRTL(language) ? 'mr-6 ml-4' : 'ml-6 mr-4'
                 }`}
             >
                 {icon}
