@@ -2,7 +2,7 @@
   "PageTemplate": {
     "Header": {
       "home": "ಮುಖಪುಟ",
-      "help": "ಸಹಾಯ"
+      "faq": "ಎಫ್‌ಎಕ್ಯೂ (FAQ)"
     },
     "Footer": {
       "product": "ಒಂದು MOSIP ಉತ್ಪನ್ನ",
@@ -59,6 +59,38 @@
       "heading": "ನಿಮ್ಮ ಕ್ರೆಡೆನ್ಶಿಯಲ್ಗಳನ್ನು ತಕ್ಷಣ ಡೌನ್‌ಲೋಡ್ ಮಾಡಲು ತ್ವರಿತ ಸಲಹೆಗಳು",
       "toastText":"ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ",
       "buttontext": "ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ"
+    },
+    "Login": {
+      "loginTitle": "ಲಾಗಿನ್ ಮಾಡಿ",
+      "loginDescription":"ನಿಮ್ಮ ಖಾತೆಯನ್ನು ಬಳಸಿಕೊಂಡು ಲಾಗಿನ್ ಮಾಡಿ ಅಥವಾ ನಿಮ್ಮ ಗುರುತುಗಳಿಗೆ ಪ್ರವೇಶಿಸಲು ಅತಿಥಿಯಾಗಿ ಮುಂದುವರೆಯಿರಿ.",
+      "loginNote":"ಅತಿಥಿ ಮೋಡ್‌ನಲ್ಲಿ ಕೆಲವು ವೈಶಿಷ್ಟ್ಯಗಳು ಸೀಮಿತವಾಗಿರಬಹುದು.",
+      "loggingIn": "ಲಾಗಿನ್ ಆಗುತ್ತಿದೆ",
+      "loginGoogle": "Google ಮೂಲಕ ಮುಂದುವರಿಯಿರಿ",
+      "loginGuest": "ಅತಿಥಿಯಾಗಿ ಮುಂದುವರಿಯಿರಿ"
+    },
+    "LoginFailedModal": {
+      "failureMessage": "ಲಾಗಿನ್ ವಿಫಲವಾಗಿದೆ",
+      "failureDescription": "ನಿಮ್ಮ ಲಾಗಿನ್ ಪ್ರಯತ್ನ ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಪ್ರಮಾಣಪತ್ರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ",
+      "retry": "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ"
+    }
+  },
+  "PinPage": {
+    "submit": "ಸಮರ್ಪಿಸಿ",
+    "submitting": "ಸಮರ್ಪಿಸಲಾಗುತ್ತಿದೆ",
+    "setPasscode": "ಪಾಸ್‌ಕೋಡ್ ಹೊಂದಿಸಿ",
+    "enterPasscode": "ಪಾಸ್‌ಕೋಡ್ ನಮೂದಿಸಿ",
+    "confirmPasscode": "ಪಾಸ್‌ಕೋಡ್ ದೃಢೀಕರಿಸಿ",
+    "resetPasscode": "ಪಾಸ್‌ಕೋಡ್ ಮರುಹೊಂದಿಸಿ",
+    "setPasscodeDescription": "ಪ್ರಾರಂಭಿಸಲು ನಿಮ್ಮ ಪಾಸ್‌ಕೋಡ್ ಹೊಂದಿಸಿ",
+    "enterPasscodeDescription": "ನಿಮ್ಮ 6 ಅಂಕಗಳ ಪಾಸ್‌ಕೋಡ್ ನಮೂದಿಸಿ",
+    "passcodeWarning": "ಭವಿಷ್ಯದಲ್ಲಿ ಲಾಗಿನ್ ಮಾಡಲು ಪಾಸ್‌ಕೋಡ್ ನೆನಪಿಡಿ",
+    "error": {
+      "walletNotFoundError": "ಪರ್ಸು ಕಂಡುಬಂದಿಲ್ಲ. ದಯವಿಟ್ಟು ಹೊಸದನ್ನು ರಚಿಸಿ.",
+      "pinLengthError": "ಪಿನ್ 6 ಸಂಖ್ಯೆಗಳಾಗಿರಬೇಕು.",
+      "passcodeMismatchError": "ಪಾಸ್ಕೋಡ್ ಹೊಂದಾಣಿಕೆಯಾಗಿಲ್ಲ.",
+      "createWalletError": "ಪರ್ಸು ರಚನೆ ವಿಫಲವಾಗಿದೆ.",
+      "incorrectPinError": "ತಪ್ಪಾದ ಪಿನ್ ನಮೂದಿಸಲಾಗಿದೆ.",
+      "fetchWalletsError": "ಪರ್ಸುಗಳನ್ನು ಪಡೆಯಲು ವಿಫಲವಾಗಿದೆ."
     }
   },
   "IssuersPage": {
@@ -102,35 +134,35 @@
         "subTitle": "ಅಧಿವೇಶನ ಮಾನ್ಯವಾಗಿಲ್ಲ ಅಥವಾ ಅಧಿವೇಶನ ಪೂರ್ಣಗೊಂಡಿದೆ"
       },
       "verification": {
-        "err_missing_issuancedate": {
+        "errMissingIssuanceDate": {
           "title": "ಅಮಾನ್ಯ ವಿತರಣೆ ದಿನಾಂಕ",
           "subTitle": "ವಿತರಣಾ ದಿನಾಂಕ ಅಮಾನ್ಯವಾಗಿದೆ ಅಥವಾ ಭವಿಷ್ಯದಲ್ಲಿ ಹೊಂದಿಸಲಾಗಿದೆ. "
         },
-        "err_invalid_issuancedate": {
+        "errInvalidIssuanceDate": {
           "title": "ಅಮಾನ್ಯ ವಿತರಣೆ ದಿನಾಂಕ",
           "subTitle": "ವಿತರಣಾ ದಿನಾಂಕ ಅಮಾನ್ಯವಾಗಿದೆ ಅಥವಾ ಭವಿಷ್ಯದಲ್ಲಿ ಹೊಂದಿಸಲಾಗಿದೆ. "
         },
-        "err_issuance_date_is_future_date": {
+        "errIssuanceDateIsFutureDate": {
           "title": "ಅಮಾನ್ಯ ವಿತರಣೆ ದಿನಾಂಕ",
           "subTitle": "ವಿತರಣಾ ದಿನಾಂಕ ಅಮಾನ್ಯವಾಗಿದೆ ಅಥವಾ ಭವಿಷ್ಯದಲ್ಲಿ ಹೊಂದಿಸಲಾಗಿದೆ. "
         },
-        "err_invalid_expirationdate": {
+        "errInvalidExpirationDate": {
           "title": "ಅಮಾನ್ಯವಾದ ಮುಕ್ತಾಯ ದಿನಾಂಕ",
           "subTitle": "ಮುಕ್ತಾಯ ದಿನಾಂಕ ಅಮಾನ್ಯವಾಗಿದೆ. "
         },
-        "err_vc_expired": {
+        "errVcExpired": {
           "title": "ಅಮಾನ್ಯವಾದ ಮುಕ್ತಾಯ ದಿನಾಂಕ",
           "subTitle": "ಮುಕ್ತಾಯ ದಿನಾಂಕ ಅಮಾನ್ಯವಾಗಿದೆ. "
         },
-        "err_invalid_validfrom": {
+        "errInvalidValidFrom": {
           "title": "ಅಮಾನ್ಯವಾದ ಪ್ರಾರಂಭ ದಿನಾಂಕ",
           "subTitle": "ದಿನಾಂಕ ಅಮಾನ್ಯವಾಗಿದೆ ಅಥವಾ ಭವಿಷ್ಯದಲ್ಲಿ ಹೊಂದಿಸಲಾಗಿದೆ. "
         },
-        "err_valid_from_is_future_date": {
+        "errValidFromIsFutureDate": {
           "title": "ಅಮಾನ್ಯವಾದ ಪ್ರಾರಂಭ ದಿನಾಂಕ",
           "subTitle": "ದಿನಾಂಕ ಅಮಾನ್ಯವಾಗಿದೆ ಅಥವಾ ಭವಿಷ್ಯದಲ್ಲಿ ಹೊಂದಿಸಲಾಗಿದೆ. "
         },
-        "err_invalid_validuntil": {
+        "errInvalidValidUntil": {
           "title": "ಅಮಾನ್ಯವಾದ ಅಂತಿಮ ದಿನಾಂಕ",
           "subTitle": "ದಿನಾಂಕ ಅಮಾನ್ಯವಾಗಿದೆ. "
         }
@@ -144,12 +176,12 @@
   "AuthorizationPage": {
     "error": {
       "code": {
-        "invalid_redirect_uri": "ಪ್ರವೇಶವನ್ನು ನಿರಾಕರಿಸಲಾಗಿದೆ!",
-        "invalid_client": "ಪ್ರವೇಶವನ್ನು ನಿರಾಕರಿಸಲಾಗಿದೆ!"
+        "invalidRedirectUri": "ಪ್ರವೇಶವನ್ನು ನಿರಾಕರಿಸಲಾಗಿದೆ!",
+        "invalidClient": "ಪ್ರವೇಶವನ್ನು ನಿರಾಕರಿಸಲಾಗಿದೆ!"
       },
       "message": {
-        "invalid_redirect_uri": "ರುಜುವಾತುಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳಲು ಸಾಧ್ಯವಿಲ್ಲ ಏಕೆಂದರೆ ಅವುಗಳನ್ನು ವಿನಂತಿಸಿದವರನ್ನು ಗುರುತಿಸಲು ನಮಗೆ ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ",
-        "invalid_client": "ರುಜುವಾತುಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳಲು ಸಾಧ್ಯವಿಲ್ಲ ಏಕೆಂದರೆ ಅವುಗಳನ್ನು ವಿನಂತಿಸಿದವರನ್ನು ಗುರುತಿಸಲು ನಮಗೆ ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. "
+        "invalidRedirectUri": "ರುಜುವಾತುಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳಲು ಸಾಧ್ಯವಿಲ್ಲ ಏಕೆಂದರೆ ಅವುಗಳನ್ನು ವಿನಂತಿಸಿದವರನ್ನು ಗುರುತಿಸಲು ನಮಗೆ ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ",
+        "invalidClient": "ರುಜುವಾತುಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳಲು ಸಾಧ್ಯವಿಲ್ಲ ಏಕೆಂದರೆ ಅವುಗಳನ್ನು ವಿನಂತಿಸಿದವರನ್ನು ಗುರುತಿಸಲು ನಮಗೆ ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. "
       }
     }
   },

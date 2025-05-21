@@ -82,7 +82,8 @@ export class api {
             return {
                 "Content-Type": "application/json"
             };
-        }
+        },
+        credentials:"include"
     };
 
     static userLogout: ApiRequest = {
@@ -103,7 +104,8 @@ export class api {
             return {
                 "Content-Type": "application/json"
             };
-        }
+        },
+        credentials:"include"
     };
 
     // Post wallet API with PIN
@@ -126,7 +128,8 @@ export class api {
             return {
                 "Content-Type": "application/json"
             };
-        }
+        },
+        credentials:"include"
     };
 
     static downloadVCInloginFlow: ApiRequest = {

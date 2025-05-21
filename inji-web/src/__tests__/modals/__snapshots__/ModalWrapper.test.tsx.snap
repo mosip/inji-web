@@ -207,7 +207,7 @@ exports[`Test the Layout of the Modal Wrapper Snapshot test for ModalWrapper sty
               class="w-full"
             >
               <div
-                class="w-full bg-iw-primary text-center cursor-pointer items-center text-iw-text ml-2 font-bold text-sm px-6 py-3 rounded-lg shadow hover:shadow-lg mr-1 bg-gradient-to-r from-iw-primary to-iw-secondary"
+                class="w-full bg-iw-primary text-center cursor-pointer items-center text-iw-text font-bold text-sm px-6 py-3 rounded-lg shadow hover:shadow-lg mr-1  bg-gradient-to-r from-iw-primary to-iw-secondary "
               >
                 <button
                   class="text-white font-bold rounded-lg"

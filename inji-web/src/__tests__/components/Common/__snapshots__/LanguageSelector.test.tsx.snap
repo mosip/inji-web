@@ -51,7 +51,7 @@ exports[`Testing the Layout of Language Selector Check if the layout is matching
       class="relative inline-block ms-1"
     >
       <button
-        class="inline-flex items-center"
+        class="inline-flex items-center font-semibold"
         data-testid="Language-Selector-Button"
         type="button"
       >

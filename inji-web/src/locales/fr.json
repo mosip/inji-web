@@ -2,7 +2,7 @@
   "PageTemplate": {
     "Header": {
       "home": "Accueil",
-      "help": "Aide"
+      "faq": "FAQ"
     },
     "Footer": {
       "product": "Un produit MOSIP",
@@ -59,6 +59,38 @@
       "heading": "Conseils rapides pour télécharger instantanément vos identifiants",
       "toastText":"à venir",
       "buttontext": "Cliquez ici"
+    },
+    "Login": {
+      "loginTitle": "Se connecter",
+      "loginDescription":"Connectez-vous avec votre compte ou continuez en tant qu'invité pour accéder à vos identifiants.",
+      "loginNote":"Certaines fonctionnalités peuvent être limitées en mode invité.",
+      "loggingIn": "Connexion en cours",
+      "loginGoogle": "Continuer avec Google",
+      "loginGuest": "Continuer en tant qu'invité"
+    },
+    "LoginFailedModal": {
+      "failureMessage": "Échec de la connexion",
+      "failureDescription": "Votre tentative de connexion a échoué. Veuillez vérifier vos identifiants et réessayer",
+      "retry": "Réessayer"
+    }
+  },
+  "PinPage": {
+    "submit": "Soumettre",
+    "submitting": "Soumission en cours",
+    "setPasscode": "Définir le code d'accès",
+    "enterPasscode": "Entrer le code d'accès",
+    "confirmPasscode": "Confirmer le code d'accès",
+    "resetPasscode": "Réinitialiser le code d'accès",
+    "setPasscodeDescription": "Définissez votre code d'accès pour commencer",
+    "enterPasscodeDescription": "Entrez votre code d'accès à 6 chiffres",
+    "passcodeWarning": "Assurez-vous de vous souvenir du mot de passe pour une future connexion",
+    "error": {
+      "walletNotFoundError": "Aucun portefeuille trouvé. Veuillez en créer un.",
+      "pinLengthError": "Le code PIN doit comporter 6 chiffres.",
+      "passcodeMismatchError": "Les codes PIN ne correspondent pas.",
+      "createWalletError": "Échec de la création du portefeuille.",
+      "incorrectPinError": "Code PIN incorrect.",
+      "fetchWalletsError": "Échec du chargement des portefeuilles."
     }
   },
   "IssuersPage": {
@@ -102,35 +134,35 @@
         "subTitle": "la session n'est pas valide ou la session est terminée"
       },
       "verification": {
-        "err_missing_issuancedate": {
+        "errMissingIssuanceDate": {
           "title": "Date d'émission invalide",
           "subTitle": "La date d'émission est invalide ou fixée dans le futur. "
         },
-        "err_invalid_issuancedate": {
+        "errInvalidIssuanceDate": {
           "title": "Date d'émission invalide",
           "subTitle": "La date d'émission est invalide ou fixée dans le futur. "
         },
-        "err_issuance_date_is_future_date": {
+        "errIssuanceDateIsFutureDate": {
           "title": "Date d'émission invalide",
           "subTitle": "La date d'émission est invalide ou fixée dans le futur. "
         },
-        "err_invalid_expirationdate": {
+        "errInvalidExpirationDate": {
           "title": "Date d'expiration invalide",
           "subTitle": "La date d'expiration n'est pas valide. "
         },
-        "err_vc_expired": {
+        "errVcExpired": {
           "title": "Date d'expiration invalide",
           "subTitle": "La date d'expiration n'est pas valide. "
         },
-        "err_invalid_validfrom": {
+        "errInvalidValidFrom": {
           "title": "Date de début invalide",
           "subTitle": "La date n'est pas valide ou est définie dans le futur. "
         },
-        "err_valid_from_is_future_date": {
+        "errValidFromIsFutureDate": {
           "title": "Date de début invalide",
           "subTitle": "La date n'est pas valide ou est définie dans le futur. "
         },
-        "err_invalid_validuntil": {
+        "errInvalidValidUntil": {
           "title": "Date de fin invalide",
           "subTitle": "La date n'est pas valide. "
         }
@@ -144,12 +176,12 @@
   "AuthorizationPage": {
     "error": {
       "code": {
-        "invalid_redirect_uri": "Accès refusé!",
-        "invalid_client": "Accès refusé!"
+        "invalidRedirectUri": "Accès refusé!",
+        "invalidClient": "Accès refusé!"
       },
       "message": {
-        "invalid_redirect_uri": "Les informations d’identification ne peuvent pas être partagées car nous n’avons pas pu identifier qui les a demandées. ",
-        "invalid_client": "Les informations d’identification ne peuvent pas être partagées car nous n’avons pas pu identifier qui les a demandées. "
+        "invalidRedirectUri": "Les informations d’identification ne peuvent pas être partagées car nous n’avons pas pu identifier qui les a demandées. ",
+        "invalidClient": "Les informations d’identification ne peuvent pas être partagées car nous n’avons pas pu identifier qui les a demandées. "
       }
     }
   },

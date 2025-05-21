@@ -1,129 +1,65 @@
-import React, {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
-import {api} from "../../../utils/api";
+import { FcGoogle } from "react-icons/fc";
+import React, { useState} from "react";
+import { useNavigate } from "react-router-dom";
+import '../../../index.css'; 
+import { useTranslation } from "react-i18next";
+import { BorderedButton } from "../../../components/Common/Buttons/BorderedButton";
+import { GoogleSignInButton } from "../../../components/Common/Buttons/GoogleSignInButton";
 
-const Login: React.FC = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [isProfileFetched, setIsProfileFetched] = useState(false);
-    const navigate = useNavigate();
+export const Login: React.FC = () => {
+  const { t } = useTranslation("HomePage");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-    const handleGoogleLogin = () => {
-        setIsLoading(true);
-        setError(null);
-        window.location.href =
-            window._env_.MIMOTO_URL + "/oauth2/authorize/google";
-    };
+  const handleGoogleLogin = () => {
+      setIsLoading(true);
+      window.location.href =
+          window._env_.MIMOTO_URL + "/oauth2/authorize/google";
+  };
 
-    useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        const status = params.get("status");
-
-        if (status === "success") {
-            setIsLoading(false);
-            fetchUserProfile();
-        } else if (status === "error") {
-            setIsLoading(false);
-            setError(params.get("error_message"));
-        }
-    }, [navigate]);
-
-    const fetchUserProfile = async () => {
-        try {
-            const response = await fetch(api.fetchUserProfile.url(), {
-                method: api.fetchUserProfile.methodType === 0 ? "GET" : "POST",
-                headers: {
-                    ...api.fetchUserProfile.headers()
-                },
-                credentials: "include"
-            });
-
-            const responseData = await response.json();
-            if (response.ok) {
-                if (responseData.display_name) {
-                    localStorage.setItem(
-                        "displayName",
-                        responseData.display_name
-                    );
-                }
-                setIsProfileFetched(true);
-            } else {
-                setError(responseData.errorMessage);
-                throw responseData;
-            }
-        } catch (error) {
-            console.error("Error occurred while fetching user profile:", error);
-            setError("Failed to fetch user profile");
-        }
-    };
-
-    useEffect(() => {
-        if (isProfileFetched) {
-            window.location.replace("/pin");
-        }
-    }, [isProfileFetched, navigate]);
-
-    const containerStyle: React.CSSProperties = {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        backgroundColor: "#f4f7fc"
-    };
-
-    const buttonStyle: React.CSSProperties = {
-        padding: "10px 20px",
-        fontSize: "16px",
-        color: "white",
-        backgroundColor: "#4285f4",
-        border: "none",
-        borderRadius: "5px",
-        cursor: "pointer",
-        transition: "background-color 0.3s ease"
-    };
-
-    const buttonHoverStyle: React.CSSProperties = {
-        ...buttonStyle,
-        backgroundColor: "#357ae8"
-    };
-
-    const buttonDisabledStyle: React.CSSProperties = {
-        ...buttonStyle,
-        backgroundColor: "#cccccc",
-        cursor: "not-allowed"
-    };
-
-    const errorStyle: React.CSSProperties = {
-        color: "red",
-        marginTop: "10px",
-        fontSize: "14px"
-    };
-
+  const Separator:React.FC=()=>{
     return (
-        <div style={containerStyle}>
-            <button
-                onClick={handleGoogleLogin}
-                disabled={isLoading}
-                style={isLoading ? buttonDisabledStyle : buttonStyle}
-                onMouseEnter={(e) => {
-                    if (!isLoading) {
-                        (e.target as HTMLElement).style.backgroundColor =
-                            "#357ae8";
-                    }
-                }}
-                onMouseLeave={(e) => {
-                    if (!isLoading) {
-                        (e.target as HTMLElement).style.backgroundColor =
-                            "#4285f4";
-                    }
-                }}
-            >
-                {isLoading ? "Logging in..." : "Login with Google"}
-            </button>
-            {error && <p style={errorStyle}>{error}</p>}
-        </div>
+      <div className="flex items-center w-full my-2 sm:my-5">
+        <hr className="flex-grow border-t border-gray-300" />
+        <span className="px-4 text-gray-500 text-sm">OR</span>
+        <hr className="flex-grow border-t border-gray-300" />
+      </div>
     );
+  }
+  
+  return (
+    <div className="flex flex-col items-center justify-center w-[100%] max-w-[400px] mx-auto rounded-2xl">
+        <div data-testid="login-logo" className="flex justify-center items-center">
+          <img src={require("../../../assets/Logomark.png")} alt="Inji Web Logo" />
+        </div>
+
+        <div data-testid="login-title" className="text-2xl sm:text-3xl text-black font-semibold  text-center py-4">
+          {t("Login.loginTitle")}
+        </div>
+
+        <div data-testid="login-description" className="sm:mt-3 text-sm sm:text-base font-light text-ellipsis text-center pb-0">
+          {t("Login.loginDescription")}
+        </div>
+
+        <div data-testid="login-note" className="sm:my-3 text-sm font-light text-ellipsis text-center pb-4">
+          {t("Login.loginNote")}
+        </div >
+
+        <GoogleSignInButton handleGoogleLogin={handleGoogleLogin} loadingText={t("Login.loggingIn")} text={t("Login.loginGoogle")}/>
+
+        <Separator/>
+
+        <div className="w-full">
+          <BorderedButton 
+              testId="HomeBanner-Guest-Login" 
+              onClick={() => navigate("/issuers")}
+              title={
+              t("Login.loginGuest")
+            } 
+          />
+        </div>
+    </div>
+  );
 };
 
 export default Login;

@@ -1,29 +1,42 @@
 import React from "react";
-import {PlainButton} from "../Common/Buttons/PlainButton";
+import Login from "../../pages/users/login/Login"; // Import your existing login component
 import { useTranslation } from "react-i18next";
 
-export const HomeBanner: React.FC<HomeBannerProps> = (props) => {
-    const {t} = useTranslation("HomePage");
-    return (
-        <div data-testid="HomeBanner-Container" className="py-2 pb-10">
-            <div 
-                data-testid="HomeBanner-Content" 
-                className="mt-8 sm:mx-[4%] sm:rounded-xl pt-12 pb-6 sm:pt-16 sm:pb-8 px-[2%] sm:px-[5%] flex flex-col justify-center items-center bg-home-banner h-1/6"
-            >
-                <span data-testid="HomeBanner-Heading" className="text-4xl sm:text-5xl text-iw-text font-semibold text-wrap w-full sm:w-[80%] text-center pb-4">
-                    {t("Banner.heading")}
-                </span>
-                <span data-testid="HomeBanner-Description" className="text-iw-text text-xl font-extralight w-[90%] sm:w-[75%] text-pretty text-center pb-8">
-                    {t("Banner.description")}
-                </span>
-                <div data-testid="HomeBanner-ButtonContainer" className="w-[95%] sm:w-48">
-                    <PlainButton testId="HomeBanner-Get-Started" onClick={props.onClick} title={t("Banner.buttontext")} />
-                </div>
-            </div>
-        </div>
-    );
-}
+export const HomeBanner: React.FC = () => {
+  const { t } = useTranslation("HomePage");
 
-export type HomeBannerProps = {
-    onClick: () => void
-}
+  return (
+    <div className="pb-10">
+      {/* Banner content */}
+      <div
+        data-testid="HomeBanner-Content"
+        className="mx-auto sm:w-[86.9vw] max-w-[1400px] sm:rounded-xl sm:mt-6 sm:pt-24 pt-16 sm:pb-12 
+          px-3 flex flex-col sm:flex-row sm:gap-10 justify-between items-center bg-home-banner bg-cover bg-center"
+      >
+        {/* Left side: Text Component*/}
+        <div className="sm:px-10 flex flex-col sm:w-1/2 items-start text-center sm:text-left">
+  
+          {/* Banner heading */}
+          <span 
+            data-testid="HomeBanner-Heading"  
+            className="text-4xl sm:text-6xl text-iw-text font-medium sm:font-semibold text-wrap text-center sm:text-left leading-none sm:pb-4 md:leading-tight"
+          >
+            {t("Banner.heading")}
+          </span>
+  
+          {/* Banner description */}
+          <h2 className="text-sm sm:text-xl w-full sm:w-[80%] my-6 sm:my-6 text-iw-text font-extralight leading-relaxed">
+            {t("Banner.description")}
+          </h2>
+        </div>
+  
+        {/* Right side: Login Component */}
+        <div className="px-6 flex flex-col sm:flex-row w-full sm:w-[35%] bg-white mb-14 mx-14 py-6 sm:py-8 rounded-xl shadow-md items-center">
+          <Login/>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default HomeBanner;

@@ -2,9 +2,7 @@
   "PageTemplate": {
     "Header": {
       "home": "Home",
-      "help": "Help",
-      "login": "Login",
-      "logout": "Logout"
+      "faq": "FAQ"
     },
     "Footer": {
       "product": "A MOSIP Product",
@@ -61,6 +59,38 @@
       "heading":"Quick Tips for Instantly Downloading Your Credentials",
       "toastText":"Coming soon",
       "buttontext":"Click Here"
+    },
+    "Login":{
+      "loginTitle":"Log In",
+      "loginDescription":"Log in with your account or continue as a guest to access your credentials.",
+      "loginNote":"Some features may be limited in guest mode.",
+      "loggingIn":"Logging in",
+      "loginGoogle":"Continue with Google",
+      "loginGuest":"Continue as Guest"
+    },
+    "LoginFailedModal":{
+      "failureMessage":"Login Failed",
+      "failureDescription":"Your login attempt has failed. Please check your credentials and try again",
+      "retry":"Retry"
+    }
+  },
+  "PinPage":{
+    "submit":"Submit",
+    "submitting":"Submitting",
+    "setPasscode":"Set Passcode",
+    "enterPasscode":"Enter Passcode",
+    "confirmPasscode":"Confirm Passcode",
+    "resetPasscode":"Reset Passcode",
+    "setPasscodeDescription":"Set your passcode to get started",
+    "enterPasscodeDescription":"Enter your 6 digit passcode",
+    "passcodeWarning":"Make sure you remember the password for future login",
+    "error":{
+      "walletNotFoundError":"Wallet not found",
+      "pinLengthError":"Please Enter 6 digits in the Pin",
+      "passcodeMismatchError":"Pin did not match",
+      "createWalletError":"Wallet creation unsuccessful",
+      "incorrectPinError":"Incorrect pin entered",
+      "fetchWalletsError":"Error in fetching wallets"
     }
   },
   "IssuersPage": {
@@ -104,35 +134,35 @@
         "subTitle": "session is not valid or session is completed"
       },
       "verification": {
-        "err_missing_issuancedate": {
+        "errMissingIssuanceDate": {
           "title": "Invalid Issuance Date",
           "subTitle": "Issuance date is invalid or set in the future. Check for a valid date."
         },
-        "err_invalid_issuancedate": {
+        "errInvalidIssuanceDate": {
           "title": "Invalid Issuance Date",
           "subTitle": "Issuance date is invalid or set in the future. Check for a valid date."
         },
-        "err_issuance_date_is_future_date": {
+        "errIssuanceDateIsFutureDate": {
           "title": "Invalid Issuance Date",
           "subTitle": "Issuance date is invalid or set in the future. Check for a valid date."
         },
-        "err_invalid_expirationdate": {
+        "errInvalidExpirationDate": {
           "title": "Invalid Expiration Date",
           "subTitle": "Expiration date is invalid. Check for a valid date"
         },
-        "err_vc_expired": {
+        "errVcExpired": {
           "title": "Invalid Expiration Date",
           "subTitle": "Expiration date is invalid. Check for a valid date"
         },
-        "err_invalid_validfrom": {
+        "errInvalidValidFrom": {
           "title": "Invalid Start Date",
           "subTitle": "Date is invalid or set in the future. Check for a valid date."
         },
-        "err_valid_from_is_future_date": {
+        "errValidFromIsFutureDate": {
           "title": "Invalid Start Date",
           "subTitle": "Date is invalid or set in the future. Check for a valid date."
         },
-        "err_invalid_validuntil": {
+        "errInvalidValidUntil": {
           "title": "Invalid End Date",
           "subTitle": "Date is invalid. Check for a valid date"
         }
@@ -146,12 +176,12 @@
   "AuthorizationPage": {
     "error": {
       "code": {
-        "invalid_redirect_uri":"Access Denied!",
-        "invalid_client": "Access Denied!"
+        "invalidRedirectUri":"Access Denied!",
+        "invalidClient": "Access Denied!"
       },
       "message": {
-        "invalid_redirect_uri":"Credentials cannot be shared because we couldn’t identify who requested them. Please contact the admin for help.",
-        "invalid_client": "Credentials cannot be shared because we couldn’t identify who requested them. Please contact the admin for help."
+        "invalidRedirectUri":"Credentials cannot be shared because we couldn’t identify who requested them. Please contact the admin for help.",
+        "invalidClient": "Credentials cannot be shared because we couldn’t identify who requested them. Please contact the admin for help."
       }
     }
   },

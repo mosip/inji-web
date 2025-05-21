@@ -39,8 +39,10 @@ export const CredentialsPage: React.FC = () => {
             let response = await fetchRequest(
                 apiRequest.url(params.issuerId ?? ""),
                 apiRequest.methodType,
-                apiRequest.headers()
+                apiRequest.headers(),
+                apiRequest.credentials
             );
+
             dispatch(storeSelectedIssuer(response?.response));
             setSelectedIssuer(response?.response);
 
@@ -48,7 +50,9 @@ export const CredentialsPage: React.FC = () => {
             response = await fetchRequest(
                 apiRequest.url(params.issuerId ?? ""),
                 apiRequest.methodType,
-                apiRequest.headers()
+                apiRequest.headers(),
+                apiRequest.credentials
+                
             );
 
             dispatch(storeFilteredCredentials(response?.response));

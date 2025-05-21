@@ -1,8 +1,8 @@
 {
   "PageTemplate": {
     "Header": {
-      "home": "Página inicial",
-      "help": "Ajuda"
+      "home": "Início",
+      "faq": "Perguntas Frequentes"
     },
     "Footer": {
       "product": "Um produto MOSIP",
@@ -59,6 +59,38 @@
       "heading":"Dicas rápidas para baixar suas credenciais instantaneamente",
       "toastText":"Em breve",
       "buttontext":"Clique aqui"
+    },
+    "Login": {
+      "loginTitle": "Entrar",
+      "loginDescription":"Faça login com sua conta ou continue como convidado para acessar suas credenciais.",
+      "loginNote":"Alguns recursos podem ser limitados no modo convidado.",
+      "loggingIn": "Entrando",
+      "loginGoogle": "Continuar com o Google",
+      "loginGuest": "Continuar como convidado"
+    },
+    "LoginFailedModal": {
+      "failureMessage": "Falha no login",
+      "failureDescription": "Sua tentativa de login falhou. Verifique suas credenciais e tente novamente",
+      "retry": "Tentar novamente"
+    }
+  },
+  "PinPage": {
+    "submit": "Enviar",
+    "submitting": "Enviando",
+    "setPasscode": "Definir código de acesso",
+    "enterPasscode": "Digite o código de acesso",
+    "confirmPasscode": "Confirmar código de acesso",
+    "resetPasscode": "Redefinir código de acesso",
+    "setPasscodeDescription": "Defina seu código de acesso para começar",
+    "enterPasscodeDescription": "Digite seu código de 6 dígitos",
+    "passcodeWarning": "Certifique-se de lembrar a senha para login futuro",
+    "error": {
+      "walletNotFoundError": "Nenhuma carteira encontrada. Crie uma.",
+      "pinLengthError": "O PIN deve ter 6 dígitos.",
+      "passcodeMismatchError": "Os PINs não coincidem.",
+      "createWalletError": "Falha na criação da carteira.",
+      "incorrectPinError": "PIN incorreto.",
+      "fetchWalletsError": "Erro ao buscar carteiras."
     }
   },
   "IssuersPage": {
@@ -136,12 +168,12 @@
   "AuthorizationPage": {
     "error": {
       "code": {
-        "invalid_redirect_uri": "Acesso negado!",
-        "invalid_client": "Acesso negado!"
+        "invalidRedirectUri": "Acesso negado!",
+        "invalidClient": "Acesso negado!"
       },
       "message": {
-        "invalid_redirect_uri": "As credenciais não podem ser compartilhadas porque não conseguimos identificar quem as solicitou. Entre em contato com o administrador para obter ajuda.",
-        "invalid_client": "As credenciais não podem ser compartilhadas porque não conseguimos identificar quem as solicitou. Entre em contato com o administrador para obter ajuda."
+        "invalidRedirectUri": "As credenciais não podem ser compartilhadas porque não conseguimos identificar quem as solicitou. Entre em contato com o administrador para obter ajuda.",
+        "invalidClient": "As credenciais não podem ser compartilhadas porque não conseguimos identificar quem as solicitou. Entre em contato com o administrador para obter ajuda."
       }
     }
   },
