@@ -8,6 +8,11 @@ import {useTranslation} from "react-i18next";
 import { useLocation } from 'react-router-dom';
 import {LoginFailedModal} from '../pages/users/login/LoginFailedModal'
 
+const Status = {
+    SUCCESS: "success",
+    FAILURE: "error"
+};
+
 export const HomePage: React.FC = () => {
     const {t} = useTranslation("HomePage");
     const [toastVisible, setToastVisible] = useState(false);
@@ -30,10 +35,10 @@ export const HomePage: React.FC = () => {
     // If google login is failing,show login failed modal 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
-        if (params.get('loginFailed') === 'true') {
+        if (params.get("status") === Status.FAILURE) {
           setLoginFailed(true);
         }
-      }, [location]);
+    }, [location]);
 
     const showToast = (message: string) => {
         if (toastVisible) return;

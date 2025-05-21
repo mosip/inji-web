@@ -169,16 +169,22 @@ export const PinPage: React.FC = () => {
     }
 
     try {
-        const unlockedWalletId=await fetchRequest(
-          api.fetchWalletDetails.url(walletId),
-          api.fetchWalletDetails.methodType,
-          api.fetchWalletDetails.headers({
-                    ...api.fetchWalletDetails.headers(),
-                    "X-XSRF-TOKEN": cookies["XSRF-TOKEN"]
-                }),
-          api.fetchWalletDetails.credentials,
-          JSON.stringify({ walletPin: pin })
-        )
+        const response = await fetch(api.fetchWalletDetails.url(walletId), {
+          method: api.fetchWalletDetails.methodType === 0 ? "GET" : "POST",
+          headers: {
+              ...api.fetchWalletDetails.headers(),
+              "X-XSRF-TOKEN": cookies["XSRF-TOKEN"]
+          },
+          credentials: "include",
+          body: JSON.stringify({ walletPin: pin })
+        });
+
+        const responseData = await response.json();
+        if (!response.ok) {
+            throw responseData;
+        }
+        const unlockedWalletId= responseData.walletId;
+
         localStorage.setItem("walletId", unlockedWalletId);
         setIsPinCorrect(true);
         navigate("/issuers"); // Redirect upon successful unlock
