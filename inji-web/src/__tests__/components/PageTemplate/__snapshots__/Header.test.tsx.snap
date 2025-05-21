@@ -4,10 +4,10 @@ exports[`Header Container Layout Test Check if the layout is matching with the s
 <DocumentFragment>
   <header
     class="fixed top-0 left-0 right-0 bg-iw-background py-7 z-10 shadow-[0_4px_5px_0_rgba(0,0,0,0.051)]"
-    data-testid="Header-Container"
   >
     <div
       class="container mx-auto flex justify-between items-center px-4"
+      data-testid="Header-Container"
     >
       <div
         class="flex flex-row space-x-9 justify-center items-center"
@@ -38,117 +38,37 @@ exports[`Header Container Layout Test Check if the layout is matching with the s
         >
           <img
             alt="Inji Web Logo"
-            class="h-13 w-28 scale-150 cursor-pointer "
+            class="h-6 w-36 flex-shrink-0 sm:h-8 sm:w-48 cursor-pointer"
             data-testid="Header-InjiWeb-Logo"
             src="InjiWebLogo.png"
           />
         </div>
       </div>
-      <nav>
-        <ul
-          class="flex space-x-10 items-center font-semibold"
-          data-testid="Header-Menu-Elements"
-        >
-          <li
-            data-testid="Header-Menu-Home"
-          >
-            <div
-              class="text-iw-title cursor-pointer hidden sm:inline-block"
-              data-testid="Header-Menu-Home-div"
-              role="button"
-              tabindex="0"
-            >
-              Home
-            </div>
-          </li>
-          <li
-            data-testid="Header-Menu-Faq"
-          >
-            <div
-              class="hidden sm:block font-semibold"
-              data-testid="Header-Menu-Faq-div"
-            >
-              <div
-                class="flex flex-row justify-center items-center"
-                data-testid="faq-dropdown-outer-div"
-                role="button"
-                tabindex="0"
-              >
-                <div
-                  class="relative inline-block ms-1"
-                >
-                  <button
-                    class="inline-flex items-center"
-                    data-testid="faq-dropdown-button"
-                    type="button"
-                  >
-                    <p
-                      data-testid="selected-dropDown"
-                    >
-                      FAQ
-                    </p>
-                    <svg
-                      height="0"
-                      width="0"
-                    >
-                      <lineargradient
-                        id="blue-gradient-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                        x1="0%"
-                        x2="100%"
-                        y1="0%"
-                        y2="100%"
-                      >
-                        <stop
-                          offset="0%"
-                          stop-color="var(--iw-color-primary)"
-                        />
-                        <stop
-                          offset="100%"
-                          stop-color="var(--iw-color-secondary)"
-                        />
-                      </lineargradient>
-                    </svg>
-                    <svg
-                      color="var(--iw-color-languageArrowIcon)"
-                      fill="currentColor"
-                      height="20"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      style="fill: url(#blue-gradient-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA);"
-                      viewBox="0 0 24 24"
-                      width="20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12 16L6 10H18L12 16Z"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li
-            data-testid="Header-Menu-Auth"
-          >
-            <div
-              class="text-iw-title cursor-pointer hidden sm:inline-block"
-              data-testid="Header-Menu-Auth-div"
-              role="button"
-              tabindex="0"
-            >
-              Login
-            </div>
-          </li>
-        </ul>
-      </nav>
       <div
-        class="font-semibold"
-        data-testid="Header-Menu-LanguageSelector"
+        class="flex flex-row space-x-4"
+        data-testid="Header-FAQ-LanguageSelector-Container"
       >
         <div
+          class="w-full"
+        >
+          <div
+            class="rounded-lg text-center cursor-pointer"
+          >
+            <div
+              class="py-2 px-4 rounded-lg bg-white"
+            >
+              <button
+                class="font-bold rounded-lg"
+                data-testid="Header-Menu-FAQ"
+              >
+                FAQ
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
           class="flex flex-row justify-center items-center"
-          data-testid="LanguageSelector-Outer-Div"
+          data-testid="Header-Menu-LanguageSelector"
           role="button"
           tabindex="0"
         >
@@ -195,7 +115,7 @@ exports[`Header Container Layout Test Check if the layout is matching with the s
             class="relative inline-block ms-1"
           >
             <button
-              class="inline-flex items-center"
+              class="inline-flex items-center font-semibold"
               data-testid="Language-Selector-Button"
               type="button"
             >

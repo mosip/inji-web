@@ -9,7 +9,7 @@ import {RiArrowDownSFill, RiArrowUpSFill} from "react-icons/ri";
 import {renderGradientText} from "../../utils/builder";
 import { GradientWrapper } from "./GradientWrapper";
   
-export const LanguageSelector: React.FC = () => {
+export const LanguageSelector: React.FC<{ "data-testid"?: string }> = ({ "data-testid": testId }) => {
     const dispatch = useDispatch();
     let language = useSelector((state: RootState) => state.common.language);
     language = language ?? window._env_.DEFAULT_LANG;
@@ -27,7 +27,7 @@ export const LanguageSelector: React.FC = () => {
     }
 
     return <div className={"flex flex-row justify-center items-center"}
-                data-testid={"LanguageSelector-Outer-Div"}
+                data-testid={testId ?? "LanguageSelector-Outer-Div"} 
                 onBlur={()=>setIsOpen(false)}
                 tabIndex={0}
                 role="button">
@@ -42,7 +42,7 @@ export const LanguageSelector: React.FC = () => {
         <div className="relative inline-block ms-1">
             <button
                 type="button"
-                className="inline-flex items-center"
+                className="inline-flex items-center font-semibold"
                 data-testid={"Language-Selector-Button"}
                 onMouseDown={() => setIsOpen(open => !isOpen)}>
                 <p data-testid={`Language-Selector-Selected-DropDown-${language}`}>{LanguagesSupported.find(lang => lang.value === language)?.label}</p>

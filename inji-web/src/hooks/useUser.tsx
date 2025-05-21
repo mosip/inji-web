@@ -1,19 +1,20 @@
-import {useState, useEffect} from "react";
-import { api } from "../utils/api";
+import {useState, useEffect} from 'react';
+import {api} from '../utils/api';
 
 export type User = {
     displayName: string;
     profilePictureUrl: string;
-}
+};
 
 type ErrorObj = {
     errorCode: string;
     errorMessage: string;
-}
+};
 
 export function useUser() {
     const [user, setUser] = useState<User | null>(null);
     const [errorObj, setErrorObj] = useState<ErrorObj | null>(null);
+    const [walletId, setWalletId] = useState<string | null>(null);
 
     useEffect(() => {
         const userData = localStorage.getItem("user");
@@ -57,13 +58,16 @@ export function useUser() {
             };
 
             saveUser(userData);
+            setWalletId(responseData.walletId);
         } catch (error) {
-            console.error("Error occurred while fetching user profile:", error);
+            console.error('Error fetching user profile:', error);
             setUser(null);
-            setErrorObj(error as ErrorObj)
+            setErrorObj(error as ErrorObj);
+            localStorage.removeItem('user');
+            localStorage.removeItem('walletId');
             throw error;
         }
     };
 
-    return {user, errorObj, saveUser, removeUser, fetchUserProfile};
+    return {user, errorObj, saveUser, removeUser, fetchUserProfile, walletId};
 }

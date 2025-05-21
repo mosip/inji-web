@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import React, {useEffect, useRef, useState} from 'react';
 import {IssuersPage} from './pages/IssuersPage';
 import {Header} from './components/PageTemplate/Header';
@@ -12,7 +12,6 @@ import {getDirCurrentLanguage} from './utils/i18n';
 import {PageNotFound} from './pages/PageNotFound';
 import {AuthorizationPage} from './pages/AuthorizationPage';
 import {HomePage} from './pages/HomePage';
-import Login from './pages/users/login/Login';
 import LoginSessionStatusChecker from './pages/users/login/LoginSessionStatusChecker';
 import PinForm from './pages/users/PinPage';
 import WalletCredentialsPage from './pages/users/login/WalletCredentialsPage';
@@ -127,7 +126,6 @@ export const AppRouter = () => {
                     path="/authorize"
                     element={wrapElement(<AuthorizationPage />)}
                 />
-                <Route path="/login" element={wrapElement(<Login />)} />
                 <Route path="/pin" element={wrapElement(<PinForm />)} />
                 <Route
                     path="/view/wallet/credentials"

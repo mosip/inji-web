@@ -4,22 +4,42 @@ import {useUser} from '../../../hooks/useUser';
 
 const LoginSessionStatusChecker = () => {
     const navigate = useNavigate();
-    const {user, removeUser, fetchUserProfile} = useUser();
+    const {user, removeUser, fetchUserProfile, walletId} = useUser();
     const fetchSessionAndUserInfo = async () => {
         try {
             await fetchUserProfile();
             if (user?.displayName) {
-                window.dispatchEvent(new Event("displayNameUpdated"));
+                window.dispatchEvent(new Event('displayNameUpdated'));
+            }
+
+            const cachedWalletId = walletId; // Wallet ID from cache
+            const localWalletId = localStorage.getItem('walletId'); // Stored in frontend
+
+            // // If wallet ID is missing or doesn't match, redirect to unlock flow
+            if (!cachedWalletId || cachedWalletId !== localWalletId) {
+                console.warn(
+                    'Wallet is locked or missing. Redirecting to unlock.'
+                );
+                navigate('/');
+                return;
+            }
+
+            //Determine unlock status via wallet ID match
+            if (cachedWalletId === localWalletId) {
+                console.info('Wallet is unlocked! Redirecting to `/issuers`.');
+                navigate('/issuers'); // Skip `/pin`
+            } else {
+                console.warn(
+                    'Wallet exists but is locked, redirecting to `/pin` to enter passcode.'
+                );
+                navigate('/pin'); // Enter passcode
             }
         } catch (error) {
-            console.error("Error occurred while fetching user profile:", error);
+            console.error('Error occurred while fetching user profile:', error);
             removeUser();
-            window.dispatchEvent(new Event("displayNameUpdated"));
-
-            // Check if the error occurred due to invalid or expired session
-            if (error.errorCode === 'session_invalid_or_expired') {
-                navigate('/login');
-            }
+            localStorage.removeItem('walletId');
+            window.dispatchEvent(new Event('displayNameUpdated'));
+            navigate('/');
         }
     };
 
@@ -34,8 +54,8 @@ const LoginSessionStatusChecker = () => {
             }
         };
 
-        window.addEventListener("storage", handleStorageChange);
-        return () => window.removeEventListener("storage", handleStorageChange);
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
     }, []);
 
     return null;

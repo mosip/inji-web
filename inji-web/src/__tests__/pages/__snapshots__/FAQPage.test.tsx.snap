@@ -39,7 +39,6 @@ exports[`Testing the Layout of FaqPage Check if the layout is matching with the 
         </div>
         <div
           class="w-full"
-          data-testid="Faq-Accordion-Container"
         >
           <div
             data-testid="Faq-Accordion-Container"
