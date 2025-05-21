@@ -173,7 +173,7 @@ Feature: Inji web multilanguage testing
     And User click on langauge button
     And User click on arabic langauge
     And User verify home screens in arabic
-    And User clicks on the help button
+    And User clicks on the Faq button
     And User verify the FAQ header and its description
     And User verify the only one FAQ is open
     And User verify the only one FAQ is at a time

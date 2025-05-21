@@ -15,7 +15,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 
-import pages.HelpPage;
+import pages.FaqPage;
 import pages.HomePage;
 import pages.SetNetwork;
 import utils.BaseTest;
@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 public class StepDef {
     private  BaseTest baseTest;
     private HomePage homePage;
-    private HelpPage helpPage;
+    private FaqPage faqPage;
     private SetNetwork setNetwork;
     private WebDriver driver;
     String pageTitle;
@@ -52,7 +52,7 @@ public class StepDef {
             throw new RuntimeException("WebDriver is null in StepDef! Check if BaseTest initializes correctly.");
         }
         this.homePage = new HomePage(driver);
-        this.helpPage = new HelpPage(driver);
+        this.faqPage = new FaqPage(driver);
         this.setNetwork = new SetNetwork();
 
     }
@@ -116,19 +116,19 @@ public class StepDef {
     }
 
 
-    @When("User clicks on the help button")
-    public void clicksOnHelpButton() {
+    @When("User clicks on the faq button")
+    public void clicksOnFaqButton() {
         try {
-            homePage.ClickOnHelpForMobileBrowse();
-            homePage.clickOnHelp();
-            test.log(Status.PASS, "User successfully clicked on the help button");
+            homePage.ClickOnFaqForMobileBrowse();
+            homePage.clickOnFaq();
+            test.log(Status.PASS, "User successfully clicked on the Faq button");
         } catch (NoSuchElementException e) {
-            test.log(Status.FAIL, "Help button not found: " + e.getMessage());
+            test.log(Status.FAIL, "Faq button not found: " + e.getMessage());
             test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
             ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
             throw e;
         } catch (Exception e) {
-            test.log(Status.FAIL, "Unexpected error while clicking the help button: " + e.getMessage());
+            test.log(Status.FAIL, "Unexpected error while clicking the Faq button: " + e.getMessage());
             test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
             ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
             throw e;
@@ -1061,8 +1061,8 @@ public class StepDef {
     public void user_verify_the_faq_header_and_its_description() {
     	
     	try {
-    		   Assert.assertTrue(helpPage.isHelpPageFAQDescriptionTextDisplayed());
-    	       Assert.assertTrue(helpPage.isHelpPageFAQTitelTextDisplayed());
+    		   Assert.assertTrue(faqPage.isFaqPageFAQDescriptionTextDisplayed());
+    	       Assert.assertTrue(faqPage.isFaqPageFAQTitelTextDisplayed());
     	       test.log(Status.PASS, "User verify the FAQ header and its description");
         } catch (AssertionError e) {
             test.log(Status.FAIL, "Assertion failed: " + e.getMessage());
@@ -1085,8 +1085,8 @@ public class StepDef {
     @When("User verify the only one FAQ is open")
     public void user_verify_the_only_one_faq_is_open() throws IOException {
         try {
-            boolean isUpArrowDisplayed = helpPage.isUpArrowDisplayed();
-            int upArrowCount = helpPage.getUpArrowCount();
+            boolean isUpArrowDisplayed = faqPage.isUpArrowDisplayed();
+            int upArrowCount = faqPage.getUpArrowCount();
             
             Assert.assertTrue(isUpArrowDisplayed);
             Assert.assertEquals(upArrowCount, 1);
@@ -1114,30 +1114,30 @@ public class StepDef {
 
     @When("User verify the only one FAQ is at a time")
     public void user_verify_the_only_one_faq_is_at_a_time() {
-        helpPage.ClickOnDownArrow();
-        Assert.assertEquals(helpPage.getUpArrowCount(),1);
-        Assert.assertEquals(helpPage.getDownArrowCount(),22);
+        faqPage.ClickOnDownArrow();
+        Assert.assertEquals(faqPage.getUpArrowCount(),1);
+        Assert.assertEquals(faqPage.getDownArrowCount(),22);
     }
 
-    @Then("User verify that help button is displayed")
-    public void user_verify_that_help_button_displayed() {
+    @Then("User verify that Faq button is displayed")
+    public void user_verify_that_faq_button_displayed() {
         try {
-            System.out.println("Help Button Displayed: " + homePage.isHelpPageDisplayed());
+            System.out.println("Faq Button Displayed: " + homePage.isFaqPageDisplayed());
 
-            assertTrue(homePage.isHelpPageDisplayed(), "Help button is not displayed");
-            test.log(Status.PASS, "User successfully verified that the help button is displayed");
+            assertTrue(homePage.isFaqPageDisplayed(), "Faq button is not displayed");
+            test.log(Status.PASS, "User successfully verified that the Faq button is displayed");
         } catch (AssertionError e) {
             test.log(Status.FAIL, "Assertion failed: " + e.getMessage());
             test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
             ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
             throw e;
         } catch (NoSuchElementException e) {
-            test.log(Status.FAIL, "Element not found while verifying the help button: " + e.getMessage());
+            test.log(Status.FAIL, "Element not found while verifying the Faq button: " + e.getMessage());
             test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
             ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
             throw e;
         } catch (Exception e) {
-            test.log(Status.FAIL, "Unexpected error while verifying the help button: " + e.getMessage());
+            test.log(Status.FAIL, "Unexpected error while verifying the Faq button: " + e.getMessage());
             test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
             ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
             throw e;

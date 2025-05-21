@@ -42,4 +42,4 @@ Feature: Inji web homepage testing
     Then User validate the title of the page
     And User verify that inji web logo is displayed
     And User verify that langauge button is displayed
-    When User clicks on the help button
+    When User clicks on the Faq button

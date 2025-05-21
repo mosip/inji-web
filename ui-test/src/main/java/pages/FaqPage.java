@@ -9,20 +9,20 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 
-public class HelpPage extends BasePage {
+public class FaqPage extends BasePage {
 
     private WebDriver driver;
 
 
-    public HelpPage(WebDriver driver) {
+    public FaqPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    public boolean isHelpPageFAQDescriptionTextDisplayed() {
+    public boolean isFaqPageFAQDescriptionTextDisplayed() {
         return isElementIsVisible(driver, By.xpath("//*[@data-testid='Faq-Item-Content-Text']"));
     }
 
-    public boolean isHelpPageFAQTitelTextDisplayed() {
+    public boolean isFaqPageFAQTitelTextDisplayed() {
         return isElementIsVisible(driver, By.xpath("//*[@data-testid='Faq-Item-Title-Text']"));
     }
 
