@@ -136,92 +136,6 @@ const PinPage: React.FC = () => {
         }
     };
 
-    const handleDelete = async () => {
-        setError("");
-        setLoading(true);
-        setIsPinCorrect(null);
-
-        if (!pin) {
-            setError("Please enter a PIN.");
-            setLoading(false);
-            return;
-        }
-
-        if (!walletId) {
-            setError("No wallet selected for deletion.");
-            setLoading(false);
-            return;
-        }
-
-        try {
-            // First verify the PIN is correct
-            await fetchWalletDetails(walletId, pin);
-
-            // If PIN verification is successful, proceed with deletion
-            const response = await fetch(api.deleteWallet.url(walletId), {
-                method: "DELETE",
-                headers: {
-                    ...api.deleteWallet.headers(),
-                    "X-XSRF-TOKEN": cookies["XSRF-TOKEN"]
-                },
-                credentials: "include",
-                body: JSON.stringify({ walletPin: pin })
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error(
-                    "Error occurred while deleting the wallet:",
-                    errorData
-                );
-                setError(
-                    `Failed to delete wallet: ${errorData.errorMessage || "Unknown error"}`
-                );
-                setIsPinCorrect(false);
-                return;
-            }
-
-            // If deletion is successful
-            setWallets([]);
-            setWalletId(null);
-            setIsPinCorrect(true);
-            setError("Wallet deleted successfully!");
-            localStorage.removeItem("walletId");
-
-            // Refresh the wallet list
-            const fetchWallets = async () => {
-                try {
-                    const response = await fetch(api.fetchWallets.url(), {
-                        method: api.fetchWallets.methodType === 0 ? "GET" : "POST",
-                        headers: api.fetchWallets.headers(),
-                        credentials: "include"
-                    });
-
-                    const responseData = await response.json();
-
-                    if (!response.ok) {
-                        throw new Error(responseData);
-                    }
-
-                    setWallets(responseData);
-                    if (responseData.length > 0) {
-                        setWalletId(responseData[0].walletId);
-                        localStorage.setItem("walletId", responseData[0].walletId);
-                    }
-                } catch (error) {
-                    console.error("Error occurred while fetching wallets:", error);
-                }
-            };
-
-            fetchWallets();
-        } catch (error) {
-            setIsPinCorrect(false);
-            setError("Incorrect PIN or an error occurred. Please try again.");
-            console.error("An error occurred while deleting wallet:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
     return (
         <div className="pin-container">
             {wallets.length > 0 ? (
@@ -269,9 +183,6 @@ const PinPage: React.FC = () => {
             </button>
 
             <br />
-            <button onClick={handleDelete} disabled={loading}>
-                {loading ? "Deleting..." : "Delete"}
-            </button>
 
             {error && <p className="error-message">{error}</p>}
 

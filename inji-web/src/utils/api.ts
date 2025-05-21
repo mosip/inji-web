@@ -8,8 +8,7 @@ import i18n from "i18next";
 
 export enum MethodType {
     GET,
-    POST,
-    DELETE
+    POST
 }
 
 export class api {
@@ -161,22 +160,12 @@ export class api {
         }
     };
 
-    static fetchCredentials: ApiRequest = {
-        url: (walletId: string) => api.mimotoHost + `/wallets/${walletId}/credentials`,
-        methodType: MethodType.GET,
-        headers: () => {
-            return {
-                "Content-Type": "application/json"
-            };
-        }
-    };
-
     static fetchWalletCredentialPreview: ApiRequest = {
         url: (credentialId: string, locale: string) => {
             const walletId = localStorage.getItem("walletId");
             return (
                 api.mimotoHost +
-                `/wallets/${walletId}/credentials/${credentialId}?locale=${locale}&action=preview`
+                `/wallets/${walletId}/credentials/${credentialId}?locale=${locale}&action=inline`
             );
         },
         methodType: MethodType.GET,
@@ -186,30 +175,4 @@ export class api {
             };
         }
     };
-
-    // Delete wallet by walletId
-    static deleteWallet: ApiRequest = {
-        url: (walletId: string) => api.mimotoHost + `/wallets/${walletId}`,
-        methodType: MethodType.DELETE,
-        headers: () => {
-            return {
-                "Content-Type": "application/json"
-            };
-        }
-    };
-
-    // Delete credential by credentialId
-    static deleteCredential: ApiRequest = {
-        url: (credentialId: string) => {
-            const walletId = localStorage.getItem("walletId");
-            return api.mimotoHost + `/wallets/${walletId}/credentials/${credentialId}`;
-        },
-        methodType: MethodType.DELETE,
-        headers: () => {
-            return {
-                "Content-Type": "application/json"
-            };
-        }
-    };
-
 }
