@@ -12,7 +12,7 @@ jest.mock('react-i18next', () => ({
     }
 }));
 
-describe('Testing the Layout and Functionalities of EmptyDocument component', () => {
+describe('Testing the Layout and Functionalities of EmptyDocumentPage ->', () => {
     let renderedComponent: ReturnType<typeof render>;
 
     beforeEach(() => {

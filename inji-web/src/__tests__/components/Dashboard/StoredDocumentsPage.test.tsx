@@ -6,7 +6,7 @@ jest.mock('../../../components/Dashboard/EmptyDocument', () => ({
     EmptyDocument: () => <div data-testid="mock-empty-document" />
 }));
 
-describe('Testing the Layout of StoredDocumentsPage', () => {
+describe('Testing the Layout of StoredDocumentsPage ->', () => {
     it('check if the layout is matching with snapshot', () => {
         const {container} = renderWithRouter(<StoredDocumentsPage />);
 
