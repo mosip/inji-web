@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import '../../../index.css'; 
 import { useTranslation } from "react-i18next";
 import { BorderedButton } from "../../../components/Common/Buttons/BorderedButton";
+import { GoogleSignInButton } from "../../../components/Common/Buttons/GoogleSignInButton";
 
 export const Login: React.FC = () => {
   const { t } = useTranslation("HomePage");
@@ -44,16 +45,7 @@ export const Login: React.FC = () => {
           {t("Login.loginNote")}
         </div >
 
-        <div className="w-full">
-          <button 
-            onClick={handleGoogleLogin} 
-            disabled={isLoading} 
-            data-testid="google-login-button"
-            className="w-full bg-white flex items-center justify-center gap-2.5 break-words py-2 px-4 shadow-md border border-gray-300 rounded-xl"
-          >
-            <FcGoogle size={24} className="flex-shrink-0"/>{isLoading ? t("Login.loggingIn") : t("Login.loginGoogle")}
-          </button>
-        </div>  
+        <GoogleSignInButton handleGoogleLogin={handleGoogleLogin} loadingText={t("Login.loggingIn")} text={t("Login.loginGoogle")}/>
 
         <Separator/>
 

@@ -61,12 +61,12 @@
       "buttontext": "Cliquez ici"
     },
     "Login": {
-    "loginTitle": "Se connecter",
-    "loginDescription":"Connectez-vous avec votre compte ou continuez en tant qu'invité pour accéder à vos identifiants.",
-    "loginNote":"Certaines fonctionnalités peuvent être limitées en mode invité.",
-    "loggingIn": "Connexion en cours",
-    "loginGoogle": "Continuer avec Google",
-    "loginGuest": "Continuer en tant qu'invité"
+      "loginTitle": "Se connecter",
+      "loginDescription":"Connectez-vous avec votre compte ou continuez en tant qu'invité pour accéder à vos identifiants.",
+      "loginNote":"Certaines fonctionnalités peuvent être limitées en mode invité.",
+      "loggingIn": "Connexion en cours",
+      "loginGoogle": "Continuer avec Google",
+      "loginGuest": "Continuer en tant qu'invité"
     },
     "LoginFailedModal": {
       "failureMessage": "Échec de la connexion",
