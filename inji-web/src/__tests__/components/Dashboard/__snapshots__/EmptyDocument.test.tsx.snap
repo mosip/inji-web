@@ -38,12 +38,12 @@ exports[`Testing the Layout and Functionalities of EmptyDocumentPage -> check if
           >
             StoredCredentials.title
           </span>
-          <span
-            class="text-xs sm:text-sm text-[#5B03AD] cursor-pointer hover:underline"
+          <button
+            class="text-xs sm:text-sm text-[#5B03AD] cursor-pointer"
             data-testid="Home"
           >
             Home.title
-          </span>
+          </button>
         </div>
       </div>
       <div
@@ -81,12 +81,6 @@ exports[`Testing the Layout and Functionalities of EmptyDocumentPage -> check if
       >
         StoredCredentials.emptyScreen.title
       </h2>
-      <p
-        class="text-gray-500 text-center max-w-md font-small"
-        data-testid="No-Credentials-Subtitle"
-      >
-        Lorem ipsum dolor sit amet consectetur. Ut nis facilisi condimentum odio nunc sem nisi.
-      </p>
       <div
         class="block sm:hidden mt-6"
       >

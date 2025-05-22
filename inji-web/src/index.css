@@ -47,6 +47,8 @@
         --iw-color-subText: #A0A8AC;
         --iw-color-disclaimerBackGround: #FFF7E5;
         --iw-color-disclaimerText: #8B6105;
+        --iw-color-dashboardSideBarMenuIcon: #6F6F6F;
+        --iw-color-dashboardSideBarMenuIconActive: #2B011C;
     }
     [class="emerald_theme"] {
         --iw-font-base: "Inter", sans-serif;

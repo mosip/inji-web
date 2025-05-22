@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import CollapseIcon from '../../assets/CollapseIcon.svg';
-import {SidebarItemProps} from './types';
+import {SidebarItemType, SidebarItemProps} from './types';
 import {isRTL} from '../../utils/i18n';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
@@ -39,7 +39,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
                     className={`${
                         isCollapsed ? 'hidden sm:block' : 'block'
                     } absolute top-1/2 -translate-y-1/2 w-1 h-8 bg-[#2B011C] rounded-r-md ${
-                        isRTL(language) ? 'right-0 rounded-l-md rounded-r-none' : 'left-0'
+                        isRTL(language)
+                            ? 'right-0 rounded-l-md rounded-r-none'
+                            : 'left-0'
                     }`}
                 />
             )}
@@ -61,19 +63,19 @@ export const Sidebar: React.FC = () => {
     const {t, i18n} = useTranslation('Dashboard');
     const location = useLocation();
     const [isCollapsed, setIsCollapsed] = useState(false);
-
-    const currentDirection = i18n.dir();
-    const isRTL = currentDirection === 'rtl';
+    const language = useSelector((state: RootState) => state.common.language);
 
     const toggleSidebar = () => {
         setIsCollapsed(!isCollapsed);
     };
 
     const getIconColor = (path: string) => {
-        return location.pathname === path ? '#2B011C' : '#6F6F6F';
+        return location.pathname === path
+            ? 'var(--iw-color-dashboardSideBarMenuIconActive)'
+            : 'var(--iw-color-dashboardSideBarMenuIcon)';
     };
 
-    const sidebarItems = [
+    const sidebarItems: SidebarItemType[] = [
         {
             icon: (
                 <svg
@@ -92,7 +94,8 @@ export const Sidebar: React.FC = () => {
                 </svg>
             ),
             text: t('Home.title'),
-            path: '/dashboard/home'
+            path: '/dashboard/home',
+            key: 'Sidebar-Item-Home'
         },
         {
             icon: (
@@ -112,20 +115,21 @@ export const Sidebar: React.FC = () => {
                 </svg>
             ),
             text: t('StoredCredentials.title'),
-            path: '/dashboard/credentials'
+            path: '/dashboard/credentials',
+            key: 'Sidebar-Item-Credentials'
         }
     ];
 
     return (
         <div
             className={`bg-white h-full transition-all duration-300 shadow-iw-sidebar flex flex-col items-start absolute top-0 z-30 sm:relative sm:w-64 ${
-                isRTL ? 'right-0' : 'left-0'
+                isRTL(language) ? 'right-0' : 'left-0'
             } ${isCollapsed ? 'w-5 sm:w-[96px]' : 'w-64'}`}
         >
             <button
                 onClick={toggleSidebar}
                 className={`absolute top-1/4 sm:top-9 p-2 z-40 ${
-                    isRTL ? 'left-[-20px]' : 'right-[-20px]'
+                    isRTL(language) ? 'left-[-20px]' : 'right-[-20px]'
                 }`}
             >
                 <img
@@ -133,10 +137,10 @@ export const Sidebar: React.FC = () => {
                     alt="Collapse"
                     className={`transform ${
                         isCollapsed
-                            ? isRTL
+                            ? isRTL(language)
                                 ? ''
                                 : 'rotate-180'
-                            : isRTL
+                            : isRTL(language)
                             ? 'rotate-180'
                             : ''
                     } transition-transform duration-300 min-w-[26px] min-h-[26px]`}
@@ -145,12 +149,12 @@ export const Sidebar: React.FC = () => {
 
             <div
                 className={`flex flex-col space-y-2 mt-6 sm:mt-7 w-full ${
-                    isRTL ? 'pl-4' : 'pr-4'
+                    isRTL(language) ? 'pl-4' : 'pr-4'
                 }`}
             >
-                {sidebarItems.map((item, index) => (
+                {sidebarItems.map((item) => (
                     <SidebarItem
-                        key={index}
+                        key={item.key}
                         icon={item.icon}
                         text={item.text}
                         path={item.path}

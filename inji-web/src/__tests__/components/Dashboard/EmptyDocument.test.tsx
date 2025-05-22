@@ -35,9 +35,6 @@ describe('Testing the Layout and Functionalities of EmptyDocumentPage ->', () =>
         expect(screen.getByTestId('Blank-Document')).toBeInTheDocument();
         expect(screen.getByTestId('Document-Icon')).toBeInTheDocument();
         expect(screen.getByTestId('No-Credentials-Title')).toBeInTheDocument();
-        expect(
-            screen.getByTestId('No-Credentials-Subtitle')
-        ).toBeInTheDocument();
     });
 
     it('should navigate to dashboard home on nav back button click', () => {

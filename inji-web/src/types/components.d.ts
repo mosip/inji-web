@@ -33,6 +33,7 @@ export type CredentialProps = {
 
 export type FAQAccordionItemProps = {
     id: number;
+    key: string;
     title: string;
     content: (string | { __html: string })[];
     open: number;

@@ -92,3 +92,13 @@ export type WalletCredential = {
     credential_type_logo: string;
     credential_id: string;
 };
+
+export type FAQAccordionItemType = {
+    key: string;
+    title: string;
+    content: (string | {__html: string})[];
+};
+
+export type FooterProps = {
+    footerRef: React.RefObject<HTMLDivElement>;
+}

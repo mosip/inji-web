@@ -45,8 +45,8 @@ export const FAQAccordionItem: React.FC<FAQAccordionItemProps> = (props) => {
                             className="border-t border-gray-200 py-5 sm:py-6 text-sm sm:text-base text-iw-title leading-relaxed"
                             data-testid="Faq-Item-Content-Text"
                         >
-                            {props.content.map((content, index) => (
-                                <p key={index} className="mb-3 last:mb-0">
+                            {props.content.map((content) => (
+                                <p key={props.key} className="mb-3 last:mb-0">
                                     {renderContent(content)}
                                 </p>
                             ))}

@@ -2,6 +2,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-dom';
 import {navigateToDashboardHome} from '../../pages/Dashboard/utils';
+import { NavBackArrowButton } from '../../pages/Dashboard/NavBackArrowButton';
 
 export const EmptyDocument: React.FC = () => {
     const {t} = useTranslation('Dashboard');
@@ -12,21 +13,11 @@ export const EmptyDocument: React.FC = () => {
             <div className="flex flex-col sm:flex-row justify-between items-start mb-4 sm:mb-6 gap-4 sm:gap-0">
                 <div className="flex items-start">
                     <div className="flex items-start">
-                        <svg
-                            data-testid={'Back-Arrow-Icon'}
-                            width="29"
-                            height="29"
-                            viewBox="0 0 24 18"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="mr-2 cursor-pointer"
-                            onClick={() => navigateToDashboardHome(navigate)}
-                        >
-                            <path
-                                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-                                fill="#000000"
-                            />
-                        </svg>
+                        <NavBackArrowButton
+                            handleBackClick={() =>
+                                navigateToDashboardHome(navigate)
+                            }
+                        />
                     </div>
                     <div className="flex flex-col items-start">
                         <span
@@ -35,13 +26,13 @@ export const EmptyDocument: React.FC = () => {
                         >
                             {t('StoredCredentials.title')}
                         </span>
-                        <span
+                        <button
                             data-testid={'Home'}
-                            className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer hover:underline"
+                            className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer"
                             onClick={() => navigateToDashboardHome(navigate)}
                         >
                             {t('Home.title')}
-                        </span>
+                        </button>
                     </div>
                 </div>
                 <div className="hidden sm:block">
@@ -79,13 +70,6 @@ export const EmptyDocument: React.FC = () => {
                 >
                     {t('StoredCredentials.emptyScreen.title')}
                 </h2>
-                <p
-                    data-testid={'No-Credentials-Subtitle'}
-                    className="text-gray-500 text-center max-w-md font-small"
-                >
-                    Lorem ipsum dolor sit amet consectetur. Ut nis facilisi
-                    condimentum odio nunc sem nisi.
-                </p>
                 <div className="block sm:hidden mt-6">
                     <button
                         data-testid={'Blank-Document-Add-Credential'}

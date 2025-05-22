@@ -97,7 +97,8 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
                 setIsProfileDropdownOpen(false);
                 navigate('profile');
             },
-            textColor: 'text-gray-700'
+            textColor: 'text-gray-700',
+            key: 'Profile-Dropdown-Profile'
         },
         {
             label: t('ProfileDropdown.faq'),
@@ -105,12 +106,14 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
                 setIsProfileDropdownOpen(false);
                 navigate('faq', {state: {from: window.location.pathname}});
             },
-            textColor: 'text-gray-700'
+            textColor: 'text-gray-700',
+            key: 'Profile-Dropdown-FAQ'
         },
         {
             label: t('ProfileDropdown.logout'),
             onClick: handleLogout,
-            textColor: 'text-red-700'
+            textColor: 'text-red-700',
+            key: 'Profile-Dropdown-Logout'
         }
     ];
 
@@ -229,7 +232,7 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
                                 <div className="absolute top-[-0.3rem] right-8 w-3 h-3 bg-white transform rotate-45" />
                                 <div className="py-2">
                                     {dropdownItems.map((item, index) => (
-                                        <React.Fragment key={index}>
+                                        <React.Fragment key={item.key}>
                                             <div
                                                 className={`px-4 py-2 text-sm ${item.textColor} hover:bg-gray-100 cursor-pointer`}
                                                 onClick={item.onClick}
@@ -262,7 +265,7 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
                                 {getUserProfileIconWithName()}
                             </div>
                             {dropdownItems.map((item, index) => (
-                                <React.Fragment key={index}>
+                                <React.Fragment key={item.key}>
                                     <div
                                         className={`px-4 py-2 text-sm ${item.textColor} hover:bg-gray-100 cursor-pointer font-medium`}
                                         onClick={item.onClick}

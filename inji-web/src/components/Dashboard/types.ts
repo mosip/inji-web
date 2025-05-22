@@ -2,6 +2,14 @@ export type DropdownItem = {
     label: string;
     onClick: () => void;
     textColor: string;
+    key: string;
+};
+
+export type SidebarItemType = {
+    icon: React.ReactNode;
+    text: string;
+    path: string;
+    key: string;
 };
 
 export type SidebarItemProps = {

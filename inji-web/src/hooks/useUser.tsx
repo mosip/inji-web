@@ -6,14 +6,14 @@ export type User = {
     profilePictureUrl: string;
 };
 
-type ErrorObj = {
+type Error = {
     errorCode: string;
     errorMessage: string;
 };
 
 export function useUser() {
     const [user, setUser] = useState<User | null>(null);
-    const [errorObj, setErrorObj] = useState<ErrorObj | null>(null);
+    const [error, setError] = useState<Error | null>(null);
     const [walletId, setWalletId] = useState<string | null>(null);
 
     useEffect(() => {
@@ -62,12 +62,12 @@ export function useUser() {
         } catch (error) {
             console.error('Error fetching user profile:', error);
             setUser(null);
-            setErrorObj(error as ErrorObj);
+            setError(error as Error);
             localStorage.removeItem('user');
             localStorage.removeItem('walletId');
             throw error;
         }
     };
 
-    return {user, errorObj, saveUser, removeUser, fetchUserProfile, walletId};
+    return {user, error, saveUser, removeUser, fetchUserProfile, walletId};
 }

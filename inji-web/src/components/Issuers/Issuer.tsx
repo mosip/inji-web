@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {getIssuerDisplayObjectForCurrentLanguage} from "../../utils/i18n";
 import {useNavigate} from "react-router-dom";
 import {ItemBox} from "../Common/ItemBox";

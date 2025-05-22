@@ -24,6 +24,7 @@ import {isObjectEmpty} from '../../utils/misc';
 import {SearchCredential} from '../../components/Credentials/SearchCredential';
 import {CredentialTypesPageProps} from '../../components/Dashboard/types';
 import {navigateToDashboardHome} from './utils';
+import { NavBackArrowButton } from './NavBackArrowButton';
 
 export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
     backUrl
@@ -92,21 +93,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
             <div className="flex flex-col lg:flex-row justify-between items-start gap-4 sm:gap-2">
                 <div className="flex items-start">
                     <div className="flex items-start">
-                        <svg
-                            data-testid={'Back-Arrow-Icon'}
-                            width="29"
-                            height="29"
-                            viewBox="0 0 24 18"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="mr-2 cursor-pointer"
-                            onClick={handleBackClick}
-                        >
-                            <path
-                                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-                                fill="#000000"
-                            />
-                        </svg>
+                        <NavBackArrowButton handleBackClick={handleBackClick} />
                     </div>
                     <div className="flex flex-col items-start">
                         <span
@@ -115,13 +102,13 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
                         >
                             {displayObject?.name}
                         </span>
-                        <span
+                        <button
                             data-testid={'Home'}
-                            className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer hover:underline"
+                            className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer"
                             onClick={() => navigateToDashboardHome(navigate)}
                         >
                             {t('Dashboard:Home.title')}
-                        </span>
+                        </button>
                     </div>
                 </div>
                 <div>

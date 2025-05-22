@@ -27,12 +27,16 @@ fileignoreconfig:
   checksum: 4863d9274e25e1b34c8acd4721a609a2aa68051e644e9f049d521cc15a1575f8
 - filename: inji-web/src/test-utils/mockUtils.tsx
   checksum: 9a3c5c6c81c6ff5cec1203004dde8a04c72425b13ca6eaec2fd15a50baf7fa02
+- filename: inji-web/src/components/Faq/FAQAccordion.tsx
+  checksum: 0788e8febe4a1b51d9413d9ec97fc71fbaddb84ac05da47749eac4ac7a99b529
 - filename: inji-web/src/components/Faq/FAQAccordionItem.tsx
-  checksum: 8351daf96cf7850bda477ad9828a76640742c4d9c0918c1270966980ee191e7a
+  checksum: 45315baa8b37e170786d2f55ea8e8940972e6496aee41dd67081986b33aca310
 - filename: inji-web/src/__tests__/components/Dashboard/EmptyDocument.test.tsx
-  checksum: 04480270c63a07a1fea5fbe505d23531153cd26d37aa925571f4e3dadbb36e9c
+  checksum: f401e15725074d3840909dd82547e7cbd4ff61f854dd574ea7c1abb0b1309aeb
 - filename: inji-web/src/components/Dashboard/Header.tsx
-  checksum: c6a69e296d0be1140fd5f3b5b5fbccae8de484d22e784b2e15982f001f4469b2
+  checksum: ee2f068d2ba2dc8b6cdbc2e2c083af6da8a2bf04dae1fbf024f585cd7aa1e2ff
+- filename: inji-web/src/components/Dashboard/Sidebar.tsx
+  checksum: 44c7c16e4f7a103969172e00b9a6e81eaa51e1b2a745ec4bd804c8436b9413e5
 - filename: inji-web/src/locales/ar.json
   checksum: 9424a9226ef6e0965a5bc0e3f6d57da413f19367759b367754d76d17c0d46dff
 - filename: inji-web/src/locales/en.json
@@ -59,4 +63,6 @@ fileignoreconfig:
   checksum: 43e96c9ccd03a006d584a536d6f526e4b6e682f95cce20cad80d12d11e3f8dc2
 - filename: inji-web/src/pages/users/login/LoginSessionStatusChecker.tsx
   checksum: c239e476daf8d3bf7dd1b9b3996d7ff351c585f4cfe400b1051f47f05a413db0
+- filename: inji-web/src/__tests__/components/PageTemplate/Footer.test.tsx
+  checksum: c6b35b4d384612c8b8cce1116b3f0ee3366b6838f742ac72aad9c3d5bd136009
 version: ""
