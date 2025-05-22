@@ -2,9 +2,9 @@ fileignoreconfig:
 - filename: inji-web/src/components/Common/ItemBox.tsx
   checksum: 2a7e352e5f86da0881c1cf73a12fe9cd36307ee6f4a543ee883df0440bc4fa1b
 - filename: inji-web/src/components/PageTemplate/Header.tsx
-  checksum: fc0dad4b52620926ffa895f8622e5cfc853158839af0e8e3da615adb6b112953
+  checksum: 0291dfef62e21a15ee76403936a8ea2b20d4c8c6412b416a819432299fb369e4
 - filename: inji-web/src/components/Common/LanguageSelector.tsx
-  checksum: 66f81412745594459c006fb681e28091a5287b30c37dd8afd8491ef2a209ea41
+  checksum: af1321afdc16552cefa4a8545d9051b063000a50a764f203a35730320d5985bd
 - filename: inji-web/public/env.config.js
   checksum: 0ffabe95d3271bb98bea2cb4e2ee67c7b351e567a9ebb3cae003de9d7e28de8f
 - filename: inji-web/package-lock.json
@@ -18,13 +18,13 @@ fileignoreconfig:
 - filename: inji-web/src/components/DataShare/DataShareContent.tsx
   checksum: 1af797cfef624b32692d625304f9a1403c1719578a0c48b4583ade529a60376d
 - filename: inji-web/src/utils/misc.ts
-  checksum: fa1fba107d4a8bb86f37ea4f022d1e6f320da816e90d0ebdd1276914d14550d5
+  checksum: 4c037bca6b9573d2a4d12f7406be2097e503db176d33b92ba9011acd571802c4
 - filename: helm/inji-web/templates/configmap.yaml
   checksum: f238e115674a518c94ea702831a02d41bc73124aa7852b8ef7d588eb27308f77
 - filename: inji-web/nginx.conf
   checksum: ad2ad36daa595266c02e48f1dbc875ebcfe409fb57685c16b5e50df4a0c5ec08
 - filename: inji-web/src/__tests__/utils/misc.test.tsx
-  checksum: 6b70370a26d1556adeca568ab8269202a660af8bb7d095e7121314935e8bff18
+  checksum: 4863d9274e25e1b34c8acd4721a609a2aa68051e644e9f049d521cc15a1575f8
 - filename: inji-web/src/test-utils/mockUtils.tsx
   checksum: 9a3c5c6c81c6ff5cec1203004dde8a04c72425b13ca6eaec2fd15a50baf7fa02
 - filename: inji-web/src/components/Faq/FAQAccordionItem.tsx
@@ -55,4 +55,8 @@ fileignoreconfig:
   checksum: 3f9bf9ed2f63b27195855a620b94a4a9eab462879b5a288a5b3ed9eb6f9bc834
 - filename: inji-web/src/__tests__/users/login/Login.test.tsx
   checksum: e7a9b4cd88f4b820aca578de87939e12c2adda73f75893b6b547c5a1ba13768b
+- filename: inji-web/src/__tests__/pages/HomePage.test.tsx
+  checksum: 43e96c9ccd03a006d584a536d6f526e4b6e682f95cce20cad80d12d11e3f8dc2
+- filename: inji-web/src/pages/users/login/LoginSessionStatusChecker.tsx
+  checksum: c239e476daf8d3bf7dd1b9b3996d7ff351c585f4cfe400b1051f47f05a413db0
 version: ""
