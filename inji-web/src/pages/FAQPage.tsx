@@ -3,6 +3,7 @@ import {FAQAccordion} from '../components/Faq/FAQAccordion';
 import {useTranslation} from 'react-i18next';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {FAQPageProps} from '../components/Dashboard/types';
+import {navigateToDashboardHome} from './Dashboard/utils';
 
 export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
     const {t} = useTranslation(['FAQPage', 'Dashboard']);
@@ -16,7 +17,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
         } else if (previousPagePath) {
             navigate(previousPagePath); // Navigate to the previous link in history
         } else {
-            navigate('/dashboard/home'); // Navigate to homepage if opened directly
+            navigateToDashboardHome(navigate); // Navigate to homepage if opened directly
         }
     };
 
@@ -47,7 +48,9 @@ export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
                         {withHome && (
                             <span
                                 className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer hover:underline"
-                                onClick={() => navigate('/dashboard/home')}
+                                onClick={() =>
+                                    navigateToDashboardHome(navigate)
+                                }
                             >
                                 {t('Dashboard:Home.title')}
                             </span>

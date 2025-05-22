@@ -1,39 +1,22 @@
 import {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useUser} from '../../../hooks/useUser';
+import { validateWalletUnlockStatus } from '../../Dashboard/utils';
 
 const LoginSessionStatusChecker = () => {
     const navigate = useNavigate();
-    const {user, removeUser, fetchUserProfile, walletId} = useUser();
+    const {removeUser, fetchUserProfile, walletId} = useUser();
     const fetchSessionAndUserInfo = async () => {
         try {
-            await fetchUserProfile();
+            const {user, walletId} = await fetchUserProfile();
             if (user?.displayName) {
                 window.dispatchEvent(new Event('displayNameUpdated'));
             }
 
-            const cachedWalletId = walletId; // Wallet ID from cache
-            const localWalletId = localStorage.getItem('walletId'); // Stored in frontend
+            const cachedWalletId = walletId;
+            const storageWalletId = localStorage.getItem('walletId');
 
-            // // If wallet ID is missing or doesn't match, redirect to unlock flow
-            if (!cachedWalletId || cachedWalletId !== localWalletId) {
-                console.warn(
-                    'Wallet is locked or missing. Redirecting to unlock.'
-                );
-                navigate('/');
-                return;
-            }
-
-            //Determine unlock status via wallet ID match
-            if (cachedWalletId === localWalletId) {
-                console.info('Wallet is unlocked! Redirecting to `/issuers`.');
-                navigate('/issuers'); // Skip `/pin`
-            } else {
-                console.warn(
-                    'Wallet exists but is locked, redirecting to `/pin` to enter passcode.'
-                );
-                navigate('/pin'); // Enter passcode
-            }
+            validateWalletUnlockStatus(cachedWalletId, storageWalletId, navigate);
         } catch (error) {
             console.error('Error occurred while fetching user profile:', error);
             removeUser();

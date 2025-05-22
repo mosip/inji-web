@@ -38,7 +38,8 @@ exports[`Header Container Layout Test Check if the layout is matching with the s
         >
           <img
             alt="Inji Web Logo"
-            class="h-6 w-36 flex-shrink-0 sm:h-8 sm:w-48 cursor-pointer"
+            class="h-6 w-36 flex-shrink-0 sm:h-8 sm:w-48 cursor-pointer 
+                                     "
             data-testid="Header-InjiWeb-Logo"
             src="InjiWebLogo.png"
           />

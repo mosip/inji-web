@@ -36,39 +36,6 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
         };
     }, []);
 
-    const handleAuthAction = async () => {
-        if (isLoggedIn) {
-            try {
-                const apiRequest = api.userLogout;
-                const response = await fetch(apiRequest.url(), {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
-                    }
-                });
-
-                if (response.ok) {
-                    removeUser();
-                    localStorage.removeItem('walletId');
-                    window.location.replace('/');
-                } else {
-                    const parsedResponse = await response.json();
-                    const errorCode = parsedResponse?.errors[0].errorCode;
-                    if (errorCode === 'user_logout_error') {
-                        removeUser();
-                        window.location.replace('/login');
-                    }
-                    throw new Error(parsedResponse?.errors[0]?.errorMessage);
-                }
-            } catch (error) {
-                console.error('Logout failed with error:', error);
-            }
-        } else {
-            navigate('/login');
-        }
-    };
-
     return (
         <header
             ref={ref}

@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import React, {useEffect, useRef, useState} from 'react';
 import {IssuersPage} from './pages/IssuersPage';
 import {Header} from './components/PageTemplate/Header';
@@ -27,7 +27,6 @@ export const AppRouter = () => {
     const {user} = useUser();
     const headerRef = useRef<HTMLDivElement>(null);
     const footerRef = useRef<HTMLDivElement>(null);
-
     const [headerHeight, setHeaderHeight] = useState(0);
     const [footerHeight, setFooterHeight] = useState(0);
 
@@ -103,7 +102,16 @@ export const AppRouter = () => {
         <BrowserRouter>
             <LoginSessionStatusChecker />
             <Routes>
-                <Route path="/" element={wrapElement(<HomePage />, false)} />
+                <Route
+                    path="/"
+                    element={
+                        isLoggedIn ? (
+                            <Navigate to="/dashboard/home" replace />
+                        ) : (
+                            wrapElement(<HomePage />, false)
+                        )
+                    }
+                />
                 <Route
                     path="/issuers"
                     element={wrapElement(

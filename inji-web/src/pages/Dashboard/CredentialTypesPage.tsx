@@ -21,10 +21,13 @@ import {
 import {getIssuerDisplayObjectForCurrentLanguage} from '../../utils/i18n';
 import {RootState} from '../../types/redux';
 import {isObjectEmpty} from '../../utils/misc';
-import { SearchCredential } from '../../components/Credentials/SearchCredential';
-import { CredentialTypesPageProps } from '../../components/Dashboard/types';
+import {SearchCredential} from '../../components/Credentials/SearchCredential';
+import {CredentialTypesPageProps} from '../../components/Dashboard/types';
+import {navigateToDashboardHome} from './utils';
 
-export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({backUrl}) => {
+export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
+    backUrl
+}) => {
     const {state, fetchRequest} = useFetch();
     const params = useParams<CredentialParamProps>();
     const dispatch = useDispatch();
@@ -77,7 +80,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({backUrl
         } else if (previousPagePath) {
             navigate(previousPagePath); // Navigate to the previous link in history
         } else {
-            navigate('/dashboard/home'); // Navigate to homepage if opened directly
+            navigateToDashboardHome(navigate); // Navigate to homepage if opened directly
         }
     };
 
@@ -115,7 +118,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({backUrl
                         <span
                             data-testid={'Home'}
                             className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer hover:underline"
-                            onClick={() => navigate('/dashboard/home')}
+                            onClick={() => navigateToDashboardHome(navigate)}
                         >
                             {t('Dashboard:Home.title')}
                         </span>

@@ -8,7 +8,8 @@ import {RiArrowDownSFill, RiArrowUpSFill} from 'react-icons/ri';
 import {GradientWrapper} from '../Common/GradientWrapper';
 import {
     convertStringIntoPascalCase,
-    getProfileInitials
+    getProfileInitials,
+    navigateToDashboardHome
 } from '../../pages/Dashboard/utils';
 import {useUser} from '../../hooks/useUser';
 import {DropdownItem} from './types';
@@ -16,7 +17,7 @@ import HamburgerMenu from '../../assets/HamburgerMenu.svg';
 import {isRTL} from '../../utils/i18n';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
     const language = useSelector((state: RootState) => state.common.language);
@@ -79,7 +80,7 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
                 const errorCode = parsedResponse?.errors[0].errorCode;
                 if (errorCode === 'user_logout_error') {
                     removeUser();
-                    window.location.replace('/login');
+                    window.location.replace('/');
                 }
                 throw new Error(parsedResponse?.errors[0]?.errorMessage);
             }
@@ -170,8 +171,8 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
                         className="w-[130px] sm:w-[160px] md:w-[170px]"
                         role={'button'}
                         tabIndex={0}
-                        onMouseDown={() => navigate('/')}
-                        onKeyUp={() => navigate('/')}
+                        onMouseDown={() => navigateToDashboardHome(navigate)}
+                        onKeyUp={() => navigateToDashboardHome(navigate)}
                     >
                         <img
                             src={require('../../assets/InjiWebLogo.png')}

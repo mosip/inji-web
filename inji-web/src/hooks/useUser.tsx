@@ -56,9 +56,9 @@ export function useUser() {
                 "displayName": responseData.display_name,
                 "profilePictureUrl": responseData.profile_picture_url
             };
-
             saveUser(userData);
-            setWalletId(responseData.walletId);
+            setWalletId(responseData.wallet_id);
+            return {user: userData, walletId: responseData.wallet_id};
         } catch (error) {
             console.error('Error fetching user profile:', error);
             setUser(null);

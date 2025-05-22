@@ -17,3 +17,23 @@ export const getProfileInitials = (displayName: string | undefined) => {
               .join("")
         : "U";
 };
+
+export const navigateToDashboardHome = (navigate: any) =>
+    navigate('/dashboard/home');
+
+
+export const validateWalletUnlockStatus = (
+    cachedWalletId: string | null,
+    storageWalletId: string | null,
+    navigate: (path: string) => void
+) => {
+    if (cachedWalletId === storageWalletId) {
+        console.info('Wallet is unlocked!');
+    } else {
+        console.warn(
+            'Wallet exists but is locked, redirecting to `/pin` to unlock the wallet.'
+        );
+        localStorage.removeItem('walletId');
+        navigate('/pin');
+    }
+};

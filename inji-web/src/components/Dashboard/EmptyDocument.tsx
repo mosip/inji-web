@@ -1,9 +1,10 @@
-import React from "react";
-import {useTranslation} from "react-i18next";
-import {useNavigate} from "react-router-dom";
+import React from 'react';
+import {useTranslation} from 'react-i18next';
+import {useNavigate} from 'react-router-dom';
+import {navigateToDashboardHome} from '../../pages/Dashboard/utils';
 
 export const EmptyDocument: React.FC = () => {
-    const {t} = useTranslation("Dashboard");
+    const {t} = useTranslation('Dashboard');
     const navigate = useNavigate();
 
     return (
@@ -19,7 +20,7 @@ export const EmptyDocument: React.FC = () => {
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
                             className="mr-2 cursor-pointer"
-                            onClick={() => navigate('/dashboard/home')}
+                            onClick={() => navigateToDashboardHome(navigate)}
                         >
                             <path
                                 d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
@@ -37,7 +38,7 @@ export const EmptyDocument: React.FC = () => {
                         <span
                             data-testid={'Home'}
                             className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer hover:underline"
-                            onClick={() => navigate('/dashboard/home')}
+                            onClick={() => navigateToDashboardHome(navigate)}
                         >
                             {t('Home.title')}
                         </span>
@@ -46,7 +47,7 @@ export const EmptyDocument: React.FC = () => {
                 <div className="hidden sm:block">
                     <button
                         data-testid="Add-Credential"
-                        onClick={() => navigate('/dashboard/home')}
+                        onClick={() => navigateToDashboardHome(navigate)}
                         className="bg-gradient-to-r from-[#FF5300] via-[#C5363C] to-[#5B03AD] text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-sm transition-shadow"
                     >
                         {t('StoredCredentials.header.addCredential')}
@@ -88,7 +89,7 @@ export const EmptyDocument: React.FC = () => {
                 <div className="block sm:hidden mt-6">
                     <button
                         data-testid={'Blank-Document-Add-Credential'}
-                        onClick={() => navigate('/dashboard/home')}
+                        onClick={() => navigateToDashboardHome(navigate)}
                         className="bg-gradient-to-r from-[#FF5300] via-[#C5363C] to-[#5B03AD] text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-sm transition-shadow"
                     >
                         {t('StoredCredentials.header.addCredential')}
