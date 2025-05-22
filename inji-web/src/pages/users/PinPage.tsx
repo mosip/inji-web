@@ -182,7 +182,7 @@ export const PinPage: React.FC = () => {
         const unlockedWalletId = responseData.walletId;
         localStorage.setItem("walletId", unlockedWalletId);
         setIsPinCorrect(true);
-        navigate("/issuers"); // Redirect upon successful unlock
+        navigate('/dashboard/home');
     } catch (error) {
         setIsPinCorrect(false);
         setError(t("error.incorrectPinError"));

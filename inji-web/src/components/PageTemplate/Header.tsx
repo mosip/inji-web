@@ -134,7 +134,7 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
                 >
                     <PlainButton
                         fullWidth={true}
-                        onClick={() => navigate('/help')}
+                        onClick={() => navigate('/faq')}
                         testId="Header-Menu-FAQ"
                         title={t('Header.faq')}
                         disableGradient={true}
