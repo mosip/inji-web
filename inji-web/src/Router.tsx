@@ -20,6 +20,7 @@ import {HomePage as DashboardHomePage} from './pages/Dashboard/HomePage';
 import {StoredCredentialsPage} from './pages/Dashboard/StoredCredentialsPage';
 import {useUser} from './hooks/useUser';
 import {CredentialTypesPage} from './pages/Dashboard/CredentialTypesPage';
+import { KEYS } from './utils/constants';
 
 export const AppRouter = () => {
     const language = useSelector((state: RootState) => state.common.language);
@@ -59,7 +60,7 @@ export const AppRouter = () => {
     useEffect(() => {
         const handleStorageChange = () => {
             const hasDisplayName = !!user?.displayName;
-            const hasWalletId = !!localStorage.getItem('walletId');
+            const hasWalletId = !!localStorage.getItem(KEYS.WALLET_ID);
             setIsLoggedIn(hasDisplayName && hasWalletId);
         };
 

@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import {api} from '../utils/api';
+import { KEYS } from '../utils/constants';
 
 export type User = {
     displayName: string;
@@ -17,7 +18,7 @@ export function useUser() {
     const [walletId, setWalletId] = useState<string | null>(null);
 
     useEffect(() => {
-        const userData = localStorage.getItem("user");
+        const userData = localStorage.getItem(KEYS.USER);
         if (userData) {
             try {
                 setUser(JSON.parse(userData));

@@ -9,6 +9,7 @@ import {useTranslation} from 'react-i18next';
 import {useFetch} from '../../hooks/useFetch';
 import {navigateToDashboardHome} from '../Dashboard/utils';
 import {useUser} from '../../hooks/useUser';
+import { KEYS } from '../../utils/constants';
 
 export const PinPage: React.FC = () => {
     const {state, fetchRequest} = useFetch();
@@ -158,7 +159,7 @@ export const PinPage: React.FC = () => {
         setLoading(true);
         setIsPinCorrect(null);
 
-        const walletId = localStorage.getItem('walletId');
+        const walletId = localStorage.getItem(KEYS.WALLET_ID);
         const pin = passcode.join('');
 
         try {

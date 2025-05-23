@@ -2,6 +2,7 @@ import {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useUser} from '../../../hooks/useUser';
 import { validateWalletUnlockStatus } from '../../Dashboard/utils';
+import { KEYS } from '../../../utils/constants';
 
 const LoginSessionStatusChecker = () => {
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ const LoginSessionStatusChecker = () => {
             }
 
             const cachedWalletId = walletId;
-            const storageWalletId = localStorage.getItem('walletId');
+            const storageWalletId = localStorage.getItem(KEYS.WALLET_ID);
 
             validateWalletUnlockStatus(cachedWalletId, storageWalletId, navigate);
         } catch (error) {
