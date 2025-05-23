@@ -12,6 +12,12 @@ export enum MethodType {
     POST
 }
 
+export enum ContentTypes {
+    JSON = "application/json",
+    PDF = "application/pdf",
+    FORM_URL_ENCODED = "application/x-www-form-urlencoded",
+}
+
 export class api {
     static mimotoHost = window._env_.MIMOTO_URL;
 

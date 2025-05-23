@@ -59,16 +59,15 @@ export const RedirectionPage: React.FC = () => {
                             activeSessionInfo?.vcStorageExpiryLimitInTimes ??
                             '-1';
 
-                        const requestBody = new URLSearchParams(
-                            getTokenRequestBody(
-                                code,
-                                codeVerifier,
-                                issuerId,
-                                certificateId,
-                                vcStorageExpiryLimitInTimes,
-                                language
-                            )
-                        );
+                const requestBody = new URLSearchParams(
+                    getTokenRequestBody(
+                        code,
+                        codeVerifier,
+                        issuerId,
+                        certificateId,
+                        vcStorageExpiryLimitInTimes
+                    )
+                );
 
                         let apiRequest, credentialDownloadResponse;
                         const isLoggedIn = !!user && !!walletId;
