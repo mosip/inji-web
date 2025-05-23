@@ -58,8 +58,7 @@ export const RedirectionPage: React.FC = () => {
                         codeVerifier,
                         issuerId,
                         certificateId,
-                        vcStorageExpiryLimitInTimes,
-                        language
+                        vcStorageExpiryLimitInTimes
                     )
                 );
 
