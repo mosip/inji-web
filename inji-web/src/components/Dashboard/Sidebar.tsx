@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
-import {SidebarItemType, SidebarItemProps} from './types';
+import {SidebarItemType, SidebarItemProps, SideBarSvgIconProps} from './types';
 import {isRTL} from '../../utils/i18n';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
-import { CollapseButton } from './CollapseButton';
+import {CollapseButton} from './CollapseButton';
+import {getIconColor} from './Utils';
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
     icon,
@@ -69,29 +70,14 @@ export const Sidebar: React.FC = () => {
         setIsCollapsed(!isCollapsed);
     };
 
-    const getIconColor = (path: string) => {
-        return location.pathname === path
-            ? 'var(--iw-color-dashboardSideBarMenuIconActive)'
-            : 'var(--iw-color-dashboardSideBarMenuIcon)';
-    };
-
     const sidebarItems: SidebarItemType[] = [
         {
             icon: (
-                <svg
-                    width="24"
-                    height="24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M3 12L5 10M5 10L12 3L19 10M5 10V20C5 20.5523 5.44772 21 6 21H9M19 10L21 12M19 10V20C19 20.5523 18.5523 21 18 21H15M9 21C9.55228 21 10 20.5523 10 20V16C10 15.4477 10.4477 15 11 15H13C13.5523 15 14 15.4477 14 16V20C14 20.5523 14.4477 21 15 21M9 21H15"
-                        stroke={getIconColor('/dashboard/home')}
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    />
-                </svg>
+                <SideBarSvgIcon
+                    outline="M3 12L5 10M5 10L12 3L19 10M5 10V20C5 20.5523 5.44772 21 6 21H9M19 10L21 12M19 10V20C19 20.5523 18.5523 21 18 21H15M9 21C9.55228 21 10 20.5523 10 20V16C10 15.4477 10.4477 15 11 15H13C13.5523 15 14 15.4477 14 16V20C14 20.5523 14.4477 21 15 21M9 21H15"
+                    navUrl="/dashboard/home"
+                    location={location}
+                />
             ),
             text: t('Home.title'),
             path: '/dashboard/home',
@@ -99,20 +85,11 @@ export const Sidebar: React.FC = () => {
         },
         {
             icon: (
-                <svg
-                    width="24"
-                    height="24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z"
-                        stroke={getIconColor('/dashboard/credentials')}
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    />
-                </svg>
+                <SideBarSvgIcon
+                    outline="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z"
+                    navUrl="/dashboard/credentials"
+                    location={location}
+                />
             ),
             text: t('StoredCredentials.title'),
             path: '/dashboard/credentials',
@@ -152,3 +129,15 @@ export const Sidebar: React.FC = () => {
         </div>
     );
 };
+
+const SideBarSvgIcon: React.FC<SideBarSvgIconProps> = ({outline, navUrl, location}) => (
+    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d={outline}
+            stroke={getIconColor(navUrl, location)}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        />
+    </svg>
+);

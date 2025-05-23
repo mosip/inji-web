@@ -9,18 +9,8 @@ export const convertStringIntoPascalCase = (text: string | undefined) => {
     );
 };
 
-export const getProfileInitials = (displayName: string | undefined) => {
-    return displayName
-        ? displayName
-              .split(" ")
-              .map((name) => name.charAt(0).toUpperCase())
-              .join("")
-        : "U";
-};
-
 export const navigateToDashboardHome = (navigate: any) =>
     navigate('/dashboard/home');
-
 
 export const validateWalletUnlockStatus = (
     cachedWalletId: string | null,

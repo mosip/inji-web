@@ -8,7 +8,6 @@ import {RiArrowDownSFill, RiArrowUpSFill} from 'react-icons/ri';
 import {GradientWrapper} from '../Common/GradientWrapper';
 import {
     convertStringIntoPascalCase,
-    getProfileInitials,
     navigateToDashboardHome
 } from '../../pages/Dashboard/utils';
 import {useUser} from '../../hooks/useUser';
@@ -18,8 +17,12 @@ import {isRTL} from '../../utils/i18n';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
 import {useTranslation} from 'react-i18next';
+import {getProfileInitials} from './Utils';
 
-export const Header: React.FC<DashboardHeaderProps> = ({headerRef, headerHeight}) => {
+export const Header: React.FC<DashboardHeaderProps> = ({
+    headerRef,
+    headerHeight
+}) => {
     const language = useSelector((state: RootState) => state.common.language);
     const navigate = useNavigate();
     const [displayName, setDisplayName] = useState<string | undefined>(

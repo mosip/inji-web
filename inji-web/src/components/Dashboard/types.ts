@@ -1,3 +1,5 @@
+import { Location } from "react-router-dom";
+
 export type DropdownItem = {
     label: string;
     onClick: () => void;
@@ -51,3 +53,9 @@ export type DashboardHeaderProps = {
     headerRef: React.RefObject<HTMLDivElement>;
     headerHeight: number;
 };
+
+export type SideBarSvgIconProps = {
+    outline: string;
+    navUrl: string;
+    location: Location;
+}

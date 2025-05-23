@@ -162,6 +162,12 @@ export const PinPage: React.FC = () => {
         const walletId = localStorage.getItem(KEYS.WALLET_ID);
         const pin = passcode.join('');
 
+        if (!walletId) {
+            setError(t('error.walletNotFoundError'));
+            setLoading(false);
+            navigate('/Pin');
+        }
+
         try {
             const responseData = await fetchRequest(
                 api.fetchWalletDetails.url(walletId ?? ''),
