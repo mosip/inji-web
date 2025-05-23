@@ -18,6 +18,7 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
 import {useTranslation} from 'react-i18next';
 import {getProfileInitials} from './Utils';
+import DropdownArrowIcon from '../Common/DropdownArrowIcon';
 
 export const Header: React.FC<DashboardHeaderProps> = ({
     headerRef,
@@ -205,25 +206,7 @@ export const Header: React.FC<DashboardHeaderProps> = ({
                                 className="relative inline-block cursor-pointer"
                                 onClick={toggleProfileDropdown}
                             >
-                                {isProfileDropdownOpen ? (
-                                    <GradientWrapper>
-                                        <RiArrowUpSFill
-                                            size={20}
-                                            color={
-                                                'var(--iw-color-languageArrowIcon)'
-                                            }
-                                        />
-                                    </GradientWrapper>
-                                ) : (
-                                    <GradientWrapper>
-                                        <RiArrowDownSFill
-                                            size={20}
-                                            color={
-                                                'var(--iw-color-languageArrowIcon)'
-                                            }
-                                        />
-                                    </GradientWrapper>
-                                )}
+                                <DropdownArrowIcon isOpen={isProfileDropdownOpen} />
                             </div>
                         </div>
 

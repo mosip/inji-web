@@ -1,8 +1,7 @@
 import React, {useState} from "react";
-import {RiArrowDownSFill, RiArrowUpSFill} from "react-icons/ri";
-import {GradientWrapper} from "../Common/GradientWrapper";
 import {useNavigate} from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import DropdownArrowIcon from "../Common/DropdownArrowIcon";
 
 export const FAQDropdown: React.FC = () => {
     const navigate = useNavigate();
@@ -25,21 +24,7 @@ export const FAQDropdown: React.FC = () => {
                     onMouseDown={() => setIsOpen((open) => !isOpen)}
                 >
                     <p data-testid={`selected-dropDown`}>{t('heading')}</p>
-                    {isOpen ? (
-                        <GradientWrapper>
-                            <RiArrowUpSFill
-                                size={20}
-                                color={'var(--iw-color-languageArrowIcon)'}
-                            />
-                        </GradientWrapper>
-                    ) : (
-                        <GradientWrapper>
-                            <RiArrowDownSFill
-                                size={20}
-                                color={'var(--iw-color-languageArrowIcon)'}
-                            />
-                        </GradientWrapper>
-                    )}
+                    <DropdownArrowIcon isOpen={isOpen} />
                 </button>
 
                 {isOpen && (

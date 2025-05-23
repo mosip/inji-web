@@ -4,7 +4,7 @@ fileignoreconfig:
 - filename: inji-web/src/components/PageTemplate/Header.tsx
   checksum: 427b9a763bea206ed6b8b690386fa2834168a390083bfaed3c3df290c9c8a546
 - filename: inji-web/src/components/Common/LanguageSelector.tsx
-  checksum: af1321afdc16552cefa4a8545d9051b063000a50a764f203a35730320d5985bd
+  checksum: 64027a9e205f67ed8493c3aecf42238880218f819008d6808f0139ee59dd2dd8
 - filename: inji-web/public/env.config.js
   checksum: 0ffabe95d3271bb98bea2cb4e2ee67c7b351e567a9ebb3cae003de9d7e28de8f
 - filename: inji-web/package-lock.json
@@ -34,7 +34,7 @@ fileignoreconfig:
 - filename: inji-web/src/__tests__/components/Dashboard/EmptyDocument.test.tsx
   checksum: f401e15725074d3840909dd82547e7cbd4ff61f854dd574ea7c1abb0b1309aeb
 - filename: inji-web/src/components/Dashboard/Header.tsx
-  checksum: 1bd4cf6aecb1f37dad17f4cb9ae1beee1bd435879d3403632f9792ffd1c77d0a
+  checksum: ab854cd1dc86597ae084cf15a0a1a3da9b73bcc7b9bfca76cbd6acae5ba78c30
 - filename: inji-web/src/components/Dashboard/Sidebar.tsx
   checksum: cefb0cee8f45135e97c8d463daf6de2eb2e87584353d19de6ccb2c4083e9e1c9
 - filename: inji-web/src/locales/ar.json

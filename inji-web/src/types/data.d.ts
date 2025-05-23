@@ -102,3 +102,9 @@ export type FAQAccordionItemType = {
 export type FooterProps = {
     footerRef: React.RefObject<HTMLDivElement>;
 }
+
+export type DropdownArrowIconProps = {
+    isOpen: boolean;
+    size?: number;
+    color?: string;
+};
