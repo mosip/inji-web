@@ -12,14 +12,14 @@ import {
     navigateToDashboardHome
 } from '../../pages/Dashboard/utils';
 import {useUser} from '../../hooks/useUser';
-import {DropdownItem} from './types';
+import {DashboardHeaderProps, DropdownItem} from './types';
 import HamburgerMenu from '../../assets/HamburgerMenu.svg';
 import {isRTL} from '../../utils/i18n';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
 import {useTranslation} from 'react-i18next';
 
-export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
+export const Header: React.FC<DashboardHeaderProps> = ({headerRef, headerHeight}) => {
     const language = useSelector((state: RootState) => state.common.language);
     const navigate = useNavigate();
     const [displayName, setDisplayName] = useState<string | undefined>(
@@ -151,7 +151,7 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
 
     return (
         <header
-            ref={ref}
+            ref={headerRef}
             data-testid="Dashboard-Header-Container"
             className="fixed top-0 left-0 right-0 z-20 bg-iw-background bg-transparent shadow-[0_4px_5px_0_rgba(0,0,0,0.051)]"
         >
@@ -257,7 +257,7 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
             >
                 {isHamburgerMenuOpen && (
                     <div
-                        style={{marginTop: props.headerHeight}}
+                        style={{marginTop: headerHeight}}
                         className="absolute top-1 bg-white shadow-iw-hamburger-dropdown p-2 w-full"
                     >
                         <div>
@@ -283,6 +283,4 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
             </div>
         </header>
     );
-});
-
-Header.displayName = 'DashboardHeader';
+};

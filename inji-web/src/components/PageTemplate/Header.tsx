@@ -1,4 +1,4 @@
-import React, {forwardRef, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-dom';
 import {LanguageSelector} from '../Common/LanguageSelector';
@@ -7,12 +7,12 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import {RootState} from '../../types/redux';
 import {useSelector} from 'react-redux';
 import {isRTL} from '../../utils/i18n';
-import {api} from '../../utils/api';
 import {useCookies} from 'react-cookie';
 import {useUser} from '../../hooks/useUser';
 import { PlainButton } from '../Common/Buttons/PlainButton';
+import { HeaderProps } from '../Dashboard/types';
 
-export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
+export const Header: React.FC<HeaderProps> = ({headerRef}) => {
     const language = useSelector((state: RootState) => state.common.language);
     const {t, i18n} = useTranslation('PageTemplate');
     const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +38,7 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
 
     return (
         <header
-            ref={ref}
+            ref={headerRef}
             className="fixed top-0 left-0 right-0 bg-iw-background py-7 z-10 shadow-[0_4px_5px_0_rgba(0,0,0,0.051)]"
         >
             <div
@@ -139,6 +139,4 @@ export const Header = forwardRef<HTMLDivElement, any>((props, ref) => {
             )}
         </header>
     );
-});
-
-Header.displayName = 'Header';
+};

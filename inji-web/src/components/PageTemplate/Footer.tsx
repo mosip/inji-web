@@ -1,11 +1,13 @@
-import React, {forwardRef} from "react";
-import {useTranslation} from "react-i18next";
+import React from 'react';
+import {useTranslation} from 'react-i18next';
+import { FooterProps } from '../Dashboard/types';
 
-export const Footer = forwardRef<HTMLDivElement, any>((props, ref) => {
-    const {t} = useTranslation("PageTemplate");
+export const Footer: React.FC<FooterProps> = ({footerRef}) => {
+    const {t} = useTranslation('PageTemplate');
+    
     return (
         <footer
-            ref={ref}
+            ref={footerRef}
             data-testid="Footer-Container"
             className="fixed bottom-0 left-0 right-0 py-4 transform rotate-180 shadow-sm shadow-iw-shadow bg-iw-footer"
         >
@@ -32,6 +34,4 @@ export const Footer = forwardRef<HTMLDivElement, any>((props, ref) => {
             </div>
         </footer>
     );
-});
-
-Footer.displayName = "Footer";
+};

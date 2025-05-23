@@ -17,12 +17,18 @@ export const Layout: React.FC = () => {
     const [footerHeight, setFooterHeight] = useState(0);
 
     useEffect(() => {
-        if (headerRef.current) {
-            setHeaderHeight(headerRef.current.getBoundingClientRect().height);
-        }
-        if (footerRef.current) {
-            setFooterHeight(footerRef.current.getBoundingClientRect().height);
-        }
+        const updateHeights = () => {
+            const headerHeight =
+                headerRef.current?.getBoundingClientRect().height || 0;
+            const footerHeight =
+                footerRef.current?.getBoundingClientRect().height || 0;
+            setHeaderHeight(headerHeight);
+            setFooterHeight(footerHeight);
+        };
+
+        updateHeights();
+        window.addEventListener('resize', updateHeights);
+        return () => window.removeEventListener('resize', updateHeights);
     }, []);
 
     return (
@@ -30,7 +36,7 @@ export const Layout: React.FC = () => {
             className="h-screen flex flex-col bg-iw-background font-base overflow-hidden w-full relative"
             dir={getDirCurrentLanguage(language)}
         >
-            <Header ref={headerRef} headerHeight={headerHeight} />
+            <Header headerRef={headerRef} headerHeight={headerHeight} />
 
             <div
                 className="flex flex-1 overflow-hidden w-full relative"
@@ -42,7 +48,9 @@ export const Layout: React.FC = () => {
             >
                 <Sidebar />
                 <div
-                    className={'relative flex flex-col overflow-hidden w-full transition-all duration-300'}
+                    className={
+                        'relative flex flex-col overflow-hidden w-full transition-all duration-300'
+                    }
                     style={{zIndex: 1}}
                 >
                     <img
@@ -63,7 +71,7 @@ export const Layout: React.FC = () => {
                 </div>
             </div>
 
-            <Footer ref={footerRef} />
+            <Footer footerRef={footerRef} />
         </div>
     );
 };

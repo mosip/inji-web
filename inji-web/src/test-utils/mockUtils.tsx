@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { createRef, ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
@@ -207,3 +207,6 @@ export const renderWithRouter = (Element: React.ReactElement, { route = '/' } = 
     );
   };
 
+export const createRefElement = () => {
+  return createRef<HTMLDivElement>();
+};

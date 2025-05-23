@@ -84,7 +84,7 @@ export const AppRouter = () => {
                 } font-base`}
                 dir={getDirCurrentLanguage(language)}
             >
-                <Header ref={headerRef} />
+                <Header headerRef={headerRef} />
                 <div
                     className="flex-grow overflow-y-auto"
                     style={{
@@ -94,7 +94,7 @@ export const AppRouter = () => {
                 >
                     {element}
                 </div>
-                <Footer ref={footerRef} />
+                <Footer footerRef={footerRef} />
             </div>
         );
     };

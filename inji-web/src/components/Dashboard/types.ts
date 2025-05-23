@@ -32,3 +32,22 @@ export type FAQPageProps = {
 export type CredentialTypesPageProps = {
     backUrl?: string;
 };
+
+export type CollapseButtonProps = {
+    isCollapsed: boolean;
+    onClick: () => void;
+    className?: string;
+};
+
+export type FooterProps = {
+    footerRef: React.RefObject<HTMLDivElement>;
+};
+
+export type HeaderProps = {
+    headerRef: React.RefObject<HTMLDivElement>;
+};
+
+export type DashboardHeaderProps = {
+    headerRef: React.RefObject<HTMLDivElement>;
+    headerHeight: number;
+};

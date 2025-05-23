@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
-import CollapseIcon from '../../assets/CollapseIcon.svg';
 import {SidebarItemType, SidebarItemProps} from './types';
 import {isRTL} from '../../utils/i18n';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
+import { CollapseButton } from './CollapseButton';
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
     icon,
@@ -126,27 +126,13 @@ export const Sidebar: React.FC = () => {
                 isRTL(language) ? 'right-0' : 'left-0'
             } ${isCollapsed ? 'w-5 sm:w-[96px]' : 'w-64'}`}
         >
-            <button
+            <CollapseButton
+                isCollapsed={isCollapsed}
                 onClick={toggleSidebar}
                 className={`absolute top-1/4 sm:top-9 p-2 z-40 ${
                     isRTL(language) ? 'left-[-20px]' : 'right-[-20px]'
                 }`}
-            >
-                <img
-                    src={CollapseIcon}
-                    alt="Collapse"
-                    className={`transform ${
-                        isCollapsed
-                            ? isRTL(language)
-                                ? ''
-                                : 'rotate-180'
-                            : isRTL(language)
-                            ? 'rotate-180'
-                            : ''
-                    } transition-transform duration-300 min-w-[26px] min-h-[26px]`}
-                />
-            </button>
-
+            />
             <div
                 className={`flex flex-col space-y-2 mt-6 sm:mt-7 w-full ${
                     isRTL(language) ? 'pl-4' : 'pr-4'
