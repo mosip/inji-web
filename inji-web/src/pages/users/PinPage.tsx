@@ -234,7 +234,7 @@ export const PinPage: React.FC = () => {
                 setIsPinCorrect(false);
                 return;
             }
-            const newWalletId = await response.text();
+            const newWalletId = (await response.json()).walletId;
             setWalletId(newWalletId);
             setWallets([{ walletId: newWalletId }]);
             setIsPinCorrect(true);
