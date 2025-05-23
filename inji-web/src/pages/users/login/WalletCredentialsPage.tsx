@@ -22,9 +22,9 @@ const WalletCredentialsPage = () => {
     const fetchWalletCredentials = async () => {
         try {
             const apiRequest = api.fetchWalletVCs;
-            const response = await fetch(apiRequest.url(language), {
+            const response = await fetch(apiRequest.url(), {
                 method: "GET",
-                headers: apiRequest.headers(),
+                headers: apiRequest.headers(language),
                 credentials: "include"
             });
 

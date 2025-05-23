@@ -223,7 +223,6 @@ export const PinPage: React.FC = () => {
                 method: "POST",
                 headers: {
                     ...api.createWalletWithPin.headers(),
-                    "Content-Type": "application/json",
                     "X-XSRF-TOKEN": cookies["XSRF-TOKEN"]
                 },
                 credentials: "include",
