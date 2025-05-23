@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Testing the Layout of StoredDocumentsPage -> check if the layout is matching with snapshot 1`] = `
-<div>
-  <div
-    data-testid="mock-empty-document"
-  />
-</div>
-`;

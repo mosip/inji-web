@@ -1,5 +1,5 @@
+import {StoredCredentialsPage} from '../../../pages/Dashboard/StoredCredentialsPage';
 import {render, screen, fireEvent} from '@testing-library/react';
-import {EmptyDocument} from '../../../components/Dashboard/EmptyDocument';
 import {mockusei18n, renderWithRouter} from '../../../test-utils/mockUtils';
 
 jest.mock('react-i18next', () => ({
@@ -12,13 +12,13 @@ jest.mock('react-i18next', () => ({
     }
 }));
 
-describe('Testing the Layout and Functionalities of EmptyDocumentPage ->', () => {
+describe('Testing the Layout of StoredDocumentsPage ->', () => {
     let renderedComponent: ReturnType<typeof render>;
 
     beforeEach(() => {
         jest.clearAllMocks();
         mockusei18n();
-        renderedComponent = renderWithRouter(<EmptyDocument />);
+        renderedComponent = renderWithRouter(<StoredCredentialsPage />);
     });
 
     it('check if the layout is matching with snapshot', () => {

@@ -1,10 +1,10 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-dom';
-import {navigateToDashboardHome} from '../../pages/Dashboard/utils';
-import { NavBackArrowButton } from '../../pages/Dashboard/NavBackArrowButton';
+import {navigateToDashboardHome} from './utils';
+import {NavBackArrowButton} from './NavBackArrowButton';
 
-export const EmptyDocument: React.FC = () => {
+export const StoredCredentialsPage: React.FC = () => {
     const {t} = useTranslation('Dashboard');
     const navigate = useNavigate();
 
