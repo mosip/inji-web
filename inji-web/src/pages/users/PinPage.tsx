@@ -1,9 +1,8 @@
-import {FaExclamationCircle} from 'react-icons/fa';
+import {FaExclamationCircle, FaEye, FaEyeSlash} from 'react-icons/fa';
 import React, {useState, useEffect, useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {api} from '../../utils/api';
 import {useCookies} from 'react-cookie';
-import {FaEye, FaEyeSlash} from 'react-icons/fa';
 import {SolidButton} from '../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
 import {navigateToDashboardHome} from '../Dashboard/utils';
