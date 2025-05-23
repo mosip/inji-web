@@ -44,7 +44,7 @@ describe('Test misc.ts utility functions', () => {
         'redirect_uri': window.location.origin + "/redirect", 
         'code_verifier': 'verifier',
         'issuer': 'issuer',
-        'credential': 'credential',
+        'credentialConfigurationId': 'credential',
         'vcStorageExpiryLimitInTimes': 'expiry'
     });
 });
