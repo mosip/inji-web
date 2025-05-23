@@ -1,12 +1,34 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useUser} from '../../../hooks/useUser';
-import { validateWalletUnlockStatus } from '../../Dashboard/utils';
-import { KEYS } from '../../../utils/constants';
+import {validateWalletUnlockStatus} from '../../Dashboard/utils';
+import {KEYS} from '../../../utils/constants';
 
 const LoginSessionStatusChecker = () => {
     const navigate = useNavigate();
-    const {removeUser, fetchUserProfile, walletId} = useUser();
+    const {user, removeUser, fetchUserProfile} = useUser();
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const displayNameFromLocalStorage = user?.displayName;
+
+    useEffect(() => {
+        setIsLoggedIn(!!displayNameFromLocalStorage);
+    }, [displayNameFromLocalStorage]);
+
+    useEffect(() => {
+        fetchSessionAndUserInfo();
+    }, [isLoggedIn]);
+
+    useEffect(() => {
+        const handleStorageChange = (event: any) => {
+            if (event.key === 'displayName') {
+                fetchSessionAndUserInfo();
+            }
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
+    }, []);
+
     const fetchSessionAndUserInfo = async () => {
         try {
             const {user, walletId} = await fetchUserProfile();
@@ -26,21 +48,6 @@ const LoginSessionStatusChecker = () => {
             navigate('/');
         }
     };
-
-    useEffect(() => {
-        fetchSessionAndUserInfo();
-    }, []);
-
-    useEffect(() => {
-        const handleStorageChange = (event: any) => {
-            if (event.key === 'displayName') {
-                fetchSessionAndUserInfo();
-            }
-        };
-
-        window.addEventListener('storage', handleStorageChange);
-        return () => window.removeEventListener('storage', handleStorageChange);
-    }, []);
 
     return null;
 };

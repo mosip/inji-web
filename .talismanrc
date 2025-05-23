@@ -54,7 +54,7 @@ fileignoreconfig:
 - filename: inji-web/src/locales/ta.json
   checksum: d9ed356387f263170f69d4237f60be5676c3599e1566596f3877c337cce859a8
 - filename: inji-web/src/pages/users/PinPage.tsx
-  checksum: dcefd50f66cd81659fefce4427cb0a4309c861ff9075f981f5d17c8ea9e3708e
+  checksum: 97d70853adcd3caed48e20238ab5b0e26ba6bc79978dc1d579ce97e1d47a47f7
 - filename: inji-web/src/__tests__/users/login/PinPage.test.tsx
   checksum: 3f9bf9ed2f63b27195855a620b94a4a9eab462879b5a288a5b3ed9eb6f9bc834
 - filename: inji-web/src/__tests__/users/login/Login.test.tsx
@@ -62,7 +62,7 @@ fileignoreconfig:
 - filename: inji-web/src/__tests__/pages/HomePage.test.tsx
   checksum: 43e96c9ccd03a006d584a536d6f526e4b6e682f95cce20cad80d12d11e3f8dc2
 - filename: inji-web/src/pages/users/login/LoginSessionStatusChecker.tsx
-  checksum: d8a4d0e8168fc5edde6c9b2653ba1290cd9788d6307c2a90ca953cb2133920bf
+  checksum: faaef4e8c03442447af438b2b54cd966feb4d4aaf10d1200de4e75c16e8d8e03
 - filename: inji-web/src/__tests__/components/PageTemplate/Footer.test.tsx
   checksum: 719791b2e60b05e60797790a823d561de37f2911c5fce90290695217b7f11012
 version: ""

@@ -17,7 +17,7 @@ export const validateWalletUnlockStatus = (
     storageWalletId: string | null,
     navigate: (path: string) => void
 ) => {
-    if (cachedWalletId === storageWalletId) {
+    if (cachedWalletId && (cachedWalletId === storageWalletId)) {
         console.info('Wallet is unlocked!');
     } else {
         console.warn(

@@ -184,7 +184,6 @@ export const PinPage: React.FC = () => {
             setIsPinCorrect(true);
             navigateToDashboardHome(navigate);
         } catch (error) {
-            localStorage.removeItem('walletId');
             setIsPinCorrect(false);
             setError(t('error.incorrectPinError'));
         } finally {

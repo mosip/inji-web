@@ -20,12 +20,13 @@ import {HomePage as DashboardHomePage} from './pages/Dashboard/HomePage';
 import {StoredCredentialsPage} from './pages/Dashboard/StoredCredentialsPage';
 import {useUser} from './hooks/useUser';
 import {CredentialTypesPage} from './pages/Dashboard/CredentialTypesPage';
-import { KEYS } from './utils/constants';
+import {KEYS} from './utils/constants';
 
 export const AppRouter = () => {
     const language = useSelector((state: RootState) => state.common.language);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const {user} = useUser();
+    const displayNameFromLocalStorage = user?.displayName;
     const headerRef = useRef<HTMLDivElement>(null);
     const footerRef = useRef<HTMLDivElement>(null);
     const [headerHeight, setHeaderHeight] = useState(0);
@@ -59,7 +60,7 @@ export const AppRouter = () => {
 
     useEffect(() => {
         const handleStorageChange = () => {
-            const hasDisplayName = !!user?.displayName;
+            const hasDisplayName = !!displayNameFromLocalStorage;
             const hasWalletId = !!localStorage.getItem(KEYS.WALLET_ID);
             setIsLoggedIn(hasDisplayName && hasWalletId);
         };
@@ -75,6 +76,11 @@ export const AppRouter = () => {
             );
         };
     }, []);
+
+
+    useEffect(() => {
+        setIsLoggedIn(!!displayNameFromLocalStorage);
+    }, [displayNameFromLocalStorage]);
 
     const wrapElement = (element: JSX.Element, isBGNeeded: boolean = true) => {
         return (
