@@ -35,6 +35,35 @@ jobs:
       RELEASE_DOCKER_HUB: ${{ secrets.RELEASE_DOCKER_HUB }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 
+  build-inji-web:
+    runs-on: ubuntu-latest
+    env:
+      NAMESPACE: ${{ secrets.dev_namespace_docker_hub }}
+      SERVICE_NAME: ui-test
+      SERVICE_LOCATION: ui-test
+      BUILD_ARTIFACT: ui-test-local
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3.7.0
+        with:
+          node-version: '18'
+      - name: Move to inji-web directory
+        run: cd inji-web
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: '~/.npm'
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+      - name: Install the dependencies
+        run: npm install
+      - name: Run unit tests with coverage
+        run: npm test -- --coverage
+      - name: Build the project
+        run: npm run build
+
+
   sonar-analysis-inji-web:
     if: "${{ github.event_name != 'pull_request' }}"
     needs: build-dockers-inji-web
