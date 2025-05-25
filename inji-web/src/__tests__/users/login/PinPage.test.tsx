@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 import { PinPage } from '../../../pages/users/PinPage';
+import { UserProvider } from '../../../hooks/useUser';
 
 // Mocking the useTranslation hook from react-i18next
 jest.mock('react-i18next', () => ({
@@ -25,9 +26,11 @@ jest.mock('react-i18next', () => ({
 describe('PinPage', () => {
   const renderWithProviders = (ui: React.ReactElement) => {
     return render(
-      <CookiesProvider>
-        <MemoryRouter>{ui}</MemoryRouter>
-      </CookiesProvider>
+        <CookiesProvider>
+            <UserProvider>
+                <MemoryRouter>{ui}</MemoryRouter>
+            </UserProvider>
+        </CookiesProvider>
     );
   };
 

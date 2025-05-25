@@ -26,7 +26,7 @@ fileignoreconfig:
 - filename: inji-web/src/__tests__/utils/misc.test.tsx
   checksum: 4863d9274e25e1b34c8acd4721a609a2aa68051e644e9f049d521cc15a1575f8
 - filename: inji-web/src/test-utils/mockUtils.tsx
-  checksum: e216b6bba14223a155401f8af44eee31690367fcca671e8284fa23a9573ecf6e
+  checksum: 6f7a7a05003ff6ba60da5fe492e8eac4059ea590681a9460e5c1b662bb151474
 - filename: inji-web/src/components/Faq/FAQAccordion.tsx
   checksum: 0788e8febe4a1b51d9413d9ec97fc71fbaddb84ac05da47749eac4ac7a99b529
 - filename: inji-web/src/components/Faq/FAQAccordionItem.tsx
@@ -56,7 +56,7 @@ fileignoreconfig:
 - filename: inji-web/src/pages/users/PinPage.tsx
   checksum: 48cf16b9849fb53c7a1cc8da345946bc022d838885d5b8b60aaaacfb328a2556
 - filename: inji-web/src/__tests__/users/login/PinPage.test.tsx
-  checksum: 3f9bf9ed2f63b27195855a620b94a4a9eab462879b5a288a5b3ed9eb6f9bc834
+  checksum: e22b91e31e1feeb4b6b1d12732c5764d1dc8bda720dc69d38595db9004d3f404
 - filename: inji-web/src/__tests__/users/login/Login.test.tsx
   checksum: e7a9b4cd88f4b820aca578de87939e12c2adda73f75893b6b547c5a1ba13768b
 - filename: inji-web/src/__tests__/pages/HomePage.test.tsx

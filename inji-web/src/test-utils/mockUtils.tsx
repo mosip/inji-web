@@ -3,6 +3,7 @@ import { render, RenderOptions } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { reduxStore } from '../redux/reduxStore';
+import { UserProvider } from '../hooks/useUser';
 
 // Mock for storage module
 export const mockStorageModule = () => {
@@ -120,9 +121,9 @@ interface RenderWithProviderOptions extends Omit<RenderOptions, 'queries'> {}
 export const renderWithProvider = (element: ReactElement, options?: RenderWithProviderOptions) => {
     return render(
         <Provider store={reduxStore}>
-            <Router>
-                {element}
-            </Router>
+            <UserProvider>
+                <Router>{element}</Router>
+            </UserProvider>
         </Provider>,
         options
     );
@@ -197,13 +198,15 @@ export const mockWindowLocation = (url: string) => {
 export const renderWithRouter = (Element: React.ReactElement, { route = '/' } = {}) => {
     window.history.pushState({}, 'Test page', route);
     return render(
-      <BrowserRouter>
-        <Provider store={reduxStore}>
-          <Routes>
-            <Route path="*" element={Element} />
-          </Routes>
-        </Provider>
-      </BrowserRouter>
+        <BrowserRouter>
+            <Provider store={reduxStore}>
+                <UserProvider>
+                    <Routes>
+                        <Route path="*" element={Element} />
+                    </Routes>
+                </UserProvider>
+            </Provider>
+        </BrowserRouter>
     );
   };
 
