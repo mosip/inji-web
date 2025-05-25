@@ -1,18 +1,15 @@
 import {FaExclamationCircle} from 'react-icons/fa';
-import React, {useState, useEffect, useRef, CSSProperties} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {api, MethodType} from '../../utils/api';
+import {api} from '../../utils/api';
 import {useCookies} from 'react-cookie';
 import {FaEye, FaEyeSlash} from 'react-icons/fa';
 import {SolidButton} from '../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
-import {useFetch} from '../../hooks/useFetch';
 import {navigateToDashboardHome} from '../Dashboard/utils';
 import {useUser} from '../../hooks/useUser';
-import { KEYS } from '../../utils/constants';
 
 export const PinPage: React.FC = () => {
-    const {state, fetchRequest} = useFetch();
     const {t, i18n} = useTranslation('PinPage');
     const navigate = useNavigate();
     const [displayName, setDisplayName] = useState<string | null>(null);
@@ -34,36 +31,30 @@ export const PinPage: React.FC = () => {
 
     const passcodeRefs = useRef<(HTMLInputElement | null)[]>([]);
     const confirmPasscodeRefs = useRef<(HTMLInputElement | null)[]>([]);
-    const {fetchUserProfile} = useUser();
+    const {fetchUserProfile, walletId: hookWalletId, user} = useUser();
 
     const fetchWallets = async () => {
         try {
-            // Fetch list of wallets present
-            let responseData = await fetchRequest(
-                api.fetchWallets.url(),
-                api.fetchWallets.methodType,
-                api.fetchWallets.headers(),
-                api.fetchWallets.credentials
-            );
+            const response = await fetch(
+                api.fetchWallets.url(), {
+                method: api.fetchWallets.methodType === 0 ? 'GET' : 'POST',
+                headers: {
+                    ...api.fetchWallets.headers(),
+                    'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
+                },
+                credentials: 'include'
+            });
 
-            setWallets(responseData);
-            const walletExists = responseData.length > 0;
-            if (walletExists) {
-                try {
-                    await fetchUserProfile();
-                } catch (error) {
-                    setError('Failed to fetch user profile');
-                    throw error;
-                }
-                setWalletId(responseData[0].wallet_id);
-                localStorage.setItem('walletId', responseData[0].walletId);
-            } else {
-                console.warn('No wallets found, prompting creation...');
+            const responseData = await response.json();
+
+            if(!response.ok){
+                throw responseData;
             }
+            
+            setWallets(responseData);
         } catch (error) {
             console.error('Error occurred while fetching wallets:', error);
             setError(t('error.fetchWalletsError'));
-            navigate('/');
         }
     };
 
@@ -154,105 +145,116 @@ export const PinPage: React.FC = () => {
         );
     };
 
-    const handleUnlock = async () => {
-        setError('');
-        setLoading(true);
-        setIsPinCorrect(null);
-
-        const walletId = localStorage.getItem(KEYS.WALLET_ID);
-        const pin = passcode.join('');
-
+    const unlockWallet = async (walletId: string, pin: string) => {
         if (!walletId) {
             setError(t('error.walletNotFoundError'));
-            setLoading(false);
             navigate('/Pin');
+            throw new Error('Wallet not found');
         }
 
         try {
-            const responseData = await fetchRequest(
-                api.fetchWalletDetails.url(walletId ?? ''),
-                api.fetchWalletDetails.methodType,
-                {
+            const response = await fetch(api.fetchWalletDetails.url(walletId), {
+                method:
+                    api.fetchWalletDetails.methodType === 0 ? 'GET' : 'POST',
+                headers: {
                     ...api.fetchWalletDetails.headers(),
                     'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
                 },
-                'include',
-                JSON.stringify({walletPin: pin})
-            );
-            const unlockedWalletId = responseData.walletId;
-            localStorage.setItem('walletId', unlockedWalletId);
+                credentials: 'include',
+                body: JSON.stringify({walletPin: pin})
+            });
+
+            const responseData = await response.json();
+            if (!response.ok) {
+                throw responseData;
+            }
             setIsPinCorrect(true);
-            navigateToDashboardHome(navigate);
         } catch (error) {
             setIsPinCorrect(false);
             setError(t('error.incorrectPinError'));
-        } finally {
-            setLoading(false);
+            throw error;
         }
+    };
+
+    const fetchUserProfileAndNavigate = async () => {
+        try {
+            await fetchUserProfile();
+            navigateToDashboardHome(navigate);
+        } catch (error) {
+            setError('Failed to fetch user profile');
+            throw error;
+        }
+    };
+
+    const createWallet = async () => {
+        const pin = passcode.join('');
+        const confirmPin = confirmPasscode.join('');
+        if (pin.length !== 6 || confirmPin.length !== 6) {
+            setError(t('error.pinLengthError'));
+            throw new Error('Invalid pin length');
+        }
+        if (wallets.length === 0 && pin !== confirmPin) {
+            setError(t('error.passcodeMismatchError'));
+            throw new Error('Pin and Confirm Pin mismatch');
+        }
+
+        const response = await fetch(api.createWalletWithPin.url(), {
+            method: 'POST',
+            headers: {
+                ...api.createWalletWithPin.headers(),
+                'Content-Type': 'application/json',
+                'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                walletPin: pin,
+                confirmWalletPin: confirmPasscode.join(''),
+                walletName: displayName
+            })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            setError(
+                `${t('error.createWalletError')}: ${
+                    errorData.errorMessage || t('unknown-error')
+                }`
+            );
+            setIsPinCorrect(false);
+            throw errorData;
+        }
+
+        const newWalletId = await response.text();
+        await unlockWallet(newWalletId, pin);
+
+        setWalletId(newWalletId);
+        setWallets([{walletId: newWalletId}]);
+        setIsPinCorrect(true);
     };
 
     const handleSubmit = async () => {
         setError('');
-        setLoading(true);
         setIsPinCorrect(null);
-        const pin = passcode.join('');
-
-        if (wallets.length !== 0) {
-            if (pin.length !== 6) {
-                setError(t('error.pinLengthError'));
-                setLoading(false);
-                return;
-            }
-        } else {
-            const confirmPin = confirmPasscode.join('');
-            if (pin.length !== 6 || confirmPin.length !== 6) {
-                setError(t('error.pinLengthError'));
-                setLoading(false);
-                return;
-            }
-            if (wallets.length === 0 && pin !== confirmPin) {
-                setError(t('error.passcodeMismatchError'));
-                setLoading(false);
-                return;
-            }
-        }
+        setLoading(true);
 
         try {
             if (wallets.length === 0) {
-                const response = await fetch(api.createWalletWithPin.url(), {
-                    method: 'POST',
-                    headers: {
-                        ...api.createWalletWithPin.headers(),
-                        'Content-Type': 'application/json',
-                        'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
-                    },
-                    credentials: 'include',
-                    body: JSON.stringify({
-                        walletPin: pin,
-                        confirmWalletPin: confirmPasscode.join(''),
-                        walletName: displayName
-                    })
-                });
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    setError(
-                        `${t('error.createWalletError')}: ${
-                            errorData.errorMessage || t('unknown-error')
-                        }`
-                    );
-                    setIsPinCorrect(false);
+                await createWallet();
+            } else {
+                const walletId = wallets[0].walletId;
+                const pin = passcode.join('');
+
+                if (pin.length !== 6) {
+                    setError(t('error.pinLengthError'));
+                    setLoading(false);
                     return;
                 }
-                const newWalletId = await response.text();
-                setWalletId(newWalletId);
-                setWallets([{walletId: newWalletId}]);
-                setIsPinCorrect(true);
-                localStorage.setItem('walletId', newWalletId);
-                navigateToDashboardHome(navigate);
-            } else {
-                await handleUnlock();
+
+                await unlockWallet(walletId, pin);
             }
+            await fetchUserProfileAndNavigate();
         } catch (error) {
+            console.error('Error occurred while setting up Wallet or loading user profile', error);
             setIsPinCorrect(false);
             setError(t('error.incorrectPinError'));
         } finally {
@@ -263,6 +265,7 @@ export const PinPage: React.FC = () => {
     const isButtonDisabled =
         passcode.includes('') ||
         (wallets.length === 0 && confirmPasscode.includes(''));
+
     return (
         <div
             className=" overflow-hidden fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50"

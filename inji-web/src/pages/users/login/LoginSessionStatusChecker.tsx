@@ -20,7 +20,7 @@ const LoginSessionStatusChecker = () => {
 
     useEffect(() => {
         const handleStorageChange = (event: any) => {
-            if (event.key === 'displayName') {
+            if (event.key === KEYS.USER) {
                 fetchSessionAndUserInfo();
             }
         };
@@ -32,19 +32,19 @@ const LoginSessionStatusChecker = () => {
     const fetchSessionAndUserInfo = async () => {
         try {
             const {user, walletId} = await fetchUserProfile();
-            if (user?.displayName) {
-                window.dispatchEvent(new Event('displayNameUpdated'));
-            }
-
             const cachedWalletId = walletId;
             const storageWalletId = localStorage.getItem(KEYS.WALLET_ID);
 
-            validateWalletUnlockStatus(cachedWalletId, storageWalletId, navigate);
+            validateWalletUnlockStatus(
+                cachedWalletId,
+                storageWalletId,
+                navigate,
+                user
+            );
         } catch (error) {
             console.error('Error occurred while fetching user profile:', error);
             removeUser();
-            localStorage.removeItem('walletId');
-            window.dispatchEvent(new Event('displayNameUpdated'));
+            localStorage.removeItem(KEYS.WALLET_ID);
             navigate('/');
         }
     };

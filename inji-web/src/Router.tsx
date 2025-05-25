@@ -20,35 +20,29 @@ import {HomePage as DashboardHomePage} from './pages/Dashboard/HomePage';
 import {StoredCredentialsPage} from './pages/Dashboard/StoredCredentialsPage';
 import {useUser} from './hooks/useUser';
 import {CredentialTypesPage} from './pages/Dashboard/CredentialTypesPage';
-import {KEYS} from './utils/constants';
 
 export const AppRouter = () => {
     const language = useSelector((state: RootState) => state.common.language);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const {user} = useUser();
-    const displayNameFromLocalStorage = user?.displayName;
+    const {user, walletId} = useUser();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    
     const headerRef = useRef<HTMLDivElement>(null);
     const footerRef = useRef<HTMLDivElement>(null);
     const [headerHeight, setHeaderHeight] = useState(0);
     const [footerHeight, setFooterHeight] = useState(0);
 
-    const getHeaderFooterHeights = (
-        headerRef: React.RefObject<HTMLElement>,
-        footerRef: React.RefObject<HTMLElement>
-    ) => {
-        const headerHeight =
-            headerRef.current?.getBoundingClientRect().height || 0;
-        const footerHeight =
-            footerRef.current?.getBoundingClientRect().height || 0;
-        return {headerHeight, footerHeight};
+
+    const getHeaderFooterHeights = () => {
+        return {
+            headerHeight:
+                headerRef.current?.getBoundingClientRect().height || 0,
+            footerHeight: footerRef.current?.getBoundingClientRect().height || 0
+        };
     };
 
     useEffect(() => {
         const updateHeights = () => {
-            const {headerHeight, footerHeight} = getHeaderFooterHeights(
-                headerRef,
-                footerRef
-            );
+            const {headerHeight, footerHeight} = getHeaderFooterHeights();
             setHeaderHeight(headerHeight);
             setFooterHeight(footerHeight);
         };
@@ -59,28 +53,12 @@ export const AppRouter = () => {
     }, []);
 
     useEffect(() => {
-        const handleStorageChange = () => {
-            const hasDisplayName = !!displayNameFromLocalStorage;
-            const hasWalletId = !!localStorage.getItem(KEYS.WALLET_ID);
-            setIsLoggedIn(hasDisplayName && hasWalletId);
+        const updateLoginState = () => {
+            setIsLoggedIn(!!user && !!walletId);
         };
 
-        // Initial check
-        handleStorageChange();
-
-        window.addEventListener('displayNameUpdated', handleStorageChange);
-        return () => {
-            window.removeEventListener(
-                'displayNameUpdated',
-                handleStorageChange
-            );
-        };
-    }, []);
-
-
-    useEffect(() => {
-        setIsLoggedIn(!!displayNameFromLocalStorage);
-    }, [displayNameFromLocalStorage]);
+        updateLoginState();
+    }, [user, walletId]);
 
     const wrapElement = (element: JSX.Element, isBGNeeded: boolean = true) => {
         return (

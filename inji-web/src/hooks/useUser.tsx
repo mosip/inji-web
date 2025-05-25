@@ -1,74 +1,80 @@
-import {useState, useEffect} from 'react';
+import React, {createContext, useContext, useState, useEffect} from 'react';
 import {api} from '../utils/api';
-import { KEYS } from '../utils/constants';
+import {KEYS} from '../utils/constants';
+import {ErrorType, User, UserContextType} from '../components/Dashboard/types';
 
-export type User = {
-    displayName: string;
-    profilePictureUrl: string;
-};
+const UserContext = createContext<UserContextType | undefined>(undefined);
 
-type Error = {
-    errorCode: string;
-    errorMessage: string;
-};
-
-export function useUser() {
+export const UserProvider: React.FC<{children: React.ReactNode}> = ({
+    children
+}) => {
     const [user, setUser] = useState<User | null>(null);
-    const [error, setError] = useState<Error | null>(null);
     const [walletId, setWalletId] = useState<string | null>(null);
-
-    useEffect(() => {
-        const userData = localStorage.getItem(KEYS.USER);
-        if (userData) {
-            try {
-                setUser(JSON.parse(userData));
-            } catch (e) {
-                console.error("Invalid user data in localStorage");
-                localStorage.removeItem("user");
-            }
-        }
-    }, []);
+    const [error, setError] = useState<ErrorType | null>(null);
 
     const saveUser = (userData: User) => {
-        localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem(KEYS.USER, JSON.stringify(userData));
         setUser(userData);
     };
 
     const removeUser = () => {
-        localStorage.removeItem("user");
+        localStorage.removeItem(KEYS.USER);
+        localStorage.removeItem(KEYS.WALLET_ID);
         setUser(null);
+        setWalletId(null);
     };
 
     const fetchUserProfile = async () => {
         try {
             const response = await fetch(api.fetchUserProfile.url(), {
-                method: api.fetchUserProfile.methodType === 0 ? "GET" : "POST",
+                method: api.fetchUserProfile.methodType === 0 ? 'GET' : 'POST',
                 headers: {...api.fetchUserProfile.headers()},
-                credentials: "include"
+                credentials: 'include'
             });
-    
+
             const responseData = await response.json();
-    
-            if (!response.ok) {
-                throw responseData;
-            }
-    
+            if (!response.ok) throw responseData;
+
             const userData: User = {
-                "displayName": responseData.display_name,
-                "profilePictureUrl": responseData.profile_picture_url
+                displayName: responseData.display_name,
+                profilePictureUrl: responseData.profile_picture_url
             };
+
             saveUser(userData);
             setWalletId(responseData.wallet_id);
+            localStorage.setItem(KEYS.WALLET_ID, responseData.wallet_id);
             return {user: userData, walletId: responseData.wallet_id};
         } catch (error) {
             console.error('Error fetching user profile:', error);
             setUser(null);
-            setError(error as Error);
-            localStorage.removeItem('user');
-            localStorage.removeItem('walletId');
+            setWalletId(null);
+            setError(error as ErrorType);
+            removeUser();
+            localStorage.removeItem(KEYS.WALLET_ID);
             throw error;
         }
     };
 
-    return {user, error, saveUser, removeUser, fetchUserProfile, walletId};
-}
+    return (
+        <UserContext.Provider
+            value={{
+                user,
+                walletId,
+                error,
+                fetchUserProfile,
+                saveUser,
+                removeUser,
+            }}
+        >
+            {children}
+        </UserContext.Provider>
+    );
+};
+
+export const useUser = () => {
+    const context = useContext(UserContext);
+    if (!context) {
+        throw new Error('useUser must be used within a UserProvider');
+    }
+    return context;
+};

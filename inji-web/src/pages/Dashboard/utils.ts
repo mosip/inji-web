@@ -1,11 +1,14 @@
+import { User } from "../../components/Dashboard/types";
+import { KEYS } from "../../utils/constants";
+
 export const convertStringIntoPascalCase = (text: string | undefined) => {
     return (
         text &&
         text
             .toLocaleLowerCase()
-            .split(" ")
+            .split(' ')
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" ")
+            .join(' ')
     );
 };
 
@@ -15,7 +18,8 @@ export const navigateToDashboardHome = (navigate: any) =>
 export const validateWalletUnlockStatus = (
     cachedWalletId: string | null,
     storageWalletId: string | null,
-    navigate: (path: string) => void
+    navigate: (path: string) => void,
+    user: User
 ) => {
     if (cachedWalletId && (cachedWalletId === storageWalletId)) {
         console.info('Wallet is unlocked!');
@@ -23,7 +27,9 @@ export const validateWalletUnlockStatus = (
         console.warn(
             'Wallet exists but is locked, redirecting to `/pin` to unlock the wallet.'
         );
-        localStorage.removeItem('walletId');
-        navigate('/pin');
+        if(user) {
+            navigate('/pin');
+            localStorage.removeItem(KEYS.WALLET_ID);
+        }
     }
 };

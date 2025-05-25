@@ -59,3 +59,22 @@ export type SideBarSvgIconProps = {
     navUrl: string;
     location: Location;
 }
+
+export type User = {
+    displayName: string;
+    profilePictureUrl: string;
+};
+
+export type ErrorType = {
+    errorCode: string;
+    errorMessage: string;
+};
+
+export type UserContextType = {
+    user: User | null;
+    walletId: string | null;
+    error: ErrorType | null;
+    fetchUserProfile: () => Promise<{user: User; walletId: string}>;
+    saveUser: (user: User) => void;
+    removeUser: () => void;
+};

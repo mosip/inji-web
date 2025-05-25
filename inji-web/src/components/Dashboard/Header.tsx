@@ -19,6 +19,7 @@ import {RootState} from '../../types/redux';
 import {useTranslation} from 'react-i18next';
 import {getProfileInitials} from './Utils';
 import DropdownArrowIcon from '../Common/DropdownArrowIcon';
+import {KEYS} from '../../utils/constants';
 
 export const Header: React.FC<DashboardHeaderProps> = ({
     headerRef,
@@ -77,7 +78,7 @@ export const Header: React.FC<DashboardHeaderProps> = ({
 
             if (response.ok) {
                 removeUser();
-                localStorage.removeItem('walletId');
+                localStorage.removeItem(KEYS.WALLET_ID);
                 window.location.replace('/');
             } else {
                 const parsedResponse = await response.json();
@@ -206,7 +207,9 @@ export const Header: React.FC<DashboardHeaderProps> = ({
                                 className="relative inline-block cursor-pointer"
                                 onClick={toggleProfileDropdown}
                             >
-                                <DropdownArrowIcon isOpen={isProfileDropdownOpen} />
+                                <DropdownArrowIcon
+                                    isOpen={isProfileDropdownOpen}
+                                />
                             </div>
                         </div>
 

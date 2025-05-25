@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-dom';
 import {LanguageSelector} from '../Common/LanguageSelector';
@@ -7,8 +7,6 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import {RootState} from '../../types/redux';
 import {useSelector} from 'react-redux';
 import {isRTL} from '../../utils/i18n';
-import {useCookies} from 'react-cookie';
-import {useUser} from '../../hooks/useUser';
 import { PlainButton } from '../Common/Buttons/PlainButton';
 import { HeaderProps } from '../Dashboard/types';
 
@@ -17,24 +15,6 @@ export const Header: React.FC<HeaderProps> = ({headerRef}) => {
     const {t, i18n} = useTranslation('PageTemplate');
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const [cookies] = useCookies(['XSRF-TOKEN']);
-    const {user, removeUser} = useUser();
-
-    useEffect(() => {
-        const handleStorageChange = () => {
-            setIsLoggedIn(!!user?.displayName);
-        };
-
-        window.addEventListener('displayNameUpdated', handleStorageChange);
-
-        return () => {
-            window.removeEventListener(
-                'displayNameUpdated',
-                handleStorageChange
-            );
-        };
-    }, []);
 
     return (
         <header
