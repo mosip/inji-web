@@ -176,7 +176,7 @@ export const PinPage: React.FC = () => {
                 ...api.fetchWalletDetails.headers(),
                 "X-XSRF-TOKEN": cookies["XSRF-TOKEN"]
             },
-            "include",
+            api.fetchWalletDetails.credentials,
             JSON.stringify({ walletPin: pin })
         );
         const unlockedWalletId = responseData.walletId;

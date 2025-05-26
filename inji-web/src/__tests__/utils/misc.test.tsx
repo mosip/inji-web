@@ -1,5 +1,5 @@
 import { generateCodeChallenge, generateRandomString, isObjectEmpty, getTokenRequestBody, downloadCredentialPDF, getErrorObject, constructContent } from '../../utils/misc';
-import { mockApi, mockCrypto } from '../../test-utils/mockUtils';
+import { mockCrypto } from '../../test-utils/mockUtils';
 import sha256 from 'crypto-js/sha256';
 import Base64 from 'crypto-js/enc-base64';
 
@@ -42,6 +42,17 @@ describe('Test misc.ts utility functions', () => {
         'grant_type': 'authorization_code',
         'code': 'code',
         'redirect_uri': window.location.origin + "/redirect", 
+        'code_verifier': 'verifier',
+        'issuer': 'issuer',
+        'credential': 'credential',
+        'vcStorageExpiryLimitInTimes': 'expiry'
+    });
+
+    const requestBodyForLoggedIn = getTokenRequestBody('code', 'verifier', 'issuer', 'credential', 'expiry', true);
+    expect(requestBodyForLoggedIn).toEqual({
+        'grant_type': 'authorization_code',
+        'code': 'code',
+        'redirect_uri': window.location.origin + "/redirect",
         'code_verifier': 'verifier',
         'issuer': 'issuer',
         'credentialConfigurationId': 'credential',

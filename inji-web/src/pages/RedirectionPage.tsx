@@ -58,7 +58,8 @@ export const RedirectionPage: React.FC = () => {
                         codeVerifier,
                         issuerId,
                         certificateId,
-                        vcStorageExpiryLimitInTimes
+                        vcStorageExpiryLimitInTimes,
+                        isLoggedIn
                     )
                 );
 
@@ -70,7 +71,7 @@ export const RedirectionPage: React.FC = () => {
                         {
                             method: "POST",
                             headers: {
-                                ...apiRequest.headers,
+                                ...apiRequest.headers(language),
                                 "X-XSRF-TOKEN": cookies["XSRF-TOKEN"]
                             },
                             credentials: "include",

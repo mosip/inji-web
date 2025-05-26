@@ -70,13 +70,13 @@ const WalletCredentialsPage = () => {
     const fetchCredential = async (credentialId: string, action: string) => {
         try {
             const response = await fetch(
-                api.fetchWalletCredentialPreview.url(credentialId, language),
+                api.fetchWalletCredentialPreview.url(credentialId),
                 {
                     method:
                         api.fetchWalletCredentialPreview.methodType === 0
                             ? "GET"
                             : "POST",
-                    headers: {...api.fetchWalletCredentialPreview.headers()},
+                    headers: api.fetchWalletCredentialPreview.headers(language),
                     credentials: "include"
                 }
             );
