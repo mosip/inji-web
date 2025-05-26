@@ -108,3 +108,7 @@ export type DropdownArrowIconProps = {
     size?: number;
     color?: string;
 };
+
+export type NavBackArrowButtonProps = {
+    onBackClick: () => void;
+};

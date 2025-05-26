@@ -85,6 +85,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
         }
     };
 
+    //TODO here check if the div with testId "Credential-List-Container" can be moved to credentialList component
     return (
         <div
             data-testid={'Credential-Types-Page-Container'}
@@ -93,7 +94,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
             <div className="flex flex-col lg:flex-row justify-between items-start gap-4 sm:gap-2">
                 <div className="flex items-start">
                     <div className="flex items-start">
-                        <NavBackArrowButton handleBackClick={handleBackClick} />
+                        <NavBackArrowButton onBackClick={handleBackClick} />
                     </div>
                     <div className="flex flex-col items-start">
                         <span

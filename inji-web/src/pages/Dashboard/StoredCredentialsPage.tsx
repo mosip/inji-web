@@ -14,7 +14,7 @@ export const StoredCredentialsPage: React.FC = () => {
                 <div className="flex items-start">
                     <div className="flex items-start">
                         <NavBackArrowButton
-                            handleBackClick={() =>
+                            onBackClick={() =>
                                 navigateToDashboardHome(navigate)
                             }
                         />
