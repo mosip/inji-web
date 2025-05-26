@@ -79,13 +79,15 @@ export const Header: React.FC<HeaderProps> = ({headerRef}) => {
                     className="flex flex-row space-x-4"
                     data-testid="Header-FAQ-LanguageSelector-Container"
                 >
-                    <PlainButton
-                        fullWidth={true}
-                        onClick={() => navigate('/faq')}
-                        testId="Header-Menu-FAQ"
-                        title={t('Header.faq')}
-                        disableGradient={true}
-                    />
+                    <div className="hidden sm:block">
+                        <PlainButton
+                            fullWidth={true}
+                            onClick={() => navigate('/faq')}
+                            testId="Header-Menu-FAQ"
+                            title={t('Header.faq')}
+                            disableGradient={true}
+                        />
+                    </div>
                     <LanguageSelector data-testid="Header-Menu-LanguageSelector" />
                 </div>
             </div>
