@@ -1,92 +1,58 @@
-import { useEffect,useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { api } from "../../../utils/api";
+import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useUser} from '../../../hooks/useUser';
+import {validateWalletUnlockStatus} from '../../Dashboard/utils';
+import {KEYS} from '../../../utils/constants';
 
-const fetchUserProfile = async () => {
-    try {
-        const response = await fetch(api.fetchUserProfile.url(), {
-            method: api.fetchUserProfile.methodType === 0 ? "GET" : "POST",
-            headers: { ...api.fetchUserProfile.headers() },
-            credentials: "include"
-        });
-        const responseData = await response.json();
-
-        if (!response.ok) {
-            throw responseData;
-        }
-
-        if (responseData.display_name) {
-            localStorage.setItem("displayName", responseData.display_name);
-        }
-
-        // Store walletId for authentication verification
-        if (!!responseData.wallet_id) {
-            localStorage.setItem("walletId", responseData.wallet_id);
-        } else {
-            localStorage.removeItem("walletId"); // Ensure proper validation
-        }
-
-        return { displayName: responseData.display_name, walletId: responseData.walletId };
-
-    } catch (error) {
-        console.error("Error fetching user profile:", error);
-        localStorage.removeItem("displayName");
-        localStorage.removeItem("walletId"); // Clear wallet data if error occurs
-        throw error;
-    }
-};
-
-const LoginSessionStatusChecker = () => {
+const LoginSessionStatusChecker: React.FC = () => {
     const navigate = useNavigate();
-    const fetchSessionAndUserInfo = async () => {
-        try {
-            const userData = await fetchUserProfile();
-            if (userData?.displayName) {
-                window.dispatchEvent(new Event("displayNameUpdated"));
-            }
-
-            const cachedWalletId = userData?.walletId; // Wallet ID from cache
-            const localWalletId = localStorage.getItem("walletId"); // Stored in frontend
-            
-            // // If wallet ID is missing or doesn't match, redirect to unlock flow
-            if (!cachedWalletId || cachedWalletId !== localWalletId) {
-                    console.warn("Wallet is locked or missing. Redirecting to unlock.");
-                    navigate("/");
-                    return;
-                }
-                
-            //Determine unlock status via wallet ID match
-            if (cachedWalletId === localWalletId) {
-                console.info("Wallet is unlocked! Redirecting to `/issuers`.");
-                navigate("/issuers"); // Skip `/pin`
-            } else {
-                console.warn("Wallet exists but is locked, redirecting to `/pin` to enter passcode.");
-                navigate("/pin"); // Enter passcode
-            }
-
-        } catch (error) {
-            console.error("Error occurred while fetching user profile:", error);
-            localStorage.removeItem("displayName");
-            localStorage.removeItem("walletId");
-            window.dispatchEvent(new Event("displayNameUpdated"));
-            navigate("/"); // Redirect on error
-        }
-    };
+    const {user, walletId, removeUser, fetchUserProfile} = useUser();
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const displayNameFromLocalStorage = localStorage.getItem(KEYS.WALLET_ID);
+    const walletIdFromLocalStorage = localStorage.getItem(KEYS.WALLET_ID);
 
     useEffect(() => {
-        fetchSessionAndUserInfo();
-    }, []);
+        setIsLoggedIn(
+            !!displayNameFromLocalStorage && !!walletIdFromLocalStorage
+        );
+    }, [displayNameFromLocalStorage, walletIdFromLocalStorage]);
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            fetchSessionAndUserInfo();
+        }
+    }, [isLoggedIn]);
 
     useEffect(() => {
         const handleStorageChange = (event: any) => {
-            if (event.key === "displayName") {
+            if (event.key === KEYS.USER) {
                 fetchSessionAndUserInfo();
             }
         };
 
-        window.addEventListener("storage", handleStorageChange);
-        return () => window.removeEventListener("storage", handleStorageChange);
+        window.addEventListener('storage', handleStorageChange);
+        return () => window.removeEventListener('storage', handleStorageChange);
     }, []);
+
+    const fetchSessionAndUserInfo = async () => {
+        try {
+            const {user, walletId} = await fetchUserProfile();
+            const cachedWalletId = walletId;
+            const storageWalletId = localStorage.getItem(KEYS.WALLET_ID);
+
+            validateWalletUnlockStatus(
+                cachedWalletId,
+                storageWalletId,
+                navigate,
+                user
+            );
+        } catch (error) {
+            console.error('Error occurred while fetching user profile:', error);
+            removeUser();
+            localStorage.removeItem(KEYS.WALLET_ID);
+            navigate('/');
+        }
+    };
 
     return null;
 };

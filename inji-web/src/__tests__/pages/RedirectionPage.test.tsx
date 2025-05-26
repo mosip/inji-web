@@ -23,6 +23,14 @@ jest.mock('../../utils/misc', () => ({
   getErrorObject: jest.fn(),
   getTokenRequestBody: jest.fn(),
 }));
+
+jest.mock('react-cookie', () => {
+    return {
+        ...jest.requireActual('react-cookie'),
+        useCookies: jest.fn().mockReturnValue([{}, jest.fn()])
+    };
+});
+
 const mockUseFetchhook = jest.fn();
 describe('Testing the Layout of RedirectionPage', () => {
   mockusei18n();
@@ -45,6 +53,10 @@ describe('Testing the Functionality of RedirectionPage', () => {
     mockUseFetch();
     jest.clearAllMocks();
     (getActiveSession as jest.Mock).mockReturnValue({ selectedIssuer: { issuer_id: 'issuer1', display: [{ name: 'Test Issuer' }] } });
+    (useCookies as jest.Mock).mockReturnValue([
+        {'XSRF-TOKEN': 'test-xsrf-token'},
+        jest.fn()
+    ]);
   });
 
   test('Check if NavBar component is rendered', () => {

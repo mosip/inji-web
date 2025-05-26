@@ -1,6 +1,6 @@
-import {screen} from "@testing-library/react";
-import {Header} from "../../../components/PageTemplate/Header";
-import {mockCrypto} from "../../../test-utils/mockUtils";
+import {screen} from '@testing-library/react';
+import {Header} from '../../../components/PageTemplate/Header';
+import {createRefElement, mockCrypto} from '../../../test-utils/mockUtils';
 import {
     renderWithProvider,
     mockUseLanguageSelector
@@ -38,19 +38,23 @@ describe("Header Container Layout Test", () => {
             {"XSRF-TOKEN": "test-xsrf-token"},
             jest.fn()
         ]);
-        const {asFragment} = renderWithProvider(<Header />);
+        const {asFragment} = renderWithProvider(
+            <Header headerRef={createRefElement()} />
+        );
         expect(asFragment()).toMatchSnapshot();
     });
 });
 
 describe("Testing Header Container Functionality", () => {
-    test("Check the presence of all Header elements", () => {
+    beforeEach(() => {
         (useCookies as jest.Mock).mockReturnValue([
             {"XSRF-TOKEN": "test-xsrf-token"},
             jest.fn()
         ]);
-        renderWithProvider(<Header />);
-        
+        renderWithProvider(<Header headerRef={createRefElement()} />);
+    });
+
+    test('Check the presence of all Header elements', () => {
         // Check Logo
         expect(screen.getByTestId("Header-InjiWeb-Logo")).toBeInTheDocument();
         
@@ -63,34 +67,22 @@ describe("Testing Header Container Functionality", () => {
 
     // Should match Logo and FAQ/Language Selector container.
     test("Check the length of Header elements", () => {
-            (useCookies as jest.Mock).mockReturnValue([
-                    {"XSRF-TOKEN": "test-xsrf-token"},
-                    jest.fn()
-                ]);
-                renderWithProvider(<Header />);
-                const headerContainer = screen.getByTestId("Header-Container");
-            expect(headerContainer.children.length).toBe(2); 
+        const headerContainer = screen.getByTestId("Header-Container");
+        
+        expect(headerContainer.children.length).toBe(2);
     });
 
     // Should match FAQ and Language-Selector Containers.
-    test("Check the length of FAQ-LanguageSelector container elements", () => {
-        (useCookies as jest.Mock).mockReturnValue([
-                {"XSRF-TOKEN": "test-xsrf-token"},
-                jest.fn()
-            ]);
-            renderWithProvider(<Header />);
-            const headerContainer = screen.getByTestId("Header-FAQ-LanguageSelector-Container");
-        expect(headerContainer.children.length).toBe(2); 
+    test('Check the length of FAQ-LanguageSelector container elements', () => {
+        const headerContainer = screen.getByTestId("Header-FAQ-LanguageSelector-Container");
+
+        expect(headerContainer.children.length).toBe(2);
     });
 
     // Should match Logo and Hamburger menu.
     test("Check the length of Logo-HamburgerMenu container elements", () => {
-        (useCookies as jest.Mock).mockReturnValue([
-                {"XSRF-TOKEN": "test-xsrf-token"},
-                jest.fn()
-            ]);
-            renderWithProvider(<Header />);
-            const headerContainer = screen.getByTestId("Header-InjiWeb-Logo-Container");
-        expect(headerContainer.children.length).toBe(2); 
+        const headerContainer = screen.getByTestId("Header-InjiWeb-Logo-Container");
+
+        expect(headerContainer.children.length).toBe(2);
     });
 });

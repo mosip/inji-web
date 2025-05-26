@@ -1,8 +1,10 @@
 {
   "PageTemplate": {
     "Header": {
-      "home": "Início",
-      "faq": "Perguntas Frequentes"
+      "home": "Página inicial",
+      "faq": "Perguntas frequentes",
+      "login": "Conecte-se",
+      "logout": "வெளியேறு"
     },
     "Footer": {
       "product": "Um produto MOSIP",
@@ -182,14 +184,14 @@
     "heading": "Isso é um erro",
     "subHeading": "A URL solicitada {{pathname}} não foi encontrada neste servidor."
   },
-  "HelpPage": {
-    "title": "Ajuda"
+  "FAQPage": {
+    "title": "Perguntas frequentes"
   },
-  "HelpDropdown":{
-    "heading":"Ajuda",
-    "item1":"Perguntas frequentes"
+  "FAQDropdown": {
+    "heading": "Perguntas frequentes",
+    "item1": "Perguntas frequentes"
   },
-  "Help": {
+  "FAQ": {
     "item1": {
       "title": "Quem são os emissores?",
       "description1": "Os emissores são órgãos governamentais ou entidades confiáveis ​​pelo governo, responsáveis ​​por fornecer credenciais verificáveis ​​em formato PDF aos residentes mediante solicitação."
@@ -325,6 +327,26 @@
     "metrics": "Vezes",
     "success": "Prosseguir",
     "cancel": "Cancelar"
+  },
+  "Dashboard": {
+    "Home": {
+      "title": "Lar",
+      "welcome": "Bem-vindo"
+    },
+    "StoredCredentials": {
+      "title": "Credenciais armazenadas",
+      "header": {
+        "addCredential": "Adicionar credencial"
+      },
+      "emptyScreen": {
+        "title": "Nenhuma credencial armazenada!"
+      }
+    },
+    "ProfileDropdown": {
+      "profile": "Perfil",
+      "faq": "Perguntas frequentes",
+      "logout": "வெளியேறு"
+    }
   }
 }
   

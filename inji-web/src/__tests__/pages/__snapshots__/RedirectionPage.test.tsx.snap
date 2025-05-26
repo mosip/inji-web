@@ -10,8 +10,7 @@ exports[`Testing the Functionality of RedirectionPage Check if DownloadResult co
       data-testid="NavBar-Outer-Container"
     >
       <nav
-        class=" mx-auto flex flex-col justify-start container items-start
- sm:flex-row sm:justify-start sm:items-center"
+        class=" mx-auto flex flex-col justify-start container items-start sm:flex-row sm:justify-start sm:items-center"
         data-testid="NavBar-Inner-Container"
       >
         <div
@@ -136,8 +135,7 @@ exports[`Testing the Functionality of RedirectionPage Check if DownloadResult co
       data-testid="NavBar-Outer-Container"
     >
       <nav
-        class=" mx-auto flex flex-col justify-start container items-start
- sm:flex-row sm:justify-start sm:items-center"
+        class=" mx-auto flex flex-col justify-start container items-start sm:flex-row sm:justify-start sm:items-center"
         data-testid="NavBar-Inner-Container"
       >
         <div
@@ -262,8 +260,7 @@ exports[`Testing the Functionality of RedirectionPage Check if NavBar component 
       data-testid="NavBar-Outer-Container"
     >
       <nav
-        class=" mx-auto flex flex-col justify-start container items-start
- sm:flex-row sm:justify-start sm:items-center"
+        class=" mx-auto flex flex-col justify-start container items-start sm:flex-row sm:justify-start sm:items-center"
         data-testid="NavBar-Inner-Container"
       >
         <div
@@ -388,8 +385,7 @@ exports[`Testing the Functionality of RedirectionPage Check if it displays error
       data-testid="NavBar-Outer-Container"
     >
       <nav
-        class=" mx-auto flex flex-col justify-start container items-start
- sm:flex-row sm:justify-start sm:items-center"
+        class=" mx-auto flex flex-col justify-start container items-start sm:flex-row sm:justify-start sm:items-center"
         data-testid="NavBar-Inner-Container"
       >
         <div
@@ -514,8 +510,7 @@ exports[`Testing the Layout of RedirectionPage Check if the layout is matching w
       data-testid="NavBar-Outer-Container"
     >
       <nav
-        class=" mx-auto flex flex-col justify-start container items-start
- sm:flex-row sm:justify-start sm:items-center"
+        class=" mx-auto flex flex-col justify-start container items-start sm:flex-row sm:justify-start sm:items-center"
         data-testid="NavBar-Inner-Container"
       >
         <div

@@ -30,7 +30,7 @@ export const IssuersList: React.FC<IssuersListProps> = ({state}) => {
     return <React.Fragment>
         <div data-testid="Issuers-List-Container" className={"flex flex-col items-center justify-center"}>
             <HeaderTile content={t("containerHeading")} subContent={t("containerSubHeading")}/>
-            <div className={`flex flex-wrap gap-3 p-4 pb-20 justify-center`}>
+            <div className={`flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 p-2 sm:p-3 md:p-4 pb-16 sm:pb-20`}>
                 {issuers.filtered_issuers.map((issuer: IssuerObject, index: number) =>
                     <div className={`flex items-center justify-center`}>
                         <Issuer issuer={issuer} key={index} index={index}/>

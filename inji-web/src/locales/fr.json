@@ -2,7 +2,9 @@
   "PageTemplate": {
     "Header": {
       "home": "Accueil",
-      "faq": "FAQ"
+      "faq": "FAQ",
+      "login": "Se connecter",
+      "logout": "Déconnexion"
     },
     "Footer": {
       "product": "Un produit MOSIP",
@@ -190,14 +192,14 @@
     "heading": "C'est une erreur",
     "subHeading": "L'URL demandée {{pathname}} n'a pas été trouvé sur ce serveur."
   },
-  "HelpPage": {
-    "title": "Aide"
+  "FAQPage": {
+    "title": "Questions fréquemment posées"
   },
-  "HelpDropdown":{
-    "heading":"Aide",
-    "item1":"Questions fréquemment posées"
+  "FAQDropdown": {
+    "heading": "Questions fréquemment posées",
+    "item1": "Questions fréquemment posées"
   },
-  "Help": {
+  "FAQ": {
     "item1": {
       "title": "Qui sont les émetteurs ?",
       "description1": "Les émetteurs sont soit des organismes gouvernementaux, soit des entités de confiance du gouvernement, chargés de fournir des informations d'identification vérifiables au format PDF aux résidents sur demande."
@@ -334,5 +336,25 @@
     "metrics": "Fois",
     "success": "Procéder",
     "cancel": "Annuler"
+  },
+  "Dashboard": {
+    "Home": {
+      "title": "Maison",
+      "welcome": "Bienvenu"
+    },
+    "StoredCredentials": {
+      "title": "Informations d'identification stockées",
+      "header": {
+        "addCredential": "Ajouter un identifiant"
+      },
+      "emptyScreen": {
+        "title": "Aucune information d'identification stockée !"
+      }
+    },
+    "ProfileDropdown": {
+      "profile": "Profil",
+      "faq": "FAQ",
+      "logout": "Déconnexion"
+    }
   }
 }

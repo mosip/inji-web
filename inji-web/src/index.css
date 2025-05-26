@@ -5,7 +5,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
     :root {
         --iw-font-base: "Inter", sans-serif;
@@ -20,8 +19,9 @@
         --iw-color-lightPrimary: #fff1eb;
         --iw-color-lightSecondary: #f2ebf8;
         --iw-color-tertiary: #951F6F;
-        --iw-color-helpAccordionHover: #e0e0e0;
+        --iw-color-faqAccordionHover: #e0e0e0;
         --iw-color-shadow: #18479329;
+        --iw-color-shadow-with-opacity: #1847930F;
         --iw-color-selected-shadow: #164EA840;
         --iw-color-spinningLoaderPrimary: #951F6F;
         --iw-color-spinningLoaderSecondary: #5B03AD;
@@ -47,6 +47,8 @@
         --iw-color-subText: #A0A8AC;
         --iw-color-disclaimerBackGround: #FFF7E5;
         --iw-color-disclaimerText: #8B6105;
+        --iw-color-dashboardSideBarMenuIcon: #6F6F6F;
+        --iw-color-dashboardSideBarMenuIconActive: #2B011C;
     }
     [class="emerald_theme"] {
         --iw-font-base: "Inter", sans-serif;
@@ -61,7 +63,7 @@
         --iw-color-lightPrimary: #fff1eb;
         --iw-color-lightSecondary: #f2ebf8;
         --iw-color-tertiary: #951F6F;
-        --iw-color-helpAccordionHover: #e0e0e0;
+        --iw-color-faqAccordionHover: #e0e0e0;
         --iw-color-shadow: #18479329;
         --iw-color-selected-shadow: #164EA840;
         --iw-color-spinningLoaderPrimary: #0FAC8B;

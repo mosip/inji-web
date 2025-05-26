@@ -22,19 +22,19 @@ public class HomePage extends BasePage {
         this.driver = driver;
     }
 
-    public void clickOnHelp() {
-        if (isElementIsVisible(driver, By.xpath("//*[@data-testid='Header-Menu-Help']"))) {
-            clickOnElement(driver, By.xpath("(//*[@data-testid='Header-Menu-Help'])[1]"));
-            clickOnElement(driver, By.xpath("//*[@data-testid='Help-DropDown-Item']"));
+    public void clickOnFaq() {
+        if (isElementIsVisible(driver, By.xpath("//*[@data-testid='Header-Menu-Faq']"))) {
+            clickOnElement(driver, By.xpath("(//*[@data-testid='Header-Menu-Faq'])[1]"));
+            clickOnElement(driver, By.xpath("//*[@data-testid='Faq-DropDown-Item']"));
 
 
         } else {
-            clickOnElement(driver, By.xpath("//li[@data-testid='Header-Menu-Help']"));
+            clickOnElement(driver, By.xpath("//li[@data-testid='Header-Menu-Faq']"));
         }
     }
 
-    public boolean isHelpPageDisplayed() {
-        return isElementIsVisible(driver, By.xpath("//div[@data-testid='Header-Menu-Help']"));
+    public boolean isFaqPageDisplayed() {
+        return isElementIsVisible(driver, By.xpath("//div[@data-testid='Header-Menu-Faq']"));
     }
 
     public boolean isHeaderContanerDisplayed() {
@@ -264,7 +264,7 @@ public class HomePage extends BasePage {
         actions.sendKeys(Keys.PAGE_DOWN).build().perform();
     }
 
-    public void ClickOnHelpForMobileBrowse() {
+    public void ClickOnFaqForMobileBrowse() {
         if (isElementIsVisible(driver, By.xpath("//div[@data-testid='Header-InjiWeb-Logo-Container']/div"))) {
             clickOnElement(driver, By.xpath("//div[@data-testid='Header-InjiWeb-Logo-Container']/div"));
         }

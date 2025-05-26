@@ -5,10 +5,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {storeLanguage} from "../../redux/reducers/commonReducer";
 import {RootState} from "../../types/redux";
 import {FaCheck} from "react-icons/fa6";
-import {RiArrowDownSFill, RiArrowUpSFill} from "react-icons/ri";
 import {renderGradientText} from "../../utils/builder";
-import { GradientWrapper } from "./GradientWrapper";
-  
+import {GradientWrapper} from './GradientWrapper';
+import DropdownArrowIcon from './DropdownArrowIcon';
+
 export const LanguageSelector: React.FC<{ "data-testid"?: string }> = ({ "data-testid": testId }) => {
     const dispatch = useDispatch();
     let language = useSelector((state: RootState) => state.common.language);
@@ -46,17 +46,7 @@ export const LanguageSelector: React.FC<{ "data-testid"?: string }> = ({ "data-t
                 data-testid={"Language-Selector-Button"}
                 onMouseDown={() => setIsOpen(open => !isOpen)}>
                 <p data-testid={`Language-Selector-Selected-DropDown-${language}`}>{LanguagesSupported.find(lang => lang.value === language)?.label}</p>
-                {isOpen ?
-
-                   <GradientWrapper>
-                        <RiArrowUpSFill size={20} color={'var(--iw-color-languageArrowIcon)'} />
-                    </GradientWrapper>
-                    :
-                    <GradientWrapper>
-                        <RiArrowDownSFill size={20} color={'var(--iw-color-languageArrowIcon)'}/>
-                    </GradientWrapper>
-                   
-                    }
+                <DropdownArrowIcon isOpen={isOpen} />
             </button>
 
             {isOpen && (

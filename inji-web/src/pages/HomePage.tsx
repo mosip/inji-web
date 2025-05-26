@@ -1,5 +1,4 @@
-import React, {CSSProperties, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from "react";
 import {HomeBanner} from "../components/Home/HomeBanner";
 import {HomeFeatures} from "../components/Home/HomeFeatures";
 import {HomeQuickTip} from "../components/Home/HomeQuickTip";

@@ -31,8 +31,9 @@ export type CredentialProps = {
     setErrorObj: Dispatch<SetStateAction<ErrorObj>>;
 };
 
-export type HelpAccordionItemProps = {
+export type FAQAccordionItemProps = {
     id: number;
+    key: string;
     title: string;
     content: (string | { __html: string })[];
     open: number;

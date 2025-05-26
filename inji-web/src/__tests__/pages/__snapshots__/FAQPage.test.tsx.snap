@@ -1,0 +1,898 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing the Layout of FaqPage Check if the layout is matching with the snapshots 1`] = `
+<DocumentFragment>
+  <div
+    class="w-full flex flex-col sm:flex-row justify-between items-start p-1 sm:p-2 md:p-4 flex-grow overflow-y-auto"
+  >
+    <div
+      class="flex flex-row items-start gap-4 w-full"
+    >
+      <div
+        class="flex items-start"
+      >
+        <svg
+          class="mr-2 cursor-pointer"
+          fill="none"
+          height="29"
+          viewBox="0 0 24 18"
+          width="29"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+            fill="#000000"
+          />
+        </svg>
+      </div>
+      <div
+        class="flex flex-col items-start gap-8 w-full mr-2 sm:mr-4 md:mr-8 lg:mr-10"
+      >
+        <div
+          class="flex flex-col items-start"
+        >
+          <span
+            class="text-2xl font-medium"
+          >
+            FAQ
+          </span>
+        </div>
+        <div
+          class="w-full"
+        >
+          <div
+            data-testid="Faq-Accordion-Container"
+          >
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-t-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  Who are issuers?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-UpArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 217.9L383 345c9.4 9.4 24.6 9.4 33.9 0 9.4-9.4 9.3-24.6 0-34L273 167c-9.1-9.1-23.7-9.3-33.1-.7L95 310.9c-4.7 4.7-7 10.9-7 17s2.3 12.3 7 17c9.4 9.4 24.6 9.4 33.9 0l127.1-127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+              <div
+                class="bg-iw-background rounded-b-md"
+              >
+                <div
+                  class="px-4 sm:px-6"
+                >
+                  <div
+                    class="border-t border-gray-200 py-5 sm:py-6 text-sm sm:text-base text-iw-title leading-relaxed"
+                    data-testid="Faq-Item-Content-Text"
+                  >
+                    <p
+                      class="mb-3 last:mb-0"
+                    >
+                      Issuers are either governmental bodies or entities trusted by the government, responsible for providing verifiable credentials in PDF format to residents upon request.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  What are verifiable credentials?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  How can I download a credential in Inji Wallet?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  What details I need to provide to download my credential?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  Where can I find my credential?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  What details are present in the PDF credential?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  Why I am not finding the list of issuers?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  What happens when I generate a Verifiable Credential (VC) in Inji Wallet's Web Interface?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  What is the role of the QR code in the credential PDF?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  How does Inji Wallet’s Web Interface ensure my VC is stored securely?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  How does the online sharing feature work with Inji Verify?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  Why embed a URL in the QR code instead of full VC data?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  Can I share my VC both online and offline?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  How does Inji Wallet verify and authorize the verifier during online sharing?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  What is OpenID4VP, and how is it used in Inji Wallet?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  How do I know my VC was securely shared using Inji Wallet??
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  What happens if the QR code is scanned on a different device than where the VC was generated?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  Can Inji Wallet support different QR code formats?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  How does Inji Wallet handle credential verification after sharing?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  What kind of credential issuers are supported?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  Where can I find more detailed information about the features introduced in this release?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  How do I get started with the online sharing feature in Inji Wallet?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div
+              class="w-full rounded-md mb-4 transition-all duration-300 bg-white shadow-[-1px_-0.5px_6px_rgba(0,0,0,0.07),1px_4px_6px_rgba(0,0,0,0.07)]"
+              data-testid="Faq-Item-Container"
+            >
+              <button
+                class="w-full px-4 sm:px-6 py-6 sm:py-8 text-left font-semibold text-base sm:text-lg text-iw-title flex justify-between items-center hover:bg-iw-faqAccordionHover hover:rounded-md focus:outline-none transition-colors"
+                data-testid="Faq-Item-Title-Button"
+              >
+                <span
+                  data-testid="Faq-Item-Title-Text"
+                >
+                  How can I toggle between embedded VC and Online Sharing in Inji Wallet?
+                </span>
+                <span
+                  class="ml-2 sm:ml-4"
+                >
+                  <svg
+                    class="sm:size-[20px]"
+                    color="#04051D"
+                    data-testid="Faq-Item-DownArrow"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(4, 5, 29);"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 294.1L383 167c9.4-9.4 24.6-9.4 33.9 0s9.3 24.6 0 34L273 345c-9.1 9.1-23.7 9.3-33.1.7L95 201.1c-4.7-4.7-7-10.9-7-17s2.3-12.3 7-17c9.4-9.4 24.6-9.4 33.9 0l127.1 127z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -5,6 +5,7 @@ import {
     IssuerObject
 } from "../types/data";
 import i18n from "i18next";
+import { KEYS } from "./constants";
 
 export enum MethodType {
     GET,
@@ -134,7 +135,7 @@ export class api {
 
     static downloadVCInloginFlow: ApiRequest = {
         url: () => {
-            const walletId = localStorage.getItem("walletId");
+            const walletId = localStorage.getItem(KEYS.WALLET_ID);
             return api.mimotoHost + `/wallets/${walletId}/credentials`;
         },
         methodType: MethodType.POST,
@@ -149,7 +150,7 @@ export class api {
 
     static fetchWalletVCs: ApiRequest = {
         url: (locale: string) => {
-            const walletId = localStorage.getItem("walletId");
+            const walletId = localStorage.getItem(KEYS.WALLET_ID);
             return (
                 api.mimotoHost +
                 `/wallets/${walletId}/credentials?locale=${locale}`
@@ -165,7 +166,7 @@ export class api {
 
     static fetchWalletCredentialPreview: ApiRequest = {
         url: (credentialId: string, locale: string) => {
-            const walletId = localStorage.getItem("walletId");
+            const walletId = localStorage.getItem(KEYS.WALLET_ID);
             return (
                 api.mimotoHost +
                 `/wallets/${walletId}/credentials/${credentialId}?locale=${locale}&action=inline`

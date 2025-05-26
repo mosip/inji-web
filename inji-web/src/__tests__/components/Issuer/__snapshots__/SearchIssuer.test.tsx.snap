@@ -6,11 +6,11 @@ exports[`Testing the layout of SearchIssuer Check if the layout is matching with
     class="flex justify-center items-center w-full"
   >
     <div
-      class="sm:w-8/12 w-full flex justify-start items-center bg-iw-background shadow-md shadow-iw-shadow"
+      class="w-full sm:w-4/4 md:w-3/4 flex justify-start items-center bg-iw-background shadow-iw rounded-lg"
       data-testid="Search-Issuer-Container"
     >
       <svg
-        class="m-5"
+        class="m-2 sm:m-3 md:m-4 lg:m-5"
         color="var(--iw-color-searchIcon)"
         data-testid="Search-Issuer-Search-Icon"
         fill="currentColor"
@@ -26,7 +26,7 @@ exports[`Testing the layout of SearchIssuer Check if the layout is matching with
         />
       </svg>
       <input
-        class="py-6 w-11/12 text-iw-searchTitle focus:outline-none overflow-ellipsis mr-10"
+        class="py-2 sm:py-3 md:py-4 lg:py-6 w-3/4 sm:w-11/12 text-iw-searchTitle focus:outline-none overflow-ellipsis ml-0 mr-2 sm:mr-3 md:mr-4 lg:mr-10"
         data-testid="Search-Issuer-Input"
         placeholder="Search Issuers by name"
         type="text"

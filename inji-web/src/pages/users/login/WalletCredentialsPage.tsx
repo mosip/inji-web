@@ -108,7 +108,6 @@ const WalletCredentialsPage = () => {
         }
     };
 
-    console.log("pdfPreviewUrl::",pdfPreviewUrl)
     return (
         <div style={{padding: "2rem"}}>
             <div
@@ -193,18 +192,6 @@ const WalletCredentialsPage = () => {
                             >
                                 {credential.credential_type}
                             </span>
-                            <button
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    fetchCredential(
-                                        credential.credential_id,
-                                        "download"
-                                    );
-                                }}
-                                className="mt-3 bg-grey-600 hover:bg-green-700 text-blank font-semibold py-1 px-4 rounded shadow"
-                            >
-                                Download
-                            </button>
                         </div>
 
                         <span className="text-sm font-semibold text-gray-500 mt-2">

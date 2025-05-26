@@ -2,7 +2,9 @@
   "PageTemplate": {
     "Header": {
       "home": "Home",
-      "faq": "FAQ"
+      "faq": "FAQ",
+      "login": "Login",
+      "logout": "Logout"
     },
     "Footer": {
       "product": "A MOSIP Product",
@@ -10,50 +12,50 @@
     }
   },
   "HomePage": {
-    "Banner":{
-      "heading":"Effortlessly Access and Manage Your Digital Credentials",
-      "description":"Make your data portable with trust. Securely manage your digital documents with our easy-to-use web-based wallet.",
-      "buttontext":"Get Started"
+    "Banner": {
+      "heading": "Effortlessly Access and Manage Your Digital Credentials",
+      "description": "Make your data portable with trust. Securely manage your digital documents with our easy-to-use web-based wallet.",
+      "buttontext": "Get Started"
     },
-    "Features":{
-      "heading":"Features of Inji Wallet",
-      "description1":"Seamless and secure management of verifiable credentials",
-      "description2":"for trusted digital interactions."
+    "Features": {
+      "heading": "Features of Inji Wallet",
+      "description1": "Seamless and secure management of verifiable credentials",
+      "description2": "for trusted digital interactions."
     },
-    "FeatureItem1":{
-      "heading":"Access Your Credentials, Anywhere You Need",
-      "item1":"Credentials Simplified",
-      "description1":"Keep all your essential documents",
-      "item2":"No more Paperwork. All In One Place",
-      "description2":"Effortlessly download, store, and retrieve your documents with ease. Win, win, win."
+    "FeatureItem1": {
+      "heading": "Access Your Credentials, Anywhere You Need",
+      "item1": "Credentials Simplified",
+      "description1": "Keep all your essential documents",
+      "item2": "No more Paperwork. All In One Place",
+      "description2": "Effortlessly download, store, and retrieve your documents with ease. Win, win, win."
     },
-    "FeatureItem2":{
-      "heading":"Your Documents Downloaded in Second",
-      "item1":"Download with Confidence",
-      "description1":"Save your important documents instantly",
-      "item2":"Safe and Sound",
-      "description2":"Download IDs, licenses, and more, in one secure location."
+    "FeatureItem2": {
+      "heading": "Your Documents Downloaded in Second",
+      "item1": "Download with Confidence",
+      "description1": "Save your important documents instantly",
+      "item2": "Safe and Sound",
+      "description2": "Download IDs, licenses, and more, in one secure location."
     },
-    "FeatureItem3":{
-      "heading":"Easy Sharing",
-      "item1":"Share with a QR Code",
-      "description1":"Seamlessly share your IDs and certificates on the go. Just present the QR code of your document, to be scanned and shared.",
-      "item2":"Read, set, share",
-      "description2":"QR code verified in real time."
+    "FeatureItem3": {
+      "heading": "Easy Sharing",
+      "item1": "Share with a QR Code",
+      "description1": "Seamlessly share your IDs and certificates on the go. Just present the QR code of your document, to be scanned and shared.",
+      "item2": "Read, set, share",
+      "description2": "QR code verified in real time."
     },
-    "FeatureItem4":{
-      "heading":"Secure and Private",
-      "item1":"Your Credentials, Protected",
-      "description1":"Your data stays private, with the built-in security mechanism.",
-      "item2":"Rest Easy",
-      "description2":"Keep your credentials safe, so you can focus on what matters."
+    "FeatureItem4": {
+      "heading": "Secure and Private",
+      "item1": "Your Credentials, Protected",
+      "description1": "Your data stays private, with the built-in security mechanism.",
+      "item2": "Rest Easy",
+      "description2": "Keep your credentials safe, so you can focus on what matters."
     },
-    "FeatureItem5":{
-      "heading":"Wider Access & Compatibility",
-      "item1":"Available on Your Favourite Browser",
-      "description1":"Inji Wallet works with Chrome, Safari, Firefox, and Edge.",
-      "item2":"Always Within Reach",
-      "description2":"Convenience meets accessibility wherever you are, ensuring your documents are always within reach."
+    "FeatureItem5": {
+      "heading": "Wider Access & Compatibility",
+      "item1": "Available on Your Favourite Browser",
+      "description1": "Inji Wallet works with Chrome, Safari, Firefox, and Edge.",
+      "item2": "Always Within Reach",
+      "description2": "Convenience meets accessibility wherever you are, ensuring your documents are always within reach."
     },
     "QuickTip":{
       "heading":"Quick Tips for Instantly Downloading Your Credentials",
@@ -190,14 +192,14 @@
     "heading": "That's an error",
     "subHeading": "The requested URL {{pathname}} was not found on this server."
   },
-  "HelpPage": {
-    "title": "Help"
+  "FAQPage": {
+    "title": "FAQ"
   },
-  "HelpDropdown":{
-    "heading":"Help",
-    "item1":"FAQs"
+  "FAQDropdown": {
+    "heading": "FAQ",
+    "item1": "FAQs"
   },
-  "Help": {
+  "FAQ": {
     "item1": {
       "title": "Who are issuers?",
       "description1": "Issuers are either governmental bodies or entities trusted by the government, responsible for providing verifiable credentials in PDF format to residents upon request."
@@ -231,81 +233,81 @@
       "description3": "2. No issuers have been configured.",
       "description4": "In either case, please contact your technical team to address the issue."
     },
-    "item8":{
+    "item8": {
       "title": "What happens when I generate a Verifiable Credential (VC) in Inji Wallet's Web Interface?",
-      "description1":"1. You select an issuer and the type of credential.",
-      "description2":"2. Redirects to the issuer's login page for authentication.",
-      "description3":"3. After login, the issuer provides the VC, stored securely as JSON using Durian. ",
-      "description4":"4.A PDF with VC details and a QR code is generated.",
-      "description5":"5.QR code links to VC storage URL for easy sharing."
+      "description1": "1. You select an issuer and the type of credential.",
+      "description2": "2. Redirects to the issuer's login page for authentication.",
+      "description3": "3. After login, the issuer provides the VC, stored securely as JSON using Durian. ",
+      "description4": "4.A PDF with VC details and a QR code is generated.",
+      "description5": "5.QR code links to VC storage URL for easy sharing."
     },
-    "item9":{
-      "title":"What is the role of the QR code in the credential PDF?",
-      "description1":"The QR code in the PDF links to the secure VC storage URL, making it easy to scan and retrieve credentials without dense data."
+    "item9": {
+      "title": "What is the role of the QR code in the credential PDF?",
+      "description1": "The QR code in the PDF links to the secure VC storage URL, making it easy to scan and retrieve credentials without dense data."
     },
-    "item10":{
-      "title":"How does Inji Wallet’s Web Interface ensure my VC is stored securely?",
-      "description1":"Integrates with the Data Share service (Durian) from the MOSIP ID platform, storing the VC as a JSON object with access protected for only authorized verifiers."
+    "item10": {
+      "title": "How does Inji Wallet’s Web Interface ensure my VC is stored securely?",
+      "description1": "Integrates with the Data Share service (Durian) from the MOSIP ID platform, storing the VC as a JSON object with access protected for only authorized verifiers."
     },
-    "item11":{
-      "title":"How does the online sharing feature work with Inji Verify?",
-      "description1":"1. VC PDF contains a QR code.",
-      "description2":"2. PDF can be printed or saved on a phone. ",
-      "description3":"3. Verifier (e.g., Inji Verify) scans the QR code. ",
-      "description4":"4. Inji Wallet authorizes and shares the VC with the verifier."
+    "item11": {
+      "title": "How does the online sharing feature work with Inji Verify?",
+      "description1": "1. VC PDF contains a QR code.",
+      "description2": "2. PDF can be printed or saved on a phone. ",
+      "description3": "3. Verifier (e.g., Inji Verify) scans the QR code. ",
+      "description4": "4. Inji Wallet authorizes and shares the VC with the verifier."
     },
-    "item12":{
-      "title":"Why embed a URL in the QR code instead of full VC data?",
-      "description1":"Embedding a URL reduces QR code density for easy scanning, allowing efficient cross-device or remote verification."
+    "item12": {
+      "title": "Why embed a URL in the QR code instead of full VC data?",
+      "description1": "Embedding a URL reduces QR code density for easy scanning, allowing efficient cross-device or remote verification."
     },
-    "item13":{
-      "title":"Can I share my VC both online and offline?",
-      "description1":"1. Online : Verifier can scan from a PDF or phone screen, and Inji Wallet authorizes and shares the VC. ",
-      "description2":"2. Offline : Printed PDF can be presented for scanning and VC retrieval."
+    "item13": {
+      "title": "Can I share my VC both online and offline?",
+      "description1": "1. Online : Verifier can scan from a PDF or phone screen, and Inji Wallet authorizes and shares the VC. ",
+      "description2": "2. Offline : Printed PDF can be presented for scanning and VC retrieval."
     },
-    "item14":{
-      "title":"How does Inji Wallet verify and authorize the verifier during online sharing?",
-      "description1":"Verifier credentials are checked from an internal list. If authorized, Inji Wallet with web interface sends the VC back to the verifier securely using a vp_token."
+    "item14": {
+      "title": "How does Inji Wallet verify and authorize the verifier during online sharing?",
+      "description1": "Verifier credentials are checked from an internal list. If authorized, Inji Wallet with web interface sends the VC back to the verifier securely using a vp_token."
     },
-    "item15":{
-      "title":"What is OpenID4VP, and how is it used in Inji Wallet?",
-      "description1":"OpenID4VP (OpenID for Verifiable Presentations) standard allows secure sharing of VCs. Inji Wallet generates a QR code for VC storage, enabling verifiers like Inji Verify to securely request and receive VCs."
+    "item15": {
+      "title": "What is OpenID4VP, and how is it used in Inji Wallet?",
+      "description1": "OpenID4VP (OpenID for Verifiable Presentations) standard allows secure sharing of VCs. Inji Wallet generates a QR code for VC storage, enabling verifiers like Inji Verify to securely request and receive VCs."
     },
-    "item16":{
-      "title":"How do I know my VC was securely shared using Inji Wallet??",
-      "description1":"After the verifier scans the QR code and Inji Wallet authorizes it, the VC is securely provided to the verifier, who then validates and confirms it."
+    "item16": {
+      "title": "How do I know my VC was securely shared using Inji Wallet??",
+      "description1": "After the verifier scans the QR code and Inji Wallet authorizes it, the VC is securely provided to the verifier, who then validates and confirms it."
     },
-    "item17":{
-      "title":"What happens if the QR code is scanned on a different device than where the VC was generated?",
-      "description1":"Supports cross-device sharing. The verifier can scan from any copy of the VC PDF, and Inji Wallet verifies and shares the VC securely."
+    "item17": {
+      "title": "What happens if the QR code is scanned on a different device than where the VC was generated?",
+      "description1": "Supports cross-device sharing. The verifier can scan from any copy of the VC PDF, and Inji Wallet verifies and shares the VC securely."
     },
-    "item18":{
-      "title":"Can Inji Wallet support different QR code formats?",
-      "description1":"Yes. Config-based generation allows QR codes to either contain: ",
-      "description2":"1. URL to VC storage for easy sharing, or ",
-      "description3":"2. Full VC data in JSON (denser format)."
+    "item18": {
+      "title": "Can Inji Wallet support different QR code formats?",
+      "description1": "Yes. Config-based generation allows QR codes to either contain: ",
+      "description2": "1. URL to VC storage for easy sharing, or ",
+      "description3": "2. Full VC data in JSON (denser format)."
     },
-    "item19":{
-      "title":"How does Inji Wallet handle credential verification after sharing?",
-      "description1":"After sharing, Inji Verify checks VC authenticity. If valid, the verifier confirms the credential's verification status."
+    "item19": {
+      "title": "How does Inji Wallet handle credential verification after sharing?",
+      "description1": "After sharing, Inji Verify checks VC authenticity. If valid, the verifier confirms the credential's verification status."
     },
-    "item20":{
-      "title":"What kind of credential issuers are supported?",
-      "description1":"Any issuer that follows the OpenID4VCI protocol can be trusted in Inji Wallet. These issuers provide data required to issue and download VCs."
+    "item20": {
+      "title": "What kind of credential issuers are supported?",
+      "description1": "Any issuer that follows the OpenID4VCI protocol can be trusted in Inji Wallet. These issuers provide data required to issue and download VCs."
     },
     "item21": {
       "title": "Where can I find more detailed information about the features introduced in this release?",
       "description1": "Refer to the <a href=\"https://docs.mosip.io/inji/inji-web/overview\" target=\"_blank\">Inji Wallet documentation</a> for detailed steps, system overviews, and descriptions of new features."
     },
-    "item22":{
-      "title":"How do I get started with the online sharing feature in Inji Wallet?",
-      "description1":"Access VCs via Inji Wallet’s Web Interface, download, and use the QR code to share credentials in person or online with verifiers. Details in the <a href=\"https://docs.mosip.io/inji/inji-web/functional-overview/end-user-guide\" target=\"_blank\"> user guide </a> ."
+    "item22": {
+      "title": "How do I get started with the online sharing feature in Inji Wallet?",
+      "description1": "Access VCs via Inji Wallet’s Web Interface, download, and use the QR code to share credentials in person or online with verifiers. Details in the <a href=\"https://docs.mosip.io/inji/inji-web/functional-overview/end-user-guide\" target=\"_blank\"> user guide </a> ."
     },
-    "item23":{
-      "title":"How can I toggle between embedded VC and Online Sharing in Inji Wallet?",
-      "description1":"Configure qr_code_type in Mimoto issuer's settings: ",
-      "description2":"1. EmbeddedVC: Embeds the full VC in JSON format (denser QR code) for offline use.",
-      "description3":"2. OnlineSharing: Generates a QR code with a URL to the online VC storage, making it easier to scan and share online."
+    "item23": {
+      "title": "How can I toggle between embedded VC and Online Sharing in Inji Wallet?",
+      "description1": "Configure qr_code_type in Mimoto issuer's settings: ",
+      "description2": "1. EmbeddedVC: Embeds the full VC in JSON format (denser QR code) for offline use.",
+      "description3": "2. OnlineSharing: Generates a QR code with a URL to the online VC storage, making it easier to scan and share online."
     }
   },
   "DataShareExpiryModal": {
@@ -313,7 +315,7 @@
     "subTitle": "Please provide your consent to set a validity for sharing the {{credentialName}}",
     "content": {
       "selectedDocument": "Selected Document",
-      "consent" : "Consent Validity *",
+      "consent": "Consent Validity *",
       "validityTimesHeader": "Number of times",
       "validityTimesOptions": {
         "once": "Once",
@@ -326,7 +328,7 @@
     "success": "Proceed",
     "cancel": "Back",
     "disclaimer": "Please note that the QR Code can be shared only for the number of times you have chosen here. To use the QR Code for sharing again, you have to download the PDF again.",
-    "toastText":"Coming soon"
+    "toastText": "Coming soon"
   },
   "CustomExpiryModal": {
     "title": "Please enter the number of times you want to use this credential ",
@@ -334,5 +336,25 @@
     "metrics": "Times",
     "success": "Proceed",
     "cancel": "Cancel"
+  },
+  "Dashboard": {
+    "Home": {
+      "title": "Home",
+      "welcome": "Welcome"
+    },
+    "StoredCredentials": {
+      "title": "Stored Credentials",
+      "header": {
+        "addCredential": "Add Credential"
+      },
+      "emptyScreen": {
+        "title": "No Credentials Stored!"
+      }
+    },
+    "ProfileDropdown": {
+      "profile": "Profile",
+      "faq": "FAQ",
+      "logout": "Logout"
+    }
   }
 }

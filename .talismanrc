@@ -1,12 +1,10 @@
 fileignoreconfig:
 - filename: inji-web/src/components/Common/ItemBox.tsx
-  checksum: 7d10caab5f94bbac7c430a8ca2800c503fff99bd4e0e6c856a140bd83907d137
-- filename: inji-web/src/components/Help/HelpAccordionItem.tsx
-  checksum: 7ef35d440ca186530b761db064cde7c47dbdba4023681bd2b7abb7c0926ad4e1
+  checksum: 2a7e352e5f86da0881c1cf73a12fe9cd36307ee6f4a543ee883df0440bc4fa1b
 - filename: inji-web/src/components/PageTemplate/Header.tsx
-  checksum: df001d17335c68fb4e3703e0622baf454dbcce4bd1869f67502c399ef876ea1f
+  checksum: c94a6ad1bc1d85bff313c25503b985478241970a499668c8521d3f97f2f16b34
 - filename: inji-web/src/components/Common/LanguageSelector.tsx
-  checksum: 66f81412745594459c006fb681e28091a5287b30c37dd8afd8491ef2a209ea41
+  checksum: 64027a9e205f67ed8493c3aecf42238880218f819008d6808f0139ee59dd2dd8
 - filename: inji-web/public/env.config.js
   checksum: 0ffabe95d3271bb98bea2cb4e2ee67c7b351e567a9ebb3cae003de9d7e28de8f
 - filename: inji-web/package-lock.json
@@ -20,13 +18,53 @@ fileignoreconfig:
 - filename: inji-web/src/components/DataShare/DataShareContent.tsx
   checksum: 1af797cfef624b32692d625304f9a1403c1719578a0c48b4583ade529a60376d
 - filename: inji-web/src/utils/misc.ts
-  checksum: fa1fba107d4a8bb86f37ea4f022d1e6f320da816e90d0ebdd1276914d14550d5
+  checksum: 4c037bca6b9573d2a4d12f7406be2097e503db176d33b92ba9011acd571802c4
 - filename: helm/inji-web/templates/configmap.yaml
   checksum: f238e115674a518c94ea702831a02d41bc73124aa7852b8ef7d588eb27308f77
 - filename: inji-web/nginx.conf
   checksum: ad2ad36daa595266c02e48f1dbc875ebcfe409fb57685c16b5e50df4a0c5ec08
 - filename: inji-web/src/__tests__/utils/misc.test.tsx
-  checksum: 6b70370a26d1556adeca568ab8269202a660af8bb7d095e7121314935e8bff18
+  checksum: 4863d9274e25e1b34c8acd4721a609a2aa68051e644e9f049d521cc15a1575f8
 - filename: inji-web/src/test-utils/mockUtils.tsx
-  checksum: 9a3c5c6c81c6ff5cec1203004dde8a04c72425b13ca6eaec2fd15a50baf7fa02
+  checksum: 6f7a7a05003ff6ba60da5fe492e8eac4059ea590681a9460e5c1b662bb151474
+- filename: inji-web/src/components/Faq/FAQAccordion.tsx
+  checksum: 0788e8febe4a1b51d9413d9ec97fc71fbaddb84ac05da47749eac4ac7a99b529
+- filename: inji-web/src/components/Faq/FAQAccordionItem.tsx
+  checksum: 45315baa8b37e170786d2f55ea8e8940972e6496aee41dd67081986b33aca310
+- filename: inji-web/src/__tests__/components/Dashboard/EmptyDocument.test.tsx
+  checksum: f401e15725074d3840909dd82547e7cbd4ff61f854dd574ea7c1abb0b1309aeb
+- filename: inji-web/src/components/Dashboard/Header.tsx
+  checksum: fc7fe8ac8b56bc8d22719c07e08ea134010f2b99a7b5e6e90dbddc90d0ebad9a
+- filename: inji-web/src/components/Dashboard/Sidebar.tsx
+  checksum: cefb0cee8f45135e97c8d463daf6de2eb2e87584353d19de6ccb2c4083e9e1c9
+- filename: inji-web/src/locales/ar.json
+  checksum: 9424a9226ef6e0965a5bc0e3f6d57da413f19367759b367754d76d17c0d46dff
+- filename: inji-web/src/locales/en.json
+  checksum: ef8279e1778cce4bc28a18a3035cf7b7bd4fa23914098928180b759cb13505f1
+- filename: inji-web/src/__tests__/users/login/FailedLoginPage.test.tsx
+  checksum: 6f4b1b3d9779ea7b47042b9131cbc482a64e9f1e398a2bb909abbc5661bd4959
+- filename: inji-web/src/locales/fr.json
+  checksum: bd2315a808ea8ea948606258a6a34ad74772a5bfe2112abf5c02d614a415c7f5
+- filename: inji-web/src/locales/hi.json
+  checksum: c94aba1c88abdb5459931fd1959502961e5b2606002348a97563fc59b581f0bc
+- filename: inji-web/src/locales/kn.json
+  checksum: 2052162f06ffccbb77709bf574ea8b5de1c828b8b98427d8bf7dec5409f3ad05
+- filename: inji-web/src/locales/pt.json
+  checksum: 89977223af5a91705605d53f210244fe6e265e5b74113445dcf72a2113661ea8
+- filename: inji-web/src/locales/ta.json
+  checksum: d9ed356387f263170f69d4237f60be5676c3599e1566596f3877c337cce859a8
+- filename: inji-web/src/pages/users/PinPage.tsx
+  checksum: 48cf16b9849fb53c7a1cc8da345946bc022d838885d5b8b60aaaacfb328a2556
+- filename: inji-web/src/__tests__/users/login/PinPage.test.tsx
+  checksum: e22b91e31e1feeb4b6b1d12732c5764d1dc8bda720dc69d38595db9004d3f404
+- filename: inji-web/src/__tests__/users/login/Login.test.tsx
+  checksum: e7a9b4cd88f4b820aca578de87939e12c2adda73f75893b6b547c5a1ba13768b
+- filename: inji-web/src/__tests__/pages/HomePage.test.tsx
+  checksum: 43e96c9ccd03a006d584a536d6f526e4b6e682f95cce20cad80d12d11e3f8dc2
+- filename: inji-web/src/pages/users/login/LoginSessionStatusChecker.tsx
+  checksum: 3841496ff93274d0f8972cdb037b170d9b634c7ee76ee7f6a9e108a0f40aee51
+- filename: inji-web/src/__tests__/components/PageTemplate/Footer.test.tsx
+  checksum: 719791b2e60b05e60797790a823d561de37f2911c5fce90290695217b7f11012
+- filename: inji-web/src/hooks/useUser.tsx
+  checksum: e30e4cf0bea98971a92d8413020d680ee2cd234c84e433f35650be0886d62106
 version: ""

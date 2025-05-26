@@ -25,28 +25,37 @@ export const SearchIssuer: React.FC<SearchIssuerProps> = (props) => {
         dispatch(storeFilteredIssuers(filteredIssuers));
     }
 
-    return <React.Fragment>
-        <div className={"flex justify-center items-center w-full"}>
-            <div data-testid="Search-Issuer-Container" className="sm:w-8/12 w-full flex justify-start items-center bg-iw-background shadow-md shadow-iw-shadow">
-                <FaSearch data-testid="Search-Issuer-Search-Icon"
-                          color={'var(--iw-color-searchIcon)'}
-                          className={"m-5"}
-                          size={20}/>
+    return (
+        <div className="flex justify-center items-center w-full">
+            <div
+                data-testid="Search-Issuer-Container"
+                className="w-full sm:w-4/4 md:w-3/4 flex justify-start items-center bg-iw-background shadow-iw rounded-lg"
+            >
+                <FaSearch
+                    data-testid="Search-Issuer-Search-Icon"
+                    color={"var(--iw-color-searchIcon)"}
+                    className="m-2 sm:m-3 md:m-4 lg:m-5"
+                    size={20}
+                />
                 <input
                     data-testid="Search-Issuer-Input"
                     type="text"
                     value={searchText}
                     placeholder={t("Intro.searchText")}
-                    onChange={event => filterIssuers(event.target.value)}
-                    className="py-6 w-11/12 text-iw-searchTitle focus:outline-none overflow-ellipsis mr-10"
+                    onChange={(event) => filterIssuers(event.target.value)}
+                    className="py-2 sm:py-3 md:py-4 lg:py-6 w-3/4 sm:w-11/12 text-iw-searchTitle focus:outline-none overflow-ellipsis ml-0 mr-2 sm:mr-3 md:mr-4 lg:mr-10"
                 />
-                {searchText.length > 0 && <IoCloseCircleSharp data-testid="Search-Issuer-Clear-Icon"
-                                                              onClick={() => filterIssuers("")}
-                                                              className={"m-5"}
-                                                              color={'var(--iw-color-closeIcon)'}
-                                                              size={20}/>}
+                {searchText.length > 0 && (
+                    <IoCloseCircleSharp
+                        data-testid="Search-Issuer-Clear-Icon"
+                        onClick={() => filterIssuers("")}
+                        className="m-2 sm:m-3 md:m-4 lg:m-5 cursor-pointer"
+                        color={"var(--iw-color-closeIcon)"}
+                        size={20}
+                    />
+                )}
             </div>
         </div>
-    </React.Fragment>
+    );
 }
 
