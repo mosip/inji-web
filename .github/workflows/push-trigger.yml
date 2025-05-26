@@ -57,11 +57,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-
       - name: Install the dependencies
-        run: npm install
+        run: pwd && npm install
+        working-directory: inji-web
       - name: Run unit tests with coverage
         run: npm test -- --coverage
+        working-directory: inji-web
       - name: Build the project
         run: npm run build
+        working-directory: inji-web
 
 
   sonar-analysis-inji-web:
