@@ -29,16 +29,18 @@ export const isObjectEmpty = (object: any) => {
     return object === null || object === undefined || Object.keys(object).length === 0;
 }
 
-export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialConfigurationId: string, vcStorageExpiryLimitInTimes: string) => {
-    return {
+export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialConfigurationId: string, vcStorageExpiryLimitInTimes: string, isLoggedIn = false) => {
+    const tokenRequestBody : { [key: string]: string } = {
         'grant_type': 'authorization_code',
         'code': code,
         'redirect_uri': api.authorizationRedirectionUrl,
         'code_verifier': codeVerifier,
         'issuer': issuerId,
-        'credentialConfigurationId': credentialConfigurationId,
         'vcStorageExpiryLimitInTimes': vcStorageExpiryLimitInTimes,
-    }
+    };
+    const credentialType = isLoggedIn ? 'credentialConfigurationId' : 'credential';
+    tokenRequestBody[credentialType] = credentialConfigurationId;
+    return tokenRequestBody
 }
 
 export const downloadCredentialPDF = async (

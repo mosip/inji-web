@@ -7,14 +7,8 @@ import {DownloadResult} from '../components/Redirection/DownloadResult';
 import {api} from '../utils/api';
 import {SessionObject} from '../types/data';
 import {useTranslation} from 'react-i18next';
-import {
-    downloadCredentialPDF,
-    getErrorObject,
-    getTokenRequestBody
-} from '../utils/misc';
+import {downloadCredentialPDF, getErrorObject, getTokenRequestBody} from '../utils/misc';
 import {getIssuerDisplayObjectForCurrentLanguage} from '../utils/i18n';
-import {RootState} from '../types/redux';
-import {useSelector} from 'react-redux';
 import {useCookies} from 'react-cookie';
 import {useUser} from '../hooks/useUser';
 
@@ -28,7 +22,6 @@ export const RedirectionPage: React.FC = () => {
     const [session, setSession] = useState<SessionObject | null>(activeSessionInfo);
     const [completedDownload, setCompletedDownload] = useState<boolean>(false);
     const displayObject = getIssuerDisplayObjectForCurrentLanguage(session?.selectedIssuer?.display ?? []);
-    const language = useSelector((state: RootState) => state.common.language);
     const [errorObj, setErrorObj] = useState({
         code: "error.generic.title",
         message: "error.generic.subTitle"
@@ -59,15 +52,15 @@ export const RedirectionPage: React.FC = () => {
                             activeSessionInfo?.vcStorageExpiryLimitInTimes ??
                             '-1';
 
-                const requestBody = new URLSearchParams(
-                    getTokenRequestBody(
-                        code,
-                        codeVerifier,
-                        issuerId,
-                        certificateId,
-                        vcStorageExpiryLimitInTimes
-                    )
-                );
+                        const requestBody = new URLSearchParams(
+                            getTokenRequestBody(
+                                code,
+                                codeVerifier,
+                                issuerId,
+                                certificateId,
+                                vcStorageExpiryLimitInTimes,
+                            )
+                        );
 
                         let apiRequest, credentialDownloadResponse;
                         const isLoggedIn = !!user && !!walletId;
@@ -163,7 +156,7 @@ export const RedirectionPage: React.FC = () => {
                                    subTitle={t(errorObject.message)}
                                    state={RequestStatus.ERROR}/>
         }
-        if(!completedDownload){
+        if (!completedDownload) {
             return <DownloadResult title={t("loading.title")}
                                    subTitle={t("loading.subTitle")}
                                    state={RequestStatus.LOADING}/>
@@ -174,7 +167,8 @@ export const RedirectionPage: React.FC = () => {
     }
 
     return <div data-testid="Redirection-Page-Container">
-        {activeSessionInfo?.selectedIssuer?.issuer_id && <NavBar title={displayObject?.name ?? ""} search={false} link={`/issuers/${activeSessionInfo?.selectedIssuer?.issuer_id}`}/>}
+        {activeSessionInfo?.selectedIssuer?.issuer_id && <NavBar title={displayObject?.name ?? ""} search={false}
+                                                                 link={`/issuers/${activeSessionInfo?.selectedIssuer?.issuer_id}`}/>}
         {loadStatusOfRedirection()}
     </div>
 }
