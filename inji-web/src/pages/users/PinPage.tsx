@@ -159,7 +159,7 @@ export const PinPage: React.FC = () => {
                     ...api.fetchWalletDetails.headers(),
                     'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
                 },
-                credentials: 'include',
+                credentials: api.fetchWalletDetails.credentials,
                 body: JSON.stringify({walletPin: pin})
             });
 
