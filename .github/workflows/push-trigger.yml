@@ -2,9 +2,9 @@ name: inji-web build upon a push
 
 on:
   release:
-    types: [published]
+    types: [ published ]
   pull_request:
-    types: [opened, reopened, synchronize]
+    types: [ opened, reopened, synchronize ]
   push:
     branches:
       - '!release-branch'
@@ -47,8 +47,6 @@ jobs:
       - uses: actions/setup-node@v3.7.0
         with:
           node-version: '18'
-      - name: Move to inji-web directory
-        run: cd inji-web
       - name: Cache npm dependencies
         uses: actions/cache@v4
         with:
@@ -57,7 +55,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-
       - name: Install the dependencies
-        run: pwd && npm install
+        run: npm install
         working-directory: inji-web
       - name: Run unit tests with coverage
         run: npm test -- --coverage
@@ -87,7 +85,7 @@ jobs:
       BUILD_ARTIFACT: ui-test
     secrets:
       BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }} 
+      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
       OSSRH_USER: ${{ secrets.OSSRH_USER }}
       OSSRH_SECRET: ${{ secrets.OSSRH_SECRET }}
       OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
