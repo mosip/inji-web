@@ -1,11 +1,9 @@
-import React, {useState, useEffect, useRef, forwardRef} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {LanguageSelector} from '../Common/LanguageSelector';
 import {api} from '../../utils/api';
 import {useCookies} from 'react-cookie';
 import {toast} from 'react-toastify';
-import {RiArrowDownSFill, RiArrowUpSFill} from 'react-icons/ri';
-import {GradientWrapper} from '../Common/GradientWrapper';
 import {
     convertStringIntoPascalCase,
     navigateToDashboardHome
