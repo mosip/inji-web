@@ -9,6 +9,7 @@ import {reduxStore} from "./redux/reduxStore";
 import {AppToaster} from "./components/Common/AppToaster";
 import { CookiesProvider } from 'react-cookie';
 import { UserProvider } from "./hooks/useUser";
+import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,7 +17,9 @@ root.render(
         <CookiesProvider>
             <UserProvider>
                 <AppToaster />
-                <AppRouter />
+                <BrowserRouter>
+                    <AppRouter />
+                </BrowserRouter>
             </UserProvider>
         </CookiesProvider>
     </Provider>

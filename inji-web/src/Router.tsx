@@ -1,4 +1,9 @@
-import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
+import {
+    Navigate,
+    Route,
+    Routes,
+    useLocation
+} from 'react-router-dom';
 import React, {useEffect, useRef, useState} from 'react';
 import {IssuersPage} from './pages/IssuersPage';
 import {Header} from './components/PageTemplate/Header';
@@ -22,15 +27,15 @@ import {useUser} from './hooks/useUser';
 import {CredentialTypesPage} from './pages/Dashboard/CredentialTypesPage';
 
 export const AppRouter = () => {
+    const location = useLocation();
     const language = useSelector((state: RootState) => state.common.language);
     const {user, walletId} = useUser();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    
+
     const headerRef = useRef<HTMLDivElement>(null);
     const footerRef = useRef<HTMLDivElement>(null);
     const [headerHeight, setHeaderHeight] = useState(0);
     const [footerHeight, setFooterHeight] = useState(0);
-
 
     const getHeaderFooterHeights = () => {
         return {
@@ -48,9 +53,12 @@ export const AppRouter = () => {
         };
 
         updateHeights();
+
         window.addEventListener('resize', updateHeights);
-        return () => window.removeEventListener('resize', updateHeights);
-    }, []);
+        return () => {
+            window.removeEventListener('resize', updateHeights);
+        };
+    }, [location.pathname]);
 
     useEffect(() => {
         const updateLoginState = () => {
@@ -84,7 +92,7 @@ export const AppRouter = () => {
     };
 
     return (
-        <BrowserRouter>
+        <>
             <LoginSessionStatusChecker />
             <Routes>
                 <Route
@@ -139,6 +147,6 @@ export const AppRouter = () => {
                     <Route path="faq" element={<FAQPage withHome={true} />} />
                 </Route>
             </Routes>
-        </BrowserRouter>
+        </>
     );
 };

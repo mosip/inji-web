@@ -50,20 +50,24 @@ exports[`Header Container Layout Test Check if the layout is matching with the s
         data-testid="Header-FAQ-LanguageSelector-Container"
       >
         <div
-          class="w-full"
+          class="hidden sm:block"
         >
           <div
-            class="rounded-lg text-center cursor-pointer"
+            class="w-full"
           >
             <div
-              class="py-2 px-4 rounded-lg bg-white"
+              class="rounded-lg text-center cursor-pointer"
             >
-              <button
-                class="font-bold rounded-lg"
-                data-testid="Header-Menu-FAQ"
+              <div
+                class="py-2 px-4 rounded-lg bg-white"
               >
-                FAQ
-              </button>
+                <button
+                  class="font-bold rounded-lg"
+                  data-testid="Header-Menu-FAQ"
+                >
+                  FAQ
+                </button>
+              </div>
             </div>
           </div>
         </div>
