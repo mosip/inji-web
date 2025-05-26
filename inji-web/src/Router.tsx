@@ -130,11 +130,7 @@ export const AppRouter = () => {
                 <Route path="/pin" element={wrapElement(<PinForm />)} />
                 <Route
                     path="/view/wallet/credentials"
-                    element={
-                        isLoggedIn
-                            ? wrapElement(<StoredCredentialsPage />, false)
-                            : wrapElement(<WalletCredentialsPage />, false)
-                    }
+                    element={wrapElement(<WalletCredentialsPage />, false)}
                 />
                 <Route path="/*" element={wrapElement(<PageNotFound />)} />
                 <Route path="/dashboard" element={<Layout />}>

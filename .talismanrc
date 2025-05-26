@@ -62,9 +62,9 @@ fileignoreconfig:
 - filename: inji-web/src/__tests__/pages/HomePage.test.tsx
   checksum: 43e96c9ccd03a006d584a536d6f526e4b6e682f95cce20cad80d12d11e3f8dc2
 - filename: inji-web/src/pages/users/login/LoginSessionStatusChecker.tsx
-  checksum: f925c9c0539e5fd38c6066074db92963ca8f108d201ff1720297c11868fe2785
+  checksum: 3841496ff93274d0f8972cdb037b170d9b634c7ee76ee7f6a9e108a0f40aee51
 - filename: inji-web/src/__tests__/components/PageTemplate/Footer.test.tsx
   checksum: 719791b2e60b05e60797790a823d561de37f2911c5fce90290695217b7f11012
 - filename: inji-web/src/hooks/useUser.tsx
-  checksum: 76b05a4ba4d0ecda8bf397804b52ab866b8095b77868efcbdf691ff271483fdf
+  checksum: e30e4cf0bea98971a92d8413020d680ee2cd234c84e433f35650be0886d62106
 version: ""

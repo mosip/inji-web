@@ -4,18 +4,23 @@ import {useUser} from '../../../hooks/useUser';
 import {validateWalletUnlockStatus} from '../../Dashboard/utils';
 import {KEYS} from '../../../utils/constants';
 
-const LoginSessionStatusChecker = () => {
+const LoginSessionStatusChecker: React.FC = () => {
     const navigate = useNavigate();
-    const {user, removeUser, fetchUserProfile} = useUser();
+    const {user, walletId, removeUser, fetchUserProfile} = useUser();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const displayNameFromLocalStorage = user?.displayName;
+    const displayNameFromLocalStorage = localStorage.getItem(KEYS.WALLET_ID);
+    const walletIdFromLocalStorage = localStorage.getItem(KEYS.WALLET_ID);
 
     useEffect(() => {
-        setIsLoggedIn(!!displayNameFromLocalStorage);
-    }, [displayNameFromLocalStorage]);
+        setIsLoggedIn(
+            !!displayNameFromLocalStorage && !!walletIdFromLocalStorage
+        );
+    }, [displayNameFromLocalStorage, walletIdFromLocalStorage]);
 
     useEffect(() => {
-        fetchSessionAndUserInfo();
+        if (isLoggedIn) {
+            fetchSessionAndUserInfo();
+        }
     }, [isLoggedIn]);
 
     useEffect(() => {

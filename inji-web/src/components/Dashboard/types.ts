@@ -77,4 +77,5 @@ export type UserContextType = {
     fetchUserProfile: () => Promise<{user: User; walletId: string}>;
     saveUser: (user: User) => void;
     removeUser: () => void;
+    isLoading: boolean;
 };

@@ -11,6 +11,7 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
     const [user, setUser] = useState<User | null>(null);
     const [walletId, setWalletId] = useState<string | null>(null);
     const [error, setError] = useState<ErrorType | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const saveUser = (userData: User) => {
         localStorage.setItem(KEYS.USER, JSON.stringify(userData));
@@ -26,6 +27,7 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
 
     const fetchUserProfile = async () => {
         try {
+            setIsLoading(true);
             const response = await fetch(api.fetchUserProfile.url(), {
                 method: api.fetchUserProfile.methodType === 0 ? 'GET' : 'POST',
                 headers: {...api.fetchUserProfile.headers()},
@@ -43,29 +45,33 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
             saveUser(userData);
             setWalletId(responseData.wallet_id);
             localStorage.setItem(KEYS.WALLET_ID, responseData.wallet_id);
+            setIsLoading(false);
             return {user: userData, walletId: responseData.wallet_id};
         } catch (error) {
             console.error('Error fetching user profile:', error);
-            setUser(null);
-            setWalletId(null);
             setError(error as ErrorType);
             removeUser();
             localStorage.removeItem(KEYS.WALLET_ID);
+            setIsLoading(false);
             throw error;
         }
     };
 
+    const contextValue = React.useMemo(
+        () => ({
+            user,
+            walletId,
+            error,
+            isLoading,
+            fetchUserProfile,
+            saveUser,
+            removeUser
+        }),
+        [user, walletId, error, isLoading]
+    );
+
     return (
-        <UserContext.Provider
-            value={{
-                user,
-                walletId,
-                error,
-                fetchUserProfile,
-                saveUser,
-                removeUser,
-            }}
-        >
+        <UserContext.Provider value={contextValue}>
             {children}
         </UserContext.Provider>
     );
