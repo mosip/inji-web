@@ -50,13 +50,12 @@ describe('Test misc.ts utility functions', () => {
 
     const requestBodyForLoggedIn = getTokenRequestBody('code', 'verifier', 'issuer', 'credential', 'expiry', true);
     expect(requestBodyForLoggedIn).toEqual({
-        'grant_type': 'authorization_code',
+        'grantType': 'authorization_code',
         'code': 'code',
-        'redirect_uri': window.location.origin + "/redirect",
-        'code_verifier': 'verifier',
+        'redirectUri': window.location.origin + "/redirect",
+        'codeVerifier': 'verifier',
         'issuer': 'issuer',
         'credentialConfigurationId': 'credential',
-        'vcStorageExpiryLimitInTimes': 'expiry'
     });
 });
 
