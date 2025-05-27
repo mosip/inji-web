@@ -83,7 +83,7 @@ export class api {
     };
     // method to fetch user profile
     static fetchUserProfile: ApiRequest = {
-        url: () => api.mimotoHost + "/users/me/cache",
+        url: () => api.mimotoHost + "/users/me",
         methodType: MethodType.GET,
         headers: () => {
             return {

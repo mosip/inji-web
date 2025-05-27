@@ -31,22 +31,22 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
             const response = await fetch(api.fetchUserProfile.url(), {
                 method: api.fetchUserProfile.methodType === 0 ? 'GET' : 'POST',
                 headers: {...api.fetchUserProfile.headers()},
-                credentials: 'include'
+                credentials: api.fetchUserProfile.credentials
             });
 
             const responseData = await response.json();
             if (!response.ok) throw responseData;
 
             const userData: User = {
-                displayName: responseData.display_name,
-                profilePictureUrl: responseData.profile_picture_url
+                displayName: responseData.displayName,
+                profilePictureUrl: responseData.profilePictureUrl
             };
 
             saveUser(userData);
-            setWalletId(responseData.wallet_id);
-            localStorage.setItem(KEYS.WALLET_ID, responseData.wallet_id);
+            setWalletId(responseData.walletId);
+            localStorage.setItem(KEYS.WALLET_ID, responseData.walletId);
             setIsLoading(false);
-            return {user: userData, walletId: responseData.wallet_id};
+            return {user: userData, walletId: responseData.walletId};
         } catch (error) {
             console.error('Error fetching user profile:', error);
             setError(error as ErrorType);
