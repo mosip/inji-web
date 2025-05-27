@@ -9,6 +9,8 @@ import {SessionObject} from '../types/data';
 import {useTranslation} from 'react-i18next';
 import {downloadCredentialPDF, getErrorObject, getTokenRequestBody} from '../utils/misc';
 import {getIssuerDisplayObjectForCurrentLanguage} from '../utils/i18n';
+import {RootState} from '../types/redux';
+import {useSelector} from 'react-redux';
 import {useCookies} from 'react-cookie';
 import {useUser} from '../hooks/useUser';
 
@@ -22,6 +24,7 @@ export const RedirectionPage: React.FC = () => {
     const [session, setSession] = useState<SessionObject | null>(activeSessionInfo);
     const [completedDownload, setCompletedDownload] = useState<boolean>(false);
     const displayObject = getIssuerDisplayObjectForCurrentLanguage(session?.selectedIssuer?.display ?? []);
+    const language = useSelector((state: RootState) => state.common.language);
     const [errorObj, setErrorObj] = useState({
         code: "error.generic.title",
         message: "error.generic.subTitle"
@@ -52,18 +55,19 @@ export const RedirectionPage: React.FC = () => {
                             activeSessionInfo?.vcStorageExpiryLimitInTimes ??
                             '-1';
 
-                        const requestBody = new URLSearchParams(
+                        const isLoggedIn = !!user && !!walletId;
+
+                        const requestBody =
                             getTokenRequestBody(
                                 code,
                                 codeVerifier,
                                 issuerId,
                                 certificateId,
                                 vcStorageExpiryLimitInTimes,
-                            )
-                        );
+                                isLoggedIn
+                            );
 
                         let apiRequest, credentialDownloadResponse;
-                        const isLoggedIn = !!user && !!walletId;
 
                         if (isLoggedIn) {
                             apiRequest = api.downloadVCInloginFlow;
@@ -72,11 +76,11 @@ export const RedirectionPage: React.FC = () => {
                                 {
                                     method: 'POST',
                                     headers: {
-                                        ...apiRequest.headers,
+                                        ...apiRequest.headers(language),
                                         'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
                                     },
-                                    credentials: 'include',
-                                    body: requestBody
+                                    credentials: apiRequest.credentials,
+                                    body: JSON.stringify(requestBody),
                                 }
                             );
                             if (credentialDownloadResponse.ok) {
@@ -96,7 +100,7 @@ export const RedirectionPage: React.FC = () => {
                                 apiRequest.methodType,
                                 apiRequest.headers(),
                                 apiRequest.credentials,
-                                requestBody
+                                new URLSearchParams(requestBody)
                             );
                             if (state !== RequestStatus.ERROR) {
                                 await downloadCredentialPDF(
