@@ -58,9 +58,9 @@ export const Header: React.FC<DashboardHeaderProps> = ({
             }
         };
 
-        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('click', handleClickOutside);
         return () =>
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('click', handleClickOutside);
     }, []);
 
     const handleLogout = async () => {
@@ -97,8 +97,8 @@ export const Header: React.FC<DashboardHeaderProps> = ({
         {
             label: t('ProfileDropdown.profile'),
             onClick: () => {
-                setIsProfileDropdownOpen(false);
-                navigate('profile');
+                setIsProfileDropdownOpen(false);    
+                navigate('profile',{state: {from: window.location.pathname}});
             },
             textColor: 'text-gray-700',
             key: 'Profile-Dropdown-Profile'
@@ -203,7 +203,10 @@ export const Header: React.FC<DashboardHeaderProps> = ({
                             {getUserProfileIconWithName()}
                             <div
                                 className="relative inline-block cursor-pointer"
-                                onClick={toggleProfileDropdown}
+                                onClick={(e) => {
+                                    e.stopPropagation(); // Prevent global click handler from immediately closing the dropdown
+                                    toggleProfileDropdown();
+                                  }}
                             >
                                 <DropdownArrowIcon
                                     isOpen={isProfileDropdownOpen}

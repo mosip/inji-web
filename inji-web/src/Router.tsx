@@ -25,6 +25,7 @@ import {HomePage as DashboardHomePage} from './pages/Dashboard/HomePage';
 import {StoredCredentialsPage} from './pages/Dashboard/StoredCredentialsPage';
 import {useUser} from './hooks/useUser';
 import {CredentialTypesPage} from './pages/Dashboard/CredentialTypesPage';
+import { ProfilePage } from './pages/Dashboard/ProfilePage';
 
 export const AppRouter = () => {
     const location = useLocation();
@@ -140,6 +141,7 @@ export const AppRouter = () => {
                         element={<CredentialTypesPage backUrl='/dashboard/home' />}
                     />
                     <Route path="credentials" element={<StoredCredentialsPage />} />
+                    <Route path="profile" element={<ProfilePage />} />
                     <Route path="faq" element={<FAQPage withHome={true} />} />
                 </Route>
             </Routes>

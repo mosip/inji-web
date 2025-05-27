@@ -39,7 +39,8 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
 
             const userData: User = {
                 displayName: responseData.display_name,
-                profilePictureUrl: responseData.profile_picture_url
+                profilePictureUrl: responseData.profile_picture_url,
+                email:responseData.email
             };
 
             saveUser(userData);

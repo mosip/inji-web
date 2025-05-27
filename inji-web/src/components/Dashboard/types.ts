@@ -35,6 +35,15 @@ export type CredentialTypesPageProps = {
     backUrl?: string;
 };
 
+export type ProfilePageProps = {
+    backUrl?: string;
+};
+
+export type InfoFieldProps = {
+    FieldName?: string;
+    Value?: string;
+};
+
 export type CollapseButtonProps = {
     isCollapsed: boolean;
     onClick: () => void;
@@ -63,6 +72,7 @@ export type SideBarSvgIconProps = {
 export type User = {
     displayName: string;
     profilePictureUrl: string;
+    email:string;
 };
 
 export type ErrorType = {
