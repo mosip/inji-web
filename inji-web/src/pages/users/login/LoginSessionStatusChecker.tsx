@@ -6,21 +6,17 @@ import {KEYS} from '../../../utils/constants';
 
 const LoginSessionStatusChecker: React.FC = () => {
     const navigate = useNavigate();
-    const {user, walletId, removeUser, fetchUserProfile} = useUser();
+    const {user, walletId, removeUser, fetchUserProfile, isLoading} = useUser();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const displayNameFromLocalStorage = localStorage.getItem(KEYS.WALLET_ID);
+    const userFromLocalStorage = localStorage.getItem(KEYS.USER);
     const walletIdFromLocalStorage = localStorage.getItem(KEYS.WALLET_ID);
 
     useEffect(() => {
-        setIsLoggedIn(
-            !!displayNameFromLocalStorage && !!walletIdFromLocalStorage
-        );
-    }, [displayNameFromLocalStorage, walletIdFromLocalStorage]);
+        setIsLoggedIn(!!userFromLocalStorage && !!walletIdFromLocalStorage);
+    }, [userFromLocalStorage, walletIdFromLocalStorage]);
 
     useEffect(() => {
-        if (isLoggedIn) {
-            fetchSessionAndUserInfo();
-        }
+        fetchSessionAndUserInfo();
     }, [isLoggedIn]);
 
     useEffect(() => {
@@ -37,6 +33,13 @@ const LoginSessionStatusChecker: React.FC = () => {
     const fetchSessionAndUserInfo = async () => {
         try {
             const {user, walletId} = await fetchUserProfile();
+            if (user && !walletId) {
+                console.warn(
+                    'No wallet ID found for the user, redirecting to `/pin`'
+                );
+                navigate('/pin');
+                return;
+            }
             const cachedWalletId = walletId;
             const storageWalletId = localStorage.getItem(KEYS.WALLET_ID);
 
@@ -50,7 +53,9 @@ const LoginSessionStatusChecker: React.FC = () => {
             console.error('Error occurred while fetching user profile:', error);
             removeUser();
             localStorage.removeItem(KEYS.WALLET_ID);
-            navigate('/');
+            if (isLoggedIn) {
+                navigate('/');
+            }
         }
     };
 
