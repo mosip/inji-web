@@ -224,11 +224,11 @@ export const PinPage: React.FC = () => {
             throw errorData;
         }
 
-        const newWalletId = await response.text();
-        await unlockWallet(newWalletId, pin);
+        const createdWallet = await response.json();
+        await unlockWallet(createdWallet, pin);
 
-        setWalletId(newWalletId);
-        setWallets([{walletId: newWalletId}]);
+        setWalletId(createdWallet.walletId);
+        setWallets([{walletId: createdWallet.walletId}]);
         setIsPinCorrect(true);
     };
 
