@@ -31,15 +31,19 @@ export const isObjectEmpty = (object: any) => {
 
 export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialConfigurationId: string, vcStorageExpiryLimitInTimes: string, isLoggedIn = false) => {
     const tokenRequestBody : { [key: string]: string } = {
-        'grant_type': 'authorization_code',
         'code': code,
-        'redirect_uri': api.authorizationRedirectionUrl,
-        'code_verifier': codeVerifier,
         'issuer': issuerId,
         'vcStorageExpiryLimitInTimes': vcStorageExpiryLimitInTimes,
     };
+    // naming convention is handled separately for logged in and non logged in users as they use camelcase and snake case respectively
     const credentialType = isLoggedIn ? 'credentialConfigurationId' : 'credential';
+    const grantType = isLoggedIn ? 'grantType' : 'grant_type';
+    const redirectUri = isLoggedIn ? 'redirectUri' : 'redirect_uri';
+    const  codeVerifierKey = isLoggedIn ? 'codeVerifier' : 'code_verifier';
     tokenRequestBody[credentialType] = credentialConfigurationId;
+    tokenRequestBody[grantType] = "authorization_code";
+    tokenRequestBody[redirectUri] = api.authorizationRedirectionUrl;
+    tokenRequestBody[codeVerifierKey] = codeVerifier;
     return tokenRequestBody
 }
 

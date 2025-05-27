@@ -148,11 +148,12 @@ export class api {
         headers: (locale: string) => {
             return {
                 "accept": ContentTypes.JSON,
-                "Content-Type": ContentTypes.FORM_URL_ENCODED,
+                "Content-Type": ContentTypes.JSON,
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Accept-Language": locale
             };
-        }
+        },
+        credentials: "include"
     };
 
     static fetchWalletVCs: ApiRequest = {
