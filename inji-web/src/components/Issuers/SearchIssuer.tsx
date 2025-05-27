@@ -5,11 +5,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {storeFilteredIssuers} from "../../redux/reducers/issuersReducer";
 import {IssuerObject} from "../../types/data";
 import {IoCloseCircleSharp} from "react-icons/io5";
-import {SearchIssuerProps} from "../../types/components";
 import {RootState} from "../../types/redux";
 import {getIssuerDisplayObjectForCurrentLanguage} from "../../utils/i18n";
 
-export const SearchIssuer: React.FC<SearchIssuerProps> = (props) => {
+export const SearchIssuer: React.FC = () => {
 
     const {t} = useTranslation("IssuersPage");
     const dispatch = useDispatch();

@@ -188,6 +188,7 @@ export class api {
                 "Accept-Language": locale,
                 "Accept": ContentTypes.PDF
             };
-        }
+        },
+        credentials: "include"
     };
 }
