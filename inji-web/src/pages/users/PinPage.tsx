@@ -60,6 +60,7 @@ export const PinPage: React.FC = () => {
 
     useEffect(() => {
         fetchWallets();
+        fetchUserProfile();
     }, []);
 
     useEffect(() => {
