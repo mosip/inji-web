@@ -22,9 +22,9 @@ const WalletCredentialsPage = () => {
     const fetchWalletCredentials = async () => {
         try {
             const apiRequest = api.fetchWalletVCs;
-            const response = await fetch(apiRequest.url(language), {
+            const response = await fetch(apiRequest.url(), {
                 method: "GET",
-                headers: apiRequest.headers(),
+                headers: apiRequest.headers(language),
                 credentials: "include"
             });
 
@@ -70,14 +70,14 @@ const WalletCredentialsPage = () => {
     const fetchCredential = async (credentialId: string, action: string) => {
         try {
             const response = await fetch(
-                api.fetchWalletCredentialPreview.url(credentialId, language),
+                api.fetchWalletCredentialPreview.url(credentialId),
                 {
                     method:
                         api.fetchWalletCredentialPreview.methodType === 0
                             ? "GET"
                             : "POST",
-                    headers: {...api.fetchWalletCredentialPreview.headers()},
-                    credentials: "include"
+                    headers: api.fetchWalletCredentialPreview.headers(language),
+                    credentials: api.fetchWalletCredentialPreview.credentials
                 }
             );
 
@@ -153,12 +153,12 @@ const WalletCredentialsPage = () => {
 
                 {credentials.map((credential) => (
                     <div
-                        key={credential.credential_id}
+                        key={credential.credentialId}
                         className="bg-iw-tileBackground flex flex-col shadow hover:shadow-lg hover:scale-105 hover:shadow-iw-selectedShadow p-5 m-4 rounded-md cursor-pointer items-center"
                         tabIndex={0}
                         role="menuitem"
                         onClick={() =>
-                            fetchCredential(credential.credential_id, "preview")
+                            fetchCredential(credential.credentialId, "preview")
                         }
                         style={{
                             width: "85%",
@@ -182,7 +182,7 @@ const WalletCredentialsPage = () => {
                         >
                             <img
                                 data-testid="ItemBox-Logo"
-                                src={credential.credential_type_logo}
+                                src={credential.credentialTypeLogo}
                                 alt="Credential Type Logo"
                                 className="w-20 h-20"
                             />
@@ -190,12 +190,12 @@ const WalletCredentialsPage = () => {
                                 className="text-sm font-semibold text-iw-title"
                                 data-testid="ItemBox-Text"
                             >
-                                {credential.credential_type}
+                                {credential.credentialType}
                             </span>
                         </div>
 
                         <span className="text-sm font-semibold text-gray-500 mt-2">
-                            {credential.issuer_name}
+                            {credential.issuerName}
                         </span>
                     </div>
                 ))}

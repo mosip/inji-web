@@ -7,11 +7,7 @@ import {DownloadResult} from '../components/Redirection/DownloadResult';
 import {api} from '../utils/api';
 import {SessionObject} from '../types/data';
 import {useTranslation} from 'react-i18next';
-import {
-    downloadCredentialPDF,
-    getErrorObject,
-    getTokenRequestBody
-} from '../utils/misc';
+import {downloadCredentialPDF, getErrorObject, getTokenRequestBody} from '../utils/misc';
 import {getIssuerDisplayObjectForCurrentLanguage} from '../utils/i18n';
 import {RootState} from '../types/redux';
 import {useSelector} from 'react-redux';
@@ -59,19 +55,19 @@ export const RedirectionPage: React.FC = () => {
                             activeSessionInfo?.vcStorageExpiryLimitInTimes ??
                             '-1';
 
-                        const requestBody = new URLSearchParams(
+                        const isLoggedIn = !!user && !!walletId;
+
+                        const requestBody =
                             getTokenRequestBody(
                                 code,
                                 codeVerifier,
                                 issuerId,
                                 certificateId,
                                 vcStorageExpiryLimitInTimes,
-                                language
-                            )
-                        );
+                                isLoggedIn
+                            );
 
                         let apiRequest, credentialDownloadResponse;
-                        const isLoggedIn = !!user && !!walletId;
 
                         if (isLoggedIn) {
                             apiRequest = api.downloadVCInloginFlow;
@@ -80,11 +76,11 @@ export const RedirectionPage: React.FC = () => {
                                 {
                                     method: 'POST',
                                     headers: {
-                                        ...apiRequest.headers,
+                                        ...apiRequest.headers(language),
                                         'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
                                     },
-                                    credentials: 'include',
-                                    body: requestBody
+                                    credentials: apiRequest.credentials,
+                                    body: JSON.stringify(requestBody),
                                 }
                             );
                             if (credentialDownloadResponse.ok) {
@@ -104,7 +100,7 @@ export const RedirectionPage: React.FC = () => {
                                 apiRequest.methodType,
                                 apiRequest.headers(),
                                 apiRequest.credentials,
-                                requestBody
+                                new URLSearchParams(requestBody)
                             );
                             if (state !== RequestStatus.ERROR) {
                                 await downloadCredentialPDF(
@@ -164,7 +160,7 @@ export const RedirectionPage: React.FC = () => {
                                    subTitle={t(errorObject.message)}
                                    state={RequestStatus.ERROR}/>
         }
-        if(!completedDownload){
+        if (!completedDownload) {
             return <DownloadResult title={t("loading.title")}
                                    subTitle={t("loading.subTitle")}
                                    state={RequestStatus.LOADING}/>
@@ -175,7 +171,8 @@ export const RedirectionPage: React.FC = () => {
     }
 
     return <div data-testid="Redirection-Page-Container">
-        {activeSessionInfo?.selectedIssuer?.issuer_id && <NavBar title={displayObject?.name ?? ""} search={false} link={`/issuers/${activeSessionInfo?.selectedIssuer?.issuer_id}`}/>}
+        {activeSessionInfo?.selectedIssuer?.issuer_id && <NavBar title={displayObject?.name ?? ""} search={false}
+                                                                 link={`/issuers/${activeSessionInfo?.selectedIssuer?.issuer_id}`}/>}
         {loadStatusOfRedirection()}
     </div>
 }

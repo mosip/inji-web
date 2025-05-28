@@ -74,7 +74,6 @@ export const CredentialsPage: React.FC = () => {
                 <NavBar
                     title={displayObject?.name}
                     search={true}
-                    fetchRequest={fetchRequest}
                     link={"/issuers"}
                 />
                 <div

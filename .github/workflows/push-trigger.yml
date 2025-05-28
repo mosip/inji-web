@@ -2,9 +2,9 @@ name: inji-web build upon a push
 
 on:
   release:
-    types: [published]
+    types: [ published ]
   pull_request:
-    types: [opened, reopened, synchronize]
+    types: [ opened, reopened, synchronize ]
   push:
     branches:
       - '!release-branch'
@@ -35,6 +35,36 @@ jobs:
       RELEASE_DOCKER_HUB: ${{ secrets.RELEASE_DOCKER_HUB }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 
+  build-inji-web:
+    runs-on: ubuntu-latest
+    env:
+      NAMESPACE: ${{ secrets.dev_namespace_docker_hub }}
+      SERVICE_NAME: ui-test
+      SERVICE_LOCATION: ui-test
+      BUILD_ARTIFACT: ui-test-local
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3.7.0
+        with:
+          node-version: '18'
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: '~/.npm'
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+      - name: Install the dependencies
+        run: npm install
+        working-directory: inji-web
+      - name: Run unit tests with coverage
+        run: npm test -- --coverage
+        working-directory: inji-web
+      - name: Build the project
+        run: npm run build
+        working-directory: inji-web
+
+
   sonar-analysis-inji-web:
     if: "${{ github.event_name != 'pull_request' }}"
     needs: build-dockers-inji-web
@@ -55,7 +85,7 @@ jobs:
       BUILD_ARTIFACT: ui-test
     secrets:
       BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }} 
+      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
       OSSRH_USER: ${{ secrets.OSSRH_USER }}
       OSSRH_SECRET: ${{ secrets.OSSRH_SECRET }}
       OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}

@@ -16,7 +16,6 @@ export type NavBarProps = {
     title: string;
     link: string;
     search: boolean;
-    fetchRequest?: any;
 }
 
 interface ErrorObj {
@@ -57,10 +56,7 @@ export type HeaderTileProps = {
     content: string;
     subContent: string;
 }
-export type SearchIssuerProps = {
-    state: RequestStatus;
-    fetchRequest: any;
-}
+
 export type IssuersListProps = {
     state: RequestStatus;
 }

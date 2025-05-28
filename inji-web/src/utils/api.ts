@@ -12,6 +12,12 @@ export enum MethodType {
     POST
 }
 
+export enum ContentTypes {
+    JSON = "application/json",
+    PDF = "application/pdf",
+    FORM_URL_ENCODED = "application/x-www-form-urlencoded",
+}
+
 export class api {
     static mimotoHost = window._env_.MIMOTO_URL;
 
@@ -22,7 +28,7 @@ export class api {
         methodType: MethodType.GET,
         headers: () => {
             return {
-                "Content-Type": "application/json"
+                "Content-Type": ContentTypes.JSON
             };
         }
     };
@@ -31,7 +37,7 @@ export class api {
         methodType: MethodType.GET,
         headers: () => {
             return {
-                "Content-Type": "application/json"
+                "Content-Type": ContentTypes.JSON
             };
         }
     };
@@ -41,7 +47,7 @@ export class api {
         methodType: MethodType.GET,
         headers: () => {
             return {
-                "Content-Type": "application/json"
+                "Content-Type": ContentTypes.JSON
             };
         }
     };
@@ -50,8 +56,8 @@ export class api {
         methodType: MethodType.POST,
         headers: () => {
             return {
-                "accept": "application/pdf",
-                "Content-Type": "application/x-www-form-urlencoded",
+                "accept": ContentTypes.PDF,
+                "Content-Type": ContentTypes.FORM_URL_ENCODED,
                 "Cache-Control": "no-cache, no-store, must-revalidate"
             };
         }
@@ -77,11 +83,11 @@ export class api {
     };
     // method to fetch user profile
     static fetchUserProfile: ApiRequest = {
-        url: () => api.mimotoHost + "/users/me/cache",
+        url: () => api.mimotoHost + "/users/me",
         methodType: MethodType.GET,
         headers: () => {
             return {
-                "Content-Type": "application/json"
+                "Content-Type": ContentTypes.JSON
             };
         },
         credentials:"include"
@@ -92,7 +98,7 @@ export class api {
         methodType: MethodType.POST,
         headers: () => {
             return {
-                "Content-Type": "application/json"
+                "Content-Type": ContentTypes.JSON
             };
         }
     };
@@ -103,7 +109,7 @@ export class api {
         methodType: MethodType.GET,
         headers: () => {
             return {
-                "Content-Type": "application/json"
+                "Content-Type": ContentTypes.JSON
             };
         },
         credentials:"include"
@@ -115,7 +121,7 @@ export class api {
         methodType: MethodType.POST,
         headers: () => {
             return {
-                "Content-Type": "application/json"
+                "Content-Type": ContentTypes.JSON
             };
         }
     };
@@ -127,7 +133,7 @@ export class api {
         methodType: MethodType.POST,
         headers: () => {
             return {
-                "Content-Type": "application/json"
+                "Content-Type": ContentTypes.JSON
             };
         },
         credentials:"include"
@@ -139,44 +145,50 @@ export class api {
             return api.mimotoHost + `/wallets/${walletId}/credentials`;
         },
         methodType: MethodType.POST,
-        headers: () => {
+        headers: (locale: string) => {
             return {
-                "accept": "application/json",
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Cache-Control": "no-cache, no-store, must-revalidate"
+                "accept": ContentTypes.JSON,
+                "Content-Type": ContentTypes.JSON,
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Accept-Language": locale
             };
-        }
+        },
+        credentials: "include"
     };
 
     static fetchWalletVCs: ApiRequest = {
-        url: (locale: string) => {
+        url: () => {
             const walletId = localStorage.getItem(KEYS.WALLET_ID);
             return (
                 api.mimotoHost +
-                `/wallets/${walletId}/credentials?locale=${locale}`
+                `/wallets/${walletId}/credentials`
             );
         },
         methodType: MethodType.GET,
-        headers: () => {
+        headers: (locale: string) => {
             return {
-                "Content-Type": "application/json"
+                "Content-Type": ContentTypes.JSON,
+                "Accept-Language": locale,
             };
         }
     };
 
     static fetchWalletCredentialPreview: ApiRequest = {
-        url: (credentialId: string, locale: string) => {
+        url: (credentialId: string) => {
             const walletId = localStorage.getItem(KEYS.WALLET_ID);
             return (
                 api.mimotoHost +
-                `/wallets/${walletId}/credentials/${credentialId}?locale=${locale}&action=inline`
+                `/wallets/${walletId}/credentials/${credentialId}?action=inline`
             );
         },
         methodType: MethodType.GET,
-        headers: () => {
+        headers: (locale: string) => {
             return {
-                "Content-Type": "application/json"
+                "Content-Type": ContentTypes.JSON,
+                "Accept-Language": locale,
+                "Accept": ContentTypes.PDF
             };
-        }
+        },
+        credentials: "include"
     };
 }

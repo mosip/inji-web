@@ -1,9 +1,8 @@
-import {FaExclamationCircle} from 'react-icons/fa';
+import {FaExclamationCircle, FaEye, FaEyeSlash} from 'react-icons/fa';
 import React, {useState, useEffect, useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {api} from '../../utils/api';
 import {useCookies} from 'react-cookie';
-import {FaEye, FaEyeSlash} from 'react-icons/fa';
 import {SolidButton} from '../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
 import {navigateToDashboardHome} from '../Dashboard/utils';
@@ -161,7 +160,7 @@ export const PinPage: React.FC = () => {
                     ...api.fetchWalletDetails.headers(),
                     'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
                 },
-                credentials: 'include',
+                credentials: api.fetchWalletDetails.credentials,
                 body: JSON.stringify({walletPin: pin})
             });
 
@@ -225,11 +224,11 @@ export const PinPage: React.FC = () => {
             throw errorData;
         }
 
-        const newWalletId = await response.text();
-        await unlockWallet(newWalletId, pin);
+        const createdWallet = await response.json();
+        await unlockWallet(createdWallet, pin);
 
-        setWalletId(newWalletId);
-        setWallets([{walletId: newWalletId}]);
+        setWalletId(createdWallet.walletId);
+        setWallets([{walletId: createdWallet.walletId}]);
         setIsPinCorrect(true);
     };
 
