@@ -38,8 +38,8 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
             if (!response.ok) throw responseData;
 
             const userData: User = {
-                displayName: responseData.display_name,
-                profilePictureUrl: responseData.profile_picture_url,
+                displayName: responseData.displayName,
+                profilePictureUrl: responseData.profilePictureUrl,
                 email:responseData.email
             };
 

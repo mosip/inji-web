@@ -35,13 +35,9 @@ export type CredentialTypesPageProps = {
     backUrl?: string;
 };
 
-export type ProfilePageProps = {
-    backUrl?: string;
-};
-
 export type InfoFieldProps = {
-    FieldName?: string;
-    Value?: string;
+    label?: string;
+    value?: string;
 };
 
 export type CollapseButtonProps = {

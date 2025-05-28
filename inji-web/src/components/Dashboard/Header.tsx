@@ -120,7 +120,8 @@ export const Header: React.FC<DashboardHeaderProps> = ({
         }
     ];
 
-    const toggleProfileDropdown = () => {
+    const toggleProfileDropdown = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation(); // Prevent global click handler from immediately closing the dropdown
         setIsProfileDropdownOpen(!isProfileDropdownOpen);
     };
 
@@ -203,10 +204,7 @@ export const Header: React.FC<DashboardHeaderProps> = ({
                             {getUserProfileIconWithName()}
                             <div
                                 className="relative inline-block cursor-pointer"
-                                onClick={(e) => {
-                                    e.stopPropagation(); // Prevent global click handler from immediately closing the dropdown
-                                    toggleProfileDropdown();
-                                  }}
+                                onClick={toggleProfileDropdown}
                             >
                                 <DropdownArrowIcon
                                     isOpen={isProfileDropdownOpen}
