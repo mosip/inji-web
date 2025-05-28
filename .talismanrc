@@ -54,7 +54,7 @@ fileignoreconfig:
 - filename: inji-web/src/locales/ta.json
   checksum: d9ed356387f263170f69d4237f60be5676c3599e1566596f3877c337cce859a8
 - filename: inji-web/src/pages/users/PinPage.tsx
-  checksum: c24e2e400e3ebca88028f6f87171e068899f53074e568b6078b4082daa1a4ae7
+  checksum: 96b093c08920e34d5c6b6432b8c718641966512857bb10355fa71fa7c7cd9e58
 - filename: inji-web/src/__tests__/users/login/PinPage.test.tsx
   checksum: e22b91e31e1feeb4b6b1d12732c5764d1dc8bda720dc69d38595db9004d3f404
 - filename: inji-web/src/__tests__/users/login/Login.test.tsx

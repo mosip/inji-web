@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
     darkMode: 'selector',
     content: ['./src/**/**/*.{js,jsx,ts,tsx}'],
@@ -54,7 +56,11 @@ module.exports = {
                     subText: 'var(--iw-color-subText)',
                     disclaimerBackGround:
                         'var(--iw-color-disclaimerBackGround)',
-                    disclaimerText: 'var(--iw-color-disclaimerText)'
+                    disclaimerText: 'var(--iw-color-disclaimerText)',
+                    textSecondary: 'var(--iw-color-textSecondary)',
+                    textTertiary: 'var(--iw-color-textTertiary)',
+                    grayLight: 'var(--iw-color-grayLight)',
+                    darkRed: 'var(--iw-color-darkRed)'
                 }
             },
             boxShadow: {
@@ -62,9 +68,37 @@ module.exports = {
                 'iw-hover': '0 5px 8px rgba(24, 71, 147, 0.2)',
                 'iw-sidebar': '2px 0 8px rgb(0,0,0,0.051)',
                 'iw-emptyDocuments': `0px -2px 4px -2px rgba(16, 24, 40, 0.06), 0px 4px 8px -2px rgba(16, 24, 40, 0.10)`,
-                'iw-hamburger-dropdown': `0px 3px 6px rgb(0,0,0,0.07), 0px -1px 6px rgb(0,0,0,0.07)`
+                'iw-hamburgerDropdown': `0px 3px 6px rgb(0,0,0,0.07), 0px -1px 6px rgb(0,0,0,0.07)`,
+                'iw-pinPageContainer': `0px 4px 8px rgba(16, 24, 40, 0.1), -0px -0.01px 0.5px rgba(16, 24, 40, 0.1)`
             }
         }
     },
-    plugins: [require('tailwindcss-rtl')]
+    plugins: [
+        require('tailwindcss-rtl'),
+        plugin(function ({addComponents}) {
+            addComponents({
+                '.pin-input-box-style': {
+                    width: '2.25rem',
+                    height: '2rem',
+                    textAlign: 'center',
+                    borderRadius: '0.5rem',
+                    fontSize: '1.125rem',
+                    '@screen sm': {
+                        width: '2.75rem',
+                        height: '2.5rem',
+                        fontSize: '1.25rem'
+                    }
+                },
+                '.pin-input-box-border': {
+                    border: '1.81px solid var(--iw-color-grayLight)'
+                },
+                '.pin-input-focus-box-border': {
+                    border: '1.81px solid var(--iw-color-grayDark)'
+                },
+                '.pin-page-warning-text-border': {
+                    border: '0.8px solid var(--iw-color-grayTransparent)'
+                }
+            });
+        })
+    ]
 };

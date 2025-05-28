@@ -1,5 +1,5 @@
-import {FaExclamationCircle, FaEye, FaEyeSlash} from 'react-icons/fa';
 import React, {useState, useEffect, useRef} from 'react';
+import {FaEye, FaEyeSlash} from 'react-icons/fa';
 import {useNavigate} from 'react-router-dom';
 import {api} from '../../utils/api';
 import {useCookies} from 'react-cookie';
@@ -7,6 +7,7 @@ import {SolidButton} from '../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
 import {navigateToDashboardHome} from '../Dashboard/utils';
 import {useUser} from '../../hooks/useUser';
+import CrossIcon from '../../assets/CrossIcon.svg';
 
 export const PinPage: React.FC = () => {
     const {t, i18n} = useTranslation('PinPage');
@@ -58,8 +59,15 @@ export const PinPage: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchWallets();
-        fetchUserProfile();
+        const fetchWalletsAndUserDetails = async () => {
+            try {
+                await fetchWallets();
+                await fetchUserProfile();
+            } catch (error) {
+                console.error('Error fetching wallets or user profile:', error);
+            }
+        };
+        fetchWalletsAndUserDetails();
     }, []);
 
     useEffect(() => {
@@ -105,41 +113,57 @@ export const PinPage: React.FC = () => {
         const refs = type === 'passcode' ? passcodeRefs : confirmPasscodeRefs;
 
         return (
-            <div className="flex items-center gap-2">
-                {values.map((digit, idx) => (
-                    <input
-                        key={idx}
-                        ref={(el) => (refs.current[idx] = el)}
-                        type={visible ? 'text' : 'password'}
-                        inputMode="numeric"
-                        maxLength={1}
-                        value={digit}
-                        onChange={(e) =>
-                            handleInputChange(idx, e.target.value, type)
-                        }
-                        onFocus={(e) => e.target.classList.add('border-black')}
-                        onBlur={(e) => {
-                            if (!digit) {
-                                e.target.classList.remove('border-black');
-                                e.target.classList.add('border-gray-300');
+            <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 py-2 rounded-lg">
+                    {values.map((digit, idx) => (
+                        <input
+                            key={idx}
+                            ref={(el) => (refs.current[idx] = el)}
+                            type={visible ? 'text' : 'password'}
+                            inputMode="numeric"
+                            maxLength={1}
+                            value={digit}
+                            onChange={(e) =>
+                                handleInputChange(idx, e.target.value, type)
                             }
-                        }}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Backspace' && idx > 0 && !digit) {
-                                refs.current[idx - 1]?.focus();
+                            onFocus={(e) =>
+                                e.target.classList.add('pin-input-focus-box')
                             }
-                        }}
-                        className={`w-9 h-9 sm:w-10 sm:h-10 text-center border mb-4  ${
-                            digit ? 'border-black' : 'border-gray-300'
-                        } rounded-lg text-lg sm:text-xl focus:outline-none`}
-                    />
-                ))}
+                            onBlur={(e) => {
+                                if (!digit) {
+                                    e.target.classList.remove(
+                                        'pin-input-focus-box'
+                                    );
+                                    e.target.classList.add('pin-input-box');
+                                }
+                            }}
+                            onKeyDown={(e) => {
+                                if (
+                                    e.key === 'Backspace' &&
+                                    idx > 0 &&
+                                    !digit
+                                ) {
+                                    refs.current[idx - 1]?.focus();
+                                }
+                            }}
+                            className={`pin-input-box-style ${
+                                digit
+                                    ? 'pin-input-focus-box-border'
+                                    : 'pin-input-box-border'
+                            } focus:outline-none`}
+                        />
+                    ))}
+                </div>
                 <button
                     type="button"
                     onClick={toggleVisibility}
-                    className=" px-3 pb-4 sm:px-5"
+                    className="pin-input-box-border pin-input-box-style flex items-center justify-center"
                 >
-                    {visible ? <FaEyeSlash /> : <FaEye />}
+                    {visible ? (
+                        <FaEyeSlash className="text-iw-grayLight" />
+                    ) : (
+                        <FaEye className="text-iw-grayLight" />
+                    )}
                 </button>
             </div>
         );
@@ -225,7 +249,7 @@ export const PinPage: React.FC = () => {
         }
 
         const createdWallet = await response.json();
-        await unlockWallet(createdWallet, pin);
+        await unlockWallet(createdWallet.walletId, pin);
 
         setWalletId(createdWallet.walletId);
         setWallets([{walletId: createdWallet.walletId}]);
@@ -271,16 +295,41 @@ export const PinPage: React.FC = () => {
             className=" overflow-hidden fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50"
             data-testid="pin-page"
         >
-            <div className="bg-white sm:mx=4 mx-2 rounded-2xl flex flex-col items-center justify-center py-[2%] px-0 sm:px-[18%] ">
-                <div className="text-center mb-2">
-                    <div className="ps-14 sm:ps-24" data-testid="pin-logo">
+            <div className="bg-white sm:mx=4 mx-2 rounded-2xl flex flex-col items-center justify-center py-[2%] px-0 sm:px-[18%] relative px-32 pt-32 pb-16">
+                <div className="overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+                    <div className="absolute top-[155px] -translate-x-1/2">
+                        {[...Array(6)].map((_, index) => {
+                            const radius = 96 + index * 96;
+                            const opacity = 0.8 - index * 0.1;
+                            return (
+                                <div
+                                    key={index}
+                                    className="absolute rounded-full border overflow-hidden"
+                                    style={{
+                                        width: `${radius}px`,
+                                        height: `${radius}px`,
+                                        borderWidth: '1px',
+                                        borderColor: `rgba(228, 231, 236, ${opacity})`,
+                                        top: `calc(50% - ${radius / 2}px)`,
+                                        left: `calc(50% - ${radius / 2}px)`
+                                    }}
+                                />
+                            );
+                        })}
+                    </div>
+                </div>
+                <div className="text-center items-center items-start relative z-20 bg-transparent space-y-4">
+                    <div
+                        className="flex items-center justify-center"
+                        data-testid="pin-logo"
+                    >
                         <img
                             src={require('../../assets/Logomark.png')}
                             alt="Inji Web Logo"
                         />
                     </div>
                     <h1
-                        className="text-xl sm:text-3xl font-semibold text-gray-800 p-4 "
+                        className="text-xl sm:text-2xl font-semibold text-gray-800 p-4"
                         data-testid="pin-title"
                     >
                         {wallets.length === 0
@@ -288,7 +337,7 @@ export const PinPage: React.FC = () => {
                             : t('enterPasscode')}
                     </h1>
                     <p
-                        className="text-gray-600 text-sm sm:text-lg"
+                        className="text-gray-600 text-sm sm:text-lg font-medium"
                         data-testid="pin-description"
                     >
                         {wallets.length === 0
@@ -298,67 +347,79 @@ export const PinPage: React.FC = () => {
                 </div>
 
                 <div
-                    className="bg-white rounded-lg shadow-2xl p-6 max-w-sm text-center"
+                    className="flex flex-col bg-white rounded-lg shadow-iw-pinPageContainer mt-8 max-w-auto items-center relative z-20"
                     data-testid="pin-container"
                 >
                     {wallets.length === 0 && (
                         <p
-                            className="text-center mx-5 my-4 w-[85%] text-gray-500 text-xs sm:text-sm"
+                            className="flex text-center mx-1 sm:mx-3 md:mx-5 mt-3 sm:mt-5 md:mt-7 w-[75%] text-iw-textTertiary text-sm sm:text-base"
                             data-testid="pin-warning"
                         >
                             {t('passcodeWarning')}
                         </p>
                     )}
 
-                    {error && (
+                    {error ? (
                         <div
-                            className="bg-red-100 border border-red-300 text-red-700 px-4 py-2 rounded-lg mb-4 flex items-center justify-between"
+                            className="bg-red-100 flex items-center justify-between w-full px-5 py-3 mt-1 sm:mt-3 md:mt-5"
                             data-testid="pin-error"
                         >
                             <div className="flex items-center gap-2">
-                                <FaExclamationCircle className="text-red-500 w-4 h-4" />
-                                <span className="w-full text-xs">{error}</span>
+                                <span className="w-full text-sm text-iw-darkRed">
+                                    {error}
+                                </span>
                             </div>
+                            <img
+                                src={CrossIcon}
+                                alt="Close"
+                                className="cursor-pointer"
+                                onClick={() => setError(null)}
+                            />
                         </div>
+                    ) : (
+                        wallets.length === 0 && (
+                            <div className="pin-page-warning-text-border w-full mt-1 sm:mt-3 md:mt-5" />
+                        )
                     )}
-
-                    <div className="mb-2" data-testid="pin-passcode-input">
-                        <p className="text-xs sm:text-sm text-left font-medium text-gray-700 mb-2">
-                            {t('enterPasscode')}
-                        </p>
-                        {renderInputs('passcode', showPasscode, () =>
-                            setShowPasscode((prev) => !prev)
-                        )}
-                    </div>
-
-                    {wallets.length === 0 && (
-                        <div
-                            className="mb-2"
-                            data-testid="pin-confirm-passcode-input"
-                        >
-                            <p className="text-xs sm:text-sm text-left font-medium text-gray-700 mb-2">
-                                {t('confirmPasscode')}
+                    <div className="p-4 sm:p-6 md:p-10 space-y-4">
+                        <div className="mb-2" data-testid="pin-passcode-input">
+                            <p className="text-sm text-left font-medium text-iw-textSecondary mb-2">
+                                {t('enterPasscode')}
                             </p>
-                            {renderInputs('confirm', showConfirm, () =>
-                                setShowConfirm((prev) => !prev)
+                            {renderInputs('passcode', showPasscode, () =>
+                                setShowPasscode((prev) => !prev)
                             )}
                         </div>
-                    )}
 
-                    {wallets.length !== 0 && (
-                        <p className="text-xs sm:text-sm text-left font-semibold text-purple-800 my-3">
-                            {t('resetPasscode')}
-                        </p>
-                    )}
+                        {wallets.length === 0 && (
+                            <div
+                                className="mb-2"
+                                data-testid="pin-confirm-passcode-input"
+                            >
+                                <p className="text-sm text-left font-medium text-iw-textSecondary mb-2">
+                                    {t('confirmPasscode')}
+                                </p>
+                                {renderInputs('confirm', showConfirm, () =>
+                                    setShowConfirm((prev) => !prev)
+                                )}
+                            </div>
+                        )}
 
-                    <SolidButton
-                        fullWidth={true}
-                        testId="pin-submit-button"
-                        onClick={handleSubmit}
-                        title={loading ? t('submitting') : t('submit')}
-                        disabled={isButtonDisabled}
-                        className={`${isButtonDisabled ? 'grayscale' : ''}`}
-                    />
+                        {wallets.length !== 0 && (
+                            <p className="text-xs sm:text-sm text-left font-semibold text-purple-800 my-3">
+                                {t('resetPasscode')}
+                            </p>
+                        )}
+
+                        <SolidButton
+                            fullWidth={true}
+                            testId="pin-submit-button"
+                            onClick={handleSubmit}
+                            title={loading ? t('submitting') : t('submit')}
+                            disabled={isButtonDisabled}
+                            className={`${isButtonDisabled ? 'grayscale' : ''}`}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
