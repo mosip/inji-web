@@ -86,11 +86,11 @@ export type LanguageObject = {
 };
 
 export type WalletCredential = {
-    issuer_name: string;
-    issuer_logo: string;
-    credential_type: string;
-    credential_type_logo: string;
-    credential_id: string;
+    issuerName: string;
+    issuerLogo: string;
+    credentialType: string;
+    credentialTypeLogo: string;
+    credentialId: string;
 };
 
 export type FAQAccordionItemType = {

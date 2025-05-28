@@ -29,16 +29,26 @@ export const isObjectEmpty = (object: any) => {
     return object === null || object === undefined || Object.keys(object).length === 0;
 }
 
-export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialType: string, vcStorageExpiryLimitInTimes: string, locale: string) => {
+export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialConfigurationId: string, vcStorageExpiryLimitInTimes: string, isLoggedIn = false) => {
+    // naming convention is handled separately for logged in and non logged in users as they use camelcase and snake case respectively
+    if (isLoggedIn) {
+        return {
+            'grantType': 'authorization_code',
+            'code': code,
+            'redirectUri': api.authorizationRedirectionUrl,
+            'codeVerifier': codeVerifier,
+            'issuer': issuerId,
+            'credentialConfigurationId': credentialConfigurationId,
+        }
+    }
     return {
         'grant_type': 'authorization_code',
         'code': code,
         'redirect_uri': api.authorizationRedirectionUrl,
         'code_verifier': codeVerifier,
         'issuer': issuerId,
-        'credential': credentialType,
-        'vcStorageExpiryLimitInTimes': vcStorageExpiryLimitInTimes,
-        'locale':locale
+        'credential': credentialConfigurationId,
+        'vcStorageExpiryLimitInTimes': vcStorageExpiryLimitInTimes
     }
 }
 

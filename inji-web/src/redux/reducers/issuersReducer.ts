@@ -1,6 +1,5 @@
 import {IssuerObject} from "../../types/data";
 import {IssuersReducerActionType} from "../../types/redux";
-import {REHYDRATE} from "redux-persist";
 
 const initialState = {
     issuers: [],
