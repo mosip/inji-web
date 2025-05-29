@@ -82,7 +82,7 @@
     "setPasscode": "Definir código de acesso",
     "enterPasscode": "Digite o código de acesso",
     "confirmPasscode": "Confirmar código de acesso",
-    "resetPasscode": "Redefinir código de acesso",
+    "forgotPasscode": "Esqueceu a senha",
     "setPasscodeDescription": "Defina seu código de acesso para começar",
     "enterPasscodeDescription": "Digite seu código de 6 dígitos",
     "passcodeWarning": "Certifique-se de lembrar a senha para login futuro",

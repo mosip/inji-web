@@ -82,7 +82,7 @@
     "setPasscode":"Set Passcode",
     "enterPasscode":"Enter Passcode",
     "confirmPasscode":"Confirm Passcode",
-    "resetPasscode":"Reset Passcode",
+    "forgotPasscode":"Forgot Passcode",
     "setPasscodeDescription":"Set your passcode to get started",
     "enterPasscodeDescription":"Enter your 6 digit passcode",
     "passcodeWarning":"Make sure you remember the password for future login",

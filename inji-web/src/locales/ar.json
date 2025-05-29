@@ -82,7 +82,7 @@
     "setPasscode": "تعيين رمز المرور",
     "enterPasscode": "أدخل رمز المرور",
     "confirmPasscode": "تأكيد رمز المرور",
-    "resetPasscode": "إعادة تعيين رمز المرور",
+    "forgotPasscode": "نسيت رمز المرور",
     "setPasscodeDescription": "قم بتعيين رمز المرور للبدء",
     "enterPasscodeDescription": "أدخل رمز المرور المكون من 6 أرقام",
     "passcodeWarning": "تأكد من تذكر كلمة المرور لتسجيل الدخول في المستقبل",

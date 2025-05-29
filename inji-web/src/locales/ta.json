@@ -82,7 +82,7 @@
     "setPasscode": "பாஸ்கோடு அமைக்கவும்",
     "enterPasscode": "பாஸ்கோடு உள்ளிடவும்",
     "confirmPasscode": "பாஸ்கோடு உறுதிப்படுத்தவும்",
-    "resetPasscode": "பாஸ்கோடு மீட்டமைக்கவும்",
+    "forgotPasscode": "கடவுக்குறியீட்டை மறந்துவிட்டேன்",
     "setPasscodeDescription": "தொடங்க உங்கள் பாஸ்கோடு அமைக்கவும்",
     "enterPasscodeDescription": "உங்கள் 6 இலக்க பாஸ்கோடு உள்ளிடவும்",
     "passcodeWarning": "எதிர்கால உள்நுழைவுக்கு பாஸ்கோடு நினைவில் வைக்கவும்",

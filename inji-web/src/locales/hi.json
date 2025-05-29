@@ -82,7 +82,7 @@
     "setPasscode": "पासकोड सेट करें",
     "enterPasscode": "पासकोड दर्ज करें",
     "confirmPasscode": "पासकोड की पुष्टि करें",
-    "resetPasscode": "पासकोड रीसेट करें",
+    "forgotPasscode": "पासकोड भूल गए",
     "setPasscodeDescription": "शुरू करने के लिए अपना पासकोड सेट करें",
     "enterPasscodeDescription": "अपना 6 अंकों का पासकोड दर्ज करें",
     "passcodeWarning": "भविष्य में लॉगिन के लिए पासकोड याद रखें",

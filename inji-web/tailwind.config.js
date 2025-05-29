@@ -60,7 +60,9 @@ module.exports = {
                     textSecondary: 'var(--iw-color-textSecondary)',
                     textTertiary: 'var(--iw-color-textTertiary)',
                     grayLight: 'var(--iw-color-grayLight)',
-                    darkRed: 'var(--iw-color-darkRed)'
+                    darkRed: 'var(--iw-color-darkRed)',
+                    deepVioletIndigo: 'var(--iw-color-deepVioletIndigo)',
+                    pink50: 'var(--iw-color-pink50)'
                 }
             },
             boxShadow: {

@@ -55,6 +55,8 @@
         --iw-color-textTertiary: #475467;
         --iw-color-textSecondary: #344054;
         --iw-color-darkRed: #D52929;
+        --iw-color-deepVioletIndigo: #5B03AD;
+        --iw-color-pink50: #FAEFEF;
     }
     [class="emerald_theme"] {
         --iw-font-base: "Inter", sans-serif;
@@ -102,6 +104,8 @@
         --iw-color-textTertiary: #475467;
         --iw-color-textSecondary: #344054;
         --iw-color-darkRed: #D52929;
+        --iw-color-deepVioletIndigo: #5B03AD;
+        --iw-color-pink50: #FAEFEF;
     }
 }
 

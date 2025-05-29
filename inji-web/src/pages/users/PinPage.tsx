@@ -35,8 +35,7 @@ export const PinPage: React.FC = () => {
 
     const fetchWallets = async () => {
         try {
-            const response = await fetch(
-                api.fetchWallets.url(), {
+            const response = await fetch(api.fetchWallets.url(), {
                 method: api.fetchWallets.methodType === 0 ? 'GET' : 'POST',
                 headers: {
                     ...api.fetchWallets.headers(),
@@ -47,10 +46,10 @@ export const PinPage: React.FC = () => {
 
             const responseData = await response.json();
 
-            if(!response.ok){
+            if (!response.ok) {
                 throw responseData;
             }
-            
+
             setWallets(responseData);
         } catch (error) {
             console.error('Error occurred while fetching wallets:', error);
@@ -278,7 +277,10 @@ export const PinPage: React.FC = () => {
             }
             await fetchUserProfileAndNavigate();
         } catch (error) {
-            console.error('Error occurred while setting up Wallet or loading user profile', error);
+            console.error(
+                'Error occurred while setting up Wallet or loading user profile',
+                error
+            );
             setIsPinCorrect(false);
             setError(t('error.incorrectPinError'));
         } finally {
@@ -361,10 +363,10 @@ export const PinPage: React.FC = () => {
 
                     {error ? (
                         <div
-                            className="bg-red-100 flex items-center justify-between w-full px-5 py-3 mt-1 sm:mt-3 md:mt-5"
+                            className="bg-iw-pink50 flex items-center justify-between w-full px-5 py-3 mt-3 sm:mt-5 md:mt-8"
                             data-testid="pin-error"
                         >
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center">
                                 <span className="w-full text-sm text-iw-darkRed">
                                     {error}
                                 </span>
@@ -381,9 +383,9 @@ export const PinPage: React.FC = () => {
                             <div className="pin-page-warning-text-border w-full mt-1 sm:mt-3 md:mt-5" />
                         )
                     )}
-                    <div className="p-4 sm:p-6 md:p-10 space-y-4">
+                    <div className="px-4 sm:px-6 md:px-10 py-3 sm:py-5 md:py-7 space-y-4">
                         <div className="mb-2" data-testid="pin-passcode-input">
-                            <p className="text-sm text-left font-medium text-iw-textSecondary mb-2">
+                            <p className="text-sm text-left font-medium text-iw-textSecondary">
                                 {t('enterPasscode')}
                             </p>
                             {renderInputs('passcode', showPasscode, () =>
@@ -396,7 +398,7 @@ export const PinPage: React.FC = () => {
                                 className="mb-2"
                                 data-testid="pin-confirm-passcode-input"
                             >
-                                <p className="text-sm text-left font-medium text-iw-textSecondary mb-2">
+                                <p className="text-sm text-left font-medium text-iw-textSecondary">
                                     {t('confirmPasscode')}
                                 </p>
                                 {renderInputs('confirm', showConfirm, () =>
@@ -406,8 +408,8 @@ export const PinPage: React.FC = () => {
                         )}
 
                         {wallets.length !== 0 && (
-                            <p className="text-xs sm:text-sm text-left font-semibold text-purple-800 my-3">
-                                {t('resetPasscode')}
+                            <p className="text-xs sm:text-sm text-left font-semibold text-iw-deepVioletIndigo my-0">
+                                {t('forgotPasscode') + ' ?'}
                             </p>
                         )}
 

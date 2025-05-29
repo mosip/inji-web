@@ -82,7 +82,7 @@
     "setPasscode": "Définir le code d'accès",
     "enterPasscode": "Entrer le code d'accès",
     "confirmPasscode": "Confirmer le code d'accès",
-    "resetPasscode": "Réinitialiser le code d'accès",
+    "forgotPasscode": "Mot de passe oublié",
     "setPasscodeDescription": "Définissez votre code d'accès pour commencer",
     "enterPasscodeDescription": "Entrez votre code d'accès à 6 chiffres",
     "passcodeWarning": "Assurez-vous de vous souvenir du mot de passe pour une future connexion",
