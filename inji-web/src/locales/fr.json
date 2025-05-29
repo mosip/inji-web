@@ -355,6 +355,12 @@
       "profile": "Profil",
       "faq": "FAQ",
       "logout": "Déconnexion"
+    },
+    "ProfilePage": {
+      "title": "Mon profil",
+      "homeTitle": "Accueil",
+      "fullName": "Nom complet",
+      "emailAddress": "Adresse e-mail"
     }
   }
 }

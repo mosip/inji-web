@@ -26,6 +26,12 @@ export type SearchCredentialProps = {
     issuerContainerBorderRadius?: string;
 }
 
+export type HomeButtonProps={
+    onClick: () => void;
+    title:string,
+    testId:string
+}
+
 export type FAQPageProps = {
     backUrl?: string;
     withHome?: boolean;

@@ -4,6 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {FAQPageProps} from '../components/Dashboard/types';
 import {navigateToDashboardHome} from './Dashboard/utils';
+import { HomeButton } from './Dashboard/HomeButton';
 
 export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
     const {t} = useTranslation(['FAQPage', 'Dashboard']);
@@ -46,14 +47,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
                             {t('title')}
                         </span>
                         {withHome && (
-                            <span
-                                className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer hover:underline"
-                                onClick={() =>
-                                    navigateToDashboardHome(navigate)
-                                }
-                            >
-                                {t('Dashboard:Home.title')}
-                            </span>
+                            <HomeButton testId={'FAQ-Home-Button'} onClick={()=>navigateToDashboardHome(navigate)} title={t('Dashboard:Home.title')}/>
                         )}
                     </div>
                     <div className="w-full">

@@ -5,6 +5,7 @@ import {useUser} from '../../hooks/useUser.tsx';
 import {navigateToDashboardHome} from './utils';
 import { NavBackArrowButton } from './NavBackArrowButton.tsx';
 import { InfoField } from '../../components/Dashboard/InfoField.tsx';
+import { HomeButton } from './HomeButton.tsx';
 
 export const ProfilePage: React.FC = () => {
     const navigate=useNavigate();
@@ -39,13 +40,7 @@ export const ProfilePage: React.FC = () => {
                             >
                                 {t('ProfilePage.title')}
                             </span>
-                            <button
-                                data-testid={'Home'}
-                                className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer"
-                                onClick={() => navigateToDashboardHome(navigate)}
-                            >
-                                {t('Home.title')}
-                            </button>
+                           <HomeButton testId={"Profile-Page-Home"} onClick={()=>navigateToDashboardHome(navigate)} title={t("ProfilePage.homeTitle")}></HomeButton>
                         </div>
                     </div>
                 </div>
@@ -59,8 +54,8 @@ export const ProfilePage: React.FC = () => {
                     </div>
                     <hr data-testid="Profile-Page-Horizontal-Rule" className="w-[90%] md:hidden border-t border-gray-200" />
                     <div className='w-full'>
-                        <InfoField label={"Full Name"} value={user?.displayName} />
-                        <InfoField label={"Email Address"} value={user?.email} />
+                        <InfoField label={t('ProfilePage.fullName')} value={user?.displayName} />
+                        <InfoField label={t('ProfilePage.emailAddress')} value={user?.email} />
                     </div>
                 </div>
         </div>

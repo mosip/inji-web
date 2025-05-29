@@ -355,6 +355,12 @@
       "profile": "ಪ್ರೊಫೈಲ್",
       "faq": "FAQ",
       "logout": "ಲಾಗ್ಔಟ್"
+    },
+    "ProfilePage": {
+      "title": "ನನ್ನ ಪ್ರೊಫೈಲ್",
+      "homeTitle": "ಮುಖಪುಟ",
+      "fullName": "ಪೂರ್ಣ ಹೆಸರು",
+      "emailAddress": "ಇಮೇಲ್ ವಿಳಾಸ"
     }
   }
 }

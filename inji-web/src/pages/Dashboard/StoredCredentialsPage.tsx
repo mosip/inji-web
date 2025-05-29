@@ -3,6 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-dom';
 import {navigateToDashboardHome} from './utils';
 import {NavBackArrowButton} from './NavBackArrowButton';
+import { HomeButton } from './HomeButton';
 
 export const StoredCredentialsPage: React.FC = () => {
     const {t} = useTranslation('Dashboard');
@@ -26,13 +27,7 @@ export const StoredCredentialsPage: React.FC = () => {
                         >
                             {t('StoredCredentials.title')}
                         </span>
-                        <button
-                            data-testid={'Home'}
-                            className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer"
-                            onClick={() => navigateToDashboardHome(navigate)}
-                        >
-                            {t('Home.title')}
-                        </button>
+                        <HomeButton testId={'Home'} onClick={()=>navigateToDashboardHome(navigate)} title={t('Home.title')}></HomeButton>
                     </div>
                 </div>
                 <div className="hidden sm:block">

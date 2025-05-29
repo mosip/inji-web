@@ -132,7 +132,7 @@ export const Header: React.FC<DashboardHeaderProps> = ({
     const getUserProfileIconWithName = () => (
         <div className="flex gap-2 items-center">
             <div
-                className={`aspect-square w-12 sm:w-14 rounded-full bg-[#DDDDDD] overflow-hidden flex items-center justify-center text-[#1A001D] font-medium text-lg ${
+                className={`aspect-square w-12 rounded-full bg-[#DDDDDD] overflow-hidden flex items-center justify-center text-[#1A001D] font-medium text-lg ${
                     !hasProfilePictureUrl && 'p-2 sm:p-3 md:p-4'
                 }`}
             >
