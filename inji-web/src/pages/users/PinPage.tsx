@@ -225,7 +225,7 @@ export const PinPage: React.FC = () => {
         }
 
         const createdWallet = await response.json();
-        await unlockWallet(createdWallet, pin);
+        await unlockWallet(createdWallet.walletId, pin);
 
         setWalletId(createdWallet.walletId);
         setWallets([{walletId: createdWallet.walletId}]);
