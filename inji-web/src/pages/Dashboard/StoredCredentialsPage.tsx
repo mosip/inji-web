@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-dom';
 import {navigateToDashboardHome} from './utils';
@@ -10,9 +10,11 @@ import {api} from "../../utils/api";
 import {SolidButton} from "../../components/Common/Buttons/SolidButton";
 import {SpinningLoader} from "../../components/Common/SpinningLoader";
 import {SearchBar} from "../../components/Common/SearchBar";
-import {NoCredentialsStored} from "../../components/VC/NoCredentialsStored";
+import {InfoSection} from "../../components/Common/InfoSection";
 import {VCCardView} from "../../components/VC/VCCardView";
 import {FlatList} from "../../components/Common/List/FlatList";
+import {DocumentIcon} from "../../components/Icon/DocumentIcon";
+import {PageTitle} from "../../components/Common/PageTitle";
 
 export const StoredCredentialsPage: React.FC = () => {
     const {t} = useTranslation('Dashboard');
@@ -21,7 +23,7 @@ export const StoredCredentialsPage: React.FC = () => {
     const [filteredCredentials, setFilteredCredentials] = useState<WalletCredential[]>([]);
     const [loading, setLoading] = useState(true);
     const language = useSelector((state: RootState) => state.common.language);
-    const [errorObj, setErrorObj] = useState({
+    const [error, setError] = useState({
         code: "",
         message: ""
     });
@@ -40,7 +42,7 @@ export const StoredCredentialsPage: React.FC = () => {
                 setCredentials(responseData);
                 setFilteredCredentials(responseData)
             } else {
-                setErrorObj({
+                setError({
                     code: "Fetching Credentials Failed",
                     message: responseData.errorMessage
                 });
@@ -48,6 +50,10 @@ export const StoredCredentialsPage: React.FC = () => {
             }
         } catch (error) {
             console.error("Failed to fetch credentials:", error);
+            setError({
+                code: "Network Error",
+                message: "Failed to fetch credentials. Please try again later."
+            })
         } finally {
             setLoading(false);
         }
@@ -57,18 +63,11 @@ export const StoredCredentialsPage: React.FC = () => {
         fetchWalletCredentials().then(_ => console.debug("Credentials fetched successfully"));
     }, []);
 
-    if (loading) {
-        return (
-            <div className="flex items-center justify-center min-h-screen w-full">
-                <SpinningLoader/>
-            </div>
-        );
-    }
     const preview = (_: WalletCredential) => () => console.log("Preview");
 
     const filterCredentials = (searchText: string) => {
         if (searchText === "") {
-            return;
+            setFilteredCredentials(credentials);
         } else {
             const filteredCredentialsToBeUpdated = credentials.filter((credential: WalletCredential) =>
                 credential.credentialTypeDisplayName.toLowerCase().includes(searchText.toLowerCase())
@@ -77,58 +76,81 @@ export const StoredCredentialsPage: React.FC = () => {
         }
     };
 
+    const navigateToHome = () => navigateToDashboardHome(navigate);
+
+    const loader =
+        <div className="flex items-center justify-center min-h-screen w-full">
+            <SpinningLoader/>
+        </div>
+
+    function displayCredentials() {
+        if (credentials.length == 0) {
+            return <InfoSection title={"No Cards Stored!"}
+                                actionText={"You haven't downloaded any credentials yet. Tap “Add Credential” to get started."}
+                                icon={<DocumentIcon/>}
+            />;
+        }
+        return (
+            <Fragment>
+                <SearchBar
+                    placeholder={"Search your documents by Name"}
+                    filter={filterCredentials}
+                />
+                <FlatList
+                    onEmpty={<InfoSection actionText={"No cards match your search."}/>}
+                    data={filteredCredentials}
+                    renderItem={(item: WalletCredential) =>
+                        <VCCardView
+                            key={item.credentialId}
+                            onClick={preview}
+                            credential={item}
+                        />
+                    }
+                    numColumns={3}
+                    keyExtractor={(credential: WalletCredential) => credential.credentialId}
+                    testId={"credentials"}
+                />
+            </Fragment>
+        )
+    }
+
+    if(error.code){
+        return (
+            <div className="container mx-auto sm:px-2 md:px-4 lg:px-6 py-6 relative ml-3 sm:ml-0">
+                <div className="text-red-500 text-center">
+                    <h2>{t('errorTitle')}</h2>
+                    <p>{error.message}</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="container mx-auto sm:px-2 md:px-4 lg:px-6 py-6 relative ml-3 sm:ml-0 ">
             <div className="flex flex-col sm:flex-row justify-between items-start mb-4 sm:mb-6 gap-4 sm:gap-0">
                 <div className="flex items-start">
                     <div className="flex items-start">
-                        <NavBackArrowButton
-                            onBackClick={() =>
-                                navigateToDashboardHome(navigate)
-                            }
-                        />
+                        <NavBackArrowButton onBackClick={navigateToHome}/>
                     </div>
                     <div className="flex flex-col items-start">
-                        <span
-                            data-testid={'Stored-Credentials'}
-                            className="text-2xl font-medium"
-                        >
-                            {t('StoredCredentials.title')}
-                        </span>
+                        <PageTitle value={t('StoredCredentials.title')} testId={"stored-credentials"}/>
+                        {/*TODO: use TertiaryButton here*/}
                         <button
                             data-testid={'Home'}
                             className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer"
-                            onClick={() => navigateToDashboardHome(navigate)}
+                            onClick={navigateToHome}
                         >
                             {t('Home.title')}
                         </button>
                     </div>
                 </div>
                 <div className="hidden sm:block">
-                    <SolidButton testId={"add-credential"} onClick={() => navigateToDashboardHome(navigate)}
-                                 title={"Add credential"}></SolidButton>
+                    <SolidButton testId={"add-credential"} onClick={navigateToHome} title={"Add credential"}/>
                 </div>
             </div>
-            <SearchBar
-                placeholder={"Search your documents by Name"}
-                filter={filterCredentials}
-            />
+
             {
-                (credentials.length === 0) ?
-                    <NoCredentialsStored/> :
-                    <FlatList
-                        data={filteredCredentials}
-                        renderItem={(item: WalletCredential) =>
-                            <VCCardView
-                                key={item.credentialId}
-                                onClick={preview}
-                                credential={item}
-                            />
-                        }
-                        numColumns={3}
-                        keyExtractor={(credential: WalletCredential) => credential.credentialId}
-                        dataTestId={"credentials"}
-                    />
+                loading ? loader : displayCredentials()
             }
         </div>
     );

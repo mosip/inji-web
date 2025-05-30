@@ -5,6 +5,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {FAQPageProps} from '../components/Dashboard/types';
 import {navigateToDashboardHome} from './Dashboard/utils';
 import { TeritaryButton } from './Dashboard/TeritaryButton';
+import {PageTitle} from "../components/Common/PageTitle";
 
 export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
     const {t} = useTranslation(['FAQPage', 'Dashboard']);
@@ -43,9 +44,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
                 </div>
                 <div className="flex flex-col items-start gap-8 w-full mr-2 sm:mr-4 md:mr-8 lg:mr-10">
                     <div className="flex flex-col items-start">
-                        <span className="text-2xl font-medium">
-                            {t('title')}
-                        </span>
+                        <PageTitle value={t('title')} testId={"faq"} />
                         {withHome && (
                             <TeritaryButton testId={'FAQ-Home-Button'} onClick={()=>navigateToDashboardHome(navigate)} title={t('Dashboard:Home.title')}/>
                         )}
