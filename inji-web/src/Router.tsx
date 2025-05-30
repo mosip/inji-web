@@ -129,6 +129,8 @@ export const AppRouter = () => {
                     element={wrapElement(<AuthorizationPage />)}
                 />
                 <Route path="/pin" element={wrapElement(<PinForm />)} />
+                {/*TODO: StoredCredentials page is already showing wallet's credentials, do we need this*/}
+                {/*TODO: Remove the component and router*/}
                 <Route
                     path="/view/wallet/credentials"
                     element={wrapElement(<WalletCredentialsPage />, false)}

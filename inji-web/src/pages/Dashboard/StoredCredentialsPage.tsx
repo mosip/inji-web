@@ -1,16 +1,84 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-dom';
 import {navigateToDashboardHome} from './utils';
 import {NavBackArrowButton} from './NavBackArrowButton';
-import {TeritaryButton } from './TeritaryButton';
+import {WalletCredential} from "../../types/data";
+import {useSelector} from "react-redux";
+import {RootState} from "../../types/redux";
+import {api} from "../../utils/api";
+import {SolidButton} from "../../components/Common/Buttons/SolidButton";
+import {SpinningLoader} from "../../components/Common/SpinningLoader";
+import {SearchBar} from "../../components/Common/SearchBar";
+import {NoCredentialsStored} from "../../components/VC/NoCredentialsStored";
+import {VCCardView} from "../../components/VC/VCCardView";
+import {FlatList} from "../../components/Common/List/FlatList";
 
 export const StoredCredentialsPage: React.FC = () => {
     const {t} = useTranslation('Dashboard');
     const navigate = useNavigate();
+    const [credentials, setCredentials] = useState<WalletCredential[]>([]);
+    const [filteredCredentials, setFilteredCredentials] = useState<WalletCredential[]>([]);
+    const [loading, setLoading] = useState(true);
+    const language = useSelector((state: RootState) => state.common.language);
+    const [errorObj, setErrorObj] = useState({
+        code: "",
+        message: ""
+    });
+
+    const fetchWalletCredentials = async () => {
+        try {
+            const fetchWalletCredentials = api.fetchWalletVCs;
+            const response = await fetch(fetchWalletCredentials.url(), {
+                method: "GET",
+                headers: fetchWalletCredentials.headers(language),
+                credentials: "include"
+            });
+
+            const responseData = await response.json();
+            if (response.ok) {
+                setCredentials(responseData);
+                setFilteredCredentials(responseData)
+            } else {
+                setErrorObj({
+                    code: "Fetching Credentials Failed",
+                    message: responseData.errorMessage
+                });
+                throw new Error(responseData.errorMessage);
+            }
+        } catch (error) {
+            console.error("Failed to fetch credentials:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchWalletCredentials().then(_ => console.debug("Credentials fetched successfully"));
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen w-full">
+                <SpinningLoader/>
+            </div>
+        );
+    }
+    const preview = (_: WalletCredential) => () => console.log("Preview");
+
+    const filterCredentials = (searchText: string) => {
+        if (searchText === "") {
+            return;
+        } else {
+            const filteredCredentialsToBeUpdated = credentials.filter((credential: WalletCredential) =>
+                credential.credentialTypeDisplayName.toLowerCase().includes(searchText.toLowerCase())
+            )
+            setFilteredCredentials(filteredCredentialsToBeUpdated);
+        }
+    };
 
     return (
-        <div className="container mx-auto sm:px-2 md:px-4 lg:px-6 py-6 relative ml-3 sm:ml-0">
+        <div className="container mx-auto sm:px-2 md:px-4 lg:px-6 py-6 relative ml-3 sm:ml-0 ">
             <div className="flex flex-col sm:flex-row justify-between items-start mb-4 sm:mb-6 gap-4 sm:gap-0">
                 <div className="flex items-start">
                     <div className="flex items-start">
@@ -22,59 +90,46 @@ export const StoredCredentialsPage: React.FC = () => {
                     </div>
                     <div className="flex flex-col items-start">
                         <span
-                            data-testid={'stored-credentials'}
+                            data-testid={'Stored-Credentials'}
                             className="text-2xl font-medium"
                         >
                             {t('StoredCredentials.title')}
                         </span>
-                        <TeritaryButton testId={'home'} onClick={()=>navigateToDashboardHome(navigate)} title={t('Home.title')}/>
+                        <button
+                            data-testid={'Home'}
+                            className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer"
+                            onClick={() => navigateToDashboardHome(navigate)}
+                        >
+                            {t('Home.title')}
+                        </button>
                     </div>
                 </div>
                 <div className="hidden sm:block">
-                    <button
-                        data-testid="add-credential"
-                        onClick={() => navigateToDashboardHome(navigate)}
-                        className="bg-gradient-to-r from-[#FF5300] via-[#C5363C] to-[#5B03AD] text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-sm transition-shadow"
-                    >
-                        {t('StoredCredentials.header.addCredential')}
-                    </button>
+                    <SolidButton testId={"add-credential"} onClick={() => navigateToDashboardHome(navigate)}
+                                 title={"Add credential"}></SolidButton>
                 </div>
             </div>
-
-            <div
-                data-testid={'blank-document'}
-                className="bg-white rounded-lg shadow-iw-emptyDocuments p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center min-h-[500px] my-4 sm:my-8 md:my-16"
-            >
-                <svg
-                    data-testid={'document-icon'}
-                    width="88"
-                    height="88"
-                    viewBox="0 0 68 88"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="mb-8 sm:mb-12 md:mb-20"
-                >
-                    <path
-                        d="M17.847 88C15.611 88 13.744 87.246 12.246 85.739C10.749 84.231 10 82.353 10 80.102V7.898C10 5.647 10.749 3.769 12.246 2.261C13.744 0.754 15.611 0 17.847 0H56.143L78 22V80.102C78 82.353 77.251 84.231 75.754 85.739C74.256 87.246 72.389 88 70.153 88H17.847ZM53.714 24.444H73.143L53.714 4.889V24.444ZM27 70.889H61V66H27V70.889ZM27 51.333H61V46.444H27V51.333Z"
-                        fill="#DEDEDE"
+            <SearchBar
+                placeholder={"Search your documents by Name"}
+                filter={filterCredentials}
+            />
+            {
+                (credentials.length === 0) ?
+                    <NoCredentialsStored/> :
+                    <FlatList
+                        data={filteredCredentials}
+                        renderItem={(item: WalletCredential) =>
+                            <VCCardView
+                                key={item.credentialId}
+                                onClick={preview}
+                                credential={item}
+                            />
+                        }
+                        numColumns={3}
+                        keyExtractor={(credential: WalletCredential) => credential.credentialId}
+                        dataTestId={"credentials"}
                     />
-                </svg>
-                <h2
-                    data-testid={'no-credentials-title'}
-                    className="text-xl text-center sm:text-2xl font-medium text-gray-800 mb-2"
-                >
-                    {t('StoredCredentials.emptyScreen.title')}
-                </h2>
-                <div className="block sm:hidden mt-6">
-                    <button
-                        data-testid={'blank-document-add-credential'}
-                        onClick={() => navigateToDashboardHome(navigate)}
-                        className="bg-gradient-to-r from-[#FF5300] via-[#C5363C] to-[#5B03AD] text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-sm transition-shadow"
-                    >
-                        {t('StoredCredentials.header.addCredential')}
-                    </button>
-                </div>
-            </div>
+            }
         </div>
     );
 };

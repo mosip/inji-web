@@ -2,6 +2,7 @@ import {WalletCredential} from "../../types/data";
 import {VCCardView} from "./VCCardView";
 import {NoCredentialsStored} from "./NoCredentialsStored";
 
+//TODO: Remove this file as its unused
 type VerifiableCredentialsListProps = {
     walletCredentials: WalletCredential[],
     viewCredential: (credential: WalletCredential) => void
