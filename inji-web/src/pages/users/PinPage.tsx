@@ -293,13 +293,10 @@ export const PinPage: React.FC = () => {
         (wallets.length === 0 && confirmPasscode.includes(''));
 
     return (
-        <div
-            className=" overflow-hidden fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50"
-            data-testid="pin-page"
-        >
-            <div className="bg-white sm:mx=4 mx-2 rounded-2xl flex flex-col items-center justify-center py-[2%] px-0 sm:px-[18%] relative px-32 pt-32 pb-16">
-                <div className="overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
-                    <div className="absolute top-[155px] -translate-x-1/2">
+        <div className="fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50">
+            <div className="overflow-hidden rounded-2xl bg-white flex flex-col items-center justify-start relative px-[25%] pb-[25%] sm:pb-[14%]">
+                <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+                    <div className="absolute top-[135px] -translate-x-1/2">
                         {[...Array(6)].map((_, index) => {
                             const radius = 96 + index * 96;
                             const opacity = 0.8 - index * 0.1;
@@ -320,107 +317,123 @@ export const PinPage: React.FC = () => {
                         })}
                     </div>
                 </div>
-                <div className="text-center items-center items-start relative z-20 bg-transparent space-y-4">
-                    <div
-                        className="flex items-center justify-center"
-                        data-testid="pin-logo"
-                    >
-                        <img
-                            src={require('../../assets/Logomark.png')}
-                            alt="Inji Web Logo"
-                        />
-                    </div>
-                    <h1
-                        className="text-xl sm:text-2xl font-semibold text-gray-800 p-4"
-                        data-testid="pin-title"
-                    >
-                        {wallets.length === 0
-                            ? t('setPasscode')
-                            : t('enterPasscode')}
-                    </h1>
-                    <p
-                        className="text-gray-600 text-sm sm:text-lg font-medium"
-                        data-testid="pin-description"
-                    >
-                        {wallets.length === 0
-                            ? t('setPasscodeDescription')
-                            : t('enterPasscodeDescription')}
-                    </p>
-                </div>
-
-                <div
-                    className="flex flex-col bg-white rounded-lg shadow-iw-pinPageContainer mt-8 max-w-auto items-center relative z-20"
-                    data-testid="pin-container"
-                >
-                    {wallets.length === 0 && (
-                        <p
-                            className="flex text-center mx-1 sm:mx-3 md:mx-5 mt-3 sm:mt-5 md:mt-7 w-[75%] text-iw-textTertiary text-sm sm:text-base"
-                            data-testid="pin-warning"
-                        >
-                            {t('passcodeWarning')}
-                        </p>
-                    )}
-
-                    {error ? (
+                <div className="top-[110px] relative">
+                    <div className="text-center items-start justify-start relative z-20 bg-transparent space-y-5 relative">
                         <div
-                            className="bg-iw-pink50 flex items-center justify-between w-full px-5 py-3 mt-3 sm:mt-5 md:mt-8"
-                            data-testid="pin-error"
+                            className="flex items-center justify-center"
+                            data-testid="pin-logo"
                         >
-                            <div className="flex items-center">
-                                <span className="w-full text-sm text-iw-darkRed">
-                                    {error}
-                                </span>
-                            </div>
                             <img
-                                src={CrossIcon}
-                                alt="Close"
-                                className="cursor-pointer"
-                                onClick={() => setError(null)}
+                                src={require('../../assets/Logomark.png')}
+                                alt="Inji Web Logo"
                             />
                         </div>
-                    ) : (
-                        wallets.length === 0 && (
-                            <div className="pin-page-warning-text-border w-full mt-1 sm:mt-3 md:mt-5" />
-                        )
-                    )}
-                    <div className="px-4 sm:px-6 md:px-10 py-3 sm:py-5 md:py-7 space-y-4">
-                        <div className="mb-2" data-testid="pin-passcode-input">
-                            <p className="text-sm text-left font-medium text-iw-textSecondary">
-                                {t('enterPasscode')}
-                            </p>
-                            {renderInputs('passcode', showPasscode, () =>
-                                setShowPasscode((prev) => !prev)
-                            )}
-                        </div>
+                        <h1
+                            className="text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGreen"
+                            data-testid="pin-title"
+                        >
+                            {wallets.length === 0
+                                ? t('setPasscode')
+                                : t('enterPasscode')}
+                        </h1>
+                        <p
+                            className="text-iw-textTertiary text-sm sm:text-lg md:text-xl font-medium"
+                            data-testid="pin-description"
+                        >
+                            {wallets.length === 0
+                                ? t('setPasscodeDescription')
+                                : t('enterPasscodeDescription')}
+                        </p>
+                    </div>
 
+                    <div
+                        className="flex flex-col bg-white rounded-lg shadow-iw-pinPageContainer mt-8 max-w-auto items-center relative z-20"
+                        data-testid="pin-container"
+                    >
                         {wallets.length === 0 && (
+                            <p
+                                className="flex text-center mx-1 sm:mx-3 md:mx-5 mt-3 sm:mt-5 md:mt-7 w-[75%] text-iw-textTertiary text-sm sm:text-base"
+                                data-testid="pin-warning"
+                            >
+                                {t('passcodeWarning')}
+                            </p>
+                        )}
+
+                        {error ? (
+                            <div
+                                className="bg-iw-pink50 flex items-center justify-between w-full px-5 py-3 mt-3 sm:mt-5 md:mt-8"
+                                data-testid="pin-error"
+                            >
+                                <div className="flex items-center">
+                                    <span className="w-full text-sm text-iw-darkRed">
+                                        {error}
+                                    </span>
+                                </div>
+                                <img
+                                    src={CrossIcon}
+                                    alt="Close"
+                                    className="cursor-pointer"
+                                    onClick={() => setError(null)}
+                                />
+                            </div>
+                        ) : (
+                            wallets.length === 0 && (
+                                <div className="pin-page-warning-text-border w-full mt-1 sm:mt-3 md:mt-5" />
+                            )
+                        )}
+                        <div className="px-4 sm:px-6 md:px-10 py-3 sm:py-5 md:py-7 space-y-4">
                             <div
                                 className="mb-2"
-                                data-testid="pin-confirm-passcode-input"
+                                data-testid="pin-passcode-input"
                             >
                                 <p className="text-sm text-left font-medium text-iw-textSecondary">
-                                    {t('confirmPasscode')}
+                                    {t('enterPasscode')}
                                 </p>
-                                {renderInputs('confirm', showConfirm, () =>
-                                    setShowConfirm((prev) => !prev)
+                                {renderInputs('passcode', showPasscode, () =>
+                                    setShowPasscode((prev) => !prev)
                                 )}
                             </div>
-                        )}
 
-                        {wallets.length !== 0 && (
-                            <p className="text-xs sm:text-sm text-left font-semibold text-iw-deepVioletIndigo my-0">
-                                {t('forgotPasscode') + ' ?'}
-                            </p>
-                        )}
+                            {wallets.length === 0 && (
+                                <div
+                                    className="mb-2"
+                                    data-testid="pin-confirm-passcode-input"
+                                >
+                                    <p className="text-sm text-left font-medium text-iw-textSecondary">
+                                        {t('confirmPasscode')}
+                                    </p>
+                                    {renderInputs('confirm', showConfirm, () =>
+                                        setShowConfirm((prev) => !prev)
+                                    )}
+                                </div>
+                            )}
 
-                        <SolidButton
-                            fullWidth={true}
-                            testId="pin-submit-button"
-                            onClick={handleSubmit}
-                            title={loading ? t('submitting') : t('submit')}
-                            disabled={isButtonDisabled}
-                            className={`${isButtonDisabled ? 'grayscale' : ''}`}
-                        />
+                            {wallets.length !== 0 && (
+                                <p
+                                    className="text-xs sm:text-sm text-left font-semibold text-iw-deepVioletIndigo my-0 cursor-pointer"
+                                    onClick={() =>
+                                        navigate('/reset-wallet', {
+                                            state: {
+                                                walletId: wallets[0].walletId
+                                            }
+                                        })
+                                    }
+                                >
+                                    {t('forgotPasscode') + ' ?'}
+                                </p>
+                            )}
+
+                            <SolidButton
+                                fullWidth={true}
+                                testId="pin-submit-button"
+                                onClick={handleSubmit}
+                                title={loading ? t('submitting') : t('submit')}
+                                disabled={isButtonDisabled}
+                                className={`${
+                                    isButtonDisabled ? 'grayscale' : ''
+                                }`}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

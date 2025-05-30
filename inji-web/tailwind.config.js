@@ -7,7 +7,8 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                base: 'var(--iw-font-base)'
+                base: 'var(--iw-font-base)',
+                montserrat: 'var(--iw-font-montserrat)'
             },
             zIndex: {
                 '50': '50',
@@ -62,7 +63,9 @@ module.exports = {
                     grayLight: 'var(--iw-color-grayLight)',
                     darkRed: 'var(--iw-color-darkRed)',
                     deepVioletIndigo: 'var(--iw-color-deepVioletIndigo)',
-                    pink50: 'var(--iw-color-pink50)'
+                    pink50: 'var(--iw-color-pink50)',
+                    darkGreen: 'var(--iw-color-darkGreen)',
+                    paleGray: 'var(--iw-color-paleGray)',
                 }
             },
             boxShadow: {

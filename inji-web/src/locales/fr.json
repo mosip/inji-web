@@ -95,6 +95,22 @@
       "fetchWalletsError": "Échec du chargement des portefeuilles."
     }
   },
+  "ResetWalletPage": {
+    "title": "Réinitialisez votre portefeuille",
+    "subTitle": "Réinitialisez le portefeuille pour récupérer l'accès et retélécharger les informations d'identification",
+    "popupQuestion": "Vous avez oublié votre mot de passe ?",
+    "popupInfo1": "Si vous ne vous souvenez pas de votre mot de passe, vous pouvez le réinitialiser en cliquant sur le bouton ci-dessous.",
+    "popupInfo2": {
+      "message": "<strong>{{highlighter1}} :</strong> Cela supprimera toutes vos cartes enregistrées du compte, telles que votre <strong>{{highlighter2}}</strong> et tous les autres documents que vous avez ajoutés.",
+      "highlighter1": "Veuillez noter",
+      "highlighter2": "Carte nationale d'identité, carte d'identification fiscale, certificat d'assurance"
+    },
+    "popupInfo3": {
+      "message": "Après la réinitialisation, vous devrez définir un nouveau mot de passe et <strong>{{highlighter}}</strong> dans votre portefeuille.",
+      "highlighter": "retéléchargez vos cartes"
+    },
+    "forgetPasscode": "Oublier le code d'accès"
+  },
   "IssuersPage": {
     "Intro": {
       "title": "Accéder à vos informations d’identification vérifiables",

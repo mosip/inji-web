@@ -95,6 +95,22 @@
       "fetchWalletsError": "Erro ao buscar carteiras."
     }
   },
+  "ResetWalletPage": {
+    "title": "Redefinir sua carteira",
+    "subTitle": "Redefina a carteira para recuperar o acesso e baixar novamente as credenciais",
+    "popupQuestion": "Esqueceu sua senha?",
+    "popupInfo1": "Caso não se lembre da sua senha, você pode redefini-la clicando no botão abaixo.",
+    "popupInfo2": {
+      "message": "<strong>{{highlighter1}}:</strong> Isso removerá todos os seus cartões salvos da conta — como seu <strong>{{highlighter2}}</strong> e quaisquer outros documentos que você adicionou.",
+      "highlighter1": "Observe",
+      "highlighter2": "Cartão de identidade nacional, cartão de identificação fiscal, certificado de seguro"
+    },
+    "popupInfo3": {
+      "message": "Após a redefinição, você precisará definir uma nova senha e <strong>{{highlighter}}</strong> na sua Carteira.",
+      "highlighter": "baixe novamente seus cartões"
+    },
+    "forgetPasscode": "Esqueci a senha"
+  },
   "IssuersPage": {
     "Intro": {
       "title": "Acesse suas credenciais verificáveis",
