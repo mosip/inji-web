@@ -3,7 +3,6 @@ import React, {Fragment} from "react";
 type FlatListProps<T> = {
     data: T[];
     renderItem: (item: T) => React.ReactNode;
-    numColumns?: number;
     keyExtractor: (item: T) => string;
     testId: string;
     onEmpty?: React.ReactNode;
@@ -12,14 +11,11 @@ type FlatListProps<T> = {
 export function FlatList<T>({
                                 data,
                                 renderItem,
-                                numColumns = 1,
                                 keyExtractor,
                                 testId,
                                 onEmpty
                             }: Readonly<FlatListProps<T>>) {
-    const smCols = Math.max(1, Math.floor(numColumns / 3));
-    const mdCols = Math.max(1, Math.floor((numColumns * 2) / 3));
-    const gridStyle = `grid grid-cols-1 sm:grid-cols-${smCols} md:grid-cols-${mdCols} lg:grid-cols-${numColumns} w-full`;
+    const gridStyle = `grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-1`;
 
     if (data.length === 0) {
         if (onEmpty === undefined)

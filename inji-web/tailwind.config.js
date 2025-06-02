@@ -7,6 +7,9 @@ module.exports = {
             fontFamily: {
                 base: 'var(--iw-font-base)'
             },
+            fontSize: {
+                'sm-plus': '15px',
+            },
             zIndex: {
                 '50': '50',
                 '40': '40',

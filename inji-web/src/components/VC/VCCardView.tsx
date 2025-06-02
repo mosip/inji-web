@@ -1,4 +1,5 @@
 import {WalletCredential} from "../../types/data";
+import {VCStyles} from "./VCStyles";
 
 export function VCCardView(props: Readonly<{
     onClick: (credential: WalletCredential) => void,
@@ -6,21 +7,21 @@ export function VCCardView(props: Readonly<{
 }>) {
     return (
         <div
-            className="bg-iw-tileBackground grid grid-cols-[1fr_auto_2fr] gap-4 items-center shadow hover:shadow-lg hover:scale-105 hover:shadow-iw-selectedShadow p-4 m-2 rounded-md cursor-pointer"
+            className={VCStyles.cardView.container}
             onClick={() => props.onClick(props.credential)}
-            datatest-id="vc-card-vew"
+            data-testid="vc-card-vew"
+            role={"menuitem"}
             tabIndex={0}
-            role="menuitem"
             onKeyDown={() => props.onClick(props.credential)}
         >
             <img
                 data-testid="issuer-logo"
                 src={props.credential.credentialTypeLogo}
                 alt="Credential Type Logo"
-                className="w-20 h-20"
+                className={VCStyles.cardView.logo}
             />
             <span
-                className="text-sm font-semibold text-iw-title"
+                className={VCStyles.cardView.credentialName}
                 data-testid="credential-type-display-name"
             >
                 {props.credential.credentialTypeDisplayName}

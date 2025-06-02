@@ -2,7 +2,7 @@ import React from "react";
 
 export function DocumentIcon() {
     return <svg
-        data-testid={"Document-Icon"}
+        data-testid={"icon-document"}
         width="88"
         height="88"
         viewBox="0 0 68 88"

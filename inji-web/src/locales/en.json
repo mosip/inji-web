@@ -342,15 +342,6 @@
       "title": "Home",
       "welcome": "Welcome"
     },
-    "StoredCredentials": {
-      "title": "Stored Credentials",
-      "header": {
-        "addCredential": "Add Credential"
-      },
-      "emptyScreen": {
-        "title": "No Credentials Stored!"
-      }
-    },
     "ProfileDropdown": {
       "profile": "Profile",
       "faq": "FAQ",
@@ -362,5 +353,23 @@
       "fullName":"Full Name",
       "emailAddress":"Email Address"
     }
+  },
+  "StoredCards": {
+    "title": "Stored Cards",
+    "header": {
+      "addCredential": "Add Cards"
+    },
+    "emptyScreen": {
+      "title": "No Cards Stored!",
+      "actionText": "You haven't downloaded any credentials yet. Tap \"Add Card\" to get started."
+    },
+    "search": {
+      "placeholder": "Search your documents by Name",
+      "noResults": "No cards match your search."
+    }
+  },
+  "Common": {
+    "home" : "Home",
+    "goToHome" : "Go to Home"
   }
 }

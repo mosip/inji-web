@@ -342,15 +342,6 @@
       "title": "بيت",
       "welcome": "مرحباً"
     },
-    "StoredCredentials": {
-      "title": "بيانات الاعتماد المخزنة",
-      "header": {
-        "addCredential": "إضافة بيانات الاعتماد"
-      },
-      "emptyScreen": {
-        "title": "لم يتم تخزين أي بيانات اعتماد!"
-      }
-    },
     "ProfileDropdown": {
       "profile": "حساب تعريفي",
       "faq": "التعليمات",
@@ -362,5 +353,22 @@
       "fullName": "الاسم الكامل",
       "emailAddress": "عنوان البريد الإلكتروني"
     }
+  },
+  "StoredCards": {
+    "title": "البطاقات المخزنة",
+    "header": {
+      "addCredential": "إضافة بطاقات"
+    },
+    "emptyScreen": {
+      "title": "لا توجد بطاقات مخزنة!",
+      "actionText": "لم تقم بتنزيل أي بيانات اعتماد بعد. انقر على \"إضافة بطاقة\" للبدء."
+    },
+    "search": {
+      "placeholder": "ابحث عن مستنداتك بالاسم",
+      "noResults": "لا توجد بطاقات تطابق بحثك."
+    }
+  },
+  "Common": {
+    "home": "بيت"
   }
 }

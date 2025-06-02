@@ -4,8 +4,8 @@ import {useTranslation} from 'react-i18next';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {FAQPageProps} from '../components/Dashboard/types';
 import {navigateToDashboardHome} from './Dashboard/utils';
+import {PageTitle} from "../components/Common/PageTitle/PageTitle";
 import { TeritaryButton } from './Dashboard/TeritaryButton';
-import {PageTitle} from "../components/Common/PageTitle";
 
 export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
     const {t} = useTranslation(['FAQPage', 'Dashboard']);

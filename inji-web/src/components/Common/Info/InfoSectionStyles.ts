@@ -1,0 +1,4 @@
+export const InfoSectionStyles = {
+    container: "bg-white rounded-lg shadow-iw-emptyDocuments p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center min-h-[500px] my-4 sm:my-8 md:my-16",
+    title: "text-xl text-center sm:text-2xl font-medium text-gray-800 mb-2"
+};

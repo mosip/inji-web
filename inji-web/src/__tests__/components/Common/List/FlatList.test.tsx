@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import {render, screen} from "@testing-library/react";
 import {FlatList} from "../../../../components/Common/List/FlatList";
 
 describe("FlatList Component", () => {
@@ -7,10 +7,10 @@ describe("FlatList Component", () => {
         id: string;
         name: string;
     }
-    const sampleData : Item[] = [
-        { id: "1", name: "Item 1" },
-        { id: "2", name: "Item 2" },
-        { id: "3", name: "Item 3" }
+    const sampleData: Item[] = [
+        {id: "1", name: "Item 1"},
+        {id: "2", name: "Item 2"},
+        {id: "3", name: "Item 3"}
     ];
 
     const keyExtractor = (item: Item) => item.id;
@@ -36,10 +36,9 @@ describe("FlatList Component", () => {
                 renderItem={renderItem}
                 keyExtractor={keyExtractor}
                 testId="flatlist"
-                numColumns={3}
             />
         );
-        sampleData.forEach(({ name }) => {
+        sampleData.forEach(({name}) => {
             expect(screen.getByText(name)).toBeInTheDocument();
         });
     });
@@ -77,7 +76,6 @@ describe("FlatList Component", () => {
                 renderItem={renderItem}
                 keyExtractor={keyExtractor}
                 testId="flatlist"
-                numColumns={3}
             />
         );
         const list = screen.getByTestId("flatlist");

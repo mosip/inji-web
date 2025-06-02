@@ -1,7 +1,7 @@
 {
   "PageTemplate": {
     "Header": {
-      "home": "Accueil",
+      "home": "Maison",
       "faq": "FAQ",
       "login": "Se connecter",
       "logout": "Déconnexion"
@@ -342,15 +342,6 @@
       "title": "Maison",
       "welcome": "Bienvenu"
     },
-    "StoredCredentials": {
-      "title": "Informations d'identification stockées",
-      "header": {
-        "addCredential": "Ajouter un identifiant"
-      },
-      "emptyScreen": {
-        "title": "Aucune information d'identification stockée !"
-      }
-    },
     "ProfileDropdown": {
       "profile": "Profil",
       "faq": "FAQ",
@@ -362,5 +353,22 @@
       "fullName": "Nom complet",
       "emailAddress": "Adresse e-mail"
     }
+  },
+  "StoredCards": {
+    "title": "Cartes Stockées",
+    "header": {
+      "addCredential": "Ajouter des Cartes"
+    },
+    "emptyScreen": {
+      "title": "Aucune Carte Stockée !",
+      "actionText": "Vous n'avez pas encore téléchargé d'identifiants. Appuyez sur \"Ajouter une Carte\" pour commencer."
+    },
+    "search": {
+      "placeholder": "Rechercher vos documents par Nom",
+      "noResults": "Aucune carte ne correspond à votre recherche."
+    }
+  },
+  "Common": {
+    "home": "Maison"
   }
 }

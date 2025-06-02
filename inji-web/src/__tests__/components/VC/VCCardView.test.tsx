@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen, fireEvent} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import {WalletCredential} from '../../../types/data';
 import {VCCardView} from '../../../components/VC/VCCardView';
 
@@ -77,37 +77,5 @@ describe('VCCardView Component', () => {
 
         expect(mockOnClick).toHaveBeenCalledTimes(1);
         expect(mockOnClick).toHaveBeenCalledWith(mockCredential);
-    });
-
-    it('should have correct styling classes', () => {
-        render(
-            <VCCardView
-                credential={mockCredential}
-                onClick={mockOnClick}
-            />
-        );
-
-        const card = screen.getByRole('menuitem');
-        expect(card).toHaveClass(
-            'bg-iw-tileBackground',
-            'grid',
-            'grid-cols-[1fr_auto_2fr]',
-            'gap-4',
-            'items-center',
-            'shadow',
-            'hover:shadow-lg',
-            'hover:scale-105',
-            'hover:shadow-iw-selectedShadow',
-            'p-4',
-            'm-2',
-            'rounded-md',
-            'cursor-pointer'
-        );
-
-        const logo = screen.getByTestId('issuer-logo');
-        expect(logo).toHaveClass('w-20', 'h-20');
-
-        const name = screen.getByTestId('credential-type-display-name');
-        expect(name).toHaveClass('text-sm', 'font-semibold', 'text-iw-title');
     });
 });

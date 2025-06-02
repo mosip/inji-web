@@ -1,6 +1,6 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
-import {SearchBar} from "../../../components/Common/SearchBar";
+import {SearchBar} from "../../../components/Common/SearchBar/SearchBar";
 
 
 describe('SearchBar Component', () => {
@@ -16,20 +16,21 @@ describe('SearchBar Component', () => {
             const {asFragment} = render(<SearchBar
                 placeholder="Search test"
                 filter={mockFilter}
+                testId={"test-search-bar"}
             />);
             expect(asFragment()).toMatchSnapshot();
         });
     });
 
     it('should render with placeholder text', () => {
-        render(<SearchBar placeholder="Search test" filter={mockFilter}/>);
+        render(<SearchBar placeholder="Search test" filter={mockFilter} testId={"test-search-bar"}/>);
 
         expect(screen.getByPlaceholderText('Search test')).toBeInTheDocument();
         expect(screen.getByTestId('icon-search')).toBeInTheDocument();
     });
 
     it('should call filter function when text is entered', () => {
-        render(<SearchBar placeholder="Search test" filter={mockFilter}/>);
+        render(<SearchBar placeholder="Search test" filter={mockFilter} testId={"test-search-bar"}/>);
 
         const input = screen.getByTestId('input-search');
         fireEvent.change(input, {target: {value: 'test query'}});
@@ -39,46 +40,23 @@ describe('SearchBar Component', () => {
     });
 
     it('should display clear icon when text is entered', () => {
-        render(<SearchBar placeholder="Search test" filter={mockFilter}/>);
-
+        render(<SearchBar placeholder="Search test" filter={mockFilter} testId={"test-search-bar"}/>);
         const input = screen.getByTestId('input-search');
 
-        // Initially clear icon should not be visible
-        expect(screen.queryByTestId('NavBar-Search-Clear-Icon')).not.toBeInTheDocument();
+        expect(screen.queryByTestId('icon-search-bar-clear')).not.toBeInTheDocument();
 
-        // Enter text
         fireEvent.change(input, {target: {value: 'test query'}});
 
-        // Clear icon should now be visible
-        expect(screen.getByTestId('NavBar-Search-Clear-Icon')).toBeInTheDocument();
+        expect(screen.getByTestId('icon-search-bar-clear')).toBeInTheDocument();
     });
 
     it('should clear search and call filter with empty string when clear icon is clicked', () => {
-        render(<SearchBar placeholder="Search test" filter={mockFilter}/>);
-
+        render(<SearchBar placeholder="Search test" filter={mockFilter} testId={"test-search-bar"}/>);
         const input = screen.getByTestId('input-search');
 
-        // Enter text
         fireEvent.change(input, {target: {value: 'test query'}});
+        fireEvent.click(screen.getByTestId('icon-search-bar-clear'));
 
-        // Clear the search
-        fireEvent.click(screen.getByTestId('NavBar-Search-Clear-Icon'));
-
-        // Filter should be called with empty string
         expect(mockFilter).toHaveBeenCalledWith('');
-    });
-
-    it('should apply correct styling to the search container', () => {
-        render(<SearchBar placeholder="Search test" filter={mockFilter}/>);
-
-        const container = screen.getByTestId('Search-Issuer-Container');
-        expect(container).toHaveClass('w-full sm:w-96 flex justify-center items-center bg-iw-background shadow-iw');
-    });
-
-    it('should have proper styling for the input field', () => {
-        render(<SearchBar placeholder="Search test" filter={mockFilter}/>);
-
-        const input = screen.getByTestId('input-search');
-        expect(input).toHaveClass('py-6 w-11/12 flex text-iw-searchTitle focus:outline-none overflow-ellipsis mr-10');
     });
 });

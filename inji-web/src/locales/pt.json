@@ -342,15 +342,6 @@
       "title": "Lar",
       "welcome": "Bem-vindo"
     },
-    "StoredCredentials": {
-      "title": "Credenciais armazenadas",
-      "header": {
-        "addCredential": "Adicionar credencial"
-      },
-      "emptyScreen": {
-        "title": "Nenhuma credencial armazenada!"
-      }
-    },
     "ProfileDropdown": {
       "profile": "Perfil",
       "faq": "Perguntas frequentes",
@@ -362,6 +353,23 @@
       "fullName": "Nome completo",
       "emailAddress": "Endereço de e-mail"
     }
+  },
+  "StoredCards": {
+    "title": "Cartões Armazenados",
+    "header": {
+      "addCredential": "Adicionar Cartões"
+    },
+    "emptyScreen": {
+      "title": "Nenhum Cartão Armazenado!",
+      "actionText": "Você ainda não baixou nenhuma credencial. Toque em \"Adicionar Cartão\" para começar."
+    },
+    "search": {
+      "placeholder": "Pesquisar seus documentos por Nome",
+      "noResults": "Nenhum cartão corresponde à sua pesquisa."
+    }
+  },
+  "Common": {
+    "home": "Lar"
   }
 }
   
