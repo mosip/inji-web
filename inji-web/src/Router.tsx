@@ -19,7 +19,6 @@ import {AuthorizationPage} from './pages/AuthorizationPage';
 import {HomePage} from './pages/HomePage';
 import LoginSessionStatusChecker from './pages/users/login/LoginSessionStatusChecker';
 import PinForm from './pages/users/PinPage';
-import WalletCredentialsPage from './pages/users/login/WalletCredentialsPage';
 import {Layout} from './components/Dashboard/Layout';
 import {HomePage as DashboardHomePage} from './pages/Dashboard/HomePage';
 import {StoredCardsPage} from './pages/Dashboard/StoredCards/StoredCardsPage';
@@ -129,12 +128,6 @@ export const AppRouter = () => {
                     element={wrapElement(<AuthorizationPage />)}
                 />
                 <Route path="/pin" element={wrapElement(<PinForm />)} />
-                {/*TODO: StoredCredentials page is already showing wallet's credentials, do we need this*/}
-                {/*TODO: Remove the component and router*/}
-                <Route
-                    path="/view/wallet/credentials"
-                    element={wrapElement(<WalletCredentialsPage />, false)}
-                />
                 <Route path="/*" element={wrapElement(<PageNotFound />)} />
                 <Route path="/dashboard" element={<Layout />}>
                     <Route path="home" element={<DashboardHomePage />} />
