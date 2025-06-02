@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-dom';
 import {navigateToDashboardHome} from './utils';
 import {NavBackArrowButton} from './NavBackArrowButton';
-import { HomeButton } from './HomeButton';
+import {TeritaryButton } from './TeritaryButton';
 
 export const StoredCredentialsPage: React.FC = () => {
     const {t} = useTranslation('Dashboard');
@@ -22,17 +22,17 @@ export const StoredCredentialsPage: React.FC = () => {
                     </div>
                     <div className="flex flex-col items-start">
                         <span
-                            data-testid={'Stored-Credentials'}
+                            data-testid={'stored-credentials'}
                             className="text-2xl font-medium"
                         >
                             {t('StoredCredentials.title')}
                         </span>
-                        <HomeButton testId={'Home'} onClick={()=>navigateToDashboardHome(navigate)} title={t('Home.title')}></HomeButton>
+                        <TeritaryButton testId={'home'} onClick={()=>navigateToDashboardHome(navigate)} title={t('Home.title')}/>
                     </div>
                 </div>
                 <div className="hidden sm:block">
                     <button
-                        data-testid="Add-Credential"
+                        data-testid="add-credential"
                         onClick={() => navigateToDashboardHome(navigate)}
                         className="bg-gradient-to-r from-[#FF5300] via-[#C5363C] to-[#5B03AD] text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-sm transition-shadow"
                     >
@@ -42,11 +42,11 @@ export const StoredCredentialsPage: React.FC = () => {
             </div>
 
             <div
-                data-testid={'Blank-Document'}
+                data-testid={'blank-document'}
                 className="bg-white rounded-lg shadow-iw-emptyDocuments p-6 sm:p-8 md:p-10 flex flex-col items-center justify-center min-h-[500px] my-4 sm:my-8 md:my-16"
             >
                 <svg
-                    data-testid={'Document-Icon'}
+                    data-testid={'document-icon'}
                     width="88"
                     height="88"
                     viewBox="0 0 68 88"
@@ -60,14 +60,14 @@ export const StoredCredentialsPage: React.FC = () => {
                     />
                 </svg>
                 <h2
-                    data-testid={'No-Credentials-Title'}
+                    data-testid={'no-credentials-title'}
                     className="text-xl text-center sm:text-2xl font-medium text-gray-800 mb-2"
                 >
                     {t('StoredCredentials.emptyScreen.title')}
                 </h2>
                 <div className="block sm:hidden mt-6">
                     <button
-                        data-testid={'Blank-Document-Add-Credential'}
+                        data-testid={'blank-document-add-credential'}
                         onClick={() => navigateToDashboardHome(navigate)}
                         className="bg-gradient-to-r from-[#FF5300] via-[#C5363C] to-[#5B03AD] text-white px-6 py-2 rounded-lg text-sm font-semibold shadow-sm transition-shadow"
                     >

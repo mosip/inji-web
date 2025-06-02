@@ -7,10 +7,5 @@ export const getIconColor = (path: string, location: Location) => {
 };
 
 export const getProfileInitials = (displayName: string | undefined) => {
-    return displayName
-        ? displayName
-              .split(' ')
-              .map((name) => name.charAt(0).toUpperCase())
-              .join('')
-        : 'U';
+    return displayName ? displayName.charAt(0).toUpperCase(): 'U';
 };

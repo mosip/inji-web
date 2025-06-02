@@ -26,7 +26,7 @@ export type SearchCredentialProps = {
     issuerContainerBorderRadius?: string;
 }
 
-export type HomeButtonProps={
+export type TeritaryButtonProps={
     onClick: () => void;
     title:string,
     testId:string
@@ -42,8 +42,9 @@ export type CredentialTypesPageProps = {
 };
 
 export type InfoFieldProps = {
-    label?: string;
+    label: string;
     value?: string;
+    testId: string;
 };
 
 export type CollapseButtonProps = {

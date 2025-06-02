@@ -54,7 +54,9 @@ module.exports = {
                     subText: 'var(--iw-color-subText)',
                     disclaimerBackGround:
                         'var(--iw-color-disclaimerBackGround)',
-                    disclaimerText: 'var(--iw-color-disclaimerText)'
+                    disclaimerText: 'var(--iw-color-disclaimerText)',
+                    avatarPlaceholder: 'var(--iw-color-avatarPlaceholder)',
+                    avatarText: 'var(--iw-color-avatarText)'
                 }
             },
             boxShadow: {

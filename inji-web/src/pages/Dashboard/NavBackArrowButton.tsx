@@ -2,7 +2,7 @@ import { NavBackArrowButtonProps } from "../../types/data";
 
 export const NavBackArrowButton: React.FC<NavBackArrowButtonProps> = ({onBackClick: handleBackClick}) => (
     <svg
-        data-testid={'Back-Arrow-Icon'}
+        data-testid={'back-arrow-icon'}
         width="29"
         height="29"
         viewBox="0 0 24 18"
