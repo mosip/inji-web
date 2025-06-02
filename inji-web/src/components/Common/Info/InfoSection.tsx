@@ -7,6 +7,7 @@ type InfoSectionProps =
         title?: string,
         message?: string
         icon?: React.ReactElement
+        mobileAction?: React.ReactElement
         testId: string
     }
 
@@ -14,7 +15,8 @@ export function InfoSection({
                                 title,
                                 message,
                                 icon,
-                                testId
+                                testId,
+                                mobileAction
                             }: Readonly<InfoSectionProps>): React.ReactElement {
     return <div
         data-testid={`${testId}-container`}
@@ -30,5 +32,10 @@ export function InfoSection({
             </h2>}
             {message && <span className={InfoSectionStyles.message} data-testid={`${testId}-message`}>{message}</span>}
         </div>
+        {mobileAction &&
+            <div className={InfoSectionStyles.action}>
+                {mobileAction}
+            </div>
+        }
     </div>;
 }

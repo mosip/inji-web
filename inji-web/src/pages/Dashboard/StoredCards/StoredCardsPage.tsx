@@ -87,11 +87,13 @@ export const StoredCardsPage: React.FC = () => {
         </div>
 
     function displayCredentials() {
+        // In case of no credentials, show empty screen with action to add cards in mobile view
         if (credentials.length === 0) {
             return <InfoSection title={t('emptyScreen.title')}
                                 message={t('emptyScreen.actionText')}
                                 icon={<DocumentIcon/>}
                                 testId={"no-credentials-downloaded"}
+                                mobileAction={addCard()}
             />;
         }
         return (
@@ -142,6 +144,9 @@ export const StoredCardsPage: React.FC = () => {
         return displayCredentials();
     };
 
+    const addCard = () => <SolidButton testId={"btn-add-cards"} onClick={navigateToHome}
+                                       title={t('header.addCredential')}/>;
+
     return (
         <div className={StoredCardsPageStyles.container}>
             <div className={StoredCardsPageStyles.headerContainer}>
@@ -161,13 +166,21 @@ export const StoredCardsPage: React.FC = () => {
                         </button>
                     </div>
                 </div>
-                <div className={StoredCardsPageStyles.buttonContainer}>
-                    <SolidButton testId={"add-credential"} onClick={navigateToHome} title={t('header.addCredential')}/>
+                <div className={`${StoredCardsPageStyles.buttonContainer.large}`}>
+                    {addCard()}
                 </div>
             </div>
 
-            <div className={StoredCardsPageStyles.contentContainer}>
-                {showContent()}
+            <div className={StoredCardsPageStyles.contentAndActionContainer}>
+                <div className={StoredCardsPageStyles.contentContainer}>
+                    {showContent()}
+                </div>
+                {/*show add cards button at bottom in mobile only while filtering did not yield result*/}
+                {!loading && credentials.length !== 0 &&
+                    <div className={StoredCardsPageStyles.buttonContainer.mobile}>
+                        {addCard()}
+                    </div>
+                }
             </div>
         </div>
     );
