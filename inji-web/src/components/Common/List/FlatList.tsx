@@ -1,4 +1,5 @@
 import React, {Fragment} from "react";
+import ListStyles from "./ListStyles";
 
 type FlatListProps<T> = {
     data: T[];
@@ -15,7 +16,6 @@ export function FlatList<T>({
                                 testId,
                                 onEmpty
                             }: Readonly<FlatListProps<T>>) {
-    const gridStyle = `grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-1`;
 
     if (data.length === 0) {
         if (onEmpty === undefined)
@@ -28,7 +28,7 @@ export function FlatList<T>({
     }
 
     return (
-        <div className={gridStyle} data-testid={testId}>
+        <div className={ListStyles.gridLayout} data-testid={testId}>
             {data.map((item) => (
                 <Fragment key={keyExtractor(item)}>
                     {renderItem(item)}
