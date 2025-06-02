@@ -19,6 +19,12 @@ export enum ContentTypes {
     FORM_URL_ENCODED = "application/x-www-form-urlencoded",
 }
 
+export enum ContentTypes {
+    JSON = "application/json",
+    PDF = "application/pdf",
+    FORM_URL_ENCODED = "application/x-www-form-urlencoded",
+}
+
 export class api {
     static mimotoHost = window._env_.MIMOTO_URL;
 
