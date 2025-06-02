@@ -7,6 +7,7 @@ import {useUser} from '../../hooks/useUser';
 import {api} from '../../utils/api';
 import {useCookies} from 'react-cookie';
 import {useLocation, useNavigate} from 'react-router-dom';
+import {toast} from 'react-toastify';
 
 export const ResetWalletPage: React.FC = () => {
     const {removeWallet, walletId} = useUser();
@@ -32,7 +33,6 @@ export const ResetWalletPage: React.FC = () => {
                     credentials: 'include'
                 }
             );
-
             if (!response.ok) {
                 const responseData = await response.json();
                 throw responseData;
@@ -41,6 +41,7 @@ export const ResetWalletPage: React.FC = () => {
             navigate('/pin');
         } catch (error) {
             console.error('Error occurred while deleting Wallet:', error);
+            toast.error(t('resetFailure'));
         }
     };
 
@@ -49,12 +50,6 @@ export const ResetWalletPage: React.FC = () => {
             className=" overflow-hidden fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50"
             data-testid="pin-page"
         >
-            {/* <div
-                className="bg-white rounded-2xl flex flex-col items-center justify-center py-[2%] relative pt-32 pb-16
-                   w-[90%] sm:w-[85%] md:w-[75%]
-                   h-[70%] sm:h-[70%] md:h-[80%]
-                   overflow-y-auto"
-            > */}
             <div
                 className="overflow-hidden rounded-2xl bg-white flex flex-col items-center justify-start relative
                    w-[85%] md:w-[75%]

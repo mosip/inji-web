@@ -89,9 +89,9 @@
     "error":{
       "walletNotFoundError":"Wallet not found",
       "pinLengthError":"Please Enter 6 digits in the Pin",
-      "passcodeMismatchError":"Pin did not match",
+      "passcodeMismatchError":"Passcodes do not match. Please ensure both passcode fields match exactly. Re-enter and try again.",
       "createWalletError":"Wallet creation unsuccessful",
-      "incorrectPinError":"Incorrect pin entered",
+      "incorrectPinError":"Invalid Passcode. The passcode you entered is incorrect. Please check and try again, or click 'Forgot Passcode' to reset it.",
       "fetchWalletsError":"Error in fetching wallets"
     }
   },
@@ -109,7 +109,8 @@
       "message": "After resetting, you’ll need to set a new passcode and <strong>{{highlighter}}</strong> into your Wallet.",
       "highlighter": "re-download your cards"
     },
-    "forgetPasscode": "Forget Passcode"
+    "forgetPasscode": "Forget Passcode",
+    "resetFailure": "Something went wrong while resetting your wallet. Please try again in a moment."
   },
   "IssuersPage": {
     "Intro": {

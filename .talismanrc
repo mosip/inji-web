@@ -40,21 +40,23 @@ fileignoreconfig:
 - filename: inji-web/src/__tests__/users/login/FailedLoginPage.test.tsx
   checksum: 6f4b1b3d9779ea7b47042b9131cbc482a64e9f1e398a2bb909abbc5661bd4959
 - filename: inji-web/src/locales/en.json
-  checksum: 9df5f264cd9de5a78b0b6d052532411f26004b69fce901835776c50a97d8c79c
+  checksum: 68ca354ba25a7f1a60083cfd0688435fe120de463368dddcf4858708fc144866
 - filename: inji-web/src/locales/ar.json
-  checksum: c0de77e427a48e8b1aae600db2876a38ddeb0860fc9e5b76260e54444533a74e
-- filename: inji-web/src/locales/fr.json
-  checksum: acd996b6d8c1c768c0394de676c8d307a5edba33cdf11ea560f635ec8d520f23
-- filename: inji-web/src/locales/hi.json
-  checksum: fec3886044f4dd7daeed40635e893039f9eb87ee007642f8b0679c55b9e7d8dd
+  checksum: a8364b34e64132ae636df96f3186f09d4aae385253c0ec4cc8ddcd0d99b00363
+- filename: inji-web/src/locales/pt.json
+  checksum: f57f941f7765f79bb3980ee08c21f590a5427e7324ee382c87629c1e7fbadef6
 - filename: inji-web/src/locales/kn.json
-  checksum: f5b55c7c4f97fce52ab09cbdf7753c24730a8e6d7cbfcbd614cf2262ff470c3e
+  checksum: d424bcbc77bf53db370c482430e793577a4dcd7e398b101ae37636e1aa882920
+- filename: inji-web/src/locales/ta.json
+  checksum: e670ac77872517c2cdf912f41224fad1bcac9ac91bb34d6a86211bbc3b1d8ab0
+- filename: inji-web/src/locales/en.json
+  checksum: 68ca354ba25a7f1a60083cfd0688435fe120de463368dddcf4858708fc144866
+- filename: inji-web/src/locales/fr.json
+  checksum: 42a87377edc6491f6763b1b2d04437b46a0f8c83466c523b8e725f96c39dde89
+- filename: inji-web/src/locales/hi.json
+  checksum: 2ded2887509cb1536b9c94075233b192d7acc1f5d3a94987978a19ccb6f08e11
 - filename: inji-web/src/pages/users/ResetWalletPage.tsx
   checksum: 12cd9731185d3207dd1e13d414f2de8c69261636f1ce4e8cbeaa4c882bd92a3f
-- filename: inji-web/src/locales/ta.json
-  checksum: bc648cd5450f60a19fd1399a7df320beecd2aa0fe75d91d5dd847aad0a3aeef4
-- filename: inji-web/src/locales/pt.json
-  checksum: 837be040bb8e2c172eea8274c0b76f181e86881f352501161482c79bce5a9597
 - filename: inji-web/src/pages/users/PinPage.tsx
   checksum: 46318fe4aac51e18a4eb49ae9d7302313008a703c8792b7285fe67ac1bd518cb
 - filename: inji-web/src/__tests__/users/login/PinPage.test.tsx

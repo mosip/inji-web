@@ -89,9 +89,9 @@
     "error": {
       "walletNotFoundError": "Nenhuma carteira encontrada. Crie uma.",
       "pinLengthError": "O PIN deve ter 6 dígitos.",
-      "passcodeMismatchError": "Os PINs não coincidem.",
+      "passcodeMismatchError": "As senhas não correspondem. Certifique-se de que ambos os campos de senha correspondam exatamente. Digite novamente e tente novamente.",
       "createWalletError": "Falha na criação da carteira.",
-      "incorrectPinError": "PIN incorreto.",
+      "incorrectPinError": "Senha inválida. A senha que você digitou está incorreta. Verifique e tente novamente ou clique em \"Esqueci a senha\" para redefini-la.",
       "fetchWalletsError": "Erro ao buscar carteiras."
     }
   },
@@ -109,7 +109,8 @@
       "message": "Após a redefinição, você precisará definir uma nova senha e <strong>{{highlighter}}</strong> na sua Carteira.",
       "highlighter": "baixe novamente seus cartões"
     },
-    "forgetPasscode": "Esqueci a senha"
+    "forgetPasscode": "Esqueci a senha",
+    "resetFailure": "Ocorreu um erro ao redefinir sua carteira. Tente novamente em breve."
   },
   "IssuersPage": {
     "Intro": {

@@ -89,9 +89,9 @@
     "error": {
       "walletNotFoundError": "Aucun portefeuille trouvé. Veuillez en créer un.",
       "pinLengthError": "Le code PIN doit comporter 6 chiffres.",
-      "passcodeMismatchError": "Les codes PIN ne correspondent pas.",
+      "passcodeMismatchError": "Les codes d'accès ne correspondent pas. Veuillez vous assurer que les deux champs du code correspondent parfaitement. Saisissez-le à nouveau et réessayez.",
       "createWalletError": "Échec de la création du portefeuille.",
-      "incorrectPinError": "Code PIN incorrect.",
+      "incorrectPinError": "Code d'accès invalide. Le code d'accès saisi est incorrect. Veuillez vérifier et réessayer, ou cliquez sur « Mot de passe oublié » pour le réinitialiser.",
       "fetchWalletsError": "Échec du chargement des portefeuilles."
     }
   },
@@ -109,7 +109,8 @@
       "message": "Après la réinitialisation, vous devrez définir un nouveau mot de passe et <strong>{{highlighter}}</strong> dans votre portefeuille.",
       "highlighter": "retéléchargez vos cartes"
     },
-    "forgetPasscode": "Oublier le code d'accès"
+    "forgetPasscode": "Oublier le code d'accès",
+    "resetFailure": "Une erreur s'est produite lors de la réinitialisation de votre portefeuille. Veuillez réessayer dans un instant."
   },
   "IssuersPage": {
     "Intro": {

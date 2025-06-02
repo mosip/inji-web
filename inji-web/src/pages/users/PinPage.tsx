@@ -195,12 +195,12 @@ export const PinPage: React.FC = () => {
 
             const responseData = await response.json();
             if (!response.ok) {
+                setError(t('error.incorrectPinError'));
                 throw responseData;
             }
             setIsPinCorrect(true);
         } catch (error) {
             setIsPinCorrect(false);
-            setError(t('error.incorrectPinError'));
             throw error;
         }
     };
@@ -216,49 +216,50 @@ export const PinPage: React.FC = () => {
     };
 
     const createWallet = async () => {
-        const pin = passcode.join('');
-        const confirmPin = confirmPasscode.join('');
-        if (pin.length !== 6 || confirmPin.length !== 6) {
-            setError(t('error.pinLengthError'));
-            throw new Error('Invalid pin length');
+        try {
+            const pin = passcode.join('');
+            const confirmPin = confirmPasscode.join('');
+            
+            if (wallets.length === 0 && pin !== confirmPin) {
+                setError(t('error.passcodeMismatchError'));
+                throw new Error('Pin and Confirm Pin mismatch');
+            }
+
+            const response = await fetch(api.createWalletWithPin.url(), {
+                method: 'POST',
+                headers: {
+                    ...api.createWalletWithPin.headers(),
+                    'Content-Type': 'application/json',
+                    'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    walletPin: pin,
+                    confirmWalletPin: confirmPasscode.join(''),
+                    walletName: displayName
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                setError(
+                    `${t('error.createWalletError')}: ${
+                        errorData.errorMessage || t('unknown-error')
+                    }`
+                );
+                setIsPinCorrect(false);
+                throw errorData;
+            }
+
+            const createdWallet = await response.json();
+            await unlockWallet(createdWallet.walletId, pin);
+
+            setWalletId(createdWallet.walletId);
+            setWallets([{walletId: createdWallet.walletId}]);
+            setIsPinCorrect(true);
+        } catch (error) {
+            throw error;
         }
-        if (wallets.length === 0 && pin !== confirmPin) {
-            setError(t('error.passcodeMismatchError'));
-            throw new Error('Pin and Confirm Pin mismatch');
-        }
-
-        const response = await fetch(api.createWalletWithPin.url(), {
-            method: 'POST',
-            headers: {
-                ...api.createWalletWithPin.headers(),
-                'Content-Type': 'application/json',
-                'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-                walletPin: pin,
-                confirmWalletPin: confirmPasscode.join(''),
-                walletName: displayName
-            })
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            setError(
-                `${t('error.createWalletError')}: ${
-                    errorData.errorMessage || t('unknown-error')
-                }`
-            );
-            setIsPinCorrect(false);
-            throw errorData;
-        }
-
-        const createdWallet = await response.json();
-        await unlockWallet(createdWallet.walletId, pin);
-
-        setWalletId(createdWallet.walletId);
-        setWallets([{walletId: createdWallet.walletId}]);
-        setIsPinCorrect(true);
     };
 
     const handleSubmit = async () => {
@@ -288,7 +289,6 @@ export const PinPage: React.FC = () => {
                 error
             );
             setIsPinCorrect(false);
-            setError(t('error.incorrectPinError'));
         } finally {
             setLoading(false);
         }
@@ -381,7 +381,7 @@ export const PinPage: React.FC = () => {
 
                         {error ? (
                             <div
-                                className="bg-iw-pink50 flex items-center justify-between w-full px-5 py-3 mt-3 sm:mt-4 md:mt-5"
+                                className="bg-iw-pink50 flex items-center justify-between w-full px-5 py-3 mt-3 sm:mt-4 md:mt-5 gap-2"
                                 data-testid="pin-error"
                             >
                                 <div className="flex items-center">
@@ -402,8 +402,8 @@ export const PinPage: React.FC = () => {
                             )
                         )}
                         <div className="w-[95%] sm:w-[85%] py-3 sm:py-5 md:py-7 space-y-4">
-                            <div className=" w-full overflow-x-auto">
-                                <div className="">
+                            <div className="w-full overflow-x-auto">
+                                <div className="mx-auto">
                                     <div
                                         className="mb-2"
                                         data-testid="pin-passcode-input"
