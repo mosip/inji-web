@@ -1,9 +1,4 @@
-import {
-    Navigate,
-    Route,
-    Routes,
-    useLocation
-} from 'react-router-dom';
+import {Navigate, Route, Routes, useLocation} from 'react-router-dom';
 import React, {useEffect, useRef, useState} from 'react';
 import {IssuersPage} from './pages/IssuersPage';
 import {Header} from './components/PageTemplate/Header';
@@ -25,7 +20,7 @@ import {HomePage as DashboardHomePage} from './pages/Dashboard/HomePage';
 import {StoredCredentialsPage} from './pages/Dashboard/StoredCredentialsPage';
 import {useUser} from './hooks/useUser';
 import {CredentialTypesPage} from './pages/Dashboard/CredentialTypesPage';
-import ResetWalletPage from './pages/users/ResetWalletPage';
+import {ResetWalletPage} from './pages/users/ResetWalletPage';
 
 export const AppRouter = () => {
     const location = useLocation();

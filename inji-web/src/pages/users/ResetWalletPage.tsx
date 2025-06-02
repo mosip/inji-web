@@ -52,8 +52,8 @@ export const ResetWalletPage: React.FC = () => {
         >
             <div
                 className="overflow-hidden rounded-2xl bg-white flex flex-col items-center justify-start relative
-                   w-[85%] md:w-[75%]
-                   h-[80%] sm:h-[70%] md:h-[70%] lg:h-[75%]
+                   w-[90%] sm:w-[85%] md:w-[75%]
+                   h-[75%] sm:h-[70%]
                    overflow-y-auto
                    overflow-x-auto
                    shadow-iw-pinPageContainer h-full"
@@ -202,5 +202,3 @@ export const ResetWalletPage: React.FC = () => {
         </div>
     );
 };
-
-export default ResetWalletPage;
