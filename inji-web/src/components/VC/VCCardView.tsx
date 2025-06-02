@@ -9,7 +9,7 @@ export function VCCardView(props: Readonly<{
         <div
             className={VCStyles.cardView.container}
             onClick={() => props.onClick(props.credential)}
-            data-testid="vc-card-vew"
+            data-testid="vc-card-view"
             role={"menuitem"}
             tabIndex={0}
             onKeyDown={() => props.onClick(props.credential)}

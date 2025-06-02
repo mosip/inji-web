@@ -38,9 +38,9 @@ describe('VCCardView Component', () => {
             />
         );
 
+        expect(screen.getByTestId("vc-card-view")).toBeInTheDocument();
         const logo = screen.getByTestId('issuer-logo');
         const name = screen.getByTestId('credential-type-display-name');
-
         expect(logo).toBeInTheDocument();
         expect(logo).toHaveAttribute('src', 'test-logo.png');
         expect(logo).toHaveAttribute('alt', 'Credential Type Logo');
