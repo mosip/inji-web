@@ -87,7 +87,7 @@ export const StoredCardsPage: React.FC = () => {
         </div>
 
     function displayCredentials() {
-        if (credentials.length == 0) {
+        if (credentials.length === 0) {
             return <InfoSection title={t('emptyScreen.title')}
                                 message={t('emptyScreen.actionText')}
                                 icon={<DocumentIcon/>}

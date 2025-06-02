@@ -119,7 +119,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
                 </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-iw-emptyDocuments flex flex-col sm:flex-row justify-between items-start p-4 sm:p-6">
+            <div className="bg-white rounded-lg shadow-iw-layout flex flex-col sm:flex-row justify-between items-start p-4 sm:p-6">
                 <div
                     data-testid="Credential-List-Container"
                     className="container mx-auto"

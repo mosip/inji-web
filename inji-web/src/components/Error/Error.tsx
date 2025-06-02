@@ -1,6 +1,7 @@
 import {BsShieldFillExclamation} from "react-icons/bs";
 import React from "react";
 import {ErrorStyles} from "./ErrorStyles";
+import LayoutStyles from "../Common/LayoutStyles";
 
 const ErrorIcon: React.FC = () => {
     return <div className={ErrorStyles.icon.container}>
@@ -27,7 +28,7 @@ export function Error({
     return (
         <div
             data-testid={`error-container-${testId}`}
-            className={ErrorStyles.container}
+            className={LayoutStyles.sectionWithWhiteBg}
         >
             <ErrorIcon/>
             <p className={ErrorStyles.message} data-testid={`error-message-${testId}`}>{message}</p>
