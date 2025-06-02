@@ -39,8 +39,6 @@ fileignoreconfig:
   checksum: cefb0cee8f45135e97c8d463daf6de2eb2e87584353d19de6ccb2c4083e9e1c9
 - filename: inji-web/src/__tests__/users/login/FailedLoginPage.test.tsx
   checksum: 6f4b1b3d9779ea7b47042b9131cbc482a64e9f1e398a2bb909abbc5661bd4959
-- filename: inji-web/src/locales/en.json
-  checksum: 68ca354ba25a7f1a60083cfd0688435fe120de463368dddcf4858708fc144866
 - filename: inji-web/src/locales/ar.json
   checksum: a8364b34e64132ae636df96f3186f09d4aae385253c0ec4cc8ddcd0d99b00363
 - filename: inji-web/src/locales/pt.json
@@ -50,9 +48,9 @@ fileignoreconfig:
 - filename: inji-web/src/locales/ta.json
   checksum: e670ac77872517c2cdf912f41224fad1bcac9ac91bb34d6a86211bbc3b1d8ab0
 - filename: inji-web/src/locales/en.json
-  checksum: 68ca354ba25a7f1a60083cfd0688435fe120de463368dddcf4858708fc144866
+  checksum: 28a239485cdf8d2e19cf571222079b6a0140e34bd859d2a36012483c48011831
 - filename: inji-web/src/locales/fr.json
-  checksum: 42a87377edc6491f6763b1b2d04437b46a0f8c83466c523b8e725f96c39dde89
+  checksum: 1d2cebfece27a4eab28dea6672f6698d24b4c9f85d5a1b9f0b4c46d1f8bac148
 - filename: inji-web/src/locales/hi.json
   checksum: 2ded2887509cb1536b9c94075233b192d7acc1f5d3a94987978a19ccb6f08e11
 - filename: inji-web/src/pages/users/ResetWalletPage.tsx

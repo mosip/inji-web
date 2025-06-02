@@ -48,7 +48,7 @@ export const ResetWalletPage: React.FC = () => {
     return (
         <div
             className=" overflow-hidden fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50"
-            data-testid="pin-page"
+            data-testid="backdrop-reset-wallet"
         >
             <div
                 className="overflow-hidden rounded-2xl bg-white flex flex-col items-center justify-start relative
@@ -82,23 +82,22 @@ export const ResetWalletPage: React.FC = () => {
                 </div>
                 <div className="top-[130px] pb-4 relative flex flex-col items-center justify-center">
                     <div className="text-center items-center justify-center relative z-20 bg-transparent space-y-4 w-[90%] sm-md:w-[85%] md:w-[50%]">
-                        <div
-                            className="flex items-center justify-center"
-                            data-testid="pin-logo"
-                        >
+                        <div className="flex items-center justify-center">
                             <img
+                                data-testid="logo-inji-web"
                                 src={require('../../assets/Logomark.png')}
                                 alt="Inji Web Logo"
                             />
                         </div>
                         <h1
                             className="text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGreen p-4"
-                            data-testid="pin-title"
+                            data-testid="title-reset-wallet"
                         >
                             {t('title')}
                         </h1>
                         <div className="flex items-start ml-4">
                             <img
+                                data-testid="btn-back-reset"
                                 src={BackArrowIcon}
                                 alt="Back Arrow"
                                 className="cursor-pointer"
@@ -106,39 +105,54 @@ export const ResetWalletPage: React.FC = () => {
                             />
                             <p
                                 className="text-iw-textTertiary text-sm sm:text-base font-medium pl-6"
-                                data-testid="pin-description"
+                                data-testid="title-reset-wallet-description"
                             >
                                 {t('subTitle')}
                             </p>
                         </div>
                     </div>
 
-                    <div
-                        className="flex flex-col bg-white rounded-xl shadow-iw-pinPageContainer mt-8 items-center relative z-20 px-4 sm:px-6 md:px-10 py-3 sm:py-5 md:py-7 space-y-4 w-[90%] sm-md:w-[85%] md:w-[50%]"
-                        data-testid="info-container"
-                    >
+                    <div className="flex flex-col bg-white rounded-xl shadow-iw-pinPageContainer mt-8 items-center relative z-20 px-4 sm:px-6 md:px-10 py-3 sm:py-5 md:py-7 space-y-4 w-[90%] sm-md:w-[85%] md:w-[50%]">
                         <div className="bg-iw-paleGray rounded-xl bg-red flex items-start justify-center gap-2 p-4 pr-10">
-                            <img src={InfoIcon} alt="Info" />
-                            <div className="flex flex-col items-left gap-2 sm:gap-4 rounded-lg">
-                                <p className="text-xs sm:text-sm md:text-md text-left font-montserrat font-semibold text-black">
-                                    {t('popupQuestion')}
+                            <img
+                                data-testid="icon-reset-instruction"
+                                src={InfoIcon}
+                                alt="Info"
+                            />
+                            <div
+                                data-testid="text-reset-instruction"
+                                className="flex flex-col items-left gap-2 sm:gap-4 rounded-lg"
+                            >
+                                <p
+                                    data-testid="text-reset-question"
+                                    className="text-xs sm:text-sm md:text-md text-left font-montserrat font-semibold text-black"
+                                >
+                                    {t('resetInstruction.question')}
                                 </p>
-                                <p className="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black">
-                                    {t('popupInfo1')}
+                                <p
+                                    data-testid="text-reset-info1"
+                                    className="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
+                                >
+                                    {t('resetInstruction.info1')}
                                 </p>
-                                <p className="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black">
+                                <p
+                                    data-testid="text-reset-info2"
+                                    className="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
+                                >
                                     <Trans
-                                        i18nKey={t('popupInfo2.message')}
+                                        i18nKey={t(
+                                            'resetInstruction.info2.message'
+                                        )}
                                         ns="ResetWalletPage"
                                         values={{
                                             highlighter1: t(
-                                                'popupInfo2.highlighter1',
+                                                'resetInstruction.info2.highlighter1',
                                                 {
                                                     ns: 'ResetWalletPage'
                                                 }
                                             ),
                                             highlighter2: t(
-                                                'popupInfo2.highlighter2',
+                                                'resetInstruction.info2.highlighter2',
                                                 {
                                                     ns: 'ResetWalletPage'
                                                 }
@@ -151,13 +165,18 @@ export const ResetWalletPage: React.FC = () => {
                                         }}
                                     />
                                 </p>
-                                <p className="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black">
+                                <p
+                                    data-testid="text-reset-info3"
+                                    className="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
+                                >
                                     <Trans
-                                        i18nKey={t('popupInfo3.message')}
+                                        i18nKey={t(
+                                            'resetInstruction.info3.message'
+                                        )}
                                         ns="ResetWalletPage"
                                         values={{
                                             highlighter: t(
-                                                'popupInfo3.highlighter',
+                                                'resetInstruction.info3.highlighter',
                                                 {ns: 'ResetWalletPage'}
                                             )
                                         }}
@@ -172,7 +191,7 @@ export const ResetWalletPage: React.FC = () => {
                         </div>
                         <SolidButton
                             fullWidth={true}
-                            testId="btn-forgot-passcode"
+                            testId="btn-forget-passcode"
                             onClick={handleForgotPasscode}
                             title={t('forgetPasscode')}
                             className="mt-3 mb-4 sm:mt-3 sm:mb-4"

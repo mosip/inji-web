@@ -98,16 +98,18 @@
   "ResetWalletPage": {
     "title": "Reset Your Wallet",
     "subTitle":"Reset wallet to regain access and re-download credentials",
-    "popupQuestion": "Forgot your passcode?",
-    "popupInfo1": "If you can’t remember your passcode, you can reset it by clicking the button below.",
-    "popupInfo2": {
-      "message": "<strong>{{highlighter1}}:</strong> This will remove all your saved cards from the account — such as your <strong>{{highlighter2}}</strong>, and any other documents you’ve added.",
-      "highlighter1": "Please note",
-      "highlighter2": "National ID card, Tax ID card, Insurance certificate"
-    },
-    "popupInfo3": {
-      "message": "After resetting, you’ll need to set a new passcode and <strong>{{highlighter}}</strong> into your Wallet.",
-      "highlighter": "re-download your cards"
+    "resetInstruction": {
+      "question": "Forgot your passcode?",
+      "info1": "If you can’t remember your passcode, you can reset it by clicking the button below.",
+      "info2": {
+        "message": "<strong>{{highlighter1}}:</strong> This will remove all your saved cards from the account — such as your <strong>{{highlighter2}}</strong>, and any other documents you’ve added.",
+        "highlighter1": "Please note",
+        "highlighter2": "National ID card, Tax ID card, Insurance certificate"
+      },
+      "info3": {
+        "message": "After resetting, you’ll need to set a new passcode and <strong>{{highlighter}}</strong> into your Wallet.",
+        "highlighter": "re-download your cards"
+      }
     },
     "forgetPasscode": "Forget Passcode",
     "resetFailure": "Something went wrong while resetting your wallet. Please try again in a moment."
