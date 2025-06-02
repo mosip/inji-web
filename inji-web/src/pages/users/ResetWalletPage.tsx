@@ -8,6 +8,7 @@ import {api} from '../../utils/api';
 import {useCookies} from 'react-cookie';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {toast} from 'react-toastify';
+import {ResetWalletPageStyles} from '../../styles/pages/ResetWalletPageStyles';
 
 export const ResetWalletPage: React.FC = () => {
     const {removeWallet, walletId} = useUser();
@@ -47,19 +48,12 @@ export const ResetWalletPage: React.FC = () => {
 
     return (
         <div
-            className=" overflow-hidden fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50"
+            className={ResetWalletPageStyles.backdrop}
             data-testid="backdrop-reset-wallet"
         >
-            <div
-                className="overflow-hidden rounded-2xl bg-white flex flex-col items-center justify-start relative
-                   w-[90%] sm:w-[85%] md:w-[75%]
-                   h-[75%] sm:h-[70%]
-                   overflow-y-auto
-                   overflow-x-auto
-                   shadow-iw-pinPageContainer h-full"
-            >
-                <div className="overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none max-w-auto">
-                    <div className="absolute top-[155px] -translate-x-1/2">
+            <div className={ResetWalletPageStyles.container}>
+                <div className={ResetWalletPageStyles.circleContainer}>
+                    <div className={ResetWalletPageStyles.circleWrapper}>
                         {[...Array(6)].map((_, index) => {
                             const radius = 96 + index * 96;
                             const opacity = 0.8 - index * 0.1;
@@ -80,9 +74,9 @@ export const ResetWalletPage: React.FC = () => {
                         })}
                     </div>
                 </div>
-                <div className="top-[130px] pb-4 relative flex flex-col items-center justify-center">
-                    <div className="text-center items-center justify-center relative z-20 bg-transparent space-y-4 w-[90%] sm-md:w-[85%] md:w-[50%]">
-                        <div className="flex items-center justify-center">
+                <div className={ResetWalletPageStyles.contentWrapper}>
+                    <div className={ResetWalletPageStyles.header}>
+                        <div className={ResetWalletPageStyles.logoContainer}>
                             <img
                                 data-testid="logo-inji-web"
                                 src={require('../../assets/Logomark.png')}
@@ -90,30 +84,32 @@ export const ResetWalletPage: React.FC = () => {
                             />
                         </div>
                         <h1
-                            className="text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGreen p-4"
+                            className={ResetWalletPageStyles.title}
                             data-testid="title-reset-wallet"
                         >
                             {t('title')}
                         </h1>
-                        <div className="flex items-start ml-4">
+                        <div className={ResetWalletPageStyles.subHeader}>
                             <img
                                 data-testid="btn-back-reset"
                                 src={BackArrowIcon}
                                 alt="Back Arrow"
-                                className="cursor-pointer"
+                                className={
+                                    ResetWalletPageStyles.backArrowButton
+                                }
                                 onClick={handleBackNavigation}
                             />
                             <p
-                                className="text-iw-textTertiary text-sm sm:text-base font-medium pl-6"
-                                data-testid="title-reset-wallet-description"
+                                className={ResetWalletPageStyles.subtitle}
+                                data-testid="subtitle-reset-wallet"
                             >
                                 {t('subTitle')}
                             </p>
                         </div>
                     </div>
 
-                    <div className="flex flex-col bg-white rounded-xl shadow-iw-pinPageContainer mt-8 items-center relative z-20 px-4 sm:px-6 md:px-10 py-3 sm:py-5 md:py-7 space-y-4 w-[90%] sm-md:w-[85%] md:w-[50%]">
-                        <div className="bg-iw-paleGray rounded-xl bg-red flex items-start justify-center gap-2 p-4 pr-10">
+                    <div className={ResetWalletPageStyles.mainContent}>
+                        <div className={ResetWalletPageStyles.instructionBox}>
                             <img
                                 data-testid="icon-reset-instruction"
                                 src={InfoIcon}
@@ -121,23 +117,31 @@ export const ResetWalletPage: React.FC = () => {
                             />
                             <div
                                 data-testid="text-reset-instruction"
-                                className="flex flex-col items-left gap-2 sm:gap-4 rounded-lg"
+                                className={
+                                    ResetWalletPageStyles.instructionContent
+                                }
                             >
                                 <p
                                     data-testid="text-reset-question"
-                                    className="text-xs sm:text-sm md:text-md text-left font-montserrat font-semibold text-black"
+                                    className={
+                                        ResetWalletPageStyles.instructionQuestion
+                                    }
                                 >
                                     {t('resetInstruction.question')}
                                 </p>
                                 <p
                                     data-testid="text-reset-info1"
-                                    className="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
+                                    className={
+                                        ResetWalletPageStyles.instructionText
+                                    }
                                 >
                                     {t('resetInstruction.info1')}
                                 </p>
                                 <p
                                     data-testid="text-reset-info2"
-                                    className="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
+                                    className={
+                                        ResetWalletPageStyles.instructionText
+                                    }
                                 >
                                     <Trans
                                         i18nKey={t(
@@ -160,14 +164,20 @@ export const ResetWalletPage: React.FC = () => {
                                         }}
                                         components={{
                                             strong: (
-                                                <strong className="text-xs sm:text-sm md:text-md text-left font-montserrat text-black" />
+                                                <strong
+                                                    className={
+                                                        ResetWalletPageStyles.instructionTextStrong
+                                                    }
+                                                />
                                             )
                                         }}
                                     />
                                 </p>
                                 <p
                                     data-testid="text-reset-info3"
-                                    className="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
+                                    className={
+                                        ResetWalletPageStyles.instructionText
+                                    }
                                 >
                                     <Trans
                                         i18nKey={t(
@@ -182,7 +192,11 @@ export const ResetWalletPage: React.FC = () => {
                                         }}
                                         components={{
                                             strong: (
-                                                <strong className="text-xs sm:text-sm md:text-md text-left font-montserrat text-black" />
+                                                <strong
+                                                    className={
+                                                        ResetWalletPageStyles.instructionTextStrong
+                                                    }
+                                                />
                                             )
                                         }}
                                     />
@@ -194,7 +208,9 @@ export const ResetWalletPage: React.FC = () => {
                             testId="btn-forget-passcode"
                             onClick={handleForgotPasscode}
                             title={t('forgetPasscode')}
-                            className="mt-3 mb-4 sm:mt-3 sm:mb-4"
+                            className={
+                                ResetWalletPageStyles.forgetPasscodeButton
+                            }
                         />
                     </div>
                 </div>

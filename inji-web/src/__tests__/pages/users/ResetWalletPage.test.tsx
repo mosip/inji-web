@@ -144,7 +144,7 @@ describe('ResetWalletPage Component', () => {
         expect(screen.getByTestId('title-reset-wallet')).toBeInTheDocument();
         expect(screen.getByTestId('btn-back-reset')).toBeInTheDocument();
         expect(
-            screen.getByTestId('title-reset-wallet-description')
+            screen.getByTestId('subtitle-reset-wallet')
         ).toBeInTheDocument();
         expect(
             screen.getByTestId('icon-reset-instruction')
@@ -166,7 +166,7 @@ describe('ResetWalletPage Component', () => {
             'Reset Your Wallet'
         );
         expect(
-            screen.getByTestId('title-reset-wallet-description')
+            screen.getByTestId('subtitle-reset-wallet')
         ).toHaveTextContent(
             'Reset wallet to regain access and re-download credentials'
         );

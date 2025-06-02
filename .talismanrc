@@ -39,24 +39,28 @@ fileignoreconfig:
   checksum: cefb0cee8f45135e97c8d463daf6de2eb2e87584353d19de6ccb2c4083e9e1c9
 - filename: inji-web/src/__tests__/users/login/FailedLoginPage.test.tsx
   checksum: 6f4b1b3d9779ea7b47042b9131cbc482a64e9f1e398a2bb909abbc5661bd4959
-- filename: inji-web/src/locales/ar.json
-  checksum: a8364b34e64132ae636df96f3186f09d4aae385253c0ec4cc8ddcd0d99b00363
-- filename: inji-web/src/locales/pt.json
-  checksum: f57f941f7765f79bb3980ee08c21f590a5427e7324ee382c87629c1e7fbadef6
-- filename: inji-web/src/locales/kn.json
-  checksum: d424bcbc77bf53db370c482430e793577a4dcd7e398b101ae37636e1aa882920
-- filename: inji-web/src/locales/ta.json
-  checksum: e670ac77872517c2cdf912f41224fad1bcac9ac91bb34d6a86211bbc3b1d8ab0
 - filename: inji-web/src/locales/en.json
   checksum: 28a239485cdf8d2e19cf571222079b6a0140e34bd859d2a36012483c48011831
 - filename: inji-web/src/locales/fr.json
   checksum: 1d2cebfece27a4eab28dea6672f6698d24b4c9f85d5a1b9f0b4c46d1f8bac148
+- filename: inji-web/src/locales/kn.json
+  checksum: d3fcfc01259180baa5fcc9026f1dd60bbbed88d20cea0f72e60db484e5f394ec
+- filename: inji-web/src/locales/pt.json
+  checksum: 388aee829a36360bb84b837eb8f9b581fea5e2c268852d6bdbeab661b655c413
+- filename: inji-web/src/locales/ar.json
+  checksum: 3f9c36fa24945ec78dde3bbb21498c6870cc95af049aa5b01188636cab6c0e2e
 - filename: inji-web/src/locales/hi.json
-  checksum: 2ded2887509cb1536b9c94075233b192d7acc1f5d3a94987978a19ccb6f08e11
+  checksum: dc7236038adaf3e48a2a9fbd89c39f55fed9724320871ed9088f8e3bfaad07db
+- filename: inji-web/src/locales/ta.json
+  checksum: 05ac04af861d859643adf3b514d20364e0c772d4292ea8649119fb0ca4451d0f
+- filename: inji-web/src/pages/users/ResetWalletPage.tsx
+  checksum: c2616bb5c9bf58d2d49959bb1b1c85af86297f20721288d1296d906c0c70cb45
+- filename: inji-web/src/styles/pages/ResetWalletPageStyles.ts
+  checksum: 3406fe1560c518e4e3c24cc231550d7d9cc6c7f6e7d0046fe863a438167bcad4
 - filename: inji-web/src/__tests__/pages/users/__snapshots__/ResetWalletPage.test.tsx.snap
-  checksum: b8a8685dae1c5e16ff5702e22dc9eadb18f3d174757beac0ca47299670dd8071
+  checksum: 65bced8e2e17cb646350b5530fbb1df8816db7553afc1cbdad2d4afa3d732825
 - filename: inji-web/src/__tests__/pages/users/ResetWalletPage.test.tsx
-  checksum: 4d205cb99b841ddf7a3010a4236644f8d4e2c2bc647fddc217e5b63401fa9fb4
+  checksum: bf754a0468dcee7877b721dc990b5abca3c2dc6c2889b36132401f4e061a11bd
 - filename: inji-web/src/pages/users/PinPage.tsx
   checksum: a95e0906e8f27ab246ee6fafaf0fa739fb3ee368598e1829dc0573d1b7e76a37
 - filename: inji-web/src/__tests__/users/login/PinPage.test.tsx
