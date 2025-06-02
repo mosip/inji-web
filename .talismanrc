@@ -34,7 +34,7 @@ fileignoreconfig:
 - filename: inji-web/src/__tests__/components/Dashboard/EmptyDocument.test.tsx
   checksum: f401e15725074d3840909dd82547e7cbd4ff61f854dd574ea7c1abb0b1309aeb
 - filename: inji-web/src/components/Dashboard/Header.tsx
-  checksum: fc7fe8ac8b56bc8d22719c07e08ea134010f2b99a7b5e6e90dbddc90d0ebad9a
+  checksum: dcac73671cdcfea252d52bc8254c09c5217297151d7fbe3ab9954066757c9031
 - filename: inji-web/src/components/Dashboard/Sidebar.tsx
   checksum: cefb0cee8f45135e97c8d463daf6de2eb2e87584353d19de6ccb2c4083e9e1c9
 - filename: inji-web/src/__tests__/users/login/FailedLoginPage.test.tsx
@@ -56,9 +56,9 @@ fileignoreconfig:
 - filename: inji-web/src/locales/hi.json
   checksum: 2ded2887509cb1536b9c94075233b192d7acc1f5d3a94987978a19ccb6f08e11
 - filename: inji-web/src/pages/users/ResetWalletPage.tsx
-  checksum: 12cd9731185d3207dd1e13d414f2de8c69261636f1ce4e8cbeaa4c882bd92a3f
+  checksum: cca7ea4a74db66e8f40364f32c9e865393c16c8860a40473a573a7f9dbe35ad2
 - filename: inji-web/src/pages/users/PinPage.tsx
-  checksum: 46318fe4aac51e18a4eb49ae9d7302313008a703c8792b7285fe67ac1bd518cb
+  checksum: a95e0906e8f27ab246ee6fafaf0fa739fb3ee368598e1829dc0573d1b7e76a37
 - filename: inji-web/src/__tests__/users/login/PinPage.test.tsx
   checksum: e22b91e31e1feeb4b6b1d12732c5764d1dc8bda720dc69d38595db9004d3f404
 - filename: inji-web/src/__tests__/users/login/Login.test.tsx
@@ -66,7 +66,7 @@ fileignoreconfig:
 - filename: inji-web/src/__tests__/pages/HomePage.test.tsx
   checksum: 43e96c9ccd03a006d584a536d6f526e4b6e682f95cce20cad80d12d11e3f8dc2
 - filename: inji-web/src/pages/users/login/LoginSessionStatusChecker.tsx
-  checksum: 0022718eb7bae9a1c5ccd8ce7c911239b4eccc4b52e7505557834726fe6ace00
+  checksum: e9ab1064c230f3f474eb3b67ec2ffa93253d4e4aadb1faaec084e41acaa9838d
 - filename: inji-web/src/__tests__/components/PageTemplate/Footer.test.tsx
   checksum: 719791b2e60b05e60797790a823d561de37f2911c5fce90290695217b7f11012
 - filename: inji-web/src/hooks/useUser.tsx

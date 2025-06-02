@@ -241,6 +241,7 @@ export const Header: React.FC<DashboardHeaderProps> = ({
             <div
                 data-testid="Hamburger-Menu-dropdown"
                 className="block sm:hidden w-full"
+                ref={hamburgerMenuRef}
             >
                 {isHamburgerMenuOpen && (
                     <div
