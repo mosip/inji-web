@@ -50,13 +50,13 @@ fileignoreconfig:
 - filename: inji-web/src/locales/kn.json
   checksum: f5b55c7c4f97fce52ab09cbdf7753c24730a8e6d7cbfcbd614cf2262ff470c3e
 - filename: inji-web/src/pages/users/ResetWalletPage.tsx
-  checksum: 0b55c79fd2a361f9ed0fe20032cc15f83281b82be56016c69b0199ccf31c4b48
+  checksum: 12cd9731185d3207dd1e13d414f2de8c69261636f1ce4e8cbeaa4c882bd92a3f
 - filename: inji-web/src/locales/ta.json
   checksum: bc648cd5450f60a19fd1399a7df320beecd2aa0fe75d91d5dd847aad0a3aeef4
 - filename: inji-web/src/locales/pt.json
   checksum: 837be040bb8e2c172eea8274c0b76f181e86881f352501161482c79bce5a9597
 - filename: inji-web/src/pages/users/PinPage.tsx
-  checksum: 076ba8f722e527117bd1a8e55c4e34591b93de0ade0e7d7f780fe58b07490c29
+  checksum: 46318fe4aac51e18a4eb49ae9d7302313008a703c8792b7285fe67ac1bd518cb
 - filename: inji-web/src/__tests__/users/login/PinPage.test.tsx
   checksum: e22b91e31e1feeb4b6b1d12732c5764d1dc8bda720dc69d38595db9004d3f404
 - filename: inji-web/src/__tests__/users/login/Login.test.tsx

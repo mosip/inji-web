@@ -6,6 +6,9 @@ module.exports = {
     content: ['./src/**/**/*.{js,jsx,ts,tsx}'],
     theme: {
         extend: {
+            screens: {
+                'sm-md': {min: '640px', max: '1024px'}
+            },
             fontFamily: {
                 base: 'var(--iw-font-base)',
                 montserrat: 'var(--iw-font-montserrat)'
@@ -65,7 +68,7 @@ module.exports = {
                     deepVioletIndigo: 'var(--iw-color-deepVioletIndigo)',
                     pink50: 'var(--iw-color-pink50)',
                     darkGreen: 'var(--iw-color-darkGreen)',
-                    paleGray: 'var(--iw-color-paleGray)',
+                    paleGray: 'var(--iw-color-paleGray)'
                 }
             },
             boxShadow: {

@@ -25,7 +25,7 @@ import {HomePage as DashboardHomePage} from './pages/Dashboard/HomePage';
 import {StoredCredentialsPage} from './pages/Dashboard/StoredCredentialsPage';
 import {useUser} from './hooks/useUser';
 import {CredentialTypesPage} from './pages/Dashboard/CredentialTypesPage';
-import ResetWallet from './pages/users/ResetWalletPage';
+import ResetWalletPage from './pages/users/ResetWalletPage';
 
 export const AppRouter = () => {
     const location = useLocation();
@@ -129,20 +129,33 @@ export const AppRouter = () => {
                     element={wrapElement(<AuthorizationPage />)}
                 />
                 <Route path="/pin" element={wrapElement(<PinForm />)} />
-                <Route path="/reset-wallet" element={wrapElement(<ResetWallet />)} />
                 <Route
                     path="/view/wallet/credentials"
                     element={wrapElement(<WalletCredentialsPage />, false)}
                 />
                 <Route path="/*" element={wrapElement(<PageNotFound />)} />
-                <Route path="/dashboard" element={<Layout />}>
-                    <Route path="home" element={<DashboardHomePage />} />
+                <Route path="/dashboard">
+                    <Route element={<Layout />}>
+                        <Route path="home" element={<DashboardHomePage />} />
+                        <Route
+                            path="issuers/:issuerId"
+                            element={
+                                <CredentialTypesPage backUrl="/dashboard/home" />
+                            }
+                        />
+                        <Route
+                            path="credentials"
+                            element={<StoredCredentialsPage />}
+                        />
+                        <Route
+                            path="faq"
+                            element={<FAQPage withHome={true} />}
+                        />
+                    </Route>
                     <Route
-                        path="issuers/:issuerId"
-                        element={<CredentialTypesPage backUrl='/dashboard/home' />}
+                        path="reset-wallet"
+                        element={wrapElement(<ResetWalletPage />)}
                     />
-                    <Route path="credentials" element={<StoredCredentialsPage />} />
-                    <Route path="faq" element={<FAQPage withHome={true} />} />
                 </Route>
             </Routes>
         </>

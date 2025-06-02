@@ -4,7 +4,7 @@ import {useUser} from '../../../hooks/useUser';
 import {validateWalletUnlockStatus} from '../../Dashboard/utils';
 import {KEYS} from '../../../utils/constants';
 
-const loginProtectedPrefixes = ['/dashboard', '/pin', '/reset-wallet'];
+const loginProtectedPrefixes = ['/dashboard', '/pin'];
 
 const isLoginProtectedRoute = (pathname: string) => {
     return loginProtectedPrefixes.some((prefix) => pathname.startsWith(prefix));

@@ -125,15 +125,19 @@ export const PinPage: React.FC = () => {
                             onChange={(e) =>
                                 handleInputChange(idx, e.target.value, type)
                             }
-                            onFocus={(e) =>
-                                e.target.classList.add('pin-input-focus-box')
-                            }
+                            onFocus={(e) => {
+                                e.target.classList.add(
+                                    'pin-input-focus-box-border'
+                                );
+                            }}
                             onBlur={(e) => {
                                 if (!digit) {
                                     e.target.classList.remove(
-                                        'pin-input-focus-box'
+                                        'pin-input-focus-box-border'
                                     );
-                                    e.target.classList.add('pin-input-box');
+                                    e.target.classList.add(
+                                        'pin-input-box-border'
+                                    );
                                 }
                             }}
                             onKeyDown={(e) => {
@@ -153,17 +157,19 @@ export const PinPage: React.FC = () => {
                         />
                     ))}
                 </div>
-                <button
-                    type="button"
-                    onClick={toggleVisibility}
-                    className="pin-input-box-border pin-input-box-style flex items-center justify-center"
-                >
-                    {visible ? (
-                        <FaEyeSlash className="text-iw-grayLight" />
-                    ) : (
-                        <FaEye className="text-iw-grayLight" />
-                    )}
-                </button>
+                <div className="flex items-center gap-4 py-2 rounded-lg">
+                    <button
+                        type="button"
+                        onClick={toggleVisibility}
+                        className="pin-input-box-border pin-input-box-style flex items-center justify-center"
+                    >
+                        {visible ? (
+                            <FaEyeSlash className="text-iw-grayLight" />
+                        ) : (
+                            <FaEye className="text-iw-grayLight" />
+                        )}
+                    </button>
+                </div>
             </div>
         );
     };
@@ -293,10 +299,19 @@ export const PinPage: React.FC = () => {
         (wallets.length === 0 && confirmPasscode.includes(''));
 
     return (
-        <div className="fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50">
-            <div className="overflow-hidden rounded-2xl bg-white flex flex-col items-center justify-start relative px-[25%] pb-[25%] sm:pb-[14%]">
-                <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
-                    <div className="absolute top-[135px] -translate-x-1/2">
+        <div
+            data-testid="pin-page"
+            className="fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50 h-screen"
+        >
+            <div
+                className="rounded-2xl bg-white flex flex-col align-center items-center justify-start relative 
+                   w-[90%] sm:w-[85%] md:w-[75%]
+                   h-[80%] sm:h-[60%] md:h-[70%]
+                   overflow-y-auto
+                   shadow-iw-pinPageContainer"
+            >
+                <div className="overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+                    <div className="absolute top-[155px]">
                         {[...Array(6)].map((_, index) => {
                             const radius = 96 + index * 96;
                             const opacity = 0.8 - index * 0.1;
@@ -315,10 +330,6 @@ export const PinPage: React.FC = () => {
                                 />
                             );
                         })}
-                    </div>
-                </div>
-                <div className="top-[110px] relative">
-                    <div className="text-center items-start justify-start relative z-20 bg-transparent space-y-5 relative">
                         <div
                             className="flex items-center justify-center"
                             data-testid="pin-logo"
@@ -328,6 +339,10 @@ export const PinPage: React.FC = () => {
                                 alt="Inji Web Logo"
                             />
                         </div>
+                    </div>
+                </div>
+                <div className=" flex flex-col items-center justify-start top-[240px] relative w-full">
+                    <div className="text-center items-center justify-center relative z-20 bg-transparent space-y-5 relative">
                         <h1
                             className="text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGreen"
                             data-testid="pin-title"
@@ -345,23 +360,28 @@ export const PinPage: React.FC = () => {
                                 : t('enterPasscodeDescription')}
                         </p>
                     </div>
-
                     <div
-                        className="flex flex-col bg-white rounded-lg shadow-iw-pinPageContainer mt-8 max-w-auto items-center relative z-20"
+                        className="flex flex-col bg-white sm:rounded-lg sm:shadow-iw-pinPageContainer mt-8 items-center z-20 w-[100%] sm:w-auto mb-4"
                         data-testid="pin-container"
                     >
                         {wallets.length === 0 && (
-                            <p
-                                className="flex text-center mx-1 sm:mx-3 md:mx-5 mt-3 sm:mt-5 md:mt-7 w-[75%] text-iw-textTertiary text-sm sm:text-base"
-                                data-testid="pin-warning"
-                            >
-                                {t('passcodeWarning')}
-                            </p>
+                            <div className="relative sm:hidden pin-page-warning-text-border min-w-full items-center justify-center mt-1 sm:mt-3 md:mt-5 w-[2%]" />
+                        )}
+
+                        {wallets.length === 0 && (
+                            <div className="min-w-full items-center justify-center flex">
+                                <p
+                                    className="text-iw-textTertiary flex items-center justify-center text-center text-sm sm:text-base px-8 pt-4 sm:pt-6 w-[90%] sm-md:w-[85%] md:w-[60%]"
+                                    data-testid="pin-warning"
+                                >
+                                    {t('passcodeWarning')}
+                                </p>
+                            </div>
                         )}
 
                         {error ? (
                             <div
-                                className="bg-iw-pink50 flex items-center justify-between w-full px-5 py-3 mt-3 sm:mt-5 md:mt-8"
+                                className="bg-iw-pink50 flex items-center justify-between w-full px-5 py-3 mt-3 sm:mt-4 md:mt-5"
                                 data-testid="pin-error"
                             >
                                 <div className="flex items-center">
@@ -378,41 +398,52 @@ export const PinPage: React.FC = () => {
                             </div>
                         ) : (
                             wallets.length === 0 && (
-                                <div className="pin-page-warning-text-border w-full mt-1 sm:mt-3 md:mt-5" />
+                                <div className="pin-page-warning-text-border w-full mt-2 sm:mt-3 md:mt-5" />
                             )
                         )}
-                        <div className="px-4 sm:px-6 md:px-10 py-3 sm:py-5 md:py-7 space-y-4">
-                            <div
-                                className="mb-2"
-                                data-testid="pin-passcode-input"
-                            >
-                                <p className="text-sm text-left font-medium text-iw-textSecondary">
-                                    {t('enterPasscode')}
-                                </p>
-                                {renderInputs('passcode', showPasscode, () =>
-                                    setShowPasscode((prev) => !prev)
-                                )}
-                            </div>
+                        <div className="w-[95%] sm:w-[85%] py-3 sm:py-5 md:py-7 space-y-4">
+                            <div className=" w-full overflow-x-auto">
+                                <div className="">
+                                    <div
+                                        className="mb-2"
+                                        data-testid="pin-passcode-input"
+                                    >
+                                        <p className="text-sm text-left font-medium text-iw-textSecondary">
+                                            {t('enterPasscode')}
+                                        </p>
+                                        {renderInputs(
+                                            'passcode',
+                                            showPasscode,
+                                            () =>
+                                                setShowPasscode((prev) => !prev)
+                                        )}
+                                    </div>
 
-                            {wallets.length === 0 && (
-                                <div
-                                    className="mb-2"
-                                    data-testid="pin-confirm-passcode-input"
-                                >
-                                    <p className="text-sm text-left font-medium text-iw-textSecondary">
-                                        {t('confirmPasscode')}
-                                    </p>
-                                    {renderInputs('confirm', showConfirm, () =>
-                                        setShowConfirm((prev) => !prev)
+                                    {wallets.length === 0 && (
+                                        <div
+                                            className="mb-2"
+                                            data-testid="pin-confirm-passcode-input"
+                                        >
+                                            <p className="text-sm text-left font-medium text-iw-textSecondary">
+                                                {t('confirmPasscode')}
+                                            </p>
+                                            {renderInputs(
+                                                'confirm',
+                                                showConfirm,
+                                                () =>
+                                                    setShowConfirm(
+                                                        (prev) => !prev
+                                                    )
+                                            )}
+                                        </div>
                                     )}
                                 </div>
-                            )}
-
+                            </div>
                             {wallets.length !== 0 && (
                                 <p
-                                    className="text-xs sm:text-sm text-left font-semibold text-iw-deepVioletIndigo my-0 cursor-pointer"
+                                    className="text-sm md:text-md text-left font-semibold text-iw-deepVioletIndigo my-0 cursor-pointer"
                                     onClick={() =>
-                                        navigate('/reset-wallet', {
+                                        navigate('/dashboard/reset-wallet', {
                                             state: {
                                                 walletId: wallets[0].walletId
                                             }
@@ -422,7 +453,6 @@ export const PinPage: React.FC = () => {
                                     {t('forgotPasscode') + ' ?'}
                                 </p>
                             )}
-
                             <SolidButton
                                 fullWidth={true}
                                 testId="pin-submit-button"
@@ -440,5 +470,4 @@ export const PinPage: React.FC = () => {
         </div>
     );
 };
-
 export default PinPage;
