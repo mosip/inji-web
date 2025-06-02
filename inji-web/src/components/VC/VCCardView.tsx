@@ -12,7 +12,7 @@ export function VCCardView(props: Readonly<{
             data-testid="vc-card-view"
             role={"menuitem"}
             tabIndex={0}
-            onKeyDown={() => props.onClick(props.credential)}
+            onKeyDown={(e) => e.key === 'Enter' && props.onClick(props.credential)}
         >
             <img
                 data-testid="issuer-logo"

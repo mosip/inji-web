@@ -78,4 +78,18 @@ describe('VCCardView Component', () => {
         expect(mockOnClick).toHaveBeenCalledTimes(1);
         expect(mockOnClick).toHaveBeenCalledWith(mockCredential);
     });
+
+    it('should not call onClick when pressing key other than enter key', () => {
+        render(
+            <VCCardView
+                credential={mockCredential}
+                onClick={mockOnClick}
+            />
+        );
+
+        const card = screen.getByRole('menuitem');
+        fireEvent.keyDown(card, {key: '1'});
+
+        expect(mockOnClick).not.toBeCalled()
+    });
 });
