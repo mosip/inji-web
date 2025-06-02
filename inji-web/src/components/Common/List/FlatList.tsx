@@ -19,7 +19,7 @@ export function FlatList<T>({
 
     if (data.length === 0) {
         if (onEmpty === undefined)
-            return <div>No items available</div>
+            return <div data-testid={"empty-list"}>No items available</div>
         return (
             <Fragment>
                 {onEmpty}

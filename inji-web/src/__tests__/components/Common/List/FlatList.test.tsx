@@ -53,6 +53,7 @@ describe("FlatList Component", () => {
             />
         );
         expect(screen.getByText("No items available")).toBeInTheDocument();
+        expect(screen.getByTestId("empty-list")).toHaveTextContent("No items available");
     });
 
     it("renders custom empty state if provided", () => {
