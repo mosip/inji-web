@@ -73,9 +73,9 @@ export const PasscodeInput: React.FC<PasscodeInputProps> = ({
                         className="pin-input-box-border pin-input-box-style flex items-center justify-center focus:outline-none"
                     >
                         {showPasscode ? (
-                            <FaEyeSlash className="text-iw-grayLight"/>
+                            <FaEye className="text-iw-grayLight" />
                         ) : (
-                            <FaEye className="text-iw-grayLight"/>
+                            <FaEyeSlash className="text-iw-grayLight" />
                         )}
                     </button>
                 </div>
