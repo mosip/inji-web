@@ -8,8 +8,9 @@ import {useTranslation} from 'react-i18next';
 import {navigateToDashboardHome} from '../Dashboard/utils';
 import {useUser} from '../../hooks/useUser';
 import CrossIcon from '../../assets/CrossIcon.svg';
-import { PasscodeInput } from '../../components/Users/PasscodeInput';
-import { BackgroundDecorator } from '../../components/Common/BackgroundDecorator';
+import {PasscodeInput} from '../../components/Users/PasscodeInput';
+import {BackgroundDecorator} from '../../components/Common/BackgroundDecorator';
+import {CrossIconButton} from '../../components/Common/Buttons/CrossIconButton';
 
 export const PinPage: React.FC = () => {
     const {t} = useTranslation('PinPage');
@@ -60,7 +61,10 @@ export const PinPage: React.FC = () => {
             try {
                 await fetchUserProfile();
             } catch (error) {
-                console.error('Error occurred while fetching User profile:', error);
+                console.error(
+                    'Error occurred while fetching User profile:',
+                    error
+                );
             }
         };
         fetchWalletsAndUserDetails();
@@ -235,12 +239,12 @@ export const PinPage: React.FC = () => {
                    overflow-y-auto
                    shadow-iw-pinPageContainer"
             >
-                <BackgroundDecorator 
+                <BackgroundDecorator
                     logoSrc={require('../../assets/Logomark.png')}
                     logoAlt="Inji Web Logo"
-                    logoTestId='logo-inji-web'
+                    logoTestId="logo-inji-web"
                 />
-                
+
                 <div className=" flex flex-col items-center justify-start top-[240px] relative w-full">
                     <div className="text-center items-center justify-center relative z-20 bg-transparent space-y-5 relative">
                         <h1
@@ -281,7 +285,7 @@ export const PinPage: React.FC = () => {
 
                         {error ? (
                             <div
-                                className="bg-iw-pink50 flex items-center justify-between w-full px-5 py-3 mt-3 sm:mt-4 md:mt-5 gap-2"
+                                className="bg-iw-pink50 flex items-start justify-between w-full px-5 py-3 mt-3 sm:mt-4 md:mt-5 gap-2"
                                 data-testid="pin-error"
                             >
                                 <div className="flex items-center">
@@ -289,11 +293,12 @@ export const PinPage: React.FC = () => {
                                         {error}
                                     </span>
                                 </div>
-                                <img
-                                    src={CrossIcon}
-                                    alt="Close"
-                                    className="cursor-pointer"
+                                <CrossIconButton
                                     onClick={() => setError(null)}
+                                    btnTestId="btn-close-icon"
+                                    iconTestId="icon-close"
+                                    btnClassName="cursor-pointer"
+                                    iconClassName="min-w-[14px] min-h-[14px] mt-1"
                                 />
                             </div>
                         ) : (
