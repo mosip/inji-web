@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PasscodeInput should match the snapshot of PasscodeInput layout 1`] = `
+<DocumentFragment>
+  <div
+    class="mb-2"
+    data-testid="test-passcode-input"
+  >
+    <p
+      class="text-sm text-left font-medium text-iw-textSecondary"
+      data-testid="label-test-passcode-input"
+    >
+      Test Passcode
+    </p>
+    <div
+      class="flex items-center gap-4"
+    >
+      <div
+        class="flex items-center gap-4 py-2 rounded-lg"
+      >
+        <input
+          class="pin-input-box-style pin-input-box-border focus:outline-none"
+          data-testid="input-test-passcode-input"
+          inputmode="numeric"
+          maxlength="1"
+          type="password"
+          value=""
+        />
+        <input
+          class="pin-input-box-style pin-input-box-border focus:outline-none"
+          data-testid="input-test-passcode-input"
+          inputmode="numeric"
+          maxlength="1"
+          type="password"
+          value=""
+        />
+        <input
+          class="pin-input-box-style pin-input-box-border focus:outline-none"
+          data-testid="input-test-passcode-input"
+          inputmode="numeric"
+          maxlength="1"
+          type="password"
+          value=""
+        />
+        <input
+          class="pin-input-box-style pin-input-box-border focus:outline-none"
+          data-testid="input-test-passcode-input"
+          inputmode="numeric"
+          maxlength="1"
+          type="password"
+          value=""
+        />
+        <input
+          class="pin-input-box-style pin-input-box-border focus:outline-none"
+          data-testid="input-test-passcode-input"
+          inputmode="numeric"
+          maxlength="1"
+          type="password"
+          value=""
+        />
+        <input
+          class="pin-input-box-style pin-input-box-border focus:outline-none"
+          data-testid="input-test-passcode-input"
+          inputmode="numeric"
+          maxlength="1"
+          type="password"
+          value=""
+        />
+      </div>
+      <div
+        class="flex items-center gap-4 py-2 rounded-lg"
+      >
+        <button
+          class="pin-input-box-border pin-input-box-style flex items-center justify-center focus:outline-none"
+          type="button"
+        >
+          <svg
+            class="text-iw-grayLight"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 576 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

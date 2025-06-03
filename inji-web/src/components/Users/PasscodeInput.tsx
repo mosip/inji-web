@@ -40,6 +40,7 @@ export const PasscodeInput: React.FC<PasscodeInputProps> = ({
                     {value.map((digit, idx) => (
                         <input
                             key={idx}
+                            data-testid={`input-${testId}`}
                             ref={(el) => (inputRefs.current[idx] = el)}
                             type={showPasscode ? 'text' : 'password'}
                             inputMode="numeric"
