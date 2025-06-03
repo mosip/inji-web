@@ -4,11 +4,11 @@ import {PageTitle} from '../../../components/Common/PageTitle/PageTitle';
 
 describe('PageTitle Component', () => {
     it('should match snapshot', () => {
-        const tree = render(
+        const {asFragment} = render(
             <PageTitle value="Test Page Title" testId="test-page"/>
         );
 
-        expect(tree).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render with correct value and test ID', () => {

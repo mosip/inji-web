@@ -17,7 +17,7 @@ describe("FlatList Component", () => {
     const renderItem = (item: Item) => <div>{item.name}</div>;
 
     it('should match the snapshot', () => {
-        const flatList = render(
+        const {asFragment} = render(
             <FlatList
                 data={sampleData}
                 renderItem={renderItem}
@@ -25,7 +25,7 @@ describe("FlatList Component", () => {
                 testId="flatlist"
             />
         );
-        expect(flatList).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it("renders all items", () => {

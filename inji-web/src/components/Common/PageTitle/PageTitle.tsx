@@ -1,5 +1,5 @@
 import React from "react";
-import {PageTitleStyles} from "./PageTitleStyles.ts";
+import {PageTitleStyles} from "./PageTitleStyles";
 
 type PageTitleProps = {
     value: string;
