@@ -238,7 +238,7 @@ export const PinPage: React.FC = () => {
                 <BackgroundDecorator 
                     logoSrc={require('../../assets/Logomark.png')}
                     logoAlt="Inji Web Logo"
-                    testId="pin-background"
+                    logoTestId='logo-inji-web'
                 />
                 
                 <div className=" flex flex-col items-center justify-start top-[240px] relative w-full">
@@ -322,7 +322,8 @@ export const PinPage: React.FC = () => {
                                 </div>
                             </div>
                             {wallets.length !== 0 && (
-                                <p
+                                <button
+                                    data-testid="btn-forgot-passcode"
                                     className="text-sm md:text-md text-left font-semibold text-iw-deepVioletIndigo my-0 cursor-pointer"
                                     onClick={() =>
                                         navigate('/dashboard/reset-wallet', {
@@ -333,7 +334,7 @@ export const PinPage: React.FC = () => {
                                     }
                                 >
                                     {t('forgotPasscode') + ' ?'}
-                                </p>
+                                </button>
                             )}
                             <SolidButton
                                 fullWidth={true}

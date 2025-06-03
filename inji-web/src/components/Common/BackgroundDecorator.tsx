@@ -7,6 +7,7 @@ interface BackgroundDecoratorProps {
     logoSrc?: string;
     logoAlt?: string;
     testId?: string;
+    logoTestId: string;
 }
 
 export const BackgroundDecorator: React.FC<BackgroundDecoratorProps> = ({
@@ -15,7 +16,8 @@ export const BackgroundDecorator: React.FC<BackgroundDecoratorProps> = ({
     baseRadius = 96,
     logoSrc,
     logoAlt = "Logo",
-    testId = "background-decorator"
+    testId = "background-decorator",
+    logoTestId
 }) => {
     return (
         <div 
@@ -46,12 +48,12 @@ export const BackgroundDecorator: React.FC<BackgroundDecoratorProps> = ({
                 {logoSrc && (
                     <div
                         className="flex items-center justify-center"
-                        data-testid={`logo-${testId}-container`}
+                        data-testid={`${logoTestId}-container`}
                     >
                         <img
                             src={logoSrc}
                             alt={logoAlt}
-                            data-testid={`logo-${testId}`}
+                            data-testid={logoTestId}
                         />
                     </div>
                 )}

@@ -54,7 +54,7 @@ fileignoreconfig:
 - filename: inji-web/src/locales/ta.json
   checksum: 05ac04af861d859643adf3b514d20364e0c772d4292ea8649119fb0ca4451d0f
 - filename: inji-web/src/pages/users/ResetWalletPage.tsx
-  checksum: c2616bb5c9bf58d2d49959bb1b1c85af86297f20721288d1296d906c0c70cb45
+  checksum: 659dc11be876efb94bf6567ed1164caab1d2451f3b00ee707c9d05bf362245d2
 - filename: inji-web/src/styles/pages/ResetWalletPageStyles.ts
   checksum: 3406fe1560c518e4e3c24cc231550d7d9cc6c7f6e7d0046fe863a438167bcad4
 - filename: inji-web/src/__tests__/pages/users/__snapshots__/ResetWalletPage.test.tsx.snap

@@ -1,19 +1,51 @@
 import React from 'react';
 import {SolidButton} from '../../components/Common/Buttons/SolidButton';
 import {Trans, useTranslation} from 'react-i18next';
-import InfoIcon from '../../assets/InfoIcon.svg';
-import BackArrowIcon from '../../assets/BackArrowIcon.svg';
 import {useUser} from '../../hooks/useUser';
 import {api} from '../../utils/api';
 import {useCookies} from 'react-cookie';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {ResetWalletPageStyles} from '../../styles/pages/ResetWalletPageStyles';
-import { BackgroundDecorator } from '../../components/Common/BackgroundDecorator';
+import {BackgroundDecorator} from '../../components/Common/BackgroundDecorator';
+import {BackButton} from '../../components/Common/Icons/BackButton';
+import {InfoIcon} from '../../components/Common/Icons/InfoIcon';
+
+interface InstructionItem {
+    testId: string;
+    className: string;
+    content: React.ReactNode;
+}
+
+interface InstructionContentProps {
+    instructionItems: InstructionItem[];
+    className: string;
+    testId: string;
+}
+
+const InstructionContent: React.FC<InstructionContentProps> = ({ 
+    instructionItems, 
+    className, 
+    testId 
+}) => {
+    return (
+        <div data-testid={testId} className={className}>
+            {instructionItems.map((item, index) => (
+                <p
+                    key={index}
+                    data-testid={item.testId}
+                    className={item.className}
+                >
+                    {item.content}
+                </p>
+            ))}
+        </div>
+    );
+};
 
 export const ResetWalletPage: React.FC = () => {
     const {removeWallet, walletId} = useUser();
-    const {t, i18n} = useTranslation('ResetWalletPage');
+    const {t} = useTranslation('ResetWalletPage');
     const [cookies] = useCookies(['XSRF-TOKEN']);
     const navigate = useNavigate();
     const location = useLocation();
@@ -36,8 +68,7 @@ export const ResetWalletPage: React.FC = () => {
                 }
             );
             if (!response.ok) {
-                const responseData = await response.json();
-                throw responseData;
+                throw await response.json();
             }
             removeWallet();
             navigate('/pin');
@@ -46,6 +77,52 @@ export const ResetWalletPage: React.FC = () => {
             toast.error(t('resetFailure'));
         }
     };
+    
+    const instructionItems: InstructionItem[] = [
+        {
+            testId: "text-reset-question",
+            className: ResetWalletPageStyles.instructionQuestion,
+            content: t('resetInstruction.question')
+        },
+        {
+            testId: "text-reset-info1",
+            className: ResetWalletPageStyles.instructionText,
+            content: t('resetInstruction.info1')
+        },
+        {
+            testId: "text-reset-info2",
+            className: ResetWalletPageStyles.instructionText,
+            content: (
+                <Trans
+                    i18nKey={t('resetInstruction.info2.message')}
+                    ns="ResetWalletPage"
+                    values={{
+                        highlighter1: t('resetInstruction.info2.highlighter1', { ns: 'ResetWalletPage' }),
+                        highlighter2: t('resetInstruction.info2.highlighter2', { ns: 'ResetWalletPage' })
+                    }}
+                    components={{
+                        strong: <strong className={ResetWalletPageStyles.instructionTextStrong} />
+                    }}
+                />
+            )
+        },
+        {
+            testId: "text-reset-info3",
+            className: ResetWalletPageStyles.instructionText,
+            content: (
+                <Trans
+                    i18nKey={t('resetInstruction.info3.message')}
+                    ns="ResetWalletPage"
+                    values={{
+                        highlighter: t('resetInstruction.info3.highlighter', { ns: 'ResetWalletPage' })
+                    }}
+                    components={{
+                        strong: <strong className={ResetWalletPageStyles.instructionTextStrong} />
+                    }}
+                />
+            )
+        }
+    ];
 
     return (
         <div
@@ -56,7 +133,7 @@ export const ResetWalletPage: React.FC = () => {
                 <BackgroundDecorator
                     logoSrc={require('../../assets/Logomark.png')}
                     logoAlt="Inji Web Logo"
-                    testId="pin-background"
+                    logoTestId="logo-inji-web"
                 />
                 <div className={ResetWalletPageStyles.contentWrapper}>
                     <div className={ResetWalletPageStyles.header}>
@@ -67,14 +144,12 @@ export const ResetWalletPage: React.FC = () => {
                             {t('title')}
                         </h1>
                         <div className={ResetWalletPageStyles.subHeader}>
-                            <img
-                                data-testid="btn-back-reset"
-                                src={BackArrowIcon}
-                                alt="Back Arrow"
+                            <BackButton
+                                testId="btn-back-reset"
+                                onClick={handleBackNavigation}
                                 className={
                                     ResetWalletPageStyles.backArrowButton
                                 }
-                                onClick={handleBackNavigation}
                             />
                             <p
                                 className={ResetWalletPageStyles.subtitle}
@@ -87,98 +162,17 @@ export const ResetWalletPage: React.FC = () => {
 
                     <div className={ResetWalletPageStyles.mainContent}>
                         <div className={ResetWalletPageStyles.instructionBox}>
-                            <img
-                                data-testid="icon-reset-instruction"
-                                src={InfoIcon}
-                                alt="Info"
+                            <InfoIcon
+                                testId="icon-reset-instruction"
+                                className="mt-[0.1rem]"
                             />
-                            <div
-                                data-testid="text-reset-instruction"
+                            <InstructionContent
+                                testId="text-reset-instruction"
                                 className={
                                     ResetWalletPageStyles.instructionContent
                                 }
-                            >
-                                <p
-                                    data-testid="text-reset-question"
-                                    className={
-                                        ResetWalletPageStyles.instructionQuestion
-                                    }
-                                >
-                                    {t('resetInstruction.question')}
-                                </p>
-                                <p
-                                    data-testid="text-reset-info1"
-                                    className={
-                                        ResetWalletPageStyles.instructionText
-                                    }
-                                >
-                                    {t('resetInstruction.info1')}
-                                </p>
-                                <p
-                                    data-testid="text-reset-info2"
-                                    className={
-                                        ResetWalletPageStyles.instructionText
-                                    }
-                                >
-                                    <Trans
-                                        i18nKey={t(
-                                            'resetInstruction.info2.message'
-                                        )}
-                                        ns="ResetWalletPage"
-                                        values={{
-                                            highlighter1: t(
-                                                'resetInstruction.info2.highlighter1',
-                                                {
-                                                    ns: 'ResetWalletPage'
-                                                }
-                                            ),
-                                            highlighter2: t(
-                                                'resetInstruction.info2.highlighter2',
-                                                {
-                                                    ns: 'ResetWalletPage'
-                                                }
-                                            )
-                                        }}
-                                        components={{
-                                            strong: (
-                                                <strong
-                                                    className={
-                                                        ResetWalletPageStyles.instructionTextStrong
-                                                    }
-                                                />
-                                            )
-                                        }}
-                                    />
-                                </p>
-                                <p
-                                    data-testid="text-reset-info3"
-                                    className={
-                                        ResetWalletPageStyles.instructionText
-                                    }
-                                >
-                                    <Trans
-                                        i18nKey={t(
-                                            'resetInstruction.info3.message'
-                                        )}
-                                        ns="ResetWalletPage"
-                                        values={{
-                                            highlighter: t(
-                                                'resetInstruction.info3.highlighter',
-                                                {ns: 'ResetWalletPage'}
-                                            )
-                                        }}
-                                        components={{
-                                            strong: (
-                                                <strong
-                                                    className={
-                                                        ResetWalletPageStyles.instructionTextStrong
-                                                    }
-                                                />
-                                            )
-                                        }}
-                                    />
-                                </p>
-                            </div>
+                                instructionItems={instructionItems}
+                            />
                         </div>
                         <SolidButton
                             fullWidth={true}

@@ -42,7 +42,7 @@ describe('PinPage', () => {
 
   test('renders pin logo', () => {
     renderWithProviders(<PinPage />);
-    const logo = screen.getByTestId('pin-logo');
+    const logo = screen.getByTestId('logo-inji-web-container');
     expect(logo).toBeInTheDocument();
   });
 
