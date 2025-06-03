@@ -9,9 +9,10 @@ import {navigateToDashboardHome} from '../Dashboard/utils';
 import {useUser} from '../../hooks/useUser';
 import CrossIcon from '../../assets/CrossIcon.svg';
 import { PasscodeInput } from '../../components/Users/PasscodeInput';
+import { BackgroundDecorator } from '../../components/Common/BackgroundDecorator';
 
 export const PinPage: React.FC = () => {
-    const {t, i18n} = useTranslation('PinPage');
+    const {t} = useTranslation('PinPage');
     const navigate = useNavigate();
     const [displayName, setDisplayName] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -19,15 +20,10 @@ export const PinPage: React.FC = () => {
     const [wallets, setWallets] = useState<any[]>([]);
     const [walletId, setWalletId] = useState<string | null>(null);
     const [cookies] = useCookies(['XSRF-TOKEN']);
-
     const [passcode, setPasscode] = useState<string[]>(Array(6).fill(''));
-    const [showPasscode, setShowPasscode] = useState(false);
-
     const [confirmPasscode, setConfirmPasscode] = useState<string[]>(
         Array(6).fill('')
     );
-    const [showConfirm, setShowConfirm] = useState(false);
-
     const [isPinCorrect, setIsPinCorrect] = useState<boolean | null>(null);
 
     const passcodeRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -53,18 +49,18 @@ export const PinPage: React.FC = () => {
 
             setWallets(responseData);
         } catch (error) {
-            console.error('Error occurred while fetching wallets:', error);
+            console.error('Error occurred while fetching Wallets:', error);
             setError(t('error.fetchWalletsError'));
         }
     };
 
     useEffect(() => {
         const fetchWalletsAndUserDetails = async () => {
+            await fetchWallets();
             try {
-                await fetchWallets();
                 await fetchUserProfile();
             } catch (error) {
-                console.error('Error fetching wallets or user profile:', error);
+                console.error('Error occurred while fetching User profile:', error);
             }
         };
         fetchWalletsAndUserDetails();
@@ -102,77 +98,6 @@ export const PinPage: React.FC = () => {
         if (value && index < 5) {
             refs.current[index + 1]?.focus();
         }
-    };
-
-    const renderInputs = (
-        type: 'passcode' | 'confirm',
-        visible: boolean,
-        toggleVisibility: () => void
-    ) => {
-        const values = type === 'passcode' ? passcode : confirmPasscode;
-        const refs = type === 'passcode' ? passcodeRefs : confirmPasscodeRefs;
-
-        return (
-            <div className="flex items-center gap-4">
-                <div className="flex items-center gap-4 py-2 rounded-lg">
-                    {values.map((digit, idx) => (
-                        <input
-                            key={idx}
-                            ref={(el) => (refs.current[idx] = el)}
-                            type={visible ? 'text' : 'password'}
-                            inputMode="numeric"
-                            maxLength={1}
-                            value={digit}
-                            onChange={(e) =>
-                                handleInputChange(idx, e.target.value, type)
-                            }
-                            onFocus={(e) => {
-                                e.target.classList.add(
-                                    'pin-input-focus-box-border'
-                                );
-                            }}
-                            onBlur={(e) => {
-                                if (!digit) {
-                                    e.target.classList.remove(
-                                        'pin-input-focus-box-border'
-                                    );
-                                    e.target.classList.add(
-                                        'pin-input-box-border'
-                                    );
-                                }
-                            }}
-                            onKeyDown={(e) => {
-                                if (
-                                    e.key === 'Backspace' &&
-                                    idx > 0 &&
-                                    !digit
-                                ) {
-                                    refs.current[idx - 1]?.focus();
-                                }
-                            }}
-                            className={`pin-input-box-style ${
-                                digit
-                                    ? 'pin-input-focus-box-border'
-                                    : 'pin-input-box-border'
-                            } focus:outline-none`}
-                        />
-                    ))}
-                </div>
-                <div className="flex items-center gap-4 py-2 rounded-lg">
-                    <button
-                        type="button"
-                        onClick={toggleVisibility}
-                        className="pin-input-box-border pin-input-box-style flex items-center justify-center"
-                    >
-                        {visible ? (
-                            <FaEye className="text-iw-grayLight" />
-                        ) : (
-                            <FaEyeSlash className="text-iw-grayLight" />
-                        )}
-                    </button>
-                </div>
-            </div>
-        );
     };
 
     const unlockWallet = async (walletId: string, pin: string) => {
@@ -230,7 +155,6 @@ export const PinPage: React.FC = () => {
                 method: 'POST',
                 headers: {
                     ...api.createWalletWithPin.headers(),
-                    'Content-Type': 'application/json',
                     'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
                 },
                 credentials: 'include',
@@ -311,37 +235,12 @@ export const PinPage: React.FC = () => {
                    overflow-y-auto
                    shadow-iw-pinPageContainer"
             >
-                <div className="overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
-                    <div className="absolute top-[155px]">
-                        {[...Array(6)].map((_, index) => {
-                            const radius = 96 + index * 96;
-                            const opacity = 0.8 - index * 0.1;
-                            return (
-                                <div
-                                    key={index}
-                                    className="absolute rounded-full border overflow-hidden"
-                                    style={{
-                                        width: `${radius}px`,
-                                        height: `${radius}px`,
-                                        borderWidth: '1px',
-                                        borderColor: `rgba(228, 231, 236, ${opacity})`,
-                                        top: `calc(50% - ${radius / 2}px)`,
-                                        left: `calc(50% - ${radius / 2}px)`
-                                    }}
-                                />
-                            );
-                        })}
-                        <div
-                            className="flex items-center justify-center"
-                            data-testid="pin-logo"
-                        >
-                            <img
-                                src={require('../../assets/Logomark.png')}
-                                alt="Inji Web Logo"
-                            />
-                        </div>
-                    </div>
-                </div>
+                <BackgroundDecorator 
+                    logoSrc={require('../../assets/Logomark.png')}
+                    logoAlt="Inji Web Logo"
+                    testId="pin-background"
+                />
+                
                 <div className=" flex flex-col items-center justify-start top-[240px] relative w-full">
                     <div className="text-center items-center justify-center relative z-20 bg-transparent space-y-5 relative">
                         <h1

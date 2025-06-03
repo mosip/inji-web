@@ -7,7 +7,7 @@ export const ResetWalletPageStyles = {
         'overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none max-w-auto',
     circleWrapper: 'absolute top-[155px]',
     contentWrapper:
-        'top-[130px] pb-4 relative flex flex-col items-center justify-center',
+        'top-[215px] pb-4 relative flex flex-col items-center justify-center',
     header: 'text-center items-center justify-center relative z-20 bg-transparent space-y-4 w-[90%] sm-md:w-[85%] md:w-[50%]',
     logoContainer: 'flex items-center justify-center',
     title: 'text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGreen p-4',

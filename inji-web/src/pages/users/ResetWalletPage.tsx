@@ -9,6 +9,7 @@ import {useCookies} from 'react-cookie';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {ResetWalletPageStyles} from '../../styles/pages/ResetWalletPageStyles';
+import { BackgroundDecorator } from '../../components/Common/BackgroundDecorator';
 
 export const ResetWalletPage: React.FC = () => {
     const {removeWallet, walletId} = useUser();
@@ -52,37 +53,13 @@ export const ResetWalletPage: React.FC = () => {
             data-testid="backdrop-reset-wallet"
         >
             <div className={ResetWalletPageStyles.container}>
-                <div className={ResetWalletPageStyles.circleContainer}>
-                    <div className={ResetWalletPageStyles.circleWrapper}>
-                        {[...Array(6)].map((_, index) => {
-                            const radius = 96 + index * 96;
-                            const opacity = 0.8 - index * 0.1;
-                            return (
-                                <div
-                                    key={index}
-                                    className="absolute rounded-full border overflow-hidden"
-                                    style={{
-                                        width: `${radius}px`,
-                                        height: `${radius}px`,
-                                        borderWidth: '1px',
-                                        borderColor: `rgba(228, 231, 236, ${opacity})`,
-                                        top: `calc(50% - ${radius / 2}px)`,
-                                        left: `calc(50% - ${radius / 2}px)`
-                                    }}
-                                />
-                            );
-                        })}
-                    </div>
-                </div>
+                <BackgroundDecorator
+                    logoSrc={require('../../assets/Logomark.png')}
+                    logoAlt="Inji Web Logo"
+                    testId="pin-background"
+                />
                 <div className={ResetWalletPageStyles.contentWrapper}>
                     <div className={ResetWalletPageStyles.header}>
-                        <div className={ResetWalletPageStyles.logoContainer}>
-                            <img
-                                data-testid="logo-inji-web"
-                                src={require('../../assets/Logomark.png')}
-                                alt="Inji Web Logo"
-                            />
-                        </div>
                         <h1
                             className={ResetWalletPageStyles.title}
                             data-testid="title-reset-wallet"
