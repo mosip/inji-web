@@ -38,7 +38,7 @@ export const mockLocalStorage = () => {
 
 // API Mock
 export const mockApi = {
-    authorizationRedirectionUrl: 'http://mockurl.com'
+    authorizationRedirectionUrl: 'https://mockurl.com'
 };
 
 // Crypto Mock
@@ -139,7 +139,7 @@ export const mockUseParams = ()=>{
 export const mockApiObject = () =>{
     jest.mock('../utils/api.ts', () => ({
         api: {
-          mimotoHost: 'http://mocked-api-host',
+          mimotoHost: 'https://mocked-api-host',
             fetchWalletVCs: {
                 url: jest.fn().mockReturnValue('/api/wallet/credentials'),
                 headers: jest.fn().mockReturnValue({

@@ -26,10 +26,7 @@ export const StoredCardsPage: React.FC = () => {
     const [filteredCredentials, setFilteredCredentials] = useState<WalletCredential[]>([]);
     const [loading, setLoading] = useState(true);
     const language = useSelector((state: RootState) => state.common.language);
-    const [error, setError] = useState({
-        code: "",
-        message: "Sub-heading goes here..."
-    });
+    const [error, setError] = useState<string>();
 
     const fetchWalletCredentials = async () => {
         try {
@@ -45,18 +42,25 @@ export const StoredCardsPage: React.FC = () => {
                 setCredentials(responseData);
                 setFilteredCredentials(responseData)
             } else {
-                setError({
-                    code: "Fetching Credentials Failed",
-                    message: responseData.errorMessage
-                });
-                throw new Error(responseData.errorMessage);
+                console.error("Error fetching credentials:", responseData);
+                if (response.status === 500) {
+                    setError("internalServerError");
+                } else if (response.status === 503) {
+                    setError("serviceUnavailable");
+                } else if (response.status === 400) {
+                    const invalidWalletRequests = ["Wallet key not found in session", "Wallet is locked", "Invalid Wallet ID. Session and request Wallet ID do not match"]
+                    if (invalidWalletRequests.includes(responseData.errorMessage)) {
+                        setError("invalidWalletRequest");
+                    } else {
+                        setError("invalidRequest");
+                    }
+                } else {
+                    setError("unknownError");
+                }
             }
         } catch (error) {
             console.error("Failed to fetch credentials:", error);
-            setError({
-                code: "Network Error",
-                message: "Failed to fetch credentials. Please try again later."
-            })
+            setError("networkError");
         } finally {
             setLoading(false);
         }
@@ -129,11 +133,11 @@ export const StoredCardsPage: React.FC = () => {
             return loader;
         }
 
-        if (error.code) {
+        if (error) {
             return (
                 <Error
-                    message={error.code}
-                    helpText={error.message}
+                    message={t(`error.${error}.title`)}
+                    helpText={t(`error.${error}.message`)}
                     testId={"stored-credentials"}
                     action={<BorderedButton testId={"btn-go-home"} onClick={navigateToHome}
                                             title={t('Common:goToHome')}/>}
@@ -145,7 +149,7 @@ export const StoredCardsPage: React.FC = () => {
     };
 
     const addCard = () => <SolidButton testId={"btn-add-cards"} onClick={navigateToHome}
-                                       title={t('header.addCredential')}/>;
+                                       title={t('header.addCards')}/>;
 
     return (
         <div className={StoredCardsPageStyles.container}>

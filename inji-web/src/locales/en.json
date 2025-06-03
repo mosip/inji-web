@@ -357,15 +357,41 @@
   "StoredCards": {
     "title": "Stored Cards",
     "header": {
-      "addCredential": "Add Cards"
+      "addCards": "Add Cards"
     },
     "emptyScreen": {
       "title": "No Cards Stored!",
-      "actionText": "You haven't downloaded any credentials yet. Tap \"Add Card\" to get started."
+      "actionText": "You haven't downloaded any cards yet. Tap \"Add Cards\" to get started."
     },
     "search": {
-      "placeholder": "Search your documents by Name",
+      "placeholder": "Search your cards by Name",
       "noResults": "No cards match your search."
+    },
+    "error": {
+      "internalServerError" : {
+        "title" : "Server Error",
+        "message" : "Something went wrong on our end. Please try again later."
+      },
+      "serviceUnavailable" : {
+        "title" : "Service Unavailable",
+        "message" : "We're currently experiencing some issues processing your request. Please try again later"
+      },
+      "invalidWalletRequest" : {
+        "title" : "Something Went Wrong",
+        "message": "We couldn’t verify your wallet information. Please try again later."
+      },
+      "invalidRequest" : {
+        "title" : "Request Error",
+        "message" : "Your request contains invalid information. Please try again later."
+      },
+      "unknownError" : {
+        "title" : "Something Went Wrong",
+        "message": "An unexpected error occurred. Please refresh the page or try again shortly."
+      },
+      "networkError": {
+        "title": "No Internet Connection",
+        "message": "Please check your internet connection and try again."
+      }
     }
   },
   "Common": {

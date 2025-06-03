@@ -357,15 +357,41 @@
   "StoredCards": {
     "title": "Cartões Armazenados",
     "header": {
-      "addCredential": "Adicionar Cartões"
+      "addCards": "Adicionar Cartões"
     },
     "emptyScreen": {
       "title": "Nenhum Cartão Armazenado!",
-      "actionText": "Você ainda não baixou nenhuma credencial. Toque em \"Adicionar Cartão\" para começar."
+      "actionText": "Você ainda não baixou nenhum cartão. Toque em \"Adicionar Cartões\" para começar."
     },
     "search": {
-      "placeholder": "Pesquisar seus documentos por Nome",
+      "placeholder": "Pesquise seus cartões por nome",
       "noResults": "Nenhum cartão corresponde à sua pesquisa."
+    },
+    "error": {
+      "internalServerError": {
+        "title": "Erro no Servidor",
+        "message": "Algo deu errado do nosso lado. Por favor, tente novamente mais tarde."
+      },
+      "serviceUnavailable": {
+        "title": "Serviço Indisponível",
+        "message": "Estamos enfrentando alguns problemas ao processar sua solicitação. Por favor, tente novamente mais tarde."
+      },
+      "invalidWalletRequest": {
+        "title": "Algo Deu Errado",
+        "message": "Não foi possível verificar as informações da sua carteira. Por favor, tente novamente mais tarde."
+      },
+      "invalidRequest": {
+        "title": "Erro na Solicitação",
+        "message": "Sua solicitação contém informações inválidas. Por favor, tente novamente mais tarde."
+      },
+      "unknownError": {
+        "title": "Algo Deu Errado",
+        "message": "Ocorreu um erro inesperado. Por favor, atualize a página ou tente novamente em breve."
+      },
+      "networkError": {
+        "title": "Sem Conexão com a Internet",
+        "message": "Por favor, verifique sua conexão com a internet e tente novamente."
+      }
     }
   },
   "Common": {

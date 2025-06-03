@@ -59,13 +59,11 @@ describe('Testing of StoredCardsPage ->', () => {
             expect(asFragment()).toMatchSnapshot();
         });
 
-        it.skip('should check if error while fetching credentials is matching snapshot', () => {
-            (global.fetch as jest.Mock).mockResolvedValueOnce({
-                ok: false,
-                json: async () => ({errorMessage: 'Failed to fetch credentials'}),
-            });
+        it('should check if error while fetching credentials is matching snapshot', async () => {
+            (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
 
             const {asFragment} = renderWithRouter(<StoredCardsPage/>);
+            await waitForLoaderDisappearance()
 
             expect(asFragment()).toMatchSnapshot();
         });
@@ -155,33 +153,109 @@ describe('Testing of StoredCardsPage ->', () => {
         await waitForLoaderDisappearance()
 
         expect(screen.getByText('No Cards Stored!')).toBeInTheDocument();
-        expect(screen.getByText("You haven't downloaded any credentials yet. Tap \"Add Card\" to get started.")).toBeInTheDocument();
+        expect(screen.getByText("You haven't downloaded any cards yet. Tap \"Add Cards\" to get started.")).toBeInTheDocument();
     });
 
-    it.skip('should display error message when fetch fails', async () => {
-        (global.fetch as jest.Mock).mockResolvedValueOnce({
-            ok: false,
-            json: async () => ({errorMessage: 'Failed to fetch credentials'}),
-        });
+    // write a table test for the error cases, error message to returned for json and status code + response to be expected in screen are configurable
+    const errorScenarios = [
+        {
+            name: 'internal server error',
+            fetchResponse: {
+                ok: false,
+                status: 500,
+                json: async () => ({errorMessage: 'Internal Server Error', errorCode: "internal_server_error"}),
+            },
+            expectedTitle: 'Server Error',
+            expectedMessage: 'Something went wrong on our end. Please try again later.',
+        },
+        {
+            name: 'service unavailable',
+            fetchResponse: {
+                ok: false,
+                status: 503,
+                json: async () => ({
+                    errorMessage: 'service_unavailable',
+                    errorCode: "Unavailable to connect to service"
+                }),
+            },
+            expectedTitle: 'Service Unavailable',
+            expectedMessage: 'We\'re currently experiencing some issues processing your request. Please try again later',
+        },
+        {
+            name: 'invalid wallet request - Wallet key not found in session',
+            fetchResponse: {
+                ok: false,
+                status: 400,
+                json: async () => ({errorMessage: 'Wallet key not found in session', errorCode: "invalid_request"}),
+            },
+            expectedTitle: "Something Went Wrong",
+            expectedMessage: "We couldn’t verify your wallet information. Please try again later."
+        },
+        {
+            name: 'invalid wallet request - Wallet is locked',
+            fetchResponse: {
+                ok: false,
+                status: 400,
+                json: async () => ({errorMessage: 'Wallet is locked', errorCode: "invalid_request"}),
+            },
+            expectedTitle: "Something Went Wrong",
+            expectedMessage: "We couldn’t verify your wallet information. Please try again later."
+        }, {
+            name: 'invalid wallet request - Invalid Wallet ID',
+            fetchResponse: {
+                ok: false,
+                status: 400,
+                json: async () => ({
+                    errorMessage: "Invalid Wallet ID. Session and request Wallet ID do not match",
+                    errorCode: "invalid_request"
+                }),
+            },
+            expectedTitle: "Something Went Wrong",
+            expectedMessage: "We couldn’t verify your wallet information. Please try again later."
+        },
+        {
+            name: 'invalid request',
+            fetchResponse: {
+                ok: false,
+                status: 400,
+                json: async () => ({errorMessage: 'Some other error', errorCode: "invalid_request"}),
+            },
+            expectedTitle: "Request Error",
+            expectedMessage: "Your request contains invalid information. Please try again later."
+        },
+        {
+            name: 'unknown error',
+            fetchResponse: {
+                ok: false,
+                status: 418,
+                json: async () => ({errorMessage: 'I am a teapot'}),
+            },
+            expectedTitle: "Something Went Wrong",
+            expectedMessage: "An unexpected error occurred. Please refresh the page or try again shortly."
+        },
+    ];
+    it.each(errorScenarios)('should display error message for $name', async ({
+                                                                                 fetchResponse,
+                                                                                 expectedTitle,
+                                                                                 expectedMessage
+                                                                             }) => {
+        (global.fetch as jest.Mock).mockResolvedValueOnce(fetchResponse);
+
+        renderWithRouter(<StoredCardsPage/>);
+        await waitForLoaderDisappearance();
+
+        expect(screen.getByText(expectedTitle)).toBeInTheDocument();
+        expect(screen.getByText(expectedMessage)).toBeInTheDocument();
+    });
+
+    it('should display network error message when network error occurs', async () => {
+        (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance()
 
-        expect(screen.getByText('errorTitle')).toBeInTheDocument();
-        expect(screen.getByText('Failed to fetch credentials')).toBeInTheDocument();
-    });
-
-    it.skip('should display network error message when fetch throws', async () => {
-        (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
-
-        renderWithRouter(<StoredCardsPage/>);
-
-        await waitFor(() => {
-            expect(screen.queryByTestId('spinning-loader')).not.toBeInTheDocument();
-        });
-
-        expect(screen.getByText('errorTitle')).toBeInTheDocument();
-        expect(screen.getByText('Failed to fetch credentials. Please try again later.')).toBeInTheDocument();
+        expect(screen.getByText("No Internet Connection")).toBeInTheDocument();
+        expect(screen.getByText('Please check your internet connection and try again.')).toBeInTheDocument();
     });
 
     it('should filter credentials when using search bar', async () => {
@@ -193,7 +267,7 @@ describe('Testing of StoredCardsPage ->', () => {
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance()
 
-        const searchInput = screen.getByPlaceholderText('Search your documents by Name');
+        const searchInput = screen.getByPlaceholderText('Search your cards by Name');
         fireEvent.change(searchInput, {target: {value: 'Health'}});
 
         expect(screen.getByText('Health Card')).toBeInTheDocument();
@@ -209,7 +283,7 @@ describe('Testing of StoredCardsPage ->', () => {
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance()
 
-        const searchInput = screen.getByPlaceholderText('Search your documents by Name');
+        const searchInput = screen.getByPlaceholderText('Search your cards by Name');
         fireEvent.change(searchInput, {target: {value: 'Passport'}});
 
         expect(screen.getByText('No cards match your search.')).toBeInTheDocument();
@@ -224,7 +298,7 @@ describe('Testing of StoredCardsPage ->', () => {
         renderWithRouter(<StoredCardsPage/>);
 
         await waitForLoaderDisappearance()
-        const searchInput = screen.getByPlaceholderText('Search your documents by Name');
+        const searchInput = screen.getByPlaceholderText('Search your cards by Name');
 
         // Filter to just Health Card
         fireEvent.change(searchInput, {target: {value: 'Health'}});
