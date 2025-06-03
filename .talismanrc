@@ -34,7 +34,7 @@ fileignoreconfig:
 - filename: inji-web/src/__tests__/components/Dashboard/EmptyDocument.test.tsx
   checksum: f401e15725074d3840909dd82547e7cbd4ff61f854dd574ea7c1abb0b1309aeb
 - filename: inji-web/src/components/Dashboard/Header.tsx
-  checksum: 0c5d2ec81445918b6893da41b8e499f71eb75149d73c8cd743da0e071ba64352
+  checksum: 16e3e56a768651433b63678fb993dfc3adfc47e58901388a6e36cf7e1af985b6
 - filename: inji-web/src/components/Dashboard/Sidebar.tsx
   checksum: a43283da3b8fcef567577b40c7c14402cd9e8f7df9260e082837e130072645b4
 - filename: inji-web/src/__tests__/users/login/FailedLoginPage.test.tsx
@@ -54,17 +54,17 @@ fileignoreconfig:
 - filename: inji-web/src/locales/ta.json
   checksum: da4d151853cd6622b79e8e18fc9a1d3ec905188dba5f667b90bf7fb03902636d
 - filename: inji-web/src/__tests__/pages/users/__snapshots__/ResetWalletPage.test.tsx.snap
-  checksum: a59c2edf3d5b4f4161a7b7a43741103656f103ec0cf66944defd2de1a63ea54f
+  checksum: 8b7bb5db2e8fea883f150ec71e0d95c6790422e9e3d6eab39896ac2fc2d696c8
 - filename: inji-web/src/__tests__/pages/users/ResetWalletPage.test.tsx
   checksum: c579ca87e97747cbed972902a5e554ea837e2bea467b23bdf93a43efee688bcc
 - filename: inji-web/src/styles/pages/ResetWalletPageStyles.ts
-  checksum: 53573010a86df4daa4d608d87519b93ba94b094f5a7747f197a571edf705ad14
+  checksum: c4ee7286b3d8791f4430289378d26e308be7517791fbf28d90987b0d5655afcf
 - filename: inji-web/src/hooks/useUser.tsx
   checksum: 1f7c891cd65659c362cf18ea8681c633bd56818186a76e2bb0e9807840b8a2e5
 - filename: inji-web/src/pages/users/ResetWalletPage.tsx
   checksum: 183ed38c95732f8fe9d4bcdb93c527c1186b13d1219eaee358547344a3c1747b
 - filename: inji-web/src/pages/users/PinPage.tsx
-  checksum: dd7db315e8367efec8553ed2f7b77c4d60d57dc30737c60895479cf8deebb8e0
+  checksum: 62d804306459aefbedb8bbfb1c7fbccb7904f0d17a79ca8c368e3f114208f3be
 - filename: inji-web/src/__tests__/users/login/PinPage.test.tsx
   checksum: bcdfdd086449c4cb833bb0bc172708ce48719a36a38dac7905d3b9046fb629e0
 - filename: inji-web/src/__tests__/users/login/Login.test.tsx

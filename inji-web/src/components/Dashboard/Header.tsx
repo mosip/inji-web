@@ -253,12 +253,11 @@ export const Header: React.FC<DashboardHeaderProps> = ({
             <div
                 data-testid="Hamburger-Menu-dropdown"
                 className="block sm:hidden w-full"
-                ref={hamburgerMenuRef}
             >
                 {isHamburgerMenuOpen && (
                     <div
                         style={{marginTop: headerHeight}}
-                        className="absolute top-1 bg-white shadow-iw-hamburgerDropdown p-2 w-full"
+                        className="absolute top-1 bg-white shadow-iw-hamburger-dropdown p-2 w-full"
                     >
                         <div>
                             <div className="flex items-center px-4 py-2">

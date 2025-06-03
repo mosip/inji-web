@@ -212,7 +212,7 @@ export const PinPage: React.FC = () => {
                w-[90%] sm:w-[85%] md:w-[90%]
                h-[80%] sm:h-[76%] md:h-[80%]
                overflow-y-auto
-               shadow-iw-pinPageContainer"
+               shadow-iw-pin-page-container"
             >
                 <BackgroundDecorator
                     logoSrc={require('../../assets/Logomark.png')}
@@ -241,7 +241,7 @@ export const PinPage: React.FC = () => {
                     </div>
 
                     <div
-                        className="flex flex-col bg-white sm:rounded-lg sm:shadow-iw-pinPageContainer items-center z-20 w-full max-w-[500px] mt-8 mb-4 mx-auto"
+                        className="flex flex-col bg-white sm:rounded-lg sm:shadow-iw-pin-page-container items-center z-20 w-full max-w-[500px] mt-8 mb-4 mx-auto"
                         data-testid="pin-container"
                     >
                         {wallets.length === 0 && (
