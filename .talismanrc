@@ -75,4 +75,18 @@ fileignoreconfig:
   checksum: 719791b2e60b05e60797790a823d561de37f2911c5fce90290695217b7f11012
 - filename: inji-web/src/hooks/useUser.tsx
   checksum: b4c65898d422f657422b2c7808dd4a29d4252dd5b791cd893e9d964bb7a6b24c
+- filename: inji-web/src/__tests__/components/Common/List/FlatList.test.tsx
+  checksum: bece0d03810ef702d9148c8ab1af64f05ff677b1b55a17ac230445f88b54f3cc
+- filename: inji-web/src/__tests__/components/VC/VCCardView.test.tsx
+  checksum: dadb3f157f0f5e2663d5d069a52f2f7201d24412bf9b973fa28d37ab73e817ed
+- filename: inji-web/src/__tests__/components/Dashboard/ProfilePage.test.tsx
+  checksum: cd3ffeda6bb5b20b657b2e74f1fcf64454c7a0b052b4a1f02c787b0415f10266
+- filename: inji-web/src/components/Common/List/FlatList.tsx
+  checksum: 41faa9ef935e8fd47c0d4bbfbbc458601bc61fa8ffe0731eaaeebe353981d6ec
+- filename: inji-web/src/__tests__/pages/Dashboard/StoredCardsPage.test.tsx
+  checksum: e23907b2d4b8c19bba4e2a79ecd27970a029be1b8faac952775eb85d9ce64435
+- filename: inji-web/src/components/VC/VCCardView.tsx
+  checksum: 1628788ece7b6db63d613a8c27d4d14ec728b9e915ac5bd642d00bec497a445a
+- filename: inji-web/src/pages/Dashboard/StoredCards/StoredCardsPage.tsx
+  checksum: 1aa60329392751ab42aa8f76298745ff836b2dac3ffd46e4b8796c1fb4f5a53b
 version: ""

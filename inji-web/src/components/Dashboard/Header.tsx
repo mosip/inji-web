@@ -33,7 +33,7 @@ export const Header: React.FC<DashboardHeaderProps> = ({
     const [cookies] = useCookies(['XSRF-TOKEN']);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const hamburgerMenuRef = useRef<HTMLImageElement>(null);
-    const {user, removeUser} = useUser();
+    const {user, removeUser,isLoading} = useUser();
     const displayNameFromLocalStorage = user?.displayName;
     const hasProfilePictureUrl = user?.profilePictureUrl;
     const {t} = useTranslation('Dashboard');
@@ -58,9 +58,9 @@ export const Header: React.FC<DashboardHeaderProps> = ({
             }
         };
 
-        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('click', handleClickOutside);
         return () =>
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('click', handleClickOutside);
     }, []);
 
     const handleLogout = async () => {
@@ -97,8 +97,8 @@ export const Header: React.FC<DashboardHeaderProps> = ({
         {
             label: t('ProfileDropdown.profile'),
             onClick: () => {
-                setIsProfileDropdownOpen(false);
-                navigate('profile');
+                setIsProfileDropdownOpen(false);    
+                navigate('profile',{state: {from: window.location.pathname}});
             },
             textColor: 'text-gray-700',
             key: 'Profile-Dropdown-Profile'
@@ -120,7 +120,8 @@ export const Header: React.FC<DashboardHeaderProps> = ({
         }
     ];
 
-    const toggleProfileDropdown = () => {
+    const toggleProfileDropdown = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation(); // Prevent global click handler from immediately closing the dropdown
         setIsProfileDropdownOpen(!isProfileDropdownOpen);
     };
 
@@ -128,29 +129,40 @@ export const Header: React.FC<DashboardHeaderProps> = ({
         setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
     };
 
-    const getUserProfileIconWithName = () => (
-        <div className="flex gap-2 items-center">
-            <div
-                className={`aspect-square w-12 sm:w-14 rounded-full bg-[#DDDDDD] overflow-hidden flex items-center justify-center text-[#1A001D] font-medium text-lg ${
-                    !hasProfilePictureUrl && 'p-2 sm:p-3 md:p-4'
+    const getUserProfileIconWithName = () => {
+        if (isLoading) {
+            return (
+              <div className="flex gap-2 items-center animate-pulse">
+                <div className="w-12 h-12 rounded-full bg-gray-300"></div>
+                <div className="h-2 bg-gray-300 rounded w-24"></div>
+              </div>
+            );
+          }
+        
+          return (
+            <div className="flex gap-2 items-center">
+              <div
+                className={`aspect-square w-12 rounded-full bg-iw-avatarPlaceholder overflow-hidden flex items-center justify-center text-iw-avatarText font-medium text-lg ${
+                  !hasProfilePictureUrl && 'p-2 sm:p-3 md:p-4'
                 }`}
-            >
+              >
                 {hasProfilePictureUrl ? (
-                    <img
-                        src={user.profilePictureUrl}
-                        alt="Profile Pic"
-                        className="w-full h-full object-cover rounded-full"
-                        referrerPolicy="no-referrer"
-                    />
+                  <img
+                    src={user.profilePictureUrl}
+                    alt="Profile Pic"
+                    className="w-12 h-12 object-cover rounded-full"
+                    referrerPolicy="no-referrer"
+                  />
                 ) : (
-                    getProfileInitials(displayName)
+                  getProfileInitials(displayName)
                 )}
-            </div>
-            <span className="font-semibold text-gray-800">
+              </div>
+              <span className="font-semibold text-gray-800">
                 {convertStringIntoPascalCase(displayName)}
-            </span>
-        </div>
-    );
+              </span>
+            </div>
+          );
+        };
 
     return (
         <header
@@ -201,14 +213,14 @@ export const Header: React.FC<DashboardHeaderProps> = ({
                     >
                         <div className="flex items-center space-x-2">
                             {getUserProfileIconWithName()}
-                            <div
+                            {!isLoading && (
+                                <div
                                 className="relative inline-block cursor-pointer"
                                 onClick={toggleProfileDropdown}
-                            >
-                                <DropdownArrowIcon
-                                    isOpen={isProfileDropdownOpen}
-                                />
-                            </div>
+                                >
+                                <DropdownArrowIcon isOpen={isProfileDropdownOpen} />
+                                </div>
+                            )}
                         </div>
 
                         {isProfileDropdownOpen && (

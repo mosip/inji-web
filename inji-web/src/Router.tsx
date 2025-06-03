@@ -14,13 +14,13 @@ import {AuthorizationPage} from './pages/AuthorizationPage';
 import {HomePage} from './pages/HomePage';
 import LoginSessionStatusChecker from './pages/users/login/LoginSessionStatusChecker';
 import PinForm from './pages/users/PinPage';
-import WalletCredentialsPage from './pages/users/login/WalletCredentialsPage';
 import {Layout} from './components/Dashboard/Layout';
 import {HomePage as DashboardHomePage} from './pages/Dashboard/HomePage';
-import {StoredCredentialsPage} from './pages/Dashboard/StoredCredentialsPage';
+import {StoredCardsPage} from './pages/Dashboard/StoredCards/StoredCardsPage';
 import {useUser} from './hooks/useUser';
 import {CredentialTypesPage} from './pages/Dashboard/CredentialTypesPage';
 import {ResetWalletPage} from './pages/users/ResetWalletPage';
+import { ProfilePage } from './pages/Dashboard/ProfilePage';
 
 export const AppRouter = () => {
     const location = useLocation();
@@ -124,10 +124,6 @@ export const AppRouter = () => {
                     element={wrapElement(<AuthorizationPage />)}
                 />
                 <Route path="/pin" element={wrapElement(<PinForm />)} />
-                <Route
-                    path="/view/wallet/credentials"
-                    element={wrapElement(<WalletCredentialsPage />, false)}
-                />
                 <Route path="/*" element={wrapElement(<PageNotFound />)} />
                 <Route path="/dashboard">
                     <Route element={<Layout />}>
@@ -138,14 +134,9 @@ export const AppRouter = () => {
                                 <CredentialTypesPage backUrl="/dashboard/home" />
                             }
                         />
-                        <Route
-                            path="credentials"
-                            element={<StoredCredentialsPage />}
-                        />
-                        <Route
-                            path="faq"
-                            element={<FAQPage withHome={true} />}
-                        />
+                        <Route path="credentials" element={<StoredCardsPage />} />
+                        <Route path="profile" element={<ProfilePage />} />
+                        <Route path="faq" element={<FAQPage withHome={true} />} />
                     </Route>
                     <Route
                         path="reset-wallet"

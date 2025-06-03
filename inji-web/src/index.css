@@ -61,6 +61,9 @@
         --iw-color-deepVioletIndigo: #5B03AD;
         --iw-color-pink50: #FAEFEF;
         --iw-color-dark-green: #101828;
+        --iw-color-info: #7B7B7B;
+        --iw-color-avatarPlaceholder: #DDDDDD;
+        --iw-color-avatarText: #1A001D;
     }
     [class="emerald_theme"] {
         --iw-font-base: "Inter", sans-serif;

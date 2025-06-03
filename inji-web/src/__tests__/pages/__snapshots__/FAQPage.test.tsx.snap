@@ -33,6 +33,7 @@ exports[`Testing the Layout of FaqPage Check if the layout is matching with the 
         >
           <span
             class="text-2xl font-medium"
+            data-testid="title-faq"
           >
             FAQ
           </span>

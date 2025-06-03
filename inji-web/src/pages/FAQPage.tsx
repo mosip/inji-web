@@ -4,6 +4,8 @@ import {useTranslation} from 'react-i18next';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {FAQPageProps} from '../components/Dashboard/types';
 import {navigateToDashboardHome} from './Dashboard/utils';
+import {PageTitle} from "../components/Common/PageTitle/PageTitle";
+import { TertiaryButton } from './Dashboard/TertiaryButton';
 
 export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
     const {t} = useTranslation(['FAQPage', 'Dashboard']);
@@ -42,18 +44,9 @@ export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
                 </div>
                 <div className="flex flex-col items-start gap-8 w-full mr-2 sm:mr-4 md:mr-8 lg:mr-10">
                     <div className="flex flex-col items-start">
-                        <span className="text-2xl font-medium">
-                            {t('title')}
-                        </span>
+                        <PageTitle value={t('title')} testId={"faq"} />
                         {withHome && (
-                            <span
-                                className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer hover:underline"
-                                onClick={() =>
-                                    navigateToDashboardHome(navigate)
-                                }
-                            >
-                                {t('Dashboard:Home.title')}
-                            </span>
+                            <TertiaryButton testId={'FAQ-Home-Button'} onClick={()=>navigateToDashboardHome(navigate)} title={t('Dashboard:Home.title')}/>
                         )}
                     </div>
                     <div className="w-full">

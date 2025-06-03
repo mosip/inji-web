@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VCCardView Component should match snapshot 1`] = `
+<div>
+  <div
+    class="bg-iw-tileBackground grid grid-cols-[auto_auto_auto] gap-4 items-center shadow hover:shadow-lg hover:scale-105 hover:shadow-iw-selectedShadow p-4 m-2 rounded-md cursor-pointer"
+    data-testid="vc-card-view"
+    role="menuitem"
+    tabindex="0"
+  >
+    <img
+      alt="Credential Type Logo"
+      class="w-20 h-20"
+      data-testid="issuer-logo"
+      src="test-logo.png"
+    />
+    <span
+      class="text-sm font-semibold text-iw-title"
+      data-testid="credential-type-display-name"
+    >
+      Health ID
+    </span>
+  </div>
+</div>
+`;

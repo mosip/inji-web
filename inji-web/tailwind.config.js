@@ -13,6 +13,9 @@ module.exports = {
                 base: 'var(--iw-font-base)',
                 montserrat: 'var(--iw-font-montserrat)'
             },
+            fontSize: {
+                'sm-plus': '15px',
+            },
             zIndex: {
                 '50': '50',
                 '40': '40',
@@ -68,7 +71,9 @@ module.exports = {
                     deepVioletIndigo: 'var(--iw-color-deepVioletIndigo)',
                     pink50: 'var(--iw-color-pink50)',
                     darkGreen: 'var(--iw-color-darkGreen)',
-                    paleGray: 'var(--iw-color-paleGray)'
+                    paleGray: 'var(--iw-color-paleGray)',
+                    avatarPlaceholder: 'var(--iw-color-avatarPlaceholder)',
+                    avatarText: 'var(--iw-color-avatarText)'
                 }
             },
             boxShadow: {
@@ -77,8 +82,10 @@ module.exports = {
                 'iw-sidebar': '2px 0 8px rgb(0,0,0,0.051)',
                 'iw-emptyDocuments': `0px -2px 4px -2px rgba(16, 24, 40, 0.06), 0px 4px 8px -2px rgba(16, 24, 40, 0.10)`,
                 'iw-hamburgerDropdown': `0px 3px 6px rgb(0,0,0,0.07), 0px -1px 6px rgb(0,0,0,0.07)`,
-                'iw-pinPageContainer': `0px 4px 8px rgba(16, 24, 40, 0.1), -0px -0.01px 0.5px rgba(16, 24, 40, 0.1)`
-            }
+                'iw-pinPageContainer': `0px 4px 8px rgba(16, 24, 40, 0.1), -0px -0.01px 0.5px rgba(16, 24, 40, 0.1)`,
+                'iw-layout': `0px -2px 4px -2px rgba(16, 24, 40, 0.06), 0px 4px 8px -2px rgba(16, 24, 40, 0.10)`,
+                'iw-hamburger-dropdown': `0px 3px 6px rgb(0,0,0,0.07), 0px -1px 6px rgb(0,0,0,0.07)`
+            },
         }
     },
     plugins: [

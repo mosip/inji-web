@@ -86,9 +86,9 @@ export type LanguageObject = {
 };
 
 export type WalletCredential = {
-    issuerName: string;
+    issuerDisplayName: string;
     issuerLogo: string;
-    credentialType: string;
+    credentialTypeDisplayName: string;
     credentialTypeLogo: string;
     credentialId: string;
 };
