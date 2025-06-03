@@ -1,7 +1,7 @@
 {
   "PageTemplate": {
     "Header": {
-      "home": "Accueil",
+      "home": "Maison",
       "faq": "FAQ",
       "login": "Se connecter",
       "logout": "Déconnexion"
@@ -342,15 +342,6 @@
       "title": "Maison",
       "welcome": "Bienvenu"
     },
-    "StoredCredentials": {
-      "title": "Informations d'identification stockées",
-      "header": {
-        "addCredential": "Ajouter un identifiant"
-      },
-      "emptyScreen": {
-        "title": "Aucune information d'identification stockée !"
-      }
-    },
     "ProfileDropdown": {
       "profile": "Profil",
       "faq": "FAQ",
@@ -362,5 +353,48 @@
       "fullName": "Nom complet",
       "emailAddress": "Adresse e-mail"
     }
+  },
+  "StoredCards": {
+    "title": "Cartes Stockées",
+    "header": {
+      "addCards": "Ajouter des Cartes"
+    },
+    "emptyScreen": {
+      "title": "Aucune Carte Stockée !",
+      "actionText": "Vous n'avez encore téléchargé aucune carte. Appuyez sur \"Ajouter des cartes\" pour commencer."
+    },
+    "search": {
+      "placeholder": "Recherchez vos cartes par nom",
+      "noResults": "Aucune carte ne correspond à votre recherche."
+    },
+    "error": {
+      "internalServerError": {
+        "title": "Erreur du serveur",
+        "message": "Un problème est survenu de notre côté. Veuillez réessayer plus tard."
+      },
+      "serviceUnavailable": {
+        "title": "Service indisponible",
+        "message": "Nous rencontrons actuellement des problèmes pour traiter votre demande. Veuillez réessayer plus tard."
+      },
+      "invalidWalletRequest": {
+        "title": "Une erreur s'est produite",
+        "message": "Nous n'avons pas pu vérifier les informations de votre portefeuille. Veuillez réessayer plus tard."
+      },
+      "invalidRequest": {
+        "title": "Erreur de la demande",
+        "message": "Votre demande contient des informations invalides. Veuillez réessayer plus tard."
+      },
+      "unknownError": {
+        "title": "Une erreur s'est produite",
+        "message": "Une erreur inattendue s'est produite. Veuillez actualiser la page ou réessayer sous peu."
+      },
+      "networkError": {
+        "title": "Pas de connexion Internet",
+        "message": "Veuillez vérifier votre connexion Internet et réessayer."
+      }
+    }
+  },
+  "Common": {
+    "home": "Maison"
   }
 }

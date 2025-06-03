@@ -91,7 +91,7 @@ export const Sidebar: React.FC = () => {
                     location={location}
                 />
             ),
-            text: t('StoredCredentials.title'),
+            text: t('StoredCards:title'),
             path: '/dashboard/credentials',
             key: 'Sidebar-Item-Credentials'
         }

@@ -7,6 +7,9 @@ module.exports = {
             fontFamily: {
                 base: 'var(--iw-font-base)'
             },
+            fontSize: {
+                'sm-plus': '15px',
+            },
             zIndex: {
                 '50': '50',
                 '40': '40',
@@ -63,9 +66,9 @@ module.exports = {
                 'iw': '0 3px 8px rgba(24, 71, 147, 0.15)',
                 'iw-hover': '0 5px 8px rgba(24, 71, 147, 0.2)',
                 'iw-sidebar': '2px 0 8px rgb(0,0,0,0.051)',
-                'iw-emptyDocuments': `0px -2px 4px -2px rgba(16, 24, 40, 0.06), 0px 4px 8px -2px rgba(16, 24, 40, 0.10)`,
+                'iw-layout': `0px -2px 4px -2px rgba(16, 24, 40, 0.06), 0px 4px 8px -2px rgba(16, 24, 40, 0.10)`,
                 'iw-hamburger-dropdown': `0px 3px 6px rgb(0,0,0,0.07), 0px -1px 6px rgb(0,0,0,0.07)`
-            }
+            },
         }
     },
     plugins: [require('tailwindcss-rtl')]

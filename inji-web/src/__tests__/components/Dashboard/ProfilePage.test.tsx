@@ -20,8 +20,8 @@ jest.mock('../../../pages/Dashboard/NavBackArrowButton', () => ({
     <button onClick={onBackClick}>Back</button>
   ),
 }));
-jest.mock('../../../pages/Dashboard/TeritaryButton', () => ({
-  TeritaryButton: ({ onClick }: { onClick: () => void }) => (
+jest.mock('../../../pages/Dashboard/TertiaryButton', () => ({
+  TertiaryButton: ({ onClick }: { onClick: () => void }) => (
     <button onClick={onClick}>Go Home</button>
   ),
 }));

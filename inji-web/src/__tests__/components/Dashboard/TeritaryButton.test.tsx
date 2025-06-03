@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { TeritaryButton } from '../../../pages/Dashboard/TeritaryButton';
+import { TertiaryButton } from '../../../pages/Dashboard/TertiaryButton';
 
 describe('TeritaryButton', () => {
   const mockOnClick = jest.fn();
@@ -16,7 +16,7 @@ describe('TeritaryButton', () => {
   });
 
   it('renders the button with correct title and test id', () => {
-    render(<TeritaryButton {...defaultProps} />);
+    render(<TertiaryButton {...defaultProps} />);
 
     const button = screen.getByTestId('btn-sample');
 
@@ -26,7 +26,7 @@ describe('TeritaryButton', () => {
   });
 
   it('calls onClick when clicked', () => {
-    render(<TeritaryButton {...defaultProps} />);
+    render(<TertiaryButton {...defaultProps} />);
 
     fireEvent.click(screen.getByTestId('btn-sample'));
 
@@ -34,7 +34,7 @@ describe('TeritaryButton', () => {
   });
 
   it('applies responsive and hover styles correctly', () => {
-    render(<TeritaryButton {...defaultProps} />);
+    render(<TertiaryButton {...defaultProps} />);
 
     const button = screen.getByTestId('btn-sample');
 
