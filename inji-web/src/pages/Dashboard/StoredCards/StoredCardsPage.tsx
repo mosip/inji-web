@@ -18,6 +18,7 @@ import {PageTitle} from "../../../components/Common/PageTitle/PageTitle";
 import {Error} from "../../../components/Error/Error";
 import {BorderedButton} from "../../../components/Common/Buttons/BorderedButton";
 import {StoredCardsPageStyles} from "./StoredCardsPageStyles";
+import {TertiaryButton} from "../TertiaryButton";
 
 export const StoredCardsPage: React.FC = () => {
     const {t} = useTranslation('StoredCards');
@@ -160,14 +161,7 @@ export const StoredCardsPage: React.FC = () => {
                     </div>
                     <div className={StoredCardsPageStyles.titleContainer}>
                         <PageTitle value={t('title')} testId={"stored-credentials"}/>
-                        {/*TODO: use TertiaryButton here*/}
-                        <button
-                            data-testid={'btn-home'}
-                            className={StoredCardsPageStyles.homeButton}
-                            onClick={navigateToHome}
-                        >
-                            {t('Common:home')}
-                        </button>
+                        <TertiaryButton onClick={navigateToHome} title={t('Common:home')} testId={"home"}/>
                     </div>
                 </div>
                 <div className={`${StoredCardsPageStyles.buttonContainer.large}`}>

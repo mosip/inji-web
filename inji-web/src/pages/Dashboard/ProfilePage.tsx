@@ -5,7 +5,7 @@ import { useUser } from '../../hooks/useUser.tsx';
 import { navigateToDashboardHome } from './utils';
 import { NavBackArrowButton } from './NavBackArrowButton.tsx';
 import { InfoField } from '../../components/Dashboard/InfoField.tsx';
-import { TeritaryButton } from './TeritaryButton.tsx';
+import { TertiaryButton } from './TertiaryButton';
 
 export const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ export const ProfilePage: React.FC = () => {
             <span data-testid="Profile-Page" className="text-2xl font-medium">
               {t('ProfilePage.title')}
             </span>
-            <TeritaryButton
+            <TertiaryButton
               testId="profile-page"
               onClick={() => navigateToDashboardHome(navigate)}
               title={t('ProfilePage.homeTitle')}

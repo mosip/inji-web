@@ -40,7 +40,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage check if the "N
             Stored Cards
           </span>
           <button
-            class="text-xs sm:text-sm text-[#5B03AD] cursor-pointer"
+            class="text-xs sm:text-sm text-iw-secondary cursor-pointer hover:underline"
             data-testid="btn-home"
           >
             Home
@@ -172,7 +172,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage check if the lo
             Stored Cards
           </span>
           <button
-            class="text-xs sm:text-sm text-[#5B03AD] cursor-pointer"
+            class="text-xs sm:text-sm text-iw-secondary cursor-pointer hover:underline"
             data-testid="btn-home"
           >
             Home
@@ -309,7 +309,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
             Stored Cards
           </span>
           <button
-            class="text-xs sm:text-sm text-[#5B03AD] cursor-pointer"
+            class="text-xs sm:text-sm text-iw-secondary cursor-pointer hover:underline"
             data-testid="btn-home"
           >
             Home
@@ -456,7 +456,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
             Stored Cards
           </span>
           <button
-            class="text-xs sm:text-sm text-[#5B03AD] cursor-pointer"
+            class="text-xs sm:text-sm text-iw-secondary cursor-pointer hover:underline"
             data-testid="btn-home"
           >
             Home
