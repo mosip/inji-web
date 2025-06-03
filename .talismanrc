@@ -62,7 +62,7 @@ fileignoreconfig:
 - filename: inji-web/src/__tests__/pages/users/ResetWalletPage.test.tsx
   checksum: bf754a0468dcee7877b721dc990b5abca3c2dc6c2889b36132401f4e061a11bd
 - filename: inji-web/src/pages/users/PinPage.tsx
-  checksum: a95e0906e8f27ab246ee6fafaf0fa739fb3ee368598e1829dc0573d1b7e76a37
+  checksum: 84e57cc992c9ec169ee2d381f92d681cf88b553de23a0da0ca976a1ab6d9c2fd
 - filename: inji-web/src/__tests__/users/login/PinPage.test.tsx
   checksum: e22b91e31e1feeb4b6b1d12732c5764d1dc8bda720dc69d38595db9004d3f404
 - filename: inji-web/src/__tests__/users/login/Login.test.tsx
