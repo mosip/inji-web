@@ -26,6 +26,12 @@ export type SearchCredentialProps = {
     issuerContainerBorderRadius?: string;
 }
 
+export type TeritaryButtonProps={
+    onClick: () => void;
+    title:string,
+    testId:string
+}
+
 export type FAQPageProps = {
     backUrl?: string;
     withHome?: boolean;
@@ -33,6 +39,12 @@ export type FAQPageProps = {
 
 export type CredentialTypesPageProps = {
     backUrl?: string;
+};
+
+export type InfoFieldProps = {
+    label: string;
+    value?: string;
+    testId: string;
 };
 
 export type CollapseButtonProps = {
@@ -63,6 +75,7 @@ export type SideBarSvgIconProps = {
 export type User = {
     displayName: string;
     profilePictureUrl: string;
+    email:string;
 };
 
 export type ErrorType = {

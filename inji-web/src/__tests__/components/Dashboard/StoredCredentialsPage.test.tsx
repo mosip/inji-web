@@ -28,23 +28,23 @@ describe('Testing the Layout of StoredDocumentsPage ->', () => {
     });
 
     it('check if it renders text elements correctly using translation keys', () => {
-        expect(screen.getByTestId('Stored-Credentials')).toBeInTheDocument();
-        expect(screen.getByTestId('Home')).toBeInTheDocument();
-        expect(screen.getByTestId('Back-Arrow-Icon')).toBeInTheDocument();
-        expect(screen.getByTestId('Add-Credential')).toBeInTheDocument();
-        expect(screen.getByTestId('Blank-Document')).toBeInTheDocument();
-        expect(screen.getByTestId('Document-Icon')).toBeInTheDocument();
-        expect(screen.getByTestId('No-Credentials-Title')).toBeInTheDocument();
+        expect(screen.getByTestId('stored-credentials')).toBeInTheDocument();
+        expect(screen.getByTestId('btn-home')).toBeInTheDocument();
+        expect(screen.getByTestId('back-arrow-icon')).toBeInTheDocument();
+        expect(screen.getByTestId('add-credential')).toBeInTheDocument();
+        expect(screen.getByTestId('blank-document')).toBeInTheDocument();
+        expect(screen.getByTestId('document-icon')).toBeInTheDocument();
+        expect(screen.getByTestId('no-credentials-title')).toBeInTheDocument();
     });
 
     it('should navigate to dashboard home on nav back button click', () => {
-        fireEvent.click(screen.getByTestId('Back-Arrow-Icon'));
+        fireEvent.click(screen.getByTestId('back-arrow-icon'));
 
         expect(window.location.pathname).toBe('/dashboard/home');
     });
 
     it('should navigate to dashboard home on Home text click', () => {
-        fireEvent.click(screen.getByTestId('Home'));
+        fireEvent.click(screen.getByTestId('btn-home'));
 
         expect(window.location.pathname).toBe('/dashboard/home');
     });
@@ -52,7 +52,7 @@ describe('Testing the Layout of StoredDocumentsPage ->', () => {
     it('should navigate to dashboard home when Add credential button is clicked in larger screens', () => {
         setScreenWidth(764);
 
-        fireEvent.click(screen.getByTestId('Add-Credential'));
+        fireEvent.click(screen.getByTestId('add-credential'));
 
         expect(window.location.pathname).toBe('/dashboard/home');
     });
@@ -60,7 +60,7 @@ describe('Testing the Layout of StoredDocumentsPage ->', () => {
     it('should navigate to dashboard home when Add credential button in blank document is clicked in smaller screens', () => {
         setScreenWidth(400);
 
-        fireEvent.click(screen.getByTestId('Add-Credential'));
+        fireEvent.click(screen.getByTestId('add-credential'));
 
         expect(window.location.pathname).toBe('/dashboard/home');
     });

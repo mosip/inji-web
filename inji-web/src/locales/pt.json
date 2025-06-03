@@ -136,29 +136,37 @@
         "subTitle": "a sessão não é válida ou a sessão foi concluída"
       },
       "verification": {
-        "proof_type_not_supported": {
-          "title": "Ocorreu um erro",
-          "subTitle": "Desculpe! Devido a um erro técnico, não conseguimos baixar sua credencial."
+        "errMissingIssuanceDate": {
+            "title": "Data de Emissão Inválida",
+            "subTitle": "A data de emissão é inválida ou está definida no futuro. Verifique se a data é válida."
         },
-        "json_parsing_failed": {
-          "title": "Ocorreu um erro",
-          "subTitle": "Desculpe, devido a um erro técnico, não conseguimos baixar o VC. Tente novamente mais tarde!"
+        "errInvalidIssuanceDate": {
+          "title": "Data de Emissão Inválida",
+          "subTitle": "A data de emissão é inválida ou está definida no futuro. Verifique se a data é válida."
         },
-        "signature_verification_failed": {
-          "title": "Ocorreu um erro",
-          "subTitle": "Desculpe! Sua credencial não pôde ser baixada, pois há um problema com a validação da assinatura do emissor. Entre em contato com o administrador para obter mais assistência."
+        "errIssuanceDateIsFutureDate": {
+          "title": "Data de Emissão Inválida",
+          "subTitle": "A data de emissão é inválida ou está definida no futuro. Verifique se a data é válida."
         },
-        "unknown_exception": {
-          "title": "Ocorreu um erro",
-          "subTitle": "Desculpe, parece que nossos serviços estão temporariamente indisponíveis. Verifique novamente em breve e agradecemos sua paciência!"
+        "errInvalidExpirationDate": {
+          "title": "Data de Validade Inválida",
+          "subTitle": "A data de validade é inválida. Verifique se a data é válida."
         },
-        "proof_document_not_found": {
-          "title": "Ocorreu um erro",
-          "subTitle": "Desculpe! Sua credencial não pôde ser baixada, pois há um problema com a validação da assinatura do emissor. Entre em contato com o administrador para obter mais assistência."
+        "errVcExpired": {
+          "title": "Data de Validade Inválida",
+          "subTitle": "A data de validade é inválida. Verifique se a data é válida."
         },
-        "public_key_not_found": {
-          "title": "Ocorreu um erro",
-          "subTitle": "Desculpe! Sua credencial não pôde ser baixada, pois há um problema com a validação da assinatura do emissor. Entre em contato com o administrador para obter mais assistência."
+        "errInvalidValidFrom": {
+          "title": "Data de Início Inválida",
+          "subTitle": "A data é inválida ou está definida no futuro. Verifique se a data é válida."
+        },
+        "errValidFromIsFutureDate": {
+          "title": "Data de Início Inválida",
+          "subTitle": "A data é inválida ou está definida no futuro. Verifique se a data é válida."
+        },
+        "errInvalidValidUntil": {
+          "title": "Data Final Inválida",
+          "subTitle": "A data é inválida. Verifique se a data é válida."
         }
       },
       "generic": {
@@ -319,7 +327,8 @@
     },
     "success": "Prosseguir",
     "cancel": "Voltar",
-    "disclaimer": "Observe que o QR Code pode ser compartilhado apenas pelo número de vezes que você escolheu aqui. Para usar o QR Code para compartilhar novamente, você precisa baixar o PDF novamente."
+    "disclaimer": "Observe que o QR Code pode ser compartilhado apenas pelo número de vezes que você escolheu aqui. Para usar o QR Code para compartilhar novamente, você precisa baixar o PDF novamente.",
+    "toastText": "Em breve"
   },
   "CustomExpiryModal": {
     "title": "Por favor, insira o número de vezes que você deseja usar esta credencial ",
@@ -346,6 +355,12 @@
       "profile": "Perfil",
       "faq": "Perguntas frequentes",
       "logout": "வெளியேறு"
+    },
+    "ProfilePage": {
+      "title": "Meu Perfil",
+      "homeTitle": "Início",
+      "fullName": "Nome completo",
+      "emailAddress": "Endereço de e-mail"
     }
   }
 }
