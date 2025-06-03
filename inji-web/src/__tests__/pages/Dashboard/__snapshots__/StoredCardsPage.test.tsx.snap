@@ -17,7 +17,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage check if the "N
         >
           <svg
             class="mr-2 cursor-pointer"
-            data-testid="Back-Arrow-Icon"
+            data-testid="back-arrow-icon"
             fill="none"
             height="29"
             viewBox="0 0 24 18"
@@ -149,7 +149,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage check if the lo
         >
           <svg
             class="mr-2 cursor-pointer"
-            data-testid="Back-Arrow-Icon"
+            data-testid="back-arrow-icon"
             fill="none"
             height="29"
             viewBox="0 0 24 18"
@@ -286,7 +286,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
         >
           <svg
             class="mr-2 cursor-pointer"
-            data-testid="Back-Arrow-Icon"
+            data-testid="back-arrow-icon"
             fill="none"
             height="29"
             viewBox="0 0 24 18"
@@ -433,7 +433,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
         >
           <svg
             class="mr-2 cursor-pointer"
-            data-testid="Back-Arrow-Icon"
+            data-testid="back-arrow-icon"
             fill="none"
             height="29"
             viewBox="0 0 24 18"

@@ -72,7 +72,7 @@ describe('Testing of StoredCardsPage ->', () => {
     it('should navigate to home on nav back button click', () => {
         renderWithRouter(<StoredCardsPage/>);
 
-        fireEvent.click(screen.getByTestId('Back-Arrow-Icon'));
+        fireEvent.click(screen.getByTestId('back-arrow-icon'));
 
         expect(window.location.pathname).toBe('/dashboard/home');
     });
