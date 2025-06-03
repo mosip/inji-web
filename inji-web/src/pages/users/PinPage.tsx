@@ -8,6 +8,7 @@ import {useTranslation} from 'react-i18next';
 import {navigateToDashboardHome} from '../Dashboard/utils';
 import {useUser} from '../../hooks/useUser';
 import CrossIcon from '../../assets/CrossIcon.svg';
+import { PasscodeInput } from '../../components/Users/PasscodeInput';
 
 export const PinPage: React.FC = () => {
     const {t, i18n} = useTranslation('PinPage');
@@ -219,7 +220,7 @@ export const PinPage: React.FC = () => {
         try {
             const pin = passcode.join('');
             const confirmPin = confirmPasscode.join('');
-            
+
             if (wallets.length === 0 && pin !== confirmPin) {
                 setError(t('error.passcodeMismatchError'));
                 throw new Error('Pin and Confirm Pin mismatch');
@@ -304,7 +305,7 @@ export const PinPage: React.FC = () => {
             className="fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50 h-screen"
         >
             <div
-                className="rounded-2xl bg-white flex flex-col align-center items-center justify-start relative 
+                className="rounded-2xl bg-white flex flex-col align-center items-center justify-start relative
                    w-[90%] sm:w-[85%] md:w-[75%]
                    h-[80%] sm:h-[60%] md:h-[70%]
                    overflow-y-auto
@@ -404,38 +405,20 @@ export const PinPage: React.FC = () => {
                         <div className="w-[95%] sm:w-[85%] py-3 sm:py-5 md:py-7 space-y-4">
                             <div className="w-full overflow-x-auto">
                                 <div className="mx-auto">
-                                    <div
-                                        className="mb-2"
-                                        data-testid="pin-passcode-input"
-                                    >
-                                        <p className="text-sm text-left font-medium text-iw-textSecondary">
-                                            {t('enterPasscode')}
-                                        </p>
-                                        {renderInputs(
-                                            'passcode',
-                                            showPasscode,
-                                            () =>
-                                                setShowPasscode((prev) => !prev)
-                                        )}
-                                    </div>
+                                    <PasscodeInput
+                                        label={t('enterPasscode')}
+                                        value={passcode}
+                                        onChange={setPasscode}
+                                        testId="pin-passcode-input"
+                                    />
 
                                     {wallets.length === 0 && (
-                                        <div
-                                            className="mb-2"
-                                            data-testid="pin-confirm-passcode-input"
-                                        >
-                                            <p className="text-sm text-left font-medium text-iw-textSecondary">
-                                                {t('confirmPasscode')}
-                                            </p>
-                                            {renderInputs(
-                                                'confirm',
-                                                showConfirm,
-                                                () =>
-                                                    setShowConfirm(
-                                                        (prev) => !prev
-                                                    )
-                                            )}
-                                        </div>
+                                        <PasscodeInput
+                                            label={t('confirmPasscode')}
+                                            value={confirmPasscode}
+                                            onChange={setConfirmPasscode}
+                                            testId="pin-confirm-passcode-input"
+                                        />
                                     )}
                                 </div>
                             </div>
