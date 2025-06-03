@@ -164,9 +164,9 @@ export const PinPage: React.FC = () => {
                         className="pin-input-box-border pin-input-box-style flex items-center justify-center"
                     >
                         {visible ? (
-                            <FaEyeSlash className="text-iw-grayLight" />
-                        ) : (
                             <FaEye className="text-iw-grayLight" />
+                        ) : (
+                            <FaEyeSlash className="text-iw-grayLight" />
                         )}
                     </button>
                 </div>
