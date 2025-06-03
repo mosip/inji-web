@@ -74,12 +74,18 @@ exports[`ResetWalletPage Component should match snapshot 1`] = `
           <div
             class="flex items-start ml-4"
           >
-            <img
-              alt="Back Arrow"
-              class="cursor-pointer cursor-pointer"
-              data-testid="btn-back-reset"
-              src="BackArrowIcon.svg"
-            />
+            <button
+              class="cursor-pointer"
+              data-testid="btn-back-arrow-container"
+              type="button"
+            >
+              <img
+                alt="Back Arrow"
+                class=""
+                data-testid="icon-back-arrow"
+                src="BackArrowIcon.svg"
+              />
+            </button>
             <p
               class="text-iw-textTertiary text-sm sm:text-base font-medium pl-6"
               data-testid="subtitle-reset-wallet"

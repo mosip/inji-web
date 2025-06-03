@@ -7,7 +7,6 @@ import {SolidButton} from '../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
 import {navigateToDashboardHome} from '../Dashboard/utils';
 import {useUser} from '../../hooks/useUser';
-import CrossIcon from '../../assets/CrossIcon.svg';
 import {PasscodeInput} from '../../components/Users/PasscodeInput';
 import {BackgroundDecorator} from '../../components/Common/BackgroundDecorator';
 import {CrossIconButton} from '../../components/Common/Buttons/CrossIconButton';

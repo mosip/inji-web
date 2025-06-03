@@ -142,10 +142,11 @@ describe('ResetWalletPage Component', () => {
         expect(screen.getByTestId('backdrop-reset-wallet')).toBeInTheDocument();
         expect(screen.getByTestId('logo-inji-web')).toBeInTheDocument();
         expect(screen.getByTestId('title-reset-wallet')).toBeInTheDocument();
-        expect(screen.getByTestId('btn-back-reset')).toBeInTheDocument();
         expect(
-            screen.getByTestId('subtitle-reset-wallet')
+            screen.getByTestId('btn-back-arrow-container')
         ).toBeInTheDocument();
+        expect(screen.getByTestId('icon-back-arrow')).toBeInTheDocument();
+        expect(screen.getByTestId('subtitle-reset-wallet')).toBeInTheDocument();
         expect(
             screen.getByTestId('icon-reset-instruction')
         ).toBeInTheDocument();
@@ -165,9 +166,7 @@ describe('ResetWalletPage Component', () => {
         expect(screen.getByTestId('title-reset-wallet')).toHaveTextContent(
             'Reset Your Wallet'
         );
-        expect(
-            screen.getByTestId('subtitle-reset-wallet')
-        ).toHaveTextContent(
+        expect(screen.getByTestId('subtitle-reset-wallet')).toHaveTextContent(
             'Reset wallet to regain access and re-download credentials'
         );
         expect(screen.getByTestId('text-reset-question')).toHaveTextContent(
@@ -187,7 +186,7 @@ describe('ResetWalletPage Component', () => {
     test('should navigate back to /pin when back arrow button is clicked', () => {
         render(<ResetWalletPage />);
 
-        fireEvent.click(screen.getByTestId('btn-back-reset'));
+        fireEvent.click(screen.getByTestId('btn-back-arrow-container'));
 
         expect(mockNavigate).toHaveBeenCalledTimes(1);
         expect(mockNavigate).toHaveBeenCalledWith('/pin');

@@ -12,7 +12,8 @@ describe('BackArrowButton Component', () => {
 
     const defaultProps = {
         onClick: mockOnClick,
-        testId: 'btn-back-arrow',
+        btnTestId: 'btn-back-arrow-container',
+        iconTestId: 'icon-back-arrow',
         alt: 'Back Arrow'
     };
 
@@ -26,88 +27,97 @@ describe('BackArrowButton Component', () => {
 
     test('matches snapshot with default props', () => {
         const {asFragment} = renderBackArrowButton();
-        
+
         expect(asFragment()).toMatchSnapshot();
     });
 
     test('matches snapshot with custom props', () => {
         const {asFragment} = renderBackArrowButton({
-            className: 'custom-class',
-            testId: 'custom-back-button',
+            btnClassName: 'custom-btn-class',
+            iconClassName: 'custom-icon-class',
+            btnTestId: 'custom-btn-test-id',
+            iconTestId: 'custom-icon-test-id',
             alt: 'Custom Alt Text'
         });
-        
+
         expect(asFragment()).toMatchSnapshot();
     });
 
-    test('renders with default test ID', () => {
+    test('renders button with provided btnTestId', () => {
+        const customBtnTestId = 'test-btn-id';
+        
+        renderBackArrowButton({btnTestId: customBtnTestId});
+        
+        expect(screen.getByTestId(customBtnTestId)).toBeInTheDocument();
+    });
+
+    test('renders icon with provided iconTestId', () => {
+        const customIconTestId = 'test-icon-id';
+        
+        renderBackArrowButton({iconTestId: customIconTestId});
+        
+        expect(screen.getByTestId(customIconTestId)).toBeInTheDocument();
+    });
+
+    test('renders with default test IDs when not provided', () => {
         renderBackArrowButton();
         
-        expect(screen.getByTestId(defaultProps.testId)).toBeInTheDocument();
+        expect(screen.getByTestId(defaultProps.btnTestId)).toBeInTheDocument();
+        
+        expect(screen.getByTestId(defaultProps.iconTestId)).toBeInTheDocument();
     });
 
-    test('renders with custom test ID', () => {
-        const customTestId = 'my-unique-button';
-        
-        renderBackArrowButton({testId: customTestId});
-        
-        expect(screen.getByTestId(customTestId)).toBeInTheDocument();
-    });
-
-    test('sets default alt text', () => {
+    test('calls onClick handler when button is clicked', () => {
         renderBackArrowButton();
         
-        expect(screen.getByTestId(defaultProps.testId)).toHaveAttribute(
-            'alt',
-            defaultProps.alt
-        );
-    });
-
-    test('sets custom alt text when provided', () => {
-        const customAltText = 'Go Back Now';
-        
-        renderBackArrowButton({alt: customAltText});
-        
-        expect(screen.getByTestId(defaultProps.testId)).toHaveAttribute(
-            'alt',
-            customAltText
-        );
-    });
-
-    test('uses correct image source', () => {
-        renderBackArrowButton();
-        
-        expect(screen.getByTestId(defaultProps.testId)).toHaveAttribute(
-            'src',
-            'mocked-back-arrow-path'
-        );
-    });
-
-    test('calls onClick handler when clicked', () => {
-        renderBackArrowButton();
-        
-        fireEvent.click(screen.getByTestId(defaultProps.testId));
+        fireEvent.click(screen.getByTestId(defaultProps.btnTestId));
         
         expect(mockOnClick).toHaveBeenCalledTimes(1);
     });
 
-    test('applies default cursor-pointer class', () => {
-        renderBackArrowButton();
+    test('applies custom button classes', () => {
+        const customBtnClass = 'test-custom-class';
+        renderBackArrowButton({btnClassName: customBtnClass});
         
-        expect(screen.getByTestId(defaultProps.testId)).toHaveClass(
-            'cursor-pointer'
-        );
+        const button = screen.getByTestId(defaultProps.btnTestId);
+        
+        expect(button).toHaveClass(customBtnClass);
     });
 
-    test('applies custom classes along with default class', () => {
-        renderBackArrowButton({className: 'test-custom-class another-class'});
+    test('applies custom icon classes', () => {
+        const customIconClass = 'test-icon-class';
+        renderBackArrowButton({iconClassName: customIconClass});
         
-        const button = screen.getByTestId(defaultProps.testId);
+        const img = screen.getByTestId(defaultProps.iconTestId);
         
-        expect(button).toHaveClass(
-            'cursor-pointer',
-            'test-custom-class',
-            'another-class'
-        );
+        expect(img).toHaveClass(customIconClass);
+    });
+
+    test('renders the back arrow icon image with correct src', () => {
+        renderBackArrowButton();
+        const imgElement = screen.getByAltText(defaultProps.alt);
+        
+        expect(imgElement).toBeInTheDocument();
+        
+        expect(imgElement).toHaveAttribute('src', 'mocked-back-arrow-path');
+    });
+
+    test('applies default empty string as class when no className provided', () => {
+        renderBackArrowButton();
+        
+        const button = screen.getByTestId(defaultProps.btnTestId);
+        const img = screen.getByTestId(defaultProps.iconTestId);
+
+        expect(button.className).toBe('');
+        expect(img.className).toBe('');
+    });
+
+    test('sets custom alt text when provided', () => {
+        const customAltText = 'Custom Alt Text Provided';
+        renderBackArrowButton({alt: customAltText});
+        
+        const imgElement = screen.getByAltText(customAltText);
+        
+        expect(imgElement).toBeInTheDocument();
     });
 });

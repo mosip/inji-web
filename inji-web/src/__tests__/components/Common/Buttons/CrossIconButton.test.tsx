@@ -16,7 +16,7 @@ describe('CrossIconButton Component', () => {
         const {asFragment} = render(
             <CrossIconButton
                 onClick={mockOnClick}
-                btnTestId="btn-close-icon"
+                btnTestId="btn-close-icon-container"
                 iconTestId="icon-close"
             />
         );
@@ -54,7 +54,7 @@ describe('CrossIconButton Component', () => {
         render(
             <CrossIconButton
                 onClick={mockOnClick}
-                btnTestId="btn-close-icon"
+                btnTestId="btn-close-icon-container"
                 iconTestId="test-icon-id"
             />
         );
@@ -66,12 +66,12 @@ describe('CrossIconButton Component', () => {
         render(
             <CrossIconButton
                 onClick={mockOnClick}
-                btnTestId="btn-close-icon"
+                btnTestId="btn-close-icon-container"
                 iconTestId="icon-close"
             />
         );
 
-        expect(screen.getByTestId('btn-close-icon')).toBeInTheDocument();
+        expect(screen.getByTestId('btn-close-icon-container')).toBeInTheDocument();
         expect(screen.getByTestId('icon-close')).toBeInTheDocument();
     });
 
@@ -79,12 +79,12 @@ describe('CrossIconButton Component', () => {
         render(
             <CrossIconButton
                 onClick={mockOnClick}
-                btnTestId="btn-close-icon"
+                btnTestId="btn-close-icon-container"
                 iconTestId="icon-close"
             />
         );
 
-        fireEvent.click(screen.getByTestId('btn-close-icon'));
+        fireEvent.click(screen.getByTestId('btn-close-icon-container'));
 
         expect(mockOnClick).toHaveBeenCalledTimes(1);
     });
@@ -94,12 +94,12 @@ describe('CrossIconButton Component', () => {
             <CrossIconButton
                 onClick={mockOnClick}
                 btnClassName="test-custom-class"
-                btnTestId="btn-close-icon"
+                btnTestId="btn-close-icon-container"
                 iconTestId="icon-close"
             />
         );
 
-        const button = screen.getByTestId('btn-close-icon');
+        const button = screen.getByTestId('btn-close-icon-container');
 
         expect(button).toHaveClass('test-custom-class');
     });
@@ -109,7 +109,7 @@ describe('CrossIconButton Component', () => {
             <CrossIconButton
                 onClick={mockOnClick}
                 iconClassName="test-icon-class"
-                btnTestId="btn-close-icon"
+                btnTestId="btn-close-icon-container"
                 iconTestId="icon-close"
             />
         );
@@ -123,7 +123,7 @@ describe('CrossIconButton Component', () => {
         render(
             <CrossIconButton
                 onClick={mockOnClick}
-                btnTestId="btn-close-icon"
+                btnTestId="btn-close-icon-container"
                 iconTestId="icon-close"
             />
         );
@@ -138,12 +138,12 @@ describe('CrossIconButton Component', () => {
         render(
             <CrossIconButton
                 onClick={mockOnClick}
-                btnTestId="btn-close-icon"
+                btnTestId="btn-close-icon-container"
                 iconTestId="icon-close"
             />
         );
 
-        const button = screen.getByTestId('btn-close-icon');
+        const button = screen.getByTestId('btn-close-icon-container');
 
         expect(button).toHaveAttribute('type', 'button');
     });
@@ -152,12 +152,12 @@ describe('CrossIconButton Component', () => {
         render(
             <CrossIconButton
                 onClick={mockOnClick}
-                btnTestId="btn-close-icon"
+                btnTestId="btn-close-icon-container"
                 iconTestId="icon-close"
             />
         );
 
-        const button = screen.getByTestId('btn-close-icon');
+        const button = screen.getByTestId('btn-close-icon-container');
         const img = screen.getByTestId('icon-close');
 
         expect(button.className).toBe('');

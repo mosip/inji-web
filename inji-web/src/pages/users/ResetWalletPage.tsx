@@ -145,9 +145,8 @@ export const ResetWalletPage: React.FC = () => {
                         </h1>
                         <div className={ResetWalletPageStyles.subHeader}>
                             <BackArrowButton
-                                testId="btn-back-reset"
                                 onClick={handleBackNavigation}
-                                className={
+                                btnClassName={
                                     ResetWalletPageStyles.backArrowButton
                                 }
                             />

@@ -2,25 +2,35 @@ import React from 'react';
 import BackArrowIcon from '../../../assets/BackArrowIcon.svg';
 
 interface BackArrowButtonProps {
-  onClick: () => void;
-  className?: string;
-  testId?: string;
-  alt?: string;
+    onClick: () => void;
+    btnClassName?: string;
+    iconClassName?: string;
+    btnTestId?: string;
+    iconTestId?: string;
+    alt?: string;
 }
 
 export const BackArrowButton: React.FC<BackArrowButtonProps> = ({
-  onClick,
-  className = '',
-  testId = 'btn-back-arrow',
-  alt = 'Back Arrow'
+    onClick,
+    btnClassName = '',
+    iconClassName = '',
+    btnTestId = 'btn-back-arrow-container',
+    iconTestId = 'icon-back-arrow',
+    alt = 'Back Arrow'
 }) => {
-  return (
-    <img
-      data-testid={testId}
-      src={BackArrowIcon}
-      alt={alt}
-      className={`cursor-pointer ${className}`}
-      onClick={onClick}
-    />
-  );
+    return (
+        <button
+            type="button"
+            onClick={onClick}
+            data-testid={btnTestId}
+            className={btnClassName}
+        >
+            <img
+                data-testid={iconTestId}
+                src={BackArrowIcon}
+                alt={alt}
+                className={iconClassName}
+            />
+        </button>
+    );
 };

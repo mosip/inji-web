@@ -13,7 +13,7 @@ export const CrossIconButton: React.FC<CrossIconButtonProps> = ({
   onClick,
   btnClassName = "",
   iconClassName= "",
-  btnTestId = "btn-close-icon",
+  btnTestId = "btn-close-icon-container",
   iconTestId = "icon-close",
 }) => {
   return (
