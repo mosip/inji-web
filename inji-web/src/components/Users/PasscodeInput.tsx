@@ -10,11 +10,11 @@ interface PasscodeInputProps {
 }
 
 export const PasscodeInput: React.FC<PasscodeInputProps> = ({
-                                                                label,
-                                                                value,
-                                                                onChange,
-                                                                testId
-                                                            }) => {
+    label,
+    value,
+    onChange,
+    testId
+}) => {
     const [showPasscode, setShowPasscode] = useState(false);
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -32,7 +32,10 @@ export const PasscodeInput: React.FC<PasscodeInputProps> = ({
 
     return (
         <div className="mb-2" data-testid={testId}>
-            <p data-testid={`label-${testId}`} className="text-sm text-left font-medium text-iw-textSecondary">
+            <p
+                data-testid={`label-${testId}`}
+                className="text-sm text-left font-medium text-iw-textSecondary"
+            >
                 {label}
             </p>
             <div className="flex items-center gap-4">
@@ -46,23 +49,37 @@ export const PasscodeInput: React.FC<PasscodeInputProps> = ({
                             inputMode="numeric"
                             maxLength={1}
                             value={digit}
-                            onChange={(e) => handleInputChange(idx, e.target.value)}
+                            onChange={(e) =>
+                                handleInputChange(idx, e.target.value)
+                            }
                             onFocus={(e) => {
-                                e.target.classList.add('pin-input-focus-box-border');
+                                e.target.classList.add(
+                                    'pin-input-focus-box-border'
+                                );
                             }}
                             onBlur={(e) => {
                                 if (!digit) {
-                                    e.target.classList.remove('pin-input-focus-box-border');
-                                    e.target.classList.add('pin-input-box-border');
+                                    e.target.classList.remove(
+                                        'pin-input-focus-box-border'
+                                    );
+                                    e.target.classList.add(
+                                        'pin-input-box-border'
+                                    );
                                 }
                             }}
                             onKeyDown={(e) => {
-                                if (e.key === 'Backspace' && idx > 0 && !digit) {
+                                if (
+                                    e.key === 'Backspace' &&
+                                    idx > 0 &&
+                                    !digit
+                                ) {
                                     inputRefs.current[idx - 1]?.focus();
                                 }
                             }}
                             className={`pin-input-box-style ${
-                                digit ? 'pin-input-focus-box-border' : 'pin-input-box-border'
+                                digit
+                                    ? 'pin-input-focus-box-border'
+                                    : 'pin-input-box-border'
                             } focus:outline-none`}
                         />
                     ))}
@@ -70,7 +87,7 @@ export const PasscodeInput: React.FC<PasscodeInputProps> = ({
                 <div className="flex items-center gap-4 py-2 rounded-lg">
                     <button
                         type="button"
-                        onClick={() => setShowPasscode(prev => !prev)}
+                        onClick={() => setShowPasscode((prev) => !prev)}
                         className="pin-input-box-border pin-input-box-style flex items-center justify-center focus:outline-none"
                     >
                         {showPasscode ? (

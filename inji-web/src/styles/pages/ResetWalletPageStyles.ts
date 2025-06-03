@@ -2,7 +2,7 @@ export const ResetWalletPageStyles = {
     backdrop:
         'overflow-hidden fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50',
     container:
-        'overflow-hidden rounded-2xl bg-white flex flex-col items-center justify-start relative w-[90%] sm:w-[85%] md:w-[75%] h-[75%] sm:h-[70%] overflow-y-auto overflow-x-auto shadow-iw-pinPageContainer h-full',
+        'overflow-hidden rounded-2xl bg-white flex flex-col items-center justify-start relative w-[90%] sm:w-[85%] md:w-[90%] h-[80%] sm:h-[76%] md:h-[80%] overflow-y-auto overflow-x-auto shadow-iw-pinPageContainer',
     circleContainer:
         'overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none max-w-auto',
     circleWrapper: 'absolute top-[155px]',

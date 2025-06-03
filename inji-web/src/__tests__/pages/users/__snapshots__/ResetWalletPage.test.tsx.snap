@@ -7,7 +7,7 @@ exports[`ResetWalletPage Component should match snapshot 1`] = `
     data-testid="backdrop-reset-wallet"
   >
     <div
-      class="overflow-hidden rounded-2xl bg-white flex flex-col items-center justify-start relative w-[90%] sm:w-[85%] md:w-[75%] h-[75%] sm:h-[70%] overflow-y-auto overflow-x-auto shadow-iw-pinPageContainer h-full"
+      class="overflow-hidden rounded-2xl bg-white flex flex-col items-center justify-start relative w-[90%] sm:w-[85%] md:w-[90%] h-[80%] sm:h-[76%] md:h-[80%] overflow-y-auto overflow-x-auto shadow-iw-pinPageContainer"
     >
       <div
         class="overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none"
