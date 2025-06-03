@@ -1,5 +1,5 @@
 import {StoredCardsPage} from '../../../pages/Dashboard/StoredCards/StoredCardsPage';
-import {fireEvent, screen, waitFor} from '@testing-library/react';
+import {fireEvent, screen, waitFor, within} from '@testing-library/react';
 import {mockApiObject, mockusei18n, mockUseTranslation, renderWithRouter} from '../../../test-utils/mockUtils';
 
 mockUseTranslation()
@@ -9,7 +9,6 @@ describe('Testing of StoredCardsPage ->', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         mockusei18n();
-
         // Reset fetch mock
         global.fetch = jest.fn();
     });
@@ -29,12 +28,48 @@ describe('Testing of StoredCardsPage ->', () => {
         },
     ];
 
-    //TODO: Snapshot tests will be unskipped at last once UI is fully ready
-    it.skip('check if the layout is matching with snapshot', () => {
-        const {asFragment} = renderWithRouter(<StoredCardsPage/>);
+    describe("Layout of StoredCardsPage", () => {
+        it('check if the loading layout is matching with snapshot', () => {
+            const {asFragment} = renderWithRouter(<StoredCardsPage/>);
 
-        expect(asFragment()).toMatchSnapshot();
-    });
+            expect(asFragment()).toMatchSnapshot();
+        });
+
+        it('check if the "No credentials found" layout is matching with snapshot', async () => {
+            (global.fetch as jest.Mock).mockResolvedValueOnce({
+                ok: true,
+                json: async () => [],
+            });
+
+            const {asFragment} = renderWithRouter(<StoredCardsPage/>);
+            await waitForLoaderDisappearance()
+
+            expect(asFragment()).toMatchSnapshot();
+        });
+
+        it('should check if listing of credentials is matching snapshot', async () => {
+            (global.fetch as jest.Mock).mockResolvedValueOnce({
+                ok: true,
+                json: async () => mockCredentials,
+            });
+
+            const {asFragment} = renderWithRouter(<StoredCardsPage/>);
+            await waitForLoaderDisappearance();
+
+            expect(asFragment()).toMatchSnapshot();
+        });
+
+        it.skip('should check if error while fetching credentials is matching snapshot', () => {
+            (global.fetch as jest.Mock).mockResolvedValueOnce({
+                ok: false,
+                json: async () => ({errorMessage: 'Failed to fetch credentials'}),
+            });
+
+            const {asFragment} = renderWithRouter(<StoredCardsPage/>);
+
+            expect(asFragment()).toMatchSnapshot();
+        });
+    })
 
     it('should navigate to home on nav back button click', () => {
         renderWithRouter(<StoredCardsPage/>);
@@ -53,21 +88,29 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should navigate to dashboard home when Add credential button is clicked in larger screens', () => {
-        setScreenWidth(764);
-
         renderWithRouter(<StoredCardsPage/>);
-        const addCredentialButton = screen.getByRole('button', {name: "Add Cards"});
+        // In case of larger screens, the add cards button is inside the page title container
+        const container = screen.getByTestId('page-title-container');
+        const addCredentialButton = within(container).getByRole('button', {name: "Add Cards"});
         fireEvent.click(addCredentialButton);
 
         expect(window.location.pathname).toBe('/dashboard/home');
     });
 
-    it('should navigate to dashboard home when Add credential button in blank document is clicked in smaller screens', () => {
-        setScreenWidth(400);
+    it('should navigate to dashboard home when Add credential button in blank document is clicked in smaller screens', async () => {
+        (global.fetch as jest.Mock).mockImplementation(() =>
+            new Promise(resolve => setTimeout(() => resolve({
+                ok: true,
+                json: async () => mockCredentials
+            }), 100))
+        );
 
         renderWithRouter(<StoredCardsPage/>);
-        const addCredentialButton = screen.getByRole('button', {name: "Add Cards"});
-        fireEvent.click(addCredentialButton);
+        await waitForLoaderDisappearance();
+        // In case of smaller screens , the add cards button is inside the content and action container
+        const container = screen.getByTestId('content-and-action-container');
+        const addCardsButton = within(container).getByRole('button', {name: "Add Cards"});
+        fireEvent.click(addCardsButton);
 
         expect(window.location.pathname).toBe('/dashboard/home');
     });
@@ -202,8 +245,3 @@ describe('Testing of StoredCardsPage ->', () => {
         });
     }
 });
-
-const setScreenWidth = (width: number) => {
-    window.innerWidth = width;
-    window.dispatchEvent(new Event('resize'));
-};

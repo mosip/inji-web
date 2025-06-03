@@ -7,8 +7,7 @@ function MockIcon() {
 }
 
 describe('InfoSection Component', () => {
-    //TODO: Snapshot tests will be unskipped at last once UI is fully ready
-    it.skip('should match snapshot with all props', () => {
+    it('should match snapshot with all props', () => {
         const {container} = render(
             <InfoSection
                 title="Test Title"
@@ -21,8 +20,7 @@ describe('InfoSection Component', () => {
         expect(container).toMatchSnapshot();
     });
 
-    //TODO: Snapshot tests will be unskipped at last once UI is fully ready
-    it.skip('should match snapshot with minimal props', () => {
+    it('should match snapshot with minimal props', () => {
         const {container} = render(
             <InfoSection message="Test Action Text Only" testId="test-info-section"/>
         );

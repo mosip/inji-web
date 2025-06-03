@@ -11,8 +11,7 @@ describe('SearchBar Component', () => {
     });
 
     describe("Testing the Layout of HeaderTile", () => {
-        //TODO: Snapshot tests will be unskipped at last once UI is fully ready
-        test.skip('Check if the layout is matching with the snapshots', () => {
+        test('Check if the layout is matching with the snapshots', () => {
             const {asFragment} = render(<SearchBar
                 placeholder="Search test"
                 filter={mockFilter}

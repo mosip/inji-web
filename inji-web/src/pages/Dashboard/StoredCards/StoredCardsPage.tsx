@@ -149,7 +149,7 @@ export const StoredCardsPage: React.FC = () => {
 
     return (
         <div className={StoredCardsPageStyles.container}>
-            <div className={StoredCardsPageStyles.headerContainer}>
+            <div className={StoredCardsPageStyles.headerContainer} data-testid={"page-title-container"}>
                 <div className={StoredCardsPageStyles.navContainer}>
                     <div className={StoredCardsPageStyles.navContainer}>
                         <NavBackArrowButton onBackClick={navigateToHome}/>
@@ -171,7 +171,8 @@ export const StoredCardsPage: React.FC = () => {
                 </div>
             </div>
 
-            <div className={StoredCardsPageStyles.contentAndActionContainer}>
+            <div className={StoredCardsPageStyles.contentAndActionContainer}
+                 data-testid={"content-and-action-container"}>
                 <div className={StoredCardsPageStyles.contentContainer}>
                     {showContent()}
                 </div>

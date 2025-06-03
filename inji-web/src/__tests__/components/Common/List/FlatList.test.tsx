@@ -16,8 +16,7 @@ describe("FlatList Component", () => {
     const keyExtractor = (item: Item) => item.id;
     const renderItem = (item: Item) => <div>{item.name}</div>;
 
-    //TODO: Snapshot tests will be unskipped at last once UI is fully ready
-    it.skip('should match the snapshot', () => {
+    it('should match the snapshot', () => {
         const flatList = render(
             <FlatList
                 data={sampleData}

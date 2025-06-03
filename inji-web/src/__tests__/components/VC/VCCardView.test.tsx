@@ -18,8 +18,7 @@ describe('VCCardView Component', () => {
         jest.clearAllMocks();
     });
 
-    //TODO: Snapshot tests will be unskipped at last once UI is fully ready
-    it.skip('should match snapshot', () => {
+    it('should match snapshot', () => {
         const {container} = render(
             <VCCardView
                 credential={mockCredential}
