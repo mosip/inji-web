@@ -8,7 +8,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {ResetWalletPageStyles} from '../../styles/pages/ResetWalletPageStyles';
 import {BackgroundDecorator} from '../../components/Common/BackgroundDecorator';
-import {BackButton} from '../../components/Common/Icons/BackButton';
+import {BackArrowButton} from '../../components/Common/Buttons/BackArrowButton';
 import {InfoIcon} from '../../components/Common/Icons/InfoIcon';
 
 interface InstructionItem {
@@ -144,7 +144,7 @@ export const ResetWalletPage: React.FC = () => {
                             {t('title')}
                         </h1>
                         <div className={ResetWalletPageStyles.subHeader}>
-                            <BackButton
+                            <BackArrowButton
                                 testId="btn-back-reset"
                                 onClick={handleBackNavigation}
                                 className={

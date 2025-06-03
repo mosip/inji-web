@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BackArrowButton Component matches snapshot with custom props 1`] = `
+<DocumentFragment>
+  <img
+    alt="Custom Alt Text"
+    class="cursor-pointer custom-class"
+    data-testid="custom-back-button"
+    src="mocked-back-arrow-path"
+  />
+</DocumentFragment>
+`;
+
+exports[`BackArrowButton Component matches snapshot with default props 1`] = `
+<DocumentFragment>
+  <img
+    alt="Back Arrow"
+    class="cursor-pointer "
+    data-testid="btn-back-arrow"
+    src="mocked-back-arrow-path"
+  />
+</DocumentFragment>
+`;

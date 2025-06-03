@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BackgroundDecorator Component matches snapshot with custom props 1`] = `
+<DocumentFragment>
+  <div
+    class="overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none"
+    data-testid="custom-decorator"
+  >
+    <div
+      class="absolute top-[100px]"
+      style="top: 100px;"
+    >
+      <div
+        class="absolute rounded-full border overflow-hidden"
+        data-testid="custom-decorator-circle-0"
+        style="width: 80px; height: 80px; border-width: 1px; border-color: rgba(228, 231, 236, 0.8); top: calc(50% - 40px); left: calc(50% - 40px);"
+      />
+      <div
+        class="absolute rounded-full border overflow-hidden"
+        data-testid="custom-decorator-circle-1"
+        style="width: 160px; height: 160px; border-width: 1px; border-color: rgba(228, 231, 236, 0.7000000000000001); top: calc(50% - 80px); left: calc(50% - 80px);"
+      />
+      <div
+        class="absolute rounded-full border overflow-hidden"
+        data-testid="custom-decorator-circle-2"
+        style="width: 240px; height: 240px; border-width: 1px; border-color: rgba(228, 231, 236, 0.6000000000000001); top: calc(50% - 120px); left: calc(50% - 120px);"
+      />
+      <div
+        class="absolute rounded-full border overflow-hidden"
+        data-testid="custom-decorator-circle-3"
+        style="width: 320px; height: 320px; border-width: 1px; border-color: rgba(228, 231, 236, 0.5); top: calc(50% - 160px); left: calc(50% - 160px);"
+      />
+      <div
+        class="flex items-center justify-center"
+        data-testid="custom-logo-container"
+      >
+        <img
+          alt="Custom Logo Alt"
+          data-testid="custom-logo"
+          src="mocked-logo-path"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`BackgroundDecorator Component matches snapshot with default props 1`] = `
+<DocumentFragment>
+  <div
+    class="overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none"
+    data-testid="background-decorator"
+  >
+    <div
+      class="absolute top-[155px]"
+      style="top: 155px;"
+    >
+      <div
+        class="absolute rounded-full border overflow-hidden"
+        data-testid="background-decorator-circle-0"
+        style="width: 96px; height: 96px; border-width: 1px; border-color: rgba(228, 231, 236, 0.8); top: calc(50% - 48px); left: calc(50% - 48px);"
+      />
+      <div
+        class="absolute rounded-full border overflow-hidden"
+        data-testid="background-decorator-circle-1"
+        style="width: 192px; height: 192px; border-width: 1px; border-color: rgba(228, 231, 236, 0.7000000000000001); top: calc(50% - 96px); left: calc(50% - 96px);"
+      />
+      <div
+        class="absolute rounded-full border overflow-hidden"
+        data-testid="background-decorator-circle-2"
+        style="width: 288px; height: 288px; border-width: 1px; border-color: rgba(228, 231, 236, 0.6000000000000001); top: calc(50% - 144px); left: calc(50% - 144px);"
+      />
+      <div
+        class="absolute rounded-full border overflow-hidden"
+        data-testid="background-decorator-circle-3"
+        style="width: 384px; height: 384px; border-width: 1px; border-color: rgba(228, 231, 236, 0.5); top: calc(50% - 192px); left: calc(50% - 192px);"
+      />
+      <div
+        class="absolute rounded-full border overflow-hidden"
+        data-testid="background-decorator-circle-4"
+        style="width: 480px; height: 480px; border-width: 1px; border-color: rgba(228, 231, 236, 0.4); top: calc(50% - 240px); left: calc(50% - 240px);"
+      />
+      <div
+        class="absolute rounded-full border overflow-hidden"
+        data-testid="background-decorator-circle-5"
+        style="width: 576px; height: 576px; border-width: 1px; border-color: rgba(228, 231, 236, 0.30000000000000004); top: calc(50% - 288px); left: calc(50% - 288px);"
+      />
+      <div
+        class="flex items-center justify-center"
+        data-testid="test-logo-container"
+      >
+        <img
+          alt="Test Logo Alt"
+          data-testid="test-logo"
+          src="mocked-logo-path"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

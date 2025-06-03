@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InfoIcon Component matches snapshot with custom props 1`] = `
+<DocumentFragment>
+  <img
+    alt="Custom Info Text"
+    class="custom-class mt-2"
+    data-testid="custom-info-icon"
+    src="mocked-info-icon-path"
+  />
+</DocumentFragment>
+`;
+
+exports[`InfoIcon Component matches snapshot with default props 1`] = `
+<DocumentFragment>
+  <img
+    alt="Info"
+    class=""
+    data-testid="icon-info"
+    src="mocked-info-icon-path"
+  />
+</DocumentFragment>
+`;

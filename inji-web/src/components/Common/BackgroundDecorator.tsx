@@ -4,7 +4,7 @@ interface BackgroundDecoratorProps {
     circleCount?: number;
     topOffset?: number;
     baseRadius?: number;
-    logoSrc?: string;
+    logoSrc: string;
     logoAlt?: string;
     testId?: string;
     logoTestId: string;
@@ -15,16 +15,19 @@ export const BackgroundDecorator: React.FC<BackgroundDecoratorProps> = ({
     topOffset = 155,
     baseRadius = 96,
     logoSrc,
-    logoAlt = "Logo",
-    testId = "background-decorator",
+    logoAlt = 'Logo',
+    testId = 'background-decorator',
     logoTestId
 }) => {
     return (
-        <div 
+        <div
             className="overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none"
             data-testid={testId}
         >
-            <div className={`absolute top-[${topOffset}px]`} style={{ top: `${topOffset}px` }}>
+            <div
+                className={`absolute top-[${topOffset}px]`}
+                style={{top: `${topOffset}px`}}
+            >
                 {[...Array(circleCount)].map((_, index) => {
                     const radius = baseRadius + index * baseRadius;
                     const opacity = 0.8 - index * 0.1;
@@ -44,19 +47,13 @@ export const BackgroundDecorator: React.FC<BackgroundDecoratorProps> = ({
                         />
                     );
                 })}
-                
-                {logoSrc && (
-                    <div
-                        className="flex items-center justify-center"
-                        data-testid={`${logoTestId}-container`}
-                    >
-                        <img
-                            src={logoSrc}
-                            alt={logoAlt}
-                            data-testid={logoTestId}
-                        />
-                    </div>
-                )}
+
+                <div
+                    className="flex items-center justify-center"
+                    data-testid={`${logoTestId}-container`}
+                >
+                    <img src={logoSrc} alt={logoAlt} data-testid={logoTestId} />
+                </div>
             </div>
         </div>
     );

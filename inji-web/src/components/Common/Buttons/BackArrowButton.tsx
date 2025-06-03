@@ -1,14 +1,14 @@
 import React from 'react';
 import BackArrowIcon from '../../../assets/BackArrowIcon.svg';
 
-interface BackButtonProps {
+interface BackArrowButtonProps {
   onClick: () => void;
   className?: string;
   testId?: string;
   alt?: string;
 }
 
-export const BackButton: React.FC<BackButtonProps> = ({
+export const BackArrowButton: React.FC<BackArrowButtonProps> = ({
   onClick,
   className = '',
   testId = 'btn-back-arrow',
