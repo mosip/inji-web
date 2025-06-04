@@ -18,6 +18,8 @@ import {useTranslation} from 'react-i18next';
 import {getProfileInitials} from './Utils';
 import DropdownArrowIcon from '../Common/DropdownArrowIcon';
 import {KEYS} from '../../utils/constants';
+import { CircleSkeleton } from './CircleSkeleton';
+import { InfoFieldSkeleton } from './InfoFieldSkeleton';
 
 export const Header: React.FC<DashboardHeaderProps> = ({
     headerRef,
@@ -132,9 +134,9 @@ export const Header: React.FC<DashboardHeaderProps> = ({
     const getUserProfileIconWithName = () => {
         if (isLoading) {
             return (
-              <div className="flex gap-2 items-center animate-pulse">
-                <div className="w-12 h-12 rounded-full bg-gray-300"></div>
-                <div className="h-2 bg-gray-300 rounded w-24"></div>
+              <div className="flex gap-2 items-center">
+                <CircleSkeleton size="w-12 h-12" />
+                <InfoFieldSkeleton width="w-24" height="h-2" />
               </div>
             );
           }
