@@ -49,7 +49,6 @@ public class StepDefSunbirdCredentials {
     public static String fullname =SimplePostForAutoGenId.fullName;
     public static String dob =SimplePostForAutoGenId.dob;
     static LocalDate date = LocalDate.parse(dob);
-    //public static String formattedDate = date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     public static String formattedDate = date.format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
 
     

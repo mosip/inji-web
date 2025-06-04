@@ -25,7 +25,6 @@ public class HomePage extends BasePage {
     public void clickOnFaq() {
         if (isElementIsVisible(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"))) {
             clickOnElement(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"));
-            //clickOnElement(driver, By.xpath("//*[@data-testid='Faq-DropDown-Item']"));
 
 
         } else {
