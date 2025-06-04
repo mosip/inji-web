@@ -3,7 +3,7 @@ Feature: download mosip cridentials
   @smoke @VerifyAndDownloadVcViaMosipNatinalId
   Scenario Outline: Mosip Natonal Id by e-Signet
     Then User gets the title of the page
-    Then User click on get started button
+    Then User click on continue as guest
     And User search the issuers mosip
     When User click on download mosip credentials button
     Then User verify list of credential types displayed
@@ -32,7 +32,7 @@ Feature: download mosip cridentials
   @smoke @VerifySearchWithInvalidString
   Scenario: Verify Search With Invalid String
     Then User gets the title of the page
-    Then User click on get started button
+    Then User click on continue as guest
     And User search the issuers with "qewqdda"
     And User Verify the no issuer found message
     And User search the issuers mosip
@@ -42,7 +42,7 @@ Feature: download mosip cridentials
   @smoke @VerifyAndDownloadVcViaMosipNatinalId
   Scenario Outline: Verify And DownloadVc Via Mosip NatinalId
     Then User gets the title of the page
-    Then User click on get started button
+    Then User click on continue as guest
     And User search the issuers mosip
     And User verify the logo of the issuer
     When User click on download mosip credentials button
@@ -72,7 +72,7 @@ Feature: download mosip cridentials
   @smoke @VerifyAndDownloadVcViaMosipNatinalIdAndRfreshPage
   Scenario Outline: Verify And DownloadVc Via Mosip NatinalId And rfreshPage
     Then User gets the title of the page
-    Then User click on get started button
+    Then User click on continue as guest
     And User search the issuers mosip
     When User click on download mosip credentials button
     Then User verify list of credential types displayed
