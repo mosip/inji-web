@@ -24,41 +24,6 @@ export const ProfilePage: React.FC = () => {
     }
   };
 
-  // const renderProfilePicture = () => {
-  //   return isLoading ? (
-  //     <div className="rounded-full sm:m-7 bg-gray-300 flex-shrink-0 min-w-[80px] min-h-[80px] md:min-w-[150px] md:min-h-[150px]" />
-  //   ) : (
-  //     <img
-  //       data-testid="profile-page-picture"
-  //       alt="Profile"
-  //       className="rounded-full sm:m-7 flex-shrink-0 min-w-[80px] min-h-[80px] md:min-w-[150px] md:min-h-[150px] object-cover"
-  //       src={user?.profilePictureUrl}
-  //     />
-  //   );
-  // };
-
-  // const renderInfoFields = () => {
-  //   return isLoading ? (
-  //     <>
-  //       <div className="h-3 bg-gray-300 rounded w-2/4 mb-12"></div>
-  //       <div className="h-3 bg-gray-300 rounded w-3/4 my-4"></div>
-  //     </>
-  //   ) : (
-  //     <>
-  //       <InfoField
-  //         testId="full-name"
-  //         label={t('ProfilePage.fullName')}
-  //         value={user?.displayName}
-  //       />
-  //       <InfoField
-  //         testId="value"
-  //         label={t('ProfilePage.emailAddress')}
-  //         value={user?.email}
-  //       />
-  //     </>
-  //   );
-  // };
-
   const renderProfilePicture = () => {
     return isLoading ? (
       <CircleSkeleton
