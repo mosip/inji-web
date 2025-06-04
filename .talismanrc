@@ -26,7 +26,7 @@ fileignoreconfig:
 - filename: inji-web/src/__tests__/utils/misc.test.tsx
   checksum: 4863d9274e25e1b34c8acd4721a609a2aa68051e644e9f049d521cc15a1575f8
 - filename: inji-web/src/test-utils/mockUtils.tsx
-  checksum: 6f7a7a05003ff6ba60da5fe492e8eac4059ea590681a9460e5c1b662bb151474
+  checksum: 6e90beaf5d40a48daf77a431896c659ea246e29b8848ae71566c19d70084c2af
 - filename: inji-web/src/components/Faq/FAQAccordion.tsx
   checksum: 0788e8febe4a1b51d9413d9ec97fc71fbaddb84ac05da47749eac4ac7a99b529
 - filename: inji-web/src/components/Faq/FAQAccordionItem.tsx
@@ -34,37 +34,63 @@ fileignoreconfig:
 - filename: inji-web/src/__tests__/components/Dashboard/EmptyDocument.test.tsx
   checksum: f401e15725074d3840909dd82547e7cbd4ff61f854dd574ea7c1abb0b1309aeb
 - filename: inji-web/src/components/Dashboard/Header.tsx
-  checksum: fc7fe8ac8b56bc8d22719c07e08ea134010f2b99a7b5e6e90dbddc90d0ebad9a
+  checksum: 16e3e56a768651433b63678fb993dfc3adfc47e58901388a6e36cf7e1af985b6
 - filename: inji-web/src/components/Dashboard/Sidebar.tsx
-  checksum: cefb0cee8f45135e97c8d463daf6de2eb2e87584353d19de6ccb2c4083e9e1c9
-- filename: inji-web/src/locales/ar.json
-  checksum: 9424a9226ef6e0965a5bc0e3f6d57da413f19367759b367754d76d17c0d46dff
-- filename: inji-web/src/locales/en.json
-  checksum: ef8279e1778cce4bc28a18a3035cf7b7bd4fa23914098928180b759cb13505f1
+  checksum: a43283da3b8fcef567577b40c7c14402cd9e8f7df9260e082837e130072645b4
 - filename: inji-web/src/__tests__/users/login/FailedLoginPage.test.tsx
   checksum: 6f4b1b3d9779ea7b47042b9131cbc482a64e9f1e398a2bb909abbc5661bd4959
-- filename: inji-web/src/locales/fr.json
-  checksum: bd2315a808ea8ea948606258a6a34ad74772a5bfe2112abf5c02d614a415c7f5
 - filename: inji-web/src/locales/hi.json
-  checksum: c94aba1c88abdb5459931fd1959502961e5b2606002348a97563fc59b581f0bc
+  checksum: d18dbb8ea8385442a1c38895615443e7501e6702680ce219a4da540584f13a2f
 - filename: inji-web/src/locales/kn.json
-  checksum: 2052162f06ffccbb77709bf574ea8b5de1c828b8b98427d8bf7dec5409f3ad05
+  checksum: 023ed8917696ef0bf2d7675070637b81d646bb0ed4f73667a12bc06e2a757193
 - filename: inji-web/src/locales/pt.json
-  checksum: 89977223af5a91705605d53f210244fe6e265e5b74113445dcf72a2113661ea8
+  checksum: f86f6afcaea61ac499c953d6935bbffeaafb99d2ec558e2c090c176fadae7bc6
+- filename: inji-web/src/locales/en.json
+  checksum: 25a90ee55666e1f41978f8fb150aca5decbd9821dd503fc1b9b89b92b62a77f5
+- filename: inji-web/src/locales/fr.json
+  checksum: 86009bdf3ef4f0058472d2bc0c62db890cc10e0322583496e522442b1fa7bf35
+- filename: inji-web/src/locales/ar.json
+  checksum: c1733901417c8f72dacb7afc401b1031bc963d29fe50ab30a02757403f8475fd
 - filename: inji-web/src/locales/ta.json
-  checksum: d9ed356387f263170f69d4237f60be5676c3599e1566596f3877c337cce859a8
+  checksum: da4d151853cd6622b79e8e18fc9a1d3ec905188dba5f667b90bf7fb03902636d
+- filename: inji-web/src/__tests__/pages/users/__snapshots__/ResetWalletPage.test.tsx.snap
+  checksum: 8b7bb5db2e8fea883f150ec71e0d95c6790422e9e3d6eab39896ac2fc2d696c8
+- filename: inji-web/src/__tests__/pages/users/ResetWalletPage.test.tsx
+  checksum: c579ca87e97747cbed972902a5e554ea837e2bea467b23bdf93a43efee688bcc
+- filename: inji-web/src/styles/pages/ResetWalletPageStyles.ts
+  checksum: c4ee7286b3d8791f4430289378d26e308be7517791fbf28d90987b0d5655afcf
+- filename: inji-web/src/hooks/useUser.tsx
+  checksum: 1f7c891cd65659c362cf18ea8681c633bd56818186a76e2bb0e9807840b8a2e5
+- filename: inji-web/src/pages/users/ResetWalletPage.tsx
+  checksum: 183ed38c95732f8fe9d4bcdb93c527c1186b13d1219eaee358547344a3c1747b
 - filename: inji-web/src/pages/users/PinPage.tsx
-  checksum: c24e2e400e3ebca88028f6f87171e068899f53074e568b6078b4082daa1a4ae7
+  checksum: 62d804306459aefbedb8bbfb1c7fbccb7904f0d17a79ca8c368e3f114208f3be
 - filename: inji-web/src/__tests__/users/login/PinPage.test.tsx
-  checksum: e22b91e31e1feeb4b6b1d12732c5764d1dc8bda720dc69d38595db9004d3f404
+  checksum: bcdfdd086449c4cb833bb0bc172708ce48719a36a38dac7905d3b9046fb629e0
 - filename: inji-web/src/__tests__/users/login/Login.test.tsx
   checksum: e7a9b4cd88f4b820aca578de87939e12c2adda73f75893b6b547c5a1ba13768b
 - filename: inji-web/src/__tests__/pages/HomePage.test.tsx
   checksum: 43e96c9ccd03a006d584a536d6f526e4b6e682f95cce20cad80d12d11e3f8dc2
 - filename: inji-web/src/pages/users/login/LoginSessionStatusChecker.tsx
-  checksum: 801103f46489a2aca02441a339551f7b750724088501de03445eab3c4da5c8ba
+  checksum: e9ab1064c230f3f474eb3b67ec2ffa93253d4e4aadb1faaec084e41acaa9838d
 - filename: inji-web/src/__tests__/components/PageTemplate/Footer.test.tsx
   checksum: 719791b2e60b05e60797790a823d561de37f2911c5fce90290695217b7f11012
 - filename: inji-web/src/hooks/useUser.tsx
-  checksum: e30e4cf0bea98971a92d8413020d680ee2cd234c84e433f35650be0886d62106
+  checksum: b4c65898d422f657422b2c7808dd4a29d4252dd5b791cd893e9d964bb7a6b24c
+- filename: inji-web/src/__tests__/components/Common/List/FlatList.test.tsx
+  checksum: bece0d03810ef702d9148c8ab1af64f05ff677b1b55a17ac230445f88b54f3cc
+- filename: inji-web/src/__tests__/components/VC/VCCardView.test.tsx
+  checksum: dadb3f157f0f5e2663d5d069a52f2f7201d24412bf9b973fa28d37ab73e817ed
+- filename: inji-web/src/__tests__/components/Dashboard/ProfilePage.test.tsx
+  checksum: cd3ffeda6bb5b20b657b2e74f1fcf64454c7a0b052b4a1f02c787b0415f10266
+- filename: inji-web/src/components/Common/List/FlatList.tsx
+  checksum: 41faa9ef935e8fd47c0d4bbfbbc458601bc61fa8ffe0731eaaeebe353981d6ec
+- filename: inji-web/src/__tests__/pages/Dashboard/StoredCardsPage.test.tsx
+  checksum: e23907b2d4b8c19bba4e2a79ecd27970a029be1b8faac952775eb85d9ce64435
+- filename: inji-web/src/components/VC/VCCardView.tsx
+  checksum: 1628788ece7b6db63d613a8c27d4d14ec728b9e915ac5bd642d00bec497a445a
+- filename: inji-web/src/pages/Dashboard/StoredCards/StoredCardsPage.tsx
+  checksum: 1aa60329392751ab42aa8f76298745ff836b2dac3ffd46e4b8796c1fb4f5a53b
+- filename: inji-web/src/components/Users/PasscodeInput.tsx
+  checksum: fa02db3cfc75f669254216fe639a45783b152a344654dfbf85e1e8dfd8875ab5
 version: ""

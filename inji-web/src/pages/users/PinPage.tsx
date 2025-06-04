@@ -1,4 +1,3 @@
-import {FaExclamationCircle, FaEye, FaEyeSlash} from 'react-icons/fa';
 import React, {useState, useEffect, useRef} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {api} from '../../utils/api';
@@ -7,9 +6,12 @@ import {SolidButton} from '../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
 import {navigateToDashboardHome} from '../Dashboard/utils';
 import {useUser} from '../../hooks/useUser';
+import {PasscodeInput} from '../../components/Users/PasscodeInput';
+import {BackgroundDecorator} from '../../components/Common/BackgroundDecorator';
+import {CrossIconButton} from '../../components/Common/Buttons/CrossIconButton';
 
 export const PinPage: React.FC = () => {
-    const {t, i18n} = useTranslation('PinPage');
+    const {t} = useTranslation('PinPage');
     const navigate = useNavigate();
     const [displayName, setDisplayName] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -17,15 +19,10 @@ export const PinPage: React.FC = () => {
     const [wallets, setWallets] = useState<any[]>([]);
     const [walletId, setWalletId] = useState<string | null>(null);
     const [cookies] = useCookies(['XSRF-TOKEN']);
-
     const [passcode, setPasscode] = useState<string[]>(Array(6).fill(''));
-    const [showPasscode, setShowPasscode] = useState(false);
-
     const [confirmPasscode, setConfirmPasscode] = useState<string[]>(
         Array(6).fill('')
     );
-    const [showConfirm, setShowConfirm] = useState(false);
-
     const [isPinCorrect, setIsPinCorrect] = useState<boolean | null>(null);
 
     const passcodeRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -34,8 +31,7 @@ export const PinPage: React.FC = () => {
 
     const fetchWallets = async () => {
         try {
-            const response = await fetch(
-                api.fetchWallets.url(), {
+            const response = await fetch(api.fetchWallets.url(), {
                 method: api.fetchWallets.methodType === 0 ? 'GET' : 'POST',
                 headers: {
                     ...api.fetchWallets.headers(),
@@ -46,20 +42,30 @@ export const PinPage: React.FC = () => {
 
             const responseData = await response.json();
 
-            if(!response.ok){
+            if (!response.ok) {
                 throw responseData;
             }
-            
+
             setWallets(responseData);
         } catch (error) {
-            console.error('Error occurred while fetching wallets:', error);
+            console.error('Error occurred while fetching Wallets:', error);
             setError(t('error.fetchWalletsError'));
         }
     };
 
     useEffect(() => {
-        fetchWallets();
-        fetchUserProfile();
+        const fetchWalletsAndUserDetails = async () => {
+            await fetchWallets();
+            try {
+                await fetchUserProfile();
+            } catch (error) {
+                console.error(
+                    'Error occurred while fetching User profile:',
+                    error
+                );
+            }
+        };
+        fetchWalletsAndUserDetails();
     }, []);
 
     useEffect(() => {
@@ -72,78 +78,6 @@ export const PinPage: React.FC = () => {
         window.addEventListener('storage', handleStorageChange);
         return () => window.removeEventListener('storage', handleStorageChange);
     }, []);
-
-    const handleInputChange = (
-        index: number,
-        value: string,
-        type: 'passcode' | 'confirm'
-    ) => {
-        if (!/\d/.test(value) && value !== '') return;
-
-        const refs = type === 'passcode' ? passcodeRefs : confirmPasscodeRefs;
-        const values =
-            type === 'passcode' ? [...passcode] : [...confirmPasscode];
-        values[index] = value;
-
-        if (type === 'passcode') {
-            setPasscode(values);
-        } else {
-            setConfirmPasscode(values);
-        }
-
-        if (value && index < 5) {
-            refs.current[index + 1]?.focus();
-        }
-    };
-
-    const renderInputs = (
-        type: 'passcode' | 'confirm',
-        visible: boolean,
-        toggleVisibility: () => void
-    ) => {
-        const values = type === 'passcode' ? passcode : confirmPasscode;
-        const refs = type === 'passcode' ? passcodeRefs : confirmPasscodeRefs;
-
-        return (
-            <div className="flex items-center gap-2">
-                {values.map((digit, idx) => (
-                    <input
-                        key={idx}
-                        ref={(el) => (refs.current[idx] = el)}
-                        type={visible ? 'text' : 'password'}
-                        inputMode="numeric"
-                        maxLength={1}
-                        value={digit}
-                        onChange={(e) =>
-                            handleInputChange(idx, e.target.value, type)
-                        }
-                        onFocus={(e) => e.target.classList.add('border-black')}
-                        onBlur={(e) => {
-                            if (!digit) {
-                                e.target.classList.remove('border-black');
-                                e.target.classList.add('border-gray-300');
-                            }
-                        }}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Backspace' && idx > 0 && !digit) {
-                                refs.current[idx - 1]?.focus();
-                            }
-                        }}
-                        className={`w-9 h-9 sm:w-10 sm:h-10 text-center border mb-4  ${
-                            digit ? 'border-black' : 'border-gray-300'
-                        } rounded-lg text-lg sm:text-xl focus:outline-none`}
-                    />
-                ))}
-                <button
-                    type="button"
-                    onClick={toggleVisibility}
-                    className=" px-3 pb-4 sm:px-5"
-                >
-                    {visible ? <FaEyeSlash /> : <FaEye />}
-                </button>
-            </div>
-        );
-    };
 
     const unlockWallet = async (walletId: string, pin: string) => {
         if (!walletId) {
@@ -166,12 +100,12 @@ export const PinPage: React.FC = () => {
 
             const responseData = await response.json();
             if (!response.ok) {
+                setError(t('error.incorrectPinError'));
                 throw responseData;
             }
             setIsPinCorrect(true);
         } catch (error) {
             setIsPinCorrect(false);
-            setError(t('error.incorrectPinError'));
             throw error;
         }
     };
@@ -187,49 +121,49 @@ export const PinPage: React.FC = () => {
     };
 
     const createWallet = async () => {
-        const pin = passcode.join('');
-        const confirmPin = confirmPasscode.join('');
-        if (pin.length !== 6 || confirmPin.length !== 6) {
-            setError(t('error.pinLengthError'));
-            throw new Error('Invalid pin length');
+        try {
+            const pin = passcode.join('');
+            const confirmPin = confirmPasscode.join('');
+
+            if (wallets.length === 0 && pin !== confirmPin) {
+                setError(t('error.passcodeMismatchError'));
+                throw new Error('Pin and Confirm Pin mismatch');
+            }
+
+            const response = await fetch(api.createWalletWithPin.url(), {
+                method: 'POST',
+                headers: {
+                    ...api.createWalletWithPin.headers(),
+                    'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    walletPin: pin,
+                    confirmWalletPin: confirmPasscode.join(''),
+                    walletName: displayName
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                setError(
+                    `${t('error.createWalletError')}: ${
+                        errorData.errorMessage || t('unknown-error')
+                    }`
+                );
+                setIsPinCorrect(false);
+                throw errorData;
+            }
+
+            const createdWallet = await response.json();
+            await unlockWallet(createdWallet.walletId, pin);
+
+            setWalletId(createdWallet.walletId);
+            setWallets([{walletId: createdWallet.walletId}]);
+            setIsPinCorrect(true);
+        } catch (error) {
+            throw error;
         }
-        if (wallets.length === 0 && pin !== confirmPin) {
-            setError(t('error.passcodeMismatchError'));
-            throw new Error('Pin and Confirm Pin mismatch');
-        }
-
-        const response = await fetch(api.createWalletWithPin.url(), {
-            method: 'POST',
-            headers: {
-                ...api.createWalletWithPin.headers(),
-                'Content-Type': 'application/json',
-                'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
-            },
-            credentials: 'include',
-            body: JSON.stringify({
-                walletPin: pin,
-                confirmWalletPin: confirmPasscode.join(''),
-                walletName: displayName
-            })
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            setError(
-                `${t('error.createWalletError')}: ${
-                    errorData.errorMessage || t('unknown-error')
-                }`
-            );
-            setIsPinCorrect(false);
-            throw errorData;
-        }
-
-        const createdWallet = await response.json();
-        await unlockWallet(createdWallet.walletId, pin);
-
-        setWalletId(createdWallet.walletId);
-        setWallets([{walletId: createdWallet.walletId}]);
-        setIsPinCorrect(true);
     };
 
     const handleSubmit = async () => {
@@ -254,9 +188,11 @@ export const PinPage: React.FC = () => {
             }
             await fetchUserProfileAndNavigate();
         } catch (error) {
-            console.error('Error occurred while setting up Wallet or loading user profile', error);
+            console.error(
+                'Error occurred while setting up Wallet or loading user profile',
+                error
+            );
             setIsPinCorrect(false);
-            setError(t('error.incorrectPinError'));
         } finally {
             setLoading(false);
         }
@@ -268,101 +204,154 @@ export const PinPage: React.FC = () => {
 
     return (
         <div
-            className=" overflow-hidden fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50"
             data-testid="pin-page"
+            className="fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50 h-screen"
         >
-            <div className="bg-white sm:mx=4 mx-2 rounded-2xl flex flex-col items-center justify-center py-[2%] px-0 sm:px-[18%] ">
-                <div className="text-center mb-2">
-                    <div className="ps-14 sm:ps-24" data-testid="pin-logo">
-                        <img
-                            src={require('../../assets/Logomark.png')}
-                            alt="Inji Web Logo"
-                        />
-                    </div>
-                    <h1
-                        className="text-xl sm:text-3xl font-semibold text-gray-800 p-4 "
-                        data-testid="pin-title"
-                    >
-                        {wallets.length === 0
-                            ? t('setPasscode')
-                            : t('enterPasscode')}
-                    </h1>
-                    <p
-                        className="text-gray-600 text-sm sm:text-lg"
-                        data-testid="pin-description"
-                    >
-                        {wallets.length === 0
-                            ? t('setPasscodeDescription')
-                            : t('enterPasscodeDescription')}
-                    </p>
-                </div>
+            <div
+                className="rounded-2xl bg-white flex flex-col items-center justify-start relative
+               w-[90%] sm:w-[85%] md:w-[90%]
+               h-[80%] sm:h-[76%] md:h-[80%]
+               overflow-y-auto
+               shadow-iw-pin-page-container"
+            >
+                <BackgroundDecorator
+                    logoSrc={require('../../assets/Logomark.png')}
+                    logoAlt="Inji Web Logo"
+                    logoTestId="logo-inji-web"
+                />
 
-                <div
-                    className="bg-white rounded-lg shadow-2xl p-6 max-w-sm text-center"
-                    data-testid="pin-container"
-                >
-                    {wallets.length === 0 && (
+                <div className="flex flex-col items-center justify-start w-full top-[240px] relative z-10 pb-8">
+                    <div className="text-center space-y-5 relative w-full max-w-[500px] px-4 sm:px-0">
+                        <h1
+                            className="text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGreen"
+                            data-testid="pin-title"
+                        >
+                            {wallets.length === 0
+                                ? t('setPasscode')
+                                : t('enterPasscode')}
+                        </h1>
                         <p
-                            className="text-center mx-5 my-4 w-[85%] text-gray-500 text-xs sm:text-sm"
-                            data-testid="pin-warning"
+                            className="text-iw-textTertiary text-sm sm:text-lg md:text-xl font-medium"
+                            data-testid="pin-description"
                         >
-                            {t('passcodeWarning')}
+                            {wallets.length === 0
+                                ? t('setPasscodeDescription')
+                                : t('enterPasscodeDescription')}
                         </p>
-                    )}
+                    </div>
 
-                    {error && (
-                        <div
-                            className="bg-red-100 border border-red-300 text-red-700 px-4 py-2 rounded-lg mb-4 flex items-center justify-between"
-                            data-testid="pin-error"
-                        >
-                            <div className="flex items-center gap-2">
-                                <FaExclamationCircle className="text-red-500 w-4 h-4" />
-                                <span className="w-full text-xs">{error}</span>
+                    <div
+                        className="flex flex-col bg-white sm:rounded-lg sm:shadow-iw-pin-page-container items-center z-20 w-full max-w-[500px] mt-8 mb-4 mx-auto"
+                        data-testid="pin-container"
+                    >
+                        {wallets.length === 0 && (
+                            <div className="relative sm:hidden pin-page-warning-text-border min-w-full items-center justify-center mt-1 sm:mt-3 md:mt-5" />
+                        )}
+
+                        {wallets.length === 0 && (
+                            <div className="w-full items-center justify-center flex">
+                                <p
+                                    className="text-iw-textTertiary text-center text-sm sm:text-base px-4 sm:px-8 pt-4 sm:pt-6 max-w-[560px]"
+                                    data-testid="pin-warning"
+                                >
+                                    {t('passcodeWarning')}
+                                </p>
+                            </div>
+                        )}
+
+                        {error ? (
+                            <div
+                                className="bg-iw-pink50 w-full px-3 sm:px-5 py-3 mt-3 sm:mt-4 md:mt-5"
+                                data-testid="pin-error"
+                            >
+                                <div className="flex items-start justify-between gap-2 max-w-[560px] mx-auto">
+                                    <div className="flex-1 pr-2">
+                                        <span className="text-sm text-iw-darkRed break-words whitespace-normal">
+                                            {error}
+                                        </span>
+                                    </div>
+                                    <div className="flex-shrink-0">
+                                        <CrossIconButton
+                                            onClick={() => setError(null)}
+                                            btnTestId="btn-close-icon"
+                                            iconTestId="icon-close"
+                                            btnClassName="cursor-pointer"
+                                            iconClassName="min-w-[14px] min-h-[14px] mt-1.5 sm:mt-2"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            wallets.length === 0 && (
+                                <div className="pin-page-warning-text-border w-full mt-2 sm:mt-3 md:mt-5" />
+                            )
+                        )}
+
+                        <div className="w-full px-4 sm:px-8 py-3 sm:py-5 md:py-7 space-y-4 flex flex-col items-center">
+                            <div className="w-full max-w-[410px] mx-auto">
+                                <div className="overflow-x-auto">
+                                    <div className="flex justify-center gap-x-2 min-w-fit">
+                                        <PasscodeInput
+                                            label={t('enterPasscode')}
+                                            value={passcode}
+                                            onChange={setPasscode}
+                                            testId="pin-passcode-input"
+                                        />
+                                    </div>
+
+                                    {wallets.length === 0 && (
+                                        <div className="flex justify-center gap-x-2 mt-4 min-w-fit">
+                                            <PasscodeInput
+                                                label={t('confirmPasscode')}
+                                                value={confirmPasscode}
+                                                onChange={setConfirmPasscode}
+                                                testId="pin-confirm-passcode-input"
+                                            />
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                            {wallets.length !== 0 && (
+                                <div className="w-full max-w-[410px] mx-auto flex justify-start">
+                                    <button
+                                        data-testid="btn-forgot-passcode"
+                                        className="text-sm md:text-md font-semibold text-iw-deepVioletIndigo my-0 cursor-pointer"
+                                        onClick={() =>
+                                            navigate(
+                                                '/dashboard/reset-wallet',
+                                                {
+                                                    state: {
+                                                        walletId:
+                                                            wallets[0].walletId
+                                                    }
+                                                }
+                                            )
+                                        }
+                                    >
+                                        {t('forgotPasscode') + ' ?'}
+                                    </button>
+                                </div>
+                            )}
+
+                            <div className="w-full max-w-[410px] mx-auto">
+                                <SolidButton
+                                    fullWidth={true}
+                                    testId="pin-submit-button"
+                                    onClick={handleSubmit}
+                                    title={
+                                        loading ? t('submitting') : t('submit')
+                                    }
+                                    disabled={isButtonDisabled}
+                                    className={`${
+                                        isButtonDisabled ? 'grayscale' : ''
+                                    }`}
+                                />
                             </div>
                         </div>
-                    )}
-
-                    <div className="mb-2" data-testid="pin-passcode-input">
-                        <p className="text-xs sm:text-sm text-left font-medium text-gray-700 mb-2">
-                            {t('enterPasscode')}
-                        </p>
-                        {renderInputs('passcode', showPasscode, () =>
-                            setShowPasscode((prev) => !prev)
-                        )}
                     </div>
-
-                    {wallets.length === 0 && (
-                        <div
-                            className="mb-2"
-                            data-testid="pin-confirm-passcode-input"
-                        >
-                            <p className="text-xs sm:text-sm text-left font-medium text-gray-700 mb-2">
-                                {t('confirmPasscode')}
-                            </p>
-                            {renderInputs('confirm', showConfirm, () =>
-                                setShowConfirm((prev) => !prev)
-                            )}
-                        </div>
-                    )}
-
-                    {wallets.length !== 0 && (
-                        <p className="text-xs sm:text-sm text-left font-semibold text-purple-800 my-3">
-                            {t('resetPasscode')}
-                        </p>
-                    )}
-
-                    <SolidButton
-                        fullWidth={true}
-                        testId="pin-submit-button"
-                        onClick={handleSubmit}
-                        title={loading ? t('submitting') : t('submit')}
-                        disabled={isButtonDisabled}
-                        className={`${isButtonDisabled ? 'grayscale' : ''}`}
-                    />
                 </div>
             </div>
         </div>
     );
 };
-
 export default PinPage;

@@ -25,6 +25,11 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
         setWalletId(null);
     };
 
+    const removeWallet= () => {
+        localStorage.removeItem(KEYS.WALLET_ID);
+        setWalletId(null);
+    };
+
     const fetchUserProfile = async () => {
         try {
             setIsLoading(true);
@@ -66,7 +71,8 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
             isLoading,
             fetchUserProfile,
             saveUser,
-            removeUser
+            removeUser,
+            removeWallet
         }),
         [user, walletId, error, isLoading]
     );

@@ -82,18 +82,37 @@
     "setPasscode": "Definir código de acesso",
     "enterPasscode": "Digite o código de acesso",
     "confirmPasscode": "Confirmar código de acesso",
-    "resetPasscode": "Redefinir código de acesso",
+    "forgotPasscode": "Esqueceu a senha",
     "setPasscodeDescription": "Defina seu código de acesso para começar",
     "enterPasscodeDescription": "Digite seu código de 6 dígitos",
     "passcodeWarning": "Certifique-se de lembrar a senha para login futuro",
     "error": {
       "walletNotFoundError": "Nenhuma carteira encontrada. Crie uma.",
       "pinLengthError": "O PIN deve ter 6 dígitos.",
-      "passcodeMismatchError": "Os PINs não coincidem.",
+      "passcodeMismatchError": "As senhas não correspondem. Certifique-se de que ambos os campos de senha correspondam exatamente. Digite novamente e tente novamente.",
       "createWalletError": "Falha na criação da carteira.",
-      "incorrectPinError": "PIN incorreto.",
+      "incorrectPinError": "Senha inválida. A senha que você digitou está incorreta. Verifique e tente novamente ou clique em \"Esqueci a senha\" para redefini-la.",
       "fetchWalletsError": "Erro ao buscar carteiras."
     }
+  },
+  "ResetWalletPage": {
+    "title": "Redefinir sua carteira",
+    "subTitle": "Redefina a carteira para recuperar o acesso e baixar novamente as credenciais",
+    "resetInstruction": {
+      "question": "Esqueceu sua senha?",
+      "info1": "Caso não se lembre da sua senha, você pode redefini-la clicando no botão abaixo.",
+      "info2": {
+        "message": "<strong>{{highlighter1}}:</strong> Isso removerá todos os seus cartões salvos da conta — como seu <strong>{{highlighter2}}</strong> e quaisquer outros documentos que você adicionou.",
+        "highlighter1": "Observe",
+        "highlighter2": "Cartão de identidade nacional, cartão de identificação fiscal, certificado de seguro"
+      },
+      "info3": {
+        "message": "Após a redefinição, você precisará definir uma nova senha e <strong>{{highlighter}}</strong> na sua Carteira.",
+        "highlighter": "baixe novamente seus cartões"
+      }
+    },
+    "forgetPasscode": "Esqueci a senha",
+    "resetFailure": "Ocorreu um erro ao redefinir sua carteira. Tente novamente em breve."
   },
   "IssuersPage": {
     "Intro": {

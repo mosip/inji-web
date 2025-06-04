@@ -82,18 +82,37 @@
     "setPasscode":"Set Passcode",
     "enterPasscode":"Enter Passcode",
     "confirmPasscode":"Confirm Passcode",
-    "resetPasscode":"Reset Passcode",
+    "forgotPasscode":"Forgot Passcode",
     "setPasscodeDescription":"Set your passcode to get started",
     "enterPasscodeDescription":"Enter your 6 digit passcode",
     "passcodeWarning":"Make sure you remember the password for future login",
     "error":{
       "walletNotFoundError":"Wallet not found",
       "pinLengthError":"Please Enter 6 digits in the Pin",
-      "passcodeMismatchError":"Pin did not match",
+      "passcodeMismatchError":"Passcodes do not match. Please ensure both passcode fields match exactly. Re-enter and try again.",
       "createWalletError":"Wallet creation unsuccessful",
-      "incorrectPinError":"Incorrect pin entered",
+      "incorrectPinError":"Invalid Passcode. The passcode you entered is incorrect. Please check and try again, or click 'Forgot Passcode' to reset it.",
       "fetchWalletsError":"Error in fetching wallets"
     }
+  },
+  "ResetWalletPage": {
+    "title": "Reset Your Wallet",
+    "subTitle":"Reset wallet to regain access and re-download credentials",
+    "resetInstruction": {
+      "question": "Forgot your passcode?",
+      "info1": "If you can’t remember your passcode, you can reset it by clicking the button below.",
+      "info2": {
+        "message": "<strong>{{highlighter1}}:</strong> This will remove all your saved cards from the account — such as your <strong>{{highlighter2}}</strong>, and any other documents you’ve added.",
+        "highlighter1": "Please note",
+        "highlighter2": "National ID card, Tax ID card, Insurance certificate"
+      },
+      "info3": {
+        "message": "After resetting, you’ll need to set a new passcode and <strong>{{highlighter}}</strong> into your Wallet.",
+        "highlighter": "re-download your cards"
+      }
+    },
+    "forgetPasscode": "Forget Passcode",
+    "resetFailure": "Something went wrong while resetting your wallet. Please try again in a moment."
   },
   "IssuersPage": {
     "Intro": {

@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResetWalletPage Component should match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="overflow-hidden fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50"
+    data-testid="backdrop-reset-wallet"
+  >
+    <div
+      class="overflow-hidden rounded-2xl bg-white flex flex-col items-center justify-start relative w-[90%] sm:w-[85%] md:w-[90%] h-[80%] sm:h-[76%] md:h-[80%] overflow-y-auto overflow-x-auto shadow-iw-pin-page-container"
+    >
+      <div
+        class="overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none"
+        data-testid="background-decorator"
+      >
+        <div
+          class="absolute top-[155px]"
+          style="top: 155px;"
+        >
+          <div
+            class="absolute rounded-full border overflow-hidden"
+            data-testid="background-decorator-circle-0"
+            style="width: 96px; height: 96px; border-width: 1px; border-color: rgba(228, 231, 236, 0.8); top: calc(50% - 48px); left: calc(50% - 48px);"
+          />
+          <div
+            class="absolute rounded-full border overflow-hidden"
+            data-testid="background-decorator-circle-1"
+            style="width: 192px; height: 192px; border-width: 1px; border-color: rgba(228, 231, 236, 0.7000000000000001); top: calc(50% - 96px); left: calc(50% - 96px);"
+          />
+          <div
+            class="absolute rounded-full border overflow-hidden"
+            data-testid="background-decorator-circle-2"
+            style="width: 288px; height: 288px; border-width: 1px; border-color: rgba(228, 231, 236, 0.6000000000000001); top: calc(50% - 144px); left: calc(50% - 144px);"
+          />
+          <div
+            class="absolute rounded-full border overflow-hidden"
+            data-testid="background-decorator-circle-3"
+            style="width: 384px; height: 384px; border-width: 1px; border-color: rgba(228, 231, 236, 0.5); top: calc(50% - 192px); left: calc(50% - 192px);"
+          />
+          <div
+            class="absolute rounded-full border overflow-hidden"
+            data-testid="background-decorator-circle-4"
+            style="width: 480px; height: 480px; border-width: 1px; border-color: rgba(228, 231, 236, 0.4); top: calc(50% - 240px); left: calc(50% - 240px);"
+          />
+          <div
+            class="absolute rounded-full border overflow-hidden"
+            data-testid="background-decorator-circle-5"
+            style="width: 576px; height: 576px; border-width: 1px; border-color: rgba(228, 231, 236, 0.30000000000000004); top: calc(50% - 288px); left: calc(50% - 288px);"
+          />
+          <div
+            class="flex items-center justify-center"
+            data-testid="logo-inji-web-container"
+          >
+            <img
+              alt="Inji Web Logo"
+              data-testid="logo-inji-web"
+              src="Logomark.png"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="top-[215px] pb-4 relative flex flex-col items-center justify-center"
+      >
+        <div
+          class="text-center items-center justify-center relative z-20 bg-transparent space-y-4 w-[90%] sm-md:w-[85%] md:w-[50%]"
+        >
+          <h1
+            class="text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGreen p-4"
+            data-testid="title-reset-wallet"
+          >
+            Reset Your Wallet
+          </h1>
+          <div
+            class="flex items-start ml-4"
+          >
+            <button
+              class="cursor-pointer"
+              data-testid="btn-back-arrow-container"
+              type="button"
+            >
+              <img
+                alt="Back Arrow"
+                class=""
+                data-testid="icon-back-arrow"
+                src="BackArrowIcon.svg"
+              />
+            </button>
+            <p
+              class="text-iw-textTertiary text-sm sm:text-base font-medium pl-6"
+              data-testid="subtitle-reset-wallet"
+            >
+              Reset wallet to regain access and re-download credentials
+            </p>
+          </div>
+        </div>
+        <div
+          class="flex flex-col bg-white rounded-xl shadow-iw-pin-page-container mt-8 items-center relative z-20 px-4 sm:px-6 md:px-10 py-3 sm:py-5 md:py-7 space-y-4 w-[90%] sm-md:w-[85%] md:w-[50%]"
+        >
+          <div
+            class="bg-iw-paleGray rounded-xl flex items-start justify-center gap-2 p-4 pr-10"
+          >
+            <img
+              alt="Info"
+              class="mt-[0.1rem]"
+              data-testid="icon-reset-instruction"
+              src="InfoIcon.svg"
+            />
+            <div
+              class="flex flex-col items-left gap-2 sm:gap-4 rounded-lg"
+              data-testid="text-reset-instruction"
+            >
+              <p
+                class="text-xs sm:text-sm md:text-md text-left font-montserrat font-semibold text-black"
+                data-testid="text-reset-question"
+              >
+                Forgot your passcode?
+              </p>
+              <p
+                class="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
+                data-testid="text-reset-info1"
+              >
+                If you can't remember your passcode, you can reset it by clicking the button below.
+              </p>
+              <p
+                class="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
+                data-testid="text-reset-info2"
+              />
+              <div>
+                <strong>
+                  Please note:
+                </strong>
+                 This will remove all your saved cards from the account — such as your 
+                <strong>
+                  National ID card, Tax ID card, Insurance certificate
+                </strong>
+                , and any other documents you've added.
+              </div>
+              <p />
+              <p
+                class="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
+                data-testid="text-reset-info3"
+              />
+              <div>
+                After resetting, you'll need to set a new passcode and 
+                <strong>
+                  re-download your cards
+                </strong>
+                 into your Wallet.
+              </div>
+              <p />
+            </div>
+          </div>
+          <div
+            class="w-full"
+          >
+            <div
+              class="w-full bg-iw-primary text-center cursor-pointer items-center text-iw-text font-bold text-sm px-6 py-3 rounded-lg shadow hover:shadow-lg mr-1  bg-gradient-to-r from-iw-primary to-iw-secondary mt-3 mb-4 sm:mt-3 sm:mb-4"
+            >
+              <button
+                class="text-white font-bold rounded-lg"
+                data-testid="btn-forget-passcode"
+              >
+                Forget Passcode
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

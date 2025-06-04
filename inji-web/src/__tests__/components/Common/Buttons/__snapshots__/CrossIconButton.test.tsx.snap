@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CrossIconButton Component matches snapshot with custom props 1`] = `
+<DocumentFragment>
+  <button
+    class="custom-btn-class"
+    data-testid="custom-btn-test-id"
+    type="button"
+  >
+    <img
+      alt="Close"
+      class="custom-icon-class"
+      data-testid="custom-icon-test-id"
+      src="mocked-cross-icon-path"
+    />
+  </button>
+</DocumentFragment>
+`;
+
+exports[`CrossIconButton Component matches snapshot with default props 1`] = `
+<DocumentFragment>
+  <button
+    class=""
+    data-testid="btn-close-icon-container"
+    type="button"
+  >
+    <img
+      alt="Close"
+      class=""
+      data-testid="icon-close"
+      src="mocked-cross-icon-path"
+    />
+  </button>
+</DocumentFragment>
+`;

@@ -82,18 +82,37 @@
     "setPasscode": "Définir le code d'accès",
     "enterPasscode": "Entrer le code d'accès",
     "confirmPasscode": "Confirmer le code d'accès",
-    "resetPasscode": "Réinitialiser le code d'accès",
+    "forgotPasscode": "Mot de passe oublié",
     "setPasscodeDescription": "Définissez votre code d'accès pour commencer",
     "enterPasscodeDescription": "Entrez votre code d'accès à 6 chiffres",
     "passcodeWarning": "Assurez-vous de vous souvenir du mot de passe pour une future connexion",
     "error": {
       "walletNotFoundError": "Aucun portefeuille trouvé. Veuillez en créer un.",
       "pinLengthError": "Le code PIN doit comporter 6 chiffres.",
-      "passcodeMismatchError": "Les codes PIN ne correspondent pas.",
+      "passcodeMismatchError": "Les codes d'accès ne correspondent pas. Veuillez vous assurer que les deux champs du code correspondent parfaitement. Saisissez-le à nouveau et réessayez.",
       "createWalletError": "Échec de la création du portefeuille.",
-      "incorrectPinError": "Code PIN incorrect.",
+      "incorrectPinError": "Code d'accès invalide. Le code d'accès saisi est incorrect. Veuillez vérifier et réessayer, ou cliquez sur « Mot de passe oublié » pour le réinitialiser.",
       "fetchWalletsError": "Échec du chargement des portefeuilles."
     }
+  },
+  "ResetWalletPage": {
+    "title": "Réinitialisez votre portefeuille",
+    "subTitle": "Réinitialisez le portefeuille pour récupérer l'accès et retélécharger les informations d'identification",
+    "resetInstruction": {
+      "question": "Vous avez oublié votre mot de passe ?",
+      "info1": "Si vous ne vous souvenez pas de votre mot de passe, vous pouvez le réinitialiser en cliquant sur le bouton ci-dessous.",
+      "info2": {
+        "message": "<strong>{{highlighter1}} :</strong> Cela supprimera toutes vos cartes enregistrées du compte, telles que votre <strong>{{highlighter2}}</strong> et tous les autres documents que vous avez ajoutés.",
+        "highlighter1": "Veuillez noter",
+        "highlighter2": "Carte nationale d'identité, carte d'identification fiscale, certificat d'assurance"
+      },
+      "info3": {
+        "message": "Après la réinitialisation, vous devrez définir un nouveau mot de passe et <strong>{{highlighter}}</strong> dans votre portefeuille.",
+        "highlighter": "retéléchargez vos cartes"
+      }
+    },
+    "forgetPasscode": "Oublier le code d'accès",
+    "resetFailure": "Une erreur s'est produite lors de la réinitialisation de votre portefeuille. Veuillez réessayer dans un instant."
   },
   "IssuersPage": {
     "Intro": {

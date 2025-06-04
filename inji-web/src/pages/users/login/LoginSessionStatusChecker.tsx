@@ -1,11 +1,18 @@
 import {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {useUser} from '../../../hooks/useUser';
 import {validateWalletUnlockStatus} from '../../Dashboard/utils';
 import {KEYS} from '../../../utils/constants';
 
+const loginProtectedPrefixes = ['/dashboard', '/pin'];
+
+const isLoginProtectedRoute = (pathname: string) => {
+    return loginProtectedPrefixes.some((prefix) => pathname.startsWith(prefix));
+}
+
 const LoginSessionStatusChecker: React.FC = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const {user, walletId, removeUser, fetchUserProfile, isLoading} = useUser();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const userFromLocalStorage = localStorage.getItem(KEYS.USER);
@@ -53,7 +60,7 @@ const LoginSessionStatusChecker: React.FC = () => {
             console.error('Error occurred while fetching user profile:', error);
             removeUser();
             localStorage.removeItem(KEYS.WALLET_ID);
-            if (isLoggedIn) {
+            if (isLoggedIn || (!isLoggedIn && isLoginProtectedRoute(location.pathname))) {
                 navigate('/');
             }
         }

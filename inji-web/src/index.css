@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Gentium+Plus:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,6 +9,7 @@
 @layer base {
     :root {
         --iw-font-base: "Inter", sans-serif;
+        --iw-font-montserrat: "Montserrat", sans-serif;
         --iw-color-background: #FFFFFF;
         --iw-color-header: #000000;
         --iw-color-footer: #FFFFFF;
@@ -49,6 +51,16 @@
         --iw-color-disclaimerText: #8B6105;
         --iw-color-dashboardSideBarMenuIcon: #6F6F6F;
         --iw-color-dashboardSideBarMenuIconActive: #2B011C;
+        --iw-color-grayLight: #C1C1C1;
+        --iw-color-grayDark: #676766;
+        --iw-color-grayTransparent: #D2D5D933;
+        --iw-color-paleGray: #F7F7F8;
+        --iw-color-textTertiary: #475467;
+        --iw-color-textSecondary: #344054;
+        --iw-color-darkRed: #D52929;
+        --iw-color-deepVioletIndigo: #5B03AD;
+        --iw-color-pink50: #FAEFEF;
+        --iw-color-dark-green: #101828;
         --iw-color-info: #7B7B7B;
         --iw-color-avatarPlaceholder: #DDDDDD;
         --iw-color-avatarText: #1A001D;
@@ -93,6 +105,16 @@
         --iw-color-subText: #A0A8AC;
         --iw-color-disclaimerBackGround: #FFF7E5;
         --iw-color-disclaimerText: #8B6105;
+        --iw-color-grayLight: #C1C1C1;
+        --iw-color-grayDark: #676766;
+        --iw-color-grayTransparent: #D2D5D933;
+        --iw-color-paleGray: #F7F7F8;
+        --iw-color-textTertiary: #475467;
+        --iw-color-textSecondary: #344054;
+        --iw-color-darkRed: #D52929;
+        --iw-color-deepVioletIndigo: #5B03AD;
+        --iw-color-pink50: #FAEFEF;
+        --iw-color-dark-green: #101828;
     }
 }
 
@@ -110,5 +132,5 @@
     }
     .no-scroll {
         overflow: hidden;
-      }
+    }
 }

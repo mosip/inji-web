@@ -9,7 +9,8 @@ import { KEYS } from "./constants";
 
 export enum MethodType {
     GET,
-    POST
+    POST,
+    DELETE
 }
 
 export enum ContentTypes {
@@ -126,7 +127,6 @@ export class api {
         }
     };
 
-    // Fetch wallet details by walletId
     static fetchWalletDetails: ApiRequest = {
         url: (walletId: string) =>
             api.mimotoHost + `/wallets/${walletId}/unlock`,
@@ -137,6 +137,17 @@ export class api {
             };
         },
         credentials:"include"
+    };
+
+    static deleteWallet: ApiRequest = {
+        url: (walletId: string) => api.mimotoHost + `/wallets/${walletId}`,
+        methodType: MethodType.DELETE,
+        headers: () => {
+            return {
+                "Content-Type": ContentTypes.JSON
+            };
+        },
+        credentials: "include"
     };
 
     static downloadVCInloginFlow: ApiRequest = {
