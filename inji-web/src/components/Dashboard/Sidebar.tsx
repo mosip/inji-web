@@ -7,6 +7,7 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
 import {CollapseButton} from './CollapseButton';
 import {getIconColor} from './Utils';
+import {ROUTES} from "../../constants/Routes";
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
     icon,
@@ -72,27 +73,28 @@ export const Sidebar: React.FC = () => {
 
     const sidebarItems: SidebarItemType[] = [
         {
+            // TODO: can the consumer assign same onClick to icon and text and all?
             icon: (
                 <SideBarSvgIcon
                     outline="M3 12L5 10M5 10L12 3L19 10M5 10V20C5 20.5523 5.44772 21 6 21H9M19 10L21 12M19 10V20C19 20.5523 18.5523 21 18 21H15M9 21C9.55228 21 10 20.5523 10 20V16C10 15.4477 10.4477 15 11 15H13C13.5523 15 14 15.4477 14 16V20C14 20.5523 14.4477 21 15 21M9 21H15"
-                    navUrl="/dashboard/home"
+                    navUrl={ROUTES.USER_HOME}
                     location={location}
                 />
             ),
             text: t('Home.title'),
-            path: '/dashboard/home',
+            path: ROUTES.USER_HOME,
             key: 'Sidebar-Item-Home'
         },
         {
             icon: (
                 <SideBarSvgIcon
                     outline="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.851 3 13.1054 3.10536 13.2929 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.149 19 9.41421V19C19 20.1046 18.1046 21 17 21Z"
-                    navUrl="/dashboard/credentials"
+                    navUrl={ROUTES.CREDENTIALS}
                     location={location}
                 />
             ),
             text: t('StoredCards:title'),
-            path: '/dashboard/credentials',
+            path: ROUTES.CREDENTIALS,
             key: 'Sidebar-Item-Credentials'
         }
     ];

@@ -1,4 +1,4 @@
-import {StoredCardsPage} from '../../../pages/Dashboard/StoredCards/StoredCardsPage';
+import {StoredCardsPage} from '../../../pages/User/StoredCards/StoredCardsPage';
 import {fireEvent, screen, waitFor, within} from '@testing-library/react';
 import {mockApiObject, mockusei18n, mockUseTranslation, renderWithRouter} from '../../../test-utils/mockUtils';
 
@@ -74,7 +74,7 @@ describe('Testing of StoredCardsPage ->', () => {
 
         fireEvent.click(screen.getByTestId('back-arrow-icon'));
 
-        expect(window.location.pathname).toBe('/dashboard/home');
+        expect(window.location.pathname).toBe('/user/home');
     });
 
     it('should navigate to home on Home text click', () => {
@@ -82,7 +82,7 @@ describe('Testing of StoredCardsPage ->', () => {
 
         fireEvent.click(screen.getByTestId('btn-home'));
 
-        expect(window.location.pathname).toBe('/dashboard/home');
+        expect(window.location.pathname).toBe('/user/home');
     });
 
     it('should navigate to dashboard home when Add credential button is clicked in larger screens', () => {
@@ -92,7 +92,7 @@ describe('Testing of StoredCardsPage ->', () => {
         const addCredentialButton = within(container).getByRole('button', {name: "Add Cards"});
         fireEvent.click(addCredentialButton);
 
-        expect(window.location.pathname).toBe('/dashboard/home');
+        expect(window.location.pathname).toBe('/user/home');
     });
 
     it('should navigate to dashboard home when Add credential button in blank document is clicked in smaller screens', async () => {
@@ -110,7 +110,7 @@ describe('Testing of StoredCardsPage ->', () => {
         const addCardsButton = within(container).getByRole('button', {name: "Add Cards"});
         fireEvent.click(addCardsButton);
 
-        expect(window.location.pathname).toBe('/dashboard/home');
+        expect(window.location.pathname).toBe('/user/home');
     });
 
     it('should show loading state initially', async () => {

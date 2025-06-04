@@ -1,19 +1,18 @@
 import { User } from "../../components/Dashboard/types";
 import { KEYS } from "../../utils/constants";
+import {ROUTES} from "../../constants/Routes";
 
 export const convertStringIntoPascalCase = (text: string | undefined) => {
     return (
-        text &&
-        text
-            .toLocaleLowerCase()
+        text?.toLocaleLowerCase()
             .split(' ')
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ')
     );
 };
 
-export const navigateToDashboardHome = (navigate: any) =>
-    navigate('/dashboard/home');
+export const navigateToUserHome = (navigate: any) =>
+    navigate(ROUTES.USER_HOME);
 
 export const validateWalletUnlockStatus = (
     cachedWalletId: string | null,

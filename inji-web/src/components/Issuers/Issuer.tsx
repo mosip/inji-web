@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../types/redux";
 import { IssuerWellknownDisplayArrayObject } from "../../types/data";
 import { useUser } from "../../hooks/useUser";
+import {ROUTES} from "../../constants/Routes";
 
 export const Issuer: React.FC<IssuerProps> = ({issuer, index}) => {
     const language = useSelector((state: RootState) => state.common.language);
@@ -15,8 +16,8 @@ export const Issuer: React.FC<IssuerProps> = ({issuer, index}) => {
     const {user} = useUser();
     const isLoggedIn = user?.displayName;
     const credentialsPagePath = isLoggedIn
-        ? `/dashboard/issuers/${issuer.issuer_id}`
-        : `/issuers/${issuer.issuer_id}`;
+        ? ROUTES.USER_ISSUER(issuer.issuer_id)
+        : ROUTES.ISSUER(issuer.issuer_id);
 
     return <React.Fragment>
         <ItemBox index={index}

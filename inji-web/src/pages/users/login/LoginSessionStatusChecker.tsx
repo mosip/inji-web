@@ -1,8 +1,9 @@
 import {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useUser} from '../../../hooks/useUser';
-import {validateWalletUnlockStatus} from '../../Dashboard/utils';
+import {validateWalletUnlockStatus} from '../../User/utils';
 import {KEYS} from '../../../utils/constants';
+import {ROUTES} from "../../../constants/Routes";
 
 const loginProtectedPrefixes = ['/dashboard', '/pin'];
 
@@ -44,7 +45,7 @@ const LoginSessionStatusChecker: React.FC = () => {
                 console.warn(
                     'No wallet ID found for the user, redirecting to `/pin`'
                 );
-                navigate('/pin');
+                navigate(ROUTES.PIN);
                 return;
             }
             const cachedWalletId = walletId;
@@ -61,7 +62,7 @@ const LoginSessionStatusChecker: React.FC = () => {
             removeUser();
             localStorage.removeItem(KEYS.WALLET_ID);
             if (isLoggedIn || (!isLoggedIn && isLoginProtectedRoute(location.pathname))) {
-                navigate('/');
+                navigate(ROUTES.ROOT);
             }
         }
     };

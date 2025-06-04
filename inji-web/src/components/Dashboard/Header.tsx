@@ -6,8 +6,8 @@ import {useCookies} from 'react-cookie';
 import {toast} from 'react-toastify';
 import {
     convertStringIntoPascalCase,
-    navigateToDashboardHome
-} from '../../pages/Dashboard/utils';
+    navigateToUserHome
+} from '../../pages/User/utils';
 import {useUser} from '../../hooks/useUser';
 import {DashboardHeaderProps, DropdownItem} from './types';
 import HamburgerMenu from '../../assets/HamburgerMenu.svg';
@@ -18,6 +18,7 @@ import {useTranslation} from 'react-i18next';
 import {getProfileInitials} from './Utils';
 import DropdownArrowIcon from '../Common/DropdownArrowIcon';
 import {KEYS} from '../../utils/constants';
+import {ROUTES} from "../../constants/Routes";
 import { CircleSkeleton } from './CircleSkeleton';
 import { InfoFieldSkeleton } from './InfoFieldSkeleton';
 
@@ -100,7 +101,7 @@ export const Header: React.FC<DashboardHeaderProps> = ({
             label: t('ProfileDropdown.profile'),
             onClick: () => {
                 setIsProfileDropdownOpen(false);    
-                navigate('profile',{state: {from: window.location.pathname}});
+                navigate(ROUTES.PROFILE,{state: {from: window.location.pathname}});
             },
             textColor: 'text-gray-700',
             key: 'Profile-Dropdown-Profile'
@@ -109,7 +110,7 @@ export const Header: React.FC<DashboardHeaderProps> = ({
             label: t('ProfileDropdown.faq'),
             onClick: () => {
                 setIsProfileDropdownOpen(false);
-                navigate('faq', {state: {from: window.location.pathname}});
+                navigate(ROUTES.FAQ, {state: {from: window.location.pathname}});
             },
             textColor: 'text-gray-700',
             key: 'Profile-Dropdown-FAQ'
@@ -191,8 +192,8 @@ export const Header: React.FC<DashboardHeaderProps> = ({
                         className="w-[130px] sm:w-[160px] md:w-[170px]"
                         role={'button'}
                         tabIndex={0}
-                        onMouseDown={() => navigateToDashboardHome(navigate)}
-                        onKeyUp={() => navigateToDashboardHome(navigate)}
+                        onMouseDown={() => navigateToUserHome(navigate)}
+                        onKeyUp={() => navigateToUserHome(navigate)}
                     >
                         <img
                             src={require('../../assets/InjiWebLogo.png')}

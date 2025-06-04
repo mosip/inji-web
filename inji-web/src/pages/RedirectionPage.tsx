@@ -13,6 +13,7 @@ import {RootState} from '../types/redux';
 import {useSelector} from 'react-redux';
 import {useCookies} from 'react-cookie';
 import {useUser} from '../hooks/useUser';
+import {ROUTES} from "../constants/Routes";
 
 export const RedirectionPage: React.FC = () => {
     const {error, state, response, fetchRequest} = useFetch();
@@ -84,7 +85,7 @@ export const RedirectionPage: React.FC = () => {
                                 }
                             );
                             if (credentialDownloadResponse.ok) {
-                                navigate('/dashboard/credentials');
+                                navigate(ROUTES.CREDENTIALS);
                             } else {
                                 const responseData =
                                     await credentialDownloadResponse.json();

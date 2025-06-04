@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import {RequestStatus, useFetch} from '../../hooks/useFetch';
-// import {NavBar} from '../components/Common/NavBar';
 import {CredentialList} from '../../components/Credentials/CredentialList';
 import {useDispatch, useSelector} from 'react-redux';
 import {storeSelectedIssuer} from '../../redux/reducers/issuersReducer';
@@ -23,8 +22,8 @@ import {RootState} from '../../types/redux';
 import {isObjectEmpty} from '../../utils/misc';
 import {SearchCredential} from '../../components/Credentials/SearchCredential';
 import {CredentialTypesPageProps} from '../../components/Dashboard/types';
-import {navigateToDashboardHome} from './utils';
-import { NavBackArrowButton } from './NavBackArrowButton';
+import {navigateToUserHome} from './utils';
+import { NavBackArrowButton } from '../../components/Common/Buttons/NavBackArrowButton';
 
 export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
     backUrl
@@ -81,7 +80,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
         } else if (previousPagePath) {
             navigate(previousPagePath); // Navigate to the previous link in history
         } else {
-            navigateToDashboardHome(navigate); // Navigate to homepage if opened directly
+            navigateToUserHome(navigate); // Navigate to homepage if opened directly
         }
     };
 
@@ -106,7 +105,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
                         <button
                             data-testid={'Home'}
                             className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer"
-                            onClick={() => navigateToDashboardHome(navigate)}
+                            onClick={() => navigateToUserHome(navigate)}
                         >
                             {t('Dashboard:Home.title')}
                         </button>

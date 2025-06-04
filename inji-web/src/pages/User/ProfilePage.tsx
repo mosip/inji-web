@@ -1,13 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useUser } from '../../hooks/useUser.tsx';
-import { navigateToDashboardHome } from './utils';
-import { NavBackArrowButton } from './NavBackArrowButton.tsx';
-import { InfoField } from '../../components/Dashboard/InfoField.tsx';
-import { TertiaryButton } from '../../components/Common/Buttons/TertiaryButton.tsx';
-import { CircleSkeleton } from '../../components/Dashboard/CircleSkeleton.tsx';
-import { InfoFieldSkeleton } from '../../components/Dashboard/InfoFieldSkeleton.tsx';
+import { useUser } from '../../hooks/useUser';
+import { navigateToUserHome } from './utils';
+import { NavBackArrowButton } from '../../components/Common/Buttons/NavBackArrowButton';
+import { InfoField } from '../../components/Dashboard/InfoField';
+import { TertiaryButton } from '../../components/Common/Buttons/TertiaryButton';
+import { CircleSkeleton } from '../../components/Dashboard/CircleSkeleton';
+import { InfoFieldSkeleton } from '../../components/Dashboard/InfoFieldSkeleton';
 
 export const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export const ProfilePage: React.FC = () => {
     if (previousPagePath) {
       navigate(previousPagePath);
     } else {
-      navigateToDashboardHome(navigate);
+      navigateToUserHome(navigate);
     }
   };
 
@@ -39,7 +39,7 @@ export const ProfilePage: React.FC = () => {
       />
     );
   };
-  
+
   const renderInfoFields = () => {
     return isLoading ? (
       <>
@@ -61,7 +61,7 @@ export const ProfilePage: React.FC = () => {
       </>
     );
   };
-  
+
   return (
     <div className="container mx-auto sm:px-2 md:px-4 lg:px-6 py-6 relative ml-3 sm:ml-0">
         
@@ -74,7 +74,7 @@ export const ProfilePage: React.FC = () => {
             </span>
             <TertiaryButton
               testId="profile-page"
-              onClick={() => navigateToDashboardHome(navigate)}
+              onClick={() => navigateToUserHome(navigate)}
               title={t('ProfilePage.homeTitle')}
             />
           </div>

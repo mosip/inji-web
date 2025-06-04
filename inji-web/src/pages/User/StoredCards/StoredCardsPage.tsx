@@ -1,8 +1,8 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-dom';
-import {navigateToDashboardHome} from '../utils';
-import {NavBackArrowButton} from '../NavBackArrowButton';
+import {navigateToUserHome} from '../utils';
+import {NavBackArrowButton} from '../../../components/Common/Buttons/NavBackArrowButton';
 import {WalletCredential} from "../../../types/data";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../types/redux";
@@ -84,7 +84,7 @@ export const StoredCardsPage: React.FC = () => {
         }
     };
 
-    const navigateToHome = () => navigateToDashboardHome(navigate);
+    const navigateToHome = () => navigateToUserHome(navigate);
 
     const loader =
         <div className={StoredCardsPageStyles.loaderContainer} data-testid={"loader-credentials"}>

@@ -10,6 +10,7 @@ import {ResetWalletPageStyles} from '../../styles/pages/ResetWalletPageStyles';
 import {BackgroundDecorator} from '../../components/Common/BackgroundDecorator';
 import {BackArrowButton} from '../../components/Common/Buttons/BackArrowButton';
 import {InfoIcon} from '../../components/Common/Icons/InfoIcon';
+import {ROUTES} from "../../constants/Routes";
 
 interface InstructionItem {
     testId: string;
@@ -51,7 +52,7 @@ export const ResetWalletPage: React.FC = () => {
     const location = useLocation();
 
     const handleBackNavigation = () => {
-        navigate('/pin');
+        navigate(ROUTES.PIN);
     };
 
     const handleForgotPasscode = async () => {
@@ -71,7 +72,7 @@ export const ResetWalletPage: React.FC = () => {
                 throw await response.json();
             }
             removeWallet();
-            navigate('/pin');
+            navigate(ROUTES.PIN);
         } catch (error) {
             console.error('Error occurred while deleting Wallet:', error);
             toast.error(t('resetFailure'));

@@ -1,21 +1,21 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ProfilePage } from '../../../pages/Dashboard/ProfilePage';
+import { ProfilePage } from '../../../pages/User/ProfilePage';
 import { useUser } from '../../../hooks/useUser';
-import { navigateToDashboardHome } from '../../../pages/Dashboard/utils';
+import { navigateToUserHome } from '../../../pages/User/utils';
 import { MemoryRouter } from 'react-router-dom';
 
 // Mocks
 jest.mock('../../../hooks/useUser');
-jest.mock('../../../pages/Dashboard/utils', () => ({
-  navigateToDashboardHome: jest.fn(),
+jest.mock('../../../pages/User/utils', () => ({
+  navigateToUserHome: jest.fn(),
 }));
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (key: string) => key,
   }),
 }));
-jest.mock('../../../pages/Dashboard/NavBackArrowButton', () => ({
+jest.mock('../../../components/Common/Buttons/NavBackArrowButton.tsx', () => ({
   NavBackArrowButton: ({ onBackClick }: { onBackClick: () => void }) => (
     <button onClick={onBackClick}>Back</button>
   ),
@@ -119,7 +119,7 @@ describe('ProfilePage', () => {
     renderWithRouter();
     fireEvent.click(screen.getByText('Back'));
 
-    expect(navigateToDashboardHome).toHaveBeenCalledWith(mockedNavigate);
+    expect(navigateToUserHome).toHaveBeenCalledWith(mockedNavigate);
   });
 
   it('navigates to home on Go Home button click', () => {
@@ -132,6 +132,6 @@ describe('ProfilePage', () => {
     renderWithRouter();
     fireEvent.click(screen.getByText('Go Home'));
 
-    expect(navigateToDashboardHome).toHaveBeenCalledWith(mockedNavigate);
+    expect(navigateToUserHome).toHaveBeenCalledWith(mockedNavigate);
   });
 });

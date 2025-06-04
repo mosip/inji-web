@@ -4,11 +4,12 @@ import {api} from '../../utils/api';
 import {useCookies} from 'react-cookie';
 import {SolidButton} from '../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
-import {navigateToDashboardHome} from '../Dashboard/utils';
+import {navigateToUserHome} from '../User/utils';
 import {useUser} from '../../hooks/useUser';
 import {PasscodeInput} from '../../components/Users/PasscodeInput';
 import {BackgroundDecorator} from '../../components/Common/BackgroundDecorator';
 import {CrossIconButton} from '../../components/Common/Buttons/CrossIconButton';
+import {ROUTES} from "../../constants/Routes";
 
 export const PinPage: React.FC = () => {
     const {t} = useTranslation('PinPage');
@@ -82,7 +83,7 @@ export const PinPage: React.FC = () => {
     const unlockWallet = async (walletId: string, pin: string) => {
         if (!walletId) {
             setError(t('error.walletNotFoundError'));
-            navigate('/Pin');
+            navigate(ROUTES.PIN);
             throw new Error('Wallet not found');
         }
 
@@ -113,7 +114,7 @@ export const PinPage: React.FC = () => {
     const fetchUserProfileAndNavigate = async () => {
         try {
             await fetchUserProfile();
-            navigateToDashboardHome(navigate);
+            navigateToUserHome(navigate);
         } catch (error) {
             setError('Failed to fetch user profile');
             throw error;
@@ -318,7 +319,7 @@ export const PinPage: React.FC = () => {
                                         className="text-sm md:text-md font-semibold text-iw-deepVioletIndigo my-0 cursor-pointer"
                                         onClick={() =>
                                             navigate(
-                                                '/dashboard/reset-wallet',
+                                                ROUTES.USER_RESET_WALLET,
                                                 {
                                                     state: {
                                                         walletId:
