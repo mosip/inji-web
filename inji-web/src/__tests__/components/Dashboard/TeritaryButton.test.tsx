@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { TertiaryButton } from '../../../pages/Dashboard/TertiaryButton';
+import { TertiaryButton } from '../../../components/Common/Buttons/TertiaryButton';
 
 describe('TeritaryButton', () => {
   const mockOnClick = jest.fn();

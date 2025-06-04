@@ -18,7 +18,7 @@ import {PageTitle} from "../../../components/Common/PageTitle/PageTitle";
 import {Error} from "../../../components/Error/Error";
 import {BorderedButton} from "../../../components/Common/Buttons/BorderedButton";
 import {StoredCardsPageStyles} from "./StoredCardsPageStyles";
-import {TertiaryButton} from "../TertiaryButton";
+import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 
 export const StoredCardsPage: React.FC = () => {
     const {t} = useTranslation('StoredCards');
