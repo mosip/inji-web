@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InfoFieldSkeleton matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="bg-gray-300 rounded animate-pulse w-full h-4 "
+  />
+</DocumentFragment>
+`;
