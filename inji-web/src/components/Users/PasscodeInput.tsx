@@ -1,4 +1,3 @@
-// Create a new file: src/components/Common/Passcode/PasscodeInput.tsx
 import React, {useRef, useState} from 'react';
 import {FaEye, FaEyeSlash} from 'react-icons/fa';
 
