@@ -14,7 +14,7 @@ import {AuthorizationPage} from './pages/AuthorizationPage';
 import {HomePage} from './pages/HomePage';
 import LoginSessionStatusChecker from './utils/LoginSessionStatusChecker';
 import {PasscodePage} from './pages/User/PasscodePage';
-import {Layout} from './components/Dashboard/Layout';
+import {Layout} from './components/User/Layout';
 import {HomePage as DashboardHomePage} from './pages/User/HomePage';
 import {StoredCardsPage} from './pages/User/StoredCards/StoredCardsPage';
 import {useUser} from './hooks/useUser';
