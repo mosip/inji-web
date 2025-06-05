@@ -23,13 +23,12 @@ public class HomePage extends BasePage {
     }
 
     public void clickOnFaq() {
-        if (isElementIsVisible(driver, By.xpath("//*[@data-testid='Header-Menu-Faq']"))) {
-            clickOnElement(driver, By.xpath("(//*[@data-testid='Header-Menu-Faq'])[1]"));
-            clickOnElement(driver, By.xpath("//*[@data-testid='Faq-DropDown-Item']"));
+        if (isElementIsVisible(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"))) {
+            clickOnElement(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"));
 
 
         } else {
-            clickOnElement(driver, By.xpath("//li[@data-testid='Header-Menu-Faq']"));
+            clickOnElement(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"));
         }
     }
 
@@ -166,7 +165,7 @@ public class HomePage extends BasePage {
 
     //
     public Boolean isLanguageDisplayed() {
-        return isElementIsVisible(driver, By.xpath("//button[@class='inline-flex items-center']"));
+        return isElementIsVisible(driver, By.xpath("//button[@class='inline-flex items-center font-semibold']"));
     }
 
     //
@@ -293,7 +292,7 @@ public class HomePage extends BasePage {
     }
 
     public boolean isHomeBannerHeadingDescriptionDisplayed(){
-        return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeBanner-Description']"));
+        return  isElementIsVisible(driver, By.xpath("//*[@class='text-sm sm:text-xl w-full sm:w-[80%] my-6 sm:my-6 text-iw-text font-extralight leading-relaxed']"));
     }
 
     public boolean isGetStartedButtonDisplayed(){
@@ -381,7 +380,9 @@ public class HomePage extends BasePage {
         clickOnElement(driver, By.xpath("//*[@data-testid='HomeBanner-Get-Started']"));
     }
 
-
+    public void clickOnContinueAsGuest() {
+        clickOnElement(driver, By.xpath("//*[@data-testid='HomeBanner-Guest-Login']"));
+    }
 
     public boolean isCredentialsSimplifiedDescriptionTextDisplayed(){
         return  isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem1-FirstFeature-Description']"));

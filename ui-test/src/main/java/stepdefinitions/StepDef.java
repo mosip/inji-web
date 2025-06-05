@@ -116,7 +116,7 @@ public class StepDef {
     }
 
 
-    @When("User clicks on the faq button")
+    @When("User clicks on the Faq button")
     public void clicksOnFaqButton() {
         try {
             homePage.ClickOnFaqForMobileBrowse();
@@ -1955,6 +1955,23 @@ public class StepDef {
             throw e;
         } catch (Exception e) {
             test.log(Status.FAIL, "Unexpected error while validating credential types title: " + e.getMessage());
+            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+            throw e;
+        }
+    }
+    @Then("User click on continue as guest")
+    public void user_click_on_Continue_as_Guest() {
+        try {
+            homePage.clickOnContinueAsGuest();
+            test.log(Status.PASS, "User successfully clicked on continue as guest");
+        } catch (NoSuchElementException e) {
+            test.log(Status.FAIL, "continue as guest button not found: " + e.getMessage());
+            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+            throw e;
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Unexpected error while clicking the continue as guest button: " + e.getMessage());
             test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
             ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
             throw e;

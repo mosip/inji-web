@@ -3,7 +3,7 @@ Feature: Login using Sunbird Credentials
   @smoke @VerifyAndDownloadVcViaSunbirdInsurance
   Scenario Outline: download vc via sunbird
     Then User gets the title of the page
-    Then User click on get started button
+    Then User click on continue as guest
     And User search the issuers sunbird
     And User verify sunbird cridentials button
     And User click on sunbird cridentials button
@@ -30,7 +30,7 @@ Feature: Login using Sunbird Credentials
   @smoke @VerifyAndDownloadVcViaSunbirdLife
   Scenario Outline: download vc via sunbird life
     Then User gets the title of the page
-    Then User click on get started button
+    Then User click on continue as guest
     And User search the issuers sunbird
     And User verify sunbird cridentials button
     And User click on sunbird cridentials button
@@ -59,7 +59,7 @@ Feature: Login using Sunbird Credentials
   @smoke @VerifyAndDownloadVcViaSunbirdLifeWithInvalidPolicyNumber
   Scenario Outline: download vc via sunbird with invalid policy number
     Then User gets the title of the page
-    Then User click on get started button
+    Then User click on continue as guest
     And User search the issuers sunbird
     And User verify sunbird cridentials button
     And User click on sunbird cridentials button
@@ -86,7 +86,7 @@ Feature: Login using Sunbird Credentials
   @smoke @VerifyAndDownloadVcViaVehicleInsuranceWithInvaildName
   Scenario Outline: download vc via sunbird with invalid name
     Then User gets the title of the page
-    Then User click on get started button
+    Then User click on continue as guest
     And User search the issuers sunbird
     And User verify sunbird cridentials button
     And User click on sunbird cridentials button
@@ -113,7 +113,7 @@ Feature: Login using Sunbird Credentials
   @smoke @VerifyAndDownloadVcViaVehicleInsurance
   Scenario Outline: download vc via sunbird vehicle insurance
     Then User gets the title of the page
-    Then User click on get started button
+    Then User click on continue as guest
     And User search the issuers sunbird
     And User verify sunbird cridentials button
     And User click on sunbird cridentials button

@@ -4,7 +4,7 @@ Feature: Inji web multilanguage testing
   Scenario: Verify the Inji web configured language
   Given User gets the title of the page
   Then User validate the title of the page
-  Then User click on get started button
+  Then User click on continue as guest
   And User verify that inji web logo is displayed
   And User verify that langauge button is displayed
   And User click on langauge button
@@ -14,7 +14,7 @@ Feature: Inji web multilanguage testing
   Scenario: Verify the Inji web homepage and search in configured language
     Given User gets the title of the page
     Then User validate the title of the page
-    Then User click on get started button
+    Then User click on continue as guest
     And User verify that inji web logo is displayed
     And User verify that langauge button is displayed
     And User click on langauge button
@@ -52,7 +52,7 @@ Feature: Inji web multilanguage testing
   Scenario: Verify the Credential Details Page for mosip in configured langauge
     Given User gets the title of the page
     Then User validate the title of the page
-    Then User click on get started button
+    Then User click on continue as guest
     And User verify that inji web logo is displayed
     And User search the issuers with "National"
     When User click on download mosip credentials button
@@ -80,7 +80,7 @@ Feature: Inji web multilanguage testing
   Scenario: Verify the Credential Details Page for sunbird in configured languge
     Given User gets the title of the page
     Then User validate the title of the page
-    Then User click on get started button
+    Then User click on continue as guest
     And User verify that inji web logo is displayed
     And User search the issuers with "Insurance"
     And User verify sunbird cridentials button
@@ -115,7 +115,7 @@ Feature: Inji web multilanguage testing
   Scenario: Verify the Credential Details Page and verify home page
     Given User gets the title of the page
     Then User validate the title of the page
-    Then User click on get started button
+    Then User click on continue as guest
     And User verify that inji web logo is displayed
     And User search the issuers with "National"
     When User click on download mosip credentials button
@@ -167,7 +167,7 @@ Feature: Inji web multilanguage testing
   Scenario: Verify the Inji web homepage  and search in configured langauge
     Given User gets the title of the page
     Then User validate the title of the page
-    Then User click on get started button
+    Then User click on continue as guest
     And User verify that inji web logo is displayed
     And User verify that langauge button is displayed
     And User click on langauge button
