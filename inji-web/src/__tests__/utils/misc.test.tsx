@@ -1,4 +1,13 @@
-import { generateCodeChallenge, generateRandomString, isObjectEmpty, getTokenRequestBody, downloadCredentialPDF, getErrorObject, constructContent } from '../../utils/misc';
+import {
+    generateCodeChallenge,
+    generateRandomString,
+    isObjectEmpty,
+    getTokenRequestBody,
+    downloadCredentialPDF,
+    getErrorObject,
+    constructContent,
+    convertStringIntoPascalCase
+} from '../../utils/misc';
 import { mockCrypto } from '../../test-utils/mockUtils';
 import sha256 from 'crypto-js/sha256';
 import Base64 from 'crypto-js/enc-base64';
@@ -95,4 +104,13 @@ describe('Test misc.ts utility functions', () => {
         const content = constructContent(descriptions, true);
         expect(content).toEqual([{ __html: 'desc1' }, { __html: 'desc2' }]);
     });
+
+    test("Check if conversion of string pascal case works correctly", () => {
+        const input = "This is pascal case";
+        const expectedOutput = "This Is Pascal Case";
+
+        const result = convertStringIntoPascalCase(input)
+
+        expect(result).toEqual(expectedOutput);
+    })
 });

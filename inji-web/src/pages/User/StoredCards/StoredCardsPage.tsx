@@ -1,7 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-dom';
-import {navigateToUserHome} from '../utils';
 import {NavBackArrowButton} from '../../../components/Common/Buttons/NavBackArrowButton';
 import {WalletCredential} from "../../../types/data";
 import {useSelector} from "react-redux";
@@ -19,6 +18,7 @@ import {Error} from "../../../components/Error/Error";
 import {BorderedButton} from "../../../components/Common/Buttons/BorderedButton";
 import {StoredCardsPageStyles} from "./StoredCardsPageStyles";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
+import {navigateToUserHome} from "../../../utils/navigationUtils";
 
 export const StoredCardsPage: React.FC = () => {
     const {t} = useTranslation('StoredCards');

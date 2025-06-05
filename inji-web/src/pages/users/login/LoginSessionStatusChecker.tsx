@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useUser} from '../../../hooks/useUser';
-import {validateWalletUnlockStatus} from '../../User/utils';
 import {KEYS} from '../../../utils/constants';
 import {ROUTES} from "../../../constants/Routes";
+import {User} from "../../../components/Dashboard/types";
 
 const loginProtectedPrefixes = ['/dashboard', '/pin'];
 
@@ -37,6 +37,25 @@ const LoginSessionStatusChecker: React.FC = () => {
         window.addEventListener('storage', handleStorageChange);
         return () => window.removeEventListener('storage', handleStorageChange);
     }, []);
+
+    const validateWalletUnlockStatus = (
+        cachedWalletId: string | null,
+        storageWalletId: string | null,
+        navigate: (path: string) => void,
+        user: User
+    ) => {
+        if (cachedWalletId && (cachedWalletId === storageWalletId)) {
+            console.info('Wallet is unlocked!');
+        } else {
+            console.warn(
+                'Wallet exists but is locked, redirecting to `/pin` to unlock the wallet.'
+            );
+            if (user) {
+                navigate('/pin');
+                localStorage.removeItem(KEYS.WALLET_ID);
+            }
+        }
+    };
 
     const fetchSessionAndUserInfo = async () => {
         try {

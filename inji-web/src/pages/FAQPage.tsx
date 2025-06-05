@@ -3,7 +3,7 @@ import {FAQAccordion} from '../components/Faq/FAQAccordion';
 import {useTranslation} from 'react-i18next';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {FAQPageProps} from '../components/Dashboard/types';
-import {navigateToUserHome} from './User/utils';
+import {navigateToUserHome} from '../utils/navigationUtils';
 import {PageTitle} from "../components/Common/PageTitle/PageTitle";
 import { TertiaryButton } from '../components/Common/Buttons/TertiaryButton';
 

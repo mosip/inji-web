@@ -4,10 +4,6 @@ import {LanguageSelector} from '../Common/LanguageSelector';
 import {api} from '../../utils/api';
 import {useCookies} from 'react-cookie';
 import {toast} from 'react-toastify';
-import {
-    convertStringIntoPascalCase,
-    navigateToUserHome
-} from '../../pages/User/utils';
 import {useUser} from '../../hooks/useUser';
 import {DashboardHeaderProps, DropdownItem} from './types';
 import HamburgerMenu from '../../assets/HamburgerMenu.svg';
@@ -19,6 +15,8 @@ import {getProfileInitials} from './Utils';
 import DropdownArrowIcon from '../Common/DropdownArrowIcon';
 import {KEYS} from '../../utils/constants';
 import {ROUTES} from "../../constants/Routes";
+import {convertStringIntoPascalCase} from "../../utils/misc";
+import {navigateToUserHome} from "../../utils/navigationUtils";
 import { CircleSkeleton } from './CircleSkeleton';
 import { InfoFieldSkeleton } from './InfoFieldSkeleton';
 

@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {IssuersPage} from '../IssuersPage';
-import {convertStringIntoPascalCase} from './utils';
 import {useUser} from '../../hooks/useUser';
+import {convertStringIntoPascalCase} from "../../utils/misc";
 
 export const HomePage: React.FC = () => {
     const {t} = useTranslation('Dashboard');

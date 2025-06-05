@@ -1,13 +1,13 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { ProfilePage } from '../../../pages/User/ProfilePage';
-import { useUser } from '../../../hooks/useUser';
-import { navigateToUserHome } from '../../../pages/User/utils';
-import { MemoryRouter } from 'react-router-dom';
+import {fireEvent, render, screen} from '@testing-library/react';
+import {ProfilePage} from '../../../pages/User/ProfilePage';
+import {useUser} from '../../../hooks/useUser';
+import {MemoryRouter, useLocation} from 'react-router-dom';
+import {navigateToUserHome} from "../../../utils/navigationUtils";
 
 // Mocks
 jest.mock('../../../hooks/useUser');
-jest.mock('../../../pages/User/utils', () => ({
+jest.mock('../../../utils/navigationUtils', () => ({
   navigateToUserHome: jest.fn(),
 }));
 jest.mock('react-i18next', () => ({
@@ -45,7 +45,6 @@ jest.mock('react-router-dom', () => {
   };
 });
 
-import { useLocation } from 'react-router-dom';
 const mockedUseLocation = useLocation as jest.Mock;
 
 const mockedUseUser = useUser as jest.Mock;

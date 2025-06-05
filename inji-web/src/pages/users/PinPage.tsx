@@ -4,12 +4,12 @@ import {api} from '../../utils/api';
 import {useCookies} from 'react-cookie';
 import {SolidButton} from '../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
-import {navigateToUserHome} from '../User/utils';
 import {useUser} from '../../hooks/useUser';
 import {PasscodeInput} from '../../components/Users/PasscodeInput';
 import {BackgroundDecorator} from '../../components/Common/BackgroundDecorator';
 import {CrossIconButton} from '../../components/Common/Buttons/CrossIconButton';
 import {ROUTES} from "../../constants/Routes";
+import {navigateToUserHome} from "../../utils/navigationUtils";
 
 export const PinPage: React.FC = () => {
     const {t} = useTranslation('PinPage');
