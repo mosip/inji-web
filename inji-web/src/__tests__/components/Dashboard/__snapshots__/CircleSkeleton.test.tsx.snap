@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CircleSkeleton matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="rounded-full bg-gray-300 animate-pulse w-20 h-20 "
+  />
+</DocumentFragment>
+`;

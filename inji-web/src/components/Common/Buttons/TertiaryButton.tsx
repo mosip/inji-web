@@ -1,5 +1,5 @@
 import React from "react";
-import { TeritaryButtonProps } from "../../components/Dashboard/types";
+import { TeritaryButtonProps } from "../../Dashboard/types";
 
 export const TertiaryButton: React.FC<TeritaryButtonProps> = ({
   title,

@@ -41,12 +41,23 @@ export type CredentialTypesPageProps = {
     backUrl?: string;
 };
 
+export type CircleSkeletonProps = {
+    size?: string;
+    className?: string;
+};
+
 export type InfoFieldProps = {
     label: string;
     value?: string;
     testId: string;
 };
 
+export type InfoFieldSkeletonProps = {
+    width?: string;
+    height?: string;
+    className?: string;
+};
+  
 export type CollapseButtonProps = {
     isCollapsed: boolean;
     onClick: () => void;
