@@ -30,7 +30,7 @@ export const PasscodeInput: React.FC<PasscodeInputProps> = ({
     };
 
     return (
-        <div className="mb-2" data-testid={testId}>
+        <div className="mb-2" data-testid={`${testId}-container`}>
             <p
                 data-testid={`label-${testId}`}
                 className="text-sm text-left font-medium text-iw-textSecondary"

@@ -288,7 +288,7 @@ return (
                                             label={t('enterPasscode')}
                                             value={passcode}
                                             onChange={setPasscode}
-                                            testId="input-passcode"
+                                            testId="passcode"
                                         />
                                     </div>
 
@@ -298,7 +298,7 @@ return (
                                                 label={t('confirmPasscode')}
                                                 value={confirmPasscode}
                                                 onChange={setConfirmPasscode}
-                                                testId="input-confirm-passcode"
+                                                testId="confirm-passcode"
                                             />
                                         </div>
                                     )}
