@@ -5,7 +5,7 @@ import {useCookies} from 'react-cookie';
 import {SolidButton} from '../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
 import {useUser} from '../../hooks/useUser';
-import {PasscodeInput} from '../../components/Users/PasscodeInput';
+import {PasscodeInput} from '../../components/Common/Input/PasscodeInput';
 import {BackgroundDecorator} from '../../components/Common/BackgroundDecorator';
 import {CrossIconButton} from '../../components/Common/Buttons/CrossIconButton';
 import {ROUTES} from "../../constants/Routes";
