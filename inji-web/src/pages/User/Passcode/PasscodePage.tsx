@@ -8,9 +8,9 @@ import {useUser} from '../../../hooks/useUser';
 import {PasscodeInput} from '../../../components/Common/Input/PasscodeInput';
 import {BackgroundDecorator} from '../../../components/Common/BackgroundDecorator';
 import {CrossIconButton} from '../../../components/Common/Buttons/CrossIconButton';
-import {ROUTES} from "../../../constants/Routes";
 import {navigateToUserHome} from "../../../utils/navigationUtils";
 import { PasscodePageStyles } from './PasscodePageStyles';
+import {ROUTES} from "../../../utils/constants";
 
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');

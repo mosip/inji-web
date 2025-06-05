@@ -1,7 +1,7 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import {ROUTES} from "../constants/Routes";
+import {ROUTES} from "../utils/constants";
 
 export const PageNotFound:React.FC = () => {
     const navigate = useNavigate();

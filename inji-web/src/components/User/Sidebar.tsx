@@ -5,8 +5,8 @@ import {isRTL} from '../../utils/i18n';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
 import {CollapseButton} from '../Common/Buttons/CollapseButton';
-import {ROUTES} from "../../constants/Routes";
 import {SidebarItemType} from "../../types/data";
+import {ROUTES} from "../../utils/constants";
 
 type SidebarItemProps = {
     icon: React.ReactNode;

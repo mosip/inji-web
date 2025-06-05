@@ -10,7 +10,7 @@ import {ResetPasscodePageStyles} from './ResetPasscodePageStyles';
 import {BackgroundDecorator} from '../../../components/Common/BackgroundDecorator';
 import {BackArrowButton} from '../../../components/Common/Buttons/BackArrowButton';
 import {InfoIcon} from '../../../components/Common/Icons/InfoIcon';
-import {ROUTES} from "../../../constants/Routes";
+import {ROUTES} from "../../../utils/constants";
 
 interface InstructionItem {
     id: string;

@@ -8,7 +8,7 @@ import {RootState} from '../../types/redux';
 import {useSelector} from 'react-redux';
 import {isRTL} from '../../utils/i18n';
 import { PlainButton } from '../Common/Buttons/PlainButton';
-import {ROUTES} from "../../constants/Routes";
+import {ROUTES} from "../../utils/constants";
 
 type HeaderProps = {
     headerRef: React.RefObject<HTMLDivElement>;

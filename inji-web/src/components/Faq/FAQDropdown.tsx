@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import DropdownArrowIcon from '../Common/DropdownArrowIcon';
-import {ROUTES} from "../../constants/Routes";
+import {ROUTES} from "../../utils/constants";
 
 // TODO This component is not being used in the current codebase, but it is kept for future use. We have to check if this can be generalized and used in other places as well.
 export const FAQDropdown: React.FC = () => {

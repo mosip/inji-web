@@ -1,8 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useUser} from '../../hooks/useUser';
-import {KEYS} from '../../utils/constants';
-import {ROUTES} from "../../constants/Routes";
+import {KEYS, ROUTES} from '../../utils/constants';
 
 import {User} from "../../types/data";
 

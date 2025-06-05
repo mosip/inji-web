@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { SolidButton } from '../Common/Buttons/SolidButton';
 import { useTranslation } from "react-i18next";
-import {ROUTES} from "../../constants/Routes";
+import {ROUTES} from "../../utils/constants";
 
 export const LoginFailedModal: React.FC = () => {
   const { t } = useTranslation("HomePage");

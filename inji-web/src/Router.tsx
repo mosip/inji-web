@@ -21,7 +21,7 @@ import {useUser} from './hooks/useUser';
 import {CredentialTypesPage} from './pages/User/CredentialTypes/CredentialTypesPage';
 import {ResetPasscodePage} from './pages/User/ResetPasscode/ResetPasscodePage';
 import {ProfilePage} from './pages/User/Profile/ProfilePage';
-import {Pages, ROUTES} from "./constants/Routes";
+import {Pages, ROUTES} from "./utils/constants";
 
 function RedirectToUserHome() {
     return <Navigate to={ROUTES.USER_HOME} replace/>;

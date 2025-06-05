@@ -13,7 +13,7 @@ import {RootState} from '../types/redux';
 import {useSelector} from 'react-redux';
 import {useCookies} from 'react-cookie';
 import {useUser} from '../hooks/useUser';
-import {ROUTES} from "../constants/Routes";
+import {ROUTES} from "../utils/constants";
 
 export const RedirectionPage: React.FC = () => {
     const {error, state, response, fetchRequest} = useFetch();

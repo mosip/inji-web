@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {BorderedButton} from "./Buttons/BorderedButton";
-import {ROUTES} from "../../constants/Routes";
+import {ROUTES} from "../../utils/constants";
 
 export const LandingPageWrapper: React.FC<LandingPageWrapperProps> = (props) => {
     const navigate = useNavigate();

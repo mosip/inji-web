@@ -7,7 +7,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../types/redux";
 import { IssuerWellknownDisplayArrayObject } from "../../types/data";
 import { useUser } from "../../hooks/useUser";
-import {ROUTES} from "../../constants/Routes";
+import {ROUTES} from "../../utils/constants";
 
 export const Issuer: React.FC<IssuerProps> = ({issuer, index}) => {
     const language = useSelector((state: RootState) => state.common.language);

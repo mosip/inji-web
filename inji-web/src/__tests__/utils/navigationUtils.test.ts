@@ -1,5 +1,5 @@
 import { navigateToUserHome } from '../../utils/navigationUtils';
-import { ROUTES } from '../../constants/Routes';
+import {ROUTES} from "../../utils/constants";
 
 describe('navigateToUserHome', () => {
     it('should navigate to USER_HOME route', () => {
