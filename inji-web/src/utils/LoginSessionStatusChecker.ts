@@ -4,7 +4,7 @@ import {useUser} from '../hooks/useUser';
 import {KEYS} from './constants';
 import {ROUTES} from "../constants/Routes";
 
-import {User} from "../models/User";
+import {User} from "../types/data";
 
 const loginProtectedPrefixes = [ROUTES.USER];
 

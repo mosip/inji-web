@@ -1,4 +1,6 @@
-import { NavBackArrowButtonProps } from "../../../types/data";
+type NavBackArrowButtonProps = {
+    onBackClick: () => void;
+};
 
 export const NavBackArrowButton: React.FC<NavBackArrowButtonProps> = ({onBackClick: handleBackClick}) => (
     <svg

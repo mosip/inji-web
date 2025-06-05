@@ -1,5 +1,4 @@
-import {User} from "./User";
-import {ErrorType} from "./Error";
+import {ErrorType, User} from "./data";
 
 export type UserContextType = {
     user: User | null;

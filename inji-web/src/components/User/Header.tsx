@@ -17,7 +17,7 @@ import {convertStringIntoPascalCase} from "../../utils/misc";
 import {navigateToUserHome} from "../../utils/navigationUtils";
 import {CircleSkeleton} from '../Common/CircleSkeleton';
 import {InfoFieldSkeleton} from '../Common/InfoFieldSkeleton';
-import {DropdownItem} from "../../models/DropdownItem";
+import {DropdownItem} from "../../types/data";
 
 type UserHeaderProps = {
     headerRef: React.RefObject<HTMLDivElement>;

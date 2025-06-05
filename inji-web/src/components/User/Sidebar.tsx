@@ -6,7 +6,7 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
 import {CollapseButton} from '../Common/Buttons/CollapseButton';
 import {ROUTES} from "../../constants/Routes";
-import {SidebarItemType} from "../../models/SidebarItemType";
+import {SidebarItemType} from "../../types/data";
 
 type SidebarItemProps = {
     icon: React.ReactNode;
