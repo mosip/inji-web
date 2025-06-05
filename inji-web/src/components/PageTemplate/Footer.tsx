@@ -1,6 +1,9 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import { FooterProps } from '../Dashboard/types';
+
+type FooterProps = {
+    footerRef: React.RefObject<HTMLDivElement>;
+};
 
 export const Footer: React.FC<FooterProps> = ({footerRef}) => {
     const {t} = useTranslation('PageTemplate');

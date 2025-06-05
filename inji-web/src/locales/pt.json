@@ -76,7 +76,7 @@
       "retry": "Tentar novamente"
     }
   },
-  "PinPage": {
+  "PasscodePage": {
     "submit": "Enviar",
     "submitting": "Enviando",
     "setPasscode": "Definir código de acesso",
@@ -88,14 +88,14 @@
     "passcodeWarning": "Certifique-se de lembrar a senha para login futuro",
     "error": {
       "walletNotFoundError": "Nenhuma carteira encontrada. Crie uma.",
-      "pinLengthError": "O PIN deve ter 6 dígitos.",
+      "passcodeLengthError": "O PIN deve ter 6 dígitos.",
       "passcodeMismatchError": "As senhas não correspondem. Certifique-se de que ambos os campos de senha correspondam exatamente. Digite novamente e tente novamente.",
       "createWalletError": "Falha na criação da carteira.",
-      "incorrectPinError": "Senha inválida. A senha que você digitou está incorreta. Verifique e tente novamente ou clique em \"Esqueci a senha\" para redefini-la.",
+      "incorrectPasscodeError": "Senha inválida. A senha que você digitou está incorreta. Verifique e tente novamente ou clique em \"Esqueci a senha\" para redefini-la.",
       "fetchWalletsError": "Erro ao buscar carteiras."
     }
   },
-  "ResetWalletPage": {
+  "ResetPasscodePage": {
     "title": "Redefinir sua carteira",
     "subTitle": "Redefina a carteira para recuperar o acesso e baixar novamente as credenciais",
     "resetInstruction": {
@@ -356,7 +356,7 @@
     "success": "Prosseguir",
     "cancel": "Cancelar"
   },
-  "Dashboard": {
+  "User": {
     "Home": {
       "title": "Lar",
       "welcome": "Bem-vindo"

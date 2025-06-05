@@ -8,11 +8,15 @@ import {RootState} from '../../types/redux';
 import {useSelector} from 'react-redux';
 import {isRTL} from '../../utils/i18n';
 import { PlainButton } from '../Common/Buttons/PlainButton';
-import { HeaderProps } from '../Dashboard/types';
+import {ROUTES} from "../../utils/constants";
+
+type HeaderProps = {
+    headerRef: React.RefObject<HTMLDivElement>;
+};
 
 export const Header: React.FC<HeaderProps> = ({headerRef}) => {
     const language = useSelector((state: RootState) => state.common.language);
-    const {t, i18n} = useTranslation('PageTemplate');
+    const {t} = useTranslation('PageTemplate');
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -45,8 +49,8 @@ export const Header: React.FC<HeaderProps> = ({headerRef}) => {
                     <div
                         role={'button'}
                         tabIndex={0}
-                        onMouseDown={() => navigate('/')}
-                        onKeyUp={() => navigate('/')}
+                        onMouseDown={() => navigate(ROUTES.ROOT)}
+                        onKeyUp={() => navigate(ROUTES.ROOT)}
                     >
                         <img
                             src={require('../../assets/InjiWebLogo.png')}
@@ -58,23 +62,6 @@ export const Header: React.FC<HeaderProps> = ({headerRef}) => {
                     </div>
                 </div>
 
-                {/* ---------------------------Credentials page saved for future use -----------------------*/}
-                {/* {isLoggedIn && (
-                    <li data-testid="Header-Menu-View-Credentials">
-                        <div
-                            data-testid="Header-Menu-View-Credentials-div"
-                            onMouseDown={() =>
-                                navigate('/view/wallet/credentials')
-                            }
-                            onKeyUp={() => navigate('/view/wallet/credentials')}
-                            role="button"
-                            tabIndex={0}
-                            className="text-iw-title cursor-pointer hidden sm:inline-block"
-                        >
-                            {'Credentials'}
-                        </div>
-                    </li>
-                )} */}
                 <div
                     className="flex flex-row space-x-4"
                     data-testid="Header-FAQ-LanguageSelector-Container"
@@ -82,7 +69,7 @@ export const Header: React.FC<HeaderProps> = ({headerRef}) => {
                     <div className="hidden sm:block">
                         <PlainButton
                             fullWidth={true}
-                            onClick={() => navigate('/faq')}
+                            onClick={() => navigate(ROUTES.FAQ)}
                             testId="Header-Menu-FAQ"
                             title={t('Header.faq')}
                             disableGradient={true}
@@ -105,11 +92,11 @@ export const Header: React.FC<HeaderProps> = ({headerRef}) => {
                             role="button"
                             tabIndex={0}
                             onKeyUp={() => {
-                                navigate('/faq');
+                                navigate(ROUTES.FAQ);
                                 setIsOpen(false);
                             }}
                             onMouseDown={() => {
-                                navigate('/faq');
+                                navigate(ROUTES.FAQ);
                                 setIsOpen(false);
                             }}
                             className="text-iw-title cursor-pointer py-5 w-full inline-block"

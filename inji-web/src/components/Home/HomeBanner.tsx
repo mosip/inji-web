@@ -1,5 +1,5 @@
 import React from "react";
-import Login from "../../pages/users/login/Login"; // Import your existing login component
+import Login from "../Login/Login"; // Import your existing login component
 import { useTranslation } from "react-i18next";
 
 export const HomeBanner: React.FC = () => {

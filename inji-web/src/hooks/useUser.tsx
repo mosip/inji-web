@@ -1,7 +1,8 @@
 import React, {createContext, useContext, useState} from 'react';
 import {api} from '../utils/api';
 import {KEYS} from '../utils/constants';
-import {ErrorType, User, UserContextType} from '../components/Dashboard/types';
+import {UserContextType} from "../types/contextTypes";
+import {ErrorType, User} from "../types/data";
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 

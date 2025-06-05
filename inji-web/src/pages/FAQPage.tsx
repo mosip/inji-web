@@ -2,13 +2,17 @@ import React from 'react';
 import {FAQAccordion} from '../components/Faq/FAQAccordion';
 import {useTranslation} from 'react-i18next';
 import {useLocation, useNavigate} from 'react-router-dom';
-import {FAQPageProps} from '../components/Dashboard/types';
-import {navigateToDashboardHome} from './Dashboard/utils';
+import {navigateToUserHome} from '../utils/navigationUtils';
 import {PageTitle} from "../components/Common/PageTitle/PageTitle";
 import { TertiaryButton } from '../components/Common/Buttons/TertiaryButton';
 
+type FAQPageProps = {
+    backUrl?: string;
+    withHome?: boolean;
+};
+
 export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
-    const {t} = useTranslation(['FAQPage', 'Dashboard']);
+    const {t} = useTranslation(['FAQPage', 'User']);
     const navigate = useNavigate();
     const location = useLocation();
     const previousPagePath = location.state?.from;
@@ -19,7 +23,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
         } else if (previousPagePath) {
             navigate(previousPagePath); // Navigate to the previous link in history
         } else {
-            navigateToDashboardHome(navigate); // Navigate to homepage if opened directly
+            navigateToUserHome(navigate); // Navigate to homepage if opened directly
         }
     };
 
@@ -46,7 +50,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
                     <div className="flex flex-col items-start">
                         <PageTitle value={t('title')} testId={"faq"} />
                         {withHome && (
-                            <TertiaryButton testId={'FAQ-Home-Button'} onClick={()=>navigateToDashboardHome(navigate)} title={t('Dashboard:Home.title')}/>
+                            <TertiaryButton testId={'FAQ-Home-Button'} onClick={()=>navigateToUserHome(navigate)} title={t('User:Home.title')}/>
                         )}
                     </div>
                     <div className="w-full">

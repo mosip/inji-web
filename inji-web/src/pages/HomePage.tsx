@@ -5,7 +5,7 @@ import {HomeQuickTip} from "../components/Home/HomeQuickTip";
 import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
 import { useLocation } from 'react-router-dom';
-import {LoginFailedModal} from '../pages/users/login/LoginFailedModal'
+import {LoginFailedModal} from '../components/Login/LoginFailedModal'
 
 const Status = {
     SUCCESS: "success",
