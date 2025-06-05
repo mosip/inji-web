@@ -71,7 +71,7 @@ describe('ProfilePage', () => {
 
     renderWithRouter();
 
-    expect(screen.getByTestId('Profile-Page')).toBeInTheDocument();
+    expect(screen.getByTestId('profile-page')).toBeInTheDocument();
     expect(screen.getByTestId('profile-page-horizontal-rule')).toBeInTheDocument();
     expect(screen.queryAllByRole('presentation')).toHaveLength(0);
   });

@@ -51,7 +51,7 @@ export const Login: React.FC = () => {
 
         <div className="w-full">
           <BorderedButton 
-              testId="HomeBanner-Guest-Login" 
+              testId="home-banner-guest-login" 
               onClick={() => navigate("/issuers")}
               title={
               t("Login.loginGuest")

@@ -88,7 +88,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
     //TODO here check if the div with testId "Credential-List-Container" can be moved to credentialList component
     return (
         <div
-            data-testid={'Credential-Types-Page-Container'}
+            data-testid={'credential-types-page-container'}
             className="container mx-auto sm:px-2 md:px-4 lg:px-6 py-6 flex flex-col srelative gap-4 sm:gap-6 md:gap-10 lg:gap-12 ml-4  sm:ml-0"
         >
             <div className="flex flex-col lg:flex-row justify-between items-start gap-4 sm:gap-2">
@@ -98,13 +98,13 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
                     </div>
                     <div className="flex flex-col items-start">
                         <span
-                            data-testid={'Stored-Credentials'}
+                            data-testid={'stored-credentials'}
                             className="text-2xl font-medium"
                         >
                             {displayObject?.name}
                         </span>
                         <button
-                            data-testid={'Home'}
+                            data-testid={'home'}
                             className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer"
                             onClick={() => navigateToDashboardHome(navigate)}
                         >
@@ -121,7 +121,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
 
             <div className="bg-white rounded-lg shadow-iw-layout flex flex-col sm:flex-row justify-between items-start p-4 sm:p-6">
                 <div
-                    data-testid="Credential-List-Container"
+                    data-testid="credential-list-container"
                     className="container mx-auto"
                 >
                     <CredentialList state={state} />

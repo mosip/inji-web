@@ -169,17 +169,17 @@ export const Header: React.FC<DashboardHeaderProps> = ({
     return (
         <header
             ref={headerRef}
-            data-testid="Dashboard-Header-Container"
+            data-testid="dashboard-header-container"
             className="fixed top-0 left-0 right-0 z-20 bg-iw-background bg-transparent shadow-[0_4px_5px_0_rgba(0,0,0,0.051)]"
         >
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 <div className="flex justify-start items-center gap-2">
                     <div
-                        data-testid="Hamburger-Menu"
+                        data-testid="hamburger-menu"
                         className="block sm:hidden"
                     >
                         <img
-                            data-testid="Hamburger-Menu-icon"
+                            data-testid="hamburger-menu-icon"
                             ref={hamburgerMenuRef}
                             src={HamburgerMenu}
                             alt="Hamburger Menu"
@@ -199,7 +199,7 @@ export const Header: React.FC<DashboardHeaderProps> = ({
                             className={`max-w-full h-auto object-contain cursor-pointer ${
                                 isRTL(language) ? 'mr-4' : ''
                             }`}
-                            data-testid="Header-InjiWeb-Logo"
+                            data-testid="header-injiWeb-logo"
                             alt="Inji Web Logo"
                         />
                     </div>
@@ -209,7 +209,7 @@ export const Header: React.FC<DashboardHeaderProps> = ({
                     <LanguageSelector />
 
                     <div
-                        data-testid="Profile-Details"
+                        data-testid="profile-details"
                         className="hidden sm:block relative"
                         ref={dropdownRef}
                     >
@@ -227,7 +227,7 @@ export const Header: React.FC<DashboardHeaderProps> = ({
 
                         {isProfileDropdownOpen && (
                             <div
-                                data-testid="Profile-Dropdown"
+                                data-testid="profile-dropdown"
                                 className="absolute -right-7 top-100 mt-8 w-56 bg-white rounded-lg shadow-lg z-50 font-medium"
                             >
                                 <div className="absolute top-[-0.3rem] right-8 w-3 h-3 bg-white transform rotate-45" />
@@ -253,7 +253,7 @@ export const Header: React.FC<DashboardHeaderProps> = ({
                 </div>
             </div>
             <div
-                data-testid="Hamburger-Menu-dropdown"
+                data-testid="hamburger-menu-dropdown"
                 className="block sm:hidden w-full"
             >
                 {isHamburgerMenuOpen && (

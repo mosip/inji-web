@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { LoginFailedModal } from '../../../pages/users/login/LoginFailedModal';
+import { LoginFailedModal } from '../../../../pages/users/login/LoginFailedModal';
 
 // // Mocking the useTranslation hook from react-i18next
 jest.mock("react-i18next", () => ({
@@ -36,7 +36,7 @@ describe('FailedLoginPage', () => {
 
   test('navigates to login page on retry button click', () => {
     const { getByTestId } = render(<LoginFailedModal />, { wrapper: MemoryRouter });
-    const button = getByTestId('Login-Failure-Button');
+    const button = getByTestId('login-failure-button');
     fireEvent.click(button);
   });
 }); 

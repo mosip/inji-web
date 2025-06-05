@@ -3,7 +3,7 @@ import { InfoFieldProps } from "./types";
 
 export const InfoField: React.FC<InfoFieldProps> = (props) => {
   return (
-    <div data-testid="Info-Field" className="w-[90%]  flex flex-col items-left my-4">
+    <div data-testid="info-field" className="w-[90%]  flex flex-col items-left my-4">
       {/* Label */}
       <h3 data-testid={`label-${props.testId}`} className="text-gray-500 text-sm">{props.label}</h3>
 
