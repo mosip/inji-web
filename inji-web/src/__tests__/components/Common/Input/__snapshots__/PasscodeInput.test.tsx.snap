@@ -4,7 +4,7 @@ exports[`PasscodeInput should match the snapshot of PasscodeInput layout 1`] = `
 <DocumentFragment>
   <div
     class="mb-2"
-    data-testid="test-passcode-input"
+    data-testid="test-passcode-input-container"
   >
     <p
       class="text-sm text-left font-medium text-iw-textSecondary"
@@ -72,10 +72,12 @@ exports[`PasscodeInput should match the snapshot of PasscodeInput layout 1`] = `
       >
         <button
           class="pin-input-box-border pin-input-box-style flex items-center justify-center focus:outline-none"
+          data-testid="btn-toggle-visibility-test-passcode-input"
           type="button"
         >
           <svg
             class="text-iw-grayLight"
+            data-testid="eye-view-slash"
             fill="currentColor"
             height="1em"
             stroke="currentColor"

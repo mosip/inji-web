@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import {render, screen, within} from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 import { PasscodePage } from '../../../pages/User/Passcode/PasscodePage';
@@ -61,14 +61,15 @@ describe('Passcode', () => {
 
   test("renders passcode input field", () => {
     renderWithProviders(<PasscodePage />);
-    const passcodeInput = screen.getByTestId("input-passcode");
+    const passcodeInput = screen.getByTestId("passcode-container");
     expect(passcodeInput).toBeInTheDocument();
-    expect(passcodeInput).toHaveTextContent("Enter Passcode");
+
+    expect(within(passcodeInput).getByTestId("label-passcode")).toHaveTextContent("Enter Passcode");
   });
 
   test("renders confirm passcode input field when wallet does not exist", () => {
     renderWithProviders(<PasscodePage />);
-    const confirmPasscodeInput = screen.getByTestId("input-confirm-passcode");
+    const confirmPasscodeInput = screen.getByTestId("confirm-passcode-container");
     expect(confirmPasscodeInput).toBeInTheDocument();
     expect(confirmPasscodeInput).toHaveTextContent("Confirm Passcode");
   });

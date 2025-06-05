@@ -235,7 +235,7 @@ return (
 
                     <div
                         className={PasscodePageStyles.passcodeContainer}
-                        data-testid="passcode-container"
+                        data-testid="passcode-inputs-container"
                     >
                         {wallets.length === 0 && (
                             <div className={PasscodePageStyles.warningTextBorder} />

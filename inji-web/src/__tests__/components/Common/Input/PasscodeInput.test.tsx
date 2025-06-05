@@ -26,7 +26,7 @@ describe('PasscodeInput', () => {
         render(<PasscodeInput {...defaultProps} />);
 
         expect(screen.getByText('Test Passcode')).toBeInTheDocument();
-        expect(screen.getByTestId('test-passcode-input')).toBeInTheDocument();
+        expect(screen.getByTestId('test-passcode-input-container')).toBeInTheDocument();
 
         // Should have 6 input fields and 1 toggle button
         const inputs = screen.getAllByTestId('input-test-passcode-input');
@@ -84,10 +84,12 @@ describe('PasscodeInput', () => {
         // Click to show passcode
         await userEvent.click(toggleButton);
         expect(inputs[0]).toHaveAttribute('type', 'text');
+        expect(screen.getByTestId("eye-view")).toBeInTheDocument()
 
         // Click again to hide passcode
         await userEvent.click(toggleButton);
         expect(inputs[0]).toHaveAttribute('type', 'password');
+        expect(screen.getByTestId("eye-view-slash")).toBeInTheDocument()
     });
 
     it('renders with prefilled values', () => {

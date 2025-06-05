@@ -88,11 +88,12 @@ export const PasscodeInput: React.FC<PasscodeInputProps> = ({
                         type="button"
                         onClick={() => setShowPasscode((prev) => !prev)}
                         className="pin-input-box-border pin-input-box-style flex items-center justify-center focus:outline-none"
+                        data-testid={`btn-toggle-visibility-${testId}`}
                     >
                         {showPasscode ? (
-                            <FaEye className="text-iw-grayLight" />
+                            <FaEye className="text-iw-grayLight" data-testid={"eye-view"}/>
                         ) : (
-                            <FaEyeSlash className="text-iw-grayLight" />
+                            <FaEyeSlash className="text-iw-grayLight" data-testid={"eye-view-slash"}/>
                         )}
                     </button>
                 </div>
