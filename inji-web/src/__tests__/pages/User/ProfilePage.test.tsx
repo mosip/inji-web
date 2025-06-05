@@ -1,13 +1,13 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
-import {ProfilePage} from '../../../pages/User/ProfilePage';
-import {useUser} from '../../../hooks/useUser';
+import {ProfilePage} from '../../../pages/User/ProfilePage.tsx';
+import {useUser} from '../../../hooks/useUser.tsx';
 import {MemoryRouter, useLocation} from 'react-router-dom';
-import {navigateToUserHome} from "../../../utils/navigationUtils";
+import {navigateToUserHome} from "../../../utils/navigationUtils.ts";
 
 // Mocks
-jest.mock('../../../hooks/useUser');
-jest.mock('../../../utils/navigationUtils', () => ({
+jest.mock('../../../hooks/useUser.tsx');
+jest.mock('../../../utils/navigationUtils.ts', () => ({
   navigateToUserHome: jest.fn(),
 }));
 jest.mock('react-i18next', () => ({
@@ -20,12 +20,12 @@ jest.mock('../../../components/Common/Buttons/NavBackArrowButton.tsx', () => ({
     <button onClick={onBackClick}>Back</button>
   ),
 }));
-jest.mock('../../../components/Common/Buttons/TertiaryButton', () => ({
+jest.mock('../../../components/Common/Buttons/TertiaryButton.tsx', () => ({
   TertiaryButton: ({ onClick }: { onClick: () => void }) => (
     <button onClick={onClick}>Go Home</button>
   ),
 }));
-jest.mock('../../../components/Dashboard/InfoField', () => ({
+jest.mock('../../../components/Dashboard/InfoField.tsx', () => ({
   InfoField: ({ label, value }: { label: string; value: string }) => (
     <div role="presentation">
       <span>{label}</span>:<span>{value}</span>
