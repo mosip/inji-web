@@ -1,13 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useUser } from '../../hooks/useUser';
-import { NavBackArrowButton } from '../../components/Common/Buttons/NavBackArrowButton';
-import { InfoField } from '../../components/Common/InfoField';
-import {navigateToUserHome} from "../../utils/navigationUtils";
-import { TertiaryButton } from '../../components/Common/Buttons/TertiaryButton';
-import { CircleSkeleton } from '../../components/Common/CircleSkeleton';
-import { InfoFieldSkeleton } from '../../components/Common/InfoFieldSkeleton';
+import { useUser } from '../../../hooks/useUser';
+import { NavBackArrowButton } from '../../../components/Common/Buttons/NavBackArrowButton';
+import { InfoField } from '../../../components/Common/InfoField';
+import {navigateToUserHome} from "../../../utils/navigationUtils";
+import { TertiaryButton } from '../../../components/Common/Buttons/TertiaryButton';
+import { CircleSkeleton } from '../../../components/Common/CircleSkeleton';
+import { InfoFieldSkeleton } from '../../../components/Common/InfoFieldSkeleton';
+import {ProfilePageStyles} from "./ProfilePageStyles";
 
 export const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
@@ -27,14 +28,14 @@ export const ProfilePage: React.FC = () => {
   const renderProfilePicture = () => {
     return isLoading ? (
       <CircleSkeleton
-        size="min-w-[80px] min-h-[80px] md:min-w-[150px] md:min-h-[150px]"
+        size={ProfilePageStyles.profilePictureSkeleton}
         className="sm:m-7 flex-shrink-0"
       />
     ) : (
       <img
         data-testid="profile-page-picture"
         alt="Profile"
-        className="rounded-full sm:m-7 flex-shrink-0 min-w-[80px] min-h-[80px] md:min-w-[150px] md:min-h-[150px] object-cover"
+        className={ProfilePageStyles.profilePicture}
         src={user?.profilePictureUrl}
       />
     );
@@ -62,18 +63,17 @@ export const ProfilePage: React.FC = () => {
     );
   };
 
-  return (
-    <div className="container mx-auto sm:px-2 md:px-4 lg:px-6 py-6 relative ml-3 sm:ml-0">
-        
-      <div className="flex flex-col sm:flex-row justify-between items-start mb-4 sm:mb-6 gap-4 sm:gap-0">
-        <div className="flex items-start">
+ return (
+    <div className={ProfilePageStyles.container}>
+      <div className={ProfilePageStyles.headerContainer}>
+        <div className={ProfilePageStyles.headerLeftSection}>
           <NavBackArrowButton onBackClick={handleBackClick} />
-          <div className="flex flex-col items-start">
-            <span data-testid="Profile-Page" className="text-2xl font-medium">
+          <div className={ProfilePageStyles.headerTitleContainer}>
+            <span data-testid="Profile-Page" className={ProfilePageStyles.pageTitle}>
               {t('ProfilePage.title')}
             </span>
             <TertiaryButton
-              testId="profile-page"
+              testId="home"
               onClick={() => navigateToUserHome(navigate)}
               title={t('ProfilePage.homeTitle')}
             />
@@ -82,15 +82,15 @@ export const ProfilePage: React.FC = () => {
       </div>
 
       {/* Main profile section */}
-      <div className={`flex flex-col items-center md:flex-row space-y-5 md:space-x-10 bg-white p-5 rounded-lg shadow-xl`}>
+      <div className={ProfilePageStyles.profileSection}>
         <div>{renderProfilePicture()}</div>
 
         <hr
           data-testid="profile-page-horizontal-rule"
-          className="w-[90%] md:hidden border-t border-gray-200"
+          className={ProfilePageStyles.horizontalDivider}
         />
 
-        <div className="w-full flex flex-col space-y-4 flex-grow">
+        <div className={ProfilePageStyles.infoContainer}>
           {renderInfoFields()}
         </div>
       </div>

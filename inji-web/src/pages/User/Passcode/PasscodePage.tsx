@@ -1,15 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {api} from '../../utils/api';
+import {api} from '../../../utils/api';
 import {useCookies} from 'react-cookie';
-import {SolidButton} from '../../components/Common/Buttons/SolidButton';
+import {SolidButton} from '../../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
-import {useUser} from '../../hooks/useUser';
-import {PasscodeInput} from '../../components/Common/Input/PasscodeInput';
-import {BackgroundDecorator} from '../../components/Common/BackgroundDecorator';
-import {CrossIconButton} from '../../components/Common/Buttons/CrossIconButton';
-import {ROUTES} from "../../constants/Routes";
-import {navigateToUserHome} from "../../utils/navigationUtils";
+import {useUser} from '../../../hooks/useUser';
+import {PasscodeInput} from '../../../components/Common/Input/PasscodeInput';
+import {BackgroundDecorator} from '../../../components/Common/BackgroundDecorator';
+import {CrossIconButton} from '../../../components/Common/Buttons/CrossIconButton';
+import {ROUTES} from "../../../constants/Routes";
+import {navigateToUserHome} from "../../../utils/navigationUtils";
+import { PasscodePageStyles } from './PasscodePageStyles';
 
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');
@@ -200,28 +201,22 @@ export const PasscodePage: React.FC = () => {
         passcode.includes('') ||
         (wallets.length === 0 && confirmPasscode.includes(''));
 
-    return (
+return (
         <div
             data-testid="passcode-page"
-            className="fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50 h-screen"
+            className={PasscodePageStyles.pageOverlay}
         >
-            <div
-                className="rounded-2xl bg-white flex flex-col items-center justify-start relative
-               w-[90%] sm:w-[85%] md:w-[90%]
-               h-[80%] sm:h-[76%] md:h-[80%]
-               overflow-y-auto
-               shadow-iw-pin-page-container"
-            >
+            <div className={PasscodePageStyles.container}>
                 <BackgroundDecorator
-                    logoSrc={require('../../assets/Logomark.png')}
+                    logoSrc={require('../../../assets/Logomark.png')}
                     logoAlt="Inji Web Logo"
                     logoTestId="logo-inji-web"
                 />
 
-                <div className="flex flex-col items-center justify-start w-full top-[240px] relative z-10 pb-8">
-                    <div className="text-center space-y-5 relative w-full max-w-[500px] px-4 sm:px-0">
+                <div className={PasscodePageStyles.contentWrapper}>
+                    <div className={PasscodePageStyles.titleContainer}>
                         <h1
-                            className="text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGreen"
+                            className={PasscodePageStyles.title}
                             data-testid="title-passcode"
                         >
                             {wallets.length === 0
@@ -229,7 +224,7 @@ export const PasscodePage: React.FC = () => {
                                 : t('enterPasscode')}
                         </h1>
                         <p
-                            className="text-iw-textTertiary text-sm sm:text-lg md:text-xl font-medium"
+                            className={PasscodePageStyles.description}
                             data-testid="passcode-description"
                         >
                             {wallets.length === 0
@@ -239,17 +234,17 @@ export const PasscodePage: React.FC = () => {
                     </div>
 
                     <div
-                        className="flex flex-col bg-white sm:rounded-lg sm:shadow-iw-pin-page-container items-center z-20 w-full max-w-[500px] mt-8 mb-4 mx-auto"
+                        className={PasscodePageStyles.passcodeContainer}
                         data-testid="passcode-container"
                     >
                         {wallets.length === 0 && (
-                            <div className="relative sm:hidden pin-page-warning-text-border min-w-full items-center justify-center mt-1 sm:mt-3 md:mt-5" />
+                            <div className={PasscodePageStyles.warningTextBorder} />
                         )}
 
                         {wallets.length === 0 && (
-                            <div className="w-full items-center justify-center flex">
+                            <div className={PasscodePageStyles.warningTextContainer}>
                                 <p
-                                    className="text-iw-textTertiary text-center text-sm sm:text-base px-4 sm:px-8 pt-4 sm:pt-6 max-w-[560px]"
+                                    className={PasscodePageStyles.warningText}
                                     data-testid="passcode-warning"
                                 >
                                     {t('passcodeWarning')}
@@ -259,36 +254,36 @@ export const PasscodePage: React.FC = () => {
 
                         {error ? (
                             <div
-                                className="bg-iw-pink50 w-full px-3 sm:px-5 py-3 mt-3 sm:mt-4 md:mt-5"
+                                className={PasscodePageStyles.errorContainer}
                                 data-testid="error-passcode"
                             >
-                                <div className="flex items-start justify-between gap-2 max-w-[560px] mx-auto">
-                                    <div className="flex-1 pr-2">
-                                        <span className="text-sm text-iw-darkRed break-words whitespace-normal">
+                                <div className={PasscodePageStyles.errorContentWrapper}>
+                                    <div className={PasscodePageStyles.errorTextContainer}>
+                                        <span className={PasscodePageStyles.errorText}>
                                             {error}
                                         </span>
                                     </div>
-                                    <div className="flex-shrink-0">
+                                    <div className={PasscodePageStyles.closeButtonContainer}>
                                         <CrossIconButton
                                             onClick={() => setError(null)}
                                             btnTestId="btn-close-icon"
                                             iconTestId="icon-close"
-                                            btnClassName="cursor-pointer"
-                                            iconClassName="min-w-[14px] min-h-[14px] mt-1.5 sm:mt-2"
+                                            btnClassName={PasscodePageStyles.closeButton}
+                                            iconClassName={PasscodePageStyles.closeIcon}
                                         />
                                     </div>
                                 </div>
                             </div>
                         ) : (
                             wallets.length === 0 && (
-                                <div className="pin-page-warning-text-border w-full mt-2 sm:mt-3 md:mt-5" />
+                                <div className={PasscodePageStyles.bottomBorder} />
                             )
                         )}
 
-                        <div className="w-full px-4 sm:px-8 py-3 sm:py-5 md:py-7 space-y-4 flex flex-col items-center">
-                            <div className="w-full max-w-[410px] mx-auto">
-                                <div className="overflow-x-auto">
-                                    <div className="flex justify-center gap-x-2 min-w-fit">
+                        <div className={PasscodePageStyles.inputContainer}>
+                            <div className={PasscodePageStyles.inputWrapper}>
+                                <div className={PasscodePageStyles.inputScrollContainer}>
+                                    <div className={PasscodePageStyles.inputGroup}>
                                         <PasscodeInput
                                             label={t('enterPasscode')}
                                             value={passcode}
@@ -298,7 +293,7 @@ export const PasscodePage: React.FC = () => {
                                     </div>
 
                                     {wallets.length === 0 && (
-                                        <div className="flex justify-center gap-x-2 mt-4 min-w-fit">
+                                        <div className={PasscodePageStyles.confirmInputGroup}>
                                             <PasscodeInput
                                                 label={t('confirmPasscode')}
                                                 value={confirmPasscode}
@@ -310,10 +305,10 @@ export const PasscodePage: React.FC = () => {
                                 </div>
                             </div>
                             {wallets.length !== 0 && (
-                                <div className="w-full max-w-[410px] mx-auto flex justify-start">
+                                <div className={PasscodePageStyles.forgotPasscodeContainer}>
                                     <button
                                         data-testid="btn-forgot-passcode"
-                                        className="text-sm md:text-md font-semibold text-iw-deepVioletIndigo my-0 cursor-pointer"
+                                        className={PasscodePageStyles.forgotPasscodeButton}
                                         onClick={() =>
                                             navigate(
                                                 ROUTES.USER_RESET_PASSCODE,
@@ -331,7 +326,7 @@ export const PasscodePage: React.FC = () => {
                                 </div>
                             )}
 
-                            <div className="w-full max-w-[410px] mx-auto">
+                            <div className={PasscodePageStyles.buttonContainer}>
                                 <SolidButton
                                     fullWidth={true}
                                     testId="btn-submit-passcode"
@@ -340,9 +335,7 @@ export const PasscodePage: React.FC = () => {
                                         loading ? t('submitting') : t('submit')
                                     }
                                     disabled={isButtonDisabled}
-                                    className={`${
-                                        isButtonDisabled ? 'grayscale' : ''
-                                    }`}
+                                    className={isButtonDisabled ? PasscodePageStyles.disabledButton : ''}
                                 />
                             </div>
                         </div>

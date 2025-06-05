@@ -1,6 +1,6 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
-import {ProfilePage} from '../../../pages/User/ProfilePage';
+import {ProfilePage} from '../../../pages/User/Profile/ProfilePage';
 import {useUser} from '../../../hooks/useUser';
 import {MemoryRouter, useLocation} from 'react-router-dom';
 import {navigateToUserHome} from "../../../utils/navigationUtils";

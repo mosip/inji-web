@@ -1,28 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
-import {RequestStatus, useFetch} from '../../hooks/useFetch';
-import {CredentialList} from '../../components/Credentials/CredentialList';
+import {RequestStatus, useFetch} from '../../../hooks/useFetch';
+import {CredentialList} from '../../../components/Credentials/CredentialList';
 import {useDispatch, useSelector} from 'react-redux';
-import {storeSelectedIssuer} from '../../redux/reducers/issuersReducer';
-import {
-    storeCredentials,
-    storeFilteredCredentials
-} from '../../redux/reducers/credentialsReducer';
-import {api} from '../../utils/api';
+import {storeSelectedIssuer} from '../../../redux/reducers/issuersReducer';
+import {storeCredentials, storeFilteredCredentials} from '../../../redux/reducers/credentialsReducer';
+import {api} from '../../../utils/api';
 import {useTranslation} from 'react-i18next';
 import {toast} from 'react-toastify';
 
-import {
-    ApiRequest,
-    IssuerWellknownDisplayArrayObject,
-    IssuerObject
-} from '../../types/data';
-import {getIssuerDisplayObjectForCurrentLanguage} from '../../utils/i18n';
-import {RootState} from '../../types/redux';
-import {isObjectEmpty} from '../../utils/misc';
-import {SearchCredential} from '../../components/Credentials/SearchCredential';
-import { NavBackArrowButton } from '../../components/Common/Buttons/NavBackArrowButton';
-import {navigateToUserHome} from "../../utils/navigationUtils";
+import {ApiRequest, IssuerObject, IssuerWellknownDisplayArrayObject} from '../../../types/data';
+import {getIssuerDisplayObjectForCurrentLanguage} from '../../../utils/i18n';
+import {RootState} from '../../../types/redux';
+import {isObjectEmpty} from '../../../utils/misc';
+import {SearchCredential} from '../../../components/Credentials/SearchCredential';
+import {NavBackArrowButton} from '../../../components/Common/Buttons/NavBackArrowButton';
+import {navigateToUserHome} from "../../../utils/navigationUtils";
+import {CredentialTypesPageStyles} from "./CredentialTypesPageStyles";
 
 type CredentialTypesPageProps = {
     backUrl?: string;
@@ -91,23 +85,23 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
     return (
         <div
             data-testid={'Credential-Types-Page-Container'}
-            className="container mx-auto sm:px-2 md:px-4 lg:px-6 py-6 flex flex-col srelative gap-4 sm:gap-6 md:gap-10 lg:gap-12 ml-4  sm:ml-0"
+            className={CredentialTypesPageStyles.container}
         >
-            <div className="flex flex-col lg:flex-row justify-between items-start gap-4 sm:gap-2">
-                <div className="flex items-start">
-                    <div className="flex items-start">
+            <div className={CredentialTypesPageStyles.headerContainer}>
+                <div className={CredentialTypesPageStyles.headerLeftSection}>
+                    <div className={CredentialTypesPageStyles.headerLeftSection}>
                         <NavBackArrowButton onBackClick={handleBackClick} />
                     </div>
-                    <div className="flex flex-col items-start">
+                    <div className={CredentialTypesPageStyles.headerTitleSection}>
                         <span
                             data-testid={'Stored-Credentials'}
-                            className="text-2xl font-medium"
+                            className={CredentialTypesPageStyles.pageTitle}
                         >
                             {displayObject?.name}
                         </span>
                         <button
                             data-testid={'Home'}
-                            className="text-xs sm:text-sm text-[#5B03AD] cursor-pointer"
+                            className={CredentialTypesPageStyles.homeButton}
                             onClick={() => navigateToUserHome(navigate)}
                         >
                             {t('Dashboard:Home.title')}
@@ -121,10 +115,10 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
                 </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-iw-layout flex flex-col sm:flex-row justify-between items-start p-4 sm:p-6">
+            <div className={CredentialTypesPageStyles.contentContainer}>
                 <div
                     data-testid="Credential-List-Container"
-                    className="container mx-auto"
+                    className={CredentialTypesPageStyles.credentialListContainer}
                 >
                     <CredentialList state={state} />
                 </div>
