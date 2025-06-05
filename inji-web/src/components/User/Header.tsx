@@ -41,7 +41,7 @@ export const Header: React.FC<UserHeaderProps> = ({
     const {user, removeUser,isLoading} = useUser();
     const displayNameFromLocalStorage = user?.displayName;
     const hasProfilePictureUrl = user?.profilePictureUrl;
-    const {t} = useTranslation('Dashboard');
+    const {t} = useTranslation('User');
 
     useEffect(() => {
         setDisplayName(displayNameFromLocalStorage);

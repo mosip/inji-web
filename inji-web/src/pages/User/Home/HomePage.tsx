@@ -6,7 +6,7 @@ import {convertStringIntoPascalCase} from "../../../utils/misc";
 import {HomePageStyles} from "./HomePageStyles";
 
 export const HomePage: React.FC = () => {
-    const {t} = useTranslation('Dashboard');
+    const {t} = useTranslation('User');
     const [displayName, setDisplayName] = useState<string | undefined>(undefined);
     const {user} = useUser();
     const userDisplayName = user?.displayName;

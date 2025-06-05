@@ -12,7 +12,7 @@ type FAQPageProps = {
 };
 
 export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
-    const {t} = useTranslation(['FAQPage', 'Dashboard']);
+    const {t} = useTranslation(['FAQPage', 'User']);
     const navigate = useNavigate();
     const location = useLocation();
     const previousPagePath = location.state?.from;
@@ -50,7 +50,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
                     <div className="flex flex-col items-start">
                         <PageTitle value={t('title')} testId={"faq"} />
                         {withHome && (
-                            <TertiaryButton testId={'FAQ-Home-Button'} onClick={()=>navigateToUserHome(navigate)} title={t('Dashboard:Home.title')}/>
+                            <TertiaryButton testId={'FAQ-Home-Button'} onClick={()=>navigateToUserHome(navigate)} title={t('User:Home.title')}/>
                         )}
                     </div>
                     <div className="w-full">

@@ -69,7 +69,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 };
 
 export const Sidebar: React.FC = () => {
-    const {t} = useTranslation('Dashboard');
+    const {t} = useTranslation('User');
     const location = useLocation();
     const [isCollapsed, setIsCollapsed] = useState(false);
     const language = useSelector((state: RootState) => state.common.language);

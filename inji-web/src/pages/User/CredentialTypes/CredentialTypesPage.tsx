@@ -28,7 +28,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
     const {state, fetchRequest} = useFetch();
     const params = useParams<CredentialParamProps>();
     const dispatch = useDispatch();
-    const {t} = useTranslation(['CredentialsPage', 'Dashboard']);
+    const {t} = useTranslation(['CredentialsPage', 'User']);
     const language = useSelector((state: RootState) => state.common.language);
     let displayObject = {} as IssuerWellknownDisplayArrayObject;
     let [selectedIssuer, setSelectedIssuer] = useState({} as IssuerObject);
@@ -104,7 +104,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
                             className={CredentialTypesPageStyles.homeButton}
                             onClick={() => navigateToUserHome(navigate)}
                         >
-                            {t('Dashboard:Home.title')}
+                            {t('User:Home.title')}
                         </button>
                     </div>
                 </div>
