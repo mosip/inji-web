@@ -1,9 +1,9 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
-import {ProfilePage} from '../../../pages/User/ProfilePage.tsx';
-import {useUser} from '../../../hooks/useUser.tsx';
+import {ProfilePage} from '../../../pages/User/ProfilePage';
+import {useUser} from '../../../hooks/useUser';
 import {MemoryRouter, useLocation} from 'react-router-dom';
-import {navigateToUserHome} from "../../../utils/navigationUtils.ts";
+import {navigateToUserHome} from "../../../utils/navigationUtils";
 
 // Mocks
 jest.mock('../../../hooks/useUser.tsx');
@@ -25,7 +25,7 @@ jest.mock('../../../components/Common/Buttons/TertiaryButton.tsx', () => ({
     <button onClick={onClick}>Go Home</button>
   ),
 }));
-jest.mock('../../../components/Dashboard/InfoField.tsx', () => ({
+jest.mock('../../../components/Common/InfoField.tsx', () => ({
   InfoField: ({ label, value }: { label: string; value: string }) => (
     <div role="presentation">
       <span>{label}</span>:<span>{value}</span>

@@ -1,8 +1,13 @@
 import { useSelector } from "react-redux";
-import { isRTL } from "../../utils/i18n";
-import { RootState } from "../../types/redux";
-import CollapseIcon from '../../assets/CollapseIcon.svg';
-import { CollapseButtonProps } from "./types";
+import { isRTL } from "../../../utils/i18n";
+import { RootState } from "../../../types/redux";
+import CollapseIcon from '../../../assets/CollapseIcon.svg';
+
+type CollapseButtonProps = {
+    isCollapsed: boolean;
+    onClick: () => void;
+    className?: string;
+};
 
 export const CollapseButton: React.FC<CollapseButtonProps> = ({isCollapsed, onClick, className}) => {
     const language = useSelector((state: RootState) => state.common.language);

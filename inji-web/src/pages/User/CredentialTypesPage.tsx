@@ -21,9 +21,12 @@ import {getIssuerDisplayObjectForCurrentLanguage} from '../../utils/i18n';
 import {RootState} from '../../types/redux';
 import {isObjectEmpty} from '../../utils/misc';
 import {SearchCredential} from '../../components/Credentials/SearchCredential';
-import {CredentialTypesPageProps} from '../../components/Dashboard/types';
 import { NavBackArrowButton } from '../../components/Common/Buttons/NavBackArrowButton';
 import {navigateToUserHome} from "../../utils/navigationUtils";
+
+type CredentialTypesPageProps = {
+    backUrl?: string;
+};
 
 export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
     backUrl

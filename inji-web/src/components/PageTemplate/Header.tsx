@@ -8,12 +8,15 @@ import {RootState} from '../../types/redux';
 import {useSelector} from 'react-redux';
 import {isRTL} from '../../utils/i18n';
 import { PlainButton } from '../Common/Buttons/PlainButton';
-import { HeaderProps } from '../Dashboard/types';
 import {ROUTES} from "../../constants/Routes";
+
+type HeaderProps = {
+    headerRef: React.RefObject<HTMLDivElement>;
+};
 
 export const Header: React.FC<HeaderProps> = ({headerRef}) => {
     const language = useSelector((state: RootState) => state.common.language);
-    const {t, i18n} = useTranslation('PageTemplate');
+    const {t} = useTranslation('PageTemplate');
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
 

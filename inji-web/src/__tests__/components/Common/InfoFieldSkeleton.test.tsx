@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { InfoFieldSkeleton } from '../../../components/Dashboard/InfoFieldSkeleton';
+import { InfoFieldSkeleton } from '../../../components/Common/InfoFieldSkeleton.tsx';
 
 describe('InfoFieldSkeleton', () => {
   it('renders with default width and height', () => {

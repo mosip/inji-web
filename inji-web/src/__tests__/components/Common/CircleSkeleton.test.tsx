@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { CircleSkeleton } from '../../../components/Dashboard/CircleSkeleton';
+import { CircleSkeleton } from '../../../components/Common/CircleSkeleton';
 
 describe('CircleSkeleton', () => {
   it('renders with default size', () => {

@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from '../../hooks/useUser';
 import { NavBackArrowButton } from '../../components/Common/Buttons/NavBackArrowButton';
-import { InfoField } from '../../components/Dashboard/InfoField';
+import { InfoField } from '../../components/Common/InfoField';
 import {navigateToUserHome} from "../../utils/navigationUtils";
 import { TertiaryButton } from '../../components/Common/Buttons/TertiaryButton';
-import { CircleSkeleton } from '../../components/Dashboard/CircleSkeleton';
-import { InfoFieldSkeleton } from '../../components/Dashboard/InfoFieldSkeleton';
+import { CircleSkeleton } from '../../components/Common/CircleSkeleton';
+import { InfoFieldSkeleton } from '../../components/Common/InfoFieldSkeleton';
 
 export const ProfilePage: React.FC = () => {
   const navigate = useNavigate();

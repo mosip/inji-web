@@ -1,21 +1,28 @@
 import React, {useState} from 'react';
-import {useNavigate, useLocation} from 'react-router-dom';
+import {Location, useLocation, useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
-import {SidebarItemType, SidebarItemProps, SideBarSvgIconProps} from './types';
 import {isRTL} from '../../utils/i18n';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
-import {CollapseButton} from './CollapseButton';
-import {getIconColor} from './Utils';
+import {CollapseButton} from '../Common/Buttons/CollapseButton';
 import {ROUTES} from "../../constants/Routes";
+import {SidebarItemType} from "../../models/SidebarItemType";
+
+type SidebarItemProps = {
+    icon: React.ReactNode;
+    text: string;
+    path: string;
+    isActive: boolean;
+    isCollapsed: boolean;
+};
 
 const SidebarItem: React.FC<SidebarItemProps> = ({
-    icon,
-    text,
-    path,
-    isActive,
-    isCollapsed
-}) => {
+                                                     icon,
+                                                     text,
+                                                     path,
+                                                     isActive,
+                                                     isCollapsed
+                                                 }) => {
     const navigate = useNavigate();
     const language = useSelector((state: RootState) => state.common.language);
 
@@ -132,8 +139,20 @@ export const Sidebar: React.FC = () => {
     );
 };
 
-const SideBarSvgIcon: React.FC<SideBarSvgIconProps> = ({outline, navUrl, location}) => (
-    <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+type SideBarSvgIconProps = {
+    outline: string;
+    navUrl: string;
+    location: Location;
+}
+
+const SideBarSvgIcon: React.FC<SideBarSvgIconProps> = ({outline, navUrl, location}) => {
+    const getIconColor = (path: string, location: Location) => {
+        return location.pathname === path
+            ? 'var(--iw-color-dashboardSideBarMenuIconActive)'
+            : 'var(--iw-color-dashboardSideBarMenuIcon)';
+    };
+
+    return <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
             d={outline}
             stroke={getIconColor(navUrl, location)}
@@ -142,4 +161,4 @@ const SideBarSvgIcon: React.FC<SideBarSvgIconProps> = ({outline, navUrl, locatio
             strokeLinejoin="round"
         />
     </svg>
-);
+};

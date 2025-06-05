@@ -1,5 +1,10 @@
 import React from "react";
-import { InfoFieldProps } from "./types";
+
+type InfoFieldProps = {
+    label: string;
+    value?: string;
+    testId: string;
+};
 
 export const InfoField: React.FC<InfoFieldProps> = (props) => {
   return (

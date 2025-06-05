@@ -1,26 +1,30 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {LanguageSelector} from '../Common/LanguageSelector';
 import {api} from '../../utils/api';
 import {useCookies} from 'react-cookie';
 import {toast} from 'react-toastify';
 import {useUser} from '../../hooks/useUser';
-import {DashboardHeaderProps, DropdownItem} from './types';
 import HamburgerMenu from '../../assets/HamburgerMenu.svg';
 import {isRTL} from '../../utils/i18n';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
 import {useTranslation} from 'react-i18next';
-import {getProfileInitials} from './Utils';
 import DropdownArrowIcon from '../Common/DropdownArrowIcon';
 import {KEYS} from '../../utils/constants';
 import {ROUTES} from "../../constants/Routes";
 import {convertStringIntoPascalCase} from "../../utils/misc";
 import {navigateToUserHome} from "../../utils/navigationUtils";
-import { CircleSkeleton } from './CircleSkeleton';
-import { InfoFieldSkeleton } from './InfoFieldSkeleton';
+import {CircleSkeleton} from '../Common/CircleSkeleton';
+import {InfoFieldSkeleton} from '../Common/InfoFieldSkeleton';
+import {DropdownItem} from "../../models/DropdownItem";
 
-export const Header: React.FC<DashboardHeaderProps> = ({
+type UserHeaderProps = {
+    headerRef: React.RefObject<HTMLDivElement>;
+    headerHeight: number;
+};
+
+export const Header: React.FC<UserHeaderProps> = ({
     headerRef,
     headerHeight
 }) => {
@@ -128,6 +132,10 @@ export const Header: React.FC<DashboardHeaderProps> = ({
 
     const toggleHamburgerMenu = () => {
         setIsHamburgerMenuOpen(!isHamburgerMenuOpen);
+    };
+
+    const getProfileInitials = (displayName: string | undefined) => {
+        return displayName ? displayName.charAt(0).toUpperCase(): 'U';
     };
 
     const getUserProfileIconWithName = () => {
