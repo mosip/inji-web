@@ -21,7 +21,7 @@ export const ROUTES = {
     USER_ISSUER: (id: string) => `/${Pages.USER}/${Pages.ISSUERS}/${id}`,
     ISSUER: (id: string) => `/${Pages.ISSUERS}/${id}`,
     CREDENTIALS: `/${Pages.USER}/${Pages.CREDENTIALS}`,
-    PROFILE: `/${Pages.USER}.${Pages.PROFILE}`,
+    PROFILE: `/${Pages.USER}/${Pages.PROFILE}`,
     FAQ: `/${Pages.FAQ}`,
     USER_FAQ: `/${Pages.USER}/${Pages.FAQ}`,
     USER_RESET_PASSCODE: `/${Pages.USER}/${Pages.RESET_PASSCODE}`,

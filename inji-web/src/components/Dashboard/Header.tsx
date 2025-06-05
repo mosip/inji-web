@@ -108,7 +108,7 @@ export const Header: React.FC<DashboardHeaderProps> = ({
             label: t('ProfileDropdown.faq'),
             onClick: () => {
                 setIsProfileDropdownOpen(false);
-                navigate(ROUTES.FAQ, {state: {from: window.location.pathname}});
+                navigate(ROUTES.USER_FAQ, {state: {from: window.location.pathname}});
             },
             textColor: 'text-gray-700',
             key: 'Profile-Dropdown-FAQ'
