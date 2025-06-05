@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
-import { PinPage } from '../../../pages/users/PinPage';
+import { PasscodePage } from '../../../pages/User/PasscodePage';
 import { UserProvider } from '../../../hooks/useUser';
 
 // Mocking the useTranslation hook from react-i18next
@@ -23,7 +23,7 @@ jest.mock('react-i18next', () => ({
   })
 }));
 
-describe('PinPage', () => {
+describe('Passcode', () => {
   const renderWithProviders = (ui: React.ReactElement) => {
     return render(
         <CookiesProvider>
@@ -34,40 +34,40 @@ describe('PinPage', () => {
     );
   };
 
-  test('renders pin page', () => {
-    renderWithProviders(<PinPage />);
+  test('renders passcode page', () => {
+    renderWithProviders(<PasscodePage />);
     const page = screen.getByTestId('pin-page');
     expect(page).toBeInTheDocument();
   });
 
   test('renders pin logo', () => {
-    renderWithProviders(<PinPage />);
+    renderWithProviders(<PasscodePage />);
     const logo = screen.getByTestId('logo-inji-web-container');
     expect(logo).toBeInTheDocument();
   });
 
   test('renders pin title', () => {
-    renderWithProviders(<PinPage />);
+    renderWithProviders(<PasscodePage />);
     const title = screen.getByTestId('pin-title');
     expect(title).toHaveTextContent(/Set Passcode|Enter Passcode/);
   });
 
 
   test('renders pin warning', () => {
-    renderWithProviders(<PinPage />);
+    renderWithProviders(<PasscodePage />);
     const warning = screen.getByTestId('pin-warning');
     expect(warning).toHaveTextContent('Make sure you remember the password for future login');
   });
 
   test("renders passcode input field", () => {
-    renderWithProviders(<PinPage />);
+    renderWithProviders(<PasscodePage />);
     const passcodeInput = screen.getByTestId("pin-passcode-input");
     expect(passcodeInput).toBeInTheDocument();
     expect(passcodeInput).toHaveTextContent("Enter Passcode");
   });
 
   test("renders confirm passcode input field when wallet does not exist", () => {
-    renderWithProviders(<PinPage />);
+    renderWithProviders(<PasscodePage />);
     const confirmPasscodeInput = screen.getByTestId("pin-confirm-passcode-input");
     expect(confirmPasscodeInput).toBeInTheDocument();
     expect(confirmPasscodeInput).toHaveTextContent("Confirm Passcode");
@@ -75,7 +75,7 @@ describe('PinPage', () => {
 
 
   test("renders submit button", () => {
-    renderWithProviders(<PinPage />);
+    renderWithProviders(<PasscodePage />);
     const submitButton = screen.getByTestId("pin-submit-button");
     expect(submitButton).toBeInTheDocument();
   });

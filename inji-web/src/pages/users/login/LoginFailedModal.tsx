@@ -19,7 +19,7 @@ export const LoginFailedModal: React.FC = () => {
           {t("LoginFailedModal.failureDescription")}
         </p>
         
-        <SolidButton testId="Login-Failure-Button" onClick={() => navigate(ROUTES.PIN)} title={t("LoginFailedModal.retry")} />
+        <SolidButton testId="Login-Failure-Button" onClick={() => navigate(ROUTES.PASSCODE)} title={t("LoginFailedModal.retry")} />
       </div>
     </div>
   );

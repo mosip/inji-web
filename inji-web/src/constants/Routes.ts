@@ -9,13 +9,13 @@ export const Pages = {
     FAQ: "faq",
     REDIRECT: "redirect",
     RESET_WALLET: "reset-wallet",
-    PIN: "pin",
+    PASSCODE: "passcode",
     AUTHORIZE: "authorize"
 }
 
 export const ROUTES = {
     ROOT: Pages.ROOT,
-    PIN: `/${Pages.PIN}`,
+    PASSCODE: `/${Pages.USER}/${Pages.PASSCODE}`,
     USER_HOME: `/${Pages.USER}/${Pages.HOME}`,
     USER_ISSUERS: `/${Pages.USER}/${Pages.ISSUERS}`,
     USER_ISSUER: (id: string) => `/${Pages.USER}/${Pages.ISSUERS}/${id}`,

@@ -189,7 +189,7 @@ describe('ResetWalletPage Component', () => {
         fireEvent.click(screen.getByTestId('btn-back-arrow-container'));
 
         expect(mockNavigate).toHaveBeenCalledTimes(1);
-        expect(mockNavigate).toHaveBeenCalledWith('/pin');
+        expect(mockNavigate).toHaveBeenCalledWith('/user/passcode');
     });
 
     test('should handle successful wallet reset: delete wallet and navigate to /pin', async () => {
@@ -211,7 +211,7 @@ describe('ResetWalletPage Component', () => {
             );
             expect(mockRemoveWallet).toHaveBeenCalledTimes(1);
             expect(mockNavigate).toHaveBeenCalledTimes(1);
-            expect(mockNavigate).toHaveBeenCalledWith('/pin');
+            expect(mockNavigate).toHaveBeenCalledWith('/user/passcode');
             expect(toast.error).not.toHaveBeenCalled();
         });
     });
@@ -252,7 +252,7 @@ describe('ResetWalletPage Component', () => {
             );
             expect(mockRemoveWallet).toHaveBeenCalledTimes(1);
             expect(mockNavigate).toHaveBeenCalledTimes(1);
-            expect(mockNavigate).toHaveBeenCalledWith('/pin');
+            expect(mockNavigate).toHaveBeenCalledWith('/user/passcode');
         });
     });
 

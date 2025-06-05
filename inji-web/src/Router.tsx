@@ -13,14 +13,14 @@ import {PageNotFound} from './pages/PageNotFound';
 import {AuthorizationPage} from './pages/AuthorizationPage';
 import {HomePage} from './pages/HomePage';
 import LoginSessionStatusChecker from './pages/users/login/LoginSessionStatusChecker';
-import PinForm from './pages/users/PinPage';
+import {PasscodePage} from './pages/User/PasscodePage';
 import {Layout} from './components/Dashboard/Layout';
 import {HomePage as DashboardHomePage} from './pages/User/HomePage';
 import {StoredCardsPage} from './pages/User/StoredCards/StoredCardsPage';
 import {useUser} from './hooks/useUser';
 import {CredentialTypesPage} from './pages/User/CredentialTypesPage';
 import {ResetWalletPage} from './pages/users/ResetWalletPage';
-import { ProfilePage } from './pages/User/ProfilePage';
+import {ProfilePage} from './pages/User/ProfilePage';
 import {Pages, ROUTES} from "./constants/Routes";
 
 function RedirectToUserHome() {
@@ -77,7 +77,7 @@ export const AppRouter = () => {
                 } font-base`}
                 dir={getDirCurrentLanguage(language)}
             >
-                <Header headerRef={headerRef} />
+                <Header headerRef={headerRef}/>
                 <div
                     className="flex-grow overflow-y-auto"
                     style={{
@@ -87,14 +87,14 @@ export const AppRouter = () => {
                 >
                     {element}
                 </div>
-                <Footer footerRef={footerRef} />
+                <Footer footerRef={footerRef}/>
             </div>
         );
     };
 
     return (
         <>
-            <LoginSessionStatusChecker />
+            <LoginSessionStatusChecker/>
             <Routes>
                 <Route
                     path={ROUTES.ROOT}
@@ -102,54 +102,54 @@ export const AppRouter = () => {
                         isLoggedIn ? (
                             <RedirectToUserHome/>
                         ) : (
-                            wrapElement(<HomePage />, false)
+                            wrapElement(<HomePage/>, false)
                         )
                     }
                 />
                 <Route
                     path={Pages.ISSUERS}
                     element={wrapElement(
-                        <IssuersPage className="mt-10 mb-20" />
+                        <IssuersPage className="mt-10 mb-20"/>
                     )}
                 />
                 <Route
                     path={Pages.ISSUER_TEMPLATE}
-                    element={wrapElement(<CredentialsPage />)}
+                    element={wrapElement(<CredentialsPage/>)}
                 />
                 <Route
                     path={Pages.FAQ}
-                    element={wrapElement(<FAQPage backUrl={ROUTES.ROOT} />)}
+                    element={wrapElement(<FAQPage backUrl={ROUTES.ROOT}/>)}
                 />
                 <Route
                     path={Pages.REDIRECT}
-                    element={wrapElement(<RedirectionPage />)}
+                    element={wrapElement(<RedirectionPage/>)}
                 />
                 <Route
                     path={Pages.AUTHORIZE}
-                    element={wrapElement(<AuthorizationPage />)}
+                    element={wrapElement(<AuthorizationPage/>)}
                 />
-                <Route path={Pages.PIN} element={wrapElement(<PinForm />)} />
                 <Route path={Pages.USER}>
-                    <Route element={<Layout />}>
-                        <Route path={Pages.ISSUERS} element={<RedirectToUserHome />} />
-                        <Route path={Pages.HOME} element={<DashboardHomePage />} />
+                    <Route path={Pages.PASSCODE} element={wrapElement(<PasscodePage/>)}/>
+                    <Route element={<Layout/>}>
+                        <Route path={Pages.ISSUERS} element={<RedirectToUserHome/>}/>
+                        <Route path={Pages.HOME} element={<DashboardHomePage/>}/>
                         <Route
                             path={Pages.ISSUER_TEMPLATE}
                             element={
-                                <CredentialTypesPage backUrl={ROUTES.USER_HOME} />
+                                <CredentialTypesPage backUrl={ROUTES.USER_HOME}/>
                             }
                         />
-                        <Route path={Pages.CREDENTIALS} element={<StoredCardsPage />} />
-                        <Route path={Pages.PROFILE} element={<ProfilePage />} />
-                        <Route path={Pages.FAQ} element={<FAQPage withHome={true} />} />
+                        <Route path={Pages.CREDENTIALS} element={<StoredCardsPage/>}/>
+                        <Route path={Pages.PROFILE} element={<ProfilePage/>}/>
+                        <Route path={Pages.FAQ} element={<FAQPage withHome={true}/>}/>
                     </Route>
                     <Route
                         path={Pages.RESET_WALLET}
-                        element={wrapElement(<ResetWalletPage />)}
+                        element={wrapElement(<ResetWalletPage/>)}
                     />
                 </Route>
 
-                <Route path="/*" element={wrapElement(<PageNotFound />)} />
+                <Route path="/*" element={wrapElement(<PageNotFound/>)}/>
             </Routes>
         </>
     );

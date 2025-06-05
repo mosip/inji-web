@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {api} from '../../utils/api';
 import {useCookies} from 'react-cookie';
@@ -11,24 +11,22 @@ import {CrossIconButton} from '../../components/Common/Buttons/CrossIconButton';
 import {ROUTES} from "../../constants/Routes";
 import {navigateToUserHome} from "../../utils/navigationUtils";
 
-export const PinPage: React.FC = () => {
+export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PinPage');
     const navigate = useNavigate();
     const [displayName, setDisplayName] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [wallets, setWallets] = useState<any[]>([]);
-    const [walletId, setWalletId] = useState<string | null>(null);
     const [cookies] = useCookies(['XSRF-TOKEN']);
     const [passcode, setPasscode] = useState<string[]>(Array(6).fill(''));
     const [confirmPasscode, setConfirmPasscode] = useState<string[]>(
         Array(6).fill('')
     );
-    const [isPinCorrect, setIsPinCorrect] = useState<boolean | null>(null);
+    //TODO: isPasscodeCorrect state variable is not used anywhere in the code, consider removing it if not needed
+    const [isPasscodeCorrect, setIsPasscodeCorrect] = useState<boolean | null>(null);
 
-    const passcodeRefs = useRef<(HTMLInputElement | null)[]>([]);
-    const confirmPasscodeRefs = useRef<(HTMLInputElement | null)[]>([]);
-    const {fetchUserProfile, walletId: hookWalletId, user} = useUser();
+    const {fetchUserProfile} = useUser();
 
     const fetchWallets = async () => {
         try {
@@ -83,7 +81,7 @@ export const PinPage: React.FC = () => {
     const unlockWallet = async (walletId: string, pin: string) => {
         if (!walletId) {
             setError(t('error.walletNotFoundError'));
-            navigate(ROUTES.PIN);
+            navigate(ROUTES.PASSCODE);
             throw new Error('Wallet not found');
         }
 
@@ -104,9 +102,9 @@ export const PinPage: React.FC = () => {
                 setError(t('error.incorrectPinError'));
                 throw responseData;
             }
-            setIsPinCorrect(true);
+            setIsPasscodeCorrect(true);
         } catch (error) {
-            setIsPinCorrect(false);
+            setIsPasscodeCorrect(false);
             throw error;
         }
     };
@@ -152,16 +150,15 @@ export const PinPage: React.FC = () => {
                         errorData.errorMessage || t('unknown-error')
                     }`
                 );
-                setIsPinCorrect(false);
+                setIsPasscodeCorrect(false);
                 throw errorData;
             }
 
             const createdWallet = await response.json();
             await unlockWallet(createdWallet.walletId, pin);
 
-            setWalletId(createdWallet.walletId);
             setWallets([{walletId: createdWallet.walletId}]);
-            setIsPinCorrect(true);
+            setIsPasscodeCorrect(true);
         } catch (error) {
             throw error;
         }
@@ -169,7 +166,7 @@ export const PinPage: React.FC = () => {
 
     const handleSubmit = async () => {
         setError('');
-        setIsPinCorrect(null);
+        setIsPasscodeCorrect(null);
         setLoading(true);
 
         try {
@@ -177,15 +174,15 @@ export const PinPage: React.FC = () => {
                 await createWallet();
             } else {
                 const walletId = wallets[0].walletId;
-                const pin = passcode.join('');
+                const formattedPasscode = passcode.join('');
 
-                if (pin.length !== 6) {
+                if (formattedPasscode.length !== 6) {
                     setError(t('error.pinLengthError'));
                     setLoading(false);
                     return;
                 }
 
-                await unlockWallet(walletId, pin);
+                await unlockWallet(walletId, formattedPasscode);
             }
             await fetchUserProfileAndNavigate();
         } catch (error) {
@@ -193,7 +190,7 @@ export const PinPage: React.FC = () => {
                 'Error occurred while setting up Wallet or loading user profile',
                 error
             );
-            setIsPinCorrect(false);
+            setIsPasscodeCorrect(false);
         } finally {
             setLoading(false);
         }
@@ -355,4 +352,3 @@ export const PinPage: React.FC = () => {
         </div>
     );
 };
-export default PinPage;

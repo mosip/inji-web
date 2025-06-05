@@ -5,7 +5,7 @@ import {KEYS} from '../../../utils/constants';
 import {ROUTES} from "../../../constants/Routes";
 import {User} from "../../../components/Dashboard/types";
 
-const loginProtectedPrefixes = ['/dashboard', '/pin'];
+const loginProtectedPrefixes = ['/user'];
 
 const isLoginProtectedRoute = (pathname: string) => {
     return loginProtectedPrefixes.some((prefix) => pathname.startsWith(prefix));
@@ -48,10 +48,10 @@ const LoginSessionStatusChecker: React.FC = () => {
             console.info('Wallet is unlocked!');
         } else {
             console.warn(
-                'Wallet exists but is locked, redirecting to `/pin` to unlock the wallet.'
+                'Wallet exists but is locked, redirecting to `/user/passcode` to unlock the wallet.'
             );
             if (user) {
-                navigate('/pin');
+                navigate(ROUTES.PASSCODE);
                 localStorage.removeItem(KEYS.WALLET_ID);
             }
         }
@@ -62,9 +62,9 @@ const LoginSessionStatusChecker: React.FC = () => {
             const {user, walletId} = await fetchUserProfile();
             if (user && !walletId) {
                 console.warn(
-                    'No wallet ID found for the user, redirecting to `/pin`'
+                    'No wallet ID found for the user, redirecting to `/user/passcode`'
                 );
-                navigate(ROUTES.PIN);
+                navigate(ROUTES.PASSCODE);
                 return;
             }
             const cachedWalletId = walletId;

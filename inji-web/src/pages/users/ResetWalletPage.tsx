@@ -13,7 +13,7 @@ import {InfoIcon} from '../../components/Common/Icons/InfoIcon';
 import {ROUTES} from "../../constants/Routes";
 
 interface InstructionItem {
-    testId: string;
+    id: string;
     className: string;
     content: React.ReactNode;
 }
@@ -31,10 +31,10 @@ const InstructionContent: React.FC<InstructionContentProps> = ({
 }) => {
     return (
         <div data-testid={testId} className={className}>
-            {instructionItems.map((item, index) => (
+            {instructionItems.map((item) => (
                 <p
-                    key={index}
-                    data-testid={item.testId}
+                    key={item.id}
+                    data-testid={item.id}
                     className={item.className}
                 >
                     {item.content}
@@ -52,7 +52,7 @@ export const ResetWalletPage: React.FC = () => {
     const location = useLocation();
 
     const handleBackNavigation = () => {
-        navigate(ROUTES.PIN);
+        navigate(ROUTES.PASSCODE);
     };
 
     const handleForgotPasscode = async () => {
@@ -72,7 +72,7 @@ export const ResetWalletPage: React.FC = () => {
                 throw await response.json();
             }
             removeWallet();
-            navigate(ROUTES.PIN);
+            navigate(ROUTES.PASSCODE);
         } catch (error) {
             console.error('Error occurred while deleting Wallet:', error);
             toast.error(t('resetFailure'));
@@ -81,17 +81,17 @@ export const ResetWalletPage: React.FC = () => {
     
     const instructionItems: InstructionItem[] = [
         {
-            testId: "text-reset-question",
+            id: "text-reset-question",
             className: ResetWalletPageStyles.instructionQuestion,
             content: t('resetInstruction.question')
         },
         {
-            testId: "text-reset-info1",
+            id: "text-reset-info1",
             className: ResetWalletPageStyles.instructionText,
             content: t('resetInstruction.info1')
         },
         {
-            testId: "text-reset-info2",
+            id: "text-reset-info2",
             className: ResetWalletPageStyles.instructionText,
             content: (
                 <Trans
@@ -108,7 +108,7 @@ export const ResetWalletPage: React.FC = () => {
             )
         },
         {
-            testId: "text-reset-info3",
+            id: "text-reset-info3",
             className: ResetWalletPageStyles.instructionText,
             content: (
                 <Trans
