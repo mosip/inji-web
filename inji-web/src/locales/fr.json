@@ -76,7 +76,7 @@
       "retry": "Réessayer"
     }
   },
-  "PinPage": {
+  "PasscodePage": {
     "submit": "Soumettre",
     "submitting": "Soumission en cours",
     "setPasscode": "Définir le code d'accès",
@@ -88,14 +88,14 @@
     "passcodeWarning": "Assurez-vous de vous souvenir du mot de passe pour une future connexion",
     "error": {
       "walletNotFoundError": "Aucun portefeuille trouvé. Veuillez en créer un.",
-      "pinLengthError": "Le code PIN doit comporter 6 chiffres.",
+      "passcodeLengthError": "Le code PIN doit comporter 6 chiffres.",
       "passcodeMismatchError": "Les codes d'accès ne correspondent pas. Veuillez vous assurer que les deux champs du code correspondent parfaitement. Saisissez-le à nouveau et réessayez.",
       "createWalletError": "Échec de la création du portefeuille.",
-      "incorrectPinError": "Code d'accès invalide. Le code d'accès saisi est incorrect. Veuillez vérifier et réessayer, ou cliquez sur « Mot de passe oublié » pour le réinitialiser.",
+      "incorrectPasscodeError": "Code d'accès invalide. Le code d'accès saisi est incorrect. Veuillez vérifier et réessayer, ou cliquez sur « Mot de passe oublié » pour le réinitialiser.",
       "fetchWalletsError": "Échec du chargement des portefeuilles."
     }
   },
-  "ResetWalletPage": {
+  "ResetPasscodePage": {
     "title": "Réinitialisez votre portefeuille",
     "subTitle": "Réinitialisez le portefeuille pour récupérer l'accès et retélécharger les informations d'identification",
     "resetInstruction": {

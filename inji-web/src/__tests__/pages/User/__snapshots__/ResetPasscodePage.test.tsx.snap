@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ResetWalletPage Component should match snapshot 1`] = `
+exports[`ResetPasscodePage Component should match snapshot 1`] = `
 <DocumentFragment>
   <div
     class="overflow-hidden fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50"
-    data-testid="backdrop-reset-wallet"
+    data-testid="backdrop-reset-passcode"
   >
     <div
       class="overflow-hidden rounded-2xl bg-white flex flex-col items-center justify-start relative w-[90%] sm:w-[85%] md:w-[90%] h-[80%] sm:h-[76%] md:h-[80%] overflow-y-auto overflow-x-auto shadow-iw-pin-page-container"
@@ -67,7 +67,7 @@ exports[`ResetWalletPage Component should match snapshot 1`] = `
         >
           <h1
             class="text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGreen p-4"
-            data-testid="title-reset-wallet"
+            data-testid="title-reset-passcode"
           >
             Reset Your Wallet
           </h1>
@@ -88,7 +88,7 @@ exports[`ResetWalletPage Component should match snapshot 1`] = `
             </button>
             <p
               class="text-iw-textTertiary text-sm sm:text-base font-medium pl-6"
-              data-testid="subtitle-reset-wallet"
+              data-testid="subtitle-reset-passcode"
             >
               Reset wallet to regain access and re-download credentials
             </p>

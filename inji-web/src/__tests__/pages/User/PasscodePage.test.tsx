@@ -36,39 +36,39 @@ describe('Passcode', () => {
 
   test('renders passcode page', () => {
     renderWithProviders(<PasscodePage />);
-    const page = screen.getByTestId('pin-page');
+    const page = screen.getByTestId('passcode-page');
     expect(page).toBeInTheDocument();
   });
 
-  test('renders pin logo', () => {
+  test('renders passcode logo', () => {
     renderWithProviders(<PasscodePage />);
     const logo = screen.getByTestId('logo-inji-web-container');
     expect(logo).toBeInTheDocument();
   });
 
-  test('renders pin title', () => {
+  test('renders passcode title', () => {
     renderWithProviders(<PasscodePage />);
-    const title = screen.getByTestId('pin-title');
+    const title = screen.getByTestId('title-passcode');
     expect(title).toHaveTextContent(/Set Passcode|Enter Passcode/);
   });
 
 
-  test('renders pin warning', () => {
+  test('renders passcode warning', () => {
     renderWithProviders(<PasscodePage />);
-    const warning = screen.getByTestId('pin-warning');
+    const warning = screen.getByTestId('passcode-warning');
     expect(warning).toHaveTextContent('Make sure you remember the password for future login');
   });
 
   test("renders passcode input field", () => {
     renderWithProviders(<PasscodePage />);
-    const passcodeInput = screen.getByTestId("pin-passcode-input");
+    const passcodeInput = screen.getByTestId("input-passcode");
     expect(passcodeInput).toBeInTheDocument();
     expect(passcodeInput).toHaveTextContent("Enter Passcode");
   });
 
   test("renders confirm passcode input field when wallet does not exist", () => {
     renderWithProviders(<PasscodePage />);
-    const confirmPasscodeInput = screen.getByTestId("pin-confirm-passcode-input");
+    const confirmPasscodeInput = screen.getByTestId("input-confirm-passcode");
     expect(confirmPasscodeInput).toBeInTheDocument();
     expect(confirmPasscodeInput).toHaveTextContent("Confirm Passcode");
   });
@@ -76,7 +76,7 @@ describe('Passcode', () => {
 
   test("renders submit button", () => {
     renderWithProviders(<PasscodePage />);
-    const submitButton = screen.getByTestId("pin-submit-button");
+    const submitButton = screen.getByTestId("btn-submit-passcode");
     expect(submitButton).toBeInTheDocument();
   });
 }); 

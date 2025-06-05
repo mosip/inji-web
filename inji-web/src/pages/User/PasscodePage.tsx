@@ -12,7 +12,7 @@ import {ROUTES} from "../../constants/Routes";
 import {navigateToUserHome} from "../../utils/navigationUtils";
 
 export const PasscodePage: React.FC = () => {
-    const {t} = useTranslation('PinPage');
+    const {t} = useTranslation('PasscodePage');
     const navigate = useNavigate();
     const [displayName, setDisplayName] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -99,7 +99,7 @@ export const PasscodePage: React.FC = () => {
 
             const responseData = await response.json();
             if (!response.ok) {
-                setError(t('error.incorrectPinError'));
+                setError(t('error.incorrectPasscodeError'));
                 throw responseData;
             }
             setIsPasscodeCorrect(true);
@@ -177,7 +177,7 @@ export const PasscodePage: React.FC = () => {
                 const formattedPasscode = passcode.join('');
 
                 if (formattedPasscode.length !== 6) {
-                    setError(t('error.pinLengthError'));
+                    setError(t('error.passcodeLengthError'));
                     setLoading(false);
                     return;
                 }
@@ -202,7 +202,7 @@ export const PasscodePage: React.FC = () => {
 
     return (
         <div
-            data-testid="pin-page"
+            data-testid="passcode-page"
             className="fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50 h-screen"
         >
             <div
@@ -222,7 +222,7 @@ export const PasscodePage: React.FC = () => {
                     <div className="text-center space-y-5 relative w-full max-w-[500px] px-4 sm:px-0">
                         <h1
                             className="text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGreen"
-                            data-testid="pin-title"
+                            data-testid="title-passcode"
                         >
                             {wallets.length === 0
                                 ? t('setPasscode')
@@ -230,7 +230,7 @@ export const PasscodePage: React.FC = () => {
                         </h1>
                         <p
                             className="text-iw-textTertiary text-sm sm:text-lg md:text-xl font-medium"
-                            data-testid="pin-description"
+                            data-testid="passcode-description"
                         >
                             {wallets.length === 0
                                 ? t('setPasscodeDescription')
@@ -240,7 +240,7 @@ export const PasscodePage: React.FC = () => {
 
                     <div
                         className="flex flex-col bg-white sm:rounded-lg sm:shadow-iw-pin-page-container items-center z-20 w-full max-w-[500px] mt-8 mb-4 mx-auto"
-                        data-testid="pin-container"
+                        data-testid="passcode-container"
                     >
                         {wallets.length === 0 && (
                             <div className="relative sm:hidden pin-page-warning-text-border min-w-full items-center justify-center mt-1 sm:mt-3 md:mt-5" />
@@ -250,7 +250,7 @@ export const PasscodePage: React.FC = () => {
                             <div className="w-full items-center justify-center flex">
                                 <p
                                     className="text-iw-textTertiary text-center text-sm sm:text-base px-4 sm:px-8 pt-4 sm:pt-6 max-w-[560px]"
-                                    data-testid="pin-warning"
+                                    data-testid="passcode-warning"
                                 >
                                     {t('passcodeWarning')}
                                 </p>
@@ -260,7 +260,7 @@ export const PasscodePage: React.FC = () => {
                         {error ? (
                             <div
                                 className="bg-iw-pink50 w-full px-3 sm:px-5 py-3 mt-3 sm:mt-4 md:mt-5"
-                                data-testid="pin-error"
+                                data-testid="error-passcode"
                             >
                                 <div className="flex items-start justify-between gap-2 max-w-[560px] mx-auto">
                                     <div className="flex-1 pr-2">
@@ -293,7 +293,7 @@ export const PasscodePage: React.FC = () => {
                                             label={t('enterPasscode')}
                                             value={passcode}
                                             onChange={setPasscode}
-                                            testId="pin-passcode-input"
+                                            testId="input-passcode"
                                         />
                                     </div>
 
@@ -303,7 +303,7 @@ export const PasscodePage: React.FC = () => {
                                                 label={t('confirmPasscode')}
                                                 value={confirmPasscode}
                                                 onChange={setConfirmPasscode}
-                                                testId="pin-confirm-passcode-input"
+                                                testId="input-confirm-passcode"
                                             />
                                         </div>
                                     )}
@@ -334,7 +334,7 @@ export const PasscodePage: React.FC = () => {
                             <div className="w-full max-w-[410px] mx-auto">
                                 <SolidButton
                                     fullWidth={true}
-                                    testId="pin-submit-button"
+                                    testId="btn-submit-passcode"
                                     onClick={handleSubmit}
                                     title={
                                         loading ? t('submitting') : t('submit')

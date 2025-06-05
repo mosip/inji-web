@@ -46,7 +46,7 @@ const InstructionContent: React.FC<InstructionContentProps> = ({
 
 export const ResetPasscodePage: React.FC = () => {
     const {removeWallet, walletId} = useUser();
-    const {t} = useTranslation('ResetWalletPage');
+    const {t} = useTranslation('ResetPasscodePage');
     const [cookies] = useCookies(['XSRF-TOKEN']);
     const navigate = useNavigate();
     const location = useLocation();
@@ -96,10 +96,10 @@ export const ResetPasscodePage: React.FC = () => {
             content: (
                 <Trans
                     i18nKey={t('resetInstruction.info2.message')}
-                    ns="ResetWalletPage"
+                    ns="ResetPasscodePage"
                     values={{
-                        highlighter1: t('resetInstruction.info2.highlighter1', { ns: 'ResetWalletPage' }),
-                        highlighter2: t('resetInstruction.info2.highlighter2', { ns: 'ResetWalletPage' })
+                        highlighter1: t('resetInstruction.info2.highlighter1', { ns: 'ResetPasscodePage' }),
+                        highlighter2: t('resetInstruction.info2.highlighter2', { ns: 'ResetPasscodePage' })
                     }}
                     components={{
                         strong: <strong className={ResetPasscodePageStyles.instructionTextStrong} />
@@ -113,9 +113,9 @@ export const ResetPasscodePage: React.FC = () => {
             content: (
                 <Trans
                     i18nKey={t('resetInstruction.info3.message')}
-                    ns="ResetWalletPage"
+                    ns="ResetPasscodePage"
                     values={{
-                        highlighter: t('resetInstruction.info3.highlighter', { ns: 'ResetWalletPage' })
+                        highlighter: t('resetInstruction.info3.highlighter', { ns: 'ResetPasscodePage' })
                     }}
                     components={{
                         strong: <strong className={ResetPasscodePageStyles.instructionTextStrong} />
@@ -128,7 +128,7 @@ export const ResetPasscodePage: React.FC = () => {
     return (
         <div
             className={ResetPasscodePageStyles.backdrop}
-            data-testid="backdrop-reset-wallet"
+            data-testid="backdrop-reset-passcode"
         >
             <div className={ResetPasscodePageStyles.container}>
                 <BackgroundDecorator
@@ -140,7 +140,7 @@ export const ResetPasscodePage: React.FC = () => {
                     <div className={ResetPasscodePageStyles.header}>
                         <h1
                             className={ResetPasscodePageStyles.title}
-                            data-testid="title-reset-wallet"
+                            data-testid="title-reset-passcode"
                         >
                             {t('title')}
                         </h1>
@@ -153,7 +153,7 @@ export const ResetPasscodePage: React.FC = () => {
                             />
                             <p
                                 className={ResetPasscodePageStyles.subtitle}
-                                data-testid="subtitle-reset-wallet"
+                                data-testid="subtitle-reset-passcode"
                             >
                                 {t('subTitle')}
                             </p>

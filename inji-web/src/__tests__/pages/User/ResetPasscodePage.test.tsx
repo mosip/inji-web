@@ -105,7 +105,7 @@ jest.mock('react-toastify', () => ({
 
 global.fetch = jest.fn();
 
-describe('ResetWalletPage Component', () => {
+describe('ResetPasscodePage Component', () => {
     const mockNavigate = jest.fn();
     const mockRemoveWallet = jest.fn();
 
@@ -139,14 +139,14 @@ describe('ResetWalletPage Component', () => {
     test('should render all elements with correct test ids', () => {
         render(<ResetPasscodePage />);
 
-        expect(screen.getByTestId('backdrop-reset-wallet')).toBeInTheDocument();
+        expect(screen.getByTestId('backdrop-reset-passcode')).toBeInTheDocument();
         expect(screen.getByTestId('logo-inji-web')).toBeInTheDocument();
-        expect(screen.getByTestId('title-reset-wallet')).toBeInTheDocument();
+        expect(screen.getByTestId('title-reset-passcode')).toBeInTheDocument();
         expect(
             screen.getByTestId('btn-back-arrow-container')
         ).toBeInTheDocument();
         expect(screen.getByTestId('icon-back-arrow')).toBeInTheDocument();
-        expect(screen.getByTestId('subtitle-reset-wallet')).toBeInTheDocument();
+        expect(screen.getByTestId('subtitle-reset-passcode')).toBeInTheDocument();
         expect(
             screen.getByTestId('icon-reset-instruction')
         ).toBeInTheDocument();
@@ -163,10 +163,10 @@ describe('ResetWalletPage Component', () => {
     test('should display translated text content correctly', () => {
         render(<ResetPasscodePage />);
 
-        expect(screen.getByTestId('title-reset-wallet')).toHaveTextContent(
+        expect(screen.getByTestId('title-reset-passcode')).toHaveTextContent(
             'Reset Your Wallet'
         );
-        expect(screen.getByTestId('subtitle-reset-wallet')).toHaveTextContent(
+        expect(screen.getByTestId('subtitle-reset-passcode')).toHaveTextContent(
             'Reset wallet to regain access and re-download credentials'
         );
         expect(screen.getByTestId('text-reset-question')).toHaveTextContent(
@@ -183,7 +183,7 @@ describe('ResetWalletPage Component', () => {
         );
     });
 
-    test('should navigate back to /pin when back arrow button is clicked', () => {
+    test('should navigate back to passcode screen when back arrow button is clicked', () => {
         render(<ResetPasscodePage />);
 
         fireEvent.click(screen.getByTestId('btn-back-arrow-container'));
@@ -192,7 +192,7 @@ describe('ResetWalletPage Component', () => {
         expect(mockNavigate).toHaveBeenCalledWith('/user/passcode');
     });
 
-    test('should handle successful wallet reset: delete wallet and navigate to /pin', async () => {
+    test('should handle successful wallet reset: delete wallet and navigate to passcode screen', async () => {
         render(<ResetPasscodePage />);
 
         fireEvent.click(screen.getByTestId('btn-forget-passcode'));
