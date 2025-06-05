@@ -1,8 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { Login } from "../../../pages/users/login/Login";
-import { useTranslation } from "react-i18next";
+import { Login } from "../../../components/Login/Login";
 
 // Mock Translation
 jest.mock("react-i18next", () => ({

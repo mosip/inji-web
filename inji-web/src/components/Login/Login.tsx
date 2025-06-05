@@ -1,10 +1,10 @@
 import { FcGoogle } from "react-icons/fc";
 import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
-import '../../../index.css'; 
+import '../../index.css';
 import { useTranslation } from "react-i18next";
-import { BorderedButton } from "../../../components/Common/Buttons/BorderedButton";
-import { GoogleSignInButton } from "../../../components/Common/Buttons/GoogleSignInButton";
+import { BorderedButton } from "../Common/Buttons/BorderedButton";
+import { GoogleSignInButton } from "../Common/Buttons/GoogleSignInButton";
 
 export const Login: React.FC = () => {
   const { t } = useTranslation("HomePage");
@@ -30,7 +30,7 @@ export const Login: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center w-[100%] max-w-[400px] mx-auto rounded-2xl">
         <div data-testid="login-logo" className="flex justify-center items-center">
-          <img src={require("../../../assets/Logomark.png")} alt="Inji Web Logo" />
+          <img src={require("../../assets/Logomark.png")} alt="Inji Web Logo" />
         </div>
 
         <div data-testid="login-title" className="text-2xl sm:text-3xl text-black font-semibold  text-center py-4">

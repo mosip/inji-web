@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { LoginFailedModal } from '../../../pages/users/login/LoginFailedModal';
+import { LoginFailedModal } from '../../../components/Login/LoginFailedModal';
 
 // // Mocking the useTranslation hook from react-i18next
 jest.mock("react-i18next", () => ({
