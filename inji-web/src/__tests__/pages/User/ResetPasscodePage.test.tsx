@@ -5,7 +5,7 @@ import {useUser} from '../../../hooks/useUser';
 import {useCookies} from 'react-cookie';
 import {useNavigate, useLocation} from 'react-router-dom';
 import {toast} from 'react-toastify';
-import {ResetWalletPage} from '../../../pages/users/ResetWalletPage';
+import {ResetPasscodePage} from '../../../pages/User/ResetPasscode/ResetPasscodePage.tsx';
 
 jest.mock('react-i18next', () => {
     const translations: {[key: string]: string} = {
@@ -84,7 +84,7 @@ jest.mock('react-i18next', () => {
     };
 });
 
-jest.mock('../../../hooks/useUser', () => ({
+jest.mock('../../../hooks/useUser.tsx', () => ({
     useUser: jest.fn()
 }));
 
@@ -131,13 +131,13 @@ describe('ResetWalletPage Component', () => {
     });
 
     test('should match snapshot', () => {
-        const {asFragment} = render(<ResetWalletPage />);
+        const {asFragment} = render(<ResetPasscodePage />);
 
         expect(asFragment()).toMatchSnapshot();
     });
 
     test('should render all elements with correct test ids', () => {
-        render(<ResetWalletPage />);
+        render(<ResetPasscodePage />);
 
         expect(screen.getByTestId('backdrop-reset-wallet')).toBeInTheDocument();
         expect(screen.getByTestId('logo-inji-web')).toBeInTheDocument();
@@ -161,7 +161,7 @@ describe('ResetWalletPage Component', () => {
     });
 
     test('should display translated text content correctly', () => {
-        render(<ResetWalletPage />);
+        render(<ResetPasscodePage />);
 
         expect(screen.getByTestId('title-reset-wallet')).toHaveTextContent(
             'Reset Your Wallet'
@@ -184,7 +184,7 @@ describe('ResetWalletPage Component', () => {
     });
 
     test('should navigate back to /pin when back arrow button is clicked', () => {
-        render(<ResetWalletPage />);
+        render(<ResetPasscodePage />);
 
         fireEvent.click(screen.getByTestId('btn-back-arrow-container'));
 
@@ -193,27 +193,25 @@ describe('ResetWalletPage Component', () => {
     });
 
     test('should handle successful wallet reset: delete wallet and navigate to /pin', async () => {
-        render(<ResetWalletPage />);
+        render(<ResetPasscodePage />);
 
         fireEvent.click(screen.getByTestId('btn-forget-passcode'));
 
-        await waitFor(() => {
-            expect(global.fetch).toHaveBeenCalledTimes(1);
-            expect(global.fetch).toHaveBeenCalledWith(
-                expect.stringContaining('wallets/location-wallet-id'),
-                expect.objectContaining({
-                    method: 'DELETE',
-                    headers: expect.objectContaining({
-                        'X-XSRF-TOKEN': 'mock-xsrf-token'
-                    }),
-                    credentials: 'include'
-                })
-            );
-            expect(mockRemoveWallet).toHaveBeenCalledTimes(1);
-            expect(mockNavigate).toHaveBeenCalledTimes(1);
-            expect(mockNavigate).toHaveBeenCalledWith('/user/passcode');
-            expect(toast.error).not.toHaveBeenCalled();
-        });
+        await waitForFetchApiToBeCalled()
+        expect(global.fetch).toHaveBeenCalledWith(
+            expect.stringContaining('wallets/location-wallet-id'),
+            expect.objectContaining({
+                method: 'DELETE',
+                headers: expect.objectContaining({
+                    'X-XSRF-TOKEN': 'mock-xsrf-token'
+                }),
+                credentials: 'include'
+            })
+        );
+        expect(mockRemoveWallet).toHaveBeenCalledTimes(1);
+        expect(mockNavigate).toHaveBeenCalledTimes(1);
+        expect(mockNavigate).toHaveBeenCalledWith('/user/passcode');
+        expect(toast.error).not.toHaveBeenCalled();
     });
 
     test('should handle failed wallet reset: display error toast and not remove wallet or navigate', async () => {
@@ -222,38 +220,34 @@ describe('ResetWalletPage Component', () => {
             json: async () => ({error: 'Wallet deletion failed'})
         });
 
-        render(<ResetWalletPage />);
+        render(<ResetPasscodePage />);
 
         fireEvent.click(screen.getByTestId('btn-forget-passcode'));
 
-        await waitFor(() => {
-            expect(global.fetch).toHaveBeenCalledTimes(1);
-            expect(mockRemoveWallet).not.toHaveBeenCalled();
-            expect(mockNavigate).not.toHaveBeenCalled();
-            expect(toast.error).toHaveBeenCalledTimes(1);
-            expect(toast.error).toHaveBeenCalledWith(
-                'Something went wrong while resetting your wallet. Please try again in a moment.'
-            );
-        });
+        await waitForFetchApiToBeCalled()
+        expect(mockRemoveWallet).not.toHaveBeenCalled();
+        expect(mockNavigate).not.toHaveBeenCalled();
+        expect(toast.error).toHaveBeenCalledTimes(1);
+        expect(toast.error).toHaveBeenCalledWith(
+            'Something went wrong while resetting your wallet. Please try again in a moment.'
+        );
     });
 
     test('should use fallback walletId from useUser when location state is not available', async () => {
         (useLocation as jest.Mock).mockReturnValue({state: null});
 
-        render(<ResetWalletPage />);
+        render(<ResetPasscodePage />);
 
         fireEvent.click(screen.getByTestId('btn-forget-passcode'));
 
-        await waitFor(() => {
-            expect(global.fetch).toHaveBeenCalledTimes(1);
-            expect(global.fetch).toHaveBeenCalledWith(
-                expect.stringContaining('wallets/mock-wallet-id'),
-                expect.any(Object)
-            );
-            expect(mockRemoveWallet).toHaveBeenCalledTimes(1);
-            expect(mockNavigate).toHaveBeenCalledTimes(1);
-            expect(mockNavigate).toHaveBeenCalledWith('/user/passcode');
-        });
+        await waitForFetchApiToBeCalled()
+        expect(global.fetch).toHaveBeenCalledWith(
+            expect.stringContaining('wallets/mock-wallet-id'),
+            expect.any(Object)
+        );
+        expect(mockRemoveWallet).toHaveBeenCalledTimes(1);
+        expect(mockNavigate).toHaveBeenCalledTimes(1);
+        expect(mockNavigate).toHaveBeenCalledWith('/user/passcode');
     });
 
     test('should handle network error during wallet reset: display error toast and not remove wallet or navigate', async () => {
@@ -261,18 +255,22 @@ describe('ResetWalletPage Component', () => {
             new Error('Network error')
         );
 
-        render(<ResetWalletPage />);
+        render(<ResetPasscodePage />);
 
         fireEvent.click(screen.getByTestId('btn-forget-passcode'));
 
+        await waitForFetchApiToBeCalled();
+        expect(mockRemoveWallet).not.toHaveBeenCalled();
+        expect(mockNavigate).not.toHaveBeenCalled();
+        expect(toast.error).toHaveBeenCalledTimes(1);
+        expect(toast.error).toHaveBeenCalledWith(
+            'Something went wrong while resetting your wallet. Please try again in a moment.'
+        );
+    });
+
+    async function waitForFetchApiToBeCalled() {
         await waitFor(() => {
             expect(global.fetch).toHaveBeenCalledTimes(1);
-            expect(mockRemoveWallet).not.toHaveBeenCalled();
-            expect(mockNavigate).not.toHaveBeenCalled();
-            expect(toast.error).toHaveBeenCalledTimes(1);
-            expect(toast.error).toHaveBeenCalledWith(
-                'Something went wrong while resetting your wallet. Please try again in a moment.'
-            );
         });
-    });
+    }
 });

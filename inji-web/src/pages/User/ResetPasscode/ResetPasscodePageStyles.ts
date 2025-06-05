@@ -1,4 +1,4 @@
-export const ResetWalletPageStyles = {
+export const ResetPasscodePageStyles = {
     backdrop:
         'overflow-hidden fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50',
     container:

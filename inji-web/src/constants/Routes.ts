@@ -8,7 +8,7 @@ export const Pages = {
     PROFILE: "profile",
     FAQ: "faq",
     REDIRECT: "redirect",
-    RESET_WALLET: "reset-wallet",
+    RESET_PASSCODE: "reset-passcode",
     PASSCODE: "passcode",
     AUTHORIZE: "authorize"
 }
@@ -24,6 +24,6 @@ export const ROUTES = {
     PROFILE: `/${Pages.USER}.${Pages.PROFILE}`,
     FAQ: `/${Pages.FAQ}`,
     USER_FAQ: `/${Pages.USER}/${Pages.FAQ}`,
-    USER_RESET_WALLET: `/${Pages.USER}/${Pages.RESET_WALLET}`,
+    USER_RESET_PASSCODE: `/${Pages.USER}/${Pages.RESET_PASSCODE}`,
 };
 

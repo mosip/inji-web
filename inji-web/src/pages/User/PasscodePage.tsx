@@ -147,7 +147,7 @@ export const PasscodePage: React.FC = () => {
                 const errorData = await response.json();
                 setError(
                     `${t('error.createWalletError')}: ${
-                        errorData.errorMessage || t('unknown-error')
+                        errorData.errorMessage ?? t('unknown-error')
                     }`
                 );
                 setIsPasscodeCorrect(false);
@@ -316,7 +316,7 @@ export const PasscodePage: React.FC = () => {
                                         className="text-sm md:text-md font-semibold text-iw-deepVioletIndigo my-0 cursor-pointer"
                                         onClick={() =>
                                             navigate(
-                                                ROUTES.USER_RESET_WALLET,
+                                                ROUTES.USER_RESET_PASSCODE,
                                                 {
                                                     state: {
                                                         walletId:

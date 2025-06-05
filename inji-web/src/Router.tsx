@@ -19,7 +19,7 @@ import {HomePage as DashboardHomePage} from './pages/User/HomePage';
 import {StoredCardsPage} from './pages/User/StoredCards/StoredCardsPage';
 import {useUser} from './hooks/useUser';
 import {CredentialTypesPage} from './pages/User/CredentialTypesPage';
-import {ResetWalletPage} from './pages/users/ResetWalletPage';
+import {ResetPasscodePage} from './pages/User/ResetPasscode/ResetPasscodePage.tsx';
 import {ProfilePage} from './pages/User/ProfilePage';
 import {Pages, ROUTES} from "./constants/Routes";
 
@@ -144,8 +144,8 @@ export const AppRouter = () => {
                         <Route path={Pages.FAQ} element={<FAQPage withHome={true}/>}/>
                     </Route>
                     <Route
-                        path={Pages.RESET_WALLET}
-                        element={wrapElement(<ResetWalletPage/>)}
+                        path={Pages.RESET_PASSCODE}
+                        element={wrapElement(<ResetPasscodePage/>)}
                     />
                 </Route>
 

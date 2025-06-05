@@ -1,16 +1,16 @@
 import React from 'react';
-import {SolidButton} from '../../components/Common/Buttons/SolidButton';
+import {SolidButton} from '../../../components/Common/Buttons/SolidButton';
 import {Trans, useTranslation} from 'react-i18next';
-import {useUser} from '../../hooks/useUser';
-import {api} from '../../utils/api';
+import {useUser} from '../../../hooks/useUser';
+import {api} from '../../../utils/api';
 import {useCookies} from 'react-cookie';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {toast} from 'react-toastify';
-import {ResetWalletPageStyles} from '../../styles/pages/ResetWalletPageStyles';
-import {BackgroundDecorator} from '../../components/Common/BackgroundDecorator';
-import {BackArrowButton} from '../../components/Common/Buttons/BackArrowButton';
-import {InfoIcon} from '../../components/Common/Icons/InfoIcon';
-import {ROUTES} from "../../constants/Routes";
+import {ResetPasscodePageStyles} from './ResetPasscodePageStyles';
+import {BackgroundDecorator} from '../../../components/Common/BackgroundDecorator';
+import {BackArrowButton} from '../../../components/Common/Buttons/BackArrowButton';
+import {InfoIcon} from '../../../components/Common/Icons/InfoIcon';
+import {ROUTES} from "../../../constants/Routes";
 
 interface InstructionItem {
     id: string;
@@ -44,7 +44,7 @@ const InstructionContent: React.FC<InstructionContentProps> = ({
     );
 };
 
-export const ResetWalletPage: React.FC = () => {
+export const ResetPasscodePage: React.FC = () => {
     const {removeWallet, walletId} = useUser();
     const {t} = useTranslation('ResetWalletPage');
     const [cookies] = useCookies(['XSRF-TOKEN']);
@@ -82,17 +82,17 @@ export const ResetWalletPage: React.FC = () => {
     const instructionItems: InstructionItem[] = [
         {
             id: "text-reset-question",
-            className: ResetWalletPageStyles.instructionQuestion,
+            className: ResetPasscodePageStyles.instructionQuestion,
             content: t('resetInstruction.question')
         },
         {
             id: "text-reset-info1",
-            className: ResetWalletPageStyles.instructionText,
+            className: ResetPasscodePageStyles.instructionText,
             content: t('resetInstruction.info1')
         },
         {
             id: "text-reset-info2",
-            className: ResetWalletPageStyles.instructionText,
+            className: ResetPasscodePageStyles.instructionText,
             content: (
                 <Trans
                     i18nKey={t('resetInstruction.info2.message')}
@@ -102,14 +102,14 @@ export const ResetWalletPage: React.FC = () => {
                         highlighter2: t('resetInstruction.info2.highlighter2', { ns: 'ResetWalletPage' })
                     }}
                     components={{
-                        strong: <strong className={ResetWalletPageStyles.instructionTextStrong} />
+                        strong: <strong className={ResetPasscodePageStyles.instructionTextStrong} />
                     }}
                 />
             )
         },
         {
             id: "text-reset-info3",
-            className: ResetWalletPageStyles.instructionText,
+            className: ResetPasscodePageStyles.instructionText,
             content: (
                 <Trans
                     i18nKey={t('resetInstruction.info3.message')}
@@ -118,7 +118,7 @@ export const ResetWalletPage: React.FC = () => {
                         highlighter: t('resetInstruction.info3.highlighter', { ns: 'ResetWalletPage' })
                     }}
                     components={{
-                        strong: <strong className={ResetWalletPageStyles.instructionTextStrong} />
+                        strong: <strong className={ResetPasscodePageStyles.instructionTextStrong} />
                     }}
                 />
             )
@@ -127,32 +127,32 @@ export const ResetWalletPage: React.FC = () => {
 
     return (
         <div
-            className={ResetWalletPageStyles.backdrop}
+            className={ResetPasscodePageStyles.backdrop}
             data-testid="backdrop-reset-wallet"
         >
-            <div className={ResetWalletPageStyles.container}>
+            <div className={ResetPasscodePageStyles.container}>
                 <BackgroundDecorator
-                    logoSrc={require('../../assets/Logomark.png')}
+                    logoSrc={require('../../../assets/Logomark.png')}
                     logoAlt="Inji Web Logo"
                     logoTestId="logo-inji-web"
                 />
-                <div className={ResetWalletPageStyles.contentWrapper}>
-                    <div className={ResetWalletPageStyles.header}>
+                <div className={ResetPasscodePageStyles.contentWrapper}>
+                    <div className={ResetPasscodePageStyles.header}>
                         <h1
-                            className={ResetWalletPageStyles.title}
+                            className={ResetPasscodePageStyles.title}
                             data-testid="title-reset-wallet"
                         >
                             {t('title')}
                         </h1>
-                        <div className={ResetWalletPageStyles.subHeader}>
+                        <div className={ResetPasscodePageStyles.subHeader}>
                             <BackArrowButton
                                 onClick={handleBackNavigation}
                                 btnClassName={
-                                    ResetWalletPageStyles.backArrowButton
+                                    ResetPasscodePageStyles.backArrowButton
                                 }
                             />
                             <p
-                                className={ResetWalletPageStyles.subtitle}
+                                className={ResetPasscodePageStyles.subtitle}
                                 data-testid="subtitle-reset-wallet"
                             >
                                 {t('subTitle')}
@@ -160,8 +160,8 @@ export const ResetWalletPage: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className={ResetWalletPageStyles.mainContent}>
-                        <div className={ResetWalletPageStyles.instructionBox}>
+                    <div className={ResetPasscodePageStyles.mainContent}>
+                        <div className={ResetPasscodePageStyles.instructionBox}>
                             <InfoIcon
                                 testId="icon-reset-instruction"
                                 className="mt-[0.1rem]"
@@ -169,7 +169,7 @@ export const ResetWalletPage: React.FC = () => {
                             <InstructionContent
                                 testId="text-reset-instruction"
                                 className={
-                                    ResetWalletPageStyles.instructionContent
+                                    ResetPasscodePageStyles.instructionContent
                                 }
                                 instructionItems={instructionItems}
                             />
@@ -180,7 +180,7 @@ export const ResetWalletPage: React.FC = () => {
                             onClick={handleForgotPasscode}
                             title={t('forgetPasscode')}
                             className={
-                                ResetWalletPageStyles.forgetPasscodeButton
+                                ResetPasscodePageStyles.forgetPasscodeButton
                             }
                         />
                     </div>
