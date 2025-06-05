@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { Login } from "../../../pages/users/login/Login";
+import { Login } from "../../../../pages/users/login/Login";
 import { useTranslation } from "react-i18next";
 
 // Mock Translation
@@ -36,12 +36,12 @@ describe("Login Page Tests", () => {
     );
     expect(screen.getByTestId("login-note")).toHaveTextContent("Some features may be limited in guest mode.");
     expect(screen.getByTestId("google-login-button")).toHaveTextContent("Continue with Google");
-    expect(screen.getByTestId("HomeBanner-Guest-Login")).toHaveTextContent("Continue as Guest");
+    expect(screen.getByTestId("home-banner-guest-login")).toHaveTextContent("Continue as Guest");
   });
 
   test("Guest login button navigates to issuers page", () => {
     render(<MemoryRouter><Login /></MemoryRouter>);
-    const guestButton = screen.getByTestId("HomeBanner-Guest-Login");
+    const guestButton = screen.getByTestId("home-banner-guest-login");
     
     fireEvent.click(guestButton);
     expect(mockNavigate).toHaveBeenCalledWith("/issuers");

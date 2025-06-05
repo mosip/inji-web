@@ -8,7 +8,7 @@ import {RootState} from '../../types/redux';
 import {CollapseButton} from './CollapseButton';
 import {getIconColor} from './Utils';
 
-const SidebarItem: React.FC<SidebarItemProps> = ({
+export const SidebarItem: React.FC<SidebarItemProps> = ({
     icon,
     text,
     path,
@@ -37,6 +37,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 
             {isActive && (
                 <div
+                    data-testid="active-indicator"
                     className={`${
                         isCollapsed ? 'hidden sm:block' : 'block'
                     } absolute top-1/2 -translate-y-1/2 w-1 h-8 bg-[#2B011C] rounded-r-md ${
@@ -99,6 +100,7 @@ export const Sidebar: React.FC = () => {
 
     return (
         <div
+            data-testid="sidebar-container"
             className={`bg-white h-full transition-all duration-300 shadow-iw-sidebar flex flex-col items-start absolute top-0 z-30 sm:relative sm:w-64 ${
                 isRTL(language) ? 'right-0' : 'left-0'
             } ${isCollapsed ? 'w-5 sm:w-[96px]' : 'w-64'}`}

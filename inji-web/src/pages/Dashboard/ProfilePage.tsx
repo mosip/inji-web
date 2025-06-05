@@ -69,7 +69,7 @@ export const ProfilePage: React.FC = () => {
         <div className="flex items-start">
           <NavBackArrowButton onBackClick={handleBackClick} />
           <div className="flex flex-col items-start">
-            <span data-testid="Profile-Page" className="text-2xl font-medium">
+            <span data-testid="profile-page" className="text-2xl font-medium">
               {t('ProfilePage.title')}
             </span>
             <TertiaryButton
