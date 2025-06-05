@@ -12,15 +12,15 @@ import {getDirCurrentLanguage} from './utils/i18n';
 import {PageNotFound} from './pages/PageNotFound';
 import {AuthorizationPage} from './pages/AuthorizationPage';
 import {HomePage} from './pages/HomePage';
-import LoginSessionStatusChecker from './utils/LoginSessionStatusChecker';
-import {PasscodePage} from './pages/User/Passcode/PasscodePage.tsx';
+import LoginSessionStatusChecker from './components/Common/LoginSessionStatusChecker';
+import {PasscodePage} from './pages/User/Passcode/PasscodePage';
 import {Layout} from './components/User/Layout';
-import {HomePage as DashboardHomePage} from './pages/User/Home/HomePage.tsx';
+import {HomePage as DashboardHomePage} from './pages/User/Home/HomePage';
 import {StoredCardsPage} from './pages/User/StoredCards/StoredCardsPage';
 import {useUser} from './hooks/useUser';
-import {CredentialTypesPage} from './pages/User/CredentialTypes/CredentialTypesPage.tsx';
+import {CredentialTypesPage} from './pages/User/CredentialTypes/CredentialTypesPage';
 import {ResetPasscodePage} from './pages/User/ResetPasscode/ResetPasscodePage';
-import {ProfilePage} from './pages/User/Profile/ProfilePage.tsx';
+import {ProfilePage} from './pages/User/Profile/ProfilePage';
 import {Pages, ROUTES} from "./constants/Routes";
 
 function RedirectToUserHome() {

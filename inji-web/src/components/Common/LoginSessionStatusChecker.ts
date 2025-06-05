@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
-import {useUser} from '../hooks/useUser';
-import {KEYS} from './constants';
-import {ROUTES} from "../constants/Routes";
+import {useUser} from '../../hooks/useUser';
+import {KEYS} from '../../utils/constants';
+import {ROUTES} from "../../constants/Routes";
 
-import {User} from "../types/data";
+import {User} from "../../types/data";
 
 const loginProtectedPrefixes = [ROUTES.USER];
 
