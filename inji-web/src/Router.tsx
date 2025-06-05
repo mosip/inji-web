@@ -12,14 +12,14 @@ import {getDirCurrentLanguage} from './utils/i18n';
 import {PageNotFound} from './pages/PageNotFound';
 import {AuthorizationPage} from './pages/AuthorizationPage';
 import {HomePage} from './pages/HomePage';
-import LoginSessionStatusChecker from './pages/users/login/LoginSessionStatusChecker';
+import LoginSessionStatusChecker from './utils/LoginSessionStatusChecker';
 import {PasscodePage} from './pages/User/PasscodePage';
 import {Layout} from './components/Dashboard/Layout';
 import {HomePage as DashboardHomePage} from './pages/User/HomePage';
 import {StoredCardsPage} from './pages/User/StoredCards/StoredCardsPage';
 import {useUser} from './hooks/useUser';
 import {CredentialTypesPage} from './pages/User/CredentialTypesPage';
-import {ResetPasscodePage} from './pages/User/ResetPasscode/ResetPasscodePage.tsx';
+import {ResetPasscodePage} from './pages/User/ResetPasscode/ResetPasscodePage';
 import {ProfilePage} from './pages/User/ProfilePage';
 import {Pages, ROUTES} from "./constants/Routes";
 

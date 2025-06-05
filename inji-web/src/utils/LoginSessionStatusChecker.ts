@@ -1,17 +1,17 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
-import {useUser} from '../../../hooks/useUser';
-import {KEYS} from '../../../utils/constants';
-import {ROUTES} from "../../../constants/Routes";
-import {User} from "../../../components/Dashboard/types";
+import {useUser} from '../hooks/useUser.tsx';
+import {KEYS} from './constants.ts';
+import {ROUTES} from "../constants/Routes.ts";
+import {User} from "../components/Dashboard/types.ts";
 
-const loginProtectedPrefixes = ['/user'];
+const loginProtectedPrefixes = [ROUTES.USER];
 
 const isLoginProtectedRoute = (pathname: string) => {
     return loginProtectedPrefixes.some((prefix) => pathname.startsWith(prefix));
 }
 
-const LoginSessionStatusChecker: React.FC = () => {
+const LoginSessionStatusChecker = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const {user, walletId, removeUser, fetchUserProfile, isLoading} = useUser();

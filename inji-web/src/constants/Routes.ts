@@ -15,6 +15,7 @@ export const Pages = {
 
 export const ROUTES = {
     ROOT: Pages.ROOT,
+    USER: `/${Pages.USER}`,
     PASSCODE: `/${Pages.USER}/${Pages.PASSCODE}`,
     USER_HOME: `/${Pages.USER}/${Pages.HOME}`,
     USER_ISSUERS: `/${Pages.USER}/${Pages.ISSUERS}`,
