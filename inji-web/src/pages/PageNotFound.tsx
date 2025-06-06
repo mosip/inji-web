@@ -1,6 +1,7 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
+import {ROUTES} from "../utils/constants";
 
 export const PageNotFound:React.FC = () => {
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ export const PageNotFound:React.FC = () => {
         <div className={"p-8"}>
           <button
               data-testid="PageNotFound-Home-Button"
-              onClick={() => navigate("/")}
+              onClick={() => navigate(ROUTES.ROOT)}
               className="text-iw-primary font-bold py-2 px-4 rounded-lg border-2 border-iw-primary">
               {t("navigateButton")}
           </button>

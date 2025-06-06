@@ -76,7 +76,7 @@
       "retry":"Retry"
     }
   },
-  "PinPage":{
+  "PasscodePage":{
     "submit":"Submit",
     "submitting":"Submitting",
     "setPasscode":"Set Passcode",
@@ -88,14 +88,14 @@
     "passcodeWarning":"Make sure you remember the password for future login",
     "error":{
       "walletNotFoundError":"Wallet not found",
-      "pinLengthError":"Please Enter 6 digits in the Pin",
+      "passcodeLengthError":"Please Enter 6 digits in the Pin",
       "passcodeMismatchError":"Passcodes do not match. Please ensure both passcode fields match exactly. Re-enter and try again.",
       "createWalletError":"Wallet creation unsuccessful",
-      "incorrectPinError":"Invalid Passcode. The passcode you entered is incorrect. Please check and try again, or click 'Forgot Passcode' to reset it.",
+      "incorrectPasscodeError":"Invalid Passcode. The passcode you entered is incorrect. Please check and try again, or click 'Forgot Passcode' to reset it.",
       "fetchWalletsError":"Error in fetching wallets"
     }
   },
-  "ResetWalletPage": {
+  "ResetPasscodePage": {
     "title": "Reset Your Wallet",
     "subTitle":"Reset wallet to regain access and re-download credentials",
     "resetInstruction": {
@@ -356,7 +356,7 @@
     "success": "Proceed",
     "cancel": "Cancel"
   },
-  "Dashboard": {
+  "User": {
     "Home": {
       "title": "Home",
       "welcome": "Welcome"

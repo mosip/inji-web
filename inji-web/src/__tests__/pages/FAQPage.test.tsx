@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { FAQPage } from '../../pages/FAQPage';
 import { useLocation } from 'react-router-dom';
-import { navigateToDashboardHome } from '../../pages/Dashboard/utils';
+import { navigateToUserHome } from '../../utils/navigationUtils';
 // Mocks
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -15,10 +15,10 @@ jest.mock('react-router-dom', () => ({
   useLocation: jest.fn(),
 }));
 
-jest.mock('../../pages/Dashboard/utils', () => ({
-  navigateToDashboardHome: jest.fn(),
+jest.mock('../../utils/navigationUtils', () => ({
+  navigateToUserHome: jest.fn(),
 }));
-
+// is it correct?
 jest.mock('../../components/Common/PageTitle/PageTitle', () => ({
   PageTitle: ({ value, testId }: { value: string; testId?: string }) => (
     <h1 data-testid={testId}>{value}</h1>
@@ -56,10 +56,10 @@ describe('FAQPage', () => {
     render(<FAQPage backUrl={undefined} withHome={true} />);
     const homeButton = screen.getByTestId('faq-home-button');
     expect(homeButton).toBeInTheDocument();
-    expect(homeButton).toHaveTextContent('Dashboard:Home.title');
+    expect(homeButton).toHaveTextContent('User:Home.title');
 
     fireEvent.click(homeButton);
-    expect(navigateToDashboardHome).toHaveBeenCalledWith(mockNavigate);
+    expect(navigateToUserHome).toHaveBeenCalledWith(mockNavigate);
   });
 
   it('clicking back arrow navigates to backUrl if present', () => {
@@ -90,7 +90,7 @@ describe('FAQPage', () => {
     const svg = document.querySelector('svg');
     fireEvent.click(svg!);
 
-    expect(navigateToDashboardHome).toHaveBeenCalledWith(mockNavigate);
+    expect(navigateToUserHome).toHaveBeenCalledWith(mockNavigate);
   });
 
   it('matches snapshot when withHome=false', () => {

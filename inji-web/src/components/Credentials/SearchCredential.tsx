@@ -7,7 +7,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {getCredentialTypeDisplayObjectForCurrentLanguage} from "../../utils/i18n";
 import {RootState} from "../../types/redux";
 import {CredentialConfigurationObject} from "../../types/data";
-import { SearchCredentialProps } from "../Dashboard/types";
+
+type SearchCredentialProps = {
+    issuerContainerBorderRadius?: string;
+}
 
 export const SearchCredential: React.FC<SearchCredentialProps> = ({
     issuerContainerBorderRadius

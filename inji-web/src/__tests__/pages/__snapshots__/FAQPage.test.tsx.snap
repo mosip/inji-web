@@ -89,7 +89,7 @@ exports[`FAQPage matches snapshot when withHome=true 1`] = `
           <button
             data-testid="faq-home-button"
           >
-            Dashboard:Home.title
+            User:Home.title
           </button>
         </div>
         <div

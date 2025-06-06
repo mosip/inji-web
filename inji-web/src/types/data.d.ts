@@ -1,4 +1,6 @@
 import {MethodType} from "../utils/api";
+import React from "react";
+// This file contains type definitions for various objects / models used in the application.
 
 export type IssuerWellknownDisplayArrayObject = {
     name: string;
@@ -99,16 +101,24 @@ export type FAQAccordionItemType = {
     content: (string | {__html: string})[];
 };
 
-export type FooterProps = {
-    footerRef: React.RefObject<HTMLDivElement>;
-}
-
-export type DropdownArrowIconProps = {
-    isOpen: boolean;
-    size?: number;
-    color?: string;
+export type User = {
+    displayName: string;
+    profilePictureUrl: string;
+    email: string;
 };
-
-export type NavBackArrowButtonProps = {
-    onBackClick: () => void;
+export type SidebarItemType = {
+    icon: React.ReactNode;
+    text: string;
+    path: string;
+    key: string;
+};
+export type ErrorType = {
+    errorCode: string;
+    errorMessage: string;
+};
+export type DropdownItem = {
+    label: string;
+    onClick: () => void;
+    textColor: string;
+    key: string;
 };

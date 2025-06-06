@@ -1,0 +1,321 @@
+import {StoredCardsPage} from '../../../pages/User/StoredCards/StoredCardsPage';
+import {fireEvent, screen, waitFor, within} from '@testing-library/react';
+import {mockApiObject, mockusei18n, mockUseTranslation, renderWithRouter} from '../../../test-utils/mockUtils';
+
+mockUseTranslation()
+mockApiObject()
+
+describe('Testing of StoredCardsPage ->', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+        mockusei18n();
+        // Reset fetch mock
+        global.fetch = jest.fn();
+    });
+
+    const mockCredentials = [
+        {
+            credentialId: 'cred-1',
+            credentialTypeDisplayName: 'Drivers License',
+            issuerDisplayName: 'DMV',
+            credentialTypeLogo: 'logo1.png',
+        },
+        {
+            credentialId: 'cred-2',
+            credentialTypeDisplayName: 'Health Card',
+            issuerDisplayName: 'Ministry of Health',
+            credentialTypeLogo: 'logo2.png',
+        },
+    ];
+
+    describe("Layout of StoredCardsPage", () => {
+        it('check if the loading layout is matching with snapshot', () => {
+            const {asFragment} = renderWithRouter(<StoredCardsPage/>);
+
+            expect(asFragment()).toMatchSnapshot();
+        });
+
+        it('check if the "No credentials found" layout is matching with snapshot', async () => {
+            (global.fetch as jest.Mock).mockResolvedValueOnce({
+                ok: true,
+                json: async () => [],
+            });
+
+            const {asFragment} = renderWithRouter(<StoredCardsPage/>);
+            await waitForLoaderDisappearance()
+
+            expect(asFragment()).toMatchSnapshot();
+        });
+
+        it('should check if listing of credentials is matching snapshot', async () => {
+            (global.fetch as jest.Mock).mockResolvedValueOnce({
+                ok: true,
+                json: async () => mockCredentials,
+            });
+
+            const {asFragment} = renderWithRouter(<StoredCardsPage/>);
+            await waitForLoaderDisappearance();
+
+            expect(asFragment()).toMatchSnapshot();
+        });
+
+        it('should check if error while fetching credentials is matching snapshot', async () => {
+            (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
+
+            const {asFragment} = renderWithRouter(<StoredCardsPage/>);
+            await waitForLoaderDisappearance()
+
+            expect(asFragment()).toMatchSnapshot();
+        });
+    })
+
+    it('should navigate to home on nav back button click', () => {
+        renderWithRouter(<StoredCardsPage/>);
+
+        fireEvent.click(screen.getByTestId('back-arrow-icon'));
+
+        expect(window.location.pathname).toBe('/user/home');
+    });
+
+    it('should navigate to home on Home text click', () => {
+        renderWithRouter(<StoredCardsPage/>);
+
+        fireEvent.click(screen.getByTestId('btn-home'));
+
+        expect(window.location.pathname).toBe('/user/home');
+    });
+
+    it('should navigate to dashboard home when Add credential button is clicked in larger screens', () => {
+        renderWithRouter(<StoredCardsPage/>);
+        // In case of larger screens, the add cards button is inside the page title container
+        const container = screen.getByTestId('page-title-container');
+        const addCredentialButton = within(container).getByRole('button', {name: "Add Cards"});
+        fireEvent.click(addCredentialButton);
+
+        expect(window.location.pathname).toBe('/user/home');
+    });
+
+    it('should navigate to dashboard home when Add credential button in blank document is clicked in smaller screens', async () => {
+        (global.fetch as jest.Mock).mockImplementation(() =>
+            new Promise(resolve => setTimeout(() => resolve({
+                ok: true,
+                json: async () => mockCredentials
+            }), 100))
+        );
+
+        renderWithRouter(<StoredCardsPage/>);
+        await waitForLoaderDisappearance();
+        // In case of smaller screens , the add cards button is inside the content and action container
+        const container = screen.getByTestId('content-and-action-container');
+        const addCardsButton = within(container).getByRole('button', {name: "Add Cards"});
+        fireEvent.click(addCardsButton);
+
+        expect(window.location.pathname).toBe('/user/home');
+    });
+
+    it('should show loading state initially', async () => {
+        (global.fetch as jest.Mock).mockImplementation(() =>
+            new Promise(resolve => setTimeout(() => resolve({
+                ok: true,
+                json: async () => mockCredentials
+            }), 100))
+        );
+
+        renderWithRouter(<StoredCardsPage/>);
+
+        expect(screen.getByTestId('loader-credentials')).toBeInTheDocument();
+    });
+
+    it('should display credentials when fetch is successful', async () => {
+        (global.fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+            json: async () => {
+                console.log("hi")
+                return mockCredentials;
+            },
+        });
+
+        renderWithRouter(<StoredCardsPage/>);
+
+        await waitForLoaderDisappearance();
+
+        expect(screen.getByText('Drivers License')).toBeInTheDocument();
+        expect(screen.getByText('Health Card')).toBeInTheDocument();
+    });
+
+    it('should display "No Cards Stored!" when no credentials are returned', async () => {
+        (global.fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+            json: async () => [],
+        });
+
+        renderWithRouter(<StoredCardsPage/>);
+        await waitForLoaderDisappearance()
+
+        expect(screen.getByText('No Cards Stored!')).toBeInTheDocument();
+        expect(screen.getByText("You haven't downloaded any cards yet. Tap \"Add Cards\" to get started.")).toBeInTheDocument();
+    });
+
+    // write a table test for the error cases, error message to returned for json and status code + response to be expected in screen are configurable
+    const errorScenarios = [
+        {
+            name: 'internal server error',
+            fetchResponse: {
+                ok: false,
+                status: 500,
+                json: async () => ({errorMessage: 'Internal Server Error', errorCode: "internal_server_error"}),
+            },
+            expectedTitle: 'Server Error',
+            expectedMessage: 'Something went wrong on our end. Please try again later.',
+        },
+        {
+            name: 'service unavailable',
+            fetchResponse: {
+                ok: false,
+                status: 503,
+                json: async () => ({
+                    errorMessage: 'service_unavailable',
+                    errorCode: "Unavailable to connect to service"
+                }),
+            },
+            expectedTitle: 'Service Unavailable',
+            expectedMessage: 'We\'re currently experiencing some issues processing your request. Please try again later',
+        },
+        {
+            name: 'invalid wallet request - Wallet key not found in session',
+            fetchResponse: {
+                ok: false,
+                status: 400,
+                json: async () => ({errorMessage: 'Wallet key not found in session', errorCode: "invalid_request"}),
+            },
+            expectedTitle: "Something Went Wrong",
+            expectedMessage: "We couldn’t verify your wallet information. Please try again later."
+        },
+        {
+            name: 'invalid wallet request - Wallet is locked',
+            fetchResponse: {
+                ok: false,
+                status: 400,
+                json: async () => ({errorMessage: 'Wallet is locked', errorCode: "invalid_request"}),
+            },
+            expectedTitle: "Something Went Wrong",
+            expectedMessage: "We couldn’t verify your wallet information. Please try again later."
+        }, {
+            name: 'invalid wallet request - Invalid Wallet ID',
+            fetchResponse: {
+                ok: false,
+                status: 400,
+                json: async () => ({
+                    errorMessage: "Invalid Wallet ID. Session and request Wallet ID do not match",
+                    errorCode: "invalid_request"
+                }),
+            },
+            expectedTitle: "Something Went Wrong",
+            expectedMessage: "We couldn’t verify your wallet information. Please try again later."
+        },
+        {
+            name: 'invalid request',
+            fetchResponse: {
+                ok: false,
+                status: 400,
+                json: async () => ({errorMessage: 'Some other error', errorCode: "invalid_request"}),
+            },
+            expectedTitle: "Request Error",
+            expectedMessage: "Your request contains invalid information. Please try again later."
+        },
+        {
+            name: 'unknown error',
+            fetchResponse: {
+                ok: false,
+                status: 418,
+                json: async () => ({errorMessage: 'I am a teapot'}),
+            },
+            expectedTitle: "Something Went Wrong",
+            expectedMessage: "An unexpected error occurred. Please refresh the page or try again shortly."
+        },
+    ];
+    it.each(errorScenarios)('should display error message for $name', async ({
+                                                                                 fetchResponse,
+                                                                                 expectedTitle,
+                                                                                 expectedMessage
+                                                                             }) => {
+        (global.fetch as jest.Mock).mockResolvedValueOnce(fetchResponse);
+
+        renderWithRouter(<StoredCardsPage/>);
+        await waitForLoaderDisappearance();
+
+        expect(screen.getByText(expectedTitle)).toBeInTheDocument();
+        expect(screen.getByText(expectedMessage)).toBeInTheDocument();
+    });
+
+    it('should display network error message when network error occurs', async () => {
+        (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
+
+        renderWithRouter(<StoredCardsPage/>);
+        await waitForLoaderDisappearance()
+
+        expect(screen.getByText("No Internet Connection")).toBeInTheDocument();
+        expect(screen.getByText('Please check your internet connection and try again.')).toBeInTheDocument();
+    });
+
+    it('should filter credentials when using search bar', async () => {
+        (global.fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+            json: async () => mockCredentials,
+        });
+
+        renderWithRouter(<StoredCardsPage/>);
+        await waitForLoaderDisappearance()
+
+        const searchInput = screen.getByPlaceholderText('Search your cards by Name');
+        fireEvent.change(searchInput, {target: {value: 'Health'}});
+
+        expect(screen.getByText('Health Card')).toBeInTheDocument();
+        expect(screen.queryByText('Drivers License')).not.toBeInTheDocument();
+    });
+
+    it('should display "No cards match your search" when search has no matches', async () => {
+        (global.fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+            json: async () => mockCredentials,
+        });
+
+        renderWithRouter(<StoredCardsPage/>);
+        await waitForLoaderDisappearance()
+
+        const searchInput = screen.getByPlaceholderText('Search your cards by Name');
+        fireEvent.change(searchInput, {target: {value: 'Passport'}});
+
+        expect(screen.getByText('No cards match your search.')).toBeInTheDocument();
+    });
+
+    it('should reset filtered credentials when search is cleared', async () => {
+        (global.fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+            json: async () => mockCredentials,
+        });
+
+        renderWithRouter(<StoredCardsPage/>);
+
+        await waitForLoaderDisappearance()
+        const searchInput = screen.getByPlaceholderText('Search your cards by Name');
+
+        // Filter to just Health Card
+        fireEvent.change(searchInput, {target: {value: 'Health'}});
+        expect(screen.getByText('Health Card')).toBeInTheDocument();
+        expect(screen.queryByText('Drivers License')).not.toBeInTheDocument();
+
+        // Clear the filter
+        fireEvent.change(searchInput, {target: {value: ''}});
+
+        // Should show all credentials again
+        expect(screen.getByText('Health Card')).toBeInTheDocument();
+        expect(screen.getByText('Drivers License')).toBeInTheDocument();
+    });
+
+    async function waitForLoaderDisappearance() {
+        await waitFor(() => {
+            expect(screen.queryByTestId('loader-credentials')).not.toBeInTheDocument();
+        });
+    }
+});

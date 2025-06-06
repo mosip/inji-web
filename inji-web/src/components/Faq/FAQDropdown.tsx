@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import DropdownArrowIcon from '../Common/DropdownArrowIcon';
+import {ROUTES} from "../../utils/constants";
 
 // TODO This component is not being used in the current codebase, but it is kept for future use. We have to check if this can be generalized and used in other places as well.
 export const FAQDropdown: React.FC = () => {
@@ -37,7 +38,7 @@ export const FAQDropdown: React.FC = () => {
                                     className="w-full px-4 py-2 text-left text-sm font-semibold hover:bg-gray-100 flex items-center justify-between flex-row"
                                     onMouseDown={() => {
                                         setIsOpen((open) => !open);
-                                        navigate('/faq');
+                                        navigate(ROUTES.FAQ);
                                     }}
                                 >
                                     {t('item1')}
