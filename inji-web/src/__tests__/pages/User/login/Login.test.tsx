@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import {Login}  from "../../../components/Login/Login"
+import {Login} from "../../../../components/Login/Login"
 import { useTranslation } from "react-i18next";
 
 // Mock Translation
