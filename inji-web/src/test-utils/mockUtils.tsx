@@ -61,6 +61,7 @@ export const mockUseTranslation = () => {
     }));
 };
 
+
 export const mockUseNavigate = () => {
     const mockNavigate = jest.fn();
     jest.mock('react-router-dom', () => ({

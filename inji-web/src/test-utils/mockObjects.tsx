@@ -48,6 +48,21 @@ export const mockCredentials: IssuerConfigurationObject = {
     "grant_types_supported": ["authorization_code"]
 };
 
+export const mockVerifiableCredentials = [
+    {
+        credentialId: 'cred-1',
+        credentialTypeDisplayName: 'Drivers License',
+        issuerDisplayName: 'DMV',
+        credentialTypeLogo: 'logo1.png',
+    },
+    {
+        credentialId: 'cred-2',
+        credentialTypeDisplayName: 'Health Card',
+        issuerDisplayName: 'Ministry of Health',
+        credentialTypeLogo: 'logo2.png',
+    },
+];
+
 
 export const mockIssuerObject = {
         name: 'Test Issuer',

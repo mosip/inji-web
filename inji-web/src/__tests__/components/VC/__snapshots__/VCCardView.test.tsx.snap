@@ -15,13 +15,13 @@ exports[`VCCardView Component should match snapshot 1`] = `
         alt="Credential Type Logo"
         class="w-20 h-20"
         data-testid="issuer-logo"
-        src="test-logo.png"
+        src="logo1.png"
       />
       <span
         class="text-sm font-semibold text-iw-title"
         data-testid="credential-type-display-name"
       >
-        Health ID
+        Drivers License
       </span>
     </div>
     <div
