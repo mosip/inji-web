@@ -12,7 +12,8 @@ describe('VCCardView Component', () => {
         issuerLogo: "test-issuer-logo.png",
     };
 
-    const mockOnClick = jest.fn();
+    const mockPreview = jest.fn();
+    const mockDownload = jest.fn();
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -22,7 +23,8 @@ describe('VCCardView Component', () => {
         const {container} = render(
             <VCCardView
                 credential={mockCredential}
-                onClick={mockOnClick}
+                onPreview={mockPreview}
+                onDownload={mockDownload}
             />
         );
 
@@ -33,7 +35,8 @@ describe('VCCardView Component', () => {
         render(
             <VCCardView
                 credential={mockCredential}
-                onClick={mockOnClick}
+                onPreview={mockPreview}
+                onDownload={mockDownload}
             />
         );
 
@@ -48,47 +51,66 @@ describe('VCCardView Component', () => {
         expect(name).toHaveTextContent('Health ID');
     });
 
-    it('should call onClick when clicked', () => {
+    it('should call onPreview when clicked', () => {
         render(
             <VCCardView
                 credential={mockCredential}
-                onClick={mockOnClick}
+                onPreview={mockPreview}
+                onDownload={mockDownload}
             />
         );
 
         const card = screen.getByRole('menuitem');
         fireEvent.click(card);
 
-        expect(mockOnClick).toHaveBeenCalledTimes(1);
-        expect(mockOnClick).toHaveBeenCalledWith(mockCredential);
+        expect(mockPreview).toHaveBeenCalledTimes(1);
+        expect(mockPreview).toHaveBeenCalledWith(mockCredential);
     });
 
-    it('should call onClick when pressing enter key', () => {
+    it('should call onPreview when pressing enter key', () => {
         render(
             <VCCardView
                 credential={mockCredential}
-                onClick={mockOnClick}
+                onPreview={mockPreview}
+                onDownload={mockDownload}
             />
         );
 
         const card = screen.getByRole('menuitem');
         fireEvent.keyDown(card, {key: 'Enter'});
 
-        expect(mockOnClick).toHaveBeenCalledTimes(1);
-        expect(mockOnClick).toHaveBeenCalledWith(mockCredential);
+        expect(mockPreview).toHaveBeenCalledTimes(1);
+        expect(mockPreview).toHaveBeenCalledWith(mockCredential);
     });
 
-    it('should not call onClick when pressing key other than enter key', () => {
+    it('should not call onPreview when pressing key other than enter key', () => {
         render(
             <VCCardView
                 credential={mockCredential}
-                onClick={mockOnClick}
+                onPreview={mockPreview}
+                onDownload={mockDownload}
             />
         );
 
         const card = screen.getByRole('menuitem');
         fireEvent.keyDown(card, {key: '1'});
 
-        expect(mockOnClick).not.toBeCalled()
+        expect(mockPreview).not.toBeCalled()
     });
+
+    it('should call onDownload when download icon is clicked', () => {
+        render(
+            <VCCardView
+                credential={mockCredential}
+                onPreview={mockPreview}
+                onDownload={mockDownload}
+            />
+        );
+
+        const downloadIcon = screen.getByTestId('icon-download');
+        fireEvent.click(downloadIcon);
+
+        expect(mockDownload).toHaveBeenCalledTimes(1);
+        expect(mockDownload).toHaveBeenCalledWith(mockCredential);
+    })
 });

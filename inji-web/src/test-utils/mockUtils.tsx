@@ -137,7 +137,7 @@ export const mockUseParams = ()=>{
 };
 
 export const mockApiObject = () =>{
-    jest.mock('../utils/api.ts', () => ({
+    return jest.mock('../utils/api.ts', () => ({
         api: {
           mimotoHost: 'https://mocked-api-host',
             fetchWalletVCs: {

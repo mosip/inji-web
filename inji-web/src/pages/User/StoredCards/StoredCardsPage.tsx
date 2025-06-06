@@ -19,6 +19,7 @@ import {BorderedButton} from "../../../components/Common/Buttons/BorderedButton"
 import {StoredCardsPageStyles} from "./StoredCardsPageStyles";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 import {navigateToUserHome} from "../../../utils/navigationUtils";
+import {downloadCredentialPDF} from "../../../utils/misc";
 
 export const StoredCardsPage: React.FC = () => {
     const {t} = useTranslation('StoredCards');
@@ -71,7 +72,33 @@ export const StoredCardsPage: React.FC = () => {
         fetchWalletCredentials().then(_ => console.debug("Credentials fetched successfully"));
     }, []);
 
-    const preview = (_: WalletCredential) => console.log("Preview");
+    const preview = async (_: WalletCredential) => console.log("Preview");
+    const download = async (credential: WalletCredential) => {
+        try {
+            const response = await fetch(
+                api.fetchWalletCredentialPreview.url(credential.credentialId),
+                {
+                    method:
+                        api.fetchWalletCredentialPreview.methodType === 0
+                            ? "GET"
+                            : "POST",
+                    headers: api.fetchWalletCredentialPreview.headers(language),
+                    credentials: api.fetchWalletCredentialPreview.credentials
+                }
+            );
+            //
+            const pdfContent = await response.blob();
+
+            const disposition = response.headers.get("Content-Disposition");
+            const fileNameMatch = /filename="(.+)"/.exec(disposition ?? "");
+            const fileName = fileNameMatch?.[1] || "download.pdf";
+
+            await downloadCredentialPDF(pdfContent, fileName);
+        } catch (error) {
+            console.error("Failed to download credential PDF:", error);
+            // setError("downloadError");
+        }
+    }
 
     const filterCredentials = (searchText: string) => {
         if (searchText === "") {
@@ -117,7 +144,8 @@ export const StoredCardsPage: React.FC = () => {
                         renderItem={(item: WalletCredential) =>
                             <VCCardView
                                 key={item.credentialId}
-                                onClick={preview}
+                                onPreview={preview}
+                                onDownload={download}
                                 credential={item}
                             />
                         }

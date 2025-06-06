@@ -1,17 +1,33 @@
 import {StoredCardsPage} from '../../../pages/User/StoredCards/StoredCardsPage';
 import {fireEvent, screen, waitFor, within} from '@testing-library/react';
-import {mockApiObject, mockusei18n, mockUseTranslation, renderWithRouter} from '../../../test-utils/mockUtils';
+import {
+    mockApiObject,
+    mockLocalStorage,
+    mockusei18n,
+    mockUseTranslation,
+    renderWithRouter
+} from '../../../test-utils/mockUtils';
+import {KEYS} from "../../../utils/constants.ts";
 
 mockUseTranslation()
 mockApiObject()
 
 describe('Testing of StoredCardsPage ->', () => {
+    let localStorageMock: {
+        getItem: jest.Mock<string | null, [key: string]>;
+        setItem: jest.Mock<void, [key: string, value: string]>
+    };
     beforeEach(() => {
         jest.clearAllMocks();
         mockusei18n();
         // Reset fetch mock
         global.fetch = jest.fn();
+        localStorageMock = mockLocalStorage();
+
+        localStorageMock.setItem('selectedLanguage', 'en');
+        localStorageMock.setItem(KEYS.WALLET_ID, "faa0e18f-0935-4fab-8ab3-0c546c0ca714")
     });
+
 
     const mockCredentials = [
         {
@@ -311,6 +327,38 @@ describe('Testing of StoredCardsPage ->', () => {
         // Should show all credentials again
         expect(screen.getByText('Health Card')).toBeInTheDocument();
         expect(screen.getByText('Drivers License')).toBeInTheDocument();
+    });
+
+    it('should call download api when clicked on download icon in card', async () => {
+        (global.fetch as jest.Mock)
+            .mockResolvedValueOnce(
+                {
+                    ok: true,
+                    json: async () => mockCredentials,
+                }
+            )
+            .mockResolvedValueOnce({
+                ok: true,
+                blob: async () => new Blob(),
+                headers: {
+                    get: () => 'attachment; filename="credential.pdf"',
+                },
+            });
+
+        renderWithRouter(<StoredCardsPage/>);
+        await waitForLoaderDisappearance()
+
+        const downloadButton = screen.getAllByTestId('icon-download')[0];
+        fireEvent.click(downloadButton);
+
+        expect(global.fetch).toHaveBeenCalledWith(
+            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1?action=download"),
+            expect.objectContaining({
+                "credentials": "include",
+                "headers": {"Accept": "application/pdf", "Accept-Language": "en", "Content-Type": "application/json"},
+                "method": "GET"
+            })
+        );
     });
 
     async function waitForLoaderDisappearance() {
