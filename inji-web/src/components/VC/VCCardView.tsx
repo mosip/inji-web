@@ -176,6 +176,8 @@ export function VCCardView(props: Readonly<{
                 <EllipsisMenu
                     testId={"mini-view-card"}
                     menuItems={[
+                        {label: "View", onClick: preview, id: "view"},
+                        {label: "Download", onClick: download, id: "download"},
                         {label: "Delete", onClick: handleDelete, id: "delete"},
                     ]}
                 />

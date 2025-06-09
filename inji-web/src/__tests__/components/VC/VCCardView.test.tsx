@@ -1,5 +1,5 @@
 import React from 'react';
-import {fireEvent, screen} from '@testing-library/react';
+import {fireEvent, screen, within} from '@testing-library/react';
 import {WalletCredential} from '../../../types/data';
 import {VCCardView} from '../../../components/VC/VCCardView';
 import {
@@ -134,6 +134,8 @@ describe('VCCardView Component', () => {
         );
     })
 
+    // Tests for menu interactions
+
     it('should open three dots menu with the relevant option when clicked on 3 dots menu', () => {
         renderWithProvider(
             <VCCardView
@@ -144,10 +146,12 @@ describe('VCCardView Component', () => {
         const threeDotsMenu = screen.getByTestId('icon-three-dots-menu');
         fireEvent.click(threeDotsMenu);
 
-        expect(screen.getByText('Delete')).toBeInTheDocument();
-        let deleteOption = screen.getByTestId('menu-item-delete');
-        expect(deleteOption).toBeInTheDocument();
-        expect(deleteOption).toHaveRole("menuitem")
+        // Assert that menu has only 3 menu items
+        const menu = screen.getByRole('menu');
+        expect(within(menu).getAllByRole("menuitem")).toHaveLength(3);
+        assertMenuItem("View", "view");
+        assertMenuItem("Download", "download");
+        assertMenuItem("Delete", "delete");
     });
 
     it('should call delete API when clicked on delete option in delete menu and confirmed it', () => {
@@ -206,4 +210,11 @@ describe('VCCardView Component', () => {
     it.todo("should show error when delete fails")
     it.todo("should close the preview of credential when clicked on close icon in preview modal")
     it.todo("should show the content given by the preview API when clicked on the card")
+
+    function assertMenuItem(text : string, testId : string) {
+        expect(screen.getByText(text)).toBeInTheDocument();
+        let menuOption = screen.getByTestId(`menu-item-${testId}`);
+        expect(menuOption).toBeInTheDocument();
+        expect(menuOption).toHaveRole("menuitem")
+    }
 });
