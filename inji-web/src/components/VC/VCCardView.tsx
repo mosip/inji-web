@@ -1,5 +1,4 @@
 import {WalletCredential} from "../../types/data";
-import {RxDotsHorizontal} from "react-icons/rx";
 import {VCStyles} from "./VCStyles";
 import React, {useState} from "react";
 import DownloadIcon from "../../assets/Download.svg"
@@ -12,7 +11,8 @@ import {toast} from "react-toastify";
 import {Viewer, Worker} from "@react-pdf-viewer/core";
 import {Modal} from "../../modals/Modal";
 import {SolidButton} from "../Common/Buttons/SolidButton";
-import {EllipsisMenu} from "../Common/Menu/EllipsisMenu.tsx";
+import {EllipsisMenu} from "../Common/Menu/EllipsisMenu";
+import {ConfirmationModal} from "../../modals/ConfirmationModal";
 
 function VCDetailView(props: { previewContent: string, onClick: () => void }) {
     return (
@@ -31,6 +31,7 @@ export function VCCardView(props: Readonly<{
     const language = useSelector((state: RootState) => state.common.language);
     const [error, setError] = useState<string>()
     const [previewContent, setPreviewContent] = useState<string>("");
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
 
 
     if (error) {
@@ -62,19 +63,23 @@ export function VCCardView(props: Readonly<{
         }
     }
 
-    const download = async (mouseEvent: React.MouseEvent) => {
-        mouseEvent.stopPropagation()
+    const handleDownload = (event: React.MouseEvent) => {
+        event.stopPropagation()
+        download();
+    }
+
+    const download = async () => {
         console.log("Downloading credential PDF for:", props.credential.credentialId);
         try {
             const response = await fetch(
-                api.fetchWalletCredentialPreview.url(props.credential.credentialId),
+                api.downloadWalletCredentialPdf.url(props.credential.credentialId),
                 {
                     method:
-                        api.fetchWalletCredentialPreview.methodType === 0
+                        api.downloadWalletCredentialPdf.methodType === 0
                             ? "GET"
                             : "POST",
-                    headers: api.fetchWalletCredentialPreview.headers(language),
-                    credentials: api.fetchWalletCredentialPreview.credentials
+                    headers: api.downloadWalletCredentialPdf.headers(language),
+                    credentials: api.downloadWalletCredentialPdf.credentials
                 }
             );
             //
@@ -89,6 +94,10 @@ export function VCCardView(props: Readonly<{
             console.error("Failed to download credential PDF:", error);
             setError("downloadError");
         }
+    }
+
+    const handleDelete = () => {
+        setShowDeleteConfirmation(true)
     }
 
     const deleteCredential = () => {
@@ -109,6 +118,10 @@ export function VCCardView(props: Readonly<{
             console.error("Failed to delete credential:", error);
             setError("deleteError");
         }
+        finally
+        {
+            setShowDeleteConfirmation(false)
+        }
     }
 
     const clearPreview = () => {
@@ -127,6 +140,16 @@ export function VCCardView(props: Readonly<{
                     onClick={clearPreview}
                 />
             </Modal>
+            {
+                showDeleteConfirmation && (
+                    <ConfirmationModal
+                        title={"Delete Card!"}
+                        message={"Are you sure you want to delete this card?"}
+                        onConfirm={deleteCredential}
+                        onCancel={() => setShowDeleteConfirmation(false)}
+                    />
+                )
+            }
 
             <div className={"flex items-center gap-6"}>
                 <img
@@ -139,12 +162,12 @@ export function VCCardView(props: Readonly<{
                     className={VCStyles.cardView.credentialName}
                     data-testid="credential-type-display-name"
                 >
-                {props.credential.credentialTypeDisplayName}
-            </span>
+            {props.credential.credentialTypeDisplayName}
+        </span>
             </div>
             <div className={"flex flex-row gap-2"}>
                 <img
-                    onClick={download}
+                    onClick={handleDownload}
                     data-testid={"icon-download"}
                     src={DownloadIcon}
                     alt={"icon-download"}
@@ -153,10 +176,11 @@ export function VCCardView(props: Readonly<{
                 <EllipsisMenu
                     testId={"mini-view-card"}
                     menuItems={[
-                        {label: "Delete", onClick: deleteCredential, id: "delete"},
+                        {label: "Delete", onClick: handleDelete, id: "delete"},
                     ]}
                 />
             </div>
         </Clickable>
-    );
+    )
+        ;
 }

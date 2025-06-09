@@ -150,7 +150,7 @@ describe('VCCardView Component', () => {
         expect(deleteOption).toHaveRole("menuitem")
     });
 
-    it('should call delete API when clicked on delete option in delete menu', () => {
+    it('should call delete API when clicked on delete option in delete menu and confirmed it', () => {
         fetchMock.mockResolvedValueOnce({
             ok: true,
         });
@@ -166,6 +166,8 @@ describe('VCCardView Component', () => {
 
         const deleteOption = screen.getByTestId('menu-item-delete');
         fireEvent.click(deleteOption);
+        const confirmButton = screen.getByRole('button', {name: 'Confirm'});
+        fireEvent.click(confirmButton);
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock).toHaveBeenCalledWith(
@@ -176,6 +178,28 @@ describe('VCCardView Component', () => {
                 "method": "DELETE"
             })
         );
+    });
+
+    it('should not call delete API when clicked on delete option in delete menu and cancelled it', () => {
+        fetchMock.mockResolvedValueOnce({
+            ok: true,
+        });
+
+        renderWithProvider(
+            <VCCardView
+                credential={mockCredential}
+            />
+        );
+
+        const threeDotsMenu = screen.getByTestId('icon-three-dots-menu');
+        fireEvent.click(threeDotsMenu);
+
+        const deleteOption = screen.getByTestId('menu-item-delete');
+        fireEvent.click(deleteOption);
+        const cancelButton = screen.getByRole('button', {name: 'Cancel'});
+        fireEvent.click(cancelButton);
+
+        expect(fetchMock).not.toBeCalled()
     });
 
     it.todo("should show error when download fails")

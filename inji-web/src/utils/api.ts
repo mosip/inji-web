@@ -203,6 +203,25 @@ export class api {
         credentials: "include"
     };
 
+    static downloadWalletCredentialPdf: ApiRequest = {
+        url: (credentialId: string) => {
+            const walletId = localStorage.getItem(KEYS.WALLET_ID);
+            return (
+                api.mimotoHost +
+                `/wallets/${walletId}/credentials/${credentialId}?action=download`
+            );
+        },
+        methodType: MethodType.GET,
+        headers: (locale: string) => {
+            return {
+                "Content-Type": ContentTypes.JSON,
+                "Accept-Language": locale,
+                "Accept": ContentTypes.PDF
+            };
+        },
+        credentials: "include"
+    };
+
     static deleteWalletCredential: ApiRequest = {
         url: (credentialId: string) => {
             const walletId = localStorage.getItem(KEYS.WALLET_ID);
