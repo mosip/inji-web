@@ -93,4 +93,6 @@ fileignoreconfig:
   checksum: 1aa60329392751ab42aa8f76298745ff836b2dac3ffd46e4b8796c1fb4f5a53b
 - filename: inji-web/src/components/Users/PasscodeInput.tsx
   checksum: fa02db3cfc75f669254216fe639a45783b152a344654dfbf85e1e8dfd8875ab5
+- filename: inji-web/src/hooks/userDownloadSessionDetails.tsx
+  checksum: 994377a399e455c9b35d18717ee0a6aa6081a6257874fe9cfbbda84ae5dc087c
 version: ""

@@ -139,6 +139,17 @@
       }
     }
   },
+  "CredentialTypesPage": {
+    "download": {
+      "error": {
+        "header": "डाउनलोड विफल",
+        "subHeader": "कार्ड डाउनलोड करने में असमर्थ। प्रक्रिया शुरू करने के लिए कृपया \"होम पर जाएँ\" बटन पर क्लिक करें।"
+      },
+      "loading": {
+        "header": "क्रेडेंशियल डाउनलोड करना"
+      }
+    }
+  },
   "RedirectionPage": {
     "navigateButton": "घर जाओ",
     "loading": {

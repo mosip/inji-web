@@ -139,6 +139,17 @@
       }
     }
   },
+  "CredentialTypesPage": {
+    "download": {
+      "error": {
+        "header": "فشل التنزيل",
+        "subHeader": "تعذر تنزيل البطاقة. يُرجى النقر على زر \"الصفحة الرئيسية\" لبدء العملية."
+      },
+      "loading": {
+        "header": "تنزيل بيانات الاعتماد"
+      }
+    }
+  },
   "RedirectionPage": {
     "navigateButton": "اذهب إلى المنزل",
     "loading": {

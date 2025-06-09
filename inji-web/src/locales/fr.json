@@ -139,6 +139,17 @@
       }
     }
   },
+  "CredentialTypesPage": {
+    "download": {
+      "error": {
+        "header": "Échec du téléchargement",
+        "subHeader": "Impossible de télécharger la carte. Veuillez cliquer sur le bouton « Accueil » pour lancer le processus."
+      },
+      "loading": {
+        "header": "Téléchargement des informations d'identification"
+      }
+    }
+  },
   "RedirectionPage": {
     "navigateButton": "Aller à la maison",
     "loading": {

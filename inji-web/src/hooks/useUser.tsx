@@ -26,10 +26,12 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
         setWalletId(null);
     };
 
-    const removeWallet= () => {
+    const removeWallet = () => {
         localStorage.removeItem(KEYS.WALLET_ID);
         setWalletId(null);
     };
+
+    const isUserLoggedIn = React.useMemo(() => !!user && !!walletId, [user, walletId]);
 
     const fetchUserProfile = async () => {
         try {
@@ -46,7 +48,7 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
             const userData: User = {
                 displayName: responseData.displayName,
                 profilePictureUrl: responseData.profilePictureUrl,
-                email:responseData.email
+                email: responseData.email
             };
 
             saveUser(userData);
@@ -70,6 +72,7 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
             walletId,
             error,
             isLoading,
+            isUserLoggedIn,
             fetchUserProfile,
             saveUser,
             removeUser,

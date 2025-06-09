@@ -139,6 +139,17 @@
       }
     }
   },
+  "CredentialTypesPage": {
+    "download": {
+      "error": {
+        "header": "Download Failed",
+        "subHeader": "Unable to download the card. Please click on \"Go to Home\" button to start the process."
+      },
+      "loading": {
+        "header": "Downloading Credential"
+      }
+    }
+  },
   "RedirectionPage": {
     "navigateButton": "Go To Home",
     "loading": {

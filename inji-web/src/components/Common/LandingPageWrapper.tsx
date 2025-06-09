@@ -1,29 +1,57 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 import {BorderedButton} from "./Buttons/BorderedButton";
-import {ROUTES} from "../../utils/constants";
+import {RouteValue} from "../../types/data";
+
+type LandingPageWrapperProps = {
+    icon: React.ReactNode;
+    title: string;
+    subTitle?: string;
+    gotoHome: boolean;
+    navUrl: RouteValue;
+    testIds: {
+        outerContainer: string;
+        titleContainer?: string;
+        title: string;
+        subTitleContainer: string;
+        subTitle?: string;
+        homeButton: string;
+    };
+    classNames: {
+        outerContainer: string;
+        titleContainer: string;
+        title: string;
+        subTitleContainer: string;
+        subTitle?: string;
+    };
+};
 
 export const LandingPageWrapper: React.FC<LandingPageWrapperProps> = (props) => {
     const navigate = useNavigate();
-    const { t } = useTranslation("RedirectionPage");
+    const {t} = useTranslation("RedirectionPage");
+    const {testIds, classNames} = props;
+
     return (
-        <div data-testid="DownloadResult-Outer-Container" className="flex flex-col justify-center items-center pt-32 ">
+        <div data-testid={testIds.outerContainer} className={classNames.outerContainer}>
             {props.icon}
-            <div className="my-4">
-                <p className="font-bold" data-testid="DownloadResult-Title">{props.title}</p>
+            <div className={classNames.titleContainer} data-testid={testIds?.titleContainer}>
+                <p className={classNames.title} data-testid={testIds.title}>
+                    {props.title}
+                </p>
             </div>
-            <div className="mb-6 px-10 text-center" data-testid="DownloadResult-SubTitle">
-                <p>{props.subTitle}</p>
-            </div>
-            {props.gotoHome && ( <BorderedButton testId={"DownloadResult-Home-Button"} onClick={() => navigate(ROUTES.ROOT)} title={t("navigateButton")} />)}
+            {props.subTitle &&
+                <div className={classNames.subTitleContainer} data-testid={testIds.subTitleContainer}>
+                    <p className={classNames?.subTitle} data-testid={testIds?.subTitle}>{props.subTitle}</p>
+                </div>
+            }
+            {props.gotoHome && (
+                <BorderedButton
+                    testId={testIds.homeButton}
+                    onClick={() => navigate(props.navUrl)}
+                    title={t("navigateButton")}
+                />
+            )}
         </div>
     );
-};
-
-export type LandingPageWrapperProps = {
-    icon: React.ReactNode;
-    title: string;
-    subTitle: string;
-    gotoHome: boolean;
 };

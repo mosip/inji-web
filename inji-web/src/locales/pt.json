@@ -139,6 +139,17 @@
       }
     }
   },
+  "CredentialTypesPage": {
+    "download": {
+      "error": {
+        "header": "Falha no download",
+        "subHeader": "Não foi possível baixar o cartão. Clique no botão \"Ir para a página inicial\" para iniciar o processo."
+      },
+      "loading": {
+        "header": "Baixando credencial"
+      }
+    }
+  },
   "RedirectionPage": {
     "navigateButton": "Ir para a página inicial",
     "loading": {

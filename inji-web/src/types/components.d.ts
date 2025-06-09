@@ -45,7 +45,7 @@ export type IssuerProps = {
 export type DownloadResultProps = {
     state: RequestStatus;
     title: string;
-    subTitle: string;
+    subTitle?: string;
 }
 
 export type EmptyListContainerProps = {

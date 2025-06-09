@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import {RequestStatus, useFetch} from '../../../hooks/useFetch';
-import {CredentialList} from '../../../components/Credentials/CredentialList';
 import {useDispatch, useSelector} from 'react-redux';
 import {storeSelectedIssuer} from '../../../redux/reducers/issuersReducer';
 import {storeCredentials, storeFilteredCredentials} from '../../../redux/reducers/credentialsReducer';
 import {api} from '../../../utils/api';
 import {useTranslation} from 'react-i18next';
-import {toast} from 'react-toastify';
 
 import {ApiRequest, IssuerObject, IssuerWellknownDisplayArrayObject} from '../../../types/data';
 import {getIssuerDisplayObjectForCurrentLanguage} from '../../../utils/i18n';
@@ -17,6 +15,9 @@ import {SearchCredential} from '../../../components/Credentials/SearchCredential
 import {NavBackArrowButton} from '../../../components/Common/Buttons/NavBackArrowButton';
 import {navigateToUserHome} from "../../../utils/navigationUtils";
 import {CredentialTypesPageStyles} from "./CredentialTypesPageStyles";
+import {useDownloadSessionDetails} from "../../../hooks/userDownloadSessionDetails";
+import {ROUTES} from "../../../utils/constants";
+import {RenderModalBasedOnDownloadStatus} from "./RenderModalBasedOnDownloadStatus";
 
 type CredentialTypesPageProps = {
     backUrl?: string;
@@ -28,7 +29,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
     const {state, fetchRequest} = useFetch();
     const params = useParams<CredentialParamProps>();
     const dispatch = useDispatch();
-    const {t} = useTranslation(['CredentialsPage', 'User']);
+    const {t} = useTranslation(['CredentialTypesPage', 'User']);
     const language = useSelector((state: RootState) => state.common.language);
     let displayObject = {} as IssuerWellknownDisplayArrayObject;
     let [selectedIssuer, setSelectedIssuer] = useState({} as IssuerObject);
@@ -39,6 +40,22 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
         );
     }
     const navigate = useNavigate();
+    const location = useLocation();
+    const {downloadSessions} = useDownloadSessionDetails();
+    const issuerId = location.state?.issuerId
+    const [downloadStatus, setDownloadStatus] = useState(downloadSessions[issuerId]?.downloadStatus);
+
+    useEffect(() => {
+        if (downloadStatus === RequestStatus.DONE) {
+            navigate(ROUTES.CREDENTIALS)
+        }
+    }, [downloadStatus])
+
+    useEffect(() => {
+        if (state === RequestStatus.ERROR) {
+            setDownloadStatus(RequestStatus.ERROR);
+        }
+    }, [state])
 
     useEffect(() => {
         const fetchCall = async () => {
@@ -57,18 +74,12 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
                 apiRequest.methodType,
                 apiRequest.headers()
             );
-
             dispatch(storeFilteredCredentials(response?.response));
             dispatch(storeCredentials(response?.response));
         };
         fetchCall();
     }, []);
 
-    if (state === RequestStatus.ERROR) {
-        toast.error(t('errorContent'));
-    }
-
-    const location = useLocation();
     const previousPagePath = location.state?.from;
 
     const handleBackClick = () => {
@@ -114,15 +125,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
                     />
                 </div>
             </div>
-
-            <div className={CredentialTypesPageStyles.contentContainer}>
-                <div
-                    data-testid="Credential-List-Container"
-                    className={CredentialTypesPageStyles.credentialListContainer}
-                >
-                    <CredentialList state={state} />
-                </div>
-            </div>
+            <RenderModalBasedOnDownloadStatus downloadStatus={downloadStatus} state={state}/>
         </div>
     );
 };

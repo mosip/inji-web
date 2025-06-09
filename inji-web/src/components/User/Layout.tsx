@@ -19,9 +19,9 @@ export const Layout: React.FC = () => {
     useEffect(() => {
         const updateHeights = () => {
             const headerHeight =
-                headerRef.current?.getBoundingClientRect().height || 0;
+                headerRef.current?.getBoundingClientRect().height ?? 0;
             const footerHeight =
-                footerRef.current?.getBoundingClientRect().height || 0;
+                footerRef.current?.getBoundingClientRect().height ?? 0;
             setHeaderHeight(headerHeight);
             setFooterHeight(footerHeight);
         };
@@ -55,17 +55,17 @@ export const Layout: React.FC = () => {
                 >
                     <img
                         src={DashboardBgTop}
-                        alt="Dashboard Top Bg Image"
+                        alt="Gradient Top Background"
                         className="absolute top-0 left-0 w-full z-[-1]"
                     />
 
                     <img
                         src={DashboardBgBottom}
-                        alt="Dashboard Bottom Bg Image"
+                        alt="Gardient Bottom Background"
                         className="absolute bottom-0 left-0 w-full z-[-1]"
                     />
 
-                    <div className="flex-1 overflow-y-auto relative z-10 p-4">
+                    <div className="flex flex-grow flex-col overflow-y-auto relative z-10 p-4">
                         <Outlet />
                     </div>
                 </div>

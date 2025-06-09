@@ -29,7 +29,28 @@ export const isObjectEmpty = (object: any) => {
     return object === null || object === undefined || Object.keys(object).length === 0;
 }
 
-export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialConfigurationId: string, vcStorageExpiryLimitInTimes: string, isLoggedIn = false) => {
+interface LoggedInRequestBody {
+    grantType: 'authorization_code';
+    code: string;
+    redirectUri: string;
+    codeVerifier: string;
+    issuer: string;
+    credentialConfigurationId: string;
+}
+
+interface GuestRequestBody {
+    grant_type: 'authorization_code';
+    code: string;
+    redirect_uri: string;
+    code_verifier: string;
+    issuer: string;
+    credential: string;
+    vcStorageExpiryLimitInTimes: string;
+}
+
+export type TokenRequestBody = LoggedInRequestBody | GuestRequestBody;
+
+export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialConfigurationId: string, vcStorageExpiryLimitInTimes: string, isLoggedIn = false) : TokenRequestBody => {
     // naming convention is handled separately for logged in and non logged in users as they use camelcase and snake case respectively
     if (isLoggedIn) {
         return {
