@@ -122,3 +122,9 @@ export type DropdownItem = {
     textColor: string;
     key: string;
 };
+
+export interface MenuItemType {
+    label: string;
+    onClick: () => void;
+    id: string; // Unique identifier for the item
+}
