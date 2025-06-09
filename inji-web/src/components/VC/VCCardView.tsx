@@ -12,6 +12,7 @@ import {toast} from "react-toastify";
 import {Viewer, Worker} from "@react-pdf-viewer/core";
 import {Modal} from "../../modals/Modal";
 import {SolidButton} from "../Common/Buttons/SolidButton";
+import {EllipsisMenu} from "../Common/Menu/EllipsisMenu.tsx";
 
 function VCDetailView(props: { previewContent: string, onClick: () => void }) {
     return (
@@ -61,7 +62,7 @@ export function VCCardView(props: Readonly<{
         }
     }
 
-    const download = async (mouseEvent : React.MouseEvent) => {
+    const download = async (mouseEvent: React.MouseEvent) => {
         mouseEvent.stopPropagation()
         console.log("Downloading credential PDF for:", props.credential.credentialId);
         try {
@@ -87,6 +88,26 @@ export function VCCardView(props: Readonly<{
         } catch (error) {
             console.error("Failed to download credential PDF:", error);
             setError("downloadError");
+        }
+    }
+
+    const deleteCredential = () => {
+        console.debug("Delete credential clicked for:", props.credential.credentialId);
+        try {
+            const response = fetch(
+                api.deleteWalletCredential.url(props.credential.credentialId),
+                {
+                    // TODO: Get methodType from api.deleteWalletCredential.methodType, make sure the ApiRequest is sending methodType as a string and not enum
+                    method: "DELETE",
+                    headers: api.deleteWalletCredential.headers(),
+                    credentials: api.deleteWalletCredential.credentials
+                }
+            );
+            console.info("Credential deletion response:", response);
+            //TODO: send refresh event to parent component post successful deletion
+        } catch (error) {
+            console.error("Failed to delete credential:", error);
+            setError("deleteError");
         }
     }
 
@@ -129,7 +150,12 @@ export function VCCardView(props: Readonly<{
                     alt={"icon-download"}
                     className={"h-25 w-25"}
                 />
-                <RxDotsHorizontal size={20} color={"#707070"}/>
+                <EllipsisMenu
+                    testId={"mini-view-card"}
+                    menuItems={[
+                        {label: "Delete", onClick: deleteCredential, id: "delete"},
+                    ]}
+                />
             </div>
         </Clickable>
     );

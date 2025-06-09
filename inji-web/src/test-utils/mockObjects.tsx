@@ -1,4 +1,4 @@
-import { IssuerConfigurationObject } from '../types/data';
+import {IssuerConfigurationObject, WalletCredential} from '../types/data';
 import { LandingPageWrapperProps } from '../components/Common/LandingPageWrapper';
 import { NavBarProps } from '../types/components';
 export const mockIssuerDisplayArrayObject = {
@@ -48,17 +48,19 @@ export const mockCredentials: IssuerConfigurationObject = {
     "grant_types_supported": ["authorization_code"]
 };
 
-export const mockVerifiableCredentials = [
+export const mockVerifiableCredentials : WalletCredential[] = [
     {
         credentialId: 'cred-1',
-        credentialTypeDisplayName: 'Drivers License',
         issuerDisplayName: 'DMV',
+        issuerLogo: 'https://example-issuer1.com/logo1.png',
+        credentialTypeDisplayName: 'Drivers License',
         credentialTypeLogo: 'logo1.png',
     },
     {
         credentialId: 'cred-2',
-        credentialTypeDisplayName: 'Health Card',
         issuerDisplayName: 'Ministry of Health',
+        issuerLogo: 'https://example-issuer2.com/logo.png',
+        credentialTypeDisplayName: 'Health Card',
         credentialTypeLogo: 'logo2.png',
     },
 ];

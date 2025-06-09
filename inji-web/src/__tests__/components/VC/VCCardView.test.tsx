@@ -9,8 +9,8 @@ import {
     setMockUseSelectorState
 } from "../../../test-utils/mockUtils";
 import {fetchMock} from "../../../test-utils/setupFetchMock";
-import {KEYS} from "../../../utils/constants.ts";
-import {mockVerifiableCredentials} from "../../../test-utils/mockObjects.tsx";
+import {KEYS} from "../../../utils/constants";
+import {mockVerifiableCredentials} from "../../../test-utils/mockObjects";
 
 describe('VCCardView Component', () => {
     const mockCredential: WalletCredential = mockVerifiableCredentials[0]
@@ -133,4 +133,53 @@ describe('VCCardView Component', () => {
             })
         );
     })
+
+    it('should open three dots menu with the relevant option when clicked on 3 dots menu', () => {
+        renderWithProvider(
+            <VCCardView
+                credential={mockCredential}
+            />
+        );
+
+        const threeDotsMenu = screen.getByTestId('icon-three-dots-menu');
+        fireEvent.click(threeDotsMenu);
+
+        expect(screen.getByText('Delete')).toBeInTheDocument();
+        let deleteOption = screen.getByTestId('menu-item-delete');
+        expect(deleteOption).toBeInTheDocument();
+        expect(deleteOption).toHaveRole("menuitem")
+    });
+
+    it('should call delete API when clicked on delete option in delete menu', () => {
+        fetchMock.mockResolvedValueOnce({
+            ok: true,
+        });
+
+        renderWithProvider(
+            <VCCardView
+                credential={mockCredential}
+            />
+        );
+
+        const threeDotsMenu = screen.getByTestId('icon-three-dots-menu');
+        fireEvent.click(threeDotsMenu);
+
+        const deleteOption = screen.getByTestId('menu-item-delete');
+        fireEvent.click(deleteOption);
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock).toHaveBeenCalledWith(
+            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1"),
+            expect.objectContaining({
+                "credentials": "include",
+                "headers": {"Content-Type": "application/json"},
+                "method": "DELETE"
+            })
+        );
+    });
+
+    it.todo("should show error when download fails")
+    it.todo("should show error when delete fails")
+    it.todo("should close the preview of credential when clicked on close icon in preview modal")
+    it.todo("should show the content given by the preview API when clicked on the card")
 });
