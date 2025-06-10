@@ -9,6 +9,17 @@ exports[`VCCardView Component should match snapshot 1`] = `
     tabindex="0"
   >
     <div
+      data-testid="vc-detail-view"
+    >
+      <div />
+      <button>
+        download
+      </button>
+      <button>
+        chylose
+      </button>
+    </div>
+    <div
       class="flex items-center gap-6"
     >
       <img

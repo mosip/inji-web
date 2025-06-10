@@ -8,7 +8,7 @@ interface EllipsisMenuProps {
     testId: string;
 }
 
-export const EllipsisMenu: React.FC<EllipsisMenuProps> = ({ menuItems, testId }) => {
+export const EllipsisMenu: React.FC<EllipsisMenuProps> = ({menuItems, testId}) => {
     const [isOpen, setIsOpen] = useState(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);

@@ -19,6 +19,7 @@ import {BorderedButton} from "../../../components/Common/Buttons/BorderedButton"
 import {StoredCardsPageStyles} from "./StoredCardsPageStyles";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 import {navigateToUserHome} from "../../../utils/navigationUtils";
+import {ROUTES} from "../../../utils/constants";
 
 export const StoredCardsPage: React.FC = () => {
     const {t} = useTranslation('StoredCards');
@@ -31,6 +32,7 @@ export const StoredCardsPage: React.FC = () => {
 
 
     const fetchWalletCredentials = async () => {
+        setLoading(true)
         try {
             const fetchWalletCredentials = api.fetchWalletVCs;
             const response = await fetch(fetchWalletCredentials.url(), {
@@ -39,11 +41,18 @@ export const StoredCardsPage: React.FC = () => {
                 credentials: "include"
             });
 
-            const responseData = await response.json();
             if (response.ok) {
+                const responseData = await response.json();
                 setCredentials(responseData);
                 setFilteredCredentials(responseData)
             } else {
+                if (response.status === 401) {
+                    console.error("Unauthorized access - redirecting to login");
+                    // Redirect to root page if unauthorized
+                    navigate(ROUTES.ROOT);
+                    return;
+                }
+                const responseData = await response.json();
                 console.error("Error fetching credentials:", responseData);
                 if (response.status === 500) {
                     setError("internalServerError");
@@ -85,6 +94,10 @@ export const StoredCardsPage: React.FC = () => {
 
     const navigateToHome = () => navigateToUserHome(navigate);
 
+    const refreshCredentials = async () => {
+        await fetchWalletCredentials()
+    }
+
     const loader =
         <div className={StoredCardsPageStyles.loaderContainer} data-testid={"loader-credentials"}>
             <SpinningLoader/>
@@ -102,22 +115,24 @@ export const StoredCardsPage: React.FC = () => {
         }
         return (
             <Fragment>
-                <div className={"flex justify-between"}>
+                <div className={"flex-shrink-0 px-4 py-0"}>
                     <SearchBar
                         testId={"search-credentials"}
                         placeholder={t('search.placeholder')}
                         filter={filterCredentials}
                     />
                 </div>
-                <div>
+                <div className={"flex-1 overflow-y-auto px-4 py-0"}>
                     <FlatList
                         onEmpty={<InfoSection message={t('search.noResults')} testId={"no-search-cards-found"}/>}
                         data={filteredCredentials}
-                        renderItem={(item: WalletCredential) =>
-                            <VCCardView
+                        renderItem={(item: WalletCredential) => {
+                            return <VCCardView
                                 key={item.credentialId}
                                 credential={item}
-                            />
+                                refreshCredentials={refreshCredentials}
+                            />;
+                        }
                         }
                         keyExtractor={(credential: WalletCredential) => credential.credentialId}
                         testId={"credentials"}
@@ -167,18 +182,14 @@ export const StoredCardsPage: React.FC = () => {
                 </div>
             </div>
 
-            <div className={StoredCardsPageStyles.contentAndActionContainer}
-                 data-testid={"content-and-action-container"}>
-                <div className={StoredCardsPageStyles.contentContainer}>
-                    {showContent()}
-                </div>
-                {/*show add cards button at bottom in mobile only while filtering did not yield result*/}
+            <Fragment>
+                {showContent()}
                 {!loading && credentials.length !== 0 &&
-                    <div className={StoredCardsPageStyles.buttonContainer.mobile}>
+                    <div className={"flex-shrink-0 px-4 py-0 mt-2 z-10 block my:2 sm:hidden"}>
                         {addCard()}
                     </div>
                 }
-            </div>
+            </Fragment>
         </div>
     );
 };

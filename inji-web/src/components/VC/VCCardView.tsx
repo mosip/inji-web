@@ -1,6 +1,6 @@
 import {WalletCredential} from "../../types/data";
 import {VCStyles} from "./VCStyles";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import DownloadIcon from "../../assets/Download.svg"
 import {Clickable} from "../Common/Clickable";
 import {api} from "../../utils/api";
@@ -8,25 +8,26 @@ import {downloadCredentialPDF} from "../../utils/misc";
 import {useSelector} from "react-redux";
 import {RootState} from "../../types/redux";
 import {toast} from "react-toastify";
-import {Modal} from "../../modals/Modal";
-import {SolidButton} from "../Common/Buttons/SolidButton";
 import {EllipsisMenu} from "../Common/Menu/EllipsisMenu";
 import {ConfirmationModal} from "../../modals/ConfirmationModal";
-import {PDFViewer} from "../Preview/PDFViewer";
-
+import {useTranslation} from "react-i18next";
+import {VCDetailView} from "./VCDetailView";
 
 export function VCCardView(props: Readonly<{
-    credential: WalletCredential
+    credential: WalletCredential,
+    refreshCredentials: () => void
 }>) {
     const language = useSelector((state: RootState) => state.common.language);
     const [error, setError] = useState<string>()
     const [previewContent, setPreviewContent] = useState<string>("");
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
+    const {t} = useTranslation('StoredCards')
 
-
-    if (error) {
-        toast.error("Download failed. Please try again later.");
-    }
+    useEffect(() => {
+        if (error) {
+            toast.error(t(`error.${error}`));
+        }
+    }, [error])
 
     const preview = async () => {
         console.log("Fetching credential preview for:", props.credential.credentialId);
@@ -42,10 +43,11 @@ export function VCCardView(props: Readonly<{
                     credentials: api.fetchWalletCredentialPreview.credentials
                 }
             );
-            //
+
             const pdfContent = await response.blob();
 
             const pdfUrl = URL.createObjectURL(pdfContent);
+            console.log("Credential preview fetched successfully:", pdfUrl);
             setPreviewContent(pdfUrl)
         } catch (error) {
             console.error("Failed to download credential PDF:", error);
@@ -90,10 +92,10 @@ export function VCCardView(props: Readonly<{
         setShowDeleteConfirmation(true)
     }
 
-    const deleteCredential = () => {
+    const deleteCredential = async () => {
         console.debug("Delete credential clicked for:", props.credential.credentialId);
         try {
-            const response = fetch(
+            await fetch(
                 api.deleteWalletCredential.url(props.credential.credentialId),
                 {
                     // TODO: Get methodType from api.deleteWalletCredential.methodType, make sure the ApiRequest is sending methodType as a string and not enum
@@ -102,8 +104,8 @@ export function VCCardView(props: Readonly<{
                     credentials: api.deleteWalletCredential.credentials
                 }
             );
-            console.info("Credential deletion response:", response);
-            //TODO: send refresh event to parent component post successful deletion
+            console.info("Credential deleted successfully.");
+            props.refreshCredentials()
         } catch (error) {
             console.error("Failed to delete credential:", error);
             setError("deleteError");
@@ -118,16 +120,9 @@ export function VCCardView(props: Readonly<{
 
     return (
         <Clickable onClick={preview} testId={"vc-card-view"} className={VCStyles.cardView.container}>
-            //TODO: Extract VC detail view
-            <Modal isOpen={!!previewContent}
-                   onClose={clearPreview}
-                   action={<SolidButton testId={"btn-download"} title={"download"} onClick={download}/>}
-                   title={props.credential.credentialTypeDisplayName}
-            >
-                <PDFViewer
-                    previewContent={previewContent}
-                />
-            </Modal>
+            {/*//TODO: Extract VC detail view*/}
+            <VCDetailView previewContent={previewContent} onClose={clearPreview} onDownload={download}
+                          credential={props.credential}/>
             {
                 showDeleteConfirmation && (
                     <ConfirmationModal

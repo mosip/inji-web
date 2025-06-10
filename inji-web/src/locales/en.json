@@ -410,7 +410,9 @@
       "networkError": {
         "title": "No Internet Connection",
         "message": "Please check your internet connection and try again."
-      }
+      },
+      "downloadError":  "Download failed. Please retry.",
+      "deleteError": "Failed to delete. Try again."
     }
   },
   "Common": {
