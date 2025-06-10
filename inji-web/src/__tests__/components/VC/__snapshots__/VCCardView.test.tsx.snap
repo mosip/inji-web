@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`VCCardView Component should match snapshot 1`] = `
-<div>
+<DocumentFragment>
   <div
     class="bg-iw-tileBackground grid grid-cols-[auto_auto] items-center shadow hover:shadow-lg hover:scale-105 hover:shadow-iw-selectedShadow p-4 m-2 rounded-md cursor-pointer"
     data-testid="vc-card-view"
@@ -62,5 +62,5 @@ exports[`VCCardView Component should match snapshot 1`] = `
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;

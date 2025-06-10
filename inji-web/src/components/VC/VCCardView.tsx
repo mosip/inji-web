@@ -8,21 +8,11 @@ import {downloadCredentialPDF} from "../../utils/misc";
 import {useSelector} from "react-redux";
 import {RootState} from "../../types/redux";
 import {toast} from "react-toastify";
-import {Viewer, Worker} from "@react-pdf-viewer/core";
 import {Modal} from "../../modals/Modal";
 import {SolidButton} from "../Common/Buttons/SolidButton";
 import {EllipsisMenu} from "../Common/Menu/EllipsisMenu";
 import {ConfirmationModal} from "../../modals/ConfirmationModal";
-
-function VCDetailView(props: { previewContent: string, onClick: () => void }) {
-    return (
-        <Worker
-            workerUrl={`https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`}
-        >
-            <Viewer fileUrl={props.previewContent}/>
-        </Worker>
-    )
-}
+import {PDFViewer} from "../Preview/PDFViewer";
 
 
 export function VCCardView(props: Readonly<{
@@ -63,9 +53,9 @@ export function VCCardView(props: Readonly<{
         }
     }
 
-    const handleDownload = (event: React.MouseEvent) => {
+    const handleDownload = async (event: React.MouseEvent) => {
         event.stopPropagation()
-        download();
+        await download();
     }
 
     const download = async () => {
@@ -117,9 +107,7 @@ export function VCCardView(props: Readonly<{
         } catch (error) {
             console.error("Failed to delete credential:", error);
             setError("deleteError");
-        }
-        finally
-        {
+        } finally {
             setShowDeleteConfirmation(false)
         }
     }
@@ -130,14 +118,14 @@ export function VCCardView(props: Readonly<{
 
     return (
         <Clickable onClick={preview} testId={"vc-card-view"} className={VCStyles.cardView.container}>
+            //TODO: Extract VC detail view
             <Modal isOpen={!!previewContent}
                    onClose={clearPreview}
                    action={<SolidButton testId={"btn-download"} title={"download"} onClick={download}/>}
                    title={props.credential.credentialTypeDisplayName}
             >
-                <VCDetailView
+                <PDFViewer
                     previewContent={previewContent}
-                    onClick={clearPreview}
                 />
             </Modal>
             {

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BackArrowButton} from "../components/Common/Buttons/BackArrowButton.tsx";
-import {PageTitle} from "../components/Common/PageTitle/PageTitle.tsx";
+import {BackArrowButton} from "../components/Common/Buttons/BackArrowButton";
+import {PageTitle} from "../components/Common/PageTitle/PageTitle";
 
 interface ModalProps {
     isOpen: boolean;
@@ -26,8 +26,8 @@ export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, 
         >
             <div
                 className="
-          bg-white rounded-lg shadow-lg
-          w-[55vw] h-[70vh]
+          bg-white rounded-lg shadow-lg w-full mx-4 h-[83vh] mt-10
+          sm:w-[70vw] sm:h-[80vh]
           flex flex-col
           p-6 relative
         "

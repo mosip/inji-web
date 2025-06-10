@@ -28,18 +28,17 @@ describe('VCCardView Component', () => {
         });
 
         localStorageMock = mockLocalStorage();
-
         localStorageMock.setItem(KEYS.WALLET_ID, "faa0e18f-0935-4fab-8ab3-0c546c0ca714")
     });
 
     it('should match snapshot', () => {
-        const {container} = renderWithProvider(
+        const {asFragment} = renderWithProvider(
             <VCCardView
                 credential={mockCredential}
             />
         );
 
-        expect(container).toMatchSnapshot();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     it('should render with correct credential information', () => {
@@ -55,12 +54,32 @@ describe('VCCardView Component', () => {
         expect(logo).toBeInTheDocument();
         expect(logo).toHaveAttribute('src', 'logo1.png');
         expect(logo).toHaveAttribute('alt', 'Credential Type Logo');
-
         expect(name).toBeInTheDocument();
         expect(name).toHaveTextContent('Drivers License');
     });
 
-    it('should call download api when clicked', () => {
+    it('should call download api when clicked on card', () => {
+        fetchMock.mockResolvedValueOnce({
+            ok: true,
+            blob: async () => new Blob(),
+            headers: {
+                get: () => 'attachment; filename="credential.pdf"',
+            },
+        });
+        renderWithProvider(
+            <VCCardView
+                credential={mockCredential}
+            />
+        );
+
+        // Simulate clicking on the card
+        const card = screen.getByRole('menuitem');
+        fireEvent.click(card);
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call download api when pressing enter key', () => {
         fetchMock.mockResolvedValueOnce({
             ok: true,
             blob: async () => new Blob(),
@@ -75,22 +94,17 @@ describe('VCCardView Component', () => {
         );
 
         const card = screen.getByRole('menuitem');
-        fireEvent.click(card);
-
-        expect(fetchMock).toHaveBeenCalledTimes(1);
-    });
-
-    it('should call download api when pressing enter key', () => {
-        renderWithProvider(
-            <VCCardView
-                credential={mockCredential}
-            />
-        );
-
-        const card = screen.getByRole('menuitem');
         fireEvent.keyDown(card, {key: 'Enter'});
 
-
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(fetchMock).toHaveBeenCalledWith(
+            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1?action=download"),
+            expect.objectContaining({
+                "credentials": "include",
+                "headers": {"Accept": "application/pdf", "Accept-Language": "en", "Content-Type": "application/json"},
+                "method": "GET"
+            })
+        );
     });
 
     it('should not call download api when pressing key other than enter key', () => {
