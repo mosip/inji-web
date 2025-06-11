@@ -76,6 +76,12 @@
       "retry": "Tentar novamente"
     }
   },
+  "Layout": {
+    "VCDownload": {
+      "success": "Seu {{cardType}} foi baixado com sucesso.",
+      "error": "Ops! Algo deu errado. Não foi possível baixar seu {{cardType}}. Selecione novamente o emissor e tente novamente."
+    }
+  },
   "PasscodePage": {
     "submit": "Enviar",
     "submitting": "Enviando",

@@ -76,6 +76,12 @@
       "retry": "Réessayer"
     }
   },
+  "Layout": {
+    "VCDownload": {
+      "success": "Votre {{cardType}} a été téléchargé avec succès.",
+      "error": "Oups ! Un problème est survenu. Votre {{cardType}} n'a pas pu être téléchargée. Veuillez resélectionner l'émetteur et réessayer."
+    }
+  },
   "PasscodePage": {
     "submit": "Soumettre",
     "submitting": "Soumission en cours",

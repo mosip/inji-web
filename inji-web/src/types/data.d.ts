@@ -67,9 +67,14 @@ export type ResponseTypeObject = {
     token_type?: string;
 };
 
+type DownloadSessionCredentialTypeObj = {
+    type: string;
+    displayObj: CredentialTypeDisplayArrayObject[];
+}
+
 export type SessionObject = {
     selectedIssuer?: IssuerObject;
-    certificateId: string;
+    selectedCredentialType: DownloadSessionCredentialTypeObj;
     codeVerifier: string;
     vcStorageExpiryLimitInTimes: number;
     state: string;

@@ -75,9 +75,9 @@ export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId
 
 export const downloadCredentialPDF = async (
     response: any,
-    certificateId: string
+    credentialType: string
 ) => {
-    let fileName = `${certificateId}.pdf`;
+    let fileName = `${credentialType}.pdf`;
     const url = window.URL.createObjectURL(response);
     const link = document.createElement("a");
     link.href = url;
@@ -91,9 +91,9 @@ export const downloadCredentialPDF = async (
 
 export const previewCredentialPDF = async (
     response: any,
-    certificateId: string
+    credentialType: string
 ) => {
-    let fileName = `${certificateId}.pdf`;
+    let fileName = `${credentialType}.pdf`;
     const url = window.URL.createObjectURL(response);
     const link = document.createElement('a');
     link.href = url;

@@ -1,8 +1,9 @@
-import React, {createContext, Dispatch, SetStateAction, useContext, useState} from "react";
+import React, {createContext, Dispatch, SetStateAction, useContext, useState, useMemo} from "react";
 import {RequestStatus} from "./useFetch";
+import {CredentialTypeDisplayArrayObject} from "../types/data";
 
-interface SessionStatus {
-    credentialType: string;
+export interface SessionStatus {
+    credentialTypeDisplayObj: CredentialTypeDisplayArrayObject[];
     downloadStatus: RequestStatus;
 }
 
@@ -14,10 +15,11 @@ interface DownloadSessionContextProps {
     downloadInProgressSessions: SessionsMap;
     currentSessionDownloadId: string | null;
     latestDownloadedSessionId: string | null;
-    addSession: (credentialType: string, downloadStatus: RequestStatus) => string;
+    addSession: (credentialTypeDisplayObj: CredentialTypeDisplayArrayObject[], downloadStatus: RequestStatus) => string;
     updateSession: (downloadId: string, downloadStatus: RequestStatus) => void;
-    removeSession: (credentialType: string) => void;
+    removeSession: (downloadId: string) => void;
     setCurrentSessionDownloadId: Dispatch<SetStateAction<string | null>>;
+    setLatestDownloadedSessionId: Dispatch<SetStateAction<string | null>>;
 }
 
 const DownloadSessionContext = createContext<DownloadSessionContextProps | undefined>(undefined);
@@ -31,31 +33,53 @@ export const DownloadSessionProvider: React.FC<{ children: React.ReactNode }> = 
         return Date.now().toString(36) + Math.random().toString(36).substring(2);
     };
 
-    const addSession = (credentialType: string, downloadStatus: RequestStatus): string => {
+    const addSession = (
+        credentialTypeDisplayObj: CredentialTypeDisplayArrayObject[],
+        downloadStatus: RequestStatus
+    ): string => {
         const newDownloadId = generateUniqueDownloadId();
-        const updatedSessions = {...downloadInProgressSessions, [newDownloadId]: {credentialType, downloadStatus}};
-        setDownloadInProgressSessions(updatedSessions);
+
+        setDownloadInProgressSessions(prevSessions => {
+            const updatedSessionsMap = {
+                ...prevSessions, [newDownloadId]: {credentialTypeDisplayObj, downloadStatus}
+            };
+            return updatedSessionsMap;
+        });
+
         setCurrentSessionDownloadId(newDownloadId);
         return newDownloadId;
     };
 
     const updateSession = (downloadId: string, downloadStatus: RequestStatus) => {
-        const updatedSessionDetails = {...downloadInProgressSessions[downloadId], downloadStatus};
-        const updatedSessions = {...downloadInProgressSessions, [downloadId]: updatedSessionDetails};
+        setDownloadInProgressSessions(prevSessions => {
+            if (!prevSessions[downloadId]) {
+                console.warn(`Attempted to update non-existent session with download ID: ${downloadId}`);
+                return prevSessions;
+            }
 
-        setDownloadInProgressSessions(updatedSessions);
+            const updatedSessionDetails = {...prevSessions[downloadId], downloadStatus};
+            const updatedSessionsMap = {
+                ...prevSessions,
+                [downloadId]: updatedSessionDetails
+            };
+
+            return updatedSessionsMap;
+        });
 
         if (downloadStatus === RequestStatus.DONE || downloadStatus === RequestStatus.ERROR) {
             setLatestDownloadedSessionId(downloadId)
         }
     };
 
-    const removeSession = (credentialType: string) => {
-        const {[credentialType]: _, ...updatedSessions} = downloadInProgressSessions;
-        setDownloadInProgressSessions(updatedSessions);
+    const removeSession = (downloadId: string) => {
+        setDownloadInProgressSessions(prevSessions => {
+            const {[downloadId]: _, ...updatedSessionsMap} = prevSessions;
+            return updatedSessionsMap;
+        });
+        setLatestDownloadedSessionId(null);
     };
 
-    const contextValue = React.useMemo(
+    const contextValue = useMemo(
         () => ({
             downloadInProgressSessions,
             currentSessionDownloadId,
@@ -63,11 +87,12 @@ export const DownloadSessionProvider: React.FC<{ children: React.ReactNode }> = 
             addSession,
             updateSession,
             removeSession,
-            setCurrentSessionDownloadId
-
+            setCurrentSessionDownloadId,
+            setLatestDownloadedSessionId
         }),
-        [downloadInProgressSessions, currentSessionDownloadId,latestDownloadedSessionId]
+        [downloadInProgressSessions, currentSessionDownloadId, latestDownloadedSessionId]
     );
+
     return (
         <DownloadSessionContext.Provider value={contextValue}>
             {children}

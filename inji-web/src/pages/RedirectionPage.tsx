@@ -16,13 +16,20 @@ import {useUser} from '../hooks/useUser';
 import {ROUTES} from "../utils/constants";
 import {useDownloadSessionDetails} from "../hooks/userDownloadSessionDetails";
 
+interface LoggedInDownloadFlowProps {
+    issuerId: string;
+    requestBody: TokenRequestBody;
+}
+
 export const RedirectionPage: React.FC = () => {
     const {error, state, response, fetchRequest} = useFetch();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const redirectedSessionId = searchParams.get("state");
     const activeSessionInfo: any = getActiveSession(redirectedSessionId);
-    const certificateId = activeSessionInfo?.certificateId;
+    const credentialType = activeSessionInfo?.selectedCredentialType?.type;
+    const credentialTypeDisplayObj =
+        activeSessionInfo?.selectedCredentialType?.displayObj;
     const {t} = useTranslation("RedirectionPage");
     const [session, setSession] = useState<SessionObject | null>(activeSessionInfo);
     const [completedDownload, setCompletedDownload] = useState<boolean>(false);
@@ -38,14 +45,9 @@ export const RedirectionPage: React.FC = () => {
     const navigate = useNavigate();
     const {addSession, updateSession} = useDownloadSessionDetails();
 
-    interface LoggedInDownloadFlowProps {
-        issuerId: string,
-        requestBody: TokenRequestBody
-    }
-
     const handleLoggedInDownloadFlow = async ({issuerId, requestBody}: LoggedInDownloadFlowProps) => {
         const apiRequest = api.downloadVCInloginFlow;
-        const downloadId = addSession(issuerId, RequestStatus.LOADING);
+        const downloadId = addSession(credentialTypeDisplayObj, RequestStatus.LOADING);
         navigate(ROUTES.USER_ISSUER(issuerId))
         let credentialDownloadResponse = await fetch(
             apiRequest.url(),
@@ -79,7 +81,7 @@ export const RedirectionPage: React.FC = () => {
         if (state !== RequestStatus.ERROR) {
             await downloadCredentialPDF(
                 credentialDownloadResponse,
-                certificateId
+                credentialType
             );
             setCompletedDownload(true);
         } else {
@@ -107,7 +109,7 @@ export const RedirectionPage: React.FC = () => {
                     code,
                     codeVerifier,
                     issuerId,
-                    certificateId,
+                    credentialType,
                     vcStorageExpiryLimitInTimes,
                     isUserLoggedIn
                 );

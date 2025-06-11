@@ -49,7 +49,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
             generateCodeChallenge(state);
         addNewSession({
             selectedIssuer: selectedIssuer,
-            certificateId: filteredCredentialConfig.name,
+            selectedCredentialType: {type: filteredCredentialConfig.name, displayObj: filteredCredentialConfig.display},
             codeVerifier: state,
             vcStorageExpiryLimitInTimes: isNaN(defaultVCStorageExpiryLimit)
                 ? vcStorageExpiryLimitInTimes

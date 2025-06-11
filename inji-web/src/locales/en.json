@@ -76,6 +76,12 @@
       "retry":"Retry"
     }
   },
+  "Layout": {
+    "VCDownload": {
+      "success": "Your {{cardType}} has been downloaded successfully.",
+      "error": "Oops! Something went wrong. Your {{cardType}} couldn’t be downloaded. Please reselect the issuer and try again."
+    }
+  },
   "PasscodePage":{
     "submit":"Submit",
     "submitting":"Submitting",

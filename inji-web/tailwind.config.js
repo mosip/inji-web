@@ -68,12 +68,14 @@ module.exports = {
                     textTertiary: 'var(--iw-color-textTertiary)',
                     grayLight: 'var(--iw-color-grayLight)',
                     darkRed: 'var(--iw-color-darkRed)',
+                    brightRed: 'var(--iw-color-brightRed)',
                     deepVioletIndigo: 'var(--iw-color-deepVioletIndigo)',
                     pink50: 'var(--iw-color-pink50)',
-                    darkGreen: 'var(--iw-color-darkGreen)',
+                    darkGrayishBlue: 'var(--iw-color-darkGrayishBlue)',
                     paleGray: 'var(--iw-color-paleGray)',
                     avatarPlaceholder: 'var(--iw-color-avatarPlaceholder)',
-                    avatarText: 'var(--iw-color-avatarText)'
+                    avatarText: 'var(--iw-color-avatarText)',
+                    darkgreen: 'var(--iw-color-darkgreen)'
                 }
             },
             boxShadow: {

@@ -266,8 +266,6 @@ return (
                                     <div className={PasscodePageStyles.closeButtonContainer}>
                                         <CrossIconButton
                                             onClick={() => setError(null)}
-                                            btnTestId="btn-close-icon"
-                                            iconTestId="icon-close"
                                             btnClassName={PasscodePageStyles.closeButton}
                                             iconClassName={PasscodePageStyles.closeIcon}
                                         />
