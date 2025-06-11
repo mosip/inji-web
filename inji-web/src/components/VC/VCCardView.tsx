@@ -79,7 +79,7 @@ export function VCCardView(props: Readonly<{
 
             const disposition = response.headers.get("Content-Disposition");
             const fileNameMatch = /filename="(.+)"/.exec(disposition ?? "");
-            const fileName = fileNameMatch?.[1] || "download.pdf";
+            const fileName = fileNameMatch?.[1] ?? "download.pdf";
 
             await downloadCredentialPDF(pdfContent, fileName);
         } catch (error) {
@@ -120,7 +120,6 @@ export function VCCardView(props: Readonly<{
 
     return (
         <Clickable onClick={preview} testId={"vc-card-view"} className={VCStyles.cardView.container}>
-            {/*//TODO: Extract VC detail view*/}
             <VCDetailView previewContent={previewContent} onClose={clearPreview} onDownload={download}
                           credential={props.credential}/>
             {

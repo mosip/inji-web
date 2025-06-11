@@ -30,40 +30,45 @@ export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, 
         >
             <div
                 className="
-          bg-white rounded-lg shadow-lg w-full mx-4 my-2 h-[83vh] mt-10
-          sm:w-[70vw] sm:h-[80vh]
-          flex flex-col
-           relative
-           pt-6
-        "
+    bg-white rounded-lg shadow-lg w-full mx-4 my-2 h-[83vh] w-[90vw] mt-10
+    sm:w-[70vw] sm:h-[80vh]
+    flex flex-col relative pt-6 border-4 border-white
+  "
                 role="dialog"
                 aria-modal="true"
-                style={{
-                    backgroundColor: "#F9FAFB"
-                }}
-                onClick={(e) => e.stopPropagation()} // prevent modal box clicks from closing
+                style={{backgroundColor: "#F9FAFB"}}
+                onClick={(e) => e.stopPropagation()}
             >
-                <div className="mb-4 flex items-center justify-between px-6">
+                <div className="mb-4 flex items-center justify-between px-6 flex-shrink-0">
                     <BackArrowButton onClick={onClose}/>
                     {title && <PageTitle value={title} testId={"title-modal"}/>}
-                    <CloseIconButton onClick={onClose}
-                                     btnClassName={"text-gray-500 hover:text-gray-700 text-2xl font-bold"}/>
+                    <CloseIconButton
+                        onClick={onClose}
+                        btnClassName="text-gray-500 hover:text-gray-700 text-2xl font-bold"
+                    />
                 </div>
-                <Separator className={"-p-6"}/>
 
-                <div className={"flex-1 overflow-y-auto mb-4"}>
-                    <div className={"overflow-y-auto flex-1"}>
+                <Separator className="flex-shrink-0"/>
+
+                <div className="flex flex-col flex-1 relative sm:bg-transparent bg-white sm:mb-4 pb-0 min-h-0">
+                    <div
+                        className="overflow-y-auto flex-1 min-h-0 sm:ml-5 sm:m-0 m-2 sm:bg-transparent bg-white sm:rounded-none rounded-xl border-2 sm:border-0">
                         {children}
                     </div>
+
                     {action && (
                         <div
-                            className="absolute right-6 bottom-0 mr-10 pb-10"
+                            className="
+          sm:absolute sm:right-6 sm:bottom-0 sm:mr-10 sm:pb-8 sm:bg-transparent sm:w-auto
+          static bg-white flex px-2 w-full py-2 sm:rounded-b-lg
+        "
                         >
-                            {action}
+                                {action}
                         </div>
                     )}
                 </div>
             </div>
+
         </Clickable>,
         document.body
     );

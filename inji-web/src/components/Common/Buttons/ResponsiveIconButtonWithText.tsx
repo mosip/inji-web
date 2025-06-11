@@ -30,7 +30,7 @@ export const ResponsiveIconButtonWithText: React.FC<ResponsiveIconButtonWithText
             <SolidButton className={"sm:hidden"} testId={"btn-download"} onClick={onClick} title={text} icon={icon}/>
 
             {/* Large screens: icon button + text as separate element */}
-            <div className="sm:flex items-center space-x-2" onMouseEnter={() => setIsHovered(true)}
+            <div className="hidden sm:flex items-center space-x-2" onMouseEnter={() => setIsHovered(true)}
                  onMouseLeave={() => setIsHovered(false)}>
                 {isHovered && (
                     <SolidButton testId={"btn-download"} onClick={onClick} title={text}/>
