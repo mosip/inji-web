@@ -2,17 +2,17 @@ import {RequestStatus} from "../../../hooks/useFetch";
 import React from "react";
 import {DownloadResult} from "../../../components/Redirection/DownloadResult";
 import {CredentialTypesPageStyles} from "./CredentialTypesPageStyles";
-import {CredentialList} from "../../../components/Credentials/CredentialList";
 import {useTranslation} from "react-i18next";
+import {CredentialListWrapper} from "../../../components/Credentials/CredentialListWrapper";
 
 interface RenderModalProps {
-    downloadStatus: RequestStatus | null,
-    state: RequestStatus
+    downloadStatus: RequestStatus | null;
+    state: RequestStatus;
 }
 
-    
-//TODO here check if the div with testId "Credential-List-Container" can be moved to credentialList component
-export const RenderModalBasedOnDownloadStatus: React.FC<RenderModalProps> = (props) => {
+export const RenderModalBasedOnDownloadStatus: React.FC<RenderModalProps> = (
+    props
+) => {
     const {t} = useTranslation('CredentialTypesPage');
 
     if (props.downloadStatus === RequestStatus.LOADING) {
@@ -32,12 +32,10 @@ export const RenderModalBasedOnDownloadStatus: React.FC<RenderModalProps> = (pro
 
     return (
         <div className={CredentialTypesPageStyles.contentContainer}>
-            <div
-                data-testid="Credential-List-Container"
+            <CredentialListWrapper
+                state={props.state}
                 className={CredentialTypesPageStyles.credentialListContainer}
-            >
-                <CredentialList state={props.state}/>
-            </div>
+            />
         </div>
     );
-}
+};
