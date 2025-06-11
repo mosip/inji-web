@@ -75,7 +75,7 @@ module.exports = {
                     paleGray: 'var(--iw-color-paleGray)',
                     avatarPlaceholder: 'var(--iw-color-avatarPlaceholder)',
                     avatarText: 'var(--iw-color-avatarText)',
-                    darkgreen: 'var(--iw-color-darkgreen)'
+                    darkgreen: 'var(--iw-color-darkGreen)'
                 }
             },
             boxShadow: {

@@ -40,7 +40,8 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
     const {
         downloadInProgressSessions,
         currentSessionDownloadId,
-        setCurrentSessionDownloadId
+        setCurrentSessionDownloadId,
+        setLatestDownloadedSessionId
     } = useDownloadSessionDetails();
 
     const [downloadStatus, setDownloadStatus] = useState<RequestStatus | null>(null);
@@ -54,6 +55,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
     useEffect(() => {
         return (() => {
             setCurrentSessionDownloadId(null);
+            setLatestDownloadedSessionId(null);
         })
     }, []);
 
