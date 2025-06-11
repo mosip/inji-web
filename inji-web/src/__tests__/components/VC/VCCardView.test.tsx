@@ -305,7 +305,6 @@ describe('VCCardView Component', () => {
         fetchMock.mockRejectedValueOnce({
             ok: false,
             status: 500,
-
         });
 
         renderWithProvider(

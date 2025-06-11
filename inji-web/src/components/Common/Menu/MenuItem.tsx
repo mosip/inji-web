@@ -13,7 +13,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({label, onClick, testId}) => {
                 event.stopPropagation();
                 onClick()
             }}
-            className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b-1 border-gray-200"
+            className="w-full text-left px-4 py-2 text-sm text-gray-700 border-b border-[#EBF0FB] hover:bg-[#F2F6FF] last:border-b-0"
             data-testid={`menu-item-${testId}`}
             role="menuitem"
         >

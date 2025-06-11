@@ -55,8 +55,12 @@ export const EllipsisMenu: React.FC<EllipsisMenuProps> = ({menuItems, testId}) =
                     ref={menuRef}
                     role="menu"
                     data-testid={`menu-${testId}`}
-                    className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-50"
+                    className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg p-1 z-50"
                 >
+                    <div
+                        className="absolute -top-[10px] right-[14px] w-0 h-0 border-l-[10px] border-r-[10px] border-b-[10px] border-transparent border-b-gray-200 z-[-1]"></div>
+                    <div
+                        className="absolute -top-2 right-4 w-0 h-0 border-l-[8px] border-r-[8px] border-b-[8px] border-transparent border-b-white z-10"></div>
                     {menuItems.map((item) => (
                         <MenuItem
                             key={item.id}

@@ -12,6 +12,8 @@ import {ConfirmationModal} from "../../modals/ConfirmationModal";
 import {useTranslation} from "react-i18next";
 import {VCDetailView} from "./VCDetailView";
 import {DownloadIcon} from "../Common/Icons/DownloadIcon";
+import {ROUTES} from "../../utils/constants";
+import {useNavigate} from "react-router-dom";
 
 export function VCCardView(props: Readonly<{
     credential: WalletCredential,
@@ -22,10 +24,12 @@ export function VCCardView(props: Readonly<{
     const [previewContent, setPreviewContent] = useState<string>("");
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
     const {t} = useTranslation('StoredCards')
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (error) {
             toast.error(t(`error.${error}`));
+            setError("")
         }
     }, [error, t])
 
@@ -43,6 +47,18 @@ export function VCCardView(props: Readonly<{
                     credentials: api.fetchWalletCredentialPreview.credentials
                 }
             );
+            if (response.status === 401) {
+                console.error("Unauthorized access - redirecting to login");
+                // Redirect to root page if unauthorized
+                navigate(ROUTES.ROOT);
+                return;
+            }
+
+            if(!response.ok){
+                console.error("Failed to fetch credential preview:", response);
+                setError("downloadError");
+                return
+            }
 
             const pdfContent = await response.blob();
 
@@ -74,7 +90,20 @@ export function VCCardView(props: Readonly<{
                     credentials: api.downloadWalletCredentialPdf.credentials
                 }
             );
-            //
+
+            if (response.status === 401) {
+                console.error("Unauthorized access - redirecting to login");
+                // Redirect to root page if unauthorized
+                navigate(ROUTES.ROOT);
+                return;
+            }
+
+            if(!response.ok){
+                console.error("Failed to fetch credential preview:", response);
+                setError("downloadError");
+                return
+            }
+
             const pdfContent = await response.blob();
 
             const disposition = response.headers.get("Content-Disposition");
@@ -95,7 +124,7 @@ export function VCCardView(props: Readonly<{
     const deleteCredential = async () => {
         console.debug("Delete credential clicked for:", props.credential.credentialId);
         try {
-            await fetch(
+            const response = await fetch(
                 api.deleteWalletCredential.url(props.credential.credentialId),
                 {
                     // TODO: Get methodType from api.deleteWalletCredential.methodType, make sure the ApiRequest is sending methodType as a string and not enum
@@ -104,6 +133,19 @@ export function VCCardView(props: Readonly<{
                     credentials: api.deleteWalletCredential.credentials
                 }
             );
+
+            if (response.status === 401) {
+                console.error("Unauthorized access - redirecting to login");
+                // Redirect to root page if unauthorized
+                navigate(ROUTES.ROOT);
+                return;
+            }
+
+            if(!response.ok){
+                console.error("Failed to fetch credential preview:", response);
+                setError("deleteError");
+                return
+            }
             console.info("Credential deleted successfully.");
             props.refreshCredentials()
         } catch (error) {

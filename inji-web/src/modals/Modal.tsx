@@ -4,7 +4,7 @@ import {BackArrowButton} from "../components/Common/Buttons/BackArrowButton";
 import {PageTitle} from "../components/Common/PageTitle/PageTitle";
 import {Clickable} from "../components/Common/Clickable";
 import {Separator} from "../components/Common/Separator";
-import {CloseIconButton} from "../components/Common/Buttons/CloseIconButton.tsx";
+import {CloseIconButton} from "../components/Common/Buttons/CloseIconButton";
 
 interface ModalProps {
     isOpen: boolean;
@@ -14,32 +14,26 @@ interface ModalProps {
     action?: React.ReactNode;
 }
 
-//TODO: Can we use modal wrapper here?
 export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, title}) => {
     if (!isOpen) return null;
-
-    const handleOverlayClick = (event: React.MouseEvent) => {
-        event.stopPropagation()
-        onClose()
-    };
 
     return ReactDOM.createPortal(
         <Clickable
             className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
-            onClick={handleOverlayClick}
+            onClick={onClose}
+            testId={"modal-overlay"}
         >
-            <div
+            <dialog
                 className="
-    bg-white rounded-lg shadow-lg w-full mx-4 my-2 h-[83vh] w-[90vw] mt-10
+    bg-white rounded-lg shadow-lg mx-4 my-2 h-[83vh] w-[90vw] mt-10
     sm:w-[70vw] sm:h-[80vh]
     flex flex-col relative pt-6 border-4 border-white
   "
-                role="dialog"
                 aria-modal="true"
                 style={{backgroundColor: "#F9FAFB"}}
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className="mb-4 flex items-center justify-between px-6 flex-shrink-0">
+                <div className="mb-4 flex items-center justify-between px-6 flex-shrink-0 gap-4">
                     <BackArrowButton onClick={onClose}/>
                     {title && <PageTitle value={title} testId={"title-modal"}/>}
                     <CloseIconButton
@@ -67,7 +61,7 @@ export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, 
                         </div>
                     )}
                 </div>
-            </div>
+            </dialog>
 
         </Clickable>,
         document.body

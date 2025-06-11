@@ -189,7 +189,7 @@ export class api {
             const walletId = localStorage.getItem(KEYS.WALLET_ID);
             return (
                 api.mimotoHost +
-                `/wallets/${walletId}/credentials/${credentialId}?action=download`
+                `/wallets/${walletId}/credentials/${credentialId}?action=inline`
             );
         },
         methodType: MethodType.GET,
