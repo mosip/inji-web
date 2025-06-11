@@ -34,6 +34,7 @@ jest.mock("../../../components/VC/VCDetailView", () => ({
         credential: WalletCredential
     }) => (
         <div data-testid="vc-detail-view">
+            <title>{credential.credentialTypeDisplayName}</title>
             <div>{previewContent}</div>
             <button onClick={onClick}>download</button>
             <button onClick={onDownload}>chylose</button>

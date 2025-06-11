@@ -123,3 +123,7 @@ export const convertStringIntoPascalCase = (text: string | undefined) => {
             .join(' ')
     );
 };
+
+export const isMobile = () => {
+    return window.innerWidth <= 640;
+}

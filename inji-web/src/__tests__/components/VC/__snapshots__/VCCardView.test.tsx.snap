@@ -11,6 +11,9 @@ exports[`VCCardView Component should match snapshot 1`] = `
     <div
       data-testid="vc-detail-view"
     >
+      <title>
+        Drivers License
+      </title>
       <div />
       <button>
         download

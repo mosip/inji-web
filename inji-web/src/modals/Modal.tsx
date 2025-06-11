@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BackArrowButton} from "../components/Common/Buttons/BackArrowButton";
 import {PageTitle} from "../components/Common/PageTitle/PageTitle";
+import {Clickable} from "../components/Common/Clickable";
+import {Separator} from "../components/Common/Separator";
+import {CloseIconButton} from "../components/Common/Buttons/CloseIconButton.tsx";
 
 interface ModalProps {
     isOpen: boolean;
@@ -11,25 +14,27 @@ interface ModalProps {
     action?: React.ReactNode;
 }
 
+//TODO: Can we use modal wrapper here?
 export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, title}) => {
     if (!isOpen) return null;
 
-    const handleOverlayClick = (event : React.MouseEvent) => {
+    const handleOverlayClick = (event: React.MouseEvent) => {
         event.stopPropagation()
         onClose()
     };
 
     return ReactDOM.createPortal(
-        <div
+        <Clickable
             className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
             onClick={handleOverlayClick}
         >
             <div
                 className="
-          bg-white rounded-lg shadow-lg w-full mx-4 h-[83vh] mt-10
+          bg-white rounded-lg shadow-lg w-full mx-4 my-2 h-[83vh] mt-10
           sm:w-[70vw] sm:h-[80vh]
           flex flex-col
-          p-6 relative
+           relative
+           pt-6
         "
                 role="dialog"
                 aria-modal="true"
@@ -38,38 +43,28 @@ export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, 
                 }}
                 onClick={(e) => e.stopPropagation()} // prevent modal box clicks from closing
             >
-                {/* Header */}
-                <div className="mb-4 flex items-center justify-between">
-                    <BackArrowButton onClick={(e: React.MouseEvent) => {
-                        e.stopPropagation();
-                        onClose();
-                    }}/>
+                <div className="mb-4 flex items-center justify-between px-6">
+                    <BackArrowButton onClick={onClose}/>
                     {title && <PageTitle value={title} testId={"title-modal"}/>}
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onClose();
-                        }}
-                        className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
-                        aria-label="Close modal"
-                    >
-                        ×
-                    </button>
+                    <CloseIconButton onClick={onClose}
+                                     btnClassName={"text-gray-500 hover:text-gray-700 text-2xl font-bold"}/>
                 </div>
+                <Separator className={"-p-6"}/>
 
-                {/* Scrollable content */}
-                <div className="flex-1 overflow-y-auto mb-4">
-                    {children}
-                </div>
-
-                {/* Action bar */}
-                {action && (
-                    <div className="bg-white border-t pt-4 pb-4 flex justify-center space-x-2 flex-shrink-0">
-                        {action}
+                <div className={"flex-1 overflow-y-auto mb-4"}>
+                    <div className={"overflow-y-auto flex-1"}>
+                        {children}
                     </div>
-                )}
+                    {action && (
+                        <div
+                            className="absolute right-6 bottom-0 mr-10 pb-10"
+                        >
+                            {action}
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>,
+        </Clickable>,
         document.body
     );
 };

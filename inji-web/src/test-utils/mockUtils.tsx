@@ -137,6 +137,18 @@ export const mockUseParams = ()=>{
       }));   
 };
 
+export const mockToaster = () => {
+    return jest.mock('react-toastify', () => {
+        return {
+            toast: {
+                warning: jest.fn(),
+                error: jest.fn(),
+            },
+            ToastContainer: () => <div data-testid="toast-wrapper"/>
+        };
+    });
+}
+
 export const mockApiObject = () =>{
     return jest.mock('../utils/api.ts', () => ({
         api: {

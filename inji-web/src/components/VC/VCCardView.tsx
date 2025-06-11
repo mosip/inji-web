@@ -1,7 +1,6 @@
 import {WalletCredential} from "../../types/data";
 import {VCStyles} from "./VCStyles";
 import React, {useEffect, useState} from "react";
-import DownloadIcon from "../../assets/Download.svg"
 import {Clickable} from "../Common/Clickable";
 import {api} from "../../utils/api";
 import {downloadCredentialPDF} from "../../utils/misc";
@@ -12,6 +11,7 @@ import {EllipsisMenu} from "../Common/Menu/EllipsisMenu";
 import {ConfirmationModal} from "../../modals/ConfirmationModal";
 import {useTranslation} from "react-i18next";
 import {VCDetailView} from "./VCDetailView";
+import {DownloadIcon} from "../Common/Icons/DownloadIcon";
 
 export function VCCardView(props: Readonly<{
     credential: WalletCredential,
@@ -27,7 +27,7 @@ export function VCCardView(props: Readonly<{
         if (error) {
             toast.error(t(`error.${error}`));
         }
-    }, [error])
+    }, [error, t])
 
     const preview = async () => {
         console.log("Fetching credential preview for:", props.credential.credentialId);
@@ -149,13 +149,12 @@ export function VCCardView(props: Readonly<{
         </span>
             </div>
             <div className={"flex flex-row gap-2"}>
-                <img
-                    onClick={handleDownload}
-                    data-testid={"icon-download"}
-                    src={DownloadIcon}
-                    alt={"icon-download"}
-                    className={"h-25 w-25"}
-                />
+                <DownloadIcon onClick={handleDownload}
+                              data-testid={"icon-download"}
+                              src={DownloadIcon}
+                              style={{color: "#707070"}}
+                              alt={"icon-download"}
+                              className={"h-25 w-25"}/>
                 <EllipsisMenu
                     testId={"mini-view-card"}
                     menuItems={[

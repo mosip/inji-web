@@ -12,7 +12,7 @@ import {SearchBar} from "../../../components/Common/SearchBar/SearchBar";
 import {InfoSection} from "../../../components/Common/Info/InfoSection";
 import {VCCardView} from "../../../components/VC/VCCardView";
 import {FlatList} from "../../../components/Common/List/FlatList";
-import {DocumentIcon} from "../../../components/Icon/DocumentIcon";
+import {DocumentIcon} from "../../../components/Common/Icons/DocumentIcon.tsx";
 import {PageTitle} from "../../../components/Common/PageTitle/PageTitle";
 import {Error} from "../../../components/Error/Error";
 import {BorderedButton} from "../../../components/Common/Buttons/BorderedButton";
@@ -71,7 +71,14 @@ export const StoredCardsPage: React.FC = () => {
             }
         } catch (error) {
             console.error("Failed to fetch credentials:", error);
-            setError("networkError");
+            if (error instanceof TypeError && error.message === 'Failed to fetch' && !navigator.onLine) {
+                console.error('Network error: Please check your internet connection.');
+                setError("networkError");
+            } else {
+                console.error('An unknown error occurred');
+                setError("unknownError");
+            }
+
         } finally {
             setLoading(false);
         }
