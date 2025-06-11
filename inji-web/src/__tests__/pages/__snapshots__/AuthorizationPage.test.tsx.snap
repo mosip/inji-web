@@ -4,7 +4,7 @@ exports[`Testing the Layouts of AuthorizationPage Check if it renders properly i
 <DocumentFragment>
   <div>
     <div
-      class="flex flex-col justify-center items-center pt-32 "
+      class="flex flex-col justify-center items-center pt-32"
       data-testid="DownloadResult-Outer-Container"
     >
       <div
@@ -62,17 +62,12 @@ exports[`Testing the Layouts of AuthorizationPage Check if it renders properly i
       </div>
       <div
         class="my-4"
+        data-testid="DownloadResult-Title-Container"
       >
         <p
           class="font-bold"
           data-testid="DownloadResult-Title"
         />
-      </div>
-      <div
-        class="mb-6 px-10 text-center"
-        data-testid="DownloadResult-SubTitle"
-      >
-        <p />
       </div>
     </div>
   </div>
@@ -83,7 +78,7 @@ exports[`Testing the Layouts of AuthorizationPage Check if it shows error messag
 <DocumentFragment>
   <div>
     <div
-      class="flex flex-col justify-center items-center pt-32 "
+      class="flex flex-col justify-center items-center pt-32"
       data-testid="DownloadResult-Outer-Container"
     >
       <div
@@ -111,6 +106,7 @@ exports[`Testing the Layouts of AuthorizationPage Check if it shows error messag
       </div>
       <div
         class="my-4"
+        data-testid="DownloadResult-Title-Container"
       >
         <p
           class="font-bold"
@@ -121,9 +117,11 @@ exports[`Testing the Layouts of AuthorizationPage Check if it shows error messag
       </div>
       <div
         class="mb-6 px-10 text-center"
-        data-testid="DownloadResult-SubTitle"
+        data-testid="DownloadResult-SubTitle-Container"
       >
-        <p>
+        <p
+          data-testid="DownloadResult-SubTitle"
+        >
           error.message.some_error
         </p>
       </div>

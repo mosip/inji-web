@@ -3,7 +3,7 @@
 exports[`Testing the Layout of LandingPageWrapper Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
-    class="flex flex-col justify-center items-center pt-32 "
+    class="flex flex-col justify-center items-center pt-32"
     data-testid="DownloadResult-Outer-Container"
   >
     <div
@@ -13,6 +13,7 @@ exports[`Testing the Layout of LandingPageWrapper Check if the layout is matchin
     </div>
     <div
       class="my-4"
+      data-testid="DownloadResult-Title-Container"
     >
       <p
         class="font-bold"
@@ -23,9 +24,11 @@ exports[`Testing the Layout of LandingPageWrapper Check if the layout is matchin
     </div>
     <div
       class="mb-6 px-10 text-center"
-      data-testid="DownloadResult-SubTitle"
+      data-testid="DownloadResult-SubTitle-Container"
     >
-      <p>
+      <p
+        data-testid="DownloadResult-SubTitle"
+      >
         Test SubTitle
       </p>
     </div>

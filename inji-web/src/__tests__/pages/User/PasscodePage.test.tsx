@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
 import { PasscodePage } from '../../../pages/User/Passcode/PasscodePage';
 import { UserProvider } from '../../../hooks/useUser';
+import {DownloadSessionProvider} from "../../../hooks/userDownloadSessionDetails";
 
 // Mocking the useTranslation hook from react-i18next
 jest.mock('react-i18next', () => ({
@@ -28,7 +29,9 @@ describe('Passcode', () => {
     return render(
         <CookiesProvider>
             <UserProvider>
+              <DownloadSessionProvider>
                 <MemoryRouter>{ui}</MemoryRouter>
+              </DownloadSessionProvider>
             </UserProvider>
         </CookiesProvider>
     );

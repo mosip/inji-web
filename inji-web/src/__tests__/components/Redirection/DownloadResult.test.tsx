@@ -32,7 +32,7 @@ describe("Testing the Layout of DownloadResult for Success Error and Loading", (
 
 describe("Testing the Functionality of DownloadResult Container",() => {
     test('Check the presence of the container', () => {
-        render(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.DONE}/>);
+        renderWithProvider(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.DONE}/>);
         let redirectionElement = screen.getByTestId("DownloadResult-Outer-Container");
         expect(redirectionElement).toBeInTheDocument();
         redirectionElement = screen.getByTestId("DownloadResult-Title");

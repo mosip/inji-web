@@ -46,7 +46,7 @@ exports[`Testing the Functionality of RedirectionPage Check if DownloadResult co
       </nav>
     </div>
     <div
-      class="flex flex-col justify-center items-center pt-32 "
+      class="flex flex-col justify-center items-center pt-32"
       data-testid="DownloadResult-Outer-Container"
     >
       <div
@@ -104,6 +104,7 @@ exports[`Testing the Functionality of RedirectionPage Check if DownloadResult co
       </div>
       <div
         class="my-4"
+        data-testid="DownloadResult-Title-Container"
       >
         <p
           class="font-bold"
@@ -114,9 +115,11 @@ exports[`Testing the Functionality of RedirectionPage Check if DownloadResult co
       </div>
       <div
         class="mb-6 px-10 text-center"
-        data-testid="DownloadResult-SubTitle"
+        data-testid="DownloadResult-SubTitle-Container"
       >
-        <p>
+        <p
+          data-testid="DownloadResult-SubTitle"
+        >
           Please wait a moment! We're converting your verifiable credentials to PDF
         </p>
       </div>
@@ -171,7 +174,7 @@ exports[`Testing the Functionality of RedirectionPage Check if DownloadResult co
       </nav>
     </div>
     <div
-      class="flex flex-col justify-center items-center pt-32 "
+      class="flex flex-col justify-center items-center pt-32"
       data-testid="DownloadResult-Outer-Container"
     >
       <div
@@ -229,6 +232,7 @@ exports[`Testing the Functionality of RedirectionPage Check if DownloadResult co
       </div>
       <div
         class="my-4"
+        data-testid="DownloadResult-Title-Container"
       >
         <p
           class="font-bold"
@@ -239,9 +243,11 @@ exports[`Testing the Functionality of RedirectionPage Check if DownloadResult co
       </div>
       <div
         class="mb-6 px-10 text-center"
-        data-testid="DownloadResult-SubTitle"
+        data-testid="DownloadResult-SubTitle-Container"
       >
-        <p>
+        <p
+          data-testid="DownloadResult-SubTitle"
+        >
           Please wait a moment! We're converting your verifiable credentials to PDF
         </p>
       </div>
@@ -296,7 +302,7 @@ exports[`Testing the Functionality of RedirectionPage Check if NavBar component 
       </nav>
     </div>
     <div
-      class="flex flex-col justify-center items-center pt-32 "
+      class="flex flex-col justify-center items-center pt-32"
       data-testid="DownloadResult-Outer-Container"
     >
       <div
@@ -354,6 +360,7 @@ exports[`Testing the Functionality of RedirectionPage Check if NavBar component 
       </div>
       <div
         class="my-4"
+        data-testid="DownloadResult-Title-Container"
       >
         <p
           class="font-bold"
@@ -364,9 +371,11 @@ exports[`Testing the Functionality of RedirectionPage Check if NavBar component 
       </div>
       <div
         class="mb-6 px-10 text-center"
-        data-testid="DownloadResult-SubTitle"
+        data-testid="DownloadResult-SubTitle-Container"
       >
-        <p>
+        <p
+          data-testid="DownloadResult-SubTitle"
+        >
           Please wait a moment! We're converting your verifiable credentials to PDF
         </p>
       </div>
@@ -421,7 +430,7 @@ exports[`Testing the Functionality of RedirectionPage Check if it displays error
       </nav>
     </div>
     <div
-      class="flex flex-col justify-center items-center pt-32 "
+      class="flex flex-col justify-center items-center pt-32"
       data-testid="DownloadResult-Outer-Container"
     >
       <div
@@ -479,6 +488,7 @@ exports[`Testing the Functionality of RedirectionPage Check if it displays error
       </div>
       <div
         class="my-4"
+        data-testid="DownloadResult-Title-Container"
       >
         <p
           class="font-bold"
@@ -489,9 +499,11 @@ exports[`Testing the Functionality of RedirectionPage Check if it displays error
       </div>
       <div
         class="mb-6 px-10 text-center"
-        data-testid="DownloadResult-SubTitle"
+        data-testid="DownloadResult-SubTitle-Container"
       >
-        <p>
+        <p
+          data-testid="DownloadResult-SubTitle"
+        >
           Please wait a moment! We're converting your verifiable credentials to PDF
         </p>
       </div>
@@ -546,7 +558,7 @@ exports[`Testing the Layout of RedirectionPage Check if the layout is matching w
       </nav>
     </div>
     <div
-      class="flex flex-col justify-center items-center pt-32 "
+      class="flex flex-col justify-center items-center pt-32"
       data-testid="DownloadResult-Outer-Container"
     >
       <div
@@ -604,6 +616,7 @@ exports[`Testing the Layout of RedirectionPage Check if the layout is matching w
       </div>
       <div
         class="my-4"
+        data-testid="DownloadResult-Title-Container"
       >
         <p
           class="font-bold"
@@ -614,9 +627,11 @@ exports[`Testing the Layout of RedirectionPage Check if the layout is matching w
       </div>
       <div
         class="mb-6 px-10 text-center"
-        data-testid="DownloadResult-SubTitle"
+        data-testid="DownloadResult-SubTitle-Container"
       >
-        <p>
+        <p
+          data-testid="DownloadResult-SubTitle"
+        >
           Please wait a moment! We're converting your verifiable credentials to PDF
         </p>
       </div>

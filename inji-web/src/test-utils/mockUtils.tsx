@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { reduxStore } from '../redux/reduxStore';
 import { UserProvider } from '../hooks/useUser';
+import {DownloadSessionProvider} from '../hooks/userDownloadSessionDetails';
 
 // Mock for storage module
 export const mockStorageModule = () => {
@@ -122,7 +123,9 @@ export const renderWithProvider = (element: ReactElement, options?: RenderWithPr
     return render(
         <Provider store={reduxStore}>
             <UserProvider>
-                <Router>{element}</Router>
+                <DownloadSessionProvider>
+                    <Router>{element}</Router>
+                </DownloadSessionProvider>
             </UserProvider>
         </Provider>,
         options
@@ -208,9 +211,11 @@ export const renderWithRouter = (Element: React.ReactElement, { route = '/' } = 
         <BrowserRouter>
             <Provider store={reduxStore}>
                 <UserProvider>
-                    <Routes>
-                        <Route path="*" element={Element} />
-                    </Routes>
+                    <DownloadSessionProvider>
+                        <Routes>
+                            <Route path="*" element={Element}/>
+                        </Routes>
+                    </DownloadSessionProvider>
                 </UserProvider>
             </Provider>
         </BrowserRouter>
