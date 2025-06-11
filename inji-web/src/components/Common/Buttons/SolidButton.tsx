@@ -1,5 +1,4 @@
 import React from "react";
-import {DownloadIcon} from "../Icons/DownloadIcon";
 
 export const SolidButton: React.FC<SolidButtonProps> = (props) => {
     return <div className={props.fullWidth ? "w-full" : ""}>

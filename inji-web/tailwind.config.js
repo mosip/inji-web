@@ -68,6 +68,7 @@ module.exports = {
                     textTertiary: 'var(--iw-color-textTertiary)',
                     grayLight: 'var(--iw-color-grayLight)',
                     darkRed: 'var(--iw-color-darkRed)',
+                    red: `var(--iw-color-red)`,
                     deepVioletIndigo: 'var(--iw-color-deepVioletIndigo)',
                     pink50: 'var(--iw-color-pink50)',
                     darkGreen: 'var(--iw-color-darkGreen)',

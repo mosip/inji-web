@@ -9,7 +9,6 @@ export const BorderedButton:React.FC<BorderedButtonProps> = (props) => {
                     data-testid={props.testId}
                     className="text-iw-tertiary font-bold rounded-lg">
                     {props.title && renderGradientText(props.title)}
-                    {props.icon && <span>{props.icon}</span>}
                 </button>
             </div>
     </div>
@@ -21,6 +20,5 @@ export type BorderedButtonProps = {
     testId: string;
     onClick: (event: React.MouseEvent)=> void;
     title?: string;
-    icon?: React.ReactNode;
     className?: string;
 }

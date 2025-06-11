@@ -65,11 +65,13 @@ export const EllipsisMenu: React.FC<EllipsisMenuProps> = ({menuItems, testId}) =
                         <MenuItem
                             key={item.id}
                             label={item.label}
+                            icon={item.icon}
                             onClick={() => {
                                 item.onClick();
                                 setIsOpen(false); // auto close on click
                             }}
                             testId={item.id}
+                            color={item.color}
                         />
                     ))}
                 </div>

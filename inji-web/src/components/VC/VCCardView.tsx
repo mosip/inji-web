@@ -14,6 +14,8 @@ import {VCDetailView} from "./VCDetailView";
 import {DownloadIcon} from "../Common/Icons/DownloadIcon";
 import {ROUTES} from "../../utils/constants";
 import {useNavigate} from "react-router-dom";
+import {RiDeleteBin6Line} from "react-icons/ri";
+import {BsBoxArrowRight} from "react-icons/bs";
 
 export function VCCardView(props: Readonly<{
     credential: WalletCredential,
@@ -198,9 +200,26 @@ export function VCCardView(props: Readonly<{
                 <EllipsisMenu
                     testId={"mini-view-card"}
                     menuItems={[
-                        {label: "View", onClick: preview, id: "view"},
-                        {label: "Download", onClick: download, id: "download"},
-                        {label: "Delete", onClick: handleDelete, id: "delete"},
+                        {
+                            label: "View",
+                            onClick: preview,
+                            id: "view",
+                            icon: <BsBoxArrowRight data-testid={"icon-view-menu"} size={18} className={"m-1"}/>
+                        },
+                        {
+                            label: "Download",
+                            onClick: download,
+                            id: "download",
+                            icon: <DownloadIcon testId={"icon-download-menu"}/>
+                        },
+                        {
+                            label: "Delete",
+                            onClick: handleDelete,
+                            id: "delete",
+                            icon: <RiDeleteBin6Line data-testid={"icon-delete-menu"} size={18} className={"m-1"}
+                                                    color={"var(--iw-color-red)"}/>,
+                            color: "var(--iw-color-red)"
+                        },
                     ]}
                 />
             </div>
