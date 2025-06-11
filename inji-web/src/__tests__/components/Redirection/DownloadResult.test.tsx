@@ -1,5 +1,4 @@
-import React from 'react';
-import {render, screen} from '@testing-library/react';
+import {screen} from '@testing-library/react';
 import {DownloadResult} from "../../../components/Redirection/DownloadResult";
 import {RequestStatus} from "../../../hooks/useFetch";
 import { renderWithProvider,mockUseNavigate,mockUseSpinningLoader } from '../../../test-utils/mockUtils';
@@ -33,11 +32,17 @@ describe("Testing the Layout of DownloadResult for Success Error and Loading", (
 describe("Testing the Functionality of DownloadResult Container",() => {
     test('Check the presence of the container', () => {
         renderWithProvider(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.DONE}/>);
-        let redirectionElement = screen.getByTestId("DownloadResult-Outer-Container");
+        let redirectionElement = screen.getByTestId(
+            'outer-container-download-result'
+        );
         expect(redirectionElement).toBeInTheDocument();
-        redirectionElement = screen.getByTestId("DownloadResult-Title");
+        redirectionElement = screen.getByTestId(
+            'title-container-download-result'
+        );
         expect(redirectionElement).toHaveTextContent("Title")
-        redirectionElement = screen.getByTestId("DownloadResult-SubTitle");
+        redirectionElement = screen.getByTestId(
+            'subtitle-container-download-result'
+        );
         expect(redirectionElement).toHaveTextContent("SubTitle")
     });
     afterEach(()=>{

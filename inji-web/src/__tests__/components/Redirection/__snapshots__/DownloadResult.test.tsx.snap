@@ -4,7 +4,7 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
 <DocumentFragment>
   <div
     class="flex flex-col justify-center items-center pt-32"
-    data-testid="DownloadResult-Outer-Container"
+    data-testid="outer-container-download-result"
   >
     <div
       class="rounded-full p-2 shadow bg-white"
@@ -31,21 +31,21 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
     </div>
     <div
       class="my-4"
-      data-testid="DownloadResult-Title-Container"
+      data-testid="title-container-download-result"
     >
       <p
         class="font-bold"
-        data-testid="DownloadResult-Title"
+        data-testid="title-download-result"
       >
         Title
       </p>
     </div>
     <div
       class="mb-6 px-10 text-center"
-      data-testid="DownloadResult-SubTitle-Container"
+      data-testid="subtitle-container-download-result"
     >
       <p
-        data-testid="DownloadResult-SubTitle"
+        data-testid="subtitle-download-result"
       >
         SubTitle
       </p>
@@ -61,7 +61,7 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
         >
           <button
             class="text-iw-tertiary font-bold rounded-lg"
-            data-testid="DownloadResult-Home-Button"
+            data-testid="btn-home-download-result"
           >
             <span
               class="bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
@@ -80,7 +80,7 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
 <DocumentFragment>
   <div
     class="flex flex-col justify-center items-center pt-32"
-    data-testid="DownloadResult-Outer-Container"
+    data-testid="outer-container-download-result"
   >
     <div
       class="flex justify-center items-center"
@@ -137,21 +137,21 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
     </div>
     <div
       class="my-4"
-      data-testid="DownloadResult-Title-Container"
+      data-testid="title-container-download-result"
     >
       <p
         class="font-bold"
-        data-testid="DownloadResult-Title"
+        data-testid="title-download-result"
       >
         Title
       </p>
     </div>
     <div
       class="mb-6 px-10 text-center"
-      data-testid="DownloadResult-SubTitle-Container"
+      data-testid="subtitle-container-download-result"
     >
       <p
-        data-testid="DownloadResult-SubTitle"
+        data-testid="subtitle-download-result"
       >
         SubTitle
       </p>
@@ -164,7 +164,7 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
 <DocumentFragment>
   <div
     class="flex flex-col justify-center items-center pt-32"
-    data-testid="DownloadResult-Outer-Container"
+    data-testid="outer-container-download-result"
   >
     <div
       class="rounded-full p-2 shadow bg-white"
@@ -192,21 +192,21 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
     </div>
     <div
       class="my-4"
-      data-testid="DownloadResult-Title-Container"
+      data-testid="title-container-download-result"
     >
       <p
         class="font-bold"
-        data-testid="DownloadResult-Title"
+        data-testid="title-download-result"
       >
         Title
       </p>
     </div>
     <div
       class="mb-6 px-10 text-center"
-      data-testid="DownloadResult-SubTitle-Container"
+      data-testid="subtitle-container-download-result"
     >
       <p
-        data-testid="DownloadResult-SubTitle"
+        data-testid="subtitle-download-result"
       >
         SubTitle
       </p>
@@ -222,7 +222,7 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
         >
           <button
             class="text-iw-tertiary font-bold rounded-lg"
-            data-testid="DownloadResult-Home-Button"
+            data-testid="btn-home-download-result"
           >
             <span
               class="bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"

@@ -21,35 +21,17 @@ export const LandingPageWrapper: React.FC<LandingPageWrapperProps> = (props) => 
     const wrapperConfig = isUserLoggedIn
         ? {
             navUrl: ROUTES.USER_HOME,
-            testIds: {
-                outerContainer: "container-outer",
-                titleContainer: "title-container-download-result",
-                title: "title-download-result",
-                subTitleContainer: "subtitle-container-download-result",
-                subTitle: "subtitle-download-result",
-                homeButton: "btn-download-result-home",
-            },
             classNames: {
                 outerContainer: "flex flex-col justify-center items-center",
-                titleContainer: "my-2",
-                title: "font-bold",
-                subTitleContainer: "mb-6 px-8 text-center",
+                titleContainer: "mt-5",
+                subTitleContainer: "my-3 px-8 text-center",
             },
         }
         : {
             navUrl: ROUTES.ROOT,
-            testIds: {
-                outerContainer: "DownloadResult-Outer-Container",
-                titleContainer: "DownloadResult-Title-Container",
-                title: "DownloadResult-Title",
-                subTitleContainer: "DownloadResult-SubTitle-Container",
-                subTitle: "DownloadResult-SubTitle",
-                homeButton: "DownloadResult-Home-Button",
-            },
             classNames: {
                 outerContainer: "flex flex-col justify-center items-center pt-32",
                 titleContainer: "my-4",
-                title: "font-bold",
                 subTitleContainer: "mb-6 px-10 text-center",
             },
         };
@@ -57,21 +39,22 @@ export const LandingPageWrapper: React.FC<LandingPageWrapperProps> = (props) => 
     const {navUrl = wrapperConfig.navUrl} = props;
 
     return (
-        <div data-testid={wrapperConfig.testIds.outerContainer} className={wrapperConfig.classNames.outerContainer}>
+        <div data-testid="outer-container-download-result" className={wrapperConfig.classNames.outerContainer}>
             {props.icon}
-            <div className={wrapperConfig.classNames.titleContainer} data-testid={wrapperConfig.testIds.titleContainer}>
-                <p className={wrapperConfig.classNames.title} data-testid={wrapperConfig.testIds.title}>
+            <div className={wrapperConfig.classNames.titleContainer} data-testid="title-container-download-result">
+                <p className="font-bold" data-testid="title-download-result">
                     {props.title}
                 </p>
             </div>
             {props.subTitle &&
-                <div className={wrapperConfig.classNames.subTitleContainer} data-testid={wrapperConfig.testIds.subTitleContainer}>
-                    <p data-testid={wrapperConfig.testIds.subTitle}>{props.subTitle}</p>
+                <div className={wrapperConfig.classNames.subTitleContainer}
+                     data-testid="subtitle-container-download-result">
+                    <p data-testid="subtitle-download-result">{props.subTitle}</p>
                 </div>
             }
             {props.gotoHome && (
                 <BorderedButton
-                    testId={wrapperConfig.testIds.homeButton}
+                    testId="btn-home-download-result"
                     onClick={() => navigate(navUrl)}
                     title={t("navigateButton")}
                 />

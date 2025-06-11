@@ -28,15 +28,15 @@ describe("Testing the Functionality LandingPageWrapper", () => {
     })
     test('Check it navigates to home when the home button is clicked', () => {
         renderWithProvider(<LandingPageWrapper {...mockLandingPageWrapperProps} />);
-        const homeButton = screen.getByTestId("DownloadResult-Home-Button");
+        const homeButton = screen.getByTestId("btn-home-download-result");
         fireEvent.click(homeButton);
         expect(mockNavigate).toHaveBeenCalledWith('/'); 
     });
 
     test('Check if it have the Title and the SubTitle', () => {
         renderWithProvider(<LandingPageWrapper {...mockLandingPageWrapperProps} />);
-        expect(screen.getByTestId("DownloadResult-Title")).toHaveTextContent("Test Title");
-        expect(screen.getByTestId("DownloadResult-SubTitle")).toHaveTextContent("Test SubTitle");
+        expect(screen.getByTestId("title-download-result")).toHaveTextContent("Test Title");
+        expect(screen.getByTestId("subtitle-container-download-result")).toHaveTextContent("Test SubTitle");
     });
     afterEach(()=>{
         jest.clearAllMocks();
