@@ -164,12 +164,13 @@ export function VCCardView(props: Readonly<{
 
     return (
         <Clickable onClick={preview} testId={"vc-card-view"}
-                   className={"bg-iw-tileBackground grid grid-cols-[2.5fr_0.5fr] items-center shadow hover:shadow-lg hover:scale-105 hover:shadow-iw-selectedShadow p-4 m-2 rounded-md cursor-pointer"}>
+                   className={VCStyles.cardView.container}>
             <VCDetailView previewContent={previewContent} onClose={clearPreview} onDownload={download}
                           credential={props.credential}/>
             {
                 showDeleteConfirmation && (
                     <ConfirmationModal
+                        testId={"delete-card"}
                         title={"Delete Card!"}
                         message={"Are you sure you want to delete this card?"}
                         onConfirm={deleteCredential}
@@ -178,7 +179,7 @@ export function VCCardView(props: Readonly<{
                 )
             }
 
-            <div className={"flex items-center overflow-scroll gap-6 sm:gap-4"}>
+            <div className={VCStyles.cardView.contentsContainer}>
                 <img
                     data-testid="issuer-logo"
                     src={props.credential.credentialTypeLogo}
@@ -192,11 +193,11 @@ export function VCCardView(props: Readonly<{
                     {props.credential.credentialTypeDisplayName}
                 </span>
             </div>
-            <div className={"flex flex-row items-center flex-shrink-0 gap-0.2"}>
+            <div className={VCStyles.cardView.actionsContainer}>
                 <DownloadIcon onClick={handleDownload}
                               testId={"icon-download"}
                               style={{color: "#707070"}}
-                              className={"h-25 w-25"}/>
+                              className={VCStyles.cardView.downloadIcon}/>
                 <EllipsisMenu
                     testId={"mini-view-card"}
                     menuItems={[
@@ -204,7 +205,7 @@ export function VCCardView(props: Readonly<{
                             label: "View",
                             onClick: preview,
                             id: "view",
-                            icon: <BsBoxArrowRight data-testid={"icon-view-menu"} size={18} className={"m-1"}/>
+                            icon: <BsBoxArrowRight data-testid={"icon-view-menu"} size={18} className={VCStyles.cardView.menuIcon}/>
                         },
                         {
                             label: "Download",
@@ -216,7 +217,7 @@ export function VCCardView(props: Readonly<{
                             label: "Delete",
                             onClick: handleDelete,
                             id: "delete",
-                            icon: <RiDeleteBin6Line data-testid={"icon-delete-menu"} size={18} className={"m-1"}
+                            icon: <RiDeleteBin6Line data-testid={"icon-delete-menu"} size={18} className={VCStyles.cardView.menuIcon}
                                                     color={"var(--iw-color-red)"}/>,
                             color: "var(--iw-color-red)"
                         },

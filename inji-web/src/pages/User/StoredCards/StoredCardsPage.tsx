@@ -122,14 +122,14 @@ export const StoredCardsPage: React.FC = () => {
         }
         return (
             <Fragment>
-                <div className={"flex-shrink-0 px-4 py-0"}>
+                <div className={StoredCardsPageStyles.searchContainer}>
                     <SearchBar
                         testId={"search-credentials"}
                         placeholder={t('search.placeholder')}
                         filter={filterCredentials}
                     />
                 </div>
-                <div className={"flex-1 overflow-y-auto pl-4 py-0"}>
+                <div className={StoredCardsPageStyles.listContainer}>
                     <FlatList
                         onEmpty={<InfoSection message={t('search.noResults')} testId={"no-search-cards-found"}/>}
                         data={filteredCredentials}
@@ -189,10 +189,10 @@ export const StoredCardsPage: React.FC = () => {
                 </div>
             </div>
 
-            <div className={"mx-auto w-full relative h-full min-h-0 flex flex-col sm:px-4"}>
+            <div className={StoredCardsPageStyles.contentContainer} data-testid={"content-and-action-container"}>
                 {showContent()}
                 {!loading && credentials.length !== 0 &&
-                    <div className={"flex-shrink-0 px-6 pr-2 py-0 mt-2 z-10 block my:2 sm:hidden"}>
+                    <div className={StoredCardsPageStyles.buttonContainer.mobile}>
                         {addCard()}
                     </div>
                 }

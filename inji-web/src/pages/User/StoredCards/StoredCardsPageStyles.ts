@@ -6,9 +6,10 @@ export const StoredCardsPageStyles = {
     homeButton: "text-xs sm:text-sm text-[#5B03AD] cursor-pointer",
     buttonContainer: {
         large: "hidden sm:block mr-4 md:mr-2 lg:mr-2",
-        mobile: "block sm:hidden fixed px-4 mx-4 py-2 mt-auto sm:mt-0 absolute bottom-0 left-0 right-0 z-10",
+        mobile: "flex-shrink-0 px-6 pr-2 py-0 mt-2 z-10 block my:2 sm:hidden",
     },
-    contentAndActionContainer: "flex flex-col justify-between h-full sm:ml-8",
-    contentContainer: "ml-6 mr-4 md:mr-20 lg:mr-20 flex-1",
-    loaderContainer: "flex items-center justify-center min-h-screen w-full"
+    loaderContainer: "flex items-center justify-center min-h-screen w-full",
+    contentContainer: "mx-auto w-full relative h-full min-h-0 flex flex-col sm:px-4",
+    searchContainer: "flex-shrink-0 px-4 py-0",
+    listContainer: "flex-1 overflow-y-auto pl-4 py-0",
 };

@@ -5,6 +5,7 @@ import {PageTitle} from "../components/Common/PageTitle/PageTitle";
 import {Clickable} from "../components/Common/Clickable";
 import {Separator} from "../components/Common/Separator";
 import {CloseIconButton} from "../components/Common/Buttons/CloseIconButton";
+import {ModalStyles} from "./ModalStyles";
 
 interface ModalProps {
     isOpen: boolean;
@@ -32,12 +33,12 @@ export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, 
 
     return ReactDOM.createPortal(
         <Clickable
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+            className={ModalStyles.modal.overlay}
             onClick={onClose}
             testId={"modal-overlay"}
         >
             <dialog
-                className={`bg-white rounded-lg shadow-lg mx-4 my-2  mt-10 flex flex-col relative pt-6 border-4 border-white ${modalSize}`}
+                className={`${ModalStyles.modal.container} ${modalSize}`}
                 aria-modal="true"
                 open
                 onClose={onClose}
@@ -46,39 +47,31 @@ export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, 
                 {
                     title && (
                         <Fragment>
-                            <div className="mb-4 flex items-center justify-between px-6 flex-shrink-0 gap-4">
+                            <div className={ModalStyles.modal.header.wrapper}>
                                 <BackArrowButton onClick={onClose}/>
                                 <PageTitle value={title} testId={"title-modal"}/>
                                 <CloseIconButton
                                     onClick={onClose}
-                                    btnClassName="text-gray-500 hover:text-gray-700 text-2xl font-bold"
+                                    btnClassName={ModalStyles.modal.header.closeButton}
                                 />
                             </div>
-                            <Separator className="flex-shrink-0"/>
+                            <Separator className={ModalStyles.modal.separator}/>
                         </Fragment>
                     )
                 }
 
-
-                <div className="flex flex-col flex-1 relative sm:bg-transparent bg-white sm:mb-4 pb-0 min-h-0">
-                    <div
-                        className="overflow-y-auto flex-1 min-h-0 sm:mx-5 sm:m-0 m-2 sm:bg-transparent bg-white sm:rounded-none rounded-xl">
+                <div className={ModalStyles.modal.content.wrapper}>
+                    <div className={ModalStyles.modal.content.container}>
                         {children}
                     </div>
 
                     {action && (
-                        <div
-                            className="
-          sm:absolute sm:right-6 sm:bottom-0 sm:mr-10 sm:pb-8 sm:bg-transparent sm:w-auto
-          static bg-white flex px-2 w-full py-2 sm:rounded-b-lg
-        "
-                        >
+                        <div className={ModalStyles.modal.action}>
                             {action}
                         </div>
                     )}
                 </div>
             </dialog>
-
         </Clickable>,
         document.body
     );
