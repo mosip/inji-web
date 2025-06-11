@@ -9,6 +9,8 @@ export function DownloadIcon({ gradient = false, style, ...props }: { gradient?:
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       style={style}
+      aria-label={"icon-download"}
+      data-testid={props.testId}
       {...props}
     >
       {gradient && (

@@ -14,6 +14,15 @@ interface ModalProps {
     action?: React.ReactNode;
 }
 
+/**
+ * Modal component that renders a dialog box with a backdrop.
+ * Features:
+ * - Renders provided title with back arrow and on close as header
+ * - Renders the provided children
+ * - If action is provided
+ *      - action is sticky floatable for large screns
+ *      - container block for smaller screens
+ */
 export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, title}) => {
     if (!isOpen) return null;
 
@@ -31,7 +40,9 @@ export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, 
   "
                 aria-modal="true"
                 style={{backgroundColor: "#F9FAFB"}}
-                onClick={(e) => e.stopPropagation()}
+                open
+                onClose={onClose}
+                onCancel={onClose}
             >
                 <div className="mb-4 flex items-center justify-between px-6 flex-shrink-0 gap-4">
                     <BackArrowButton onClick={onClose}/>

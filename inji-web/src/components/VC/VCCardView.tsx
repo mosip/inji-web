@@ -54,7 +54,7 @@ export function VCCardView(props: Readonly<{
                 return;
             }
 
-            if(!response.ok){
+            if (!response.ok) {
                 console.error("Failed to fetch credential preview:", response);
                 setError("downloadError");
                 return
@@ -98,7 +98,7 @@ export function VCCardView(props: Readonly<{
                 return;
             }
 
-            if(!response.ok){
+            if (!response.ok) {
                 console.error("Failed to fetch credential preview:", response);
                 setError("downloadError");
                 return
@@ -141,7 +141,7 @@ export function VCCardView(props: Readonly<{
                 return;
             }
 
-            if(!response.ok){
+            if (!response.ok) {
                 console.error("Failed to fetch credential preview:", response);
                 setError("deleteError");
                 return
@@ -161,7 +161,8 @@ export function VCCardView(props: Readonly<{
     }
 
     return (
-        <Clickable onClick={preview} testId={"vc-card-view"} className={VCStyles.cardView.container}>
+        <Clickable onClick={preview} testId={"vc-card-view"}
+                   className={"bg-iw-tileBackground grid grid-cols-[2.5fr_0.5fr] items-center shadow hover:shadow-lg hover:scale-105 hover:shadow-iw-selectedShadow p-4 m-2 rounded-md cursor-pointer"}>
             <VCDetailView previewContent={previewContent} onClose={clearPreview} onDownload={download}
                           credential={props.credential}/>
             {
@@ -175,7 +176,7 @@ export function VCCardView(props: Readonly<{
                 )
             }
 
-            <div className={"flex items-center gap-6"}>
+            <div className={"flex items-center overflow-scroll gap-6 sm:gap-4"}>
                 <img
                     data-testid="issuer-logo"
                     src={props.credential.credentialTypeLogo}
@@ -186,15 +187,13 @@ export function VCCardView(props: Readonly<{
                     className={VCStyles.cardView.credentialName}
                     data-testid="credential-type-display-name"
                 >
-            {props.credential.credentialTypeDisplayName}
-        </span>
+                    {props.credential.credentialTypeDisplayName}
+                </span>
             </div>
-            <div className={"flex flex-row gap-2"}>
+            <div className={"flex flex-row items-center flex-shrink-0 gap-0.2"}>
                 <DownloadIcon onClick={handleDownload}
-                              data-testid={"icon-download"}
-                              src={DownloadIcon}
+                              testId={"icon-download"}
                               style={{color: "#707070"}}
-                              alt={"icon-download"}
                               className={"h-25 w-25"}/>
                 <EllipsisMenu
                     testId={"mini-view-card"}

@@ -1,9 +1,7 @@
 import React from "react";
-import {ModalWrapper} from "./ModalWrapper";
 import {Modal} from "./Modal";
-import {SolidButton} from "../components/Common/Buttons/SolidButton.tsx";
-import {PlainButton} from "../components/Common/Buttons/PlainButton.tsx";
-import {BorderedButton} from "../components/Common/Buttons/BorderedButton.tsx";
+import {SolidButton} from "../components/Common/Buttons/SolidButton";
+import {BorderedButton} from "../components/Common/Buttons/BorderedButton";
 
 export const ConfirmationModal = (props: {
     title: string;
