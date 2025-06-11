@@ -1,70 +1,84 @@
-import {useEffect, useState} from "react";
+import React, {createContext, Dispatch, SetStateAction, useContext, useState} from "react";
 import {RequestStatus} from "./useFetch";
 
 interface SessionStatus {
+    credentialType: string;
     downloadStatus: RequestStatus;
 }
 
 interface SessionsMap {
-    [credentialType: string]: SessionStatus;
+    [downloadId: string]: SessionStatus;
 }
 
-const getSessionsFromLocalStorage = (): SessionsMap => {
-    try {
-        const sessions = localStorage.getItem('downloadSessions');
-        return sessions ? JSON.parse(sessions) : {};
-    } catch (e) {
-        console.error("Error parsing download sessions from localStorage:", e);
-        return {};
+interface DownloadSessionContextProps {
+    downloadInProgressSessions: SessionsMap;
+    currentSessionDownloadId: string | null;
+    latestDownloadedSessionId: string | null;
+    addSession: (credentialType: string, downloadStatus: RequestStatus) => string;
+    updateSession: (downloadId: string, downloadStatus: RequestStatus) => void;
+    removeSession: (credentialType: string) => void;
+    setCurrentSessionDownloadId: Dispatch<SetStateAction<string | null>>;
+}
+
+const DownloadSessionContext = createContext<DownloadSessionContextProps | undefined>(undefined);
+
+export const DownloadSessionProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
+    const [downloadInProgressSessions, setDownloadInProgressSessions] = useState<SessionsMap>({});
+    const [currentSessionDownloadId, setCurrentSessionDownloadId] = useState<string | null>(null);
+    const [latestDownloadedSessionId, setLatestDownloadedSessionId] = useState<string | null>(null);
+
+    const generateUniqueDownloadId = (): string => {
+        return Date.now().toString(36) + Math.random().toString(36).substring(2);
+    };
+
+    const addSession = (credentialType: string, downloadStatus: RequestStatus): string => {
+        const newDownloadId = generateUniqueDownloadId();
+        const updatedSessions = {...downloadInProgressSessions, [newDownloadId]: {credentialType, downloadStatus}};
+        setDownloadInProgressSessions(updatedSessions);
+        setCurrentSessionDownloadId(newDownloadId);
+        return newDownloadId;
+    };
+
+    const updateSession = (downloadId: string, downloadStatus: RequestStatus) => {
+        const updatedSessionDetails = {...downloadInProgressSessions[downloadId], downloadStatus};
+        const updatedSessions = {...downloadInProgressSessions, [downloadId]: updatedSessionDetails};
+
+        setDownloadInProgressSessions(updatedSessions);
+
+        if (downloadStatus === RequestStatus.DONE || downloadStatus === RequestStatus.ERROR) {
+            setLatestDownloadedSessionId(downloadId)
+        }
+    };
+
+    const removeSession = (credentialType: string) => {
+        const {[credentialType]: _, ...updatedSessions} = downloadInProgressSessions;
+        setDownloadInProgressSessions(updatedSessions);
+    };
+
+    const contextValue = React.useMemo(
+        () => ({
+            downloadInProgressSessions,
+            currentSessionDownloadId,
+            latestDownloadedSessionId,
+            addSession,
+            updateSession,
+            removeSession,
+            setCurrentSessionDownloadId
+
+        }),
+        [downloadInProgressSessions, currentSessionDownloadId,latestDownloadedSessionId]
+    );
+    return (
+        <DownloadSessionContext.Provider value={contextValue}>
+            {children}
+        </DownloadSessionContext.Provider>
+    );
+};
+
+export const useDownloadSessionDetails = (): DownloadSessionContextProps => {
+    const context = useContext(DownloadSessionContext);
+    if (!context) {
+        throw new Error("useDownloadSessionDetails must be used within a DownloadSessionProvider");
     }
-};
-
-const dispatchLocalStorageChangeEvent = () => {
-    window.dispatchEvent(new CustomEvent(LOCAL_STORAGE_CHANGE_EVENT));
-};
-
-export const LOCAL_STORAGE_CHANGE_EVENT = 'downloadSessionsChange';
-
-export const useDownloadSessionDetails = () => {
-    const [downloadSessions, setDownloadSessions] = useState<SessionsMap>(getSessionsFromLocalStorage());
-
-    useEffect(() => {
-        const updateSessionsFromEvent = () => {
-            setDownloadSessions(getSessionsFromLocalStorage());
-        };
-
-        window.addEventListener(LOCAL_STORAGE_CHANGE_EVENT, updateSessionsFromEvent);
-
-        const handleStorageChange = (event: StorageEvent) => {
-            if (event.key === 'downloadSessions') {
-                updateSessionsFromEvent();
-            }
-        };
-        window.addEventListener('storage', handleStorageChange);
-
-        return () => {
-            window.removeEventListener(LOCAL_STORAGE_CHANGE_EVENT, updateSessionsFromEvent);
-            window.removeEventListener('storage', handleStorageChange);
-        };
-    }, []);
-
-    const addOrUpdateSession = (credentialType: string, downloadStatus: RequestStatus) => {
-        const sessions = getSessionsFromLocalStorage();
-        const updatedSessions = {...sessions, [credentialType]: {downloadStatus}}
-        localStorage.setItem('downloadSessions', JSON.stringify(updatedSessions));
-        dispatchLocalStorageChangeEvent();
-    };
-
-    const removeActiveSession = (credentialType: string) => {
-        const sessions = getSessionsFromLocalStorage();
-        const {[credentialType]: _, ...updatedSessions} = sessions;
-        localStorage.setItem('downloadedSessions', JSON.stringify(updatedSessions));
-        dispatchLocalStorageChangeEvent();
-    };
-
-    return {
-        addOrUpdateSession,
-        removeActiveSession,
-        downloadSessions
-    };
+    return context;
 };

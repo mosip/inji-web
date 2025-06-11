@@ -7,19 +7,22 @@ import "../src/utils/i18n";
 import {Provider} from "react-redux";
 import {reduxStore} from "./redux/reduxStore";
 import {AppToaster} from "./components/Common/AppToaster";
-import { CookiesProvider } from 'react-cookie';
-import { UserProvider } from "./hooks/useUser";
-import { BrowserRouter } from "react-router-dom";
+import {CookiesProvider} from 'react-cookie';
+import {UserProvider} from "./hooks/useUser";
+import {BrowserRouter} from "react-router-dom";
+import {DownloadSessionProvider} from "./hooks/userDownloadSessionDetails";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <Provider store={reduxStore}>
         <CookiesProvider>
             <UserProvider>
-                <AppToaster />
-                <BrowserRouter>
-                    <AppRouter />
-                </BrowserRouter>
+                <DownloadSessionProvider>
+                    <AppToaster/>
+                    <BrowserRouter>
+                        <AppRouter/>
+                    </BrowserRouter>
+                </DownloadSessionProvider>
             </UserProvider>
         </CookiesProvider>
     </Provider>

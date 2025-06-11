@@ -52,7 +52,6 @@ export const CredentialsPage: React.FC = () => {
                 apiRequest.methodType,
                 apiRequest.headers(),
                 apiRequest.credentials
-                
             );
 
             dispatch(storeFilteredCredentials(response?.response));
@@ -66,23 +65,21 @@ export const CredentialsPage: React.FC = () => {
     }
 
     return (
-        <React.Fragment>
+        <div
+            className="bg-iw-background min-h-screen"
+            data-testid="Credentials-Page-Container"
+        >
+            <NavBar
+                title={displayObject?.name}
+                search={true}
+                link={"/issuers"}
+            />
             <div
-                className="bg-iw-background min-h-screen"
-                data-testid="Credentials-Page-Container"
+                data-testid="Credential-List-Container"
+                className="container mx-auto mt-8 px-10 sm:px-0"
             >
-                <NavBar
-                    title={displayObject?.name}
-                    search={true}
-                    link={"/issuers"}
-                />
-                <div
-                    data-testid="Credential-List-Container"
-                    className="container mx-auto mt-8 px-10 sm:px-0"
-                >
-                    <CredentialList state={state} />
-                </div>
+                <CredentialList state={state}/>
             </div>
-        </React.Fragment>
+        </div>
     );
 };

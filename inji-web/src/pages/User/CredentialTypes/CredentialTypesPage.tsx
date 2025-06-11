@@ -5,31 +5,27 @@ import {useDispatch, useSelector} from 'react-redux';
 import {storeSelectedIssuer} from '../../../redux/reducers/issuersReducer';
 import {storeCredentials, storeFilteredCredentials} from '../../../redux/reducers/credentialsReducer';
 import {api} from '../../../utils/api';
-import {useTranslation} from 'react-i18next';
-
 import {ApiRequest, IssuerObject, IssuerWellknownDisplayArrayObject} from '../../../types/data';
 import {getIssuerDisplayObjectForCurrentLanguage} from '../../../utils/i18n';
 import {RootState} from '../../../types/redux';
 import {isObjectEmpty} from '../../../utils/misc';
-import {SearchCredential} from '../../../components/Credentials/SearchCredential';
-import {NavBackArrowButton} from '../../../components/Common/Buttons/NavBackArrowButton';
 import {navigateToUserHome} from "../../../utils/navigationUtils";
 import {CredentialTypesPageStyles} from "./CredentialTypesPageStyles";
 import {useDownloadSessionDetails} from "../../../hooks/userDownloadSessionDetails";
-import {ROUTES} from "../../../utils/constants";
 import {RenderModalBasedOnDownloadStatus} from "./RenderModalBasedOnDownloadStatus";
+import {Header} from "./Header";
+import {ROUTES} from "../../../utils/constants";
 
 type CredentialTypesPageProps = {
     backUrl?: string;
 };
 
 export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
-    backUrl
-}) => {
+                                                                            backUrl
+                                                                        }) => {
     const {state, fetchRequest} = useFetch();
     const params = useParams<CredentialParamProps>();
     const dispatch = useDispatch();
-    const {t} = useTranslation(['CredentialTypesPage', 'User']);
     const language = useSelector((state: RootState) => state.common.language);
     let displayObject = {} as IssuerWellknownDisplayArrayObject;
     let [selectedIssuer, setSelectedIssuer] = useState({} as IssuerObject);
@@ -41,9 +37,25 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
     }
     const navigate = useNavigate();
     const location = useLocation();
-    const {downloadSessions} = useDownloadSessionDetails();
-    const issuerId = location.state?.issuerId
-    const [downloadStatus, setDownloadStatus] = useState(downloadSessions[issuerId]?.downloadStatus);
+    const {
+        downloadInProgressSessions,
+        currentSessionDownloadId,
+        setCurrentSessionDownloadId
+    } = useDownloadSessionDetails();
+
+    const [downloadStatus, setDownloadStatus] = useState<RequestStatus | null>(null);
+
+    useEffect(() => {
+        const status = currentSessionDownloadId ? downloadInProgressSessions[currentSessionDownloadId]?.downloadStatus : null;
+        setDownloadStatus(status);
+
+    }, [currentSessionDownloadId, downloadInProgressSessions]);
+
+    useEffect(() => {
+        return (() => {
+            setCurrentSessionDownloadId(null);
+        })
+    }, []);
 
     useEffect(() => {
         if (downloadStatus === RequestStatus.DONE) {
@@ -92,39 +104,13 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
         }
     };
 
-    //TODO here check if the div with testId "Credential-List-Container" can be moved to credentialList component
     return (
         <div
             data-testid={'Credential-Types-Page-Container'}
             className={CredentialTypesPageStyles.container}
         >
-            <div className={CredentialTypesPageStyles.headerContainer}>
-                <div className={CredentialTypesPageStyles.headerLeftSection}>
-                    <div className={CredentialTypesPageStyles.headerLeftSection}>
-                        <NavBackArrowButton onBackClick={handleBackClick} />
-                    </div>
-                    <div className={CredentialTypesPageStyles.headerTitleSection}>
-                        <span
-                            data-testid={'Stored-Credentials'}
-                            className={CredentialTypesPageStyles.pageTitle}
-                        >
-                            {displayObject?.name}
-                        </span>
-                        <button
-                            data-testid={'Home'}
-                            className={CredentialTypesPageStyles.homeButton}
-                            onClick={() => navigateToUserHome(navigate)}
-                        >
-                            {t('User:Home.title')}
-                        </button>
-                    </div>
-                </div>
-                <div>
-                    <SearchCredential
-                        issuerContainerBorderRadius={'rounded-md'}
-                    />
-                </div>
-            </div>
+            <Header onBackClick={handleBackClick} displayObject={displayObject}
+                    onClick={() => navigateToUserHome(navigate)}/>
             <RenderModalBasedOnDownloadStatus downloadStatus={downloadStatus} state={state}/>
         </div>
     );

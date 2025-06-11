@@ -36,7 +36,7 @@ export const RedirectionPage: React.FC = () => {
     const {isLoading, fetchUserProfile, isUserLoggedIn} = useUser();
     const hasFetchedRef = useRef(false);
     const navigate = useNavigate();
-    const {addOrUpdateSession} = useDownloadSessionDetails();
+    const {addSession, updateSession} = useDownloadSessionDetails();
 
     interface LoggedInDownloadFlowProps {
         issuerId: string,
@@ -45,8 +45,8 @@ export const RedirectionPage: React.FC = () => {
 
     const handleLoggedInDownloadFlow = async ({issuerId, requestBody}: LoggedInDownloadFlowProps) => {
         const apiRequest = api.downloadVCInloginFlow;
-        addOrUpdateSession(issuerId, RequestStatus.LOADING);
-        navigate(ROUTES.USER_ISSUER(issuerId), {state: {issuerId: issuerId}})
+        const downloadId = addSession(issuerId, RequestStatus.LOADING);
+        navigate(ROUTES.USER_ISSUER(issuerId))
         let credentialDownloadResponse = await fetch(
             apiRequest.url(),
             {
@@ -60,15 +60,9 @@ export const RedirectionPage: React.FC = () => {
             }
         );
         if (credentialDownloadResponse.ok) {
-            addOrUpdateSession(issuerId, RequestStatus.DONE)
-            setTimeout(() => {
-                removeActiveSession(issuerId);
-            }, 15000);
+            updateSession(downloadId, RequestStatus.DONE)
         } else {
-            addOrUpdateSession(issuerId, RequestStatus.ERROR)
-            setTimeout(() => {
-                removeActiveSession(issuerId);
-            }, 15000);
+            updateSession(downloadId, RequestStatus.ERROR)
         }
     }
 
