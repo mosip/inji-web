@@ -12,7 +12,7 @@ import {SearchBar} from "../../../components/Common/SearchBar/SearchBar";
 import {InfoSection} from "../../../components/Common/Info/InfoSection";
 import {VCCardView} from "../../../components/VC/VCCardView";
 import {FlatList} from "../../../components/Common/List/FlatList";
-import {DocumentIcon} from "../../../components/Common/Icons/DocumentIcon.tsx";
+import {DocumentIcon} from "../../../components/Common/Icons/DocumentIcon";
 import {PageTitle} from "../../../components/Common/PageTitle/PageTitle";
 import {Error} from "../../../components/Error/Error";
 import {BorderedButton} from "../../../components/Common/Buttons/BorderedButton";
@@ -47,7 +47,7 @@ export const StoredCardsPage: React.FC = () => {
                 setFilteredCredentials(responseData)
             } else {
                 if (response.status === 401) {
-                    console.error("Unauthorized access - redirecting to login");
+                    console.error("Unauthorized access - redirecting to root");
                     // Redirect to root page if unauthorized
                     navigate(ROUTES.ROOT);
                     return;
@@ -129,7 +129,7 @@ export const StoredCardsPage: React.FC = () => {
                         filter={filterCredentials}
                     />
                 </div>
-                <div className={"flex-1 overflow-y-auto px-4 py-0"}>
+                <div className={"flex-1 overflow-y-auto pl-4 py-0"}>
                     <FlatList
                         onEmpty={<InfoSection message={t('search.noResults')} testId={"no-search-cards-found"}/>}
                         data={filteredCredentials}
@@ -189,14 +189,14 @@ export const StoredCardsPage: React.FC = () => {
                 </div>
             </div>
 
-            <Fragment>
+            <div className={"mx-auto w-full relative h-full min-h-0 flex flex-col sm:px-4"}>
                 {showContent()}
                 {!loading && credentials.length !== 0 &&
-                    <div className={"flex-shrink-0 px-4 py-0 mt-2 z-10 block my:2 sm:hidden"}>
+                    <div className={"flex-shrink-0 px-6 pr-2 py-0 mt-2 z-10 block my:2 sm:hidden"}>
                         {addCard()}
                     </div>
                 }
-            </Fragment>
+            </div>
         </div>
     );
 };
