@@ -60,7 +60,7 @@ jest.mock('react-i18next', () => {
     };
 });
 
-describe('RenderModalBasedOnDownloadStatus', () => {
+describe('Testing of RenderModalBasedOnDownloadStatus -> ', () => {
     const renderComponent = async (
         downloadStatus: RequestStatus | null,
         language: string = 'en',
@@ -75,7 +75,7 @@ describe('RenderModalBasedOnDownloadStatus', () => {
         (globalThis as any).__mockI18nLanguage__ = 'en';
     });
 
-    it.each([
+    test.each([
         {
             testName: 'renders loading modal when downloadStatus is LOADING',
             downloadStatus: RequestStatus.LOADING,

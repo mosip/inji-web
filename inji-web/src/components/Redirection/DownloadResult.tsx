@@ -45,10 +45,10 @@ export const DownloadResult: React.FC<DownloadResultProps> = ({title, subTitle, 
         gotoHome: currentConfig.gotoHome,
     };
 
-
     return (
         isUserLoggedIn ? (
             <div
+                data-testid="download-result-container"
                 className={DownloadResultStyles.container}>
                 <LandingPageWrapper{...baseWrapperProps}/>
             </div>

@@ -1,51 +1,93 @@
-import {screen} from '@testing-library/react';
-import {DownloadResult} from "../../../components/Redirection/DownloadResult";
-import {RequestStatus} from "../../../hooks/useFetch";
-import { renderWithProvider,mockUseNavigate,mockUseSpinningLoader } from '../../../test-utils/mockUtils';
+import {renderWithProvider} from '../../../test-utils/mockUtils';
+import {DownloadResult} from '../../../components/Redirection/DownloadResult';
+import {RequestStatus} from '../../../hooks/useFetch';
+import {screen} from "@testing-library/react";
+import {useUser} from "../../../hooks/useUser";
 
-mockUseNavigate();
-mockUseSpinningLoader();
-//todo : extract the local method to mockUtils, which is added to bypass the routing problems
-const mockedUsedNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useNavigate: () => ({
-        navigate: mockedUsedNavigate,
-    }),
-}))
-describe("Testing the Layout of DownloadResult for Success Error and Loading", () => {
+const mockLandingPageWrapper = jest.fn();
+jest.mock('../../../components/Common/LandingPageWrapper', () => ({
+    LandingPageWrapper: (props: any) => {
+        mockLandingPageWrapper(props);
+        return <div data-testid="mock-landing-page-wrapper" {...props} />;
+    },
+}));
 
-    test('Check if the layout is matching with the snapshots for the Success',()=>{
-        const {asFragment} = renderWithProvider(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.DONE}/>)
-        expect(asFragment()).toMatchSnapshot();
-    });
-    test('Check if the layout is matching with the snapshots for the Error',()=>{
-        const {asFragment} = renderWithProvider(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.ERROR}/>)
-        expect(asFragment()).toMatchSnapshot();
-    })
-    test('Check if the layout is matching with the snapshots for the Loading',()=>{
-        const {asFragment} = renderWithProvider(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.LOADING}/>)
-        expect(asFragment()).toMatchSnapshot();
-    })
+jest.mock("../../../hooks/useUser.tsx", () => {
+    const actualModule = jest.requireActual('../../../hooks/useUser');
+    return {
+        useUser: jest.fn(),
+        UserProvider: actualModule.UserProvider,
+    };
 });
 
-describe("Testing the Functionality of DownloadResult Container",() => {
-    test('Check the presence of the container', () => {
-        renderWithProvider(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.DONE}/>);
-        let redirectionElement = screen.getByTestId(
-            'outer-container-download-result'
-        );
-        expect(redirectionElement).toBeInTheDocument();
-        redirectionElement = screen.getByTestId(
-            'title-container-download-result'
-        );
-        expect(redirectionElement).toHaveTextContent("Title")
-        redirectionElement = screen.getByTestId(
-            'subtitle-container-download-result'
-        );
-        expect(redirectionElement).toHaveTextContent("SubTitle")
-    });
-    afterEach(()=>{
+const mockUseUser = useUser as jest.Mock;
+
+describe('Testing of DownloadResult -> ', () => {
+    beforeEach(() => {
         jest.clearAllMocks();
-    })
-})
+        mockUseUser.mockReturnValue({isUserLoggedIn: false});
+    });
+
+    it('matches snapshot when user is not logged in', () => {
+        const {asFragment} = renderWithProvider(
+            <DownloadResult title="Title" subTitle="SubTitle" state={RequestStatus.DONE}/>
+        );
+
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    it('matches snapshot when user is logged in', () => {
+        mockUseUser.mockReturnValue({isUserLoggedIn: true});
+
+        const {asFragment} = renderWithProvider(
+            <DownloadResult title="Title" subTitle="SubTitle" state={RequestStatus.DONE}/>
+        );
+
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    it('renders div wrapper when user is logged in', () => {
+        mockUseUser.mockReturnValue({isUserLoggedIn: true});
+
+        renderWithProvider(<DownloadResult title="Title" subTitle="SubTitle" state={RequestStatus.DONE}/>);
+
+        expect(screen.getByTestId('download-result-container')).toBeInTheDocument();
+        expect(screen.getByTestId('mock-landing-page-wrapper')).toBeInTheDocument();
+    });
+
+    it('does not render div wrapper when user is not logged in', () => {
+        renderWithProvider(
+            <DownloadResult title="Title" subTitle="SubTitle" state={RequestStatus.DONE}/>
+        );
+
+        expect(screen.queryByTestId('download-result-container')).not.toBeInTheDocument();
+        expect(screen.getByTestId('mock-landing-page-wrapper')).toBeInTheDocument();
+    });
+
+    test.each([
+        [
+            'DONE',
+            RequestStatus.DONE,
+            {icon: expect.anything(), title: 'Title', subTitle: 'SubTitle', gotoHome: true},
+        ],
+        [
+            'ERROR',
+            RequestStatus.ERROR,
+            {icon: expect.anything(), title: 'Title', subTitle: 'SubTitle', gotoHome: true},
+        ],
+        [
+            'LOADING',
+            RequestStatus.LOADING,
+            {icon: expect.anything(), title: 'Title', subTitle: 'SubTitle', gotoHome: false},
+        ],
+    ])(
+        'should call LandingPageWrapper with correct props for state %s',
+        (_stateName, state, expectedProps) => {
+            renderWithProvider(<DownloadResult title="Title" subTitle="SubTitle" state={state}/>);
+
+            expect(mockLandingPageWrapper).toHaveBeenCalledWith(
+                expect.objectContaining(expectedProps)
+            );
+        }
+    );
+});

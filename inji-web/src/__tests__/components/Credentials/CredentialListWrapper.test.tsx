@@ -12,7 +12,7 @@ jest.mock('../../../components/Credentials/CredentialList', () => ({
     },
 }));
 
-describe('CredentialListWrapper', () => {
+describe('Testing of CredentialListWrapper -> ', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
