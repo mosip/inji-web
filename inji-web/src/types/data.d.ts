@@ -132,3 +132,24 @@ export type DropdownItem = {
 };
 
 export type RouteValue = (typeof ROUTES)[keyof typeof ROUTES];
+
+type LoggedInRequestBody = {
+    grantType: 'authorization_code';
+    code: string;
+    redirectUri: string;
+    codeVerifier: string;
+    issuer: string;
+    credentialConfigurationId: string;
+}
+
+type GuestRequestBody = {
+    grant_type: 'authorization_code';
+    code: string;
+    redirect_uri: string;
+    code_verifier: string;
+    issuer: string;
+    credential: string;
+    vcStorageExpiryLimitInTimes: string;
+}
+
+export type TokenRequestBody = LoggedInRequestBody | GuestRequestBody;
