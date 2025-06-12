@@ -3,6 +3,7 @@ import {fireEvent, screen, waitFor, within} from '@testing-library/react';
 import {
     mockApiObject,
     mockLocalStorage,
+    mockNavigatorOnline,
     mockusei18n,
     mockUseTranslation,
     renderWithRouter
@@ -276,6 +277,22 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should display network error message when network error occurs', async () => {
+        const onlineMock = mockNavigatorOnline(false);
+        (global.fetch as jest.Mock).mockRejectedValueOnce(
+            new TypeError('Failed to fetch')
+        );
+
+        renderWithRouter(<StoredCardsPage/>);
+        await waitForLoaderDisappearance();
+
+        expect(screen.getByText("No Internet Connection")).toBeInTheDocument();
+        expect(screen.getByText('Please check your internet connection and try again.')).toBeInTheDocument();
+
+        // reset to original online status
+        onlineMock.reset();
+    });
+
+    it('should display generic error message when any unknown occurs', async () => {
         (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
 
         renderWithRouter(<StoredCardsPage/>);

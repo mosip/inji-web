@@ -6,7 +6,6 @@ import {api} from "../../utils/api";
 import {downloadCredentialPDF} from "../../utils/misc";
 import {useSelector} from "react-redux";
 import {RootState} from "../../types/redux";
-import {toast} from "react-toastify";
 import {EllipsisMenu} from "../Common/Menu/EllipsisMenu";
 import {ConfirmationModal} from "../../modals/ConfirmationModal";
 import {useTranslation} from "react-i18next";
@@ -16,6 +15,7 @@ import {ROUTES} from "../../utils/constants";
 import {useNavigate} from "react-router-dom";
 import {RiDeleteBin6Line} from "react-icons/ri";
 import {BsBoxArrowRight} from "react-icons/bs";
+import {showToast} from "../Common/toast/ToastWrapper";
 
 export function VCCardView(props: Readonly<{
     credential: WalletCredential,
@@ -32,7 +32,11 @@ export function VCCardView(props: Readonly<{
 
     useEffect(() => {
         if (error) {
-            toast.error(t(`error.${error}`));
+            showToast({
+                type: "error",
+                message: t(`error.${error}`),
+                testId: error === "downloadError" ? "download-failure" : "delete-failure"
+            })
             setError("")
         }
     }, [error, t])

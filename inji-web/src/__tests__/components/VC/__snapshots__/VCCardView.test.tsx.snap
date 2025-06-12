@@ -16,10 +16,10 @@ exports[`VCCardView Component should match snapshot 1`] = `
       </title>
       <div />
       <button>
-        download
+        Close
       </button>
       <button>
-        chylose
+        download
       </button>
     </div>
     <div

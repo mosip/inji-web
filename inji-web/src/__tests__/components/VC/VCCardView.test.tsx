@@ -8,12 +8,12 @@ import {
     mockUseSelector,
     mockUseTranslation,
     renderWithProvider,
-    setMockUseSelectorState
+    setMockUseSelectorState,
+    setupShowToastMock
 } from "../../../test-utils/mockUtils";
 import {fetchMock} from "../../../test-utils/setupFetchMock";
 import {KEYS} from "../../../utils/constants";
 import {mockVerifiableCredentials} from "../../../test-utils/mockObjects";
-import {toast} from 'react-toastify';
 
 jest.mock('react-toastify', () => {
     return {
@@ -25,19 +25,22 @@ jest.mock('react-toastify', () => {
     };
 });
 
+jest.mock('../../../components/Common/toast/ToastWrapper', () => ({
+    showToast: jest.fn()
+}));
 
 jest.mock("../../../components/VC/VCDetailView", () => ({
-    VCDetailView: ({previewContent, onDownload, onClick, credential}: {
+    VCDetailView: ({previewContent, onDownload, onClose, credential}: {
         previewContent: string,
-        onDownload: () => void,
-        onClick: () => Promise<void>,
+        onClose: () => void,
+        onDownload: () => Promise<void>,
         credential: WalletCredential
     }) => (
         <div data-testid="vc-detail-view">
             <title>{credential.credentialTypeDisplayName}</title>
             <div>{previewContent}</div>
-            <button onClick={onClick}>download</button>
-            <button onClick={onDownload}>chylose</button>
+            <button onClick={onClose}>Close</button>
+            <button onClick={onDownload}>download</button>
         </div>
     )
 }));
@@ -46,6 +49,7 @@ describe('VCCardView Component', () => {
     const mockCredential: WalletCredential = mockVerifiableCredentials[0]
     let localStorageMock
     let refreshCredentialsMock: jest.Mock
+    let toastMock: { assertShowToastCalled: any; };
 
     const mockObjectUrl = 'Name:Simon';
 
@@ -75,6 +79,7 @@ describe('VCCardView Component', () => {
         localStorageMock.setItem(KEYS.WALLET_ID, "faa0e18f-0935-4fab-8ab3-0c546c0ca714")
 
         refreshCredentialsMock = jest.fn();
+        toastMock = setupShowToastMock()
     });
 
     it('should match snapshot', () => {
@@ -221,10 +226,11 @@ describe('VCCardView Component', () => {
         const viewOption = screen.getByTestId('menu-item-view');
         fireEvent.click(viewOption);
 
-        await waitFor(() => {
-            expect(toast.error).toBeCalled()
-        })
-        expect(toast.error).toHaveBeenCalledWith("Download failed. Please retry.")
+        await waitFor(() => toastMock.assertShowToastCalled({
+            message: 'Download failed. Please retry.',
+            type: 'error',
+            testId: 'download-failure'
+        }))
     });
 
     it('should redirect to root page when user clicks on preview an unauthorized access is detetected', () => {
@@ -264,9 +270,8 @@ describe('VCCardView Component', () => {
         fireEvent.click(card);
         expect(fetchMock).toHaveBeenCalledTimes(1);
 
-        await waitFor(() => {
-            expect(screen.getByText("Name:Simon")).toBeInTheDocument()
-        });
+        await screen.findByTestId("vc-detail-view")
+        expect(screen.getByText("Name:Simon")).toBeInTheDocument()
     })
 
     it("should show error when download fails", async () => {
@@ -285,10 +290,11 @@ describe('VCCardView Component', () => {
         const downloadIcon = screen.getByTestId('icon-download');
         fireEvent.click(downloadIcon);
 
-        await waitFor(() => {
-            expect(toast.error).toBeCalled()
-        })
-        expect(toast.error).toHaveBeenCalledWith("Download failed. Please retry.")
+        await waitFor(() => toastMock.assertShowToastCalled({
+            message: 'Download failed. Please retry.',
+            type: 'error',
+            testId: 'download-failure'
+        }))
     })
 
     it('should redirect to root page when user downloads card but response is unauthorized', () => {
@@ -434,10 +440,11 @@ describe('VCCardView Component', () => {
         const confirmButton = screen.getByRole('button', {name: 'Confirm'});
         fireEvent.click(confirmButton);
 
-        await waitFor(() => {
-            expect(toast.error).toBeCalled()
-        })
-        expect(toast.error).toHaveBeenCalledWith("Failed to delete. Try again.")
+        await waitFor(() => toastMock.assertShowToastCalled({
+            message: 'Failed to delete. Try again.',
+            type: 'error',
+            testId: 'delete-failure'
+        }))
     });
 
     it('should redirect to root page when user deletes card but response is unauthorized access', () => {
