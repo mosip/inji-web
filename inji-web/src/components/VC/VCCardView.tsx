@@ -207,19 +207,19 @@ export function VCCardView(props: Readonly<{
                             label: t('menu.view'),
                             onClick: preview,
                             id: "view",
-                            icon: <BsBoxArrowRight data-testid={"icon-view-menu"} size={18} className={VCStyles.cardView.menuIcon}/>
+                            icon: <BsBoxArrowRight data-testid={"icon-view"} size={18} className={VCStyles.cardView.menuIcon}/>
                         },
                         {
                             label: t('download'),
                             onClick: download,
                             id: "download",
-                            icon: <DownloadIcon testId={"icon-download-menu"}/>
+                            icon: <DownloadIcon testId={"icon-download"}/>
                         },
                         {
                             label: t('menu.delete'),
                             onClick: handleDelete,
                             id: "delete",
-                            icon: <RiDeleteBin6Line data-testid={"icon-delete-menu"} size={18} className={VCStyles.cardView.menuIcon}
+                            icon: <RiDeleteBin6Line data-testid={"icon-delete"} size={18} className={VCStyles.cardView.menuIcon}
                                                     color={"var(--iw-color-red)"}/>,
                             color: "var(--iw-color-red)"
                         },

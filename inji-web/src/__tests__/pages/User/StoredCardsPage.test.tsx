@@ -395,14 +395,14 @@ describe('Testing of StoredCardsPage ->', () => {
         let menu = screen.getAllByTestId("icon-three-dots-menu")[0];
         fireEvent.click(menu);
         expect(screen.getByRole("menu")).toBeInTheDocument()
-        const deleteButton = screen.getByTestId('icon-download-menu');
+        const deleteButton = screen.getByTestId('icon-delete');
         fireEvent.click(deleteButton);
         fireEvent.click(screen.getByRole('button', {name: "Confirm"}));
         expect(global.fetch).toHaveBeenCalledWith(
             expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1"),
             expect.objectContaining({
                 "credentials": "include",
-                "headers": {"Accept-Language": "en"},
+                "headers": {"Content-Type": "application/json"},
                 "method": "DELETE"
             })
         );
@@ -412,11 +412,13 @@ describe('Testing of StoredCardsPage ->', () => {
             expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials"),
             expect.objectContaining({
                 "credentials": "include",
-                "headers": {"Accept-Language": "en"},
+                "headers": {"Accept-Language": "en", "Content-Type": "application/json"},
                 "method": "GET"
             })
         );
-        expect(screen.queryByText('Drivers License')).not.toBeInTheDocument();
+        await waitFor(() =>
+            expect(screen.queryByText('Drivers License')).not.toBeInTheDocument()
+        )
         expect(screen.getByText('Health Card')).toBeInTheDocument();
     });
 

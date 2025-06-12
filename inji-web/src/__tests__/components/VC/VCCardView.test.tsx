@@ -269,8 +269,6 @@ describe('VCCardView Component', () => {
         });
     })
 
-    // Tests for menu interactions
-
     it("should show error when download fails", async () => {
         fetchMock.mockRejectedValueOnce({
             ok: false,
@@ -313,6 +311,8 @@ describe('VCCardView Component', () => {
         expect(window.location.href).toBe("http://localhost/");
     });
 
+    // Tests for menu interactions
+
     it('should open three dots menu with the relevant option when clicked on 3 dots menu', () => {
         renderWithProvider(
             <VCCardView
@@ -327,6 +327,7 @@ describe('VCCardView Component', () => {
         // Assert that menu has only 3 menu items
         const menu = screen.getByRole('menu');
         expect(within(menu).getAllByRole("menuitem")).toHaveLength(3);
+        expect(screen.getByTestId("menu-mini-view-card")).toBeInTheDocument()
         assertMenuItem("View", "view");
         assertMenuItem("Download", "download");
         assertMenuItem("Delete", "delete");
@@ -467,6 +468,8 @@ describe('VCCardView Component', () => {
     function assertMenuItem(text: string, testId: string) {
         expect(screen.getByText(text)).toBeInTheDocument();
         let menuOption = screen.getByTestId(`menu-item-${testId}`);
+        expect(within(menuOption).getByTestId(`icon-${testId}`)).toBeInTheDocument();
+        expect(within(menuOption).getByTestId(`label-${testId}`)).toBeInTheDocument();
         expect(menuOption).toBeInTheDocument();
         expect(menuOption).toHaveRole("menuitem")
     }
