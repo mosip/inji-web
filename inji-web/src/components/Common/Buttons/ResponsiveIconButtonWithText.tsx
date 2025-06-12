@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {SolidButton} from "./SolidButton";
+import {IconProps} from "../../../types/components";
 
 interface ResponsiveIconButtonWithTextProps {
-    icon: React.ReactNode;
+    icon: React.ReactElement<IconProps>;
     text: string;
     onClick: () => void;
     testId: string;
@@ -21,6 +22,12 @@ export const ResponsiveIconButtonWithText: React.FC<ResponsiveIconButtonWithText
                                                                                               testId
                                                                                           }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const enhancedIcon =React.isValidElement(icon) ? React.cloneElement(icon, {
+        gradient: !isHovered,
+        style: {
+            color: isHovered ? "#FFFFFF" : "var(--iw-color-grayMedium)",
+        }
+    }): icon;
 
     return (
         <div
@@ -53,7 +60,7 @@ export const ResponsiveIconButtonWithText: React.FC<ResponsiveIconButtonWithText
                             }
                         }}
                     >
-                        {icon}
+                        {enhancedIcon}
                     </button>
                 </div>
 

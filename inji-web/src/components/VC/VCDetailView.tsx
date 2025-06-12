@@ -13,7 +13,7 @@ export function VCDetailView(props: Readonly<{
     onDownload: () => Promise<void>,
     credential: WalletCredential
 }>) {
-    const {t} = useTranslation('StoredCards',{
+    const {t} = useTranslation('StoredCards', {
         keyPrefix: "cardView"
     })
 
