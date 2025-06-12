@@ -197,12 +197,12 @@
   "AuthorizationPage": {
     "error": {
       "code": {
-        "invalidRedirectUri": "Acesso negado!",
-        "invalidClient": "Acesso negado!"
+        "invalid_redirect_uri": "Acesso negado!",
+        "invalid_client": "Acesso negado!"
       },
       "message": {
-        "invalidRedirectUri": "As credenciais não podem ser compartilhadas porque não conseguimos identificar quem as solicitou. Entre em contato com o administrador para obter ajuda.",
-        "invalidClient": "As credenciais não podem ser compartilhadas porque não conseguimos identificar quem as solicitou. Entre em contato com o administrador para obter ajuda."
+        "invalid_redirect_uri": "As credenciais não podem ser compartilhadas porque não conseguimos identificar quem as solicitou. Entre em contato com o administrador para obter ajuda.",
+        "invalid_client": "As credenciais não podem ser compartilhadas porque não conseguimos identificar quem as solicitou. Entre em contato com o administrador para obter ajuda."
       }
     }
   },
