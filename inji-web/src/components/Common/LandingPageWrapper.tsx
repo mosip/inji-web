@@ -6,7 +6,7 @@ import {RouteValue} from "../../types/data";
 import {ROUTES} from "../../utils/constants";
 import {useUser} from "../../hooks/useUser";
 
-interface LandingPageWrapperProps {
+export interface LandingPageWrapperProps {
     icon: React.ReactNode;
     title: string;
     subTitle?: string;

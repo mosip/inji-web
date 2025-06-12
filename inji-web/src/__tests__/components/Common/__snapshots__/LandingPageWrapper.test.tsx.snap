@@ -1,6 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing the Layout of LandingPageWrapper Check if the layout is matching with the snapshots 1`] = `
+exports[`Testing the Layout of LandingPageWrapper ->  matches snapshot when user is logged in 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col justify-center items-center"
+    data-testid="outer-container-download-result"
+  >
+    <div
+      data-testid="Test-Icon"
+    >
+      Icon
+    </div>
+    <div
+      class="mt-5"
+      data-testid="title-container-download-result"
+    >
+      <p
+        class="font-bold"
+        data-testid="title-download-result"
+      >
+        Test Title
+      </p>
+    </div>
+    <div
+      class="my-3 px-8 text-center"
+      data-testid="subtitle-container-download-result"
+    >
+      <p
+        data-testid="subtitle-download-result"
+      >
+        Test SubTitle
+      </p>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="bg-gradient-to-r rounded-lg text-center cursor-pointer shadow hover:shadow-lg from-iw-primary to-iw-secondary p-0.5"
+      >
+        <div
+          class="py-2 px-4 rounded-lg bg-white"
+        >
+          <button
+            class="text-iw-tertiary font-bold rounded-lg"
+            data-testid="btn-home-download-result"
+          >
+            <span
+              class="bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
+            >
+              Go To Home
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Testing the Layout of LandingPageWrapper ->  matches snapshot when user is not logged in 1`] = `
 <DocumentFragment>
   <div
     class="flex flex-col justify-center items-center pt-32"
