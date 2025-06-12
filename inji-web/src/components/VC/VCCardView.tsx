@@ -25,7 +25,9 @@ export function VCCardView(props: Readonly<{
     const [error, setError] = useState<string>()
     const [previewContent, setPreviewContent] = useState<string>("");
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
-    const {t} = useTranslation('StoredCards')
+    const {t} = useTranslation('StoredCards',{
+        keyPrefix: "cardView"
+    })
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -171,8 +173,8 @@ export function VCCardView(props: Readonly<{
                 showDeleteConfirmation && (
                     <ConfirmationModal
                         testId={"delete-card"}
-                        title={"Delete Card!"}
-                        message={"Are you sure you want to delete this card?"}
+                        title={t("delete.confirmation.title")}
+                        message={t("delete.confirmation.message")}
                         onConfirm={deleteCredential}
                         onCancel={() => setShowDeleteConfirmation(false)}
                     />
@@ -202,19 +204,19 @@ export function VCCardView(props: Readonly<{
                     testId={"mini-view-card"}
                     menuItems={[
                         {
-                            label: "View",
+                            label: t('menu.view'),
                             onClick: preview,
                             id: "view",
                             icon: <BsBoxArrowRight data-testid={"icon-view-menu"} size={18} className={VCStyles.cardView.menuIcon}/>
                         },
                         {
-                            label: "Download",
+                            label: t('download'),
                             onClick: download,
                             id: "download",
                             icon: <DownloadIcon testId={"icon-download-menu"}/>
                         },
                         {
-                            label: "Delete",
+                            label: t('menu.delete'),
                             onClick: handleDelete,
                             id: "delete",
                             icon: <RiDeleteBin6Line data-testid={"icon-delete-menu"} size={18} className={VCStyles.cardView.menuIcon}

@@ -59,13 +59,13 @@
     },
     "QuickTip": {
       "heading": "Conseils rapides pour télécharger instantanément vos identifiants",
-      "toastText":"à venir",
+      "toastText": "à venir",
       "buttontext": "Cliquez ici"
     },
     "Login": {
       "loginTitle": "Se connecter",
-      "loginDescription":"Connectez-vous avec votre compte ou continuez en tant qu'invité pour accéder à vos identifiants.",
-      "loginNote":"Certaines fonctionnalités peuvent être limitées en mode invité.",
+      "loginDescription": "Connectez-vous avec votre compte ou continuez en tant qu'invité pour accéder à vos identifiants.",
+      "loginNote": "Certaines fonctionnalités peuvent être limitées en mode invité.",
       "loggingIn": "Connexion en cours",
       "loginGoogle": "Continuer avec Google",
       "loginGuest": "Continuer en tant qu'invité"
@@ -117,7 +117,7 @@
   "IssuersPage": {
     "Intro": {
       "title": "Accéder à vos informations d’identification vérifiables",
-      "title2":"en toute simplicité !",
+      "title2": "en toute simplicité !",
       "subTitle": "Téléchargez et partagez en toute sécurité vos informations d'identification instantanément.",
       "searchText": "Rechercher des émetteurs par nom"
     },
@@ -252,82 +252,82 @@
       "description3": "2. Aucun émetteur n'a été configuré.",
       "description4": "Dans les deux cas, veuillez contacter votre équipe technique pour résoudre le problème."
     },
-    "item8":{
+    "item8": {
       "title": "Que se passe-t-il lorsque je génère un justificatif vérifiable (VC) dans l'interface Web d'Inji Wallet ?",
       "description1": "1. Vous sélectionnez un émetteur et le type de justificatif.",
       "description2": "2. Redirige vers la page de connexion de l'émetteur pour l'authentification.",
       "description3": "3. Après la connexion, l'émetteur fournit le VC, stocké de manière sécurisée au format JSON à l'aide de Durian. ",
       "description4": "4. Un PDF avec les détails du VC et un code QR est généré.",
       "description5": "5. Le code QR renvoie à l'URL de stockage du VC pour un partage facile."
-      },
-      "item9": {
+    },
+    "item9": {
       "title": "Quel est le rôle du code QR dans le PDF des justificatifs ?",
       "description1": "Le code QR dans le PDF renvoie à l'URL de stockage sécurisée du VC, ce qui facilite la numérisation et la récupération des justificatifs sans données denses."
-      },
-      "item10":{
-        "title": "Comment l'interface Web d'Inji Wallet garantit-elle que ma VC est stockée en toute sécurité ?",
-        "description1": "S'intègre au service de partage de données (Durian) de la plateforme d'identification MOSIP, stockant la VC sous forme d'objet JSON avec un accès protégé uniquement pour les vérificateurs autorisés."
-      },
-      "item11":{
-        "title": "Comment fonctionne la fonction de partage en ligne avec Inji Verify ?",
-        "description1": "1. Le PDF VC contient un code QR.",
-        "description2": "2. Le PDF peut être imprimé ou enregistré sur un téléphone. ",
-        "description3": "3. Le vérificateur (par exemple, Inji Verify) scanne le code QR. ",
-        "description4": "4. Inji Wallet autorise et partage la VC avec le vérificateur."
-      },
-      "item12":{
-        "title": "Pourquoi intégrer une URL dans le code QR au lieu des données VC complètes ?",
-        "description1": "L'intégration d'une URL réduit la densité du code QR pour une numérisation facile, permettant une vérification efficace entre appareils ou à distance."
-      },
-      "item13":{
-        "title": "Puis-je partager mon VC en ligne et hors ligne ?",
-        "description1": "1. En ligne : le vérificateur peut numériser à partir d'un PDF ou d'un écran de téléphone, et Inji Wallet autorise et partage le VC. ",
-        "description2": "2. Hors ligne : le PDF imprimé peut être présenté pour la numérisation et la récupération du VC."
-      },
-      "item14":{
-        "title": "Comment Inji Wallet vérifie-t-il et autorise-t-il le vérificateur pendant le partage en ligne ?",
-        "description1": "Les informations d'identification du vérificateur sont vérifiées à partir d'une liste interne. S'il est autorisé, Inji Wallet avec interface Web renvoie le VC au vérificateur en toute sécurité à l'aide d'un vp_token."
-      },
-      "item15":{
-        "title": "Qu'est-ce qu'OpenID4VP et comment est-il utilisé dans Inji Wallet ?",
-        "description1": "La norme OpenID4VP (OpenID for Verifiable Presentations) permet le partage sécurisé de VC. Inji Wallet génère un code QR pour le stockage des VC, permettant aux vérificateurs comme Inji Verify de demander et de recevoir des VC en toute sécurité."
-      },
-      "item16":{
-        "title": "Comment savoir si mon VC a été partagé en toute sécurité à l'aide d'Inji Wallet ??",
-        "description1": "Une fois que le vérificateur a scanné le code QR et qu'Inji Wallet l'a autorisé, le VC est fourni en toute sécurité au vérificateur, qui le valide et le confirme ensuite."
-      },
-      "item17":{
-        "title": "Que se passe-t-il si le code QR est scanné sur un appareil différent de celui sur lequel le VC a été généré ?",
-        "description1": "Prend en charge le partage entre appareils. Le vérificateur peut numériser à partir de n'importe quelle copie du PDF VC, et Inji Wallet vérifie et partage le VC en toute sécurité."
-      },
-      "item18":{
-        "title": "Inji Wallet peut-il prendre en charge différents formats de code QR ?",
-        "description1": "Oui. La génération basée sur la configuration permet aux codes QR de contenir : ",
-        "description2": "1. URL vers le stockage VC pour un partage facile, ou ",
-        "description3": "2. Données VC complètes au format JSON (format plus dense)."
-      },
-      "item19":{
-        "title": "Comment Inji Wallet gère-t-il la vérification des informations d'identification après le partage ?",
-        "description1": "Après le partage, Inji Verify vérifie l'authenticité du VC. Si elle est valide, le vérificateur confirme le statut de vérification des informations d'identification."
-      },
-      "item20":{
-        "title": "Quels types d'émetteurs d'informations d'identification sont pris en charge ?",
-        "description1": "Tout émetteur qui suit le protocole OpenID4VCI peut être approuvé dans Inji Wallet. Ces émetteurs fournissent les données nécessaires à l'émission et au téléchargement de VC."
-      },
-      "item21": {
-        "title": "Où puis-je trouver des informations plus détaillées sur les fonctionnalités introduites dans cette version ?",
-        "description1": "Consultez la <a href=\"https://docs.mosip.io/inji/inji-web/overview\" target=\"_blank\">documentation d'Inji Wallet</a> pour obtenir des étapes détaillées, des aperçus du système et des descriptions des nouvelles fonctionnalités."
-      },
-      "item22":{
-        "title": "Comment démarrer avec la fonctionnalité de partage en ligne dans Inji Wallet ?",
-        "description1": "Accédez aux VC via l'interface Web d'Inji Wallet, téléchargez et utilisez le code QR pour partager des informations d'identification en personne ou en ligne avec des vérificateurs. Détails dans le <a href=\"https://docs.mosip.io/inji/inji-web/function-overview/end-user-guide\" target=\"_blank\">guide de l'utilisateur </a>."
-      },
-      "item23":{
-        "title": "Comment puis-je basculer entre le VC intégré et le partage en ligne dans Inji Wallet ?",
-        "description1": "Configurer le qr_code_type dans les paramètres de l'émetteur Mimoto : ",
-        "description2": "1. EmbeddedVC : intègre le VC complet au format JSON (code QR plus dense) pour une utilisation hors ligne.",
-        "description3": "2. OnlineSharing : génère un code QR avec une URL vers le stockage VC en ligne, ce qui facilite la numérisation et le partage en ligne."
-        }
+    },
+    "item10": {
+      "title": "Comment l'interface Web d'Inji Wallet garantit-elle que ma VC est stockée en toute sécurité ?",
+      "description1": "S'intègre au service de partage de données (Durian) de la plateforme d'identification MOSIP, stockant la VC sous forme d'objet JSON avec un accès protégé uniquement pour les vérificateurs autorisés."
+    },
+    "item11": {
+      "title": "Comment fonctionne la fonction de partage en ligne avec Inji Verify ?",
+      "description1": "1. Le PDF VC contient un code QR.",
+      "description2": "2. Le PDF peut être imprimé ou enregistré sur un téléphone. ",
+      "description3": "3. Le vérificateur (par exemple, Inji Verify) scanne le code QR. ",
+      "description4": "4. Inji Wallet autorise et partage la VC avec le vérificateur."
+    },
+    "item12": {
+      "title": "Pourquoi intégrer une URL dans le code QR au lieu des données VC complètes ?",
+      "description1": "L'intégration d'une URL réduit la densité du code QR pour une numérisation facile, permettant une vérification efficace entre appareils ou à distance."
+    },
+    "item13": {
+      "title": "Puis-je partager mon VC en ligne et hors ligne ?",
+      "description1": "1. En ligne : le vérificateur peut numériser à partir d'un PDF ou d'un écran de téléphone, et Inji Wallet autorise et partage le VC. ",
+      "description2": "2. Hors ligne : le PDF imprimé peut être présenté pour la numérisation et la récupération du VC."
+    },
+    "item14": {
+      "title": "Comment Inji Wallet vérifie-t-il et autorise-t-il le vérificateur pendant le partage en ligne ?",
+      "description1": "Les informations d'identification du vérificateur sont vérifiées à partir d'une liste interne. S'il est autorisé, Inji Wallet avec interface Web renvoie le VC au vérificateur en toute sécurité à l'aide d'un vp_token."
+    },
+    "item15": {
+      "title": "Qu'est-ce qu'OpenID4VP et comment est-il utilisé dans Inji Wallet ?",
+      "description1": "La norme OpenID4VP (OpenID for Verifiable Presentations) permet le partage sécurisé de VC. Inji Wallet génère un code QR pour le stockage des VC, permettant aux vérificateurs comme Inji Verify de demander et de recevoir des VC en toute sécurité."
+    },
+    "item16": {
+      "title": "Comment savoir si mon VC a été partagé en toute sécurité à l'aide d'Inji Wallet ??",
+      "description1": "Une fois que le vérificateur a scanné le code QR et qu'Inji Wallet l'a autorisé, le VC est fourni en toute sécurité au vérificateur, qui le valide et le confirme ensuite."
+    },
+    "item17": {
+      "title": "Que se passe-t-il si le code QR est scanné sur un appareil différent de celui sur lequel le VC a été généré ?",
+      "description1": "Prend en charge le partage entre appareils. Le vérificateur peut numériser à partir de n'importe quelle copie du PDF VC, et Inji Wallet vérifie et partage le VC en toute sécurité."
+    },
+    "item18": {
+      "title": "Inji Wallet peut-il prendre en charge différents formats de code QR ?",
+      "description1": "Oui. La génération basée sur la configuration permet aux codes QR de contenir : ",
+      "description2": "1. URL vers le stockage VC pour un partage facile, ou ",
+      "description3": "2. Données VC complètes au format JSON (format plus dense)."
+    },
+    "item19": {
+      "title": "Comment Inji Wallet gère-t-il la vérification des informations d'identification après le partage ?",
+      "description1": "Après le partage, Inji Verify vérifie l'authenticité du VC. Si elle est valide, le vérificateur confirme le statut de vérification des informations d'identification."
+    },
+    "item20": {
+      "title": "Quels types d'émetteurs d'informations d'identification sont pris en charge ?",
+      "description1": "Tout émetteur qui suit le protocole OpenID4VCI peut être approuvé dans Inji Wallet. Ces émetteurs fournissent les données nécessaires à l'émission et au téléchargement de VC."
+    },
+    "item21": {
+      "title": "Où puis-je trouver des informations plus détaillées sur les fonctionnalités introduites dans cette version ?",
+      "description1": "Consultez la <a href=\"https://docs.mosip.io/inji/inji-web/overview\" target=\"_blank\">documentation d'Inji Wallet</a> pour obtenir des étapes détaillées, des aperçus du système et des descriptions des nouvelles fonctionnalités."
+    },
+    "item22": {
+      "title": "Comment démarrer avec la fonctionnalité de partage en ligne dans Inji Wallet ?",
+      "description1": "Accédez aux VC via l'interface Web d'Inji Wallet, téléchargez et utilisez le code QR pour partager des informations d'identification en personne ou en ligne avec des vérificateurs. Détails dans le <a href=\"https://docs.mosip.io/inji/inji-web/function-overview/end-user-guide\" target=\"_blank\">guide de l'utilisateur </a>."
+    },
+    "item23": {
+      "title": "Comment puis-je basculer entre le VC intégré et le partage en ligne dans Inji Wallet ?",
+      "description1": "Configurer le qr_code_type dans les paramètres de l'émetteur Mimoto : ",
+      "description2": "1. EmbeddedVC : intègre le VC complet au format JSON (code QR plus dense) pour une utilisation hors ligne.",
+      "description3": "2. OnlineSharing : génère un code QR avec une URL vers le stockage VC en ligne, ce qui facilite la numérisation et le partage en ligne."
+    }
   },
   "DataShareExpiryModal": {
     "title": "Validité du partage",
@@ -347,7 +347,7 @@
     "success": "Procéder",
     "cancel": "Dos",
     "disclaimer": "Veuillez noter que le QR Code ne peut être partagé que le nombre de fois que vous avez choisi ici. ",
-    "toastText":"À venir"
+    "toastText": "À venir"
   },
   "CustomExpiryModal": {
     "title": "Veuillez saisir le nombre de fois que vous souhaitez utiliser cet identifiant ",
@@ -411,9 +411,29 @@
         "title": "Pas de connexion Internet",
         "message": "Veuillez vérifier votre connexion Internet et réessayer."
       }
+    },
+    "cardView": {
+      "download": "Télécharger",
+      "menu": {
+        "view": "Voir",
+        "delete": "Supprimer"
+      },
+      "error": {
+        "downloadError": "Échec du téléchargement. Veuillez réessayer.",
+        "deleteError": "Échec de la suppression. Réessayez."
+      },
+      "delete": {
+        "confirmation": {
+          "title": "Supprimer la carte !",
+          "message": "Êtes-vous sûr de vouloir supprimer cette carte ?"
+        }
+      }
     }
   },
   "Common": {
-    "home": "Maison"
+    "home": "Maison",
+    "goToHome": "Aller à l'accueil",
+    "confirm": "Confirmer",
+    "cancel": "Annuler"
   }
 }

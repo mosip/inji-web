@@ -128,7 +128,7 @@ describe('VCCardView Component', () => {
         expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
-    it('should call download api when pressing enter key', () => {
+    it('should call download api when pressing enter key for previewing VC', () => {
         fetchMock.mockResolvedValueOnce({
             ok: true,
             blob: async () => new Blob(),
@@ -148,7 +148,7 @@ describe('VCCardView Component', () => {
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock).toHaveBeenCalledWith(
-            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1?action=download"),
+            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1?action=inline"),
             expect.objectContaining({
                 "credentials": "include",
                 "headers": {"Accept": "application/pdf", "Accept-Language": "en", "Content-Type": "application/json"},

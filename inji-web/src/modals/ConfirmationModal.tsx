@@ -3,6 +3,7 @@ import {Modal} from "./Modal";
 import {SolidButton} from "../components/Common/Buttons/SolidButton";
 import {BorderedButton} from "../components/Common/Buttons/BorderedButton";
 import {ModalStyles} from "./ModalStyles";
+import {useTranslation} from "react-i18next";
 
 export const ConfirmationModal = (props: {
     title: string;
@@ -11,6 +12,7 @@ export const ConfirmationModal = (props: {
     onCancel: () => void;
     testId: string;
 }) => {
+    const {t} = useTranslation('Common')
 
     return (
         <Modal
@@ -29,14 +31,14 @@ export const ConfirmationModal = (props: {
                     <BorderedButton
                         testId={"btn-cancel"}
                         onClick={props.onCancel}
-                        title={"Cancel"}
+                        title={t('cancel')}
                         fullWidth
                         className={ModalStyles.confirmation.cancelButton}
                     />
                     <SolidButton
                         testId={"btn-confirm"}
                         onClick={props.onConfirm}
-                        title={"Confirm"}
+                        title={t('confirm')}
                         fullWidth
                     />
                 </div>

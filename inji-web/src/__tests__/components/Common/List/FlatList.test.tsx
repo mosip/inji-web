@@ -81,7 +81,7 @@ describe("FlatList Component", () => {
         const list = screen.getByTestId("flatlist");
         // Check if grid class contains responsive col definitions
         expect(list.className).toMatch(/grid-cols-1/);
-        expect(list.className).toMatch(/sm:grid-cols-1/); // 3 / 3
+        expect(list.className).toMatch(/sm:grid-cols-2/);
         expect(list.className).toMatch(/md:grid-cols-2/); // 2/3 of 3 = 2
         expect(list.className).toMatch(/lg:grid-cols-3/);
     });
