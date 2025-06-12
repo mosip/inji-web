@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../src/utils/i18n";
 import {Provider} from "react-redux";
 import {reduxStore} from "./redux/reduxStore";
-import {AppToaster} from "./components/Common/AppToaster";
+import {AppToaster} from "./components/Common/toast/AppToaster";
 import { CookiesProvider } from 'react-cookie';
 import { UserProvider } from "./hooks/useUser";
 import { BrowserRouter } from "react-router-dom";
