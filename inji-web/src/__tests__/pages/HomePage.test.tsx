@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { HomePage } from '../../pages/HomePage';
 import { toast } from 'react-toastify';
-import { AppToaster } from '../../components/Common/AppToaster';
+import { AppToaster } from '../../components/Common/toast/AppToaster';
 
 // Mock redux store
 const mockStore = {
