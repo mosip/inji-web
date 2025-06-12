@@ -214,12 +214,12 @@
   "AuthorizationPage": {
     "error": {
       "code": {
-        "invalidRedirectUri": "Accès refusé!",
-        "invalidClient": "Accès refusé!"
+        "invalid_redirect_uri": "Accès refusé!",
+        "invalid_client": "Accès refusé!"
       },
       "message": {
-        "invalidRedirectUri": "Les informations d’identification ne peuvent pas être partagées car nous n’avons pas pu identifier qui les a demandées. ",
-        "invalidClient": "Les informations d’identification ne peuvent pas être partagées car nous n’avons pas pu identifier qui les a demandées. "
+        "invalid_redirect_uri": "Les informations d’identification ne peuvent pas être partagées car nous n’avons pas pu identifier qui les a demandées. ",
+        "invalid_client": "Les informations d’identification ne peuvent pas être partagées car nous n’avons pas pu identifier qui les a demandées. "
       }
     }
   },

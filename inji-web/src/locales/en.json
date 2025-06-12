@@ -214,12 +214,12 @@
   "AuthorizationPage": {
     "error": {
       "code": {
-        "invalidRedirectUri":"Access Denied!",
-        "invalidClient": "Access Denied!"
+        "invalid_redirect_uri":"Access Denied!",
+        "invalid_client": "Access Denied!"
       },
       "message": {
-        "invalidRedirectUri":"Credentials cannot be shared because we couldn’t identify who requested them. Please contact the admin for help.",
-        "invalidClient": "Credentials cannot be shared because we couldn’t identify who requested them. Please contact the admin for help."
+        "invalid_redirect_uri":"Credentials cannot be shared because we couldn’t identify who requested them. Please contact the admin for help.",
+        "invalid_client": "Credentials cannot be shared because we couldn’t identify who requested them. Please contact the admin for help."
       }
     }
   },

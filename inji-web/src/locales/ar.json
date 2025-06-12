@@ -214,12 +214,12 @@
   "AuthorizationPage": {
     "error": {
       "code": {
-        "invalidRedirectUri": "تم الرفض!",
-        "invalidClient": "تم الرفض!"
+        "invalid_redirect_uri": "تم الرفض!",
+        "invalid_client": "تم الرفض!"
       },
       "message": {
-        "invalidRedirectUri": "لا يمكن مشاركة بيانات الاعتماد لأننا لم نتمكن من تحديد من طلبها. ",
-        "invalidClient": "لا يمكن مشاركة بيانات الاعتماد لأننا لم نتمكن من تحديد من طلبها. "
+        "invalid_redirect_uri": "لا يمكن مشاركة بيانات الاعتماد لأننا لم نتمكن من تحديد من طلبها. ",
+        "invalid_client": "لا يمكن مشاركة بيانات الاعتماد لأننا لم نتمكن من تحديد من طلبها. "
       }
     }
   },
