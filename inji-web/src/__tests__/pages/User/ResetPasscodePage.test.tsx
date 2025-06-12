@@ -5,7 +5,7 @@ import {useUser} from '../../../hooks/useUser';
 import {useCookies} from 'react-cookie';
 import {useNavigate, useLocation} from 'react-router-dom';
 import {toast} from 'react-toastify';
-import {ResetPasscodePage} from '../../../pages/User/ResetPasscode/ResetPasscodePage.tsx';
+import {ResetPasscodePage} from '../../../pages/User/ResetPasscode/ResetPasscodePage';
 
 jest.mock('react-i18next', () => {
     const translations: {[key: string]: string} = {
