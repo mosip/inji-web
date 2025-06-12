@@ -5,12 +5,12 @@ import {CredentialTypesPageStyles} from "./CredentialTypesPageStyles";
 import {useTranslation} from "react-i18next";
 import {CredentialListWrapper} from "../../../components/Credentials/CredentialListWrapper";
 
-interface RenderModalProps {
+interface DownloadStatusModalProps {
     downloadStatus: RequestStatus | null;
     state: RequestStatus;
 }
 
-export const RenderModalBasedOnDownloadStatus: React.FC<RenderModalProps> = (
+export const DownloadStatusModal: React.FC<DownloadStatusModalProps> = (
     props
 ) => {
     const {t} = useTranslation('CredentialTypesPage');

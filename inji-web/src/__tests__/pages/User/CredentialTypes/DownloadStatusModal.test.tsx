@@ -1,8 +1,8 @@
 import React from 'react';
 import {render, screen, waitFor} from '@testing-library/react';
 import {
-    RenderModalBasedOnDownloadStatus
-} from "../../../../pages/User/CredentialTypes/RenderModalBasedOnDownloadStatus";
+    DownloadStatusModal
+} from "../../../../pages/User/CredentialTypes/DownloadStatusModal";
 import {RequestStatus} from "../../../../hooks/useFetch";
 
 const mockDownloadResult = jest.fn();
@@ -67,7 +67,7 @@ describe('Testing of RenderModalBasedOnDownloadStatus -> ', () => {
         state: RequestStatus,
     ) => {
         (globalThis as any).__mockI18nLanguage__ = language;
-        render(<RenderModalBasedOnDownloadStatus downloadStatus={downloadStatus} state={state} />);
+        render(<DownloadStatusModal downloadStatus={downloadStatus} state={state} />);
     };
 
     beforeEach(() => {
