@@ -1,5 +1,5 @@
 export const StoredCardsPageStyles = {
-    container: "mx-auto sm:px-2 md:px-4 lg:px-6 pb-1 sm:pb-0 relative ml-3 sm:ml-0 flex-1 relative h-full flex flex-col",
+    container: "mx-auto sm:px-2 md:px-4 lg:px-6 pb-1 sm:pb-0 relative ml-3 sm:ml-0 flex-1 relative h-full flex flex-col w-full",
     headerContainer: "flex flex-col sm:flex-row justify-between ml-5 sm:ml-7 sm:items-center items-start mb-4 sm:mb-6 gap-4 sm:gap-0 lg:mr-20 sm:items-start sm:mr-0",
     navContainer: "flex items-start",
     titleContainer: "flex flex-col items-start mr-0.5",
