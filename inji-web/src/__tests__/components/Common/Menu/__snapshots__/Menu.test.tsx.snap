@@ -4,6 +4,7 @@ exports[`EllipsisMenu Component renders correctly and matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="relative inline-block text-left"
+    data-testid="test-view-menu"
   >
     <button
       class="p-2 hover:bg-gray-100"
