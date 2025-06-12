@@ -59,28 +59,16 @@ export const Layout: React.FC = () => {
                         ).name;
                     const {downloadStatus} = session;
 
-                    const toastId = toast(
+                    toast(
                         downloadStatus === RequestStatus.DONE ? t('VCDownload.success', {cardType: credentialTypeDisplayName}) : t('VCDownload.error', {cardType: credentialTypeDisplayName}),
                         {
                             type: downloadStatus === RequestStatus.DONE ? 'success' : 'error',
                             autoClose: 10000,
-                            onClose: () => {
-                                setLatestDownloadedSessionId(null);
-                                removeSession(latestDownloadedSessionId);
-                            },
-                            closeButton: (
-                                <CrossIconButton
-                                    onClick={() => {
-                                        toast.dismiss(toastId);
-                                        setLatestDownloadedSessionId(null);
-                                        removeSession(latestDownloadedSessionId);
-                                    }}
-                                    iconClassName={LayoutStyles.closeIcon}
-                                />
-                            ),
                             containerId: DOWNLOAD_TOAST_CONTAINER_ID
                         }
                     );
+                    setLatestDownloadedSessionId(null);
+                    removeSession(latestDownloadedSessionId);
                 }
             }
         }, [latestDownloadedSessionId, downloadInProgressSessions, setLatestDownloadedSessionId, removeSession]
@@ -97,6 +85,16 @@ export const Layout: React.FC = () => {
         return contextClassMap[type as keyof typeof contextClassMap];
     };
 
+    const handleToasterCloseButton = (closeToast: (e: React.MouseEvent<HTMLElement>) => void) => (
+        <CrossIconButton
+            onClick={(e) => {
+                e.stopPropagation();
+                closeToast(e);
+            }}
+            iconClassName={LayoutStyles.closeIcon}
+        />
+    );
+
     return (
         <div
             className="h-screen flex flex-col bg-iw-background font-base overflow-hidden w-full relative"
@@ -112,7 +110,7 @@ export const Layout: React.FC = () => {
                     zIndex: 0
                 }}
             >
-                <Sidebar />
+                <Sidebar/>
                 <div
                     className={
                         'relative flex flex-col overflow-hidden w-full transition-all duration-300'
@@ -148,6 +146,7 @@ export const Layout: React.FC = () => {
                         pauseOnFocusLoss
                         draggable
                         pauseOnHover
+                        closeButton={({closeToast}) => handleToasterCloseButton(closeToast)}
                         style={{
                             width: '400px',
                             zIndex: 1000,
