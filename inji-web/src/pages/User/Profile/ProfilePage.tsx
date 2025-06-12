@@ -55,7 +55,7 @@ export const ProfilePage: React.FC = () => {
           value={user?.displayName}
         />
         <InfoField
-          testId="value"
+          testId="email"
           label={t('ProfilePage.emailAddress')}
           value={user?.email}
         />

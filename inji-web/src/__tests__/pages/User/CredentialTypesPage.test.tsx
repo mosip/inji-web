@@ -33,20 +33,29 @@ jest.mock('../../../components/Common/Buttons/NavBackArrowButton', () => ({
   ),
 }));
 
+jest.mock('react-router-dom', () => {
+  const lib = jest.requireActual('react-router-dom');
+  return {
+    ...lib,
+    useParams:   () => ({ issuerId: 'Issuer1' }),
+    useNavigate: () => jest.fn(),
+    useLocation: () => ({ state: { from: '/somewhere' } }),
+    MemoryRouter: lib.MemoryRouter,
+  };
+});
+
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({ t: (key: string) => key }),
+  initReactI18next: {
+    type: '3rdParty',
+    init: () => {},      
+  },
+}));
+
 const mockUseSelector = useSelector as jest.MockedFunction<typeof useSelector>;
 const mockUseDispatch = useDispatch as jest.MockedFunction<typeof useDispatch>;
 const mockUseFetch = useFetch as jest.Mock;
 
-mockUseSelector.mockImplementation((selectorFn) =>
-  selectorFn({
-    language: 'en',
-    issuers: {
-      selectedIssuer: {
-        display: { name: 'Test Issuer' },
-      },
-    },
-  })
-);
 
 describe('CredentialTypesPage', () => {
   beforeEach(() => {
@@ -82,7 +91,7 @@ describe('CredentialTypesPage', () => {
     );
 
     await waitFor(() => {
-        expect(toast.error).toHaveBeenCalledWith('The service is currently unavailable now. Please try again later.');
+        expect(toast.error).toHaveBeenCalledWith('errorContent');
     });
   });
 
@@ -100,4 +109,80 @@ describe('CredentialTypesPage', () => {
 
     expect(screen.getByTestId('credential-list-container')).toBeInTheDocument();
   });
+  
+  it('renders loading snapshot', () => {
+    mockUseFetch.mockReturnValue({ state: RequestStatus.LOADING, fetchRequest: jest.fn() });
+    const { asFragment } = render(<MemoryRouter><CredentialTypesPage /></MemoryRouter>);
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('renders error snapshot + toast.error', async () => {
+    mockUseFetch.mockReturnValue({ state: RequestStatus.ERROR, fetchRequest: jest.fn() });
+    const { asFragment } = render(<MemoryRouter><CredentialTypesPage /></MemoryRouter>);
+    await waitFor(() => expect(toast.error).toHaveBeenCalledWith('errorContent'));
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('matches snapshot after data loads', async () => {
+    const fetchMock = jest.fn()
+      .mockResolvedValueOnce({ response: { display: [ { language: 'en', name: 'Issuer1' } ] }})
+      .mockResolvedValueOnce({ response: [] });
+
+    mockUseFetch.mockReturnValue({ state: RequestStatus.DONE, fetchRequest: fetchMock });
+
+    const { asFragment } = render(<MemoryRouter><CredentialTypesPage /></MemoryRouter>);
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
+    expect(screen.getByText('Issuer1')).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+//Search Credential Tests
+  it('renders SearchCredential alongside other header elements', () => {
+    mockUseFetch.mockReturnValue({
+      state: RequestStatus.DONE,
+      fetchRequest: jest.fn(),
+    });
+
+    render(
+      <MemoryRouter>
+        <CredentialTypesPage />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByTestId('search-credential-component')).toBeInTheDocument();
+    expect(screen.getByTestId('back-button')).toBeInTheDocument();
+    expect(screen.getByTestId('stored-credentials')).toBeInTheDocument();
+  });
+
+  it('maintains SearchCredential visibility across different states', () => {
+    // Test with ERROR state
+    mockUseFetch.mockReturnValue({
+      state: RequestStatus.ERROR,
+      fetchRequest: jest.fn(),
+    });
+
+    const { rerender } = render(
+      <MemoryRouter>
+        <CredentialTypesPage />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByTestId('search-credential-component')).toBeInTheDocument();
+
+    // Test with DONE state
+    mockUseFetch.mockReturnValue({
+      state: RequestStatus.DONE,
+      fetchRequest: jest.fn(),
+    });
+
+    rerender(
+      <MemoryRouter>
+        <CredentialTypesPage />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByTestId('search-credential-component')).toBeInTheDocument();
+  });
+
 });

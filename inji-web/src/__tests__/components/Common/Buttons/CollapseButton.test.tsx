@@ -1,11 +1,8 @@
-import React from 'react';
+import {setMockUseSelectorState} from '../../../../test-utils/mockUtils';
 import { render, fireEvent } from '@testing-library/react';
 import { useSelector } from 'react-redux';
 import { CollapseButton } from '../../../../components/Common/Buttons/CollapseButton';
 import * as i18nUtils from '../../../../utils/i18n';
-jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
-}));
 
 jest.mock('../../../../assets/CollapseIcon.svg', () => 'mock-icon.svg');
 
@@ -14,6 +11,9 @@ describe('CollapseButton', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    setMockUseSelectorState({
+      common: { language: 'en' }
+    });
   });
 
   it('renders with default class and calls onClick when clicked', () => {

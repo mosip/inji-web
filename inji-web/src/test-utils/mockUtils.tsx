@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { reduxStore } from '../redux/reduxStore';
 import { UserProvider } from '../hooks/useUser';
+import { useSelector } from 'react-redux';
 
 // Mock for storage module
 export const mockStorageModule = () => {
@@ -61,20 +62,23 @@ export const mockUseTranslation = () => {
     }));
 };
 
-export const mockUseNavigate = () => {
-    const mockNavigate = jest.fn();
-    jest.mock('react-router-dom', () => ({
-        ...jest.requireActual('react-router-dom'),
-        useNavigate: mockNavigate,
-    }));
+export const mockUseNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockUseNavigate,
+    useLocation: jest.fn(),
+    Outlet: () => <div data-testid="Outlet">Page content</div>,
+}));
+
+export const setMockUseNavigateReturnValue = (returnValue: any) => {
+    mockUseNavigate.mockReturnValue(returnValue);
 };
 
-export const mockUseSelector = () => {
-    jest.mock('react-redux', () => ({
-        ...jest.requireActual('react-redux'),
-        useSelector: jest.fn(),
+export const mockUseSelector = jest.fn();
+jest.mock('react-redux', () => ({
+    ...jest.requireActual('react-redux'),
+    useSelector: jest.fn(),
     }));
-};
 
 export const setMockUseSelectorState = (state: any) => {
     const useSelectorMock = require('react-redux').useSelector;

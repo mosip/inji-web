@@ -1,3 +1,4 @@
+import { setMockUseSelectorState } from '../../../test-utils/mockUtils';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import { Header } from '../../../components/User/Header';
 import { useNavigate } from 'react-router-dom';
@@ -115,7 +116,6 @@ describe('Header', () => {
     fireEvent.click(getByTestId('profile-details').querySelector('svg')!);
     const profileOption = getByText('ProfileDropdown.profile');
     fireEvent.click(profileOption);
-// Legal?
     expect(mockNavigate).toHaveBeenCalledWith('/user/profile', {
       state: { from: window.location.pathname },
     });

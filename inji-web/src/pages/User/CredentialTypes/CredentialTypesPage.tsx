@@ -108,7 +108,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
                         </button>
                     </div>
                 </div>
-                <div>
+                <div data-testid="search-credential-component">
                     <SearchCredential
                         issuerContainerBorderRadius={'rounded-md'}
                     />

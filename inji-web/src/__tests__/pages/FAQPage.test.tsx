@@ -18,7 +18,7 @@ jest.mock('react-router-dom', () => ({
 jest.mock('../../utils/navigationUtils', () => ({
   navigateToUserHome: jest.fn(),
 }));
-// is it correct?
+
 jest.mock('../../components/Common/PageTitle/PageTitle', () => ({
   PageTitle: ({ value, testId }: { value: string; testId?: string }) => (
     <h1 data-testid={testId}>{value}</h1>

@@ -1,11 +1,8 @@
+import {setMockUseSelectorState } from '../../../test-utils/mockUtils';
 import { render, screen, act } from '@testing-library/react';
 import { Layout } from '../../../components/User/Layout';
 import { useSelector } from 'react-redux';
 import * as i18n from '../../../utils/i18n';
-
-jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
-}));
 
 jest.mock('../../../components/User/Header', () => ({
   Header: ({ headerRef, headerHeight }: any) => (
@@ -40,7 +37,7 @@ jest.mock('../../../assets/DashboardBgBottom.svg', () => 'mock-dashboard-bg-bott
 
 describe('Layout component', () => {
   beforeEach(() => {
-    (useSelector as unknown as jest.Mock).mockReturnValue('en');
+    setMockUseSelectorState({ common: { language: 'en' } });
     (i18n.getDirCurrentLanguage as jest.Mock).mockReturnValue('ltr');
   });
 
@@ -81,5 +78,55 @@ describe('Layout component', () => {
 
     expect(header).toBeInTheDocument();
     expect(footer).toBeInTheDocument();
+  });
+
+   // Snapshot test for the default (ltr) language rendering of Layout
+   it('matches snapshot for default language', () => {
+    const { container } = render(<Layout />);
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  // Snapshot test for RTL language rendering of Layout
+  it('matches snapshot for rtl language', () => {
+    (i18n.getDirCurrentLanguage as jest.Mock).mockReturnValue('rtl');
+    const { container } = render(<Layout />);
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  // Snapshot test after simulating a resize that updates header and footer heights
+  it('matches snapshot after header and footer heights update on resize', () => {
+    const { container } = render(<Layout />);
+
+    const header = screen.getByTestId('Header');
+    const footer = screen.getByTestId('Footer');
+
+    // Set DOM rects for header and footer to specific heights
+    jest.spyOn(header, 'getBoundingClientRect').mockReturnValue({
+      height: 80,
+      width: 0,
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      x: 0,
+      y: 0,
+      toJSON: () => {},
+    });
+    jest.spyOn(footer, 'getBoundingClientRect').mockReturnValue({
+      height: 60,
+      width: 0,
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      x: 0,
+      y: 0,
+      toJSON: () => {},
+    });
+
+    act(() => {
+      window.dispatchEvent(new Event('resize'));
+    });
+    expect(container.firstChild).toMatchSnapshot();
   });
 });

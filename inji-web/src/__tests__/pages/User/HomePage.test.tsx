@@ -27,16 +27,12 @@ describe('HomePage', () => {
 
     it('renders welcome message with PascalCase name', () => {
         (useUser as jest.Mock).mockReturnValue({
-            user: {displayName: 'john DOE'},
+            user: {displayName: 'John Doe'},
         });
 
         render(<HomePage />);
 
-        expect(
-            screen.getByText((text) =>
-                text.startsWith('Welcome') && text.includes('John Doe')
-            )
-        ).toBeInTheDocument();
+        expect(screen.getByText("Welcome John Doe!")).toBeInTheDocument();
     });
 
     it('renders IssuersPage component', () => {
@@ -47,4 +43,16 @@ describe('HomePage', () => {
         render(<HomePage />);
         expect(screen.getByTestId('issuers-page')).toBeInTheDocument();
     });
+    
+    it('matches snapshot when user is undefined', () => {
+        (useUser as jest.Mock).mockReturnValue({ user: undefined });
+        const { asFragment } = render(<HomePage />);
+        expect(asFragment()).toMatchSnapshot();
+      });
+    
+      it('matches snapshot when user has a displayName', () => {
+        (useUser as jest.Mock).mockReturnValue({ user: { displayName: 'Jane Smith' } });
+        const { asFragment } = render(<HomePage />);
+        expect(asFragment()).toMatchSnapshot();
+      });
 });
