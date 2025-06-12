@@ -6,7 +6,7 @@ export const StoredCardsPageStyles = {
     homeButton: "text-xs sm:text-sm text-[#5B03AD] cursor-pointer",
     buttonContainer: {
         large: "hidden sm:block mr-4 md:mr-2 lg:mr-2",
-        mobile: "flex-shrink-0 px-6 pr-2 py-0 mt-2 z-10 block my:2 sm:hidden",
+        mobile: "flex-shrink-0 px-6 pr-2 py-0 mt-2 z-10 block sm:hidden",
     },
     loaderContainer: "flex items-center justify-center min-h-screen w-full",
     contentContainer: "mx-auto w-full relative h-full min-h-0 flex flex-col sm:px-4",

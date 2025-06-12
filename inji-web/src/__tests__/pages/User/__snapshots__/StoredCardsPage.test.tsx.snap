@@ -688,7 +688,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
         </div>
       </div>
       <div
-        class="flex-shrink-0 px-6 pr-2 py-0 mt-2 z-10 block my:2 sm:hidden"
+        class="flex-shrink-0 px-6 pr-2 py-0 mt-2 z-10 block sm:hidden"
       >
         <div
           class=""
