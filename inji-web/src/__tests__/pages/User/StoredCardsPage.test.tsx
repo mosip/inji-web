@@ -7,7 +7,7 @@ import {
     mockUseTranslation,
     renderWithRouter
 } from '../../../test-utils/mockUtils';
-import {KEYS} from "../../../utils/constants.ts";
+import {KEYS} from "../../../utils/constants";
 
 mockUseTranslation()
 mockApiObject()
@@ -270,8 +270,8 @@ describe('Testing of StoredCardsPage ->', () => {
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance()
 
-        expect(screen.getByText("No Internet Connection")).toBeInTheDocument();
-        expect(screen.getByText('Please check your internet connection and try again.')).toBeInTheDocument();
+        expect(screen.getByText("Something Went Wrong")).toBeInTheDocument();
+        expect(screen.getByText('An unexpected error occurred. Please refresh the page or try again shortly.')).toBeInTheDocument();
     });
 
     it('should filter credentials when using search bar', async () => {

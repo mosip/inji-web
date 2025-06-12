@@ -196,7 +196,7 @@ export function VCCardView(props: Readonly<{
             <div className={VCStyles.cardView.actionsContainer}>
                 <DownloadIcon onClick={handleDownload}
                               testId={"icon-download"}
-                              style={{color: "#707070"}}
+                              style={{color: "var(--iw-color-grayMedium)"}}
                               className={VCStyles.cardView.downloadIcon}/>
                 <EllipsisMenu
                     testId={"mini-view-card"}

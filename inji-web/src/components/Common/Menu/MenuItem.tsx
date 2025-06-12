@@ -1,4 +1,5 @@
 import React from "react";
+import {MenuStyles} from "./MenuStyles";
 
 interface MenuItemProps {
     label: string;
@@ -15,13 +16,14 @@ export const MenuItem: React.FC<MenuItemProps> = ({label, onClick, testId, icon,
                 event.stopPropagation();
                 onClick()
             }}
-            className="w-full text-left px-4 py-2 text-sm text-gray-700 border-b border-[#EBF0FB] hover:bg-[#F2F6FF] last:border-b-0"
+            className={MenuStyles.menuItem.base}
             data-testid={`menu-item-${testId}`}
             role="menuitem"
         >
-            <div className={"flex flex-row items-center gap-2"}>
-                {icon && <span className="flex-shrink-0">{icon}</span>}
-                <span data-testid={`label-${testId}`} className="block" style={{color: color}}>{label}</span>
+            <div className={MenuStyles.menuItem.menuItemWrapper}>
+                {icon && <span className={MenuStyles.menuItem.icon}>{icon}</span>}
+                <span data-testid={`label-${testId}`} className={MenuStyles.menuItem.label}
+                      style={{color: color}}>{label}</span>
             </div>
         </button>
     );
