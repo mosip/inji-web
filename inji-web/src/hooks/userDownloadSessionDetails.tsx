@@ -1,6 +1,7 @@
 import React, {createContext, Dispatch, SetStateAction, useContext, useState, useMemo} from "react";
 import {RequestStatus} from "./useFetch";
 import {CredentialTypeDisplayArrayObject} from "../types/data";
+import {generateRandomString} from "../utils/misc";
 
 export interface SessionStatus {
     credentialTypeDisplayObj: CredentialTypeDisplayArrayObject[];
@@ -30,7 +31,7 @@ export const DownloadSessionProvider: React.FC<{ children: React.ReactNode }> = 
     const [latestDownloadedSessionId, setLatestDownloadedSessionId] = useState<string | null>(null);
 
     const generateUniqueDownloadId = (): string => {
-        return Date.now().toString(36) + Math.random().toString(36).substring(2);
+        return Date.now().toString(36) + generateRandomString();
     };
 
     const addSession = (
