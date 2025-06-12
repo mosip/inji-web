@@ -181,7 +181,8 @@ export class api {
                 "Content-Type": ContentTypes.JSON,
                 "Accept-Language": locale,
             };
-        }
+        },
+        credentials: "include"
     };
 
     static fetchWalletCredentialPreview: ApiRequest = {

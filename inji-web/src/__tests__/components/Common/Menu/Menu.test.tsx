@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { EllipsisMenu } from '../../../../components/Common/Menu/EllipsisMenu';
+import {Menu} from "../../../../components/Common/Menu/Menu";
 
 describe('EllipsisMenu Component', () => {
     const mockMenuItems = [
@@ -12,31 +12,32 @@ describe('EllipsisMenu Component', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
+    
+    const triggerComponent = <span data-testid="trigger-menu">...</span>;
 
-    //TODO: Unskip this test when the feature is fully implemented to avoid snapshot mismatch
-    it.skip('renders correctly and matches snapshot', () => {
-        const { asFragment } = render(<EllipsisMenu menuItems={mockMenuItems} testId={"test-view"}/>);
+    it('renders correctly and matches snapshot', () => {
+        const { asFragment } = render(<Menu triggerComponent={triggerComponent} menuItems={mockMenuItems} testId={"test-view"}/>);
         expect(asFragment()).toMatchSnapshot();
     });
 
     it('renders the ellipsis button', () => {
-        render(<EllipsisMenu menuItems={mockMenuItems} testId={"test-view"}/>);
+        render(<Menu triggerComponent={triggerComponent} menuItems={mockMenuItems} testId={"test-view"}/>);
 
-        const button = screen.getByTestId('icon-three-dots-menu');
+        const button = screen.getByTestId('trigger-menu');
 
         expect(button).toBeInTheDocument();
     });
 
     it('does not show menu items when initially rendered', () => {
-        render(<EllipsisMenu menuItems={mockMenuItems} testId={"test-view"}/>);
+        render(<Menu triggerComponent={triggerComponent} menuItems={mockMenuItems} testId={"test-view"}/>);
 
         expect(screen.queryByRole('menu')).not.toBeInTheDocument();
     });
 
     it('shows menu items when button is clicked', () => {
-        render(<EllipsisMenu menuItems={mockMenuItems} testId={"test-view"}/>);
+        render(<Menu triggerComponent={triggerComponent} menuItems={mockMenuItems} testId={"test-view"}/>);
 
-        const button = screen.getByTestId('icon-three-dots-menu');
+        const button = screen.getByTestId('trigger-menu');
         fireEvent.click(button);
 
         const menu = screen.getByRole('menu');
@@ -49,9 +50,9 @@ describe('EllipsisMenu Component', () => {
     });
 
     it('calls the onClick handler and closes menu when a menu item is clicked', () => {
-        render(<EllipsisMenu menuItems={mockMenuItems} testId={"test-view"}/>);
+        render(<Menu triggerComponent={triggerComponent} menuItems={mockMenuItems} testId={"test-view"}/>);
 
-        const button = screen.getByTestId('icon-three-dots-menu');
+        const button = screen.getByTestId('trigger-menu');
         fireEvent.click(button);
 
         const editMenuItem = screen.getByTestId('menu-item-edit');
@@ -63,9 +64,9 @@ describe('EllipsisMenu Component', () => {
     });
 
     it('toggles menu visibility when button is clicked multiple times', () => {
-        render(<EllipsisMenu menuItems={mockMenuItems} testId={"test-view"}/>);
+        render(<Menu triggerComponent={triggerComponent} menuItems={mockMenuItems} testId={"test-view"}/>);
 
-        const button = screen.getByTestId('icon-three-dots-menu');
+        const button = screen.getByTestId('trigger-menu');
 
         // Initially not visible
         expect(screen.queryByRole('menu')).not.toBeInTheDocument();
@@ -82,11 +83,11 @@ describe('EllipsisMenu Component', () => {
 
         render(
             <div onClick={mockContainerClick}>
-            <EllipsisMenu menuItems={mockMenuItems} testId={"test-view"}/>
+            <Menu triggerComponent={triggerComponent} menuItems={mockMenuItems} testId={"test-view"}/>
         </div>
     );
 
-        const button = screen.getByTestId('icon-three-dots-menu');
+        const button = screen.getByTestId('trigger-menu');
         fireEvent.click(button);
 
         expect(mockContainerClick).not.toHaveBeenCalled();
@@ -96,12 +97,12 @@ describe('EllipsisMenu Component', () => {
         render(
             <div>
                 <div data-testid="outside-element">Outside</div>
-                <EllipsisMenu menuItems={mockMenuItems} testId={"test-view"}/>
+                <Menu triggerComponent={triggerComponent} menuItems={mockMenuItems} testId={"test-view"}/>
         </div>
     );
 
         // Open the menu
-        const button = screen.getByTestId('icon-three-dots-menu');
+        const button = screen.getByTestId('trigger-menu');
         fireEvent.click(button);
         // Menu should be visible
         expect(screen.getByRole('menu')).toBeInTheDocument();
@@ -114,9 +115,9 @@ describe('EllipsisMenu Component', () => {
     });
 
     it('does not close the menu when clicking inside the menu', () => {
-        render(<EllipsisMenu menuItems={mockMenuItems} testId={"test-view"}/>);
+        render(<Menu triggerComponent={triggerComponent} menuItems={mockMenuItems} testId={"test-view"}/>);
         // Open the menu
-        const button = screen.getByTestId('icon-three-dots-menu');
+        const button = screen.getByTestId('trigger-menu');
         fireEvent.click(button);
         // Click on the menu container (not on a menu item)
         const menu = screen.getByRole('menu');

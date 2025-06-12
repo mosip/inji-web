@@ -172,7 +172,6 @@ describe('Testing of StoredCardsPage ->', () => {
         expect(screen.getByText("You haven't downloaded any cards yet. Tap \"Add Cards\" to get started.")).toBeInTheDocument();
     });
 
-    // write a table test for the error cases, error message to returned for json and status code + response to be expected in screen are configurable
     const errorScenarios = [
         {
             name: 'internal server error',
@@ -262,6 +261,18 @@ describe('Testing of StoredCardsPage ->', () => {
 
         expect(screen.getByText(expectedTitle)).toBeInTheDocument();
         expect(screen.getByText(expectedMessage)).toBeInTheDocument();
+    });
+
+    it('should redirect to root page when response is unAuthorized', () => {
+        (global.fetch as jest.Mock).mockResolvedValueOnce({
+            ok: false,
+            status: 401,
+            json: async () => ({errorMessage: 'Unauthorized'}),
+        });
+
+        renderWithRouter(<StoredCardsPage/>);
+
+        expect(window.location.pathname).toBe('/');
     });
 
     it('should display network error message when network error occurs', async () => {
@@ -359,6 +370,54 @@ describe('Testing of StoredCardsPage ->', () => {
                 "method": "GET"
             })
         );
+    });
+
+    it('should delete credential and call fetch all credentials api again when user deletes a card', async () => {
+        const mockDeleteResponse = {
+            ok: true,
+            json: async () => ({message: 'Credential deleted successfully'}),
+        };
+
+        (global.fetch as jest.Mock)
+            .mockResolvedValueOnce({
+                ok: true,
+                json: async () => mockCredentials,
+            })
+            .mockResolvedValueOnce(mockDeleteResponse)
+            .mockResolvedValueOnce({
+                ok: true,
+                json: async () => [mockCredentials[1]],
+            });
+
+        renderWithRouter(<StoredCardsPage/>);
+        await waitForLoaderDisappearance();
+
+        let menu = screen.getAllByTestId("icon-three-dots-menu")[0];
+        fireEvent.click(menu);
+        expect(screen.getByRole("menu")).toBeInTheDocument()
+        const deleteButton = screen.getByTestId('icon-download-menu');
+        fireEvent.click(deleteButton);
+        fireEvent.click(screen.getByRole('button', {name: "Confirm"}));
+        expect(global.fetch).toHaveBeenCalledWith(
+            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1"),
+            expect.objectContaining({
+                "credentials": "include",
+                "headers": {"Accept-Language": "en"},
+                "method": "DELETE"
+            })
+        );
+
+        // Check if fetch for all credentials is called again
+        expect(global.fetch).toHaveBeenCalledWith(
+            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials"),
+            expect.objectContaining({
+                "credentials": "include",
+                "headers": {"Accept-Language": "en"},
+                "method": "GET"
+            })
+        );
+        expect(screen.queryByText('Drivers License')).not.toBeInTheDocument();
+        expect(screen.getByText('Health Card')).toBeInTheDocument();
     });
 
     async function waitForLoaderDisappearance() {

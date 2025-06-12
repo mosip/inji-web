@@ -106,7 +106,9 @@ describe('VCCardView Component', () => {
         expect(name).toHaveTextContent('Drivers License');
     });
 
-    it('should call download api when clicked on card', () => {
+    //Preview of Card
+
+    it('should call download api when clicked on card for previewing VC', () => {
         fetchMock.mockResolvedValueOnce({
             ok: true,
             blob: async () => new Blob(),
@@ -200,7 +202,116 @@ describe('VCCardView Component', () => {
         );
     })
 
+    it("should show error when preview fails", async () => {
+        fetchMock.mockRejectedValueOnce({
+            ok: false,
+            status: 500,
+        });
+
+        renderWithProvider(
+            <VCCardView
+                refreshCredentials={refreshCredentialsMock}
+                credential={mockCredential}
+            />
+        );
+
+        const threeDotsMenu = screen.getByTestId('icon-three-dots-menu');
+        fireEvent.click(threeDotsMenu);
+
+        const viewOption = screen.getByTestId('menu-item-view');
+        fireEvent.click(viewOption);
+
+        await waitFor(() => {
+            expect(toast.error).toBeCalled()
+        })
+        expect(toast.error).toHaveBeenCalledWith("Download failed. Please retry.")
+    });
+
+    it('should redirect to root page when user clicks on preview an unauthorized access is detetected', () => {
+        fetchMock.mockResolvedValueOnce({
+            ok: false,
+            status: 401,
+        });
+
+        renderWithProvider(
+            <VCCardView
+                refreshCredentials={refreshCredentialsMock}
+                credential={mockCredential}
+            />
+        );
+
+        const card = screen.getByTestId("vc-card-view");
+        fireEvent.click(card);
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(window.location.href).toBe("http://localhost/");
+    });
+
+    it("should show the content given by the preview API when clicked on the card", async () => {
+        fetchMock.mockResolvedValueOnce({
+            ok: true,
+            blob: async () => new Blob(['{"Name": "John"}'], {type: "application/pdf"}),
+        });
+
+        renderWithProvider(
+            <VCCardView
+                refreshCredentials={refreshCredentialsMock}
+                credential={mockCredential}
+            />
+        );
+
+        const card = screen.getByTestId("vc-card-view");
+        fireEvent.click(card);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+
+        await waitFor(() => {
+            expect(screen.getByText("Name:Simon")).toBeInTheDocument()
+        });
+    })
+
     // Tests for menu interactions
+
+    it("should show error when download fails", async () => {
+        fetchMock.mockRejectedValueOnce({
+            ok: false,
+            status: 500,
+        });
+
+        renderWithProvider(
+            <VCCardView
+                refreshCredentials={refreshCredentialsMock}
+                credential={mockCredential}
+            />
+        );
+
+        const downloadIcon = screen.getByTestId('icon-download');
+        fireEvent.click(downloadIcon);
+
+        await waitFor(() => {
+            expect(toast.error).toBeCalled()
+        })
+        expect(toast.error).toHaveBeenCalledWith("Download failed. Please retry.")
+    })
+
+    it('should redirect to root page when user downloads card but response is unauthorized', () => {
+        fetchMock.mockResolvedValueOnce({
+            ok: false,
+            status: 401,
+        });
+
+        renderWithProvider(
+            <VCCardView
+                refreshCredentials={refreshCredentialsMock}
+                credential={mockCredential}
+            />
+        );
+
+        const downloadIcon = screen.getByTestId('icon-download');
+        fireEvent.click(downloadIcon);
+
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(window.location.href).toBe("http://localhost/");
+    });
 
     it('should open three dots menu with the relevant option when clicked on 3 dots menu', () => {
         renderWithProvider(
@@ -301,28 +412,6 @@ describe('VCCardView Component', () => {
         expect(fetchMock).not.toBeCalled()
     });
 
-    it("should show error when download fails", async () => {
-        fetchMock.mockRejectedValueOnce({
-            ok: false,
-            status: 500,
-        });
-
-        renderWithProvider(
-            <VCCardView
-                refreshCredentials={refreshCredentialsMock}
-                credential={mockCredential}
-            />
-        );
-
-        const downloadIcon = screen.getByTestId('icon-download');
-        fireEvent.click(downloadIcon);
-
-        await waitFor(() => {
-            expect(toast.error).toBeCalled()
-        })
-        expect(toast.error).toHaveBeenCalledWith("Download failed. Please retry.")
-    })
-
     it("should show error when delete fails", async () => {
         fetchMock.mockRejectedValueOnce({
             ok: false,
@@ -350,10 +439,10 @@ describe('VCCardView Component', () => {
         expect(toast.error).toHaveBeenCalledWith("Failed to delete. Try again.")
     });
 
-    it("should show error when preview fails", async () => {
-        fetchMock.mockRejectedValueOnce({
+    it('should redirect to root page when user deletes card but response is unauthorized access', () => {
+        fetchMock.mockResolvedValueOnce({
             ok: false,
-            status: 500,
+            status: 401,
         });
 
         renderWithProvider(
@@ -366,39 +455,14 @@ describe('VCCardView Component', () => {
         const threeDotsMenu = screen.getByTestId('icon-three-dots-menu');
         fireEvent.click(threeDotsMenu);
 
-        const viewOption = screen.getByTestId('menu-item-view');
-        fireEvent.click(viewOption);
+        const deleteOption = screen.getByTestId('menu-item-delete');
+        fireEvent.click(deleteOption);
+        const confirmButton = screen.getByRole('button', {name: 'Confirm'});
+        fireEvent.click(confirmButton);
 
-        await waitFor(() => {
-            expect(toast.error).toBeCalled()
-        })
-        expect(toast.error).toHaveBeenCalledWith("Download failed. Please retry.")
-    });
-
-
-    it.todo("should close the preview of credential when clicked on close icon in preview modal")
-
-    it("should show the content given by the preview API when clicked on the card", async () => {
-        fetchMock.mockResolvedValueOnce({
-            ok: true,
-            blob: async () => new Blob(['{"Name": "John"}'], {type: "application/pdf"}),
-        });
-
-        renderWithProvider(
-            <VCCardView
-                refreshCredentials={refreshCredentialsMock}
-                credential={mockCredential}
-            />
-        );
-
-        const card = screen.getByTestId("vc-card-view");
-        fireEvent.click(card);
         expect(fetchMock).toHaveBeenCalledTimes(1);
-
-        await waitFor(() => {
-            expect(screen.getByText("Name:Simon")).toBeInTheDocument()
-        });
-    })
+        expect(window.location.href).toBe("http://localhost/");
+    });
 
     function assertMenuItem(text: string, testId: string) {
         expect(screen.getByText(text)).toBeInTheDocument();

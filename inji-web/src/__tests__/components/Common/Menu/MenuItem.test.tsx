@@ -11,8 +11,7 @@ describe('MenuItem Component', () => {
     mockOnClick.mockClear();
   });
 
-  //TODO: Unskip this test when the feature is fully implemented to avoid snapshot mismatch
-  it.skip('renders correctly and matches snapshot', () => {
+  it('renders correctly and matches snapshot', () => {
     const { asFragment } = render(
       <MenuItem label={label} onClick={mockOnClick} testId={testId} />
     );

@@ -586,6 +586,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
               </svg>
               <div
                 class="relative inline-block text-left"
+                data-testid="mini-view-card-menu"
               >
                 <button
                   class="p-2 hover:bg-gray-100"
@@ -657,6 +658,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
               </svg>
               <div
                 class="relative inline-block text-left"
+                data-testid="mini-view-card-menu"
               >
                 <button
                   class="p-2 hover:bg-gray-100"

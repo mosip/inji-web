@@ -14,6 +14,7 @@ interface ModalProps {
     children: React.ReactNode;
     action?: React.ReactNode;
     size?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
+    testId: string;
 }
 
 /**
@@ -26,7 +27,7 @@ interface ModalProps {
  *      - container block for smaller screens
  * 2. Serves a responsive modal which can be used to wrap any content as per need
  */
-export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, title, size}) => {
+export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, title, size, testId}) => {
     if (!isOpen) return null;
 
     const modalSize = size ? `min-h-${size}` : "h-[83vh] w-[90vw] sm:w-[70vw] sm:h-[80vh]"
@@ -35,7 +36,7 @@ export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, 
         <Clickable
             className={ModalStyles.modal.overlay}
             onClick={onClose}
-            testId={"modal-overlay"}
+            testId={`${testId}-modal-overlay`}
         >
             <dialog
                 className={`${ModalStyles.modal.container} ${modalSize}`}

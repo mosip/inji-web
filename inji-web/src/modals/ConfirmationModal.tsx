@@ -19,6 +19,7 @@ export const ConfirmationModal = (props: {
             isOpen={true}
             onClose={props.onCancel}
             size="md"
+            testId={`${props.testId}-confirmation`}
         >
             <div className={ModalStyles.confirmation.container}>
                             <span data-testid={`title-${props.testId}`} className={ModalStyles.confirmation.title}>

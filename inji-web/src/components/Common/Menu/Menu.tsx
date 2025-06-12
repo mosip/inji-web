@@ -37,7 +37,7 @@ export const Menu: React.FC<MenuProps> = ({triggerComponent, menuItems, testId})
 
 
     return (
-        <div className={MenuStyles.menu.container}>
+        <div className={MenuStyles.menu.container} data-testid={`${testId}-menu`}>
             <button
                 className={MenuStyles.menu.button}
                 ref={buttonRef}
