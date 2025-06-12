@@ -1,5 +1,5 @@
 import {toast} from 'react-toastify';
-import {showToast} from "../../../../components/Common/toast/ToastWrapper";
+import {showToast} from '../../../../components/Common/toast/ToastWrapper';
 
 jest.mock('react-toastify', () => {
     const actual = jest.requireActual('react-toastify');
