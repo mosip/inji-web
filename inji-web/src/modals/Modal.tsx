@@ -11,6 +11,7 @@ interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
     title?: string;
+    titleTestId?: string;
     children: React.ReactNode;
     action?: React.ReactNode;
     size?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
@@ -27,7 +28,7 @@ interface ModalProps {
  *      - container block for smaller screens
  * 2. Serves a responsive modal which can be used to wrap any content as per need
  */
-export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, title, size, testId}) => {
+export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, title, size, testId, titleTestId}) => {
     if (!isOpen) return null;
 
     const modalSize = size ? `min-h-${size}` : "h-[83vh] w-[90vw] sm:w-[70vw] sm:h-[80vh]"
@@ -36,7 +37,7 @@ export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, 
         <Clickable
             className={ModalStyles.modal.overlay}
             onClick={onClose}
-            testId={`${testId}-modal-overlay`}
+            testId={testId}
         >
             <dialog
                 className={`${ModalStyles.modal.container} ${modalSize}`}
@@ -49,9 +50,10 @@ export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, 
                     title && (
                         <Fragment>
                             <div className={ModalStyles.modal.header.wrapper}>
-                                <BackArrowButton onClick={onClose}/>
-                                <PageTitle value={title} testId={"title-modal"}/>
+                                <BackArrowButton onClick={onClose} btnTestId={"btn-back"}/>
+                                <PageTitle value={title} testId={titleTestId ?? `title-${testId}`}/>
                                 <CloseIconButton
+                                    btnTestId={"btn-close"}
                                     onClick={onClose}
                                     btnClassName={ModalStyles.modal.header.closeButton}
                                 />
@@ -62,7 +64,7 @@ export const Modal: React.FC<ModalProps> = ({isOpen, onClose, children, action, 
                 }
 
                 <div className={ModalStyles.modal.content.wrapper}>
-                    <div className={ModalStyles.modal.content.container}>
+                    <div className={ModalStyles.modal.content.container} data-testid={`${testId}-content`}>
                         {children}
                     </div>
 

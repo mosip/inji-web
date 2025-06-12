@@ -5,35 +5,41 @@ exports[`ResponsiveIconButtonWithText Component matches snapshot with default pr
   <div
     class="flex items-center space-x-2 w-full"
   >
-    <div
-      class="w-full"
+    <span
+      class=" w-full"
+      data-testid="small-device-view"
     >
       <div
-        class="w-full bg-iw-primary text-center cursor-pointer items-center text-iw-text font-bold text-sm px-6 py-3 rounded-lg shadow hover:shadow-lg mr-1  bg-gradient-to-r from-iw-primary to-iw-secondary sm:hidden"
+        class="w-full"
       >
-        <button
-          class="text-white font-bold rounded-lg"
-          data-testid="btn-responsive-button"
+        <div
+          class="w-full bg-iw-primary text-center cursor-pointer items-center text-iw-text font-bold text-sm px-6 py-3 rounded-lg shadow hover:shadow-lg mr-1  bg-gradient-to-r from-iw-primary to-iw-secondary sm:hidden"
         >
-          <div
-            class="flex items-center justify-center gap-1.5"
+          <button
+            class="text-white font-bold rounded-lg"
+            data-testid="btn-responsive-button"
           >
-            <span>
-              <div
-                data-testid="test-icon"
-              >
-                Icon
-              </div>
-            </span>
-            <span>
-              Download
-            </span>
-          </div>
-        </button>
+            <div
+              class="flex items-center justify-center gap-1.5"
+            >
+              <span>
+                <div
+                  data-testid="test-icon"
+                >
+                  Icon
+                </div>
+              </span>
+              <span>
+                Download
+              </span>
+            </div>
+          </button>
+        </div>
       </div>
-    </div>
+    </span>
     <div
       class="hidden sm:flex items-center space-x-2"
+      data-testid="non-small-device-view"
     >
       <div
         class="rounded-xl bg-gradient-to-r from-iw-primary to-iw-secondary p-[2px] transition-all duration-200 ease-in-out"
@@ -41,7 +47,7 @@ exports[`ResponsiveIconButtonWithText Component matches snapshot with default pr
         <button
           aria-label="Gradient Icon Button"
           class="flex items-center justify-center w-10 h-10 rounded-xl shadow border-none bg-[#FBF2EF] transition-all duration-200 ease-in-out "
-          data-testid="btn-responsive-button-icon"
+          data-testid="btn-responsive-button"
         >
           <div
             data-testid="test-icon"

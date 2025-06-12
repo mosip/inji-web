@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {SolidButton} from "./SolidButton";
 import {IconProps} from "../../../types/components";
+import {ButtonStyles} from "./ButtonStyles";
 
 interface ResponsiveIconButtonWithTextProps {
     icon: React.ReactElement<IconProps>;
@@ -22,36 +23,41 @@ export const ResponsiveIconButtonWithText: React.FC<ResponsiveIconButtonWithText
                                                                                               testId
                                                                                           }) => {
     const [isHovered, setIsHovered] = useState(false);
-    const enhancedIcon =React.isValidElement(icon) ? React.cloneElement(icon, {
+    const enhancedIcon = React.isValidElement(icon) ? React.cloneElement(icon, {
         gradient: !isHovered,
         style: {
             color: isHovered ? "#FFFFFF" : "var(--iw-color-grayMedium)",
         }
-    }): icon;
+    }) : icon;
 
     return (
-        <div
-            className="flex items-center space-x-2 w-full"
-        >
+        <div className={ButtonStyles.responsiveButtonWithText.container}>
             {/* Small screens: icon + text */}
-            <SolidButton className={"sm:hidden"} testId={`btn-${testId}`} onClick={onClick} title={text} icon={icon}
-                         fullWidth/>
+            <span data-testid={"small-device-view"} className={ButtonStyles.responsiveButtonWithText.smallDeviceView}>
+                <SolidButton
+                    className={ButtonStyles.responsiveButtonWithText.smallDeviceButton}
+                    testId={`btn-${testId}`}
+                    onClick={onClick}
+                    title={text}
+                    icon={icon}
+                    fullWidth
+                />
+            </span>
 
             {/* Large screens: icon button + text as separate element */}
-            <div className="hidden sm:flex items-center space-x-2">
+            <div className={ButtonStyles.responsiveButtonWithText.largeDeviceContainer} data-testid={`non-small-device-view`}>
                 {isHovered && (
-                    <SolidButton testId={`btn-${testId}`} onClick={onClick} title={text}/>
+                    <SolidButton testId={`btn-${testId}-hover-view`} onClick={onClick} title={text}/>
                 )}
 
-                <div
-                    className="rounded-xl bg-gradient-to-r from-iw-primary to-iw-secondary p-[2px] transition-all duration-200 ease-in-out">
+                <div className={ButtonStyles.responsiveButtonWithText.gradientContainer}>
                     <button
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
-                        className={`flex items-center justify-center w-10 h-10 rounded-xl shadow border-none bg-[#FBF2EF] transition-all duration-200 ease-in-out ${isHovered ? "bg-gradient-to-r from-iw-primary to-iw-secondary " : ""}`}
+                        className={`${ButtonStyles.responsiveButtonWithText.iconButton} ${isHovered ? ButtonStyles.responsiveButtonWithText.hoveredIconButton : ""}`}
                         aria-label="Gradient Icon Button"
                         onClick={onClick}
-                        data-testid={`btn-${testId}-icon`}
+                        data-testid={`btn-${testId}`}
                         onKeyDown={(event: React.KeyboardEvent<HTMLButtonElement>) => {
                             if (event.key === 'Enter' || event.key === ' ') {
                                 event.preventDefault();
@@ -63,7 +69,6 @@ export const ResponsiveIconButtonWithText: React.FC<ResponsiveIconButtonWithText
                         {enhancedIcon}
                     </button>
                 </div>
-
             </div>
         </div>
     );

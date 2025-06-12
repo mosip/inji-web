@@ -27,7 +27,8 @@ export function VCDetailView(props: Readonly<{
                                                         onClick={props.onDownload}
                   />}
                   title={props.credential.credentialTypeDisplayName}
-                  testId={"vc-detail-view"}
+                  testId={"vc-card-detail-view"}
+                  titleTestId={"credential-type-display-name"}
     >
         <PDFViewer
             previewContent={props.previewContent}
