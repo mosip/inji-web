@@ -4,7 +4,7 @@ export const VCStyles = {
         contentsContainer: "flex items-center overflow-scroll gap-6 sm:gap-4",
         logo: "w-16 h-16 sm:w-20 sm:h-20",
         credentialName: "text-sm font-semibold text-iw-title",
-        actionsContainer: "flex flex-row items-center flex-shrink-0 gap-0.2",
+        actionsContainer: "flex flex-row items-center flex-shrink-0",
         downloadIcon: "h-25 w-25",
         menuIcon: "m-1"
     }
