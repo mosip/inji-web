@@ -14,7 +14,7 @@ $ nvm install 18
 # Configuration:
 Inji web connects with a backend-for-frontend service called Mimoto. URLs to connect with this service can be updated in the config file by running the following command:
 ```
-$ nano ./inji-web/src/utils/config.js
+$ nano ./inji-web/public/env.config.js
 ```
 Once the config file is updated run following commands to save the updates:
 
@@ -33,7 +33,7 @@ Once the config file is updated run following commands to save the updates:
 ---
 # Updating Mimoto Host
 
-In the api.ts file, modify the **mimotoHost** to url pointing to the mimoto service running  
+In the env.config.js file, modify the **MIMOTO_URL** to url pointing to the mimoto service running  
 
 ---
 
@@ -71,7 +71,7 @@ $ docker-compose down
 ```
 
 - You can access the application in the below nginx server :  
-> Open URL http://localhost:81
+> Open URL http://localhost:3004
 
 ## Running Tests in Inji Web
  - Snapshot testing has been implemented for layout tests to ensure consistent UI and detect changes.
@@ -88,7 +88,3 @@ npm test --u
 npm test -- --coverage
 ```
 
-
-
-
-## **Mimoto Dependency Version :** v0.14.0
