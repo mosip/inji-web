@@ -1,4 +1,4 @@
-import {WalletCredential} from "../../types/data";
+import {ApiRequest, WalletCredential} from "../../types/data";
 import {VCStyles} from "./VCStyles";
 import React, {useEffect, useState} from "react";
 import {Clickable} from "../Common/Clickable";
@@ -41,81 +41,73 @@ export function VCCardView(props: Readonly<{
         }
     }, [error, t])
 
-    const preview = async () => {
-        console.log("Fetching credential preview for:", props.credential.credentialId);
+    const executeCredentialApiRequest = async (
+        apiCall: ApiRequest,
+        onSuccess: (response: Response) => Promise<void>,
+        errorType: string = "downloadError"
+    ) => {
         try {
             const response = await fetch(
-                api.fetchWalletCredentialPreview.url(props.credential.credentialId),
+                apiCall.url(props.credential.credentialId),
                 {
-                    method: MethodType[api.fetchWalletCredentialPreview.methodType],
-                    headers: api.fetchWalletCredentialPreview.headers(language),
-                    credentials: api.fetchWalletCredentialPreview.credentials
+                    method: MethodType[apiCall.methodType],
+                    headers: apiCall.headers(language),
+                    credentials: apiCall.credentials
                 }
             );
+
             if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
-                console.error("Unauthorized access - redirecting to login");
+                console.error("Unauthorized access - redirecting to root page");
                 navigate(ROUTES.ROOT);
                 return;
             }
 
             if (!response.ok) {
-                console.error("Failed to fetch credential preview:", response);
-                setError("downloadError");
-                return
+                console.error(`Failed to fetch request, got ${errorType} with response - `, response);
+                setError(errorType);
+                return;
             }
 
-            const pdfContent = await response.blob();
-
-            const pdfUrl = URL.createObjectURL(pdfContent);
-            console.log("Credential preview fetched successfully:", pdfUrl);
-            setPreviewContent(pdfUrl)
+            await onSuccess(response);
         } catch (error) {
-            console.error("Failed to download credential PDF:", error);
-            setError("downloadError");
+            console.error("API request failed:", error);
+            setError(errorType);
         }
-    }
+    };
+
+    const preview = async () => {
+        console.info("Fetching credential preview for:", props.credential.credentialId);
+        await executeCredentialApiRequest(
+            api.fetchWalletCredentialPreview,
+            async (response) => {
+                const pdfContent = await response.blob();
+                const pdfUrl = URL.createObjectURL(pdfContent);
+                console.info("Credential preview fetched successfully");
+                setPreviewContent(pdfUrl);
+            }
+        );
+    };
 
     const handleDownload = async (event: React.MouseEvent) => {
-        event.stopPropagation()
+        event.stopPropagation();
         await download();
-    }
+    };
 
     const download = async () => {
-        console.log("Downloading credential PDF for:", props.credential.credentialId);
-        try {
-            const response = await fetch(
-                api.downloadWalletCredentialPdf.url(props.credential.credentialId),
-                {
-                    method: MethodType[api.downloadWalletCredentialPdf.methodType],
-                    headers: api.downloadWalletCredentialPdf.headers(language),
-                    credentials: api.downloadWalletCredentialPdf.credentials
-                }
-            );
+        console.info("Downloading credential PDF for:", props.credential.credentialId);
+        await executeCredentialApiRequest(
+            api.downloadWalletCredentialPdf,
+            async (response) => {
+                const pdfContent = await response.blob();
+                const disposition = response.headers.get("Content-Disposition");
+                const fileNameMatch = /filename="(.+)"/.exec(disposition ?? "");
+                const fileName = fileNameMatch?.[1] ?? "download.pdf";
 
-            if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
-                console.error("Unauthorized access - redirecting to login");
-                navigate(ROUTES.ROOT);
-                return;
+                await downloadCredentialPDF(pdfContent, fileName);
+                console.info("Credential PDF downloaded successfully");
             }
-
-            if (!response.ok) {
-                console.error("Failed to fetch credential preview:", response);
-                setError("downloadError");
-                return
-            }
-
-            const pdfContent = await response.blob();
-
-            const disposition = response.headers.get("Content-Disposition");
-            const fileNameMatch = /filename="(.+)"/.exec(disposition ?? "");
-            const fileName = fileNameMatch?.[1] ?? "download.pdf";
-
-            await downloadCredentialPDF(pdfContent, fileName);
-        } catch (error) {
-            console.error("Failed to download credential PDF:", error);
-            setError("downloadError");
-        }
-    }
+        );
+    };
 
     const handleDelete = () => {
         setShowDeleteConfirmation(true)
@@ -124,35 +116,21 @@ export function VCCardView(props: Readonly<{
     const deleteCredential = async () => {
         console.debug("Delete credential clicked for:", props.credential.credentialId);
         try {
-            const response = await fetch(
-                api.deleteWalletCredential.url(props.credential.credentialId),
-                {
-                    method: MethodType[api.deleteWalletCredential.methodType],
-                    headers: api.deleteWalletCredential.headers(),
-                    credentials: api.deleteWalletCredential.credentials
-                }
+            await executeCredentialApiRequest(
+                api.deleteWalletCredential,
+                async () => {
+                    console.info("Credential deleted successfully.");
+                    props.refreshCredentials();
+                },
+                "deleteError"
             );
-
-            if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
-                console.error("Unauthorized access - redirecting to login");
-                navigate(ROUTES.ROOT);
-                return;
-            }
-
-            if (!response.ok) {
-                console.error("Failed to fetch credential preview:", response);
-                setError("deleteError");
-                return
-            }
-            console.info("Credential deleted successfully.");
-            props.refreshCredentials()
         } catch (error) {
             console.error("Failed to delete credential:", error);
             setError("deleteError");
         } finally {
-            setShowDeleteConfirmation(false)
+            setShowDeleteConfirmation(false);
         }
-    }
+    };
 
     const clearPreview = () => {
         setPreviewContent("");
