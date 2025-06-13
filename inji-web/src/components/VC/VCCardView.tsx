@@ -2,7 +2,7 @@ import {WalletCredential} from "../../types/data";
 import {VCStyles} from "./VCStyles";
 import React, {useEffect, useState} from "react";
 import {Clickable} from "../Common/Clickable";
-import {api} from "../../utils/api";
+import {api, MethodType} from "../../utils/api";
 import {downloadCredentialPDF} from "../../utils/misc";
 import {useSelector} from "react-redux";
 import {RootState} from "../../types/redux";
@@ -47,10 +47,7 @@ export function VCCardView(props: Readonly<{
             const response = await fetch(
                 api.fetchWalletCredentialPreview.url(props.credential.credentialId),
                 {
-                    method:
-                        api.fetchWalletCredentialPreview.methodType === 0
-                            ? "GET"
-                            : "POST",
+                    method: MethodType[api.fetchWalletCredentialPreview.methodType],
                     headers: api.fetchWalletCredentialPreview.headers(language),
                     credentials: api.fetchWalletCredentialPreview.credentials
                 }
@@ -90,10 +87,7 @@ export function VCCardView(props: Readonly<{
             const response = await fetch(
                 api.downloadWalletCredentialPdf.url(props.credential.credentialId),
                 {
-                    method:
-                        api.downloadWalletCredentialPdf.methodType === 0
-                            ? "GET"
-                            : "POST",
+                    method: MethodType[api.downloadWalletCredentialPdf.methodType],
                     headers: api.downloadWalletCredentialPdf.headers(language),
                     credentials: api.downloadWalletCredentialPdf.credentials
                 }
@@ -135,8 +129,7 @@ export function VCCardView(props: Readonly<{
             const response = await fetch(
                 api.deleteWalletCredential.url(props.credential.credentialId),
                 {
-                    // TODO: Get methodType from api.deleteWalletCredential.methodType, make sure the ApiRequest is sending methodType as a string and not enum
-                    method: "DELETE",
+                    method: MethodType[api.deleteWalletCredential.methodType],
                     headers: api.deleteWalletCredential.headers(),
                     credentials: api.deleteWalletCredential.credentials
                 }
