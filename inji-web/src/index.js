@@ -8,9 +8,9 @@ import {Provider} from "react-redux";
 import {reduxStore} from "./redux/reduxStore";
 import {AppToaster} from "./components/Common/toast/AppToaster";
 import { CookiesProvider } from 'react-cookie';
-import { UserProvider } from "./hooks/useUser";
 import { BrowserRouter } from "react-router-dom";
-import {DownloadSessionProvider} from './hooks/userDownloadSessionDetails';
+import {UserProvider} from "./context/User/UserContext";
+import {DownloadSessionProvider} from "./context/User/DownloadSessionContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

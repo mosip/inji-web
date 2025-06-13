@@ -4,7 +4,7 @@ import {SpinningLoader} from "../Common/SpinningLoader";
 import {ErrorSheildIcon} from "../Common/ErrorSheildIcon";
 import {SuccessSheildIcon} from "../Common/SuccessSheildIcon";
 import {LandingPageWrapper} from "../Common/LandingPageWrapper";
-import {useUser} from "../../hooks/useUser";
+import {useUser} from "../../hooks/User/useUser";
 import {DownloadResultStyles} from "./DownloadResultStyles";
 
 interface DisplayConfig {

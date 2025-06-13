@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, screen, fireEvent, waitFor} from '@testing-library/react';
 import '@testing-library/jest-dom';
-import {useUser} from '../../../hooks/useUser';
+import {useUser} from '../../../hooks/User/useUser.tsx';
 import {useCookies} from 'react-cookie';
 import {useNavigate, useLocation} from 'react-router-dom';
 import {toast} from 'react-toastify';
@@ -84,7 +84,7 @@ jest.mock('react-i18next', () => {
     };
 });
 
-jest.mock('../../../hooks/useUser.tsx', () => ({
+jest.mock('../../../hooks/User/useUser.tsx', () => ({
     useUser: jest.fn()
 }));
 

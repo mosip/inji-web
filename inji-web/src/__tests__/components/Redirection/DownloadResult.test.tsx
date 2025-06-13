@@ -2,7 +2,7 @@ import {renderWithProvider} from '../../../test-utils/mockUtils';
 import {DownloadResult} from '../../../components/Redirection/DownloadResult';
 import {RequestStatus} from '../../../hooks/useFetch';
 import {screen} from "@testing-library/react";
-import {useUser} from "../../../hooks/useUser";
+import {useUser} from "../../../hooks/User/useUser";
 
 const mockLandingPageWrapper = jest.fn();
 jest.mock('../../../components/Common/LandingPageWrapper', () => ({
@@ -12,8 +12,8 @@ jest.mock('../../../components/Common/LandingPageWrapper', () => ({
     },
 }));
 
-jest.mock("../../../hooks/useUser.tsx", () => {
-    const actualModule = jest.requireActual('../../../hooks/useUser');
+jest.mock("../../../hooks/User/useUser.tsx", () => {
+    const actualModule = jest.requireActual('../../../hooks/User/useUser');
     return {
         useUser: jest.fn(),
         UserProvider: actualModule.UserProvider,

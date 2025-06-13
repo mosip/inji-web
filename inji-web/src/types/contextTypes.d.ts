@@ -1,4 +1,6 @@
-import {ErrorType, User} from "./data";
+import {CredentialTypeDisplayArrayObject, ErrorType, User} from "./data";
+import {RequestStatus} from "../hooks/useFetch";
+import {Dispatch, SetStateAction} from "react";
 
 export type UserContextType = {
     user: User | null;
@@ -11,3 +13,14 @@ export type UserContextType = {
     removeUser: () => void;
     removeWallet: () => void;
 };
+
+export type DownloadSessionContextType = {
+    downloadInProgressSessions: SessionsMap;
+    currentSessionDownloadId: string | null;
+    latestDownloadedSessionId: string | null;
+    addSession: (credentialTypeDisplayObj: CredentialTypeDisplayArrayObject[], downloadStatus: RequestStatus) => string;
+    updateSession: (downloadId: string, downloadStatus: RequestStatus) => void;
+    removeSession: (downloadId: string) => void;
+    setCurrentSessionDownloadId: Dispatch<SetStateAction<string | null>>;
+    setLatestDownloadedSessionId: Dispatch<SetStateAction<string | null>>;
+}

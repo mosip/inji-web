@@ -1,11 +1,11 @@
-import React, { createRef, ReactElement } from 'react';
-import { render, RenderOptions } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { BrowserRouter, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { reduxStore } from '../redux/reduxStore';
-import { UserProvider } from '../hooks/useUser';
-import {DownloadSessionProvider} from '../hooks/userDownloadSessionDetails';
-import {showToast} from "../components/Common/toast/ToastWrapper";
+import React, {createRef, ReactElement} from 'react';
+import {render, RenderOptions} from '@testing-library/react';
+import {Provider} from 'react-redux';
+import {BrowserRouter, Route, BrowserRouter as Router, Routes} from 'react-router-dom';
+import {reduxStore} from '../redux/reduxStore';
+import {UserProvider} from '../context/User/UserContext';
+import {DownloadSessionProvider} from '../context/User/DownloadSessionContext';
+import {showToast} from '../components/Common/toast/ToastWrapper';
 
 export const setupShowToastMock = () => {
     (showToast as jest.Mock).mockClear();

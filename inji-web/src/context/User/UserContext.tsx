@@ -1,14 +1,14 @@
-import React, {createContext, useContext, useState} from 'react';
-import {api, MethodType} from '../utils/api';
-import {KEYS} from '../utils/constants';
-import {UserContextType} from "../types/contextTypes";
-import {ErrorType, User} from "../types/data";
+import React, {createContext, useState} from "react";
+import {UserContextType} from "../../types/contextTypes";
+import {ErrorType, User} from "../../types/data";
+import {KEYS} from "../../utils/constants";
+import {api, MethodType} from "../../utils/api";
 
-const UserContext = createContext<UserContextType | undefined>(undefined);
+export const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{children: React.ReactNode}> = ({
-    children
-}) => {
+                                                                        children
+                                                                    }) => {
     const [user, setUser] = useState<User | null>(null);
     const [walletId, setWalletId] = useState<string | null>(null);
     const [error, setError] = useState<ErrorType | null>(null);
@@ -86,12 +86,4 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
             {children}
         </UserContext.Provider>
     );
-};
-
-export const useUser = () => {
-    const context = useContext(UserContext);
-    if (!context) {
-        throw new Error('useUser must be used within a UserProvider');
-    }
-    return context;
 };

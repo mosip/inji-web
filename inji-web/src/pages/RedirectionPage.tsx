@@ -12,14 +12,9 @@ import {getIssuerDisplayObjectForCurrentLanguage} from '../utils/i18n';
 import {RootState} from '../types/redux';
 import {useSelector} from 'react-redux';
 import {useCookies} from 'react-cookie';
-import {useUser} from '../hooks/useUser';
+import {useUser} from '../hooks/User/useUser';
 import {ROUTES} from "../utils/constants";
-import {useDownloadSessionDetails} from "../hooks/userDownloadSessionDetails";
-
-interface LoggedInDownloadFlowProps {
-    issuerId: string;
-    requestBody: TokenRequestBody;
-}
+import {useDownloadSessionDetails} from "../hooks/User/useDownloadSession";
 
 export const RedirectionPage: React.FC = () => {
     const {error, state, response, fetchRequest} = useFetch();
@@ -35,17 +30,13 @@ export const RedirectionPage: React.FC = () => {
     const [completedDownload, setCompletedDownload] = useState<boolean>(false);
     const displayObject = getIssuerDisplayObjectForCurrentLanguage(session?.selectedIssuer?.display ?? []);
     const language = useSelector((state: RootState) => state.common.language);
-    const [errorObj, setErrorObj] = useState({
-        code: "error.generic.title",
-        message: "error.generic.subTitle"
-    });
     const [cookies] = useCookies(["XSRF-TOKEN"]);
     const {isLoading, fetchUserProfile, isUserLoggedIn} = useUser();
     const hasFetchedRef = useRef(false);
     const navigate = useNavigate();
     const {addSession, updateSession} = useDownloadSessionDetails();
 
-    const handleLoggedInDownloadFlow = async ({issuerId, requestBody}: LoggedInDownloadFlowProps) => {
+    const handleLoggedInDownloadFlow = async (issuerId: string, requestBody: TokenRequestBody) => {
         const apiRequest = api.downloadVCInloginFlow;
         const downloadId = addSession(credentialTypeDisplayObj, RequestStatus.LOADING);
         navigate(ROUTES.USER_ISSUER(issuerId))
@@ -78,17 +69,15 @@ export const RedirectionPage: React.FC = () => {
             apiRequest.credentials,
             new URLSearchParams(requestBody)
         );
+
         if (state !== RequestStatus.ERROR) {
             await downloadCredentialPDF(
                 credentialDownloadResponse,
                 credentialType
             );
             setCompletedDownload(true);
-        } else {
-            setErrorObj(
-                getErrorObject(credentialDownloadResponse)
-            );
         }
+
         if (urlState != null) {
             removeActiveSession(urlState);
         }
@@ -115,7 +104,7 @@ export const RedirectionPage: React.FC = () => {
                 );
 
             if (isUserLoggedIn) {
-                await handleLoggedInDownloadFlow({issuerId, requestBody});
+                await handleLoggedInDownloadFlow(issuerId, requestBody);
             } else {
                 await handleGuestDownloadFlow(requestBody);
             }

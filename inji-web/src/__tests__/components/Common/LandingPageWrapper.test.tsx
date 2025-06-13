@@ -2,7 +2,7 @@ import {screen, fireEvent, cleanup} from '@testing-library/react';
 import {LandingPageWrapper} from '../../../components/Common/LandingPageWrapper';
 import {mockUseTranslation, renderWithProvider, mockUseNavigate} from '../../../test-utils/mockUtils';
 import {mockLandingPageWrapperProps} from '../../../test-utils/mockObjects';
-import {useUser} from "../../../hooks/useUser";
+import {useUser} from "../../../hooks/User/useUser";
 import {ROUTES} from "../../../utils/constants";
 
 // Mock useTranslation
@@ -15,8 +15,8 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockNavigate,
 }));
 
-jest.mock("../../../hooks/useUser.tsx", () => {
-    const actualModule = jest.requireActual('../../../hooks/useUser');
+jest.mock("../../../hooks/User/useUser.tsx", () => {
+    const actualModule = jest.requireActual('../../../hooks/User/useUser');
     return {
         useUser: jest.fn(),
         UserProvider: actualModule.UserProvider,

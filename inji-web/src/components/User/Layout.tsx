@@ -11,7 +11,7 @@ import DashboardBgBottom from '../../assets/DashboardBgBottom.svg';
 import 'react-toastify/dist/ReactToastify.css';
 import {CrossIconButton} from '../Common/Buttons/CrossIconButton';
 import LayoutStyles from "../Common/LayoutStyles";
-import {useDownloadSessionDetails} from '../../hooks/userDownloadSessionDetails';
+import {useDownloadSessionDetails} from '../../hooks/User/useDownloadSession';
 import {RequestStatus} from "../../hooks/useFetch";
 import {useTranslation} from "react-i18next";
 import {showToast} from "../Common/toast/ToastWrapper";
@@ -59,7 +59,7 @@ export const Layout: React.FC = () => {
 
                     const toastOptions = {
                         limit: 1,
-                        autoClose: 5000,
+                        autoClose: 3000,
                         icon: undefined,
                         closeButton: ({closeToast}: any) => handleToasterCloseButton(closeToast),
                         style: {

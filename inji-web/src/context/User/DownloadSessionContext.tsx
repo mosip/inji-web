@@ -1,7 +1,8 @@
-import React, {createContext, Dispatch, SetStateAction, useContext, useState, useMemo} from "react";
-import {RequestStatus} from "./useFetch";
-import {CredentialTypeDisplayArrayObject} from "../types/data";
-import {generateRandomString} from "../utils/misc";
+import {CredentialTypeDisplayArrayObject} from "../../types/data";
+import {RequestStatus} from "../../hooks/useFetch";
+import React, {createContext, useMemo, useState} from "react";
+import {DownloadSessionContextType} from "../../types/contextTypes";
+import {generateRandomString} from "../../utils/misc";
 
 export interface SessionStatus {
     credentialTypeDisplayObj: CredentialTypeDisplayArrayObject[];
@@ -12,18 +13,7 @@ interface SessionsMap {
     [downloadId: string]: SessionStatus;
 }
 
-interface DownloadSessionContextProps {
-    downloadInProgressSessions: SessionsMap;
-    currentSessionDownloadId: string | null;
-    latestDownloadedSessionId: string | null;
-    addSession: (credentialTypeDisplayObj: CredentialTypeDisplayArrayObject[], downloadStatus: RequestStatus) => string;
-    updateSession: (downloadId: string, downloadStatus: RequestStatus) => void;
-    removeSession: (downloadId: string) => void;
-    setCurrentSessionDownloadId: Dispatch<SetStateAction<string | null>>;
-    setLatestDownloadedSessionId: Dispatch<SetStateAction<string | null>>;
-}
-
-const DownloadSessionContext = createContext<DownloadSessionContextProps | undefined>(undefined);
+export const DownloadSessionContext = createContext<DownloadSessionContextType | undefined>(undefined);
 
 export const DownloadSessionProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
     const [downloadInProgressSessions, setDownloadInProgressSessions] = useState<SessionsMap>({});
@@ -99,12 +89,4 @@ export const DownloadSessionProvider: React.FC<{ children: React.ReactNode }> = 
             {children}
         </DownloadSessionContext.Provider>
     );
-};
-
-export const useDownloadSessionDetails = (): DownloadSessionContextProps => {
-    const context = useContext(DownloadSessionContext);
-    if (!context) {
-        throw new Error("useDownloadSessionDetails must be used within a DownloadSessionProvider");
-    }
-    return context;
 };

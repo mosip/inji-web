@@ -11,9 +11,9 @@ import {RootState} from '../../../types/redux';
 import {isObjectEmpty} from '../../../utils/misc';
 import {navigateToUserHome} from "../../../utils/navigationUtils";
 import {CredentialTypesPageStyles} from "./CredentialTypesPageStyles";
-import {useDownloadSessionDetails} from "../../../hooks/userDownloadSessionDetails";
-import {CredentialTypesPageContent} from "../../../components/User/CredentialTypes/CredentialTypesPageContent.tsx";
-import {Header} from "../../../components/User/CredentialTypes/Header.tsx";
+import {useDownloadSessionDetails} from "../../../hooks/User/useDownloadSession";
+import {CredentialTypesPageContent} from "../../../components/User/CredentialTypes/CredentialTypesPageContent";
+import {Header} from "../../../components/User/CredentialTypes/Header";
 import {ROUTES} from "../../../utils/constants";
 
 type CredentialTypesPageProps = {

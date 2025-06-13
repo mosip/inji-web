@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 import {BorderedButton} from "./Buttons/BorderedButton";
 import {RouteValue} from "../../types/data";
 import {ROUTES} from "../../utils/constants";
-import {useUser} from "../../hooks/useUser";
+import {useUser} from "../../hooks/User/useUser";
 
 export interface LandingPageWrapperProps {
     icon: React.ReactNode;
