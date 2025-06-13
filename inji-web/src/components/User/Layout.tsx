@@ -8,15 +8,13 @@ import {getCredentialTypeDisplayObjectForCurrentLanguage, getDirCurrentLanguage,
 import {Outlet} from 'react-router-dom';
 import DashboardBgTop from '../../assets/Background.svg';
 import DashboardBgBottom from '../../assets/DashboardBgBottom.svg';
-import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {CrossIconButton} from '../Common/Buttons/CrossIconButton';
 import LayoutStyles from "../Common/LayoutStyles";
 import {useDownloadSessionDetails} from '../../hooks/userDownloadSessionDetails';
 import {RequestStatus} from "../../hooks/useFetch";
 import {useTranslation} from "react-i18next";
-
-const DOWNLOAD_TOAST_CONTAINER_ID = 'download-toast-container';
+import {showToast} from "../Common/toast/ToastWrapper";
 
 export const Layout: React.FC = () => {
     const {t} = useTranslation('Layout')
@@ -59,12 +57,30 @@ export const Layout: React.FC = () => {
                         ).name;
                     const {downloadStatus} = session;
 
-                    toast(
-                        downloadStatus === RequestStatus.DONE ? t('VCDownload.success', {cardType: credentialTypeDisplayName}) : t('VCDownload.error', {cardType: credentialTypeDisplayName}),
-                        {
+                    const toastOptions = {
+                        limit: 1,
+                        autoClose: 5000,
+                        icon: undefined,
+                        closeButton: ({closeToast}: any) => handleToasterCloseButton(closeToast),
+                        style: {
+                            width: '400px',
+                            zIndex: 1000,
+                            top: headerHeight + 10
+                        },
+                        className: ({type}: any) => {
+                            const toastType = type ?? 'default';
+                            return `${getToasterBackgroundColor(toastType)} ${LayoutStyles.toastContainerBase}`;
+                        }
+                    };
+                    const toastMessage = downloadStatus === RequestStatus.DONE
+                        ? t('VCDownload.success', {cardType: credentialTypeDisplayName})
+                        : t('VCDownload.error', {cardType: credentialTypeDisplayName})
+
+                    showToast({
+                            message: toastMessage,
+
                             type: downloadStatus === RequestStatus.DONE ? 'success' : 'error',
-                            autoClose: 10000,
-                            containerId: DOWNLOAD_TOAST_CONTAINER_ID
+                            options: {...toastOptions}
                         }
                     );
                     setLatestDownloadedSessionId(null);
@@ -133,34 +149,10 @@ export const Layout: React.FC = () => {
                         <Outlet />
                     </div>
 
-                    <ToastContainer
-                        containerId={DOWNLOAD_TOAST_CONTAINER_ID}
-                        position={isRTL(language) ? 'top-left' : 'top-right'}
-                        limit={1}
-                        autoClose={10000}
-                        hideProgressBar
-                        newestOnTop
-                        closeOnClick
-                        rtl={isRTL(language)}
-                        icon={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        closeButton={({closeToast}) => handleToasterCloseButton(closeToast)}
-                        style={{
-                            width: '400px',
-                            zIndex: 1000,
-                            top: headerHeight + 10
-                        }}
-                        toastClassName={({type}: any) => {
-                            const toastType = type ?? 'default';
-                            return `${getToasterBackgroundColor(toastType)} relative flex p-2 min-h-10 rounded-xl justify-between overflow-hidden items-center`;
-                        }}
-                    />
                 </div>
             </div>
 
-            <Footer footerRef={footerRef} />
+            <Footer footerRef={footerRef}/>
         </div>
     );
 };
