@@ -28,10 +28,6 @@ jest.mock('../../../utils/i18n', () => ({
   getDirCurrentLanguage: jest.fn(),
 }));
 
-jest.mock('react-router-dom', () => ({
-  Outlet: () => <div data-testid="Outlet">Page content</div>,
-}));
-
 jest.mock('../../../assets/Background.svg', () => 'mock-dashboard-bg-top');
 jest.mock('../../../assets/DashboardBgBottom.svg', () => 'mock-dashboard-bg-bottom');
 

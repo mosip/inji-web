@@ -1,62 +1,50 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { Sidebar,SidebarItem } from '../../../components/User/Sidebar';
-import { useTranslation } from 'react-i18next';
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key,
-    i18n: { changeLanguage: () => Promise.resolve() },
-  }),
-  initReactI18next: { type: '3rdParty', init: jest.fn() },
+import { screen, fireEvent} from '@testing-library/react';
+import { Sidebar, SidebarItem} from '../../../components/User/Sidebar';
+import { renderWithRouter} from '../../../test-utils/mockUtils';
+import {setMockUseSelectorState,mockusei18n} from '../../../test-utils/mockUtils'
+
+jest.mock('../../../utils/i18n', () => ({
+  isRTL: (lang: string) => lang === 'ar',
 }));
 
-jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
-}));
-
-jest.mock('react-router-dom', () => ({
-  useNavigate: jest.fn(),
-  useLocation: jest.fn(),
-  Outlet: () => <div data-testid="Outlet">Page content</div>,
-}));
-
+jest.mock('react-redux', () => {
+  const ActualReactRedux = jest.requireActual('react-redux');
+  return {
+    ...ActualReactRedux,
+    useSelector: jest.fn(),
+    useDispatch: jest.fn(),
+  };
+})
 
 describe('Sidebar', () => {
-  const useSelectorMock = require('react-redux').useSelector as jest.Mock;
-  const useNavigateMock = require('react-router-dom').useNavigate as jest.Mock;
-  const useLocationMock = require('react-router-dom').useLocation as jest.Mock;
-
+  // const useSelectorMock = require('react-redux').useSelector as jest.Mock;
+  
   beforeEach(() => {
     jest.clearAllMocks();
-
-    useSelectorMock.mockImplementation((selector: any) =>
-      selector({ common: { language: 'en' } })
-    );
-
-    // Default location.pathname = "/user/home"
-    useLocationMock.mockReturnValue({ pathname: '/user/home' });
-
-    useNavigateMock.mockReturnValue(jest.fn());
+    mockusei18n();
+    setMockUseSelectorState({common:{language:'en'}});
+    // useSelectorMock.mockImplementation((selector: any) =>
+      // selector({ common: { language: 'en' } })
+    // );
   });
 
   it('renders sidebar items with correct text', () => {
-    render(<Sidebar />);
+    renderWithRouter(<Sidebar />, { route: '/user/home' });
     expect(screen.getByText('Home.title')).toBeInTheDocument();
     expect(screen.getByText('StoredCards:title')).toBeInTheDocument();
   });
 
   it('sets active class on current location path', () => {
-    render(<Sidebar />);
+    renderWithRouter(<Sidebar />, { route: '/user/home' });
     const activeItem = screen.getByText('Home.title');
     expect(activeItem).toHaveClass('text-[#2B011C]');
   });
 
   it('toggles collapse state when CollapseButton is clicked', () => {
-    render(<Sidebar />);
-    
+    renderWithRouter(<Sidebar />);
     const collapseBtn = screen.getByRole('button');
-    const sidebarContainer = screen.getByTestId('sidebar-container');   
+    const sidebarContainer = screen.getByTestId('sidebar-container');
 
     expect(sidebarContainer).toHaveClass('w-64');
     fireEvent.click(collapseBtn);
@@ -64,44 +52,36 @@ describe('Sidebar', () => {
   });
 
   it('navigates on SidebarItem click', () => {
-    const navigateFn = jest.fn();
-    useNavigateMock.mockReturnValue(navigateFn);
-
-    render(<Sidebar />);
+    renderWithRouter(<Sidebar />);
     fireEvent.click(screen.getByText('Home.title'));
-
-    expect(navigateFn).toHaveBeenCalledWith('/user/home');
+    expect(window.location.pathname).toBe('/user/home');
   });
 
   it('renders RTL classes when language is "ar"', () => {
-    // Change language to Arabic (RTL)
-    useSelectorMock.mockImplementation((selector: any) =>
-      selector({ common: { language: 'ar' } })
-    );
-
-    render(<Sidebar />);
+    // useSelectorMock.mockImplementation((selector: any) =>
+    //   selector({ common: { language: 'ar' } })
+    // );
+    setMockUseSelectorState({common:{language:'ar'}});
+    renderWithRouter(<Sidebar />);
     const sidebarContainer = screen.getByTestId('sidebar-container');
     expect(sidebarContainer).toHaveClass('right-0');
   });
 });
 
 describe('SidebarItem', () => {
-  const useSelectorMock = require('react-redux').useSelector as jest.Mock;
-  const useNavigateMock = require('react-router-dom').useNavigate as jest.Mock;
+  // const useSelectorMock = require('react-redux').useSelector as jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
-  
-    useSelectorMock.mockImplementation((selector: any) =>
-      selector({ common: { language: 'en' } })
-    );
-
-    useNavigateMock.mockReturnValue(jest.fn());
+    setMockUseSelectorState({common:{language:'en'}});
+    // useSelectorMock.mockImplementation((selector: any) =>
+    //   selector({ common: { language: 'en' } })
+    // );
   });
 
   it('renders icon and text correctly', () => {
     const icon = <svg data-testid="icon" />;
-    render(
+    renderWithRouter(
       <SidebarItem
         icon={icon}
         text="Test Item"
@@ -114,12 +94,9 @@ describe('SidebarItem', () => {
     expect(screen.getByTestId('icon')).toBeInTheDocument();
   });
 
-  it('calls navigate with path on click', () => {
-    const navigateFn = jest.fn();
-    useNavigateMock.mockReturnValue(navigateFn);
-
+  it('navigates to path on click', () => {
     const icon = <svg />;
-    render(
+    renderWithRouter(
       <SidebarItem
         icon={icon}
         text="Click me"
@@ -128,13 +105,14 @@ describe('SidebarItem', () => {
         isCollapsed={false}
       />
     );
+
     fireEvent.click(screen.getByText('Click me'));
-    expect(navigateFn).toHaveBeenCalledWith('/clicked');
+    expect(window.location.pathname).toBe('/clicked');
   });
 
   it('shows active indicator when isActive is true', () => {
     const icon = <svg />;
-    render(
+    renderWithRouter(
       <SidebarItem
         icon={icon}
         text="Active Item"
@@ -149,7 +127,7 @@ describe('SidebarItem', () => {
 
   it('hides text when isCollapsed is true', () => {
     const icon = <svg />;
-    render(
+    renderWithRouter(
       <SidebarItem
         icon={icon}
         text="Hidden Text"

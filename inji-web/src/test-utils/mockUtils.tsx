@@ -63,10 +63,11 @@ export const mockUseTranslation = () => {
 };
 
 export const mockUseNavigate = jest.fn();
+export const mockUseLocation = jest.fn().mockReturnValue({ pathname: '/' });
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: () => mockUseNavigate,
-    useLocation: jest.fn(),
+    useLocation: ()=> mockUseLocation(),
     Outlet: () => <div data-testid="Outlet">Page content</div>,
 }));
 
@@ -75,14 +76,23 @@ export const setMockUseNavigateReturnValue = (returnValue: any) => {
 };
 
 export const mockUseSelector = jest.fn();
-jest.mock('react-redux', () => ({
-    ...jest.requireActual('react-redux'),
+jest.mock('react-redux', () => {
+    const ActualReactRedux = jest.requireActual('react-redux');
+    return {
+    ...ActualReactRedux,
     useSelector: jest.fn(),
-    }));
-
+    useDispatch: jest.fn(),
+    };
+});
+    
 export const setMockUseSelectorState = (state: any) => {
     const useSelectorMock = require('react-redux').useSelector;
     useSelectorMock.mockImplementation((selector: any) => selector(state));
+};
+
+export const setMockUseDispatchReturnValue = (dispatchFn: jest.Mock) => {
+    const { useDispatch } = require('react-redux');
+    (useDispatch as jest.Mock).mockReturnValue(dispatchFn);
 };
 
 export const mockUseGetIssuerDisplayObjectForCurrentLanguage = () => {
@@ -101,12 +111,6 @@ export const mockUseSearchCredentials = () => {
     }));
  };
 
-export const mockUseDispatch = () => {
-    jest.mock('react-redux', () => ({
-        ...jest.requireActual('react-redux'),
-        useDispatch: jest.fn(),
-    }));
-};
               
 export const mockUseSpinningLoader = () => {
     jest.mock('../components/Common/SpinningLoader', () => ({

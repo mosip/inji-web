@@ -1,33 +1,16 @@
-import { setMockUseSelectorState } from '../../../test-utils/mockUtils';
+import { setMockUseNavigateReturnValue,setMockUseSelectorState,setMockUseDispatchReturnValue} from '../../../test-utils/mockUtils';
+import { mockUseLocation,mockUseNavigate,mockusei18n } from '../../../test-utils/mockUtils';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import { Header } from '../../../components/User/Header';
-import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { useUser } from '../../../hooks/useUser';
-import { useSelector,useDispatch} from 'react-redux';
 import * as i18n from '../../../utils/i18n';
-
-jest.mock('react-router-dom', () => ({
-  useNavigate: jest.fn(),
-}));
-
 jest.mock('react-cookie', () => ({
   useCookies: jest.fn(),
 }));
 
 jest.mock('../../../hooks/useUser', () => ({
   useUser: jest.fn(),
-}));
-
-jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
-  useDispatch: jest.fn(),
-}));
-
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key,
-  }),
 }));
 
 jest.mock('../../../utils/i18n', () => ({
@@ -53,21 +36,24 @@ jest.mock('../../../assets/InjiWebLogo.png', () => 'mock-injiweb-logo');
 describe('Header', () => {
   const mockNavigate = jest.fn();
   const mockRemoveUser = jest.fn();
+  const mockDispatch = jest.fn();
   const mockHeaderRef = { current: null };
 
   beforeEach(() => {
-    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
+    jest.clearAllMocks();
+    mockusei18n();
+    mockUseLocation.mockReturnValue({ pathname: '/' });
     (useCookies as jest.Mock).mockReturnValue([{ 'XSRF-TOKEN': 'token' }]);
     (useUser as jest.Mock).mockReturnValue({
       user: { displayName: 'John Doe', profilePictureUrl: '' },
       removeUser: mockRemoveUser,
       isLoading: false,
     });
-    (useSelector as unknown as jest.Mock).mockReturnValue('en');
-    (useDispatch as unknown as jest.Mock).mockReturnValue(jest.fn());
+    setMockUseNavigateReturnValue(mockNavigate);
+    setMockUseSelectorState({common:{language:"en"}});
+    setMockUseDispatchReturnValue(mockDispatch);
     (i18n.isRTL as unknown as jest.Mock).mockReturnValue(false);
 
-    jest.clearAllMocks();
   });
 
   it('renders header and user details correctly', () => {
@@ -116,8 +102,8 @@ describe('Header', () => {
     fireEvent.click(getByTestId('profile-details').querySelector('svg')!);
     const profileOption = getByText('ProfileDropdown.profile');
     fireEvent.click(profileOption);
-    expect(mockNavigate).toHaveBeenCalledWith('/user/profile', {
-      state: { from: window.location.pathname },
+    expect(mockUseNavigate).toHaveBeenCalledWith('/user/profile', {
+      state: { from: '/' },
     });
   });
 
