@@ -1,7 +1,7 @@
 import React from "react";
-import {SearchCredential} from "../../../components/Credentials/SearchCredential";
-import {CredentialTypesPageStyles} from "./CredentialTypesPageStyles";
-import {NavBackArrowButton} from "../../../components/Common/Buttons/NavBackArrowButton";
+import {SearchCredential} from "../../Credentials/SearchCredential.tsx";
+import {CredentialTypesPageStyles} from "../../../pages/User/CredentialTypes/CredentialTypesPageStyles.ts";
+import {NavBackArrowButton} from "../../Common/Buttons/NavBackArrowButton.tsx";
 import {IssuerWellknownDisplayArrayObject} from "../../../types/data";
 import {useTranslation} from "react-i18next";
 

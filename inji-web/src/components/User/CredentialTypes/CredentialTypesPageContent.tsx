@@ -1,16 +1,16 @@
 import {RequestStatus} from "../../../hooks/useFetch";
 import React from "react";
-import {DownloadResult} from "../../../components/Redirection/DownloadResult";
-import {CredentialTypesPageStyles} from "./CredentialTypesPageStyles";
+import {DownloadResult} from "../../Redirection/DownloadResult";
+import {CredentialTypesPageStyles} from "../../../pages/User/CredentialTypes/CredentialTypesPageStyles";
 import {useTranslation} from "react-i18next";
-import {CredentialListWrapper} from "../../../components/Credentials/CredentialListWrapper";
+import {CredentialListWrapper} from "../../Credentials/CredentialListWrapper";
 
-interface DownloadStatusModalProps {
+interface CredentialTypesPageContentProps {
     downloadStatus: RequestStatus | null;
     state: RequestStatus;
 }
 
-export const DownloadStatusModal: React.FC<DownloadStatusModalProps> = (
+export const CredentialTypesPageContent: React.FC<CredentialTypesPageContentProps> = (
     props
 ) => {
     const {t} = useTranslation('CredentialTypesPage');

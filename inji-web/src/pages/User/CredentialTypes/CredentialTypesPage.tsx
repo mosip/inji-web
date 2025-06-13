@@ -12,8 +12,8 @@ import {isObjectEmpty} from '../../../utils/misc';
 import {navigateToUserHome} from "../../../utils/navigationUtils";
 import {CredentialTypesPageStyles} from "./CredentialTypesPageStyles";
 import {useDownloadSessionDetails} from "../../../hooks/userDownloadSessionDetails";
-import {DownloadStatusModal} from "./DownloadStatusModal.tsx";
-import {Header} from "./Header";
+import {CredentialTypesPageContent} from "../../../components/User/CredentialTypes/CredentialTypesPageContent.tsx";
+import {Header} from "../../../components/User/CredentialTypes/Header.tsx";
 import {ROUTES} from "../../../utils/constants";
 
 type CredentialTypesPageProps = {
@@ -113,7 +113,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
         >
             <Header onBackClick={handleBackClick} displayObject={displayObject}
                     onClick={() => navigateToUserHome(navigate)}/>
-            <DownloadStatusModal downloadStatus={downloadStatus} state={state}/>
+            <CredentialTypesPageContent downloadStatus={downloadStatus} state={state}/>
         </div>
     );
 };
