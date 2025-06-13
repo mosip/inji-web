@@ -44,3 +44,5 @@ export const HTTP_STATUS_CODES = {
     INTERNAL_SERVER_ERROR: 500,
     SERVICE_UNAVAILABLE: 503,
 }
+
+export const PDF_WORKER_URL = "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
