@@ -51,6 +51,7 @@
         --iw-color-disclaimerText: #8B6105;
         --iw-color-dashboardSideBarMenuIcon: #6F6F6F;
         --iw-color-dashboardSideBarMenuIconActive: #2B011C;
+        --iw-color-grayMedium: #707070;
         --iw-color-grayLight: #C1C1C1;
         --iw-color-grayDark: #676766;
         --iw-color-grayTransparent: #D2D5D933;
@@ -59,6 +60,7 @@
         --iw-color-textSecondary: #344054;
         --iw-color-darkRed: #D52929;
         --iw-color-brightRed: #D73E3E;
+        --iw-color-red: #DA262E;
         --iw-color-deepVioletIndigo: #5B03AD;
         --iw-color-pink50: #FAEFEF;
         --iw-color-darkGrayishBlue: #101828;
@@ -107,6 +109,7 @@
         --iw-color-subText: #A0A8AC;
         --iw-color-disclaimerBackGround: #FFF7E5;
         --iw-color-disclaimerText: #8B6105;
+        --iw-color-grayMedium: #707070;
         --iw-color-grayLight: #C1C1C1;
         --iw-color-grayDark: #676766;
         --iw-color-grayTransparent: #D2D5D933;
@@ -115,6 +118,7 @@
         --iw-color-textSecondary: #344054;
         --iw-color-darkRed: #D52929;
         --iw-color-brightRed: #D73E3E;
+        --iw-color-red: #DA262E;
         --iw-color-deepVioletIndigo: #5B03AD;
         --iw-color-pink50: #FAEFEF;
         --iw-color-darkGrayishBlue: #101828;

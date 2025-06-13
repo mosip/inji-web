@@ -12,13 +12,14 @@ import {SearchBar} from "../../../components/Common/SearchBar/SearchBar";
 import {InfoSection} from "../../../components/Common/Info/InfoSection";
 import {VCCardView} from "../../../components/VC/VCCardView";
 import {FlatList} from "../../../components/Common/List/FlatList";
-import {DocumentIcon} from "../../../components/Icon/DocumentIcon";
+import {DocumentIcon} from "../../../components/Common/Icons/DocumentIcon";
 import {PageTitle} from "../../../components/Common/PageTitle/PageTitle";
 import {Error} from "../../../components/Error/Error";
 import {BorderedButton} from "../../../components/Common/Buttons/BorderedButton";
 import {StoredCardsPageStyles} from "./StoredCardsPageStyles";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 import {navigateToUserHome} from "../../../utils/navigationUtils";
+import {HTTP_STATUS_CODES, ROUTES} from "../../../utils/constants";
 
 export const StoredCardsPage: React.FC = () => {
     const {t} = useTranslation('StoredCards');
@@ -29,7 +30,9 @@ export const StoredCardsPage: React.FC = () => {
     const language = useSelector((state: RootState) => state.common.language);
     const [error, setError] = useState<string>();
 
+
     const fetchWalletCredentials = async () => {
+        setLoading(true)
         try {
             const fetchWalletCredentials = api.fetchWalletVCs;
             const response = await fetch(fetchWalletCredentials.url(), {
@@ -38,30 +41,51 @@ export const StoredCardsPage: React.FC = () => {
                 credentials: "include"
             });
 
-            const responseData = await response.json();
             if (response.ok) {
+                const responseData = await response.json();
                 setCredentials(responseData);
                 setFilteredCredentials(responseData)
             } else {
+                if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
+                    console.error("Unauthorized access - redirecting to root");
+                    navigate(ROUTES.ROOT);
+                    return;
+                }
+                const responseData = await response.json();
                 console.error("Error fetching credentials:", responseData);
-                if (response.status === 500) {
-                    setError("internalServerError");
-                } else if (response.status === 503) {
-                    setError("serviceUnavailable");
-                } else if (response.status === 400) {
-                    const invalidWalletRequests = ["Wallet key not found in session", "Wallet is locked", "Invalid Wallet ID. Session and request Wallet ID do not match"]
-                    if (invalidWalletRequests.includes(responseData.errorMessage)) {
-                        setError("invalidWalletRequest");
-                    } else {
-                        setError("invalidRequest");
-                    }
-                } else {
-                    setError("unknownError");
+                const invalidWalletRequests = [
+                    "Wallet key not found in session",
+                    "Wallet is locked",
+                    "Invalid Wallet ID. Session and request Wallet ID do not match"
+                ];
+                switch (response.status) {
+                    case HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR:
+                        setError("internalServerError");
+                        break;
+                    case HTTP_STATUS_CODES.SERVICE_UNAVAILABLE:
+                        setError("serviceUnavailable");
+                        break;
+                    case HTTP_STATUS_CODES.BAD_REQUEST:
+                        setError(
+                            invalidWalletRequests.includes(responseData.errorMessage)
+                                ? "invalidWalletRequest"
+                                : "invalidRequest"
+                        );
+                        break;
+                    default:
+                        setError("unknownError");
                 }
             }
         } catch (error) {
             console.error("Failed to fetch credentials:", error);
-            setError("networkError");
+            if (error instanceof TypeError && error.message === 'Failed to fetch' && !navigator.onLine) {
+                console.error('Network error: Please check your internet connection.');
+                setError("networkError");
+            } else {
+                console.error('An unknown error occurred');
+                setError("unknownError");
+            }
+
         } finally {
             setLoading(false);
         }
@@ -70,8 +94,6 @@ export const StoredCardsPage: React.FC = () => {
     useEffect(() => {
         fetchWalletCredentials().then(_ => console.debug("Credentials fetched successfully"));
     }, []);
-
-    const preview = (_: WalletCredential) => console.log("Preview");
 
     const filterCredentials = (searchText: string) => {
         if (searchText === "") {
@@ -85,6 +107,10 @@ export const StoredCardsPage: React.FC = () => {
     };
 
     const navigateToHome = () => navigateToUserHome(navigate);
+
+    const refreshCredentials = async () => {
+        await fetchWalletCredentials()
+    }
 
     const loader =
         <div className={StoredCardsPageStyles.loaderContainer} data-testid={"loader-credentials"}>
@@ -103,23 +129,24 @@ export const StoredCardsPage: React.FC = () => {
         }
         return (
             <Fragment>
-                <div className={"flex justify-between"}>
+                <div className={StoredCardsPageStyles.searchContainer}>
                     <SearchBar
                         testId={"search-credentials"}
                         placeholder={t('search.placeholder')}
                         filter={filterCredentials}
                     />
                 </div>
-                <div>
+                <div className={StoredCardsPageStyles.listContainer}>
                     <FlatList
                         onEmpty={<InfoSection message={t('search.noResults')} testId={"no-search-cards-found"}/>}
                         data={filteredCredentials}
-                        renderItem={(item: WalletCredential) =>
-                            <VCCardView
+                        renderItem={(item: WalletCredential) => {
+                            return <VCCardView
                                 key={item.credentialId}
-                                onClick={preview}
                                 credential={item}
-                            />
+                                refreshCredentials={refreshCredentials}
+                            />;
+                        }
                         }
                         keyExtractor={(credential: WalletCredential) => credential.credentialId}
                         testId={"credentials"}
@@ -169,12 +196,8 @@ export const StoredCardsPage: React.FC = () => {
                 </div>
             </div>
 
-            <div className={StoredCardsPageStyles.contentAndActionContainer}
-                 data-testid={"content-and-action-container"}>
-                <div className={StoredCardsPageStyles.contentContainer}>
-                    {showContent()}
-                </div>
-                {/*show add cards button at bottom in mobile only while filtering did not yield result*/}
+            <div className={StoredCardsPageStyles.contentContainer} data-testid={"content-and-action-container"}>
+                {showContent()}
                 {!loading && credentials.length !== 0 &&
                     <div className={StoredCardsPageStyles.buttonContainer.mobile}>
                         {addCard()}

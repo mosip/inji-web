@@ -153,3 +153,10 @@ type GuestRequestBody = {
 }
 
 export type TokenRequestBody = LoggedInRequestBody | GuestRequestBody;
+export interface MenuItemType {
+    label: string;
+    onClick: () => void;
+    id: string; // Unique identifier for the item
+    icon?: React.ReactNode;
+    color?: string;
+}

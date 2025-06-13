@@ -26,6 +26,7 @@ export const ROUTES = {
     PASSCODE: `/${Pages.USER}/${Pages.PASSCODE}`,
     USER_HOME: `/${Pages.USER}/${Pages.HOME}`,
     USER_ISSUERS: `/${Pages.USER}/${Pages.ISSUERS}`,
+    ISSUERS: `/${Pages.ISSUERS}`,
     USER_ISSUER: (id: string) => `/${Pages.USER}/${Pages.ISSUERS}/${id}`,
     ISSUER: (id: string) => `/${Pages.ISSUERS}/${id}`,
     CREDENTIALS: `/${Pages.USER}/${Pages.CREDENTIALS}`,
@@ -34,3 +35,14 @@ export const ROUTES = {
     USER_FAQ: `/${Pages.USER}/${Pages.FAQ}`,
     USER_RESET_PASSCODE: `/${Pages.USER}/${Pages.RESET_PASSCODE}`,
 } as const;
+
+export const HTTP_STATUS_CODES = {
+    BAD_REQUEST: 400,
+    UNAUTHORIZED: 401,
+    FORBIDDEN: 403,
+    NOT_FOUND: 404,
+    INTERNAL_SERVER_ERROR: 500,
+    SERVICE_UNAVAILABLE: 503,
+}
+
+export const PDF_WORKER_URL = "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js";

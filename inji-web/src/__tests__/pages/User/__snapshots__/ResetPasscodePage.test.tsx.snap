@@ -161,7 +161,13 @@ exports[`ResetPasscodePage Component should match snapshot 1`] = `
                 class="text-white font-bold rounded-lg"
                 data-testid="btn-forget-passcode"
               >
-                Forget Passcode
+                <div
+                  class="flex items-center justify-center gap-1.5"
+                >
+                  <span>
+                    Forget Passcode
+                  </span>
+                </div>
               </button>
             </div>
           </div>

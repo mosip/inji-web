@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PDFViewer Component renders correctly and matches snapshot 1`] = `
+<div>
+  <div
+    data-testid="pdf-worker"
+  >
+    <div
+      data-default-scale="page-width"
+      data-enable-smooth-scroll="true"
+      data-file-url="https://example.com/test.pdf"
+      data-testid="pdf-viewer"
+    >
+      <div
+        data-testid="spinning-loader"
+      >
+        Loading PDF...
+      </div>
+    </div>
+  </div>
+</div>
+`;
