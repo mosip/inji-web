@@ -7,7 +7,7 @@ import {LandingPageWrapper} from "../Common/LandingPageWrapper";
 import {useUser} from "../../hooks/useUser";
 import {DownloadResultStyles} from "./DownloadResultStyles";
 
-interface StateConfig {
+interface DisplayConfig {
     icon: JSX.Element;
     gotoHome: boolean;
 }
@@ -21,7 +21,7 @@ interface DownloadResultProps {
 export const DownloadResult: React.FC<DownloadResultProps> = ({title, subTitle, state}) => {
     const {isUserLoggedIn} = useUser();
 
-    const stateConfig: Record<RequestStatus, StateConfig> = {
+    const displayConfig: Record<RequestStatus, DisplayConfig> = {
         [RequestStatus.DONE]: {
             icon: <SuccessSheildIcon/>,
             gotoHome: true,
@@ -36,7 +36,7 @@ export const DownloadResult: React.FC<DownloadResultProps> = ({title, subTitle, 
         },
     };
 
-    const currentConfig = stateConfig[state];
+    const currentConfig = displayConfig[state];
 
     const baseWrapperProps = {
         icon: currentConfig.icon,

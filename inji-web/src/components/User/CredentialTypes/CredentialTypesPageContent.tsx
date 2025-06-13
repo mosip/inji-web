@@ -16,10 +16,13 @@ export const CredentialTypesPageContent: React.FC<CredentialTypesPageContentProp
     const {t} = useTranslation('CredentialTypesPage');
 
     if (props.downloadStatus === RequestStatus.LOADING) {
-        return <DownloadResult
-            title={t('CredentialTypesPage:download.loading.header')}
-            state={RequestStatus.LOADING}
-        />
+        return (
+            <DownloadResult
+                title={t('CredentialTypesPage:download.loading.header')}
+                subTitle={t('CredentialTypesPage:download.loading.subHeader')}
+                state={RequestStatus.LOADING}
+            />
+        );
     }
 
     if (props.downloadStatus === RequestStatus.ERROR) {

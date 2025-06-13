@@ -152,7 +152,8 @@
         "subHeader": "Impossible de télécharger la carte. Veuillez cliquer sur le bouton « Accueil » pour lancer le processus."
       },
       "loading": {
-        "header": "Téléchargement des informations d'identification"
+        "header": "Téléchargement des informations d'identification",
+        "subHeader": "Votre carte continuera à se télécharger même si vous actualisez ou changez d'écran. Vous pouvez télécharger une carte à la fois. Elle apparaîtra dans les Cartes enregistrées une fois terminée."
       }
     }
   },

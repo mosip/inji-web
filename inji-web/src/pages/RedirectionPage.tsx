@@ -4,7 +4,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {NavBar} from '../components/Common/NavBar';
 import {RequestStatus, useFetch} from '../hooks/useFetch';
 import {DownloadResult} from '../components/Redirection/DownloadResult';
-import {api} from '../utils/api';
+import {api, MethodType} from '../utils/api';
 import {SessionObject, TokenRequestBody} from '../types/data';
 import {useTranslation} from 'react-i18next';
 import {downloadCredentialPDF, getErrorObject, getTokenRequestBody} from '../utils/misc';
@@ -52,7 +52,7 @@ export const RedirectionPage: React.FC = () => {
         let credentialDownloadResponse = await fetch(
             apiRequest.url(),
             {
-                method: 'POST',
+                method: MethodType[apiRequest.methodType],
                 headers: {
                     ...apiRequest.headers(language),
                     'X-XSRF-TOKEN': cookies['XSRF-TOKEN']

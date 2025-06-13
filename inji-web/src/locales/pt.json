@@ -152,7 +152,8 @@
         "subHeader": "Não foi possível baixar o cartão. Clique no botão \"Ir para a página inicial\" para iniciar o processo."
       },
       "loading": {
-        "header": "Baixando credencial"
+        "header": "Baixando credencial",
+        "subHeader": "Seu cartão continuará sendo baixado mesmo se você atualizar ou alternar as telas. Você pode baixar um cartão por vez. Ele aparecerá em Cartões Armazenados quando terminar."
       }
     }
   },

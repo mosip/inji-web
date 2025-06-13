@@ -152,7 +152,8 @@
         "subHeader": "Unable to download the card. Please click on \"Go to Home\" button to start the process."
       },
       "loading": {
-        "header": "Downloading Credential"
+        "header": "Downloading Credential",
+        "subHeader": "Your card will keep downloading even if you refresh or switch screens. You can download one card at a time. It’ll appear in Stored Cards when done."
       }
     }
   },
