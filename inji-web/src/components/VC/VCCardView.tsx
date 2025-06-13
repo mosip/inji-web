@@ -11,7 +11,7 @@ import {ConfirmationModal} from "../../modals/ConfirmationModal";
 import {useTranslation} from "react-i18next";
 import {VCDetailView} from "./VCDetailView";
 import {DownloadIcon} from "../Common/Icons/DownloadIcon";
-import {ROUTES} from "../../utils/constants";
+import {HTTP_STATUS_CODES, ROUTES} from "../../utils/constants";
 import {useNavigate} from "react-router-dom";
 import {RiDeleteBin6Line} from "react-icons/ri";
 import {BsBoxArrowRight} from "react-icons/bs";
@@ -25,7 +25,7 @@ export function VCCardView(props: Readonly<{
     const [error, setError] = useState<string>()
     const [previewContent, setPreviewContent] = useState<string>("");
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
-    const {t} = useTranslation('StoredCards',{
+    const {t} = useTranslation('StoredCards', {
         keyPrefix: "cardView"
     })
     const navigate = useNavigate();
@@ -52,9 +52,8 @@ export function VCCardView(props: Readonly<{
                     credentials: api.fetchWalletCredentialPreview.credentials
                 }
             );
-            if (response.status === 401) {
+            if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
                 console.error("Unauthorized access - redirecting to login");
-                // Redirect to root page if unauthorized
                 navigate(ROUTES.ROOT);
                 return;
             }
@@ -93,9 +92,8 @@ export function VCCardView(props: Readonly<{
                 }
             );
 
-            if (response.status === 401) {
+            if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
                 console.error("Unauthorized access - redirecting to login");
-                // Redirect to root page if unauthorized
                 navigate(ROUTES.ROOT);
                 return;
             }
@@ -135,9 +133,8 @@ export function VCCardView(props: Readonly<{
                 }
             );
 
-            if (response.status === 401) {
+            if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
                 console.error("Unauthorized access - redirecting to login");
-                // Redirect to root page if unauthorized
                 navigate(ROUTES.ROOT);
                 return;
             }
@@ -204,7 +201,8 @@ export function VCCardView(props: Readonly<{
                             label: t('menu.view'),
                             onClick: preview,
                             id: "view",
-                            icon: <BsBoxArrowRight data-testid={"icon-view"} size={18} className={VCStyles.cardView.menuIcon}/>
+                            icon: <BsBoxArrowRight data-testid={"icon-view"} size={18}
+                                                   className={VCStyles.cardView.menuIcon}/>
                         },
                         {
                             label: t('download'),
@@ -216,7 +214,8 @@ export function VCCardView(props: Readonly<{
                             label: t('menu.delete'),
                             onClick: handleDelete,
                             id: "delete",
-                            icon: <RiDeleteBin6Line data-testid={"icon-delete"} size={18} className={VCStyles.cardView.menuIcon}
+                            icon: <RiDeleteBin6Line data-testid={"icon-delete"} size={18}
+                                                    className={VCStyles.cardView.menuIcon}
                                                     color={"var(--iw-color-red)"}/>,
                             color: "var(--iw-color-red)"
                         },

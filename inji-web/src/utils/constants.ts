@@ -35,3 +35,12 @@ export const ROUTES = {
     USER_FAQ: `/${Pages.USER}/${Pages.FAQ}`,
     USER_RESET_PASSCODE: `/${Pages.USER}/${Pages.RESET_PASSCODE}`,
 };
+
+export const HTTP_STATUS_CODES = {
+    BAD_REQUEST: 400,
+    UNAUTHORIZED: 401,
+    FORBIDDEN: 403,
+    NOT_FOUND: 404,
+    INTERNAL_SERVER_ERROR: 500,
+    SERVICE_UNAVAILABLE: 503,
+}

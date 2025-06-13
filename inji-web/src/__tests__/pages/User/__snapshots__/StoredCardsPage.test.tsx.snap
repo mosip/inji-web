@@ -566,7 +566,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
               </span>
             </div>
             <div
-              class="flex flex-row items-center flex-shrink-0 gap-0.2"
+              class="flex flex-row items-center flex-shrink-0"
             >
               <svg
                 aria-label="icon-download"
@@ -637,7 +637,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
               </span>
             </div>
             <div
-              class="flex flex-row items-center flex-shrink-0 gap-0.2"
+              class="flex flex-row items-center flex-shrink-0"
             >
               <svg
                 aria-label="icon-download"

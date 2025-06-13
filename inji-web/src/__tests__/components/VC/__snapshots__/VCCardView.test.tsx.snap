@@ -39,7 +39,7 @@ exports[`VCCardView Component should match snapshot 1`] = `
       </span>
     </div>
     <div
-      class="flex flex-row items-center flex-shrink-0 gap-0.2"
+      class="flex flex-row items-center flex-shrink-0"
     >
       <svg
         aria-label="icon-download"

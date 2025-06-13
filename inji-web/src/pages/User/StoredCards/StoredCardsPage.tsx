@@ -19,7 +19,7 @@ import {BorderedButton} from "../../../components/Common/Buttons/BorderedButton"
 import {StoredCardsPageStyles} from "./StoredCardsPageStyles";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 import {navigateToUserHome} from "../../../utils/navigationUtils";
-import {ROUTES} from "../../../utils/constants";
+import {HTTP_STATUS_CODES, ROUTES} from "../../../utils/constants";
 
 export const StoredCardsPage: React.FC = () => {
     const {t} = useTranslation('StoredCards');
@@ -46,27 +46,34 @@ export const StoredCardsPage: React.FC = () => {
                 setCredentials(responseData);
                 setFilteredCredentials(responseData)
             } else {
-                if (response.status === 401) {
+                if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
                     console.error("Unauthorized access - redirecting to root");
-                    // Redirect to root page if unauthorized
                     navigate(ROUTES.ROOT);
                     return;
                 }
                 const responseData = await response.json();
                 console.error("Error fetching credentials:", responseData);
-                if (response.status === 500) {
-                    setError("internalServerError");
-                } else if (response.status === 503) {
-                    setError("serviceUnavailable");
-                } else if (response.status === 400) {
-                    const invalidWalletRequests = ["Wallet key not found in session", "Wallet is locked", "Invalid Wallet ID. Session and request Wallet ID do not match"]
-                    if (invalidWalletRequests.includes(responseData.errorMessage)) {
-                        setError("invalidWalletRequest");
-                    } else {
-                        setError("invalidRequest");
-                    }
-                } else {
-                    setError("unknownError");
+                const invalidWalletRequests = [
+                    "Wallet key not found in session",
+                    "Wallet is locked",
+                    "Invalid Wallet ID. Session and request Wallet ID do not match"
+                ];
+                switch (response.status) {
+                    case HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR:
+                        setError("internalServerError");
+                        break;
+                    case HTTP_STATUS_CODES.SERVICE_UNAVAILABLE:
+                        setError("serviceUnavailable");
+                        break;
+                    case HTTP_STATUS_CODES.BAD_REQUEST:
+                        setError(
+                            invalidWalletRequests.includes(responseData.errorMessage)
+                                ? "invalidWalletRequest"
+                                : "invalidRequest"
+                        );
+                        break;
+                    default:
+                        setError("unknownError");
                 }
             }
         } catch (error) {
