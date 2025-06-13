@@ -411,10 +411,30 @@
         "title": "Sem Conexão com a Internet",
         "message": "Por favor, verifique sua conexão com a internet e tente novamente."
       }
+    },
+    "cardView": {
+      "download": "Baixar",
+      "menu": {
+        "view": "Ver",
+        "delete": "Excluir"
+      },
+      "error": {
+        "downloadError": "Download falhou. Por favor, tente novamente.",
+        "deleteError": "Falha ao excluir. Tente novamente."
+      },
+      "delete": {
+        "confirmation": {
+          "title": "Excluir Cartão!",
+          "message": "Tem certeza que deseja excluir este cartão?"
+        }
+      }
     }
   },
   "Common": {
-    "home": "Lar"
+    "home": "Lar",
+    "goToHome": "Ir para a página inicial",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar"
   }
 }
   

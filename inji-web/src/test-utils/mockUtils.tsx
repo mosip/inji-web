@@ -4,6 +4,60 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { reduxStore } from '../redux/reduxStore';
 import { UserProvider } from '../hooks/useUser';
+import {showToast} from "../components/Common/toast/ToastWrapper";
+
+export const setupShowToastMock = () => {
+    (showToast as jest.Mock).mockClear();
+
+    return {
+        // Verify showToast was called with the expected parameters
+        assertShowToastCalled: ({
+                                    message,
+                                    type = 'default',
+                                    testId,
+                                    options
+                                }: {
+            message: string;
+            type?: 'info' | 'success' | 'warning' | 'error' | 'default';
+            testId?: string;
+            options?: any;
+        }) => {
+            expect(showToast).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    message,
+                    ...(type && { type }),
+                    ...(testId && { testId }),
+                    ...(options && { options })
+                })
+            );
+        },
+    };
+};
+
+export const mockNavigatorOnline = (isOnline: boolean) => {
+    const originalOnLine = window.navigator.onLine;
+
+    const setOnlineStatus = (status: boolean) => {
+        Object.defineProperty(navigator, 'onLine', {
+            configurable: true,
+            value: status,
+            writable: true
+        });
+    };
+
+    setOnlineStatus(isOnline);
+
+    return {
+        reset: () => {
+            Object.defineProperty(navigator, 'onLine', {
+                configurable: true,
+                value: originalOnLine,
+                writable: true
+            });
+        },
+        setStatus: setOnlineStatus
+    };
+};
 
 // Mock for storage module
 export const mockStorageModule = () => {
@@ -61,6 +115,7 @@ export const mockUseTranslation = () => {
     }));
 };
 
+
 export const mockUseNavigate = () => {
     const mockNavigate = jest.fn();
     jest.mock('react-router-dom', () => ({
@@ -85,10 +140,6 @@ export const mockUseGetIssuerDisplayObjectForCurrentLanguage = () => {
     jest.mock('../utils/i18n', () => ({
         getIssuerDisplayObjectForCurrentLanguage: jest.fn(),
     }));
-};
-
-export const wrapUnderRouter = (children: React.ReactNode) => {
-    return <Router>{children}</Router>;
 };
 
 export const mockUseSearchCredentials = () => {
@@ -137,7 +188,7 @@ export const mockUseParams = ()=>{
 };
 
 export const mockApiObject = () =>{
-    jest.mock('../utils/api.ts', () => ({
+    return jest.mock('../utils/api.ts', () => ({
         api: {
           mimotoHost: 'https://mocked-api-host',
             fetchWalletVCs: {
@@ -163,14 +214,6 @@ export const mockUseFetch = () =>{
           RequestStatus,
         };
       });
-};
-
-export const mockUseToast = () =>{
-    jest.mock('react-toastify', () => ({
-      toast: {
-        error: jest.fn(),
-      },
-    }));
 };
 
 export const mockusemisc = ()=>{

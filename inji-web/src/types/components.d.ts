@@ -1,8 +1,9 @@
-import {IssuerObject, IssuerConfigurationObject} from "./data";
+import {IssuerObject} from "./data";
 import React from "react";
 import {RequestStatus} from "../hooks/useFetch";
-export type HomeFeatureItemProps={
-    itemno:number;
+
+export type HomeFeatureItemProps = {
+    itemno: number;
 }
 
 export type ItemBoxProps = {
@@ -106,3 +107,9 @@ export type ModalWrapperProps = {
     zIndex: number;
     size: string;
 }
+
+export type IconProps = {
+    gradient?: boolean,
+    style?: React.CSSProperties,
+    testId: string
+} & React.SVGProps<SVGSVGElement>;

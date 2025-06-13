@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuItem Component renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <button
+    class="w-full text-left px-4 py-2 text-sm text-gray-700 border-b border-[#EBF0FB] hover:bg-[#F2F6FF] last:border-b-0"
+    data-testid="menu-item-test-menu"
+    role="menuitem"
+  >
+    <div
+      class="flex flex-row items-center gap-2"
+    >
+      <span
+        class="block"
+        data-testid="label-test-menu"
+      >
+        Test Item
+      </span>
+    </div>
+  </button>
+</DocumentFragment>
+`;

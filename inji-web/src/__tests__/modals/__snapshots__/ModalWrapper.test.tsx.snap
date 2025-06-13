@@ -188,7 +188,7 @@ exports[`Test the Layout of the Modal Wrapper Snapshot test for ModalWrapper sty
                 class="bg-gradient-to-r rounded-lg text-center cursor-pointer shadow hover:shadow-lg from-iw-primary to-iw-secondary p-0.5"
               >
                 <div
-                  class="py-2 px-4 rounded-lg bg-white"
+                  class="py-1 px-2 rounded-lg bg-white justify-center center undefined"
                 >
                   <button
                     class="text-iw-tertiary font-bold rounded-lg"
@@ -213,7 +213,13 @@ exports[`Test the Layout of the Modal Wrapper Snapshot test for ModalWrapper sty
                   class="text-white font-bold rounded-lg"
                   data-testid="DataShareFooter-Success-Button"
                 >
-                  success
+                  <div
+                    class="flex items-center justify-center gap-1.5"
+                  >
+                    <span>
+                      success
+                    </span>
+                  </div>
                 </button>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {api} from '../../../utils/api';
+import {api, MethodType} from '../../../utils/api';
 import {useCookies} from 'react-cookie';
 import {SolidButton} from '../../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
@@ -32,7 +32,7 @@ export const PasscodePage: React.FC = () => {
     const fetchWallets = async () => {
         try {
             const response = await fetch(api.fetchWallets.url(), {
-                method: api.fetchWallets.methodType === 0 ? 'GET' : 'POST',
+                method: MethodType[api.fetchWallets.methodType],
                 headers: {
                     ...api.fetchWallets.headers(),
                     'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
@@ -88,8 +88,7 @@ export const PasscodePage: React.FC = () => {
 
         try {
             const response = await fetch(api.fetchWalletDetails.url(walletId), {
-                method:
-                    api.fetchWalletDetails.methodType === 0 ? 'GET' : 'POST',
+                method: MethodType[api.fetchWalletDetails.methodType],
                 headers: {
                     ...api.fetchWalletDetails.headers(),
                     'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
