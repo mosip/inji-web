@@ -13,8 +13,8 @@ import {
 } from "../../../test-utils/mockObjects";
 import {
     renderWithProvider,
-    mockUseSelector
 } from "../../../test-utils/mockUtils";
+import { setMockUseSelectorState } from "../../../test-utils/mockReactRedux";
 
 // todo : extract the local method to mockUtils, which is added to bypass the problems
 // Mock the i18n configuration
@@ -32,18 +32,14 @@ const credential: IssuerConfigurationObject = {
 
 describe("Testing the Layout of Credentials", () => {
     beforeEach(() => {
-        mockUseSelector();
-        const useSelectorMock = require("react-redux").useSelector;
-        useSelectorMock.mockImplementation((selector: any) =>
-            selector({
-                issuers: {
-                    selected_issuer: "issuer1"
-                },
-                common: {
-                    language: "en"
-                }
-            })
-        );
+        setMockUseSelectorState({
+            issuers: {
+                selected_issuer: "issuer1"
+            },
+            common: {
+                language: "en"
+            }
+        })
     });
 
     afterEach(() => {

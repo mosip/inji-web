@@ -1,10 +1,9 @@
 import { IssuersList } from '../../../components/Issuers/IssuersList';
 import { RequestStatus } from '../../../hooks/useFetch';
 import { mockIssuerObjectList } from '../../../test-utils/mockObjects';
-import { renderWithProvider,mockUseSelector,mockUseTranslation, mockCrypto } from '../../../test-utils/mockUtils';
-
+import { renderWithProvider,mockUseTranslation, mockCrypto } from '../../../test-utils/mockUtils';
+import { setMockUseSelectorState } from '../../../test-utils/mockReactRedux';
 mockUseTranslation();
-mockUseSelector();
 global.crypto = mockCrypto;
 
 describe("Testing the Layout of IssuersList", () => {
@@ -33,17 +32,15 @@ describe("Testing the Layout of IssuersList", () => {
     });
 
     test('Check whether it renders empty issuers list', () => {
-        const useSelectorMock = require('react-redux').useSelector;
-        useSelectorMock.mockImplementation((selector: any) => selector({
+        setMockUseSelectorState({
             issuers: {
                 issuers: [],
                 filtered_issuers: [],
             },
             common: {
                 language: 'en',
-            },
-        }));
-
+            }
+        });
         const { asFragment } = renderWithProvider(<IssuersList state={RequestStatus.DONE} />);
         expect(asFragment()).toMatchSnapshot();
     });

@@ -1,4 +1,4 @@
-import {setMockUseSelectorState} from '../../../../test-utils/mockUtils';
+import {setMockUseSelectorState} from '../../../../test-utils/mockReactRedux';
 import { render, fireEvent } from '@testing-library/react';
 import { useSelector } from 'react-redux';
 import { CollapseButton } from '../../../../components/Common/Buttons/CollapseButton';

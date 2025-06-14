@@ -1,9 +1,10 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { renderWithRouter } from '../../../test-utils/mockUtils';
+import { screen, waitFor } from '@testing-library/react';
 import { useFetch, RequestStatus } from '../../../hooks/useFetch';
-import { useDispatch, useSelector } from 'react-redux';
+import { setMockUseDispatchReturnValue } from '../../../test-utils/mockReactRedux';
 import { toast } from 'react-toastify';
 import { CredentialTypesPage } from '../../../pages/User/CredentialTypes/CredentialTypesPage';
-import { MemoryRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 jest.mock('../../../hooks/useFetch', () => ({
   useFetch: jest.fn(),
@@ -12,11 +13,6 @@ jest.mock('../../../hooks/useFetch', () => ({
     DONE: 1,
     ERROR: 2,
   },
-}));
-
-jest.mock('react-redux', () => ({
-  useDispatch: jest.fn(),
-  useSelector: jest.fn(),
 }));
 
 jest.mock('react-toastify', () => ({
@@ -33,34 +29,20 @@ jest.mock('../../../components/Common/Buttons/NavBackArrowButton', () => ({
   ),
 }));
 
-jest.mock('react-router-dom', () => {
-  const lib = jest.requireActual('react-router-dom');
-  return {
-    ...lib,
-    useParams:   () => ({ issuerId: 'Issuer1' }),
-    useNavigate: () => jest.fn(),
-    useLocation: () => ({ state: { from: '/somewhere' } }),
-    MemoryRouter: lib.MemoryRouter,
-  };
-});
-
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({ t: (key: string) => key }),
   initReactI18next: {
     type: '3rdParty',
-    init: () => {},      
+    init: () => {},
   },
 }));
 
-const mockUseSelector = useSelector as jest.MockedFunction<typeof useSelector>;
-const mockUseDispatch = useDispatch as jest.MockedFunction<typeof useDispatch>;
 const mockUseFetch = useFetch as jest.Mock;
-
 
 describe('CredentialTypesPage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseDispatch.mockReturnValue(jest.fn());
+    setMockUseDispatchReturnValue(jest.fn());
   });
 
   it('renders CredentialTypesPage component', () => {
@@ -69,11 +51,7 @@ describe('CredentialTypesPage', () => {
       fetchRequest: jest.fn(),
     });
 
-    render(
-      <MemoryRouter>
-        <CredentialTypesPage backUrl="/user/home" />
-      </MemoryRouter>
-    );
+    renderWithRouter(<CredentialTypesPage backUrl="/user/home" />);
 
     expect(screen.getByTestId('credential-types-page-container')).toBeInTheDocument();
   });
@@ -84,14 +62,9 @@ describe('CredentialTypesPage', () => {
       fetchRequest: jest.fn(),
     });
 
-    render(
-      <MemoryRouter>
-        <CredentialTypesPage backUrl="/user/home" />
-      </MemoryRouter>
-    );
-
+    renderWithRouter(<CredentialTypesPage backUrl="/user/home" />);
     await waitFor(() => {
-        expect(toast.error).toHaveBeenCalledWith('errorContent');
+      expect(toast.error).toHaveBeenCalledWith('errorContent');
     });
   });
 
@@ -101,54 +74,58 @@ describe('CredentialTypesPage', () => {
       fetchRequest: jest.fn(),
     });
 
-    render(
-      <MemoryRouter>
-        <CredentialTypesPage backUrl="/user/home" />
-      </MemoryRouter>
-    );
-
+    renderWithRouter(<CredentialTypesPage backUrl="/user/home" />);
     expect(screen.getByTestId('credential-list-container')).toBeInTheDocument();
   });
-  
+
   it('renders loading snapshot', () => {
-    mockUseFetch.mockReturnValue({ state: RequestStatus.LOADING, fetchRequest: jest.fn() });
-    const { asFragment } = render(<MemoryRouter><CredentialTypesPage /></MemoryRouter>);
+    mockUseFetch.mockReturnValue({
+      state: RequestStatus.LOADING,
+      fetchRequest: jest.fn(),
+    });
+
+    const { asFragment } = renderWithRouter(<CredentialTypesPage />);
+
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders error snapshot + toast.error', async () => {
-    mockUseFetch.mockReturnValue({ state: RequestStatus.ERROR, fetchRequest: jest.fn() });
-    const { asFragment } = render(<MemoryRouter><CredentialTypesPage /></MemoryRouter>);
+    mockUseFetch.mockReturnValue({
+      state: RequestStatus.ERROR,
+      fetchRequest: jest.fn(),
+    });
+
+    const { asFragment } = renderWithRouter(<CredentialTypesPage />);
+
     await waitFor(() => expect(toast.error).toHaveBeenCalledWith('errorContent'));
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('matches snapshot after data loads', async () => {
-    const fetchMock = jest.fn()
-      .mockResolvedValueOnce({ response: { display: [ { language: 'en', name: 'Issuer1' } ] }})
+    const fetchMock = jest
+      .fn()
+      .mockResolvedValueOnce({
+        response: { display: [{ language: 'en', name: 'Issuer1' }] },
+      })
       .mockResolvedValueOnce({ response: [] });
 
     mockUseFetch.mockReturnValue({ state: RequestStatus.DONE, fetchRequest: fetchMock });
 
-    const { asFragment } = render(<MemoryRouter><CredentialTypesPage /></MemoryRouter>);
+    const { asFragment } = renderWithRouter(<CredentialTypesPage />);
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
     expect(screen.getByText('Issuer1')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
-//Search Credential Tests
+  // Search Credential Tests
   it('renders SearchCredential alongside other header elements', () => {
     mockUseFetch.mockReturnValue({
       state: RequestStatus.DONE,
       fetchRequest: jest.fn(),
     });
 
-    render(
-      <MemoryRouter>
-        <CredentialTypesPage />
-      </MemoryRouter>
-    );
+    renderWithRouter(<CredentialTypesPage />);
 
     expect(screen.getByTestId('search-credential-component')).toBeInTheDocument();
     expect(screen.getByTestId('back-button')).toBeInTheDocument();
@@ -156,33 +133,25 @@ describe('CredentialTypesPage', () => {
   });
 
   it('maintains SearchCredential visibility across different states', () => {
-    // Test with ERROR state
+    // First render: ERROR state
     mockUseFetch.mockReturnValue({
       state: RequestStatus.ERROR,
       fetchRequest: jest.fn(),
     });
+    const { rerender, getByTestId } = renderWithRouter(<CredentialTypesPage />);
+    expect(getByTestId('search-credential-component')).toBeInTheDocument();
 
-    const { rerender } = render(
-      <MemoryRouter>
-        <CredentialTypesPage />
-      </MemoryRouter>
-    );
-
-    expect(screen.getByTestId('search-credential-component')).toBeInTheDocument();
-
-    // Test with DONE state
     mockUseFetch.mockReturnValue({
       state: RequestStatus.DONE,
       fetchRequest: jest.fn(),
     });
-
+    // Wrap in <BrowserRouter> again
     rerender(
-      <MemoryRouter>
+      <BrowserRouter>
         <CredentialTypesPage />
-      </MemoryRouter>
+      </BrowserRouter>
     );
-
-    expect(screen.getByTestId('search-credential-component')).toBeInTheDocument();
+    expect(getByTestId('search-credential-component')).toBeInTheDocument();
   });
-
+  
 });

@@ -1,32 +1,15 @@
-
+import { setMockUseSelectorState } from '../../../test-utils/mockReactRedux';
 import { screen, fireEvent} from '@testing-library/react';
 import { Sidebar, SidebarItem} from '../../../components/User/Sidebar';
 import { renderWithRouter} from '../../../test-utils/mockUtils';
-import {setMockUseSelectorState,mockusei18n} from '../../../test-utils/mockUtils'
-
 jest.mock('../../../utils/i18n', () => ({
   isRTL: (lang: string) => lang === 'ar',
 }));
 
-jest.mock('react-redux', () => {
-  const ActualReactRedux = jest.requireActual('react-redux');
-  return {
-    ...ActualReactRedux,
-    useSelector: jest.fn(),
-    useDispatch: jest.fn(),
-  };
-})
-
 describe('Sidebar', () => {
-  // const useSelectorMock = require('react-redux').useSelector as jest.Mock;
-  
   beforeEach(() => {
     jest.clearAllMocks();
-    mockusei18n();
     setMockUseSelectorState({common:{language:'en'}});
-    // useSelectorMock.mockImplementation((selector: any) =>
-      // selector({ common: { language: 'en' } })
-    // );
   });
 
   it('renders sidebar items with correct text', () => {
@@ -58,9 +41,6 @@ describe('Sidebar', () => {
   });
 
   it('renders RTL classes when language is "ar"', () => {
-    // useSelectorMock.mockImplementation((selector: any) =>
-    //   selector({ common: { language: 'ar' } })
-    // );
     setMockUseSelectorState({common:{language:'ar'}});
     renderWithRouter(<Sidebar />);
     const sidebarContainer = screen.getByTestId('sidebar-container');
@@ -69,14 +49,9 @@ describe('Sidebar', () => {
 });
 
 describe('SidebarItem', () => {
-  // const useSelectorMock = require('react-redux').useSelector as jest.Mock;
-
   beforeEach(() => {
     jest.clearAllMocks();
     setMockUseSelectorState({common:{language:'en'}});
-    // useSelectorMock.mockImplementation((selector: any) =>
-    //   selector({ common: { language: 'en' } })
-    // );
   });
 
   it('renders icon and text correctly', () => {

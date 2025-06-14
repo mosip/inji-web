@@ -1,19 +1,7 @@
+import { mockNavigateFn,setMockUseLocation } from '../../test-utils/mockRouter';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { FAQPage } from '../../pages/FAQPage';
-import { useLocation } from 'react-router-dom';
 import { navigateToUserHome } from '../../utils/navigationUtils';
-// Mocks
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key,
-  }),
-}));
-
-const mockNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  useNavigate: () => mockNavigate,
-  useLocation: jest.fn(),
-}));
 
 jest.mock('../../utils/navigationUtils', () => ({
   navigateToUserHome: jest.fn(),
@@ -36,12 +24,19 @@ jest.mock('../../components/Faq/FAQAccordion', () => ({
 }));
 
 describe('FAQPage', () => {
+  const { useLocation } = require('react-router-dom') as { useLocation: jest.Mock };
+
   beforeEach(() => {
     jest.clearAllMocks();
+    mockNavigateFn.mockReset();
+
+    setMockUseLocation({ pathname: '/' });
+    useLocation.mockReturnValue({ pathname: '/', state: {} });
+
   });
 
   it('renders PageTitle and FAQAccordion', () => {
-    (useLocation as jest.Mock).mockReturnValue({ state: {} });
+    useLocation.mockReturnValue({ pathname: '/', state: {} });
 
     render(<FAQPage backUrl={undefined} withHome={false} />);
 
@@ -51,7 +46,7 @@ describe('FAQPage', () => {
   });
 
   it('renders home button if withHome=true and calls navigateToDashboardHome on click', () => {
-    (useLocation as jest.Mock).mockReturnValue({ state: {} });
+    useLocation.mockReturnValue({ pathname: '/', state: {} });
 
     render(<FAQPage backUrl={undefined} withHome={true} />);
     const homeButton = screen.getByTestId('faq-home-button');
@@ -59,49 +54,49 @@ describe('FAQPage', () => {
     expect(homeButton).toHaveTextContent('User:Home.title');
 
     fireEvent.click(homeButton);
-    expect(navigateToUserHome).toHaveBeenCalledWith(mockNavigate);
+    expect(navigateToUserHome).toHaveBeenCalledWith(mockNavigateFn);
   });
 
   it('clicking back arrow navigates to backUrl if present', () => {
-    (useLocation as jest.Mock).mockReturnValue({ state: {} });
+    useLocation.mockReturnValue({ pathname: '/', state: {} });
   
     render(<FAQPage backUrl="/custom-back" withHome={false} />);
     const svg = document.querySelector('svg');
     expect(svg).toBeInTheDocument();
   
     fireEvent.click(svg!);
-    expect(mockNavigate).toHaveBeenCalledWith('/custom-back');
+    expect(mockNavigateFn).toHaveBeenCalledWith('/custom-back');
   });
 
   it('clicking back arrow navigates to previousPagePath from location.state if no backUrl', () => {
-    (useLocation as jest.Mock).mockReturnValue({ state: { from: '/prev-page' } });
+    useLocation.mockReturnValue({ pathname: '/', state: { from: '/prev-page' } });
 
     render(<FAQPage backUrl={undefined} withHome={false} />);
     const svg = document.querySelector('svg');
     fireEvent.click(svg!);
 
-    expect(mockNavigate).toHaveBeenCalledWith('/prev-page');
+    expect(mockNavigateFn).toHaveBeenCalledWith('/prev-page');
   });
 
   it('clicking back arrow calls navigateToDashboardHome if no backUrl or previousPagePath', () => {
-    (useLocation as jest.Mock).mockReturnValue({ state: {} });
+    useLocation.mockReturnValue({ pathname: '/', state: {} });
 
     render(<FAQPage backUrl={undefined} withHome={false} />);
     const svg = document.querySelector('svg');
     fireEvent.click(svg!);
 
-    expect(navigateToUserHome).toHaveBeenCalledWith(mockNavigate);
+    expect(navigateToUserHome).toHaveBeenCalledWith(mockNavigateFn);
   });
 
   it('matches snapshot when withHome=false', () => {
-    (useLocation as jest.Mock).mockReturnValue({ state: {} });
+    useLocation.mockReturnValue({ pathname: '/', state: {} });
 
     const { asFragment } = render(<FAQPage backUrl={undefined} withHome={false} />);
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('matches snapshot when withHome=true', () => {
-    (useLocation as jest.Mock).mockReturnValue({ state: {} });
+    useLocation.mockReturnValue({ pathname: '/', state: {} });
 
     const { asFragment } = render(<FAQPage backUrl={undefined} withHome={true} />);
     expect(asFragment()).toMatchSnapshot();

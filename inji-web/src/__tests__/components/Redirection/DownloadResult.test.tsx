@@ -1,20 +1,15 @@
-import React from 'react';
+import {mockNavigateFn } from '../../../test-utils/mockRouter';
 import {render, screen} from '@testing-library/react';
 import {DownloadResult} from "../../../components/Redirection/DownloadResult";
 import {RequestStatus} from "../../../hooks/useFetch";
-import { renderWithProvider,mockUseNavigate,mockUseSpinningLoader } from '../../../test-utils/mockUtils';
-
-mockUseNavigate();
+import { renderWithProvider,mockUseSpinningLoader } from '../../../test-utils/mockUtils';
 mockUseSpinningLoader();
-//todo : extract the local method to mockUtils, which is added to bypass the routing problems
-const mockedUsedNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useNavigate: () => ({
-        navigate: mockedUsedNavigate,
-    }),
-}))
+
 describe("Testing the Layout of DownloadResult for Success Error and Loading", () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+        mockNavigateFn.mockReset();
+      });
 
     test('Check if the layout is matching with the snapshots for the Success',()=>{
         const {asFragment} = renderWithProvider(<DownloadResult title={"Title"} subTitle={"SubTitle"} state={RequestStatus.DONE}/>)

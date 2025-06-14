@@ -1,6 +1,6 @@
-import { setMockUseNavigateReturnValue,setMockUseSelectorState,setMockUseDispatchReturnValue} from '../../../test-utils/mockUtils';
-import { mockUseLocation,mockUseNavigate,mockusei18n } from '../../../test-utils/mockUtils';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { setMockUseSelectorState} from '../../../test-utils/mockReactRedux';
+import { setMockUseLocation,mockNavigateFn } from '../../../test-utils/mockRouter';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { Header } from '../../../components/User/Header';
 import { useCookies } from 'react-cookie';
 import { useUser } from '../../../hooks/useUser';
@@ -34,24 +34,21 @@ jest.mock('../../../assets/InjiWebLogo.png', () => 'mock-injiweb-logo');
   };
 
 describe('Header', () => {
-  const mockNavigate = jest.fn();
   const mockRemoveUser = jest.fn();
-  const mockDispatch = jest.fn();
   const mockHeaderRef = { current: null };
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockusei18n();
-    mockUseLocation.mockReturnValue({ pathname: '/' });
+    mockNavigateFn.mockReset();
+    setMockUseLocation({ pathname: '/' });
+
     (useCookies as jest.Mock).mockReturnValue([{ 'XSRF-TOKEN': 'token' }]);
     (useUser as jest.Mock).mockReturnValue({
       user: { displayName: 'John Doe', profilePictureUrl: '' },
       removeUser: mockRemoveUser,
       isLoading: false,
     });
-    setMockUseNavigateReturnValue(mockNavigate);
     setMockUseSelectorState({common:{language:"en"}});
-    setMockUseDispatchReturnValue(mockDispatch);
     (i18n.isRTL as unknown as jest.Mock).mockReturnValue(false);
 
   });
@@ -94,15 +91,17 @@ describe('Header', () => {
     expect(queryByTestId('hamburger-menu-dropdown')).toBeInTheDocument();
   });
 
-  it('navigates to profile on dropdown item click', () => {
-    const { getByTestId, getByText } = render(
-      <Header headerRef={mockHeaderRef} headerHeight={50} />
-    );
+  it('navigates to profile on dropdown item click', async () => {
+    render(<Header headerRef={mockHeaderRef} headerHeight={50} />);
 
-    fireEvent.click(getByTestId('profile-details').querySelector('svg')!);
-    const profileOption = getByText('ProfileDropdown.profile');
+    const profileDetails = screen.getByTestId('profile-details');
+    const arrowIconSvg = profileDetails.querySelector('svg');
+    fireEvent.click(arrowIconSvg!);
+
+    const profileOption = await screen.findByText('ProfileDropdown.profile');
     fireEvent.click(profileOption);
-    expect(mockUseNavigate).toHaveBeenCalledWith('/user/profile', {
+
+    expect(mockNavigateFn).toHaveBeenCalledWith('/user/profile', {
       state: { from: '/' },
     });
   });

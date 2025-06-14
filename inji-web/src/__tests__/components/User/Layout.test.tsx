@@ -1,7 +1,7 @@
-import {setMockUseSelectorState } from '../../../test-utils/mockUtils';
+import { setMockUseLocation } from '../../../test-utils/mockRouter';
+import {setMockUseSelectorState } from '../../../test-utils/mockReactRedux';
 import { render, screen, act } from '@testing-library/react';
 import { Layout } from '../../../components/User/Layout';
-import { useSelector } from 'react-redux';
 import * as i18n from '../../../utils/i18n';
 
 jest.mock('../../../components/User/Header', () => ({
@@ -35,6 +35,7 @@ describe('Layout component', () => {
   beforeEach(() => {
     setMockUseSelectorState({ common: { language: 'en' } });
     (i18n.getDirCurrentLanguage as jest.Mock).mockReturnValue('ltr');
+    setMockUseLocation({ pathname: '/' });
   });
 
   it('renders layout with Header, Sidebar, Outlet and Footer', () => {

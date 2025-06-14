@@ -1,4 +1,4 @@
-import React from "react";
+import { setMockUseSelectorState } from "../../../test-utils/mockReactRedux";
 import {screen, fireEvent} from "@testing-library/react";
 import {SearchCredential} from "../../../components/Credentials/SearchCredential";
 import {storeFilteredCredentials} from "../../../redux/reducers/credentialsReducer";
@@ -7,29 +7,18 @@ import {
     renderWithProvider,
     mockUseTranslation
 } from "../../../test-utils/mockUtils";
-
 mockUseTranslation();
-// Mock the useSelector and useDispatch hooks
-// todo : extract the local method to mockUtils
-jest.mock("react-redux", () => ({
-    ...jest.requireActual("react-redux"),
-    useSelector: jest.fn(),
-    useDispatch: jest.fn()
-}));
 
 describe("Testing the Layout of SearchCredential", () => {
     beforeEach(() => {
-        const useSelectorMock = require("react-redux").useSelector;
-        useSelectorMock.mockImplementation((selector: any) =>
-            selector({
-                credentials: {
-                    credentials: mockCredentials
-                },
-                common: {
-                    language: "en"
-                }
-            })
-        );
+        setMockUseSelectorState({
+            credentials: {
+                credentials: mockCredentials
+            },
+            common: {
+                language: "en"
+            }
+        });
     });
 
     test("Check if the layout is matching with the snapshots", () => {
@@ -45,18 +34,14 @@ describe("Testing the Functionality of SearchCredential", () => {
     const mockDispatch = jest.fn();
 
     beforeEach(() => {
-        const useSelectorMock = require("react-redux").useSelector;
-        useSelectorMock.mockImplementation((selector: any) =>
-            selector({
-                credentials: {
-                    credentials: mockCredentials
-                },
-                common: {
-                    language: "en"
-                }
-            })
-        );
-
+        setMockUseSelectorState({
+            credentials: {
+                credentials: mockCredentials
+            },
+            common: {
+                language: "en"
+            }
+        });
         const useDispatchMock = require("react-redux").useDispatch;
         useDispatchMock.mockReturnValue(mockDispatch);
     });
