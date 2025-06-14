@@ -54,7 +54,7 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
         class="bg-gradient-to-r rounded-lg text-center cursor-pointer shadow hover:shadow-lg from-iw-primary to-iw-secondary p-0.5"
       >
         <div
-          class="py-2 px-4 rounded-lg bg-white"
+          class="py-1 px-2 rounded-lg bg-white justify-center center undefined"
         >
           <button
             class="text-iw-tertiary font-bold rounded-lg"
@@ -209,7 +209,7 @@ exports[`Testing the Layout of DownloadResult for Success Error and Loading Chec
         class="bg-gradient-to-r rounded-lg text-center cursor-pointer shadow hover:shadow-lg from-iw-primary to-iw-secondary p-0.5"
       >
         <div
-          class="py-2 px-4 rounded-lg bg-white"
+          class="py-1 px-2 rounded-lg bg-white justify-center center undefined"
         >
           <button
             class="text-iw-tertiary font-bold rounded-lg"

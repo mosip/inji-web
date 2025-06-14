@@ -1,25 +1,91 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`VCCardView Component should match snapshot 1`] = `
-<div>
+<DocumentFragment>
   <div
-    class="bg-iw-tileBackground grid grid-cols-[auto_auto_auto] gap-4 items-center shadow hover:shadow-lg hover:scale-105 hover:shadow-iw-selectedShadow p-4 m-2 rounded-md cursor-pointer"
+    class="bg-iw-tileBackground grid grid-cols-[2.5fr_0.5fr] items-center shadow hover:shadow-lg hover:scale-105 hover:shadow-iw-selectedShadow p-4 m-2 rounded-md cursor-pointer"
     data-testid="vc-card-view"
     role="menuitem"
     tabindex="0"
   >
-    <img
-      alt="Credential Type Logo"
-      class="w-20 h-20"
-      data-testid="issuer-logo"
-      src="test-logo.png"
-    />
-    <span
-      class="text-sm font-semibold text-iw-title"
-      data-testid="credential-type-display-name"
+    <div
+      data-testid="vc-detail-view"
     >
-      Health ID
-    </span>
+      <title>
+        Drivers License
+      </title>
+      <div />
+      <button>
+        Close
+      </button>
+      <button>
+        download
+      </button>
+    </div>
+    <div
+      class="flex items-center overflow-scroll gap-6 sm:gap-4"
+    >
+      <img
+        alt="Credential Type Logo"
+        class="w-16 h-16 sm:w-20 sm:h-20"
+        data-testid="issuer-logo"
+        src="logo1.png"
+      />
+      <span
+        class="text-sm font-semibold text-iw-title"
+        data-testid="credential-type-display-name"
+      >
+        Drivers License
+      </span>
+    </div>
+    <div
+      class="flex flex-row items-center flex-shrink-0"
+    >
+      <svg
+        aria-label="icon-download"
+        class="h-25 w-25"
+        data-testid="icon-download"
+        fill="currentColor"
+        height="24"
+        testid="icon-download"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12 15.7885L7.73075 11.5192L8.78475 10.4348L11.25 12.9V4.5H12.75V12.9L15.2153 10.4348L16.2693 11.5192L12 15.7885ZM6.30775 19.5C5.80258 19.5 5.375 19.325 5.025 18.975C4.675 18.625 4.5 18.1974 4.5 17.6923V14.9808H6V17.6923C6 17.7692 6.03208 17.8398 6.09625 17.9038C6.16025 17.9679 6.23075 18 6.30775 18H17.6923C17.7692 18 17.8398 17.9679 17.9038 17.9038C17.9679 17.8398 18 17.7692 18 17.6923V14.9808H19.5V17.6923C19.5 18.1974 19.325 18.625 18.975 18.975C18.625 19.325 18.1974 19.5 17.6923 19.5H6.30775Z"
+        />
+      </svg>
+      <div
+        class="relative inline-block text-left"
+        data-testid="mini-view-card-menu"
+      >
+        <button
+          class="p-2 hover:bg-gray-100"
+          data-testid="icon-mini-view-card-menu"
+        >
+          <svg
+            color="#707070"
+            data-testid="icon-three-dots-menu"
+            fill="none"
+            height="20"
+            stroke="currentColor"
+            stroke-width="0"
+            style="color: rgb(112, 112, 112);"
+            viewBox="0 0 15 15"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M3.625 7.5C3.625 8.12132 3.12132 8.625 2.5 8.625C1.87868 8.625 1.375 8.12132 1.375 7.5C1.375 6.87868 1.87868 6.375 2.5 6.375C3.12132 6.375 3.625 6.87868 3.625 7.5ZM8.625 7.5C8.625 8.12132 8.12132 8.625 7.5 8.625C6.87868 8.625 6.375 8.12132 6.375 7.5C6.375 6.87868 6.87868 6.375 7.5 6.375C8.12132 6.375 8.625 6.87868 8.625 7.5ZM12.5 8.625C13.1213 8.625 13.625 8.12132 13.625 7.5C13.625 6.87868 13.1213 6.375 12.5 6.375C11.8787 6.375 11.375 6.87868 11.375 7.5C11.375 8.12132 11.8787 8.625 12.5 8.625Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
   </div>
-</div>
+</DocumentFragment>
 `;

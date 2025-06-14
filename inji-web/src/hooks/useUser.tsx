@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useState} from 'react';
-import {api} from '../utils/api';
+import {api, MethodType} from '../utils/api';
 import {KEYS} from '../utils/constants';
 import {UserContextType} from "../types/contextTypes";
 import {ErrorType, User} from "../types/data";
@@ -35,7 +35,7 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
         try {
             setIsLoading(true);
             const response = await fetch(api.fetchUserProfile.url(), {
-                method: api.fetchUserProfile.methodType === 0 ? 'GET' : 'POST',
+                method: MethodType[api.fetchUserProfile.methodType],
                 headers: {...api.fetchUserProfile.headers()},
                 credentials: api.fetchUserProfile.credentials
             });

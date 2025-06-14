@@ -1,7 +1,7 @@
 import React from 'react';
-import { AppToaster } from '../../../components/Common/AppToaster';
-import { reduxStore } from '../../../redux/reduxStore'; // Assuming the store is named reduxStore
-import { renderWithProvider } from '../../../test-utils/mockUtils';
+import { AppToaster } from '../../../../components/Common/toast/AppToaster';
+import { reduxStore } from '../../../../redux/reduxStore'; // Assuming the store is named reduxStore
+import { renderWithProvider } from '../../../../test-utils/mockUtils';
 import { toast } from 'react-toastify';
 
 // Mock the useTranslation hook

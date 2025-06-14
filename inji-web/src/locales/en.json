@@ -197,12 +197,12 @@
   "AuthorizationPage": {
     "error": {
       "code": {
-        "invalidRedirectUri":"Access Denied!",
-        "invalidClient": "Access Denied!"
+        "invalid_redirect_uri":"Access Denied!",
+        "invalid_client": "Access Denied!"
       },
       "message": {
-        "invalidRedirectUri":"Credentials cannot be shared because we couldn’t identify who requested them. Please contact the admin for help.",
-        "invalidClient": "Credentials cannot be shared because we couldn’t identify who requested them. Please contact the admin for help."
+        "invalid_redirect_uri":"Credentials cannot be shared because we couldn’t identify who requested them. Please contact the admin for help.",
+        "invalid_client": "Credentials cannot be shared because we couldn’t identify who requested them. Please contact the admin for help."
       }
     }
   },
@@ -387,34 +387,53 @@
       "noResults": "No cards match your search."
     },
     "error": {
-      "internalServerError" : {
-        "title" : "Server Error",
-        "message" : "Something went wrong on our end. Please try again later."
+      "internalServerError": {
+        "title": "Server Error",
+        "message": "Something went wrong on our end. Please try again later."
       },
-      "serviceUnavailable" : {
-        "title" : "Service Unavailable",
-        "message" : "We're currently experiencing some issues processing your request. Please try again later"
+      "serviceUnavailable": {
+        "title": "Service Unavailable",
+        "message": "We're currently experiencing some issues processing your request. Please try again later"
       },
-      "invalidWalletRequest" : {
-        "title" : "Something Went Wrong",
+      "invalidWalletRequest": {
+        "title": "Something Went Wrong",
         "message": "We couldn’t verify your wallet information. Please try again later."
       },
-      "invalidRequest" : {
-        "title" : "Request Error",
-        "message" : "Your request contains invalid information. Please try again later."
+      "invalidRequest": {
+        "title": "Request Error",
+        "message": "Your request contains invalid information. Please try again later."
       },
-      "unknownError" : {
-        "title" : "Something Went Wrong",
+      "unknownError": {
+        "title": "Something Went Wrong",
         "message": "An unexpected error occurred. Please refresh the page or try again shortly."
       },
       "networkError": {
         "title": "No Internet Connection",
         "message": "Please check your internet connection and try again."
       }
+    },
+    "cardView": {
+      "download": "Download",
+      "menu": {
+        "view": "View",
+        "delete": "Delete"
+      },
+      "error": {
+        "downloadError": "Download failed. Please retry.",
+        "deleteError": "Failed to delete. Try again."
+      },
+      "delete": {
+        "confirmation": {
+          "title": "Delete Card!",
+          "message": "Are you sure you want to delete this card?"
+        }
+      }
     }
   },
   "Common": {
-    "home" : "Home",
-    "goToHome" : "Go to Home"
+    "home": "Home",
+    "goToHome": "Go to Home",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   }
 }

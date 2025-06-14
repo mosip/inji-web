@@ -1,17 +1,34 @@
 import {StoredCardsPage} from '../../../pages/User/StoredCards/StoredCardsPage';
 import {fireEvent, screen, waitFor, within} from '@testing-library/react';
-import {mockApiObject, mockusei18n, mockUseTranslation, renderWithRouter} from '../../../test-utils/mockUtils';
+import {
+    mockApiObject,
+    mockLocalStorage,
+    mockNavigatorOnline,
+    mockusei18n,
+    mockUseTranslation,
+    renderWithRouter
+} from '../../../test-utils/mockUtils';
+import {KEYS} from "../../../utils/constants";
 
 mockUseTranslation()
 mockApiObject()
 
 describe('Testing of StoredCardsPage ->', () => {
+    let localStorageMock: {
+        getItem: jest.Mock<string | null, [key: string]>;
+        setItem: jest.Mock<void, [key: string, value: string]>
+    };
     beforeEach(() => {
         jest.clearAllMocks();
         mockusei18n();
         // Reset fetch mock
         global.fetch = jest.fn();
+        localStorageMock = mockLocalStorage();
+
+        localStorageMock.setItem('selectedLanguage', 'en');
+        localStorageMock.setItem(KEYS.WALLET_ID, "faa0e18f-0935-4fab-8ab3-0c546c0ca714")
     });
+
 
     const mockCredentials = [
         {
@@ -156,7 +173,6 @@ describe('Testing of StoredCardsPage ->', () => {
         expect(screen.getByText("You haven't downloaded any cards yet. Tap \"Add Cards\" to get started.")).toBeInTheDocument();
     });
 
-    // write a table test for the error cases, error message to returned for json and status code + response to be expected in screen are configurable
     const errorScenarios = [
         {
             name: 'internal server error',
@@ -248,14 +264,42 @@ describe('Testing of StoredCardsPage ->', () => {
         expect(screen.getByText(expectedMessage)).toBeInTheDocument();
     });
 
+    it('should redirect to root page when response is unAuthorized', () => {
+        (global.fetch as jest.Mock).mockResolvedValueOnce({
+            ok: false,
+            status: 401,
+            json: async () => ({errorMessage: 'Unauthorized'}),
+        });
+
+        renderWithRouter(<StoredCardsPage/>);
+
+        expect(window.location.pathname).toBe('/');
+    });
+
     it('should display network error message when network error occurs', async () => {
+        const onlineMock = mockNavigatorOnline(false);
+        (global.fetch as jest.Mock).mockRejectedValueOnce(
+            new TypeError('Failed to fetch')
+        );
+
+        renderWithRouter(<StoredCardsPage/>);
+        await waitForLoaderDisappearance();
+
+        expect(screen.getByText("No Internet Connection")).toBeInTheDocument();
+        expect(screen.getByText('Please check your internet connection and try again.')).toBeInTheDocument();
+
+        // reset to original online status
+        onlineMock.reset();
+    });
+
+    it('should display generic error message when any unknown occurs', async () => {
         (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance()
 
-        expect(screen.getByText("No Internet Connection")).toBeInTheDocument();
-        expect(screen.getByText('Please check your internet connection and try again.')).toBeInTheDocument();
+        expect(screen.getByText("Something Went Wrong")).toBeInTheDocument();
+        expect(screen.getByText('An unexpected error occurred. Please refresh the page or try again shortly.')).toBeInTheDocument();
     });
 
     it('should filter credentials when using search bar', async () => {
@@ -311,6 +355,88 @@ describe('Testing of StoredCardsPage ->', () => {
         // Should show all credentials again
         expect(screen.getByText('Health Card')).toBeInTheDocument();
         expect(screen.getByText('Drivers License')).toBeInTheDocument();
+    });
+
+    it('should call download api when clicked on download icon in card', async () => {
+        (global.fetch as jest.Mock)
+            .mockResolvedValueOnce(
+                {
+                    ok: true,
+                    json: async () => mockCredentials,
+                }
+            )
+            .mockResolvedValueOnce({
+                ok: true,
+                blob: async () => new Blob(),
+                headers: {
+                    get: () => 'attachment; filename="credential.pdf"',
+                },
+            });
+
+        renderWithRouter(<StoredCardsPage/>);
+        await waitForLoaderDisappearance()
+
+        const downloadButton = screen.getAllByTestId('icon-download')[0];
+        fireEvent.click(downloadButton);
+
+        expect(global.fetch).toHaveBeenCalledWith(
+            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1?action=download"),
+            expect.objectContaining({
+                "credentials": "include",
+                "headers": {"Accept": "application/pdf", "Accept-Language": "en", "Content-Type": "application/json"},
+                "method": "GET"
+            })
+        );
+    });
+
+    it('should delete credential and call fetch all credentials api again when user deletes a card', async () => {
+        const mockDeleteResponse = {
+            ok: true,
+            json: async () => ({message: 'Credential deleted successfully'}),
+        };
+
+        (global.fetch as jest.Mock)
+            .mockResolvedValueOnce({
+                ok: true,
+                json: async () => mockCredentials,
+            })
+            .mockResolvedValueOnce(mockDeleteResponse)
+            .mockResolvedValueOnce({
+                ok: true,
+                json: async () => [mockCredentials[1]],
+            });
+
+        renderWithRouter(<StoredCardsPage/>);
+        await waitForLoaderDisappearance();
+
+        let menu = screen.getAllByTestId("icon-three-dots-menu")[0];
+        fireEvent.click(menu);
+        expect(screen.getByRole("menu")).toBeInTheDocument()
+        const deleteButton = screen.getByTestId('icon-delete');
+        fireEvent.click(deleteButton);
+        fireEvent.click(screen.getByRole('button', {name: "Confirm"}));
+        expect(global.fetch).toHaveBeenCalledWith(
+            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1"),
+            expect.objectContaining({
+                "credentials": "include",
+                "headers": {"Content-Type": "application/json"},
+                "method": "DELETE"
+            })
+        );
+
+        // Check if fetch for all credentials is called again
+        expect(global.fetch).toHaveBeenCalledWith(
+            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials"),
+            expect.objectContaining({
+                "credentials": "include",
+                "headers": {"Accept-Language": "en", "Content-Type": "application/json"},
+                "method": "GET"
+            })
+        );
+        await waitFor(() =>
+            expect(screen.queryByText('Drivers License')).not.toBeInTheDocument()
+        )
+        expect(screen.getByText('Health Card')).toBeInTheDocument();
     });
 
     async function waitForLoaderDisappearance() {

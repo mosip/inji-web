@@ -17,6 +17,7 @@ import {ApiRequest, IssuerWellknownDisplayArrayObject, IssuerObject} from "../ty
 import {getIssuerDisplayObjectForCurrentLanguage} from "../utils/i18n";
 import {RootState} from "../types/redux";
 import {isObjectEmpty} from "../utils/misc";
+import {ROUTES} from "../utils/constants";
 
 export const CredentialsPage: React.FC = () => {
     const {state, fetchRequest} = useFetch();
@@ -74,7 +75,7 @@ export const CredentialsPage: React.FC = () => {
                 <NavBar
                     title={displayObject?.name}
                     search={true}
-                    link={"/issuers"}
+                    link={ROUTES.ISSUERS}
                 />
                 <div
                     data-testid="Credential-List-Container"
