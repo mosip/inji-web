@@ -19,7 +19,6 @@ export const AppToaster: React.FC = () => {
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
-                style={{width: '400px'}}
                 theme="colored"
             />
         </div>

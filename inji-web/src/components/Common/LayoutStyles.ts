@@ -3,7 +3,7 @@ const LayoutStyles = {
     successToastContainer: "bg-iw-darkgreen",
     errorToastContainer: "bg-iw-brightRed",
     closeIcon: "text-white min-w-[26px] min-h-[26px]",
-    toastContainerBase: "relative flex p-2 min-h-10 rounded-xl justify-between overflow-hidden items-center"
+    toastContainerBase: "flex gap-1 sm:gap-2 rounded-xl justify-between overflow-hidden items-center"
 };
 
 export default LayoutStyles;

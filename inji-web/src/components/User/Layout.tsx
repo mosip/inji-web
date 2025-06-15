@@ -15,6 +15,7 @@ import {useDownloadSessionDetails} from '../../hooks/User/useDownloadSession';
 import {RequestStatus} from "../../hooks/useFetch";
 import {useTranslation} from "react-i18next";
 import {showToast} from "../Common/toast/ToastWrapper";
+import {CloseButtonProps} from "react-toastify/dist/components";
 
 export const Layout: React.FC = () => {
     const {t} = useTranslation('Layout')
@@ -61,11 +62,9 @@ export const Layout: React.FC = () => {
                         limit: 1,
                         autoClose: 3000,
                         icon: undefined,
-                        closeButton: ({closeToast}: any) => handleToasterCloseButton(closeToast),
+                        closeButton: handleToasterCloseButton,
                         style: {
-                            width: '400px',
-                            zIndex: 1000,
-                            top: headerHeight + 10
+                            marginTop: headerHeight + 5,
                         },
                         className: ({type}: any) => {
                             const toastType = type ?? 'default';
@@ -78,7 +77,6 @@ export const Layout: React.FC = () => {
 
                     showToast({
                             message: toastMessage,
-
                             type: downloadStatus === RequestStatus.DONE ? 'success' : 'error',
                             options: {...toastOptions}
                         }
@@ -101,7 +99,7 @@ export const Layout: React.FC = () => {
         return contextClassMap[type as keyof typeof contextClassMap];
     };
 
-    const handleToasterCloseButton = (closeToast: (e: React.MouseEvent<HTMLElement>) => void) => (
+    const handleToasterCloseButton = ({closeToast}: CloseButtonProps) => (
         <CrossIconButton
             onClick={(e) => {
                 e.stopPropagation();
