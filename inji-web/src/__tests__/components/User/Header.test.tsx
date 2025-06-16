@@ -85,7 +85,7 @@ describe('Header', () => {
       <Header headerRef={mockHeaderRef} headerHeight={50} />
     );
 
-    const hamburgerIcon = getByTestId('hamburger-menu-icon');
+    const hamburgerIcon = getByTestId('icon-hamburger-menu');
     expect(queryByTestId('hamburger-menu-dropdown')).toBeInTheDocument();
     fireEvent.click(hamburgerIcon);
     expect(queryByTestId('hamburger-menu-dropdown')).toBeInTheDocument();

@@ -1,5 +1,5 @@
-import {setMockUseSelectorState} from '../../../../test-utils/mockReactRedux';
-import { render, fireEvent } from '@testing-library/react';
+import { setMockUseSelectorState } from '../../../../test-utils/mockReactRedux';
+import { screen,render, fireEvent } from '@testing-library/react';
 import { useSelector } from 'react-redux';
 import { CollapseButton } from '../../../../components/Common/Buttons/CollapseButton';
 import * as i18nUtils from '../../../../utils/i18n';
@@ -20,11 +20,9 @@ describe('CollapseButton', () => {
     (useSelector as unknown as jest.Mock).mockReturnValue('en'); // LTR language
     jest.spyOn(i18nUtils, 'isRTL').mockReturnValue(false);
 
-    const { getByRole } = render(
-      <CollapseButton isCollapsed={false} onClick={mockOnClick} className="test-class" />
-    );
+    render(<CollapseButton isCollapsed={false} onClick={mockOnClick} className="test-class" />);
 
-    const button = getByRole('button');
+    const button = screen.getByRole('button');
     expect(button).toHaveClass('test-class');
 
     const image = button.querySelector('img');
@@ -39,11 +37,9 @@ describe('CollapseButton', () => {
     (useSelector as unknown as jest.Mock).mockReturnValue('en'); // LTR
     jest.spyOn(i18nUtils, 'isRTL').mockReturnValue(false);
 
-    const { getByRole } = render(
-      <CollapseButton isCollapsed={true} onClick={mockOnClick} className="" />
-    );
+    render(<CollapseButton isCollapsed={true} onClick={mockOnClick} className="" />);
 
-    const image = getByRole('img');
+    const image = screen.getByRole('img');
     expect(image).toHaveClass('rotate-180');
   });
 
@@ -51,11 +47,9 @@ describe('CollapseButton', () => {
     (useSelector as unknown as jest.Mock).mockReturnValue('ar'); // RTL
     jest.spyOn(i18nUtils, 'isRTL').mockReturnValue(true);
 
-    const { getByRole } = render(
-      <CollapseButton isCollapsed={true} onClick={mockOnClick} className="" />
-    );
+    render(<CollapseButton isCollapsed={true} onClick={mockOnClick} className="" />);
 
-    const image = getByRole('img');
+    const image = screen.getByRole('img');
     expect(image).not.toHaveClass('rotate-180');
   });
 
@@ -63,11 +57,9 @@ describe('CollapseButton', () => {
     (useSelector as unknown as jest.Mock).mockReturnValue('ar'); // RTL
     jest.spyOn(i18nUtils, 'isRTL').mockReturnValue(true);
 
-    const { getByRole } = render(
-      <CollapseButton isCollapsed={false} onClick={mockOnClick} className="" />
-    );
+    render(<CollapseButton isCollapsed={false} onClick={mockOnClick} className="" />);
 
-    const image = getByRole('img');
+    const image = screen.getByRole('img');
     expect(image).toHaveClass('rotate-180');
   });
 });

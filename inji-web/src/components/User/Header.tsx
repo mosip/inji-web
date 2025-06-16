@@ -185,7 +185,7 @@ export const Header: React.FC<UserHeaderProps> = ({
                         className="block sm:hidden"
                     >
                         <img
-                            data-testid="hamburger-menu-icon"
+                            data-testid="icon-hamburger-menu"
                             ref={hamburgerMenuRef}
                             src={HamburgerMenu}
                             alt="Hamburger Menu"
