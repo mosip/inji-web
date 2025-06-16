@@ -8,7 +8,7 @@ import {useTranslation} from "react-i18next";
 
 
 export function VCDetailView(props: Readonly<{
-    previewContent: string,
+    previewContent: Blob,
     onClose: () => void,
     onDownload: () => Promise<void>,
     credential: WalletCredential

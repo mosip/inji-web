@@ -45,4 +45,4 @@ export const HTTP_STATUS_CODES = {
     SERVICE_UNAVAILABLE: 503,
 }
 
-export const PDF_WORKER_URL = "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+export const pdfWorkerSource = (pdfVersion : string) => `//unpkg.com/pdfjs-dist@${pdfVersion}/build/pdf.worker.min.mjs`;

@@ -3,18 +3,47 @@
 exports[`PDFViewer Component renders correctly and matches snapshot 1`] = `
 <div>
   <div
-    data-testid="pdf-worker"
+    class="w-full max-h-screen overflow-auto"
+    style="position: relative;"
   >
     <div
-      data-default-scale="page-width"
-      data-enable-smooth-scroll="true"
-      data-file-url="https://example.com/test.pdf"
+      data-file="\\"blob:http://localhost:3000/mock-pdf-url\\""
       data-testid="pdf-viewer"
     >
       <div
         data-testid="spinning-loader"
       >
         Loading PDF...
+      </div>
+      <div
+        data-page-number="1"
+        data-render-annotation-layer="false"
+        data-render-text-layer="false"
+        data-testid="pdf-page"
+        data-width="0"
+      >
+        Page 
+        1
+      </div>
+      <div
+        data-page-number="2"
+        data-render-annotation-layer="false"
+        data-render-text-layer="false"
+        data-testid="pdf-page"
+        data-width="0"
+      >
+        Page 
+        2
+      </div>
+      <div
+        data-page-number="3"
+        data-render-annotation-layer="false"
+        data-render-text-layer="false"
+        data-testid="pdf-page"
+        data-width="0"
+      >
+        Page 
+        3
       </div>
     </div>
   </div>

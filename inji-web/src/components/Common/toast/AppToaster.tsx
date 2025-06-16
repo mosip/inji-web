@@ -10,7 +10,7 @@ export const AppToaster: React.FC = () => {
         <div data-testid="Apptoaster-outer-container">
             <ToastContainer
                 position={isRTL(language) ? "top-left" : "top-right"}
-                autoClose={1000}
+                autoClose={3000}
                 hideProgressBar
                 newestOnTop
                 closeOnClick

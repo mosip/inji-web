@@ -23,7 +23,7 @@ export function VCCardView(props: Readonly<{
 }>) {
     const language = useSelector((state: RootState) => state.common.language);
     const [error, setError] = useState<string>()
-    const [previewContent, setPreviewContent] = useState<string>("");
+    const [previewContent, setPreviewContent] = useState<Blob>();
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
     const {t} = useTranslation('StoredCards', {
         keyPrefix: "cardView"
@@ -80,10 +80,9 @@ export function VCCardView(props: Readonly<{
         await executeCredentialApiRequest(
             api.fetchWalletCredentialPreview,
             async (response) => {
-                const pdfContent = await response.blob();
-                const pdfUrl = URL.createObjectURL(pdfContent);
+                const pdfContent : Blob = await response.blob();
                 console.info("Credential preview fetched successfully");
-                setPreviewContent(pdfUrl);
+                setPreviewContent(pdfContent);
             }
         );
     };
