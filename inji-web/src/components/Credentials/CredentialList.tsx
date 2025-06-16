@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Credential} from "./Crendential";
+import {Credential} from "./Credential";
 import {useSelector} from "react-redux";
 import {RootState} from "../../types/redux";
 import {EmptyListContainer} from "../Common/EmptyListContainer";
