@@ -81,17 +81,19 @@ describe('PDFViewer Component', () => {
     const mockObjectUrl = "blob:http://localhost:3000/mock-pdf-url";
 
     // Save the original implementation
-    const originalCreateObjectURL = URL.createObjectURL;
+    const originalURL = URL;
 
     afterAll(() => {
         // Restore the original implementation
-        URL.createObjectURL = originalCreateObjectURL;
+        URL.createObjectURL = originalURL.createObjectURL;
+        URL.revokeObjectURL = originalURL.revokeObjectURL;
     });
 
     beforeEach(() => {
         jest.clearAllMocks();
 
         URL.createObjectURL = jest.fn(() => mockObjectUrl);
+        URL.revokeObjectURL = jest.fn();
     });
 
     const mockPdfBlob = new Blob(['PDF content'], {type: 'application/pdf'});

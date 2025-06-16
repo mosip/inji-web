@@ -12,19 +12,25 @@ export function PDFViewer(props: Readonly<{ previewContent: Blob }>) {
     const containerRef = useRef<HTMLDivElement>(null);
     const [containerWidth, setContainerWidth] = useState(0);
     const [numPages, setNumPages] = useState<number>(0);
+    // Padding to account for any margins or borders in the container
+    const containerPadding = 22;
 
     useEffect(() => {
         if (!containerRef.current) return;
         const observer = new ResizeObserver(entries => {
             for (let entry of entries) {
-                setContainerWidth(entry.contentRect.width - 22);
+                setContainerWidth(entry.contentRect.width - containerPadding);
             }
         });
         observer.observe(containerRef.current);
-        return () => observer.disconnect();
+        return () => {
+            // cleanup the observer and URL
+            observer.disconnect();
+            URL.revokeObjectURL(blobUrl);
+        }
     }, []);
 
-    function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
+    function onDocumentLoadSuccess({numPages}: { numPages: number }) {
         setNumPages(numPages);
     }
 
@@ -32,7 +38,7 @@ export function PDFViewer(props: Readonly<{ previewContent: Blob }>) {
         <div
             ref={containerRef}
             className="w-full max-h-screen overflow-auto"
-            style={{ position: 'relative' }}
+            style={{position: 'relative'}}
         >
             <Document
                 file={blobUrl}
@@ -40,7 +46,7 @@ export function PDFViewer(props: Readonly<{ previewContent: Blob }>) {
                 renderMode="canvas"
                 loading={<SpinningLoader/>}
             >
-                {Array.from({ length: numPages }, (_, i) => (
+                {Array.from({length: numPages}, (_, i) => (
                     <Page
                         key={i + 1}
                         pageNumber={i + 1}
