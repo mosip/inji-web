@@ -80,7 +80,7 @@ export function VCCardView(props: Readonly<{
         await executeCredentialApiRequest(
             api.fetchWalletCredentialPreview,
             async (response) => {
-                const pdfContent : Blob = await response.blob();
+                const pdfContent: Blob = await response.blob();
                 console.info("Credential preview fetched successfully");
                 setPreviewContent(pdfContent);
             }
@@ -138,7 +138,7 @@ export function VCCardView(props: Readonly<{
     return (
         <Clickable onClick={preview} testId={"vc-card-view"}
                    className={VCStyles.cardView.container}>
-            <VCDetailView previewContent={previewContent} onClose={clearPreview} onDownload={download}
+            <VCDetailView previewContent={previewContent!!} onClose={clearPreview} onDownload={download}
                           credential={props.credential}/>
             {
                 showDeleteConfirmation && (
@@ -200,6 +200,5 @@ export function VCCardView(props: Readonly<{
                 />
             </div>
         </Clickable>
-    )
-        ;
+    );
 }

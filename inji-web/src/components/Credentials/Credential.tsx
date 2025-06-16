@@ -16,6 +16,7 @@ import {
 import {RootState} from "../../types/redux";
 import {DataShareExpiryModal} from "../../modals/DataShareExpiryModal";
 import {useTranslation} from "react-i18next";
+import {useUser} from "../../hooks/User/useUser";
 
 export const Credential: React.FC<CredentialProps> = (props) => {
     const {t} = useTranslation("CredentialsPage");
@@ -40,6 +41,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
     const vcStorageExpiryLimitInTimes = useSelector(
         (state: RootState) => state.common.vcStorageExpiryLimitInTimes
     );
+    const {isUserLoggedIn} = useUser();
 
     const onSuccess = async (
         defaultVCStorageExpiryLimit: number = vcStorageExpiryLimitInTimes
@@ -100,9 +102,9 @@ export const Credential: React.FC<CredentialProps> = (props) => {
                 url={credentialObject.logo}
                 title={credentialObject.name}
                 onClick={() => {
-                    selectedIssuer.qr_code_type === "OnlineSharing"
-                        ? setCredentialExpiry(true)
-                        : onSuccess(-1);
+                    isUserLoggedIn || selectedIssuer.qr_code_type !== "OnlineSharing"
+                                                    ? onSuccess(-1)
+                                                    : setCredentialExpiry(true);
                 }}
             />
             {credentialExpiry && (
