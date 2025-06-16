@@ -76,6 +76,12 @@
       "retry": "Réessayer"
     }
   },
+  "Layout": {
+    "VCDownload": {
+      "success": "Votre {{cardType}} a été téléchargé avec succès.",
+      "error": "Oups ! Un problème est survenu. Votre {{cardType}} n'a pas pu être téléchargée. Veuillez resélectionner l'émetteur et réessayer."
+    }
+  },
   "PasscodePage": {
     "submit": "Soumettre",
     "submitting": "Soumission en cours",
@@ -136,6 +142,18 @@
       "authorizationGrantTypeNotSupportedByWallet": {
         "code": "Erreur d'autorisation du type d'octroi non pris en charge!",
         "message": "Merci pour votre patience ! Nous rencontrons actuellement des difficultés techniques. Veuillez réessayer plus tard ou contacter l'administrateur pour obtenir de l'aide!"
+      }
+    }
+  },
+  "CredentialTypesPage": {
+    "download": {
+      "error": {
+        "header": "Échec du téléchargement",
+        "subHeader": "Impossible de télécharger la carte. Veuillez cliquer sur le bouton « Accueil » pour lancer le processus."
+      },
+      "loading": {
+        "header": "Téléchargement des informations d'identification",
+        "subHeader": "Votre carte continuera à se télécharger même si vous actualisez ou changez d'écran. Vous pouvez télécharger une carte à la fois. Elle apparaîtra dans les Cartes enregistrées une fois terminée."
       }
     }
   },

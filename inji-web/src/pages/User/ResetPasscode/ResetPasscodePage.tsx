@@ -1,7 +1,7 @@
 import React from 'react';
 import {SolidButton} from '../../../components/Common/Buttons/SolidButton';
 import {Trans, useTranslation} from 'react-i18next';
-import {useUser} from '../../../hooks/useUser';
+import {useUser} from '../../../hooks/User/useUser';
 import {api} from '../../../utils/api';
 import {useCookies} from 'react-cookie';
 import {useLocation, useNavigate} from 'react-router-dom';

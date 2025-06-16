@@ -76,6 +76,12 @@
       "retry": "Tentar novamente"
     }
   },
+  "Layout": {
+    "VCDownload": {
+      "success": "Seu {{cardType}} foi baixado com sucesso.",
+      "error": "Ops! Algo deu errado. Não foi possível baixar seu {{cardType}}. Selecione novamente o emissor e tente novamente."
+    }
+  },
   "PasscodePage": {
     "submit": "Enviar",
     "submitting": "Enviando",
@@ -136,6 +142,18 @@
       "authorizationGrantTypeNotSupportedByWallet": {
         "code": "Erro de autorização de tipo de concessão não suportado!",
         "message": "Obrigado pela sua paciência! Estamos enfrentando dificuldades técnicas no momento. Tente novamente mais tarde ou entre em contato com o administrador para obter mais assistência!"
+      }
+    }
+  },
+  "CredentialTypesPage": {
+    "download": {
+      "error": {
+        "header": "Falha no download",
+        "subHeader": "Não foi possível baixar o cartão. Clique no botão \"Ir para a página inicial\" para iniciar o processo."
+      },
+      "loading": {
+        "header": "Baixando credencial",
+        "subHeader": "Seu cartão continuará sendo baixado mesmo se você atualizar ou alternar as telas. Você pode baixar um cartão por vez. Ele aparecerá em Cartões Armazenados quando terminar."
       }
     }
   },

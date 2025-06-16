@@ -3,13 +3,13 @@ import { setMockUseLocation,mockNavigateFn } from '../../../test-utils/mockRoute
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { Header } from '../../../components/User/Header';
 import { useCookies } from 'react-cookie';
-import { useUser } from '../../../hooks/useUser';
+import { useUser } from '../../../hooks/User/useUser';
 import * as i18n from '../../../utils/i18n';
 jest.mock('react-cookie', () => ({
   useCookies: jest.fn(),
 }));
 
-jest.mock('../../../hooks/useUser', () => ({
+jest.mock('../../../hooks/User/useUser', () => ({
   useUser: jest.fn(),
 }));
 

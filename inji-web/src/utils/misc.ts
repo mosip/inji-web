@@ -1,6 +1,7 @@
 import sha256 from 'crypto-js/sha256';
 import Base64 from 'crypto-js/enc-base64';
 import {api} from "./api";
+import {TokenRequestBody} from "../types/data";
 
 export const generateCodeChallenge = (verifier = generateRandomString()) => {
     const hashedVerifier = sha256(verifier);
@@ -29,7 +30,7 @@ export const isObjectEmpty = (object: any) => {
     return object === null || object === undefined || Object.keys(object).length === 0;
 }
 
-export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialConfigurationId: string, vcStorageExpiryLimitInTimes: string, isLoggedIn = false) => {
+export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId: string, credentialConfigurationId: string, vcStorageExpiryLimitInTimes: string, isLoggedIn = false) : TokenRequestBody => {
     // naming convention is handled separately for logged in and non logged in users as they use camelcase and snake case respectively
     if (isLoggedIn) {
         return {
@@ -54,9 +55,9 @@ export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId
 
 export const downloadCredentialPDF = async (
     response: any,
-    certificateId: string
+    credentialType: string
 ) => {
-    let fileName = `${certificateId}.pdf`;
+    let fileName = `${credentialType}.pdf`;
     const url = window.URL.createObjectURL(response);
     const link = document.createElement("a");
     link.href = url;
@@ -70,9 +71,9 @@ export const downloadCredentialPDF = async (
 
 export const previewCredentialPDF = async (
     response: any,
-    certificateId: string
+    credentialType: string
 ) => {
-    let fileName = `${certificateId}.pdf`;
+    let fileName = `${credentialType}.pdf`;
     const url = window.URL.createObjectURL(response);
     const link = document.createElement('a');
     link.href = url;

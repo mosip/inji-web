@@ -43,11 +43,6 @@ export type IssuerProps = {
     index: number;
     issuer: IssuerObject;
 }
-export type DownloadResultProps = {
-    state: RequestStatus;
-    title: string;
-    subTitle: string;
-}
 
 export type EmptyListContainerProps = {
     content: string;

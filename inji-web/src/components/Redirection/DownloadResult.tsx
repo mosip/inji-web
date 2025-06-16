@@ -1,17 +1,59 @@
 import React from "react";
-import {DownloadResultProps} from "../../types/components";
 import {RequestStatus} from "../../hooks/useFetch";
 import {SpinningLoader} from "../Common/SpinningLoader";
 import {ErrorSheildIcon} from "../Common/ErrorSheildIcon";
 import {SuccessSheildIcon} from "../Common/SuccessSheildIcon";
 import {LandingPageWrapper} from "../Common/LandingPageWrapper";
+import {useUser} from "../../hooks/User/useUser";
+import {DownloadResultStyles} from "./DownloadResultStyles";
 
-
-export const DownloadResult: React.FC<DownloadResultProps> = (props) => {
-    return <React.Fragment>
-        {props.state === RequestStatus.DONE && <LandingPageWrapper icon={<SuccessSheildIcon />} title={props.title} subTitle={props.subTitle} gotoHome={true}/> }
-        {props.state === RequestStatus.ERROR && <LandingPageWrapper icon={<ErrorSheildIcon />} title={props.title} subTitle={props.subTitle} gotoHome={true}/> }
-        {props.state === RequestStatus.LOADING && <LandingPageWrapper icon={<SpinningLoader />} title={props.title} subTitle={props.subTitle} gotoHome={false}/> }
-    </React.Fragment>
+interface DisplayConfig {
+    icon: JSX.Element;
+    gotoHome: boolean;
 }
 
+interface DownloadResultProps {
+    state: RequestStatus;
+    title: string;
+    subTitle?: string;
+}
+
+export const DownloadResult: React.FC<DownloadResultProps> = ({title, subTitle, state}) => {
+    const {isUserLoggedIn} = useUser();
+
+    const displayConfig: Record<RequestStatus, DisplayConfig> = {
+        [RequestStatus.DONE]: {
+            icon: <SuccessSheildIcon/>,
+            gotoHome: true,
+        },
+        [RequestStatus.ERROR]: {
+            icon: <ErrorSheildIcon/>,
+            gotoHome: true,
+        },
+        [RequestStatus.LOADING]: {
+            icon: <SpinningLoader/>,
+            gotoHome: false,
+        },
+    };
+
+    const currentConfig = displayConfig[state];
+
+    const baseWrapperProps = {
+        icon: currentConfig.icon,
+        title: title,
+        subTitle: subTitle,
+        gotoHome: currentConfig.gotoHome,
+    };
+
+    return (
+        isUserLoggedIn ? (
+            <div
+                data-testid="download-result-container"
+                className={DownloadResultStyles.container}>
+                <LandingPageWrapper{...baseWrapperProps}/>
+            </div>
+        ) : (
+            <LandingPageWrapper{...baseWrapperProps}/>
+        )
+    );
+};

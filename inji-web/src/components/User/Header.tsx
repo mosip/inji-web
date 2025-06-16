@@ -4,7 +4,7 @@ import {LanguageSelector} from '../Common/LanguageSelector';
 import {api} from '../../utils/api';
 import {useCookies} from 'react-cookie';
 import {toast} from 'react-toastify';
-import {useUser} from '../../hooks/useUser';
+import {useUser} from '../../hooks/User/useUser';
 import HamburgerMenu from '../../assets/HamburgerMenu.svg';
 import {isRTL} from '../../utils/i18n';
 import {useSelector} from 'react-redux';

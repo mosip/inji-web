@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {IssuersPage} from '../../IssuersPage';
-import {useUser} from '../../../hooks/useUser';
+import {useUser} from '../../../hooks/User/useUser';
 import {convertStringIntoPascalCase} from "../../../utils/misc";
 import {HomePageStyles} from "./HomePageStyles";
 

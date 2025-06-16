@@ -4,6 +4,19 @@ import { render, screen, act } from '@testing-library/react';
 import { Layout } from '../../../components/User/Layout';
 import * as i18n from '../../../utils/i18n';
 
+jest.mock('../../../hooks/User/useDownloadSession', () => ({
+  useDownloadSessionDetails: () => ({
+    latestDownloadedSessionId: null,
+    currentSessionDownloadId: null,
+    downloadInProgressSessions: {},
+    addSession: jest.fn().mockReturnValue('mockId'),
+    updateSession: jest.fn(),
+    removeSession: jest.fn(),
+    setCurrentSessionDownloadId: jest.fn(),
+    setLatestDownloadedSessionId: jest.fn(),
+  }),
+}));
+
 jest.mock('../../../components/User/Header', () => ({
   Header: ({ headerRef, headerHeight }: any) => (
     <div data-testid="Header" ref={headerRef}>

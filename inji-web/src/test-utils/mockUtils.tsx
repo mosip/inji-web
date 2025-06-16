@@ -1,10 +1,11 @@
-import React, { createRef, ReactElement } from 'react';
-import { render, RenderOptions } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { BrowserRouter, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { reduxStore } from '../redux/reduxStore';
-import { UserProvider } from '../hooks/useUser';
-import {showToast} from "../components/Common/toast/ToastWrapper";
+import React, {createRef, ReactElement} from 'react';
+import {render, RenderOptions} from '@testing-library/react';
+import {Provider} from 'react-redux';
+import {BrowserRouter, Route, BrowserRouter as Router, Routes} from 'react-router-dom';
+import {reduxStore} from '../redux/reduxStore';
+import {UserProvider} from '../context/User/UserContext';
+import {DownloadSessionProvider} from '../context/User/DownloadSessionContext';
+import {showToast} from '../components/Common/toast/ToastWrapper';
 
 export const setupShowToastMock = () => {
     (showToast as jest.Mock).mockClear();
@@ -145,7 +146,9 @@ export const renderWithProvider = (element: ReactElement, options?: RenderWithPr
     return render(
         <Provider store={reduxStore}>
             <UserProvider>
-                <Router>{element}</Router>
+                <DownloadSessionProvider>
+                    <Router>{element}</Router>
+                </DownloadSessionProvider>
             </UserProvider>
         </Provider>,
         options
@@ -223,9 +226,11 @@ export const renderWithRouter = (Element: React.ReactElement, { route = '/' } = 
         <BrowserRouter>
             <Provider store={reduxStore}>
                 <UserProvider>
-                    <Routes>
-                        <Route path="*" element={Element} />
-                    </Routes>
+                    <DownloadSessionProvider>
+                        <Routes>
+                            <Route path="*" element={Element}/>
+                        </Routes>
+                    </DownloadSessionProvider>
                 </UserProvider>
             </Provider>
         </BrowserRouter>

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {RequestStatus, useFetch} from "../hooks/useFetch";
 import {NavBar} from "../components/Common/NavBar";
-import {CredentialList} from "../components/Credentials/CredentialList";
 import {useDispatch, useSelector} from "react-redux";
 import {storeSelectedIssuer} from "../redux/reducers/issuersReducer";
 import {
@@ -17,7 +16,7 @@ import {ApiRequest, IssuerWellknownDisplayArrayObject, IssuerObject} from "../ty
 import {getIssuerDisplayObjectForCurrentLanguage} from "../utils/i18n";
 import {RootState} from "../types/redux";
 import {isObjectEmpty} from "../utils/misc";
-import {ROUTES} from "../utils/constants";
+import {CredentialListWrapper} from "../components/Credentials/CredentialListWrapper";
 
 export const CredentialsPage: React.FC = () => {
     const {state, fetchRequest} = useFetch();
@@ -53,7 +52,6 @@ export const CredentialsPage: React.FC = () => {
                 apiRequest.methodType,
                 apiRequest.headers(),
                 apiRequest.credentials
-                
             );
 
             dispatch(storeFilteredCredentials(response?.response));
@@ -67,23 +65,19 @@ export const CredentialsPage: React.FC = () => {
     }
 
     return (
-        <React.Fragment>
-            <div
-                className="bg-iw-background min-h-screen"
-                data-testid="Credentials-Page-Container"
-            >
-                <NavBar
-                    title={displayObject?.name}
-                    search={true}
-                    link={ROUTES.ISSUERS}
-                />
-                <div
-                    data-testid="Credential-List-Container"
-                    className="container mx-auto mt-8 px-10 sm:px-0"
-                >
-                    <CredentialList state={state} />
-                </div>
-            </div>
-        </React.Fragment>
+        <div
+            className="bg-iw-background min-h-screen"
+            data-testid="Credentials-Page-Container"
+        >
+            <NavBar
+                title={displayObject?.name}
+                search={true}
+                link={"/issuers"}
+            />
+            <CredentialListWrapper
+                state={state}
+                className="container mx-auto mt-8 px-10 sm:px-0"
+            />
+        </div>
     );
 };

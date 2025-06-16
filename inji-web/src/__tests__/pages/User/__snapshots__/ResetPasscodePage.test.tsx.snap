@@ -66,7 +66,7 @@ exports[`ResetPasscodePage Component should match snapshot 1`] = `
           class="text-center items-center justify-center relative z-20 bg-transparent space-y-4 w-[90%] sm-md:w-[85%] md:w-[50%]"
         >
           <h1
-            class="text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGreen p-4"
+            class="text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGrayishBlue p-4"
             data-testid="title-reset-passcode"
           >
             Reset Your Wallet

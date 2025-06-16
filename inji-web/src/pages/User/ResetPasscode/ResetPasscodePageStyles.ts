@@ -10,7 +10,7 @@ export const ResetPasscodePageStyles = {
         'top-[215px] pb-4 relative flex flex-col items-center justify-center',
     header: 'text-center items-center justify-center relative z-20 bg-transparent space-y-4 w-[90%] sm-md:w-[85%] md:w-[50%]',
     logoContainer: 'flex items-center justify-center',
-    title: 'text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGreen p-4',
+    title: 'text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGrayishBlue p-4',
     subHeader: 'flex items-start ml-4',
     backArrowButton: 'cursor-pointer',
     subtitle: 'text-iw-textTertiary text-sm sm:text-base font-medium pl-6',

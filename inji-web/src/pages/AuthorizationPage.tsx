@@ -23,4 +23,3 @@ export const AuthorizationPage: React.FC = () => {
     return <div><LandingPageWrapper icon={<ErrorSheildIcon />} title={t(`error.code.${error}`)} subTitle={t(`error.message.${error}`)} gotoHome={false}/></div>
 }
 
-

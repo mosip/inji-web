@@ -70,7 +70,7 @@ describe('Test misc.ts utility functions', () => {
 
     test('Check if downloadCredentialPDF creates and clicks a download link', async () => {
         const response = new Blob(['test'], { type: 'application/pdf' });
-        const certificateId = '12345';
+        const credentialType = '12345';
         const createElementSpy = jest.spyOn(document, 'createElement');
         const appendChildSpy = jest.spyOn(document.body, 'appendChild');
         const removeChildSpy = jest.spyOn(document.body, 'removeChild');
@@ -82,7 +82,7 @@ describe('Test misc.ts utility functions', () => {
 
         createElementSpy.mockReturnValue(mockLink);
 
-        await downloadCredentialPDF(response, certificateId);
+        await downloadCredentialPDF(response, credentialType);
 
         expect(createElementSpy).toHaveBeenCalledWith('a');
         expect(appendChildSpy).toHaveBeenCalledWith(mockLink);

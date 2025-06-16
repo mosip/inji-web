@@ -1,5 +1,5 @@
 import {render, screen} from '@testing-library/react';
-import {useUser} from '../../../hooks/useUser';
+import { useUser } from '../../../hooks/User/useUser';
 import { HomePage } from '../../../pages/User/Home/HomePage';
 
 // Mock dependencies
@@ -12,7 +12,7 @@ jest.mock('react-i18next', () => ({
     }),
 }));
 
-jest.mock('../../../hooks/useUser', () => ({
+jest.mock('../../../hooks/User/useUser', () => ({
     useUser: jest.fn(),
 }));
 

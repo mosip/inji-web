@@ -25,17 +25,17 @@ exports[`Layout component matches snapshot after header and footer heights updat
       style="z-index: 1;"
     >
       <img
-        alt="Dashboard Top Bg Image"
+        alt="Gradient Top Background"
         class="absolute top-0 left-0 w-full z-[-1]"
         src="mock-dashboard-bg-top"
       />
       <img
-        alt="Dashboard Bottom Bg Image"
+        alt="Gardient Bottom Background"
         class="absolute bottom-0 left-0 w-full z-[-1]"
         src="mock-dashboard-bg-bottom"
       />
       <div
-        class="flex-1 overflow-y-auto relative z-10 p-4"
+        class="flex flex-grow flex-col overflow-y-auto relative z-10 p-4"
       >
         <div
           data-testid="Outlet"
@@ -78,17 +78,17 @@ exports[`Layout component matches snapshot for default language 1`] = `
       style="z-index: 1;"
     >
       <img
-        alt="Dashboard Top Bg Image"
+        alt="Gradient Top Background"
         class="absolute top-0 left-0 w-full z-[-1]"
         src="mock-dashboard-bg-top"
       />
       <img
-        alt="Dashboard Bottom Bg Image"
+        alt="Gardient Bottom Background"
         class="absolute bottom-0 left-0 w-full z-[-1]"
         src="mock-dashboard-bg-bottom"
       />
       <div
-        class="flex-1 overflow-y-auto relative z-10 p-4"
+        class="flex flex-grow flex-col overflow-y-auto relative z-10 p-4"
       >
         <div
           data-testid="Outlet"
@@ -131,17 +131,17 @@ exports[`Layout component matches snapshot for rtl language 1`] = `
       style="z-index: 1;"
     >
       <img
-        alt="Dashboard Top Bg Image"
+        alt="Gradient Top Background"
         class="absolute top-0 left-0 w-full z-[-1]"
         src="mock-dashboard-bg-top"
       />
       <img
-        alt="Dashboard Bottom Bg Image"
+        alt="Gardient Bottom Background"
         class="absolute bottom-0 left-0 w-full z-[-1]"
         src="mock-dashboard-bg-bottom"
       />
       <div
-        class="flex-1 overflow-y-auto relative z-10 p-4"
+        class="flex flex-grow flex-col overflow-y-auto relative z-10 p-4"
       >
         <div
           data-testid="Outlet"

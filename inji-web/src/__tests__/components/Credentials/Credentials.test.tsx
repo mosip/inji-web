@@ -30,6 +30,8 @@ const credential: IssuerConfigurationObject = {
     )
 };
 
+const mockSetErrorObj = jest.fn();
+
 describe("Testing the Layout of Credentials", () => {
     beforeEach(() => {
         setMockUseSelectorState({
@@ -60,6 +62,7 @@ describe("Testing the Layout of Credentials", () => {
                 credentialId="InsuranceCredential"
                 index={1}
                 credentialWellknown={credential}
+                setErrorObj={mockSetErrorObj}
             />
         );
 
@@ -110,6 +113,7 @@ describe("Testing the Functionality of Credentials", () => {
                 credentialId="InsuranceCredential"
                 index={1}
                 credentialWellknown={credential}
+                setErrorObj={mockSetErrorObj}
             />
         );
 
@@ -130,6 +134,7 @@ describe("Testing the Functionality of Credentials", () => {
                 credentialId="InsuranceCredential"
                 index={1}
                 credentialWellknown={credential}
+                setErrorObj={mockSetErrorObj}
             />
         );
         const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container-1");
