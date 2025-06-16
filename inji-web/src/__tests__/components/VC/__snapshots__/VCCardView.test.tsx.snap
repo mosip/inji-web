@@ -14,7 +14,9 @@ exports[`VCCardView Component should match snapshot 1`] = `
       <title>
         Drivers License
       </title>
-      <div />
+      <div>
+        Name:Simon
+      </div>
       <button>
         Close
       </button>
