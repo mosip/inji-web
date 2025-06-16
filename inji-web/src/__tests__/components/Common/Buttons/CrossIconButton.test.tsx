@@ -119,21 +119,6 @@ describe('CrossIconButton Component', () => {
         expect(img).toHaveClass('test-icon-class');
     });
 
-    it('renders the cross icon image with correct src', () => {
-        render(
-            <CrossIconButton
-                onClick={mockOnClick}
-                btnTestId="btn-close-icon-container"
-                iconTestId="icon-close"
-            />
-        );
-
-        const imgElement = screen.getByAltText('Close');
-
-        expect(imgElement).toBeInTheDocument();
-        expect(imgElement).toHaveAttribute('src', 'mocked-cross-icon-path');
-    });
-
     it('has correct button type attribute', () => {
         render(
             <CrossIconButton
@@ -158,9 +143,9 @@ describe('CrossIconButton Component', () => {
         );
 
         const button = screen.getByTestId('btn-close-icon-container');
-        const img = screen.getByTestId('icon-close');
+        const svgImage = screen.getByTestId('icon-close');
 
         expect(button.className).toBe('');
-        expect(img.className).toBe('');
+        expect(svgImage.className.baseVal).toBe('');
     });
 });

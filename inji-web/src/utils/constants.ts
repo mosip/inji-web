@@ -34,7 +34,7 @@ export const ROUTES = {
     FAQ: `/${Pages.FAQ}`,
     USER_FAQ: `/${Pages.USER}/${Pages.FAQ}`,
     USER_RESET_PASSCODE: `/${Pages.USER}/${Pages.RESET_PASSCODE}`,
-};
+} as const;
 
 export const HTTP_STATUS_CODES = {
     BAD_REQUEST: 400,

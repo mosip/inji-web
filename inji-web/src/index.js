@@ -8,18 +8,21 @@ import {Provider} from "react-redux";
 import {reduxStore} from "./redux/reduxStore";
 import {AppToaster} from "./components/Common/toast/AppToaster";
 import { CookiesProvider } from 'react-cookie';
-import { UserProvider } from "./hooks/useUser";
 import { BrowserRouter } from "react-router-dom";
+import {UserProvider} from "./context/User/UserContext";
+import {DownloadSessionProvider} from "./context/User/DownloadSessionContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <Provider store={reduxStore}>
         <CookiesProvider>
             <UserProvider>
-                <AppToaster />
-                <BrowserRouter>
-                    <AppRouter />
-                </BrowserRouter>
+                <DownloadSessionProvider>
+                    <AppToaster/>
+                    <BrowserRouter>
+                        <AppRouter/>
+                    </BrowserRouter>
+                </DownloadSessionProvider>
             </UserProvider>
         </CookiesProvider>
     </Provider>

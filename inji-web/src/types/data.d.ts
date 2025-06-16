@@ -67,9 +67,14 @@ export type ResponseTypeObject = {
     token_type?: string;
 };
 
+type DownloadSessionCredentialTypeObj = {
+    type: string;
+    displayObj: CredentialTypeDisplayArrayObject[];
+}
+
 export type SessionObject = {
     selectedIssuer?: IssuerObject;
-    certificateId: string;
+    selectedCredentialType: DownloadSessionCredentialTypeObj;
     codeVerifier: string;
     vcStorageExpiryLimitInTimes: number;
     state: string;
@@ -106,16 +111,19 @@ export type User = {
     profilePictureUrl: string;
     email: string;
 };
+
 export type SidebarItemType = {
     icon: React.ReactNode;
     text: string;
     path: string;
     key: string;
 };
+
 export type ErrorType = {
     errorCode: string;
     errorMessage: string;
 };
+
 export type DropdownItem = {
     label: string;
     onClick: () => void;
@@ -123,6 +131,28 @@ export type DropdownItem = {
     key: string;
 };
 
+export type RouteValue = (typeof ROUTES)[keyof typeof ROUTES];
+
+type LoggedInRequestBody = {
+    grantType: 'authorization_code';
+    code: string;
+    redirectUri: string;
+    codeVerifier: string;
+    issuer: string;
+    credentialConfigurationId: string;
+}
+
+type GuestRequestBody = {
+    grant_type: 'authorization_code';
+    code: string;
+    redirect_uri: string;
+    code_verifier: string;
+    issuer: string;
+    credential: string;
+    vcStorageExpiryLimitInTimes: string;
+}
+
+export type TokenRequestBody = LoggedInRequestBody | GuestRequestBody;
 export interface MenuItemType {
     label: string;
     onClick: () => void;

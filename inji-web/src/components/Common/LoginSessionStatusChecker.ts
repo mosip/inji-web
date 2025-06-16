@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
-import {useUser} from '../../hooks/useUser';
+import {useUser} from '../../hooks/User/useUser';
 import {KEYS, ROUTES} from '../../utils/constants';
 
 import {User} from "../../types/data";

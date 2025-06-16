@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useUser } from '../../../hooks/useUser';
+import { useUser } from '../../../hooks/User/useUser';
 import { NavBackArrowButton } from '../../../components/Common/Buttons/NavBackArrowButton';
 import { InfoField } from '../../../components/Common/InfoField';
 import {navigateToUserHome} from "../../../utils/navigationUtils";

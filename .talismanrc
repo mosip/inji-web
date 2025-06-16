@@ -93,4 +93,14 @@ fileignoreconfig:
   checksum: 1aa60329392751ab42aa8f76298745ff836b2dac3ffd46e4b8796c1fb4f5a53b
 - filename: inji-web/src/components/Users/PasscodeInput.tsx
   checksum: fa02db3cfc75f669254216fe639a45783b152a344654dfbf85e1e8dfd8875ab5
+- filename: inji-web/src/hooks/useDownloadSession.tsx
+  checksum: 994377a399e455c9b35d18717ee0a6aa6081a6257874fe9cfbbda84ae5dc087c
+- filename: inji-web/src/components/Credentials/CredentialList.tsx
+  checksum: 68a659af039df8fd7518d086f27a70fd0c49d23689707e30f0baef433e94bb1b
+- filename: inji-web/src/__tests__/components/Credentials/CredentialListWrapper.test.tsx
+  checksum: b387f8b20ae971008c5b02d913f53c4939621cbbbec465a428b243cd992ec04f
+- filename: inji-web/src/__tests__/pages/User/CredentialTypes/CredentialTypesPageContent.test.tsx
+  checksum: 2a80ed22695ef98375ec95a7a00b7cef5ca098483debd3a274e7073ca5aba771
+- filename: inji-web/src/__tests__/components/Common/LandingPageWrapper.test.tsx
+  checksum: 29a91215a4e4f32e58ea5c5bd927919c8b3428da6cf6bff4f8beca4b563d4aab
 version: ""

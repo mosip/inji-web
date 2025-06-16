@@ -67,18 +67,13 @@ describe('showToast', () => {
 
         expect(toastFn).toHaveBeenCalledTimes(1);
         expect(toastFn).toHaveBeenCalledWith(
-            expect.objectContaining({
-                props: expect.objectContaining({
-                    message: expectedMessage,
-                    testId: expectedTestId
-                })
-            }),
-            undefined
+            expect.any(Function),
+            {"closeButton": true}
         );
     });
 
     it('should pass custom options to toast functions', () => {
-        const options = {style: {backgroundColor: 'blue'}};
+        const options = {style: {backgroundColor: 'blue'}, closeButton: true};
         showToast({
             message: 'Message with options',
             type: 'success',

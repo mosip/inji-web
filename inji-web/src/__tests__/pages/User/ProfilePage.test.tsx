@@ -1,12 +1,12 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
 import {ProfilePage} from '../../../pages/User/Profile/ProfilePage';
-import {useUser} from '../../../hooks/useUser';
+import {useUser} from '../../../hooks/User/useUser';
 import {MemoryRouter, useLocation} from 'react-router-dom';
 import {navigateToUserHome} from "../../../utils/navigationUtils";
 
 // Mocks
-jest.mock('../../../hooks/useUser.tsx');
+jest.mock('../../../hooks/User/useUser.tsx');
 jest.mock('../../../utils/navigationUtils.ts', () => ({
   navigateToUserHome: jest.fn(),
 }));

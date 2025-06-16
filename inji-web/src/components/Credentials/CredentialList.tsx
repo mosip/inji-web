@@ -6,11 +6,14 @@ import {EmptyListContainer} from "../Common/EmptyListContainer";
 import {useTranslation} from "react-i18next";
 import {RequestStatus} from "../../hooks/useFetch";
 import {SpinningLoader} from "../Common/SpinningLoader";
-import {CredentialListProps} from "../../types/components";
 import {HeaderTile} from "../Common/HeaderTile";
 import {DownloadResult} from "../Redirection/DownloadResult";
 import {CredentialConfigurationObject} from "../../types/data";
 import {defaultLanguage} from "../../utils/i18n";
+
+interface CredentialListProps {
+    state: RequestStatus;
+}
 
 export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
     const [errorObj, setErrorObj] = useState({
@@ -27,7 +30,7 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
         const missingLanguageSupport: CredentialConfigurationObject[] = [];
 
         const filteredCredentialsList = (
-            credentials?.filtered_credentials?.credentials_supported || []
+            credentials?.filtered_credentials?.credentials_supported ?? []
         ).filter((credential: CredentialConfigurationObject) => {
             const display = credential.display;
             const hasMatchingDisplay = display?.some(
@@ -104,7 +107,7 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
                         index: number
                     ) => (
                         <Credential
-                            key={index}
+                            key={credentialConfig.name}
                             credentialId={credentialConfig.name}
                             credentialWellknown={credentialConfig}
                             index={index}
