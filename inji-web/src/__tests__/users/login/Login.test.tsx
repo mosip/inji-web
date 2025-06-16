@@ -46,4 +46,33 @@ describe("Login Page Tests", () => {
     fireEvent.click(guestButton);
     expect(mockNavigate).toHaveBeenCalledWith("/issuers");
   });
+
+  test("Google login button redirects to Google OAuth URL", () => {
+    const originalHref = window.location.href;
+  
+    (window as any)._env_ = {
+      MIMOTO_URL: "https://example.com",
+    };
+
+    // Mock window.location.href setter
+    const setHref = jest.fn();
+    Object.defineProperty(window, "location", {
+      value: { set href(url: string) { setHref(url); } },
+      configurable: true,
+    });
+  
+    render(<MemoryRouter><Login /></MemoryRouter>);
+  
+    const googleButton = screen.getByTestId("google-login-button");
+    fireEvent.click(googleButton);
+  
+    expect(setHref).toHaveBeenCalledWith("https://example.com/oauth2/authorize/google");
+  
+    Object.defineProperty(window, "location", {
+      value: { href: originalHref },
+      configurable: true,
+    });
+  });
+  
+  
 });

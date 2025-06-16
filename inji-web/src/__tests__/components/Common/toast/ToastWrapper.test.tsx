@@ -90,7 +90,7 @@ describe('showToast', () => {
     });
 });
 
-describe('Toast Content rendering (via content function)', () => {
+describe('Toast rendering with default and custom closeButton options', () => {
     beforeEach(() => {
       jest.clearAllMocks();
     });

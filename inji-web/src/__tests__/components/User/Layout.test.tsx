@@ -1,21 +1,11 @@
 import { setMockUseLocation } from '../../../test-utils/mockRouter';
-import {setMockUseSelectorState } from '../../../test-utils/mockReactRedux';
+import { setMockUseSelectorState } from '../../../test-utils/mockReactRedux';
+import { mockusei18n } from '../../../test-utils/mockUtils';
 import { render, screen, act } from '@testing-library/react';
 import { Layout } from '../../../components/User/Layout';
 import * as i18n from '../../../utils/i18n';
-
-jest.mock('../../../hooks/User/useDownloadSession', () => ({
-  useDownloadSessionDetails: () => ({
-    latestDownloadedSessionId: null,
-    currentSessionDownloadId: null,
-    downloadInProgressSessions: {},
-    addSession: jest.fn().mockReturnValue('mockId'),
-    updateSession: jest.fn(),
-    removeSession: jest.fn(),
-    setCurrentSessionDownloadId: jest.fn(),
-    setLatestDownloadedSessionId: jest.fn(),
-  }),
-}));
+import { showToast } from '../../../components/Common/toast/ToastWrapper';
+import { RequestStatus } from '../../../hooks/useFetch';
 
 jest.mock('../../../components/User/Header', () => ({
   Header: ({ headerRef, headerHeight }: any) => (
@@ -37,18 +27,55 @@ jest.mock('../../../components/PageTemplate/Footer', () => ({
   ),
 }));
 
-jest.mock('../../../utils/i18n', () => ({
-  getDirCurrentLanguage: jest.fn(),
+jest.mock('../../../utils/i18n', () => {
+  const actual = jest.requireActual('../../../utils/i18n');
+  return {
+    __esModule: true,
+    ...actual,
+    getDirCurrentLanguage: jest.fn(),
+    getCredentialTypeDisplayObjectForCurrentLanguage: jest.fn(),
+    isRTL: jest.fn(),
+  };
+});
+
+jest.mock('../../../components/Common/toast/ToastWrapper', () => ({
+  showToast: jest.fn(),
 }));
 
 jest.mock('../../../assets/Background.svg', () => 'mock-dashboard-bg-top');
 jest.mock('../../../assets/DashboardBgBottom.svg', () => 'mock-dashboard-bg-bottom');
 
+let mockDownloadSessionDetails: any;
+
+jest.mock('../../../hooks/User/useDownloadSession', () => ({
+  useDownloadSessionDetails: () => mockDownloadSessionDetails,
+}));
+
 describe('Layout component', () => {
   beforeEach(() => {
+    jest.clearAllMocks();
+    mockusei18n();
+
+    mockDownloadSessionDetails = {
+      latestDownloadedSessionId: null,
+      currentSessionDownloadId: null,
+      downloadInProgressSessions: {},
+      addSession: jest.fn(),
+      updateSession: jest.fn(),
+      removeSession: jest.fn(),
+      setCurrentSessionDownloadId: jest.fn(),
+      setLatestDownloadedSessionId: jest.fn(),
+    };
+
     setMockUseSelectorState({ common: { language: 'en' } });
-    (i18n.getDirCurrentLanguage as jest.Mock).mockReturnValue('ltr');
     setMockUseLocation({ pathname: '/' });
+
+    (i18n.getDirCurrentLanguage as jest.Mock).mockReturnValue('ltr');
+    (i18n.getCredentialTypeDisplayObjectForCurrentLanguage as jest.Mock).mockReturnValue({
+      name: 'Test Credential',
+      locale: 'en',
+      logo: 'https://example.com/logo.png',
+    });
   });
 
   it('renders layout with Header, Sidebar, Outlet and Footer', () => {
@@ -71,7 +98,6 @@ describe('Layout component', () => {
     const header = screen.getByTestId('Header');
     const footer = screen.getByTestId('Footer');
 
-    // Simulate DOM rects
     jest.spyOn(header, 'getBoundingClientRect').mockReturnValue({
       height: 80,
       width: 0, top: 0, left: 0, bottom: 0, right: 0, x: 0, y: 0, toJSON: () => {},
@@ -90,53 +116,80 @@ describe('Layout component', () => {
     expect(footer).toBeInTheDocument();
   });
 
-   // Snapshot test for the default (ltr) language rendering of Layout
-   it('matches snapshot for default language', () => {
+  it('calls showToast with correct options when a session download is DONE', () => {
+    mockDownloadSessionDetails = {
+      latestDownloadedSessionId: 'session-1',
+      currentSessionDownloadId: null,
+      downloadInProgressSessions: {
+        'session-1': {
+          credentialTypeDisplayObj: [
+            { name: 'Test Credential', locale: 'en', logo: 'url' },
+          ],
+          downloadStatus: RequestStatus.DONE,
+        },
+      },
+      addSession: jest.fn(),
+      updateSession: jest.fn(),
+      removeSession: jest.fn(),
+      setCurrentSessionDownloadId: jest.fn(),
+      setLatestDownloadedSessionId: jest.fn(),
+    };
+
+    render(<Layout />);
+
+    expect(i18n.getCredentialTypeDisplayObjectForCurrentLanguage).toHaveBeenCalledWith(
+      mockDownloadSessionDetails.downloadInProgressSessions['session-1'].credentialTypeDisplayObj,
+      'en'
+    );
+
+    expect(showToast).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: 'Your Test Credential has been downloaded successfully.',
+        type: 'success',
+        options: expect.objectContaining({
+          autoClose: 3000,
+          limit: 1,
+          closeButton: expect.any(Function),
+          style: expect.objectContaining({
+            marginTop: expect.any(Number),
+          }),
+        }),
+      })
+    );
+
+    expect(mockDownloadSessionDetails.setLatestDownloadedSessionId).toHaveBeenCalledWith(null);
+    expect(mockDownloadSessionDetails.removeSession).toHaveBeenCalledWith('session-1');
+  });
+
+  it('matches snapshot for default language', () => {
     const { container } = render(<Layout />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  // Snapshot test for RTL language rendering of Layout
   it('matches snapshot for rtl language', () => {
     (i18n.getDirCurrentLanguage as jest.Mock).mockReturnValue('rtl');
     const { container } = render(<Layout />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  // Snapshot test after simulating a resize that updates header and footer heights
   it('matches snapshot after header and footer heights update on resize', () => {
     const { container } = render(<Layout />);
 
     const header = screen.getByTestId('Header');
     const footer = screen.getByTestId('Footer');
 
-    // Set DOM rects for header and footer to specific heights
     jest.spyOn(header, 'getBoundingClientRect').mockReturnValue({
-      height: 80,
-      width: 0,
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
-      x: 0,
-      y: 0,
-      toJSON: () => {},
+      height: 80, width: 0, top: 0, left: 0, bottom: 0, right: 0, x: 0, y: 0, toJSON: () => {},
     });
+
     jest.spyOn(footer, 'getBoundingClientRect').mockReturnValue({
-      height: 60,
-      width: 0,
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
-      x: 0,
-      y: 0,
-      toJSON: () => {},
+      height: 60, width: 0, top: 0, left: 0, bottom: 0, right: 0, x: 0, y: 0, toJSON: () => {},
     });
 
     act(() => {
       window.dispatchEvent(new Event('resize'));
     });
+
     expect(container.firstChild).toMatchSnapshot();
   });
 });
