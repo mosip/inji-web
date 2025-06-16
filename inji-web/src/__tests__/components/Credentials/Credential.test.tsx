@@ -1,6 +1,6 @@
 import React from "react";
 import {screen} from "@testing-library/react";
-import {Credential} from "../../../components/Credentials/Crendential";
+import {Credential} from "../../../components/Credentials/Credential";
 import {IssuerConfigurationObject} from "../../../types/data";
 import {
     getCredentialTypeDisplayObjectForCurrentLanguage,

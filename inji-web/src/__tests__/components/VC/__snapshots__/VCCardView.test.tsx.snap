@@ -3,7 +3,7 @@
 exports[`VCCardView Component should match snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="bg-iw-tileBackground grid grid-cols-[2.5fr_0.5fr] items-center shadow hover:shadow-lg hover:scale-105 hover:shadow-iw-selectedShadow p-4 m-2 rounded-md cursor-pointer"
+    class="bg-iw-tileBackground grid grid-cols-[2.5fr_0.5fr] items-center shadow hover:shadow-lg hover:shadow-iw-selectedShadow p-4 m-2 rounded-md cursor-pointer"
     data-testid="vc-card-view"
     role="menuitem"
     tabindex="0"
@@ -14,7 +14,9 @@ exports[`VCCardView Component should match snapshot 1`] = `
       <title>
         Drivers License
       </title>
-      <div />
+      <div>
+        Name:Simon
+      </div>
       <button>
         Close
       </button>

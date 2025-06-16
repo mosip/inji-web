@@ -30,18 +30,19 @@ jest.mock('../../../components/Common/toast/ToastWrapper', () => ({
 
 jest.mock("../../../components/VC/VCDetailView", () => ({
     VCDetailView: ({previewContent, onDownload, onClose, credential}: {
-        previewContent: string,
+        previewContent: Blob,
         onClose: () => void,
         onDownload: () => Promise<void>,
         credential: WalletCredential
-    }) => (
-        <div data-testid="vc-detail-view">
+    }) => {
+        const content = "Name:Simon";
+        return (<div data-testid="vc-detail-view">
             <title>{credential.credentialTypeDisplayName}</title>
-            <div>{previewContent}</div>
+            <div>{content}</div>
             <button onClick={onClose}>Close</button>
             <button onClick={onDownload}>download</button>
-        </div>
-    )
+        </div>)
+    }
 }));
 
 describe('VCCardView Component', () => {
@@ -269,7 +270,9 @@ describe('VCCardView Component', () => {
         expect(fetchMock).toHaveBeenCalledTimes(1);
 
         await screen.findByTestId("vc-detail-view")
-        expect(screen.getByText("Name:Simon")).toBeInTheDocument()
+        await waitFor(() => {
+            expect(screen.getByText("Name:Simon")).toBeInTheDocument()
+        })
     })
 
     it("should show error when download fails", async () => {

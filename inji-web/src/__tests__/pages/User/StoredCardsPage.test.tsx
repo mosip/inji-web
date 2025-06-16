@@ -9,9 +9,14 @@ import {
     renderWithRouter
 } from '../../../test-utils/mockUtils';
 import {KEYS} from "../../../utils/constants";
+import React from "react";
 
 mockUseTranslation()
 mockApiObject()
+
+jest.mock("../../../components/Preview/PDFViewer", () => ({
+    PDFViewer: () => <div data-testid="pdf-viewer">Mock PDF Viewer</div>
+}));
 
 describe('Testing of StoredCardsPage ->', () => {
     let localStorageMock: {
@@ -292,8 +297,8 @@ describe('Testing of StoredCardsPage ->', () => {
         onlineMock.reset();
     });
 
-    it('should display generic error message when any unknown occurs', async () => {
-        (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
+    it('should display generic error message when any unknown error occurs', async () => {
+        (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network slow error'));
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance()
