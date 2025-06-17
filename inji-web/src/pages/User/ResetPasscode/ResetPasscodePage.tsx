@@ -11,7 +11,7 @@ import {BackgroundDecorator} from '../../../components/Common/BackgroundDecorato
 import {BackArrowButton} from '../../../components/Common/Buttons/BackArrowButton';
 import {InfoIcon} from '../../../components/Common/Icons/InfoIcon';
 import {ROUTES} from "../../../utils/constants";
-import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodeTemplate.tsx";
+import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePageTemplate.tsx";
 
 interface InstructionItem {
     id: string;
@@ -161,6 +161,7 @@ export const ResetPasscodePage: React.FC = () => {
             testId="reset-passcode-page"
             error={error}
             onErrorClose={() => setError(null)}
+            onBack={handleBackNavigation}
         />
     );
 };

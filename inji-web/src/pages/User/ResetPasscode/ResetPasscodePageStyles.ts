@@ -11,9 +11,9 @@ export const ResetPasscodePageStyles = {
     header: 'text-center items-center justify-center relative z-20 bg-transparent space-y-4 w-[90%] sm-md:w-[85%] md:w-[50%]',
     logoContainer: 'flex items-center justify-center',
     title: 'text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGrayishBlue p-4',
-    subHeader: 'flex items-start ml-4',
+    subHeader: 'flex items-center gap-3 justify-center mx-4 px-2',
     backArrowButton: 'cursor-pointer',
-    subtitle: 'text-iw-textTertiary text-sm sm:text-base font-medium pl-6',
+    subtitle: 'text-iw-textTertiary text-base font-medium',
     mainContent:
         'flex flex-col bg-white rounded-xl shadow-iw-pin-page-container mt-8 items-center relative z-20 px-4 sm:px-6 md:px-10 py-3 sm:py-5 md:py-7 space-y-4 w-[90%] sm-md:w-[85%] md:w-[50%]',
     instructionBox:

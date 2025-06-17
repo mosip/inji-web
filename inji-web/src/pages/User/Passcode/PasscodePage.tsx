@@ -9,7 +9,7 @@ import {PasscodeInput} from '../../../components/Common/Input/PasscodeInput';
 import {navigateToUserHome} from "../../../utils/navigationUtils";
 import {PasscodePageStyles} from './PasscodePageStyles';
 import {ROUTES} from "../../../utils/constants";
-import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodeTemplate";
+import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePageTemplate.tsx";
 
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');
