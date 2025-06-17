@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {api, MethodType} from '../../../utils/api';
 import {useCookies} from 'react-cookie';
@@ -6,11 +6,10 @@ import {SolidButton} from '../../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
 import {useUser} from '../../../hooks/User/useUser';
 import {PasscodeInput} from '../../../components/Common/Input/PasscodeInput';
-import {BackgroundDecorator} from '../../../components/Common/BackgroundDecorator';
-import {CrossIconButton} from '../../../components/Common/Buttons/CrossIconButton';
 import {navigateToUserHome} from "../../../utils/navigationUtils";
 import {PasscodePageStyles} from './PasscodePageStyles';
 import {ROUTES} from "../../../utils/constants";
+import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodeTemplate";
 
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');
@@ -200,124 +199,76 @@ export const PasscodePage: React.FC = () => {
         passcode.includes('') ||
         (wallets.length === 0 && confirmPasscode.includes(''));
 
-    return (
-        <div
-            data-testid="passcode-page"
-            className={PasscodePageStyles.pageOverlay}
-        >
-            <div className={PasscodePageStyles.container}>
-                <BackgroundDecorator
-                    logoSrc={require('../../../assets/Logomark.png')}
-                    logoAlt="Inji Web Logo"
-                    logoTestId="logo-inji-web"
-                />
+    const pageTitle = wallets.length === 0 ? t('setPasscode') : t('enterPasscode');
+    const pageSubtitle = wallets.length === 0
+        ? t('setPasscodeDescription')
+        : t('enterPasscodeDescription');
 
-                <div className={PasscodePageStyles.contentWrapper}>
-                    <div className={PasscodePageStyles.titleContainer}>
-                        <h1
-                            className={PasscodePageStyles.title}
-                            data-testid="title-passcode"
-                        >
-                            {wallets.length === 0
-                                ? t('setPasscode')
-                                : t('enterPasscode')}
-                        </h1>
-                        <p
-                            className={PasscodePageStyles.description}
-                            data-testid="passcode-description"
-                        >
-                            {wallets.length === 0
-                                ? t('setPasscodeDescription')
-                                : t('enterPasscodeDescription')}
-                        </p>
-                    </div>
-
-                    <div
-                        className={PasscodePageStyles.passcodeContainer}
-                        data-testid="passcode-inputs-container"
-                    >
-                        {error && (
-                            <div
-                                className={PasscodePageStyles.errorContainer}
-                                data-testid="error-passcode"
-                            >
-                                <div className={PasscodePageStyles.errorContentWrapper}>
-                                    <div className={PasscodePageStyles.errorTextContainer}>
-                                        <span className={PasscodePageStyles.errorText}>
-                                            {error}
-                                        </span>
-                                    </div>
-                                    <div className={PasscodePageStyles.closeButtonContainer}>
-                                        <CrossIconButton
-                                            onClick={() => setError(null)}
-                                            btnClassName={PasscodePageStyles.closeButton}
-                                            iconClassName={PasscodePageStyles.closeIcon}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        <div className={PasscodePageStyles.inputContainer}>
-                            <div className={PasscodePageStyles.inputWrapper}>
-                                <div className={PasscodePageStyles.inputGroup}>
-                                    <PasscodeInput
-                                        label={t('enterPasscode')}
-                                        value={passcode}
-                                        onChange={setPasscode}
-                                        testId="passcode"
-                                    />
-                                </div>
-
-                                {wallets.length === 0 && (
-                                    <div className={PasscodePageStyles.confirmInputGroup}>
-                                        <PasscodeInput
-                                            label={t('confirmPasscode')}
-                                            value={confirmPasscode}
-                                            onChange={setConfirmPasscode}
-                                            testId="confirm-passcode"
-                                        />
-                                    </div>
-                                )}
-                            </div>
-                            {wallets.length !== 0 && (
-                                <div className={PasscodePageStyles.forgotPasscodeContainer}>
-                                    <button
-                                        data-testid="btn-forgot-passcode"
-                                        className={PasscodePageStyles.forgotPasscodeButton}
-                                        onClick={() =>
-                                            navigate(
-                                                ROUTES.USER_RESET_PASSCODE,
-                                                {
-                                                    state: {
-                                                        walletId:
-                                                        wallets[0].walletId
-                                                    }
-                                                }
-                                            )
-                                        }
-                                    >
-                                        {t('forgotPasscode') + ' ?'}
-                                    </button>
-                                </div>
-                            )}
-
-                            <div className={PasscodePageStyles.buttonContainer}>
-                                <SolidButton
-                                    fullWidth={true}
-                                    testId="btn-submit-passcode"
-                                    onClick={handleSubmit}
-                                    title={
-                                        loading ? t('submitting') : t('submit')
-                                    }
-                                    disabled={isButtonDisabled}
-                                    className={isButtonDisabled ? PasscodePageStyles.disabledButton : ''}
-                                />
-                            </div>
-                        </div>
-                    </div>
+    const renderContent = () => (
+        <Fragment>
+            <div className={PasscodePageStyles.inputWrapper}>
+                <div className={PasscodePageStyles.inputGroup}>
+                    <PasscodeInput
+                        label={t('enterPasscode')}
+                        value={passcode}
+                        onChange={setPasscode}
+                        testId="passcode"
+                    />
                 </div>
+
+                {wallets.length === 0 && (
+                    <div className={PasscodePageStyles.confirmInputGroup}>
+                        <PasscodeInput
+                            label={t('confirmPasscode')}
+                            value={confirmPasscode}
+                            onChange={setConfirmPasscode}
+                            testId="confirm-passcode"
+                        />
+                    </div>
+                )}
             </div>
-        </div>
+            {wallets.length !== 0 && (
+                <div className={PasscodePageStyles.forgotPasscodeContainer}>
+                    <button
+                        data-testid="btn-forgot-passcode"
+                        className={PasscodePageStyles.forgotPasscodeButton}
+                        onClick={() =>
+                            navigate(
+                                ROUTES.USER_RESET_PASSCODE,
+                                {
+                                    state: {
+                                        walletId: wallets[0].walletId
+                                    }
+                                }
+                            )
+                        }
+                    >
+                        {t('forgotPasscode') + ' ?'}
+                    </button>
+                </div>
+            )}
+
+            <div className={PasscodePageStyles.buttonContainer}>
+                <SolidButton
+                    fullWidth={true}
+                    testId="btn-submit-passcode"
+                    onClick={handleSubmit}
+                    title={loading ? t('submitting') : t('submit')}
+                    disabled={isButtonDisabled}
+                    className={isButtonDisabled ? PasscodePageStyles.disabledButton : ''}
+                />
+            </div>
+        </Fragment>
+    );
+
+    return (
+        <PasscodePageTemplate
+            title={pageTitle}
+            subtitle={pageSubtitle}
+            error={error}
+            onErrorClose={() => setError(null)}
+            content={renderContent()}
+            testId="passcode-page"
+        />
     );
 };
