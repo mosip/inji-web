@@ -51,6 +51,7 @@ export const ResetPasscodePage: React.FC = () => {
     const [cookies] = useCookies(['XSRF-TOKEN']);
     const navigate = useNavigate();
     const location = useLocation();
+    const [error, setError] = React.useState<string | null>(null);
 
     const handleBackNavigation = () => {
         navigate(ROUTES.PASSCODE);
@@ -76,7 +77,7 @@ export const ResetPasscodePage: React.FC = () => {
             navigate(ROUTES.PASSCODE);
         } catch (error) {
             console.error('Error occurred while deleting Wallet:', error);
-            toast.error(t('resetFailure'));
+            setError(t('resetFailure'));
         }
     };
 
@@ -158,6 +159,8 @@ export const ResetPasscodePage: React.FC = () => {
             subtitle={t('subTitle')}
             content={renderContent()}
             testId="reset-passcode-page"
+            error={error}
+            onErrorClose={() => setError(null)}
         />
     );
 };

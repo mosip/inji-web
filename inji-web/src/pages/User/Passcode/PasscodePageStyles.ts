@@ -9,7 +9,7 @@ export const PasscodePageStyles = {
   warningTextBorder: "relative sm:hidden pin-page-warning-text-border min-w-full items-center justify-center mt-1 sm:mt-3 md:mt-5",
   warningTextContainer: "w-full items-center justify-center flex",
   warningText: "text-iw-textTertiary text-center text-sm sm:text-base px-4 sm:px-8 pt-4 sm:pt-6 max-w-[560px]",
-  errorContainer: "bg-iw-pink50 w-full px-3 sm:px-5 py-3 border-t rounded-t-lg",
+  errorContainer: "bg-iw-pink50 w-full px-3 sm:px-5 py-3 border-t sm:rounded-t-lg",
   errorContentWrapper: "flex items-start justify-between gap-2 max-w-[560px] mx-auto",
   errorText: "text-sm text-iw-darkRed break-words whitespace-normal",
   errorTextContainer: "flex-1 pr-2",
