@@ -7,7 +7,7 @@ exports[`PasscodePageTemplate Component matches snapshot 1`] = `
     data-testid="test-page"
   >
     <div
-      class="rounded-2xl bg-white flex flex-col items-center justify-start relative w-[90%] sm:w-[85%] md:w-[90%] h-fit overflow-y-auto shadow-iw-pin-page-container"
+      class="rounded-2xl bg-white flex flex-col items-center justify-start relative w-[90%] sm:w-[85%] md:w-[90%] h-fit max-h-[98vh] overflow-y-hidden shadow-iw-pin-page-container"
     >
       <div
         class="overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none"
@@ -88,7 +88,7 @@ exports[`PasscodePageTemplate Component matches snapshot 1`] = `
             </button>
             <p
               class="text-iw-textTertiary text-base font-medium"
-              data-testid="subtitle-reset-passcode"
+              data-testid="subtitle-test"
             >
               Test Subtitle
             </p>
@@ -96,11 +96,11 @@ exports[`PasscodePageTemplate Component matches snapshot 1`] = `
         </div>
         <div
           class="flex flex-col bg-white sm:rounded-lg sm:shadow-iw-pin-page-container items-center z-20 w-full max-w-[500px] mt-8 mb-4 mx-auto border-t border-iw-grayishBlue mx-8 sm:my:0"
-          data-testid="passcode-inputs-container"
+          data-testid="content-test"
         >
           <div
             class="bg-iw-pink50 w-full px-3 sm:px-5 py-3 border-t sm:rounded-t-lg"
-            data-testid="error-passcode"
+            data-testid="error-test"
           >
             <div
               class="flex items-start justify-between gap-2 max-w-[560px] mx-auto"

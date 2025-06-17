@@ -85,12 +85,12 @@
   "PasscodePage": {
     "submit": "إرسال",
     "submitting": "جاري الإرسال",
-    "setPasscode": "تعيين رمز المرور",
-    "enterPasscode": "أدخل رمز المرور",
+    "setPasscode": "قم بتعيين رمز المرور للبدء",
+    "setPasscodeDescription": "يرجى تذكر رمز المرور الخاص بك أو تخزينه بأمان. ستحتاج إليه في كل مرة تصل فيها إلى المحفظة.",
+    "enterPasscode": "أدخل رمز المرور للمتابعة",
+    "enterPasscodeDescription": "استخدم نفس رمز المرور الذي قمت بتعيينه سابقًا للوصول إلى حسابك أو محفظتك.",
     "confirmPasscode": "تأكيد رمز المرور",
     "forgotPasscode": "نسيت رمز المرور",
-    "setPasscodeDescription": "قم بتعيين رمز المرور للبدء",
-    "enterPasscodeDescription": "أدخل رمز المرور المكون من 6 أرقام",
     "passcodeWarning": "تأكد من تذكر كلمة المرور لتسجيل الدخول في المستقبل",
     "error": {
       "walletNotFoundError": "لم يتم العثور على محفظة. يرجى إنشاء واحدة.",
@@ -102,22 +102,32 @@
     }
   },
   "ResetPasscodePage": {
-    "title": "إعادة ضبط محفظتك",
-    "subTitle": "إعادة تعيين المحفظة لاستعادة الوصول وإعادة تنزيل بيانات الاعتماد",
+    "title": "هل نسيت رمز المرور الخاص بك؟",
+    "subTitle": "أعد تعيين محفظتك لاستعادة الوصول وإعادة تنزيل بطاقاتك.",
     "resetInstruction": {
-      "question": "هل نسيت رمز المرور الخاص بك؟",
-      "info1": "إذا لم تتمكن من تذكر رمز المرور الخاص بك، فيمكنك إعادة تعيينه بالنقر فوق الزر أدناه.",
+      "question": "ماذا يحدث عندما تنسى رمز المرور الخاص بك؟",
+      "info1": {
+        "message": "سيتم <strong>{{highlighter}}</strong> محفظتك بأمان.",
+        "highlighter": "إعادة التعيين"
+      },
       "info2": {
-        "message": "<strong>{{highlighter1}}:</strong> سيؤدي هذا إلى إزالة جميع البطاقات المحفوظة من الحساب — مثل <strong>{{highlighter2}}</strong>، وأي مستندات أخرى أضفتها.",
-        "highlighter1": "يرجى الملاحظة",
-        "highlighter2": "بطاقة الهوية الوطنية، بطاقة الهوية الضريبية، شهادة التأمين"
+        "message": "سيتم حذف جميع <strong>{{highlighter}}</strong> المحفوظة مسبقًا من محفظتك.",
+        "highlighter": "البطاقات"
       },
       "info3": {
-        "message": "بعد إعادة الضبط، ستحتاج إلى تعيين رمز مرور جديد و<strong>{{highlighter}}</strong> في محفظتك.",
-        "highlighter": "أعد تنزيل بطاقاتك"
+        "message": "سيتم إرشادك إلى <strong>{{highlighter}}</strong>.",
+        "highlighter": "تعيين رمز مرور جديد"
+      },
+      "info4": {
+        "message": "بعد ذلك يمكنك <strong>{{highlighter}}</strong> من المصدر/الجهة المصدرة الأصلية.",
+        "highlighter": "إعادة تنزيل البطاقات"
+      },
+      "info5": {
+        "message": "سيظل معلوماتك <strong>{{highlighter}}</strong> حتى إذا فقدت جهازك/محفظتك أو شاركتها.",
+        "highlighter": "آمنة"
       }
     },
-    "forgetPasscode": "ننسى رمز المرور",
+    "setNewPasscode": "تعيين رمز مرور جديد",
     "resetFailure": "حدث خطأ أثناء إعادة ضبط محفظتك. يُرجى المحاولة مجددًا بعد قليل."
   },
   "IssuersPage": {

@@ -127,7 +127,7 @@
         "highlighter": "safe"
       }
     },
-    "forgetPasscode": "Set New Passcode",
+    "setNewPasscode": "Set New Passcode",
     "resetFailure": "Something went wrong while resetting your wallet. Please try again in a moment."
   },
   "IssuersPage": {

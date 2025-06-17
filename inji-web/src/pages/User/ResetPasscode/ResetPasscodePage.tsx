@@ -6,7 +6,6 @@ import {api} from '../../../utils/api';
 import {useCookies} from 'react-cookie';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {ResetPasscodePageStyles} from './ResetPasscodePageStyles';
-import {BackArrowButton} from '../../../components/Common/Buttons/BackArrowButton';
 import {InfoIcon} from '../../../components/Common/Icons/InfoIcon';
 import {ROUTES} from "../../../utils/constants";
 import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePage/PasscodePageTemplate";
@@ -134,12 +133,11 @@ export const ResetPasscodePage: React.FC = () => {
                 />
             </div>
 
-            {/*TODO: change it to setNewPasscode*/}
             <SolidButton
                 fullWidth={true}
                 testId="btn-forget-passcode"
                 onClick={handleForgotPasscode}
-                title={t('forgetPasscode')}
+                title={t('setNewPasscode')}
                 className={ResetPasscodePageStyles.resetPasscodeAction}
             />
         </Fragment>
@@ -150,6 +148,7 @@ export const ResetPasscodePage: React.FC = () => {
             title={t('title')}
             subtitle={t('subTitle')}
             content={renderContent()}
+            contentTestId="reset-passcode-content"
             testId="reset-passcode"
             error={error}
             onErrorClose={() => setError(null)}

@@ -11,6 +11,7 @@ interface PasscodePageTemplateProps {
     onErrorClose?: () => void;
     content: React.ReactNode;
     testId: string;
+    contentTestId: string;
     onBack?: () => void;
 }
 
@@ -21,6 +22,7 @@ export const PasscodePageTemplate: React.FC<PasscodePageTemplateProps> = ({
                                                                               onErrorClose,
                                                                               content,
                                                                               testId,
+                                                                              contentTestId,
                                                                               onBack
                                                                           }) => {
     return (
@@ -48,14 +50,14 @@ export const PasscodePageTemplate: React.FC<PasscodePageTemplateProps> = ({
                                     />
                                     <p
                                         className={PasscodePageTemplateStyles.subTitle.content}
-                                        data-testid="subtitle-reset-passcode"
+                                        data-testid={`subtitle-${testId}`}
                                     >
                                         {subtitle}
                                     </p>
                                 </div>
                             ) : <p
                                 className={PasscodePageTemplateStyles.description}
-                                data-testid="passcode-description"
+                                data-testid={`${testId}-description`}
                             >
                                 {subtitle}
                             </p>
@@ -64,12 +66,12 @@ export const PasscodePageTemplate: React.FC<PasscodePageTemplateProps> = ({
 
                     <div
                         className={PasscodePageTemplateStyles.errorAndContentContainer}
-                        data-testid="passcode-inputs-container"
+                        data-testid={contentTestId}
                     >
                         {error && (
                             <div
                                 className={PasscodePageTemplateStyles.errorContainer}
-                                data-testid="error-passcode"
+                                data-testid={`error-${testId}`}
                             >
                                 <div className={PasscodePageTemplateStyles.errorContentWrapper}>
                                     <div className={PasscodePageTemplateStyles.errorTextContainer}>

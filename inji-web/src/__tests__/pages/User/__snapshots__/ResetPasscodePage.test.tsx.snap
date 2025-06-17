@@ -7,7 +7,7 @@ exports[`ResetPasscodePage Component should match snapshot 1`] = `
     data-testid="reset-passcode-page"
   >
     <div
-      class="rounded-2xl bg-white flex flex-col items-center justify-start relative w-[90%] sm:w-[85%] md:w-[90%] h-fit overflow-y-auto shadow-iw-pin-page-container"
+      class="rounded-2xl bg-white flex flex-col items-center justify-start relative w-[90%] sm:w-[85%] md:w-[90%] h-fit max-h-[98vh] overflow-y-hidden shadow-iw-pin-page-container"
     >
       <div
         class="overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none"
@@ -96,7 +96,7 @@ exports[`ResetPasscodePage Component should match snapshot 1`] = `
         </div>
         <div
           class="flex flex-col bg-white sm:rounded-lg sm:shadow-iw-pin-page-container items-center z-20 w-full max-w-[500px] mt-8 mb-4 mx-auto border-t border-iw-grayishBlue mx-8 sm:my:0"
-          data-testid="passcode-inputs-container"
+          data-testid="reset-passcode-content"
         >
           <div
             class="w-full px-4 sm:px-8 py-3 sm:py-5 md:py-7 space-y-4 flex flex-col items-center"
@@ -187,7 +187,7 @@ exports[`ResetPasscodePage Component should match snapshot 1`] = `
                     class="flex items-center justify-center gap-1.5"
                   >
                     <span>
-                      Forget Passcode
+                      set new passcode
                     </span>
                   </div>
                 </button>

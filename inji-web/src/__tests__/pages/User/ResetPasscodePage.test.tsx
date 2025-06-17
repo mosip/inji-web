@@ -22,7 +22,7 @@ jest.mock('react-i18next', () => {
         'resetInstruction.info3.message':
             "After resetting, you'll need to set a new passcode and <strong>re-download your cards</strong> into your Wallet.",
         'resetInstruction.info3.highlighter': 're-download your cards',
-        'forgetPasscode': 'Forget Passcode',
+        'setNewPasscode': 'set new passcode',
         'resetFailure':
             'Something went wrong while resetting your wallet. Please try again in a moment.'
     };
@@ -173,7 +173,7 @@ describe('ResetPasscodePage Component', () => {
             'Forgot your passcode?'
         );
         expect(screen.getByTestId('btn-forget-passcode')).toHaveTextContent(
-            'Forget Passcode'
+            'set new passcode'
         );
         expect(screen.getByTestId('text-reset-info2')).toHaveTextContent(
             "Please note: This will remove all your saved cards from the account — such as your National ID card, Tax ID card, Insurance certificate, and any other documents you've added."

@@ -85,12 +85,12 @@
   "PasscodePage": {
     "submit": "Enviar",
     "submitting": "Enviando",
-    "setPasscode": "Definir código de acesso",
-    "enterPasscode": "Digite o código de acesso",
+    "setPasscode": "Defina seu código de acesso para começar",
+    "setPasscodeDescription": "Por favor, lembre-se ou armazene seu código de acesso com segurança. Você precisará dele toda vez que acessar a carteira.",
+    "enterPasscode": "Digite seu código de acesso para continuar",
+    "enterPasscodeDescription": "Use o mesmo código de acesso que você definiu anteriormente para acessar sua conta ou carteira.",
     "confirmPasscode": "Confirmar código de acesso",
     "forgotPasscode": "Esqueceu a senha",
-    "setPasscodeDescription": "Defina seu código de acesso para começar",
-    "enterPasscodeDescription": "Digite seu código de 6 dígitos",
     "passcodeWarning": "Certifique-se de lembrar a senha para login futuro",
     "error": {
       "walletNotFoundError": "Nenhuma carteira encontrada. Crie uma.",
@@ -102,22 +102,32 @@
     }
   },
   "ResetPasscodePage": {
-    "title": "Redefinir sua carteira",
-    "subTitle": "Redefina a carteira para recuperar o acesso e baixar novamente as credenciais",
+    "title": "Esqueceu seu código de acesso?",
+    "subTitle": "Redefina sua carteira para recuperar o acesso e baixar novamente seus cartões.",
     "resetInstruction": {
-      "question": "Esqueceu sua senha?",
-      "info1": "Caso não se lembre da sua senha, você pode redefini-la clicando no botão abaixo.",
+      "question": "O que acontece quando você esquece seu código de acesso?",
+      "info1": {
+        "message": "Sua carteira será <strong>{{highlighter}}</strong> com segurança.",
+        "highlighter": "redefinida"
+      },
       "info2": {
-        "message": "<strong>{{highlighter1}}:</strong> Isso removerá todos os seus cartões salvos da conta — como seu <strong>{{highlighter2}}</strong> e quaisquer outros documentos que você adicionou.",
-        "highlighter1": "Observe",
-        "highlighter2": "Cartão de identidade nacional, cartão de identificação fiscal, certificado de seguro"
+        "message": "Todos os <strong>{{highlighter}}</strong> armazenados anteriormente serão removidos da sua carteira.",
+        "highlighter": "cartões serão excluídos"
       },
       "info3": {
-        "message": "Após a redefinição, você precisará definir uma nova senha e <strong>{{highlighter}}</strong> na sua Carteira.",
-        "highlighter": "baixe novamente seus cartões"
+        "message": "Você será orientado para <strong>{{highlighter}}</strong>.",
+        "highlighter": "definir um novo código de acesso"
+      },
+      "info4": {
+        "message": "Você poderá então <strong>{{highlighter}}</strong> a partir da fonte/emissores originais.",
+        "highlighter": "baixar novamente os cartões"
+      },
+      "info5": {
+        "message": "Isso mantém suas informações <strong>{{highlighter}}</strong>, mesmo se seu dispositivo/carteira for perdido ou compartilhado.",
+        "highlighter": "seguras"
       }
     },
-    "forgetPasscode": "Esqueci a senha",
+    "setNewPasscode": "Definir novo código de acesso",
     "resetFailure": "Ocorreu um erro ao redefinir sua carteira. Tente novamente em breve."
   },
   "IssuersPage": {

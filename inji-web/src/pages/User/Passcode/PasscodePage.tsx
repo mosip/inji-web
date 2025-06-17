@@ -265,6 +265,7 @@ export const PasscodePage: React.FC = () => {
             error={error}
             onErrorClose={() => setError(null)}
             content={renderContent()}
+            contentTestId={"passcode-inputs-container"}
             testId="passcode"
         />
     );
