@@ -31,13 +31,22 @@ const InstructionContent: React.FC<InstructionContentProps> = ({
     return (
         <div data-testid={testId} className={className}>
             {instructionItems.map((item) => (
-                <p
-                    key={item.id}
-                    data-testid={item.id}
-                    className={item.className}
-                >
-                    {item.content}
-                </p>
+                item.id === "text-reset-question" ? (
+                    <p
+                        key={item.id}
+                        data-testid={item.id}
+                        className={item.className}
+                    >
+                        {item.content}
+                    </p>
+                ) : (
+                    <li
+                        key={item.id}
+                        data-testid={item.id}
+                        className={item.className}
+                    >
+                        {item.content}
+                    </li>)
             ))}
         </div>
     );
@@ -111,21 +120,6 @@ export const ResetPasscodePage: React.FC = () => {
         getInstruction(5)
     ];
 
-    function subTitle() {
-        return <div className={ResetPasscodePageStyles.subHeader}>
-            <BackArrowButton
-                onClick={handleBackNavigation}
-                btnClassName={ResetPasscodePageStyles.backArrowButton}
-            />
-            <p
-                className={ResetPasscodePageStyles.subtitle}
-                data-testid="subtitle-reset-passcode"
-            >
-                {t('subTitle')}
-            </p>
-        </div>;
-    }
-
     const renderContent = () => (
         <Fragment>
             <div className={ResetPasscodePageStyles.instructionBox}>
@@ -156,7 +150,7 @@ export const ResetPasscodePage: React.FC = () => {
             title={t('title')}
             subtitle={t('subTitle')}
             content={renderContent()}
-            testId="reset-passcode-page"
+            testId="reset-passcode"
             error={error}
             onErrorClose={() => setError(null)}
             onBack={handleBackNavigation}
