@@ -1,9 +1,8 @@
 import React from 'react';
-import {PasscodePageStyles} from '../../pages/User/Passcode/PasscodePageStyles';
-import {BackgroundDecorator} from '../Common/BackgroundDecorator';
-import {CrossIconButton} from '../Common/Buttons/CrossIconButton';
-import {ResetPasscodePageStyles} from "../../pages/User/ResetPasscode/ResetPasscodePageStyles";
-import {BackArrowButton} from "../Common/Buttons/BackArrowButton";
+import {BackgroundDecorator} from '../../Common/BackgroundDecorator';
+import {CrossIconButton} from '../../Common/Buttons/CrossIconButton';
+import {BackArrowButton} from "../../Common/Buttons/BackArrowButton";
+import {PasscodePageTemplateStyles} from "./PasscodePageTemplateStyles.ts";
 
 interface PasscodePageTemplateProps {
     title: string;
@@ -27,39 +26,35 @@ export const PasscodePageTemplate: React.FC<PasscodePageTemplateProps> = ({
     return (
         <div
             data-testid={testId}
-            className={PasscodePageStyles.pageOverlay}
+            className={PasscodePageTemplateStyles.overlay}
         >
-            <div className={PasscodePageStyles.container}>
-                <BackgroundDecorator
-                    logoSrc={require('../../assets/Logomark.png')}
-                    logoAlt="Inji Web Logo"
-                    logoTestId="logo-inji-web"
-                />
+            <div className={PasscodePageTemplateStyles.container}>
+                <BackgroundDecorator/>
 
-                <div className={PasscodePageStyles.contentWrapper}>
-                    <div className={PasscodePageStyles.titleContainer}>
+                <div className={PasscodePageTemplateStyles.contentWrapper}>
+                    <div className={PasscodePageTemplateStyles.titleContainer}>
                         <h1
-                            className={PasscodePageStyles.title}
+                            className={PasscodePageTemplateStyles.title}
                             data-testid="title-passcode"
                         >
                             {title}
                         </h1>
                         {
                             onBack ? (
-                                <div className={ResetPasscodePageStyles.subHeader}>
+                                <div className={PasscodePageTemplateStyles.subTitle.container}>
                                     <BackArrowButton
                                         onClick={onBack}
-                                        btnClassName={ResetPasscodePageStyles.backArrowButton}
+                                        btnClassName={PasscodePageTemplateStyles.subTitle.backArrowButton}
                                     />
                                     <p
-                                        className={ResetPasscodePageStyles.subtitle}
+                                        className={PasscodePageTemplateStyles.subTitle.content}
                                         data-testid="subtitle-reset-passcode"
                                     >
                                         {subtitle}
                                     </p>
                                 </div>
                             ) : <p
-                                className={PasscodePageStyles.description}
+                                className={PasscodePageTemplateStyles.description}
                                 data-testid="passcode-description"
                             >
                                 {subtitle}
@@ -68,26 +63,26 @@ export const PasscodePageTemplate: React.FC<PasscodePageTemplateProps> = ({
                     </div>
 
                     <div
-                        className={PasscodePageStyles.passcodeContainer}
+                        className={PasscodePageTemplateStyles.errorAndContentContainer}
                         data-testid="passcode-inputs-container"
                     >
                         {error && (
                             <div
-                                className={PasscodePageStyles.errorContainer}
+                                className={PasscodePageTemplateStyles.errorContainer}
                                 data-testid="error-passcode"
                             >
-                                <div className={PasscodePageStyles.errorContentWrapper}>
-                                    <div className={PasscodePageStyles.errorTextContainer}>
-                                        <span className={PasscodePageStyles.errorText}>
+                                <div className={PasscodePageTemplateStyles.errorContentWrapper}>
+                                    <div className={PasscodePageTemplateStyles.errorTextContainer}>
+                                        <span className={PasscodePageTemplateStyles.errorText}>
                                           {error}
                                         </span>
                                     </div>
                                     {onErrorClose && (
-                                        <div className={PasscodePageStyles.closeButtonContainer}>
+                                        <div className={PasscodePageTemplateStyles.closeButtonContainer}>
                                             <CrossIconButton
                                                 onClick={onErrorClose}
-                                                btnClassName={PasscodePageStyles.closeButton}
-                                                iconClassName={PasscodePageStyles.closeIcon}
+                                                btnClassName={PasscodePageTemplateStyles.closeButton}
+                                                iconClassName={PasscodePageTemplateStyles.closeIcon}
                                             />
                                         </div>
                                     )}
@@ -95,7 +90,7 @@ export const PasscodePageTemplate: React.FC<PasscodePageTemplateProps> = ({
                             </div>
                         )}
 
-                        <div className={PasscodePageStyles.inputContainer}>
+                        <div className={PasscodePageTemplateStyles.contentContainer}>
                             {content}
                         </div>
                     </div>

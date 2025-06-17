@@ -4,21 +4,15 @@ interface BackgroundDecoratorProps {
     circleCount?: number;
     topOffset?: number;
     baseRadius?: number;
-    logoSrc: string;
-    logoAlt?: string;
     testId?: string;
-    logoTestId: string;
 }
 
 export const BackgroundDecorator: React.FC<BackgroundDecoratorProps> = ({
-    circleCount = 6,
-    topOffset = 116,
-    baseRadius = 96,
-    logoSrc,
-    logoAlt = 'Logo',
-    testId = 'background-decorator',
-    logoTestId
-}) => {
+                                                                            circleCount = 6,
+                                                                            topOffset = 116,
+                                                                            baseRadius = 96,
+                                                                            testId = 'background-decorator',
+                                                                        }) => {
     return (
         <div
             className="overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none"
@@ -50,9 +44,10 @@ export const BackgroundDecorator: React.FC<BackgroundDecoratorProps> = ({
 
                 <div
                     className="flex items-center justify-center"
-                    data-testid={`${logoTestId}-container`}
+                    data-testid={"logo-inji-web-container"}
                 >
-                    <img src={logoSrc} alt={logoAlt} data-testid={logoTestId} />
+                    <img src={require("../../assets/Logomark.png")} alt={"Inji Web Logo"}
+                         data-testid={"logo-inji-web"}/>
                 </div>
             </div>
         </div>

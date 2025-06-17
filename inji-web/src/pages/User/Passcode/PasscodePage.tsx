@@ -9,7 +9,8 @@ import {PasscodeInput} from '../../../components/Common/Input/PasscodeInput';
 import {navigateToUserHome} from "../../../utils/navigationUtils";
 import {PasscodePageStyles} from './PasscodePageStyles';
 import {ROUTES} from "../../../utils/constants";
-import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePageTemplate.tsx";
+import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePage/PasscodePageTemplate";
+import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');
@@ -204,51 +205,47 @@ export const PasscodePage: React.FC = () => {
         ? t('setPasscodeDescription')
         : t('enterPasscodeDescription');
 
-    const renderContent = () => (
-        <Fragment>
-            <div className={PasscodePageStyles.inputWrapper}>
-                <div className={PasscodePageStyles.inputGroup}>
-                    <PasscodeInput
-                        label={t('enterPasscode')}
-                        value={passcode}
-                        onChange={setPasscode}
-                        testId="passcode"
-                    />
-                </div>
+    const handleForgotPasscode = () =>
+        navigate(
+            ROUTES.USER_RESET_PASSCODE,
+            {
+                state: {
+                    walletId: wallets[0].walletId
+                }
+            }
+        );
 
-                {wallets.length === 0 && (
-                    <div className={PasscodePageStyles.confirmInputGroup}>
+    const renderContent = () => {
+        return (
+            <Fragment>
+                <div className={PasscodePageStyles.inputWrapper}>
+                    <div className={PasscodePageStyles.inputGroup}>
                         <PasscodeInput
-                            label={t('confirmPasscode')}
-                            value={confirmPasscode}
-                            onChange={setConfirmPasscode}
-                            testId="confirm-passcode"
+                            label={t('enterPasscode')}
+                            value={passcode}
+                            onChange={setPasscode}
+                            testId="passcode"
                         />
                     </div>
-                )}
-            </div>
-            {wallets.length !== 0 && (
-                <div className={PasscodePageStyles.forgotPasscodeContainer}>
-                    <button
-                        data-testid="btn-forgot-passcode"
-                        className={PasscodePageStyles.forgotPasscodeButton}
-                        onClick={() =>
-                            navigate(
-                                ROUTES.USER_RESET_PASSCODE,
-                                {
-                                    state: {
-                                        walletId: wallets[0].walletId
-                                    }
-                                }
-                            )
-                        }
-                    >
-                        {t('forgotPasscode') + ' ?'}
-                    </button>
-                </div>
-            )}
 
-            <div className={PasscodePageStyles.buttonContainer}>
+                    {wallets.length === 0 && (
+                        <div className={PasscodePageStyles.confirmInputGroup}>
+                            <PasscodeInput
+                                label={t('confirmPasscode')}
+                                value={confirmPasscode}
+                                onChange={setConfirmPasscode}
+                                testId="confirm-passcode"
+                            />
+                        </div>
+                    )}
+                </div>
+                {wallets.length !== 0 && (
+                    <div className={PasscodePageStyles.forgotPasscodeContainer}>
+                        <TertiaryButton onClick={handleForgotPasscode} title={t('forgotPasscode') + "?"}
+                                        testId={"forgot-passcode"} className={PasscodePageStyles.forgotPasscodeButton}/>
+                    </div>
+                )}
+
                 <SolidButton
                     fullWidth={true}
                     testId="btn-submit-passcode"
@@ -257,9 +254,9 @@ export const PasscodePage: React.FC = () => {
                     disabled={isButtonDisabled}
                     className={isButtonDisabled ? PasscodePageStyles.disabledButton : ''}
                 />
-            </div>
-        </Fragment>
-    );
+            </Fragment>
+        );
+    };
 
     return (
         <PasscodePageTemplate

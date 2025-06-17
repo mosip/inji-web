@@ -5,13 +5,11 @@ import {useUser} from '../../../hooks/User/useUser';
 import {api} from '../../../utils/api';
 import {useCookies} from 'react-cookie';
 import {useLocation, useNavigate} from 'react-router-dom';
-import {toast} from 'react-toastify';
 import {ResetPasscodePageStyles} from './ResetPasscodePageStyles';
-import {BackgroundDecorator} from '../../../components/Common/BackgroundDecorator';
 import {BackArrowButton} from '../../../components/Common/Buttons/BackArrowButton';
 import {InfoIcon} from '../../../components/Common/Icons/InfoIcon';
 import {ROUTES} from "../../../utils/constants";
-import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePageTemplate.tsx";
+import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePage/PasscodePageTemplate";
 
 interface InstructionItem {
     id: string;
@@ -142,17 +140,17 @@ export const ResetPasscodePage: React.FC = () => {
                 />
             </div>
 
+            {/*TODO: change it to setNewPasscode*/}
             <SolidButton
                 fullWidth={true}
                 testId="btn-forget-passcode"
                 onClick={handleForgotPasscode}
                 title={t('forgetPasscode')}
-                className={ResetPasscodePageStyles.forgetPasscodeButton}
+                className={ResetPasscodePageStyles.resetPasscodeAction}
             />
         </Fragment>
     );
 
-    // {/*TODO : add back arrow into template and if present wrap subtitle into same container*/}
     return (
         <PasscodePageTemplate
             title={t('title')}
