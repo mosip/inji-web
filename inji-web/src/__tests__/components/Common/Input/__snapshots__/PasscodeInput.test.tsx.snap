@@ -13,10 +13,10 @@ exports[`PasscodeInput should match the snapshot of PasscodeInput layout 1`] = `
       Test Passcode
     </p>
     <div
-      class="flex items-center gap-4"
+      class="flex items-center gap-2 sm:gap-3.5"
     >
       <div
-        class="flex items-center gap-4 py-2 rounded-lg"
+        class="flex items-stretch gap-2 sm:gap-3.5 py-2 rounded-lg"
       >
         <input
           class="pin-input-box-style pin-input-box-border focus:outline-none"

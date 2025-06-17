@@ -2,7 +2,7 @@ import React from 'react';
 import {BackgroundDecorator} from '../../Common/BackgroundDecorator';
 import {CrossIconButton} from '../../Common/Buttons/CrossIconButton';
 import {BackArrowButton} from "../../Common/Buttons/BackArrowButton";
-import {PasscodePageTemplateStyles} from "./PasscodePageTemplateStyles.ts";
+import {PasscodePageTemplateStyles} from "./PasscodePageTemplateStyles";
 
 interface PasscodePageTemplateProps {
     title: string;
@@ -25,17 +25,17 @@ export const PasscodePageTemplate: React.FC<PasscodePageTemplateProps> = ({
                                                                           }) => {
     return (
         <div
-            data-testid={testId}
+            data-testid={`${testId}-page`}
             className={PasscodePageTemplateStyles.overlay}
         >
             <div className={PasscodePageTemplateStyles.container}>
-                <BackgroundDecorator/>
+                <BackgroundDecorator testId={`backdrop-${testId}`}/>
 
                 <div className={PasscodePageTemplateStyles.contentWrapper}>
                     <div className={PasscodePageTemplateStyles.titleContainer}>
                         <h1
                             className={PasscodePageTemplateStyles.title}
-                            data-testid="title-passcode"
+                            data-testid={`title-${testId}`}
                         >
                             {title}
                         </h1>

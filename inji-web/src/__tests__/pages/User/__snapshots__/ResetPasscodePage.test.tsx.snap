@@ -3,48 +3,48 @@
 exports[`ResetPasscodePage Component should match snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="overflow-hidden fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50"
-    data-testid="backdrop-reset-passcode"
+    class="fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50 h-screen"
+    data-testid="reset-passcode-page"
   >
     <div
-      class="overflow-hidden rounded-2xl bg-white flex flex-col items-center justify-start relative w-[90%] sm:w-[85%] md:w-[90%] h-[80%] sm:h-[76%] md:h-[80%] overflow-y-auto overflow-x-auto shadow-iw-pin-page-container"
+      class="rounded-2xl bg-white flex flex-col items-center justify-start relative w-[90%] sm:w-[85%] md:w-[90%] h-fit overflow-y-auto shadow-iw-pin-page-container"
     >
       <div
         class="overflow-hidden absolute inset-0 z-0 flex items-center justify-center pointer-events-none"
-        data-testid="background-decorator"
+        data-testid="backdrop-reset-passcode"
       >
         <div
-          class="absolute top-[155px]"
-          style="top: 155px;"
+          class="absolute top-[116px]"
+          style="top: 116px;"
         >
           <div
             class="absolute rounded-full border overflow-hidden"
-            data-testid="background-decorator-circle-0"
+            data-testid="backdrop-reset-passcode-circle-0"
             style="width: 96px; height: 96px; border-width: 1px; border-color: rgba(228, 231, 236, 0.8); top: calc(50% - 48px); left: calc(50% - 48px);"
           />
           <div
             class="absolute rounded-full border overflow-hidden"
-            data-testid="background-decorator-circle-1"
+            data-testid="backdrop-reset-passcode-circle-1"
             style="width: 192px; height: 192px; border-width: 1px; border-color: rgba(228, 231, 236, 0.7000000000000001); top: calc(50% - 96px); left: calc(50% - 96px);"
           />
           <div
             class="absolute rounded-full border overflow-hidden"
-            data-testid="background-decorator-circle-2"
+            data-testid="backdrop-reset-passcode-circle-2"
             style="width: 288px; height: 288px; border-width: 1px; border-color: rgba(228, 231, 236, 0.6000000000000001); top: calc(50% - 144px); left: calc(50% - 144px);"
           />
           <div
             class="absolute rounded-full border overflow-hidden"
-            data-testid="background-decorator-circle-3"
+            data-testid="backdrop-reset-passcode-circle-3"
             style="width: 384px; height: 384px; border-width: 1px; border-color: rgba(228, 231, 236, 0.5); top: calc(50% - 192px); left: calc(50% - 192px);"
           />
           <div
             class="absolute rounded-full border overflow-hidden"
-            data-testid="background-decorator-circle-4"
+            data-testid="backdrop-reset-passcode-circle-4"
             style="width: 480px; height: 480px; border-width: 1px; border-color: rgba(228, 231, 236, 0.4); top: calc(50% - 240px); left: calc(50% - 240px);"
           />
           <div
             class="absolute rounded-full border overflow-hidden"
-            data-testid="background-decorator-circle-5"
+            data-testid="backdrop-reset-passcode-circle-5"
             style="width: 576px; height: 576px; border-width: 1px; border-color: rgba(228, 231, 236, 0.30000000000000004); top: calc(50% - 288px); left: calc(50% - 288px);"
           />
           <div
@@ -60,19 +60,19 @@ exports[`ResetPasscodePage Component should match snapshot 1`] = `
         </div>
       </div>
       <div
-        class="top-[215px] pb-4 relative flex flex-col items-center justify-center"
+        class="flex flex-col items-center justify-start w-full mt-[180px] sm:mt-[200px] relative z-10 pb-0 sm:pb-8"
       >
         <div
-          class="text-center items-center justify-center relative z-20 bg-transparent space-y-4 w-[90%] sm-md:w-[85%] md:w-[50%]"
+          class="text-center space-y-5 relative w-full max-w-[500px] px-4 sm:px-0"
         >
           <h1
-            class="text-xl sm:text-2xl md:text-3xl font-semibold text-iw-darkGrayishBlue p-4"
+            class="text-2xl-plus font-semibold text-iw-darkGrayishBlue"
             data-testid="title-reset-passcode"
           >
             Reset Your Wallet
           </h1>
           <div
-            class="flex items-start ml-4"
+            class="flex items-center gap-3 justify-center mx-4 px-2"
           >
             <button
               class="cursor-pointer"
@@ -87,7 +87,7 @@ exports[`ResetPasscodePage Component should match snapshot 1`] = `
               />
             </button>
             <p
-              class="text-iw-textTertiary text-sm sm:text-base font-medium pl-6"
+              class="text-iw-textTertiary text-base font-medium"
               data-testid="subtitle-reset-passcode"
             >
               Reset wallet to regain access and re-download credentials
@@ -95,80 +95,103 @@ exports[`ResetPasscodePage Component should match snapshot 1`] = `
           </div>
         </div>
         <div
-          class="flex flex-col bg-white rounded-xl shadow-iw-pin-page-container mt-8 items-center relative z-20 px-4 sm:px-6 md:px-10 py-3 sm:py-5 md:py-7 space-y-4 w-[90%] sm-md:w-[85%] md:w-[50%]"
+          class="flex flex-col bg-white sm:rounded-lg sm:shadow-iw-pin-page-container items-center z-20 w-full max-w-[500px] mt-8 mb-4 mx-auto border-t border-iw-grayishBlue mx-8 sm:my:0"
+          data-testid="passcode-inputs-container"
         >
           <div
-            class="bg-iw-paleGray rounded-xl flex items-start justify-center gap-2 p-4 pr-10"
-          >
-            <img
-              alt="Info"
-              class="mt-[0.1rem]"
-              data-testid="icon-reset-instruction"
-              src="InfoIcon.svg"
-            />
-            <div
-              class="flex flex-col items-left gap-2 sm:gap-4 rounded-lg"
-              data-testid="text-reset-instruction"
-            >
-              <p
-                class="text-xs sm:text-sm md:text-md text-left font-montserrat font-semibold text-black"
-                data-testid="text-reset-question"
-              >
-                Forgot your passcode?
-              </p>
-              <p
-                class="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
-                data-testid="text-reset-info1"
-              >
-                If you can't remember your passcode, you can reset it by clicking the button below.
-              </p>
-              <p
-                class="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
-                data-testid="text-reset-info2"
-              />
-              <div>
-                <strong>
-                  Please note:
-                </strong>
-                 This will remove all your saved cards from the account — such as your 
-                <strong>
-                  National ID card, Tax ID card, Insurance certificate
-                </strong>
-                , and any other documents you've added.
-              </div>
-              <p />
-              <p
-                class="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
-                data-testid="text-reset-info3"
-              />
-              <div>
-                After resetting, you'll need to set a new passcode and 
-                <strong>
-                  re-download your cards
-                </strong>
-                 into your Wallet.
-              </div>
-              <p />
-            </div>
-          </div>
-          <div
-            class="w-full"
+            class="w-full px-4 sm:px-8 py-3 sm:py-5 md:py-7 space-y-4 flex flex-col items-center"
           >
             <div
-              class="w-full bg-iw-primary text-center cursor-pointer items-center text-iw-text font-bold text-sm px-6 py-3 rounded-lg shadow hover:shadow-lg mr-1  bg-gradient-to-r from-iw-primary to-iw-secondary mt-3 mb-4 sm:mt-3 sm:mb-4"
+              class="bg-iw-paleGray rounded-xl flex items-start justify-center gap-2 p-4 pr-10"
             >
-              <button
-                class="text-white font-bold rounded-lg"
-                data-testid="btn-forget-passcode"
+              <img
+                alt="Info"
+                class="mt-[0.1rem]"
+                data-testid="icon-reset-instruction"
+                src="InfoIcon.svg"
+              />
+              <div
+                class="flex flex-col items-left gap-2 sm:gap-4 rounded-lg"
+                data-testid="text-reset-instruction"
               >
-                <div
-                  class="flex items-center justify-center gap-1.5"
+                <p
+                  class="text-xs sm:text-sm md:text-md text-left font-montserrat font-semibold text-black"
+                  data-testid="text-reset-question"
                 >
-                  <span>
-                    Forget Passcode
-                  </span>
-                </div>
-              </button>
+                  Forgot your passcode?
+                </p>
+                <li
+                  class="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
+                  data-testid="text-reset-info1"
+                >
+                  <div>
+                    resetInstruction.info1.message
+                  </div>
+                </li>
+                <li
+                  class="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
+                  data-testid="text-reset-info2"
+                >
+                  <div>
+                    <strong>
+                      Please note:
+                    </strong>
+                     This will remove all your saved cards from the account — such as your 
+                    <strong>
+                      National ID card, Tax ID card, Insurance certificate
+                    </strong>
+                    , and any other documents you've added.
+                  </div>
+                </li>
+                <li
+                  class="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
+                  data-testid="text-reset-info3"
+                >
+                  <div>
+                    After resetting, you'll need to set a new passcode and 
+                    <strong>
+                      re-download your cards
+                    </strong>
+                     into your Wallet.
+                  </div>
+                </li>
+                <li
+                  class="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
+                  data-testid="text-reset-info4"
+                >
+                  <div>
+                    resetInstruction.info4.message
+                  </div>
+                </li>
+                <li
+                  class="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black"
+                  data-testid="text-reset-info5"
+                >
+                  <div>
+                    resetInstruction.info5.message
+                  </div>
+                </li>
+              </div>
+            </div>
+            <div
+              class="w-full"
+            >
+              <div
+                class="w-full bg-iw-primary text-center cursor-pointer items-center text-iw-text font-bold text-sm px-6 py-3 rounded-lg shadow hover:shadow-lg mr-1  bg-gradient-to-r from-iw-primary to-iw-secondary mt-3 mb-0 sm:mt-3"
+              >
+                <button
+                  class="text-white font-bold rounded-lg"
+                  data-testid="btn-forget-passcode"
+                >
+                  <div
+                    class="flex items-center justify-center gap-1.5"
+                  >
+                    <span>
+                      Forget Passcode
+                    </span>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
