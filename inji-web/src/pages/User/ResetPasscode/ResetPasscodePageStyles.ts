@@ -25,5 +25,5 @@ export const ResetPasscodePageStyles = {
         'text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black',
     instructionTextStrong:
         'text-xs sm:text-sm md:text-md text-left font-montserrat text-black',
-    forgetPasscodeButton: 'mt-3 mb-4 sm:mt-3 sm:mb-4'
+    forgetPasscodeButton: 'mt-3 mb-0 sm:mt-3'
 };
