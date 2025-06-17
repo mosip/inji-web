@@ -37,8 +37,8 @@ export const PasscodeInput: React.FC<PasscodeInputProps> = ({
             >
                 {label}
             </p>
-            <div className="flex items-center gap-4">
-                <div className="flex items-center gap-4 py-2 rounded-lg">
+            <div className="flex items-center gap-2 sm:gap-3.5">
+                <div className="flex items-stretch gap-2 sm:gap-3.5 py-2 rounded-lg">
                     {value.map((digit, idx) => (
                         <input
                             key={idx}

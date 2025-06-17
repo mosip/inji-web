@@ -9,7 +9,7 @@ import {PasscodeInput} from '../../../components/Common/Input/PasscodeInput';
 import {BackgroundDecorator} from '../../../components/Common/BackgroundDecorator';
 import {CrossIconButton} from '../../../components/Common/Buttons/CrossIconButton';
 import {navigateToUserHome} from "../../../utils/navigationUtils";
-import { PasscodePageStyles } from './PasscodePageStyles';
+import {PasscodePageStyles} from './PasscodePageStyles';
 import {ROUTES} from "../../../utils/constants";
 
 export const PasscodePage: React.FC = () => {
@@ -200,7 +200,7 @@ export const PasscodePage: React.FC = () => {
         passcode.includes('') ||
         (wallets.length === 0 && confirmPasscode.includes(''));
 
-return (
+    return (
         <div
             data-testid="passcode-page"
             className={PasscodePageStyles.pageOverlay}
@@ -236,22 +236,7 @@ return (
                         className={PasscodePageStyles.passcodeContainer}
                         data-testid="passcode-inputs-container"
                     >
-                        {wallets.length === 0 && (
-                            <div className={PasscodePageStyles.warningTextBorder} />
-                        )}
-
-                        {wallets.length === 0 && (
-                            <div className={PasscodePageStyles.warningTextContainer}>
-                                <p
-                                    className={PasscodePageStyles.warningText}
-                                    data-testid="passcode-warning"
-                                >
-                                    {t('passcodeWarning')}
-                                </p>
-                            </div>
-                        )}
-
-                        {error ? (
+                        {error && (
                             <div
                                 className={PasscodePageStyles.errorContainer}
                                 data-testid="error-passcode"
@@ -271,35 +256,29 @@ return (
                                     </div>
                                 </div>
                             </div>
-                        ) : (
-                            wallets.length === 0 && (
-                                <div className={PasscodePageStyles.bottomBorder} />
-                            )
                         )}
 
                         <div className={PasscodePageStyles.inputContainer}>
                             <div className={PasscodePageStyles.inputWrapper}>
-                                <div className={PasscodePageStyles.inputScrollContainer}>
-                                    <div className={PasscodePageStyles.inputGroup}>
+                                <div className={PasscodePageStyles.inputGroup}>
+                                    <PasscodeInput
+                                        label={t('enterPasscode')}
+                                        value={passcode}
+                                        onChange={setPasscode}
+                                        testId="passcode"
+                                    />
+                                </div>
+
+                                {wallets.length === 0 && (
+                                    <div className={PasscodePageStyles.confirmInputGroup}>
                                         <PasscodeInput
-                                            label={t('enterPasscode')}
-                                            value={passcode}
-                                            onChange={setPasscode}
-                                            testId="passcode"
+                                            label={t('confirmPasscode')}
+                                            value={confirmPasscode}
+                                            onChange={setConfirmPasscode}
+                                            testId="confirm-passcode"
                                         />
                                     </div>
-
-                                    {wallets.length === 0 && (
-                                        <div className={PasscodePageStyles.confirmInputGroup}>
-                                            <PasscodeInput
-                                                label={t('confirmPasscode')}
-                                                value={confirmPasscode}
-                                                onChange={setConfirmPasscode}
-                                                testId="confirm-passcode"
-                                            />
-                                        </div>
-                                    )}
-                                </div>
+                                )}
                             </div>
                             {wallets.length !== 0 && (
                                 <div className={PasscodePageStyles.forgotPasscodeContainer}>
@@ -312,7 +291,7 @@ return (
                                                 {
                                                     state: {
                                                         walletId:
-                                                            wallets[0].walletId
+                                                        wallets[0].walletId
                                                     }
                                                 }
                                             )

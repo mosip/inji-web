@@ -12,7 +12,7 @@ interface BackgroundDecoratorProps {
 
 export const BackgroundDecorator: React.FC<BackgroundDecoratorProps> = ({
     circleCount = 6,
-    topOffset = 155,
+    topOffset = 116,
     baseRadius = 96,
     logoSrc,
     logoAlt = 'Logo',

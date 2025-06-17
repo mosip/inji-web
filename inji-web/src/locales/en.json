@@ -85,12 +85,12 @@
   "PasscodePage":{
     "submit":"Submit",
     "submitting":"Submitting",
-    "setPasscode":"Set Passcode",
-    "enterPasscode":"Enter Passcode",
+    "setPasscode":"Set your passcode to get started",
+    "setPasscodeDescription":"Please remember or securely store your passcode. You’ll need it each time you access the wallet.",
+    "enterPasscode":"Enter Your Passcode to Continue",
+    "enterPasscodeDescription":"Use the same passcode you set earlier to access your account or wallet.",
     "confirmPasscode":"Confirm Passcode",
     "forgotPasscode":"Forgot Passcode",
-    "setPasscodeDescription":"Set your passcode to get started",
-    "enterPasscodeDescription":"Enter your 6 digit passcode",
     "passcodeWarning":"Make sure you remember the password for future login",
     "error":{
       "walletNotFoundError":"Wallet not found",
