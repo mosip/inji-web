@@ -66,11 +66,11 @@ describe('ProfilePage', () => {
       user: null,
       isLoading: true,
     });
-    mockedUseLocation.mockReturnValue({ state: { from: '/dashboard' } });
+    mockedUseLocation.mockReturnValue({ state: { from: '/user' } });
 
     renderWithRouter();
 
-    expect(screen.getByTestId('Profile-Page')).toBeInTheDocument();
+    expect(screen.getByTestId('profile-page')).toBeInTheDocument();
     expect(screen.getByTestId('profile-page-horizontal-rule')).toBeInTheDocument();
     expect(screen.queryAllByRole('presentation')).toHaveLength(0);
   });
@@ -100,12 +100,12 @@ describe('ProfilePage', () => {
       user: null,
       isLoading: true,
     });
-    mockedUseLocation.mockReturnValue({ state: { from: '/dashboard' } });
+    mockedUseLocation.mockReturnValue({ state: { from: '/user' } });
 
     renderWithRouter();
     fireEvent.click(screen.getByText('Back'));
 
-    expect(mockedNavigate).toHaveBeenCalledWith('/dashboard');
+    expect(mockedNavigate).toHaveBeenCalledWith('/user');
   });
 
   it('navigates to home if no location.state.from', () => {

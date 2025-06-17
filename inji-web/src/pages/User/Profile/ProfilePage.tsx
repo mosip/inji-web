@@ -55,7 +55,7 @@ export const ProfilePage: React.FC = () => {
           value={user?.displayName}
         />
         <InfoField
-          testId="value"
+          testId="email"
           label={t('ProfilePage.emailAddress')}
           value={user?.email}
         />
@@ -69,7 +69,7 @@ export const ProfilePage: React.FC = () => {
         <div className={ProfilePageStyles.headerLeftSection}>
           <NavBackArrowButton onBackClick={handleBackClick} />
           <div className={ProfilePageStyles.headerTitleContainer}>
-            <span data-testid="Profile-Page" className={ProfilePageStyles.pageTitle}>
+            <span data-testid="profile-page" className={ProfilePageStyles.pageTitle}>
               {t('ProfilePage.title')}
             </span>
             <TertiaryButton

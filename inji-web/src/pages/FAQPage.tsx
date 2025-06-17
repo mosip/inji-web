@@ -50,7 +50,7 @@ export const FAQPage: React.FC<FAQPageProps> = ({backUrl, withHome}) => {
                     <div className="flex flex-col items-start">
                         <PageTitle value={t('title')} testId={"faq"} />
                         {withHome && (
-                            <TertiaryButton testId={'FAQ-Home-Button'} onClick={()=>navigateToUserHome(navigate)} title={t('User:Home.title')}/>
+                            <TertiaryButton testId={'faq-home-button'} onClick={()=>navigateToUserHome(navigate)} title={t('User:Home.title')}/>
                         )}
                     </div>
                     <div className="w-full">

@@ -2,12 +2,12 @@ import React from 'react';
 import { CredentialList } from '../../../components/Credentials/CredentialList';
 import { RequestStatus } from '../../../hooks/useFetch';
 import { mockCredentials } from '../../../test-utils/mockObjects';
-import { renderWithProvider, mockUseSelector, mockUseTranslation, setMockUseSelectorState } from '../../../test-utils/mockUtils';
+import { renderWithProvider, mockUseTranslation} from '../../../test-utils/mockUtils';
+import { setMockUseSelectorState } from '../../../test-utils/mockReactRedux';
 
 describe("Testing the Layout of CredentialList Layouts", () => {
     beforeEach(() => {
         mockUseTranslation();
-        mockUseSelector();
         setMockUseSelectorState({
             credentials: {
                 filtered_credentials: mockCredentials,

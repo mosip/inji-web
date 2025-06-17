@@ -1,20 +1,14 @@
-import {screen, fireEvent, cleanup} from '@testing-library/react';
-import {LandingPageWrapper} from '../../../components/Common/LandingPageWrapper';
-import {mockUseTranslation, renderWithProvider, mockUseNavigate} from '../../../test-utils/mockUtils';
-import {mockLandingPageWrapperProps} from '../../../test-utils/mockObjects';
+import React from 'react';
+import {mockNavigateFn} from '../../../test-utils/mockRouter';
+import { screen, fireEvent,cleanup } from '@testing-library/react';
+import { LandingPageWrapper } from '../../../components/Common/LandingPageWrapper';
+import { mockUseTranslation, renderWithProvider} from '../../../test-utils/mockUtils';
+import { mockLandingPageWrapperProps } from '../../../test-utils/mockObjects';
 import {useUser} from "../../../hooks/User/useUser";
 import {ROUTES} from "../../../utils/constants";
 
 // Mock useTranslation
 mockUseTranslation();
-
-//todo : extract the local method to mockUtils, which is added to bypass the routing problems
-const mockNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useNavigate: () => mockNavigate,
-}));
-
 jest.mock("../../../hooks/User/useUser.tsx", () => {
     const actualModule = jest.requireActual('../../../hooks/User/useUser');
     return {
@@ -44,7 +38,8 @@ describe("Testing the Layout of LandingPageWrapper -> ", () => {
 describe("Testing the Functionality of LandingPageWrapper -> ", () => {
     beforeEach(() => {
         jest.clearAllMocks();
-        mockUseNavigate();
+        mockNavigateFn.mockReset();
+        // mockUseNavigate();
         mockUseUser.mockReturnValue({isUserLoggedIn: true});
     });
 
@@ -69,8 +64,8 @@ describe("Testing the Functionality of LandingPageWrapper -> ", () => {
 
         fireEvent.click(homeButton);
 
-        expect(mockNavigate).toHaveBeenCalledWith(expectedRoute);
-        expect(mockNavigate).toHaveBeenCalledTimes(1);
+        expect(mockNavigateFn).toHaveBeenCalledWith(expectedRoute);
+        expect(mockNavigateFn).toHaveBeenCalledTimes(1);
     });
 
     test.each([
@@ -108,3 +103,32 @@ describe("Testing the Functionality of LandingPageWrapper -> ", () => {
         }
     );
 });
+
+// describe("Testing the Layout of LandingPageWrapper", () => {
+//     test('Check if the layout is matching with the snapshots', () => {
+//         const { asFragment } = renderWithProvider(<LandingPageWrapper {...mockLandingPageWrapperProps} />);
+//         expect(asFragment()).toMatchSnapshot();
+//     });
+// });
+
+// describe("Testing the Functionality LandingPageWrapper", () => {
+//     beforeEach(()=>{
+//         jest.clearAllMocks();
+//         mockNavigateFn.mockReset();
+//     })
+//     test('Check it navigates to home when the home button is clicked', () => {
+//         renderWithProvider(<LandingPageWrapper {...mockLandingPageWrapperProps} />);
+//         const homeButton = screen.getByTestId("DownloadResult-Home-Button");
+//         fireEvent.click(homeButton);
+//         expect(mockNavigateFn).toHaveBeenCalledWith('/'); 
+//     });
+
+//     test('Check if it have the Title and the SubTitle', () => {
+//         renderWithProvider(<LandingPageWrapper {...mockLandingPageWrapperProps} />);
+//         expect(screen.getByTestId("DownloadResult-Title")).toHaveTextContent("Test Title");
+//         expect(screen.getByTestId("DownloadResult-SubTitle")).toHaveTextContent("Test SubTitle");
+//     });
+//     afterEach(()=>{
+//         jest.clearAllMocks();
+//     })
+// });

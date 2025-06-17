@@ -115,28 +115,6 @@ export const mockUseTranslation = () => {
         }),
     }));
 };
-
-
-export const mockUseNavigate = () => {
-    const mockNavigate = jest.fn();
-    jest.mock('react-router-dom', () => ({
-        ...jest.requireActual('react-router-dom'),
-        useNavigate: mockNavigate,
-    }));
-};
-
-export const mockUseSelector = () => {
-    jest.mock('react-redux', () => ({
-        ...jest.requireActual('react-redux'),
-        useSelector: jest.fn(),
-    }));
-};
-
-export const setMockUseSelectorState = (state: any) => {
-    const useSelectorMock = require('react-redux').useSelector;
-    useSelectorMock.mockImplementation((selector: any) => selector(state));
-};
-
 export const mockUseGetIssuerDisplayObjectForCurrentLanguage = () => {
     jest.mock('../utils/i18n', () => ({
         getIssuerDisplayObjectForCurrentLanguage: jest.fn(),
@@ -149,12 +127,6 @@ export const mockUseSearchCredentials = () => {
     }));
  };
 
-export const mockUseDispatch = () => {
-    jest.mock('react-redux', () => ({
-        ...jest.requireActual('react-redux'),
-        useDispatch: jest.fn(),
-    }));
-};
               
 export const mockUseSpinningLoader = () => {
     jest.mock('../components/Common/SpinningLoader', () => ({

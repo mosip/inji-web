@@ -108,7 +108,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
 
     return (
         <div
-            data-testid={'Credential-Types-Page-Container'}
+            data-testid={'credential-types-page-container'}
             className={CredentialTypesPageStyles.container}
         >
             <Header onBackClick={handleBackClick} displayObject={displayObject}

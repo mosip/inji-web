@@ -1,0 +1,160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Layout component matches snapshot after header and footer heights update on resize 1`] = `
+<div
+  class="h-screen flex flex-col bg-iw-background font-base overflow-hidden w-full relative"
+  dir="ltr"
+>
+  <div
+    data-testid="Header"
+  >
+    Header - height: 
+    80
+  </div>
+  <div
+    class="flex flex-1 overflow-hidden w-full relative"
+    style="margin-top: 80px; margin-bottom: 60px; z-index: 0;"
+  >
+    <div
+      data-testid="Sidebar"
+    >
+      Sidebar
+    </div>
+    <div
+      class="relative flex flex-col overflow-hidden w-full transition-all duration-300"
+      style="z-index: 1;"
+    >
+      <img
+        alt="Gradient Top Background"
+        class="absolute top-0 left-0 w-full z-[-1]"
+        src="mock-dashboard-bg-top"
+      />
+      <img
+        alt="Gardient Bottom Background"
+        class="absolute bottom-0 left-0 w-full z-[-1]"
+        src="mock-dashboard-bg-bottom"
+      />
+      <div
+        class="flex flex-grow flex-col overflow-y-auto relative z-10 p-4"
+      >
+        <div
+          data-testid="Outlet"
+        >
+          Page content
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    data-testid="Footer"
+  >
+    Footer
+  </div>
+</div>
+`;
+
+exports[`Layout component matches snapshot for default language 1`] = `
+<div
+  class="h-screen flex flex-col bg-iw-background font-base overflow-hidden w-full relative"
+  dir="ltr"
+>
+  <div
+    data-testid="Header"
+  >
+    Header - height: 
+    0
+  </div>
+  <div
+    class="flex flex-1 overflow-hidden w-full relative"
+    style="margin-top: 0px; margin-bottom: 0px; z-index: 0;"
+  >
+    <div
+      data-testid="Sidebar"
+    >
+      Sidebar
+    </div>
+    <div
+      class="relative flex flex-col overflow-hidden w-full transition-all duration-300"
+      style="z-index: 1;"
+    >
+      <img
+        alt="Gradient Top Background"
+        class="absolute top-0 left-0 w-full z-[-1]"
+        src="mock-dashboard-bg-top"
+      />
+      <img
+        alt="Gardient Bottom Background"
+        class="absolute bottom-0 left-0 w-full z-[-1]"
+        src="mock-dashboard-bg-bottom"
+      />
+      <div
+        class="flex flex-grow flex-col overflow-y-auto relative z-10 p-4"
+      >
+        <div
+          data-testid="Outlet"
+        >
+          Page content
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    data-testid="Footer"
+  >
+    Footer
+  </div>
+</div>
+`;
+
+exports[`Layout component matches snapshot for rtl language 1`] = `
+<div
+  class="h-screen flex flex-col bg-iw-background font-base overflow-hidden w-full relative"
+  dir="rtl"
+>
+  <div
+    data-testid="Header"
+  >
+    Header - height: 
+    0
+  </div>
+  <div
+    class="flex flex-1 overflow-hidden w-full relative"
+    style="margin-top: 0px; margin-bottom: 0px; z-index: 0;"
+  >
+    <div
+      data-testid="Sidebar"
+    >
+      Sidebar
+    </div>
+    <div
+      class="relative flex flex-col overflow-hidden w-full transition-all duration-300"
+      style="z-index: 1;"
+    >
+      <img
+        alt="Gradient Top Background"
+        class="absolute top-0 left-0 w-full z-[-1]"
+        src="mock-dashboard-bg-top"
+      />
+      <img
+        alt="Gardient Bottom Background"
+        class="absolute bottom-0 left-0 w-full z-[-1]"
+        src="mock-dashboard-bg-bottom"
+      />
+      <div
+        class="flex flex-grow flex-col overflow-y-auto relative z-10 p-4"
+      >
+        <div
+          data-testid="Outlet"
+        >
+          Page content
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    data-testid="Footer"
+  >
+    Footer
+  </div>
+</div>
+`;

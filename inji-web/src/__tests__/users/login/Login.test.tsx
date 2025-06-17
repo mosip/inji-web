@@ -1,7 +1,8 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { Login } from "../../../components/Login/Login";
+import {Login} from "../../../components/Login/Login"
+import { useTranslation } from "react-i18next";
 
 // Mock Translation
 jest.mock("react-i18next", () => ({
@@ -35,14 +36,43 @@ describe("Login Page Tests", () => {
     );
     expect(screen.getByTestId("login-note")).toHaveTextContent("Some features may be limited in guest mode.");
     expect(screen.getByTestId("google-login-button")).toHaveTextContent("Continue with Google");
-    expect(screen.getByTestId("HomeBanner-Guest-Login")).toHaveTextContent("Continue as Guest");
+    expect(screen.getByTestId("home-banner-guest-login")).toHaveTextContent("Continue as Guest");
   });
 
   test("Guest login button navigates to issuers page", () => {
     render(<MemoryRouter><Login /></MemoryRouter>);
-    const guestButton = screen.getByTestId("HomeBanner-Guest-Login");
+    const guestButton = screen.getByTestId("home-banner-guest-login");
     
     fireEvent.click(guestButton);
     expect(mockNavigate).toHaveBeenCalledWith("/issuers");
   });
+
+  test("Google login button redirects to Google OAuth URL", () => {
+    const originalHref = window.location.href;
+  
+    (window as any)._env_ = {
+      MIMOTO_URL: "https://example.com",
+    };
+
+    // Mock window.location.href setter
+    const setHref = jest.fn();
+    Object.defineProperty(window, "location", {
+      value: { set href(url: string) { setHref(url); } },
+      configurable: true,
+    });
+  
+    render(<MemoryRouter><Login /></MemoryRouter>);
+  
+    const googleButton = screen.getByTestId("google-login-button");
+    fireEvent.click(googleButton);
+  
+    expect(setHref).toHaveBeenCalledWith("https://example.com/oauth2/authorize/google");
+  
+    Object.defineProperty(window, "location", {
+      value: { href: originalHref },
+      configurable: true,
+    });
+  });
+  
+  
 });

@@ -5,12 +5,11 @@ import {VCCardView} from '../../../components/VC/VCCardView';
 import {
     mockLocalStorage,
     mockusei18n,
-    mockUseSelector,
     mockUseTranslation,
     renderWithProvider,
-    setMockUseSelectorState,
     setupShowToastMock
 } from "../../../test-utils/mockUtils";
+import { setMockUseSelectorState } from '../../../test-utils/mockReactRedux';
 import {fetchMock} from "../../../test-utils/setupFetchMock";
 import {KEYS} from "../../../utils/constants";
 import {mockVerifiableCredentials} from "../../../test-utils/mockObjects";
@@ -69,7 +68,6 @@ describe('VCCardView Component', () => {
 
         URL.createObjectURL = jest.fn(() => mockObjectUrl);
 
-        mockUseSelector();
         setMockUseSelectorState({
             common: {
                 language: 'en',
