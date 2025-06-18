@@ -85,12 +85,12 @@
   "PasscodePage": {
     "submit": "Soumettre",
     "submitting": "Soumission en cours",
-    "setPasscode": "Définir le code d'accès",
-    "enterPasscode": "Entrer le code d'accès",
+    "setPasscode": "Définissez votre code d'accès pour commencer",
+    "setPasscodeDescription": "Veuillez mémoriser ou stocker en toute sécurité votre code d'accès. Vous en aurez besoin à chaque accès au portefeuille.",
+    "enterPasscode": "Entrez votre code d'accès pour continuer",
+    "enterPasscodeDescription": "Utilisez le même code d'accès que vous avez défini précédemment pour accéder à votre compte ou portefeuille.",
     "confirmPasscode": "Confirmer le code d'accès",
     "forgotPasscode": "Mot de passe oublié",
-    "setPasscodeDescription": "Définissez votre code d'accès pour commencer",
-    "enterPasscodeDescription": "Entrez votre code d'accès à 6 chiffres",
     "passcodeWarning": "Assurez-vous de vous souvenir du mot de passe pour une future connexion",
     "error": {
       "walletNotFoundError": "Aucun portefeuille trouvé. Veuillez en créer un.",
@@ -102,22 +102,32 @@
     }
   },
   "ResetPasscodePage": {
-    "title": "Réinitialisez votre portefeuille",
-    "subTitle": "Réinitialisez le portefeuille pour récupérer l'accès et retélécharger les informations d'identification",
+    "title": "Vous avez oublié votre code d'accès ?",
+    "subTitle": "Réinitialisez votre portefeuille pour récupérer l'accès et re-télécharger vos cartes.",
     "resetInstruction": {
-      "question": "Vous avez oublié votre mot de passe ?",
-      "info1": "Si vous ne vous souvenez pas de votre mot de passe, vous pouvez le réinitialiser en cliquant sur le bouton ci-dessous.",
+      "question": "Que se passe-t-il lorsque vous oubliez votre code d'accès ?",
+      "info1": {
+        "message": "Votre portefeuille sera <strong>{{highlighter}}</strong> en toute sécurité.",
+        "highlighter": "réinitialisé"
+      },
       "info2": {
-        "message": "<strong>{{highlighter1}} :</strong> Cela supprimera toutes vos cartes enregistrées du compte, telles que votre <strong>{{highlighter2}}</strong> et tous les autres documents que vous avez ajoutés.",
-        "highlighter1": "Veuillez noter",
-        "highlighter2": "Carte nationale d'identité, carte d'identification fiscale, certificat d'assurance"
+        "message": "Toutes les <strong>{{highlighter}}</strong> de votre portefeuille.",
+        "highlighter": "cartes précédemment stockées seront supprimées"
       },
       "info3": {
-        "message": "Après la réinitialisation, vous devrez définir un nouveau mot de passe et <strong>{{highlighter}}</strong> dans votre portefeuille.",
-        "highlighter": "retéléchargez vos cartes"
+        "message": "Vous serez guidé pour <strong>{{highlighter}}</strong>.",
+        "highlighter": "définir un nouveau code d'accès"
+      },
+      "info4": {
+        "message": "Vous pourrez ensuite <strong>{{highlighter}}</strong> depuis la source/les émetteurs d'origine.",
+        "highlighter": "re-télécharger vos cartes"
+      },
+      "info5": {
+        "message": "Cela maintient vos informations <strong>{{highlighter}}</strong>, même si votre appareil/portefeuille est perdu ou partagé.",
+        "highlighter": "en sécurité"
       }
     },
-    "forgetPasscode": "Oublier le code d'accès",
+    "setNewPasscode": "Définir un nouveau code d'accès",
     "resetFailure": "Une erreur s'est produite lors de la réinitialisation de votre portefeuille. Veuillez réessayer dans un instant."
   },
   "IssuersPage": {

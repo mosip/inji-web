@@ -1,14 +1,14 @@
 import React from 'react';
 import {render, screen, fireEvent, waitFor} from '@testing-library/react';
 import '@testing-library/jest-dom';
-import {useUser} from '../../../hooks/User/useUser.tsx';
+import {useUser} from '../../../hooks/User/useUser';
 import {useCookies} from 'react-cookie';
 import {useNavigate, useLocation} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {ResetPasscodePage} from '../../../pages/User/ResetPasscode/ResetPasscodePage';
 
 jest.mock('react-i18next', () => {
-    const translations: {[key: string]: string} = {
+    const translations: { [key: string]: string } = {
         'title': 'Reset Your Wallet',
         'subTitle': 'Reset wallet to regain access and re-download credentials',
         'resetInstruction.question': 'Forgot your passcode?',
@@ -22,7 +22,7 @@ jest.mock('react-i18next', () => {
         'resetInstruction.info3.message':
             "After resetting, you'll need to set a new passcode and <strong>re-download your cards</strong> into your Wallet.",
         'resetInstruction.info3.highlighter': 're-download your cards',
-        'forgetPasscode': 'Forget Passcode',
+        'setNewPasscode': 'set new passcode',
         'resetFailure':
             'Something went wrong while resetting your wallet. Please try again in a moment.'
     };
@@ -55,10 +55,10 @@ jest.mock('react-i18next', () => {
             }
         }),
         Trans: ({
-            children,
-            i18nKey,
-            values
-        }: {
+                    children,
+                    i18nKey,
+                    values
+                }: {
             children?: React.ReactNode;
             i18nKey?: string;
             values?: Record<string, string>;
@@ -77,7 +77,7 @@ jest.mock('react-i18next', () => {
             }
 
             if (typeof content === 'string') {
-                return <div dangerouslySetInnerHTML={{__html: content}} />;
+                return <div dangerouslySetInnerHTML={{__html: content}}/>;
             }
             return <>{children}</>;
         }
@@ -131,13 +131,13 @@ describe('ResetPasscodePage Component', () => {
     });
 
     test('should match snapshot', () => {
-        const {asFragment} = render(<ResetPasscodePage />);
+        const {asFragment} = render(<ResetPasscodePage/>);
 
         expect(asFragment()).toMatchSnapshot();
     });
 
     test('should render all elements with correct test ids', () => {
-        render(<ResetPasscodePage />);
+        render(<ResetPasscodePage/>);
 
         expect(screen.getByTestId('backdrop-reset-passcode')).toBeInTheDocument();
         expect(screen.getByTestId('logo-inji-web')).toBeInTheDocument();
@@ -157,11 +157,11 @@ describe('ResetPasscodePage Component', () => {
         expect(screen.getByTestId('text-reset-info1')).toBeInTheDocument();
         expect(screen.getByTestId('text-reset-info2')).toBeInTheDocument();
         expect(screen.getByTestId('text-reset-info3')).toBeInTheDocument();
-        expect(screen.getByTestId('btn-forget-passcode')).toBeInTheDocument();
+        expect(screen.getByTestId('btn-set-new-passcode')).toBeInTheDocument();
     });
 
     test('should display translated text content correctly', () => {
-        render(<ResetPasscodePage />);
+        render(<ResetPasscodePage/>);
 
         expect(screen.getByTestId('title-reset-passcode')).toHaveTextContent(
             'Reset Your Wallet'
@@ -172,8 +172,8 @@ describe('ResetPasscodePage Component', () => {
         expect(screen.getByTestId('text-reset-question')).toHaveTextContent(
             'Forgot your passcode?'
         );
-        expect(screen.getByTestId('btn-forget-passcode')).toHaveTextContent(
-            'Forget Passcode'
+        expect(screen.getByTestId('btn-set-new-passcode')).toHaveTextContent(
+            'set new passcode'
         );
         expect(screen.getByTestId('text-reset-info2')).toHaveTextContent(
             "Please note: This will remove all your saved cards from the account — such as your National ID card, Tax ID card, Insurance certificate, and any other documents you've added."
@@ -184,7 +184,7 @@ describe('ResetPasscodePage Component', () => {
     });
 
     test('should navigate back to passcode screen when back arrow button is clicked', () => {
-        render(<ResetPasscodePage />);
+        render(<ResetPasscodePage/>);
 
         fireEvent.click(screen.getByTestId('btn-back-arrow-container'));
 
@@ -193,9 +193,9 @@ describe('ResetPasscodePage Component', () => {
     });
 
     test('should handle successful wallet reset: delete wallet and navigate to passcode screen', async () => {
-        render(<ResetPasscodePage />);
+        render(<ResetPasscodePage/>);
 
-        fireEvent.click(screen.getByTestId('btn-forget-passcode'));
+        fireEvent.click(screen.getByTestId('btn-set-new-passcode'));
 
         await waitForFetchApiToBeCalled()
         expect(global.fetch).toHaveBeenCalledWith(
@@ -220,25 +220,22 @@ describe('ResetPasscodePage Component', () => {
             json: async () => ({error: 'Wallet deletion failed'})
         });
 
-        render(<ResetPasscodePage />);
+        render(<ResetPasscodePage/>);
 
-        fireEvent.click(screen.getByTestId('btn-forget-passcode'));
+        fireEvent.click(screen.getByTestId('btn-set-new-passcode'));
 
         await waitForFetchApiToBeCalled()
         expect(mockRemoveWallet).not.toHaveBeenCalled();
         expect(mockNavigate).not.toHaveBeenCalled();
-        expect(toast.error).toHaveBeenCalledTimes(1);
-        expect(toast.error).toHaveBeenCalledWith(
-            'Something went wrong while resetting your wallet. Please try again in a moment.'
-        );
+        await screen.findByText('Something went wrong while resetting your wallet. Please try again in a moment.')
     });
 
     test('should use fallback walletId from useUser when location state is not available', async () => {
         (useLocation as jest.Mock).mockReturnValue({state: null});
 
-        render(<ResetPasscodePage />);
+        render(<ResetPasscodePage/>);
 
-        fireEvent.click(screen.getByTestId('btn-forget-passcode'));
+        fireEvent.click(screen.getByTestId('btn-set-new-passcode'));
 
         await waitForFetchApiToBeCalled()
         expect(global.fetch).toHaveBeenCalledWith(
@@ -255,17 +252,14 @@ describe('ResetPasscodePage Component', () => {
             new Error('Network error')
         );
 
-        render(<ResetPasscodePage />);
+        render(<ResetPasscodePage/>);
 
-        fireEvent.click(screen.getByTestId('btn-forget-passcode'));
+        fireEvent.click(screen.getByTestId('btn-set-new-passcode'));
 
         await waitForFetchApiToBeCalled();
         expect(mockRemoveWallet).not.toHaveBeenCalled();
         expect(mockNavigate).not.toHaveBeenCalled();
-        expect(toast.error).toHaveBeenCalledTimes(1);
-        expect(toast.error).toHaveBeenCalledWith(
-            'Something went wrong while resetting your wallet. Please try again in a moment.'
-        );
+        await screen.findByText('Something went wrong while resetting your wallet. Please try again in a moment.')
     });
 
     async function waitForFetchApiToBeCalled() {

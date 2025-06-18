@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {api, MethodType} from '../../../utils/api';
 import {useCookies} from 'react-cookie';
@@ -6,16 +6,15 @@ import {SolidButton} from '../../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
 import {useUser} from '../../../hooks/User/useUser';
 import {PasscodeInput} from '../../../components/Common/Input/PasscodeInput';
-import {BackgroundDecorator} from '../../../components/Common/BackgroundDecorator';
-import {CrossIconButton} from '../../../components/Common/Buttons/CrossIconButton';
 import {navigateToUserHome} from "../../../utils/navigationUtils";
-import { PasscodePageStyles } from './PasscodePageStyles';
+import {PasscodePageStyles} from './PasscodePageStyles';
 import {ROUTES} from "../../../utils/constants";
+import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePage/PasscodePageTemplate";
+import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');
     const navigate = useNavigate();
-    const [displayName, setDisplayName] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [wallets, setWallets] = useState<any[]>([]);
@@ -24,9 +23,6 @@ export const PasscodePage: React.FC = () => {
     const [confirmPasscode, setConfirmPasscode] = useState<string[]>(
         Array(6).fill('')
     );
-    //TODO: isPasscodeCorrect state variable is not used anywhere in the code, consider removing it if not needed
-    const [isPasscodeCorrect, setIsPasscodeCorrect] = useState<boolean | null>(null);
-
     const {fetchUserProfile} = useUser();
 
     const fetchWallets = async () => {
@@ -102,9 +98,7 @@ export const PasscodePage: React.FC = () => {
                 setError(t('error.incorrectPasscodeError'));
                 throw responseData;
             }
-            setIsPasscodeCorrect(true);
         } catch (error) {
-            setIsPasscodeCorrect(false);
             throw error;
         }
     };
@@ -124,7 +118,7 @@ export const PasscodePage: React.FC = () => {
             const pin = passcode.join('');
             const confirmPin = confirmPasscode.join('');
 
-            if (wallets.length === 0 && pin !== confirmPin) {
+            if (isUserCreatingWallet() && pin !== confirmPin) {
                 setError(t('error.passcodeMismatchError'));
                 throw new Error('Pin and Confirm Pin mismatch');
             }
@@ -139,7 +133,7 @@ export const PasscodePage: React.FC = () => {
                 body: JSON.stringify({
                     walletPin: pin,
                     confirmWalletPin: confirmPasscode.join(''),
-                    walletName: displayName
+                    walletName: null
                 })
             });
 
@@ -150,7 +144,6 @@ export const PasscodePage: React.FC = () => {
                         errorData.errorMessage ?? t('unknown-error')
                     }`
                 );
-                setIsPasscodeCorrect(false);
                 throw errorData;
             }
 
@@ -158,7 +151,6 @@ export const PasscodePage: React.FC = () => {
             await unlockWallet(createdWallet.walletId, pin);
 
             setWallets([{walletId: createdWallet.walletId}]);
-            setIsPasscodeCorrect(true);
         } catch (error) {
             throw error;
         }
@@ -166,11 +158,10 @@ export const PasscodePage: React.FC = () => {
 
     const handleSubmit = async () => {
         setError('');
-        setIsPasscodeCorrect(null);
         setLoading(true);
 
         try {
-            if (wallets.length === 0) {
+            if (isUserCreatingWallet()) {
                 await createWallet();
             } else {
                 const walletId = wallets[0].walletId;
@@ -190,7 +181,6 @@ export const PasscodePage: React.FC = () => {
                 'Error occurred while setting up Wallet or loading user profile',
                 error
             );
-            setIsPasscodeCorrect(false);
         } finally {
             setLoading(false);
         }
@@ -198,147 +188,71 @@ export const PasscodePage: React.FC = () => {
 
     const isButtonDisabled =
         passcode.includes('') ||
-        (wallets.length === 0 && confirmPasscode.includes(''));
+        (isUserCreatingWallet() && confirmPasscode.includes(''));
 
-return (
-        <div
-            data-testid="passcode-page"
-            className={PasscodePageStyles.pageOverlay}
-        >
-            <div className={PasscodePageStyles.container}>
-                <BackgroundDecorator
-                    logoSrc={require('../../../assets/Logomark.png')}
-                    logoAlt="Inji Web Logo"
-                    logoTestId="logo-inji-web"
-                />
+    function isUserCreatingWallet() {
+        return wallets.length === 0;
+    }
 
-                <div className={PasscodePageStyles.contentWrapper}>
-                    <div className={PasscodePageStyles.titleContainer}>
-                        <h1
-                            className={PasscodePageStyles.title}
-                            data-testid="title-passcode"
-                        >
-                            {wallets.length === 0
-                                ? t('setPasscode')
-                                : t('enterPasscode')}
-                        </h1>
-                        <p
-                            className={PasscodePageStyles.description}
-                            data-testid="passcode-description"
-                        >
-                            {wallets.length === 0
-                                ? t('setPasscodeDescription')
-                                : t('enterPasscodeDescription')}
-                        </p>
-                    </div>
+    const pageTitle = isUserCreatingWallet() ? t('setPasscode') : t('enterPasscode');
+    const pageSubtitle = isUserCreatingWallet() ? t('setPasscodeDescription') : t('enterPasscodeDescription');
 
-                    <div
-                        className={PasscodePageStyles.passcodeContainer}
-                        data-testid="passcode-inputs-container"
-                    >
-                        {wallets.length === 0 && (
-                            <div className={PasscodePageStyles.warningTextBorder} />
-                        )}
+    function renderForgotPasscodeButton() {
+        const handleForgotPasscode = () =>
+            navigate(
+                ROUTES.USER_RESET_PASSCODE,
+                {
+                    state: {
+                        walletId: wallets[0].walletId
+                    }
+                }
+            );
 
-                        {wallets.length === 0 && (
-                            <div className={PasscodePageStyles.warningTextContainer}>
-                                <p
-                                    className={PasscodePageStyles.warningText}
-                                    data-testid="passcode-warning"
-                                >
-                                    {t('passcodeWarning')}
-                                </p>
-                            </div>
-                        )}
+        return <div className={PasscodePageStyles.forgotPasscodeContainer}>
+            <TertiaryButton onClick={handleForgotPasscode} title={t('forgotPasscode') + "?"}
+                            testId={"forgot-passcode"} className={PasscodePageStyles.forgotPasscodeButton}/>
+        </div>;
+    }
 
-                        {error ? (
-                            <div
-                                className={PasscodePageStyles.errorContainer}
-                                data-testid="error-passcode"
-                            >
-                                <div className={PasscodePageStyles.errorContentWrapper}>
-                                    <div className={PasscodePageStyles.errorTextContainer}>
-                                        <span className={PasscodePageStyles.errorText}>
-                                            {error}
-                                        </span>
-                                    </div>
-                                    <div className={PasscodePageStyles.closeButtonContainer}>
-                                        <CrossIconButton
-                                            onClick={() => setError(null)}
-                                            btnClassName={PasscodePageStyles.closeButton}
-                                            iconClassName={PasscodePageStyles.closeIcon}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            wallets.length === 0 && (
-                                <div className={PasscodePageStyles.bottomBorder} />
-                            )
-                        )}
+    function renderPasscodeInput(label: string, value: string[], onChange: (values: string[]) => void, testId: string) {
+        return <PasscodeInput label={label} value={value} onChange={onChange} testId={testId}/>;
+    }
 
-                        <div className={PasscodePageStyles.inputContainer}>
-                            <div className={PasscodePageStyles.inputWrapper}>
-                                <div className={PasscodePageStyles.inputScrollContainer}>
-                                    <div className={PasscodePageStyles.inputGroup}>
-                                        <PasscodeInput
-                                            label={t('enterPasscode')}
-                                            value={passcode}
-                                            onChange={setPasscode}
-                                            testId="passcode"
-                                        />
-                                    </div>
+    const renderContent = () => {
+        return (
+            <Fragment>
+                {<div className={PasscodePageStyles.inputWrapper}>
+                    {renderPasscodeInput(t('enterPasscode'), passcode, setPasscode, "passcode")}
 
-                                    {wallets.length === 0 && (
-                                        <div className={PasscodePageStyles.confirmInputGroup}>
-                                            <PasscodeInput
-                                                label={t('confirmPasscode')}
-                                                value={confirmPasscode}
-                                                onChange={setConfirmPasscode}
-                                                testId="confirm-passcode"
-                                            />
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                            {wallets.length !== 0 && (
-                                <div className={PasscodePageStyles.forgotPasscodeContainer}>
-                                    <button
-                                        data-testid="btn-forgot-passcode"
-                                        className={PasscodePageStyles.forgotPasscodeButton}
-                                        onClick={() =>
-                                            navigate(
-                                                ROUTES.USER_RESET_PASSCODE,
-                                                {
-                                                    state: {
-                                                        walletId:
-                                                            wallets[0].walletId
-                                                    }
-                                                }
-                                            )
-                                        }
-                                    >
-                                        {t('forgotPasscode') + ' ?'}
-                                    </button>
-                                </div>
-                            )}
+                    {isUserCreatingWallet() &&
+                        renderPasscodeInput(t('confirmPasscode'), confirmPasscode, setConfirmPasscode, "confirm-passcode")
+                    }
+                </div>}
+                {!isUserCreatingWallet() && renderForgotPasscodeButton()}
 
-                            <div className={PasscodePageStyles.buttonContainer}>
-                                <SolidButton
-                                    fullWidth={true}
-                                    testId="btn-submit-passcode"
-                                    onClick={handleSubmit}
-                                    title={
-                                        loading ? t('submitting') : t('submit')
-                                    }
-                                    disabled={isButtonDisabled}
-                                    className={isButtonDisabled ? PasscodePageStyles.disabledButton : ''}
-                                />
-                            </div>
-                        </div>
-                    </div>
+                <div className={PasscodePageStyles.buttonContainer}>
+                    <SolidButton
+                        fullWidth={true}
+                        testId="btn-submit-passcode"
+                        onClick={handleSubmit}
+                        title={loading ? t('submitting') : t('submit')}
+                        disabled={isButtonDisabled}
+                        className={isButtonDisabled ? PasscodePageStyles.disabledButton : ''}
+                    />
                 </div>
-            </div>
-        </div>
+            </Fragment>
+        );
+    };
+
+    return (
+        <PasscodePageTemplate
+            title={pageTitle}
+            subtitle={pageSubtitle}
+            error={error}
+            onErrorClose={() => setError(null)}
+            content={renderContent()}
+            contentTestId={"passcode-inputs-container"}
+            testId="passcode"
+        />
     );
 };

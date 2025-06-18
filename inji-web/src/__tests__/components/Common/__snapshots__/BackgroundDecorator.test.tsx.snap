@@ -32,11 +32,11 @@ exports[`BackgroundDecorator Component matches snapshot with custom props 1`] = 
       />
       <div
         class="flex items-center justify-center"
-        data-testid="custom-logo-container"
+        data-testid="logo-inji-web-container"
       >
         <img
-          alt="Custom Logo Alt"
-          data-testid="custom-logo"
+          alt="Inji Web Logo"
+          data-testid="logo-inji-web"
           src="mocked-logo-path"
         />
       </div>
@@ -52,8 +52,8 @@ exports[`BackgroundDecorator Component matches snapshot with default props 1`] =
     data-testid="background-decorator"
   >
     <div
-      class="absolute top-[155px]"
-      style="top: 155px;"
+      class="absolute top-[116px]"
+      style="top: 116px;"
     >
       <div
         class="absolute rounded-full border overflow-hidden"
@@ -87,11 +87,11 @@ exports[`BackgroundDecorator Component matches snapshot with default props 1`] =
       />
       <div
         class="flex items-center justify-center"
-        data-testid="test-logo-container"
+        data-testid="logo-inji-web-container"
       >
         <img
-          alt="Test Logo Alt"
-          data-testid="test-logo"
+          alt="Inji Web Logo"
+          data-testid="logo-inji-web"
           src="mocked-logo-path"
         />
       </div>

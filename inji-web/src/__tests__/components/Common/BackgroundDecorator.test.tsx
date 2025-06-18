@@ -5,14 +5,8 @@ import {BackgroundDecorator} from '../../../components/Common/BackgroundDecorato
 
 jest.mock('../../../assets/Logomark.png', () => 'mocked-logo-path');
 
-const commonProps = {
-    logoSrc: 'mocked-logo-path',
-    logoAlt: 'Test Logo Alt',
-    logoTestId: 'test-logo'
-};
-
 const renderComponent = (props = {}) => {
-    return render(<BackgroundDecorator {...commonProps} {...props} />);
+    return render(<BackgroundDecorator {...props} />);
 };
 
 describe('BackgroundDecorator Component', () => {
@@ -45,17 +39,6 @@ describe('BackgroundDecorator Component', () => {
         renderComponent({testId: 'custom-decorator'});
 
         expect(screen.getByTestId('custom-decorator')).toBeInTheDocument();
-    });
-
-    test('renders logo with provided logoSrc and correct attributes', () => {
-        renderComponent();
-
-        const logoImg = screen.getByTestId('test-logo');
-
-        expect(screen.getByTestId('test-logo-container')).toBeInTheDocument();
-        expect(logoImg).toBeInTheDocument();
-        expect(logoImg).toHaveAttribute('alt', commonProps.logoAlt);
-        expect(logoImg).toHaveAttribute('src', commonProps.logoSrc);
     });
 
     test('renders concentric circles based on the provided count value', () => {

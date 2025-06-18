@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Instruction should match instruction component snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="bg-iw-paleGray rounded-xl flex flex-col items-start justify-center gap-2 p-4 pr-10 overflow-y-auto sm:max-h-[38vh] max-h-[37vh]"
+    data-testid="text-test-instruction-instruction"
+  >
+    <div
+      class="flex gap-2 items-center align-middle w-full"
+    >
+      <img
+        alt="Info"
+        class="mt-[0.1rem]"
+        data-testid="icon-test-instruction-instruction"
+        src="InfoIcon.svg"
+      />
+      <p
+        class="text-xs sm:text-sm md:text-md text-left font-montserrat font-semibold text-black"
+        data-testid="text-test-instruction-question"
+      >
+        What should I do?
+      </p>
+    </div>
+    <ul
+      class="flex flex-col items-left gap-2 sm:gap-3 rounded-lg px-8 py-2"
+      data-testid="text-test-instruction-instruction-content"
+    >
+      <li
+        class="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black list-disc pl-2 "
+        data-testid="item-1"
+      >
+        First instruction
+      </li>
+      <li
+        class="text-xs sm:text-sm md:text-md text-left font-montserrat font-normal text-black list-disc pl-2 "
+        data-testid="item-2"
+      >
+        <span>
+          Second 
+          <strong>
+            instruction
+          </strong>
+        </span>
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
+`;

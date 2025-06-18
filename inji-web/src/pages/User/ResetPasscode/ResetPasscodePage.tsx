@@ -1,48 +1,16 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {SolidButton} from '../../../components/Common/Buttons/SolidButton';
 import {Trans, useTranslation} from 'react-i18next';
 import {useUser} from '../../../hooks/User/useUser';
 import {api} from '../../../utils/api';
 import {useCookies} from 'react-cookie';
 import {useLocation, useNavigate} from 'react-router-dom';
-import {toast} from 'react-toastify';
 import {ResetPasscodePageStyles} from './ResetPasscodePageStyles';
-import {BackgroundDecorator} from '../../../components/Common/BackgroundDecorator';
-import {BackArrowButton} from '../../../components/Common/Buttons/BackArrowButton';
-import {InfoIcon} from '../../../components/Common/Icons/InfoIcon';
 import {ROUTES} from "../../../utils/constants";
-
-interface InstructionItem {
-    id: string;
-    className: string;
-    content: React.ReactNode;
-}
-
-interface InstructionContentProps {
-    instructionItems: InstructionItem[];
-    className: string;
-    testId: string;
-}
-
-const InstructionContent: React.FC<InstructionContentProps> = ({ 
-    instructionItems, 
-    className, 
-    testId 
-}) => {
-    return (
-        <div data-testid={testId} className={className}>
-            {instructionItems.map((item) => (
-                <p
-                    key={item.id}
-                    data-testid={item.id}
-                    className={item.className}
-                >
-                    {item.content}
-                </p>
-            ))}
-        </div>
-    );
-};
+import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePage/PasscodePageTemplate";
+import {Instruction} from "../../../components/Common/Instruction/Instruction";
+import {InstructionStyles} from "../../../components/Common/Instruction/InstructionStyles";
+import {InstructionItem} from "../../../types/data";
 
 export const ResetPasscodePage: React.FC = () => {
     const {removeWallet, walletId} = useUser();
@@ -50,6 +18,7 @@ export const ResetPasscodePage: React.FC = () => {
     const [cookies] = useCookies(['XSRF-TOKEN']);
     const navigate = useNavigate();
     const location = useLocation();
+    const [error, setError] = React.useState<string | null>(null);
 
     const handleBackNavigation = () => {
         navigate(ROUTES.PASSCODE);
@@ -75,117 +44,60 @@ export const ResetPasscodePage: React.FC = () => {
             navigate(ROUTES.PASSCODE);
         } catch (error) {
             console.error('Error occurred while deleting Wallet:', error);
-            toast.error(t('resetFailure'));
+            setError(t('resetFailure'));
         }
     };
-    
+
+    function getInstructionItem(id: number) {
+        return {
+            id: `text-reset-info${id}`,
+            content: (
+                <Trans
+                    i18nKey={t(`resetInstruction.info${id}.message`)}
+                    ns="ResetPasscodePage"
+                    values={{
+                        highlighter: t(`resetInstruction.info${id}.highlighter`, {ns: 'ResetPasscodePage'}),
+                    }}
+                    components={{
+                        strong: <strong className={InstructionStyles.instructionTextStrong}/>
+                    }}
+                />
+            )
+        };
+    }
+
     const instructionItems: InstructionItem[] = [
-        {
-            id: "text-reset-question",
-            className: ResetPasscodePageStyles.instructionQuestion,
-            content: t('resetInstruction.question')
-        },
-        {
-            id: "text-reset-info1",
-            className: ResetPasscodePageStyles.instructionText,
-            content: t('resetInstruction.info1')
-        },
-        {
-            id: "text-reset-info2",
-            className: ResetPasscodePageStyles.instructionText,
-            content: (
-                <Trans
-                    i18nKey={t('resetInstruction.info2.message')}
-                    ns="ResetPasscodePage"
-                    values={{
-                        highlighter1: t('resetInstruction.info2.highlighter1', { ns: 'ResetPasscodePage' }),
-                        highlighter2: t('resetInstruction.info2.highlighter2', { ns: 'ResetPasscodePage' })
-                    }}
-                    components={{
-                        strong: <strong className={ResetPasscodePageStyles.instructionTextStrong} />
-                    }}
-                />
-            )
-        },
-        {
-            id: "text-reset-info3",
-            className: ResetPasscodePageStyles.instructionText,
-            content: (
-                <Trans
-                    i18nKey={t('resetInstruction.info3.message')}
-                    ns="ResetPasscodePage"
-                    values={{
-                        highlighter: t('resetInstruction.info3.highlighter', { ns: 'ResetPasscodePage' })
-                    }}
-                    components={{
-                        strong: <strong className={ResetPasscodePageStyles.instructionTextStrong} />
-                    }}
-                />
-            )
-        }
+        getInstructionItem(1),
+        getInstructionItem(2),
+        getInstructionItem(3),
+        getInstructionItem(4),
+        getInstructionItem(5)
     ];
 
-    return (
-        <div
-            className={ResetPasscodePageStyles.backdrop}
-            data-testid="backdrop-reset-passcode"
-        >
-            <div className={ResetPasscodePageStyles.container}>
-                <BackgroundDecorator
-                    logoSrc={require('../../../assets/Logomark.png')}
-                    logoAlt="Inji Web Logo"
-                    logoTestId="logo-inji-web"
-                />
-                <div className={ResetPasscodePageStyles.contentWrapper}>
-                    <div className={ResetPasscodePageStyles.header}>
-                        <h1
-                            className={ResetPasscodePageStyles.title}
-                            data-testid="title-reset-passcode"
-                        >
-                            {t('title')}
-                        </h1>
-                        <div className={ResetPasscodePageStyles.subHeader}>
-                            <BackArrowButton
-                                onClick={handleBackNavigation}
-                                btnClassName={
-                                    ResetPasscodePageStyles.backArrowButton
-                                }
-                            />
-                            <p
-                                className={ResetPasscodePageStyles.subtitle}
-                                data-testid="subtitle-reset-passcode"
-                            >
-                                {t('subTitle')}
-                            </p>
-                        </div>
-                    </div>
+    const renderContent = () => (
+        <Fragment>
+            <Instruction instructionItems={instructionItems} question={t('resetInstruction.question')}
+                         testId={"reset"}/>
+            <SolidButton
+                fullWidth={true}
+                testId="btn-set-new-passcode"
+                onClick={handleForgotPasscode}
+                title={t('setNewPasscode')}
+                className={ResetPasscodePageStyles.resetPasscodeAction}
+            />
+        </Fragment>
+    );
 
-                    <div className={ResetPasscodePageStyles.mainContent}>
-                        <div className={ResetPasscodePageStyles.instructionBox}>
-                            <InfoIcon
-                                testId="icon-reset-instruction"
-                                className="mt-[0.1rem]"
-                            />
-                            <InstructionContent
-                                testId="text-reset-instruction"
-                                className={
-                                    ResetPasscodePageStyles.instructionContent
-                                }
-                                instructionItems={instructionItems}
-                            />
-                        </div>
-                        <SolidButton
-                            fullWidth={true}
-                            testId="btn-forget-passcode"
-                            onClick={handleForgotPasscode}
-                            title={t('forgetPasscode')}
-                            className={
-                                ResetPasscodePageStyles.forgetPasscodeButton
-                            }
-                        />
-                    </div>
-                </div>
-            </div>
-        </div>
+    return (
+        <PasscodePageTemplate
+            title={t('title')}
+            subtitle={t('subTitle')}
+            content={renderContent()}
+            contentTestId="reset-passcode-content"
+            testId="reset-passcode"
+            error={error}
+            onErrorClose={() => setError(null)}
+            onBack={handleBackNavigation}
+        />
     );
 };

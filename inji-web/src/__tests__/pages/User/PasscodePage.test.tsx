@@ -55,13 +55,6 @@ describe('Passcode', () => {
     expect(title).toHaveTextContent(/Set Passcode|Enter Passcode/);
   });
 
-
-  test('renders passcode warning', () => {
-    renderWithProviders(<PasscodePage />);
-    const warning = screen.getByTestId('passcode-warning');
-    expect(warning).toHaveTextContent('Make sure you remember the password for future login');
-  });
-
   test("renders passcode input field", () => {
     renderWithProviders(<PasscodePage />);
     const passcodeInput = screen.getByTestId("passcode-container");

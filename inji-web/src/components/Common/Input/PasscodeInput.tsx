@@ -1,5 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {FaEye, FaEyeSlash} from 'react-icons/fa';
+import {InputStyles} from "./InputStyles";
 
 interface PasscodeInputProps {
     label: string;
@@ -9,11 +10,11 @@ interface PasscodeInputProps {
 }
 
 export const PasscodeInput: React.FC<PasscodeInputProps> = ({
-    label,
-    value,
-    onChange,
-    testId
-}) => {
+                                                                label,
+                                                                value,
+                                                                onChange,
+                                                                testId
+                                                            }) => {
     const [showPasscode, setShowPasscode] = useState(false);
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -30,72 +31,68 @@ export const PasscodeInput: React.FC<PasscodeInputProps> = ({
     };
 
     return (
-        <div className="mb-2" data-testid={`${testId}-container`}>
-            <p
-                data-testid={`label-${testId}`}
-                className="text-sm text-left font-medium text-iw-textSecondary"
-            >
-                {label}
-            </p>
-            <div className="flex items-center gap-4">
-                <div className="flex items-center gap-4 py-2 rounded-lg">
-                    {value.map((digit, idx) => (
-                        <input
-                            key={idx}
-                            data-testid={`input-${testId}`}
-                            ref={(el) => (inputRefs.current[idx] = el)}
-                            type={showPasscode ? 'text' : 'password'}
-                            inputMode="numeric"
-                            maxLength={1}
-                            value={digit}
-                            onChange={(e) =>
-                                handleInputChange(idx, e.target.value)
-                            }
-                            onFocus={(e) => {
-                                e.target.classList.add(
-                                    'pin-input-focus-box-border'
-                                );
-                            }}
-                            onBlur={(e) => {
-                                if (!digit) {
-                                    e.target.classList.remove(
-                                        'pin-input-focus-box-border'
-                                    );
-                                    e.target.classList.add(
-                                        'pin-input-box-border'
-                                    );
+        <div className={InputStyles.passcode.wrapper}>
+            <div className={InputStyles.passcode.container} data-testid={`${testId}-container`}>
+                <p
+                    data-testid={`label-${testId}`}
+                    className={InputStyles.passcode.label}
+                >
+                    {label}
+                </p>
+                <div className={InputStyles.passcode.inputRow}>
+                    <div className={InputStyles.passcode.inputGroup}>
+                        {value.map((digit, idx) => (
+                            <input
+                                key={idx}
+                                data-testid={`input-${testId}`}
+                                ref={(el) => (inputRefs.current[idx] = el)}
+                                type={showPasscode ? 'text' : 'password'}
+                                inputMode="numeric"
+                                maxLength={1}
+                                value={digit}
+                                onChange={(e) =>
+                                    handleInputChange(idx, e.target.value)
                                 }
-                            }}
-                            onKeyDown={(e) => {
-                                if (
-                                    e.key === 'Backspace' &&
-                                    idx > 0 &&
-                                    !digit
-                                ) {
-                                    inputRefs.current[idx - 1]?.focus();
-                                }
-                            }}
-                            className={`pin-input-box-style ${
-                                digit
-                                    ? 'pin-input-focus-box-border'
-                                    : 'pin-input-box-border'
-                            } focus:outline-none`}
-                        />
-                    ))}
-                </div>
-                <div className="flex items-center gap-4 py-2 rounded-lg">
-                    <button
-                        type="button"
-                        onClick={() => setShowPasscode((prev) => !prev)}
-                        className="pin-input-box-border pin-input-box-style flex items-center justify-center focus:outline-none"
-                        data-testid={`btn-toggle-visibility-${testId}`}
-                    >
-                        {showPasscode ? (
-                            <FaEye className="text-iw-grayLight" data-testid={"eye-view"}/>
-                        ) : (
-                            <FaEyeSlash className="text-iw-grayLight" data-testid={"eye-view-slash"}/>
-                        )}
-                    </button>
+                                onFocus={(e) => {
+                                    e.target.classList.add(InputStyles.passcode.inputFocus);
+                                }}
+                                onBlur={(e) => {
+                                    if (!digit) {
+                                        e.target.classList.remove(InputStyles.passcode.inputFocus);
+                                        e.target.classList.add(InputStyles.passcode.inputBlur);
+                                    }
+                                }}
+                                onKeyDown={(e) => {
+                                    if (
+                                        e.key === 'Backspace' &&
+                                        idx > 0 &&
+                                        !digit
+                                    ) {
+                                        inputRefs.current[idx - 1]?.focus();
+                                    }
+                                }}
+                                className={`${InputStyles.passcode.input} ${
+                                    digit
+                                        ? InputStyles.passcode.inputFocus
+                                        : InputStyles.passcode.inputBlur
+                                } focus:outline-none`}
+                            />
+                        ))}
+                    </div>
+                    <div className={InputStyles.passcode.toggleGroup}>
+                        <button
+                            type="button"
+                            onClick={() => setShowPasscode((prev) => !prev)}
+                            className={InputStyles.passcode.toggleButton}
+                            data-testid={`btn-toggle-visibility-${testId}`}
+                        >
+                            {showPasscode ? (
+                                <FaEye className={InputStyles.passcode.eyeIcon} data-testid={"eye-view"}/>
+                            ) : (
+                                <FaEyeSlash className={InputStyles.passcode.eyeIcon} data-testid={"eye-view-slash"}/>
+                            )}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -85,12 +85,12 @@
   "PasscodePage":{
     "submit":"Submit",
     "submitting":"Submitting",
-    "setPasscode":"Set Passcode",
-    "enterPasscode":"Enter Passcode",
+    "setPasscode":"Set your passcode to get started",
+    "setPasscodeDescription":"Please remember or securely store your passcode. You’ll need it each time you access the wallet.",
+    "enterPasscode":"Enter Your Passcode to Continue",
+    "enterPasscodeDescription":"Use the same passcode you set earlier to access your account or wallet.",
     "confirmPasscode":"Confirm Passcode",
     "forgotPasscode":"Forgot Passcode",
-    "setPasscodeDescription":"Set your passcode to get started",
-    "enterPasscodeDescription":"Enter your 6 digit passcode",
     "passcodeWarning":"Make sure you remember the password for future login",
     "error":{
       "walletNotFoundError":"Wallet not found",
@@ -102,22 +102,32 @@
     }
   },
   "ResetPasscodePage": {
-    "title": "Reset Your Wallet",
-    "subTitle":"Reset wallet to regain access and re-download credentials",
+    "title": "Forgot Your Passcode?",
+    "subTitle":"Reset your wallet to regain access and re-download your cards.",
     "resetInstruction": {
-      "question": "Forgot your passcode?",
-      "info1": "If you can’t remember your passcode, you can reset it by clicking the button below.",
+      "question": "What happens when you forget your passcode?",
+      "info1": {
+        "message":"Your wallet will be securely <strong>{{highlighter}}</strong>.",
+        "highlighter": "reset"
+      },
       "info2": {
-        "message": "<strong>{{highlighter1}}:</strong> This will remove all your saved cards from the account — such as your <strong>{{highlighter2}}</strong>, and any other documents you’ve added.",
-        "highlighter1": "Please note",
-        "highlighter2": "National ID card, Tax ID card, Insurance certificate"
+        "message": "All previously stored <strong>{{highlighter}}</strong> from your wallet.",
+        "highlighter": "cards will be deleted"
       },
       "info3": {
-        "message": "After resetting, you’ll need to set a new passcode and <strong>{{highlighter}}</strong> into your Wallet.",
-        "highlighter": "re-download your cards"
+        "message": "You'll be guided to <strong>{{highlighter}}</strong>.",
+        "highlighter": "set a new passcode"
+      },
+      "info4": {
+        "message": "You can then <strong>{{highlighter}}</strong>. from the original source/issuers.",
+        "highlighter": "re-download cards"
+      },
+      "info5": {
+        "message": "This keeps your information <strong>{{highlighter}}</strong>, even if your device/wallet is lost or shared.",
+        "highlighter": "safe"
       }
     },
-    "forgetPasscode": "Forget Passcode",
+    "setNewPasscode": "Set New Passcode",
     "resetFailure": "Something went wrong while resetting your wallet. Please try again in a moment."
   },
   "IssuersPage": {

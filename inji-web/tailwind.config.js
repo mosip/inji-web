@@ -15,6 +15,7 @@ module.exports = {
             },
             fontSize: {
                 'sm-plus': '15px',
+                '2xl-plus': '28px',
             },
             zIndex: {
                 '50': '50',
@@ -95,14 +96,14 @@ module.exports = {
         plugin(function ({addComponents}) {
             addComponents({
                 '.pin-input-box-style': {
-                    width: '2.25rem',
-                    height: '2rem',
+                    width: '2.37rem',
+                    height: '2.25rem',
                     textAlign: 'center',
                     borderRadius: '0.5rem',
                     fontSize: '1.125rem',
                     '@screen sm': {
-                        width: '2.75rem',
-                        height: '2.5rem',
+                        width: '3.1rem',
+                        height: '2.94rem',
                         fontSize: '1.25rem'
                     }
                 },
