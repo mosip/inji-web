@@ -14,8 +14,8 @@ exports[`PasscodePageTemplate Component matches snapshot 1`] = `
         data-testid="backdrop-test"
       >
         <div
-          class="absolute top-[116px]"
-          style="top: 116px;"
+          class="absolute"
+          style="top: 73px;"
         >
           <div
             class="absolute rounded-full border overflow-hidden"
@@ -72,10 +72,10 @@ exports[`PasscodePageTemplate Component matches snapshot 1`] = `
             Test Title
           </h1>
           <div
-            class="flex items-center gap-3 justify-center mx-4 px-2"
+            class="flex items-start gap-3 justify-center mx-4 px-2"
           >
             <button
-              class="cursor-pointer"
+              class="cursor-pointer mt-2 sm:mt-1"
               data-testid="btn-back-arrow-container"
               type="button"
             >

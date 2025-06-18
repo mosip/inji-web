@@ -13,7 +13,8 @@ jest.mock('react-i18next', () => ({
       const translations: Record<string, string> = {
         "setPasscode":"Set Passcode",
         "enterPasscode":"Enter Passcode",
-        "confirmPasscode":"Confirm Passcode",
+        "enterPasscodeLabel":"Enter Passcode",
+        "confirmPasscodeLabel":"Confirm Passcode",
         "resetasscode":"Reset Passcode",
         "setPasscodeDescription":"Set your passcode to get started",
         "enterPasscodeDescription":"Enter your 6 digit passcode",

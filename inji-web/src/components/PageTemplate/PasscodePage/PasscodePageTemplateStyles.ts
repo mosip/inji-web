@@ -6,8 +6,8 @@ export const PasscodePageTemplateStyles = {
     title: "text-2xl-plus font-semibold text-iw-darkGrayishBlue",
     description: "text-iw-textTertiary text-lg font-normal mx-8",
     subTitle: {
-        container: 'flex items-center gap-3 justify-center mx-4 px-2',
-        backArrowButton: 'cursor-pointer',
+        container: 'flex items-start gap-3 justify-center mx-4 px-2',
+        backArrowButton: 'cursor-pointer mt-2 sm:mt-1',
         content: 'text-iw-textTertiary text-base font-medium',
     },
     errorAndContentContainer: "flex flex-col bg-white sm:rounded-lg sm:shadow-iw-pin-page-container items-center z-20 w-full max-w-lg mt-8 mb-4 mx-auto border-t border-iw-grayishBlue mx-8",

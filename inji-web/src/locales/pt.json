@@ -89,7 +89,8 @@
     "setPasscodeDescription": "Por favor, lembre-se ou armazene seu código de acesso com segurança. Você precisará dele toda vez que acessar a carteira.",
     "enterPasscode": "Digite seu código de acesso para continuar",
     "enterPasscodeDescription": "Use o mesmo código de acesso que você definiu anteriormente para acessar sua conta ou carteira.",
-    "confirmPasscode": "Confirmar código de acesso",
+    "enterPasscodeLabel": "Digite o código de acesso",
+    "confirmPasscodeLabel": "Confirme o código de acesso",
     "forgotPasscode": "Esqueceu a senha",
     "passcodeWarning": "Certifique-se de lembrar a senha para login futuro",
     "error": {
