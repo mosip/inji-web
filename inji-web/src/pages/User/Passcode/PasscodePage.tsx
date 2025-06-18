@@ -246,14 +246,16 @@ export const PasscodePage: React.FC = () => {
                     </div>
                 )}
 
-                <SolidButton
-                    fullWidth={true}
-                    testId="btn-submit-passcode"
-                    onClick={handleSubmit}
-                    title={loading ? t('submitting') : t('submit')}
-                    disabled={isButtonDisabled}
-                    className={isButtonDisabled ? PasscodePageStyles.disabledButton : ''}
-                />
+                <div className={PasscodePageStyles.buttonContainer}>
+                    <SolidButton
+                        fullWidth={true}
+                        testId="btn-submit-passcode"
+                        onClick={handleSubmit}
+                        title={loading ? t('submitting') : t('submit')}
+                        disabled={isButtonDisabled}
+                        className={isButtonDisabled ? PasscodePageStyles.disabledButton : ''}
+                    />
+                </div>
             </Fragment>
         );
     };
