@@ -80,7 +80,7 @@ export const ResetPasscodePage: React.FC = () => {
                          testId={"reset"}/>
             <SolidButton
                 fullWidth={true}
-                testId="btn-forget-passcode"
+                testId="btn-set-new-passcode"
                 onClick={handleForgotPasscode}
                 title={t('setNewPasscode')}
                 className={ResetPasscodePageStyles.resetPasscodeAction}

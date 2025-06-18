@@ -1,6 +1,6 @@
 export const InstructionStyles = {
     container:
-        'bg-iw-paleGray rounded-xl flex flex-col items-start justify-center gap-2 p-4 pr-10 overflow-y-auto sm:max-h-[38vh] max-h-[35vh]',
+        'bg-iw-paleGray rounded-xl flex flex-col items-start justify-center gap-2 p-4 pr-10 overflow-y-auto sm:max-h-[38vh] max-h-[37vh]',
     instructionContent: 'flex flex-col items-left gap-2 sm:gap-3 rounded-lg px-8 py-2',
     questionContainer: "flex gap-2 items-center align w-full",
     instructionQuestion:

@@ -15,7 +15,6 @@ import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton"
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');
     const navigate = useNavigate();
-    const [displayName, setDisplayName] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [wallets, setWallets] = useState<any[]>([]);
@@ -124,7 +123,7 @@ export const PasscodePage: React.FC = () => {
             const pin = passcode.join('');
             const confirmPin = confirmPasscode.join('');
 
-            if (wallets.length === 0 && pin !== confirmPin) {
+            if (isUserCreatingWallet() && pin !== confirmPin) {
                 setError(t('error.passcodeMismatchError'));
                 throw new Error('Pin and Confirm Pin mismatch');
             }
@@ -139,7 +138,7 @@ export const PasscodePage: React.FC = () => {
                 body: JSON.stringify({
                     walletPin: pin,
                     confirmWalletPin: confirmPasscode.join(''),
-                    walletName: displayName
+                    walletName: null
                 })
             });
 
@@ -170,7 +169,7 @@ export const PasscodePage: React.FC = () => {
         setLoading(true);
 
         try {
-            if (wallets.length === 0) {
+            if (isUserCreatingWallet()) {
                 await createWallet();
             } else {
                 const walletId = wallets[0].walletId;
@@ -198,53 +197,47 @@ export const PasscodePage: React.FC = () => {
 
     const isButtonDisabled =
         passcode.includes('') ||
-        (wallets.length === 0 && confirmPasscode.includes(''));
+        (isUserCreatingWallet() && confirmPasscode.includes(''));
 
-    const pageTitle = wallets.length === 0 ? t('setPasscode') : t('enterPasscode');
-    const pageSubtitle = wallets.length === 0
-        ? t('setPasscodeDescription')
-        : t('enterPasscodeDescription');
+    function isUserCreatingWallet() {
+        return wallets.length === 0;
+    }
 
-    const handleForgotPasscode = () =>
-        navigate(
-            ROUTES.USER_RESET_PASSCODE,
-            {
-                state: {
-                    walletId: wallets[0].walletId
+    const pageTitle = isUserCreatingWallet() ? t('setPasscode') : t('enterPasscode');
+    const pageSubtitle = isUserCreatingWallet() ? t('setPasscodeDescription') : t('enterPasscodeDescription');
+
+    function renderForgotPasscodeButton() {
+        const handleForgotPasscode = () =>
+            navigate(
+                ROUTES.USER_RESET_PASSCODE,
+                {
+                    state: {
+                        walletId: wallets[0].walletId
+                    }
                 }
-            }
-        );
+            );
+
+        return <div className={PasscodePageStyles.forgotPasscodeContainer}>
+            <TertiaryButton onClick={handleForgotPasscode} title={t('forgotPasscode') + "?"}
+                            testId={"forgot-passcode"} className={PasscodePageStyles.forgotPasscodeButton}/>
+        </div>;
+    }
+
+    function renderPasscodeInput(label: string, value: string[], onChange: (values: string[]) => void, testId: string) {
+        return <PasscodeInput label={label} value={value} onChange={onChange} testId={testId}/>;
+    }
 
     const renderContent = () => {
         return (
             <Fragment>
-                <div className={PasscodePageStyles.inputWrapper}>
-                    <div className={PasscodePageStyles.inputGroup}>
-                        <PasscodeInput
-                            label={t('enterPasscode')}
-                            value={passcode}
-                            onChange={setPasscode}
-                            testId="passcode"
-                        />
-                    </div>
+                {<div className={PasscodePageStyles.inputWrapper}>
+                    {renderPasscodeInput(t('enterPasscode'), passcode, setPasscode, "passcode")}
 
-                    {wallets.length === 0 && (
-                        <div className={PasscodePageStyles.confirmInputGroup}>
-                            <PasscodeInput
-                                label={t('confirmPasscode')}
-                                value={confirmPasscode}
-                                onChange={setConfirmPasscode}
-                                testId="confirm-passcode"
-                            />
-                        </div>
-                    )}
-                </div>
-                {wallets.length !== 0 && (
-                    <div className={PasscodePageStyles.forgotPasscodeContainer}>
-                        <TertiaryButton onClick={handleForgotPasscode} title={t('forgotPasscode') + "?"}
-                                        testId={"forgot-passcode"} className={PasscodePageStyles.forgotPasscodeButton}/>
-                    </div>
-                )}
+                    {isUserCreatingWallet() &&
+                        renderPasscodeInput(t('confirmPasscode'), confirmPasscode, setConfirmPasscode, "confirm-passcode")
+                    }
+                </div>}
+                {!isUserCreatingWallet() && renderForgotPasscodeButton()}
 
                 <div className={PasscodePageStyles.buttonContainer}>
                     <SolidButton
