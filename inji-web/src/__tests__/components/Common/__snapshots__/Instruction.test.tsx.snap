@@ -3,7 +3,7 @@
 exports[`Instruction should match instruction component snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="bg-iw-paleGray rounded-xl flex flex-col items-start justify-center gap-2 p-4 pr-10 overflow-y-auto sm:max-h-[38vh] max-h-[35vh]"
+    class="bg-iw-paleGray rounded-xl flex flex-col items-start justify-center gap-2 p-4 pr-10 overflow-y-auto sm:max-h-[38vh] max-h-[37vh]"
     data-testid="text-test-instruction-instruction"
   >
     <div

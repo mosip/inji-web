@@ -157,7 +157,7 @@ describe('ResetPasscodePage Component', () => {
         expect(screen.getByTestId('text-reset-info1')).toBeInTheDocument();
         expect(screen.getByTestId('text-reset-info2')).toBeInTheDocument();
         expect(screen.getByTestId('text-reset-info3')).toBeInTheDocument();
-        expect(screen.getByTestId('btn-forget-passcode')).toBeInTheDocument();
+        expect(screen.getByTestId('btn-set-new-passcode')).toBeInTheDocument();
     });
 
     test('should display translated text content correctly', () => {
@@ -172,7 +172,7 @@ describe('ResetPasscodePage Component', () => {
         expect(screen.getByTestId('text-reset-question')).toHaveTextContent(
             'Forgot your passcode?'
         );
-        expect(screen.getByTestId('btn-forget-passcode')).toHaveTextContent(
+        expect(screen.getByTestId('btn-set-new-passcode')).toHaveTextContent(
             'set new passcode'
         );
         expect(screen.getByTestId('text-reset-info2')).toHaveTextContent(
@@ -195,7 +195,7 @@ describe('ResetPasscodePage Component', () => {
     test('should handle successful wallet reset: delete wallet and navigate to passcode screen', async () => {
         render(<ResetPasscodePage/>);
 
-        fireEvent.click(screen.getByTestId('btn-forget-passcode'));
+        fireEvent.click(screen.getByTestId('btn-set-new-passcode'));
 
         await waitForFetchApiToBeCalled()
         expect(global.fetch).toHaveBeenCalledWith(
@@ -222,7 +222,7 @@ describe('ResetPasscodePage Component', () => {
 
         render(<ResetPasscodePage/>);
 
-        fireEvent.click(screen.getByTestId('btn-forget-passcode'));
+        fireEvent.click(screen.getByTestId('btn-set-new-passcode'));
 
         await waitForFetchApiToBeCalled()
         expect(mockRemoveWallet).not.toHaveBeenCalled();
@@ -235,7 +235,7 @@ describe('ResetPasscodePage Component', () => {
 
         render(<ResetPasscodePage/>);
 
-        fireEvent.click(screen.getByTestId('btn-forget-passcode'));
+        fireEvent.click(screen.getByTestId('btn-set-new-passcode'));
 
         await waitForFetchApiToBeCalled()
         expect(global.fetch).toHaveBeenCalledWith(
@@ -254,7 +254,7 @@ describe('ResetPasscodePage Component', () => {
 
         render(<ResetPasscodePage/>);
 
-        fireEvent.click(screen.getByTestId('btn-forget-passcode'));
+        fireEvent.click(screen.getByTestId('btn-set-new-passcode'));
 
         await waitForFetchApiToBeCalled();
         expect(mockRemoveWallet).not.toHaveBeenCalled();
