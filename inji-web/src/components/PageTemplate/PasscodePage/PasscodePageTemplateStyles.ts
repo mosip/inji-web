@@ -1,6 +1,6 @@
 export const PasscodePageTemplateStyles = {
     overlay: "fixed inset-0 backdrop-blur-sm bg-black bg-opacity-40 flex flex-col items-center justify-center z-50 h-screen",
-    container: "rounded-2xl bg-white flex flex-col items-center justify-start relative w-[90%] sm:w-[85%] md:w-[90%] h-fit max-h-[98vh] overflow-y-hidden shadow-iw-pin-page-container",
+    container: "rounded-2xl bg-white flex flex-col items-center justify-start relative w-[90%] sm:w-[85%] md:w-[90%] h-fit max-h-[99vh] sm:max-h-[98vh] overflow-y-hidden shadow-iw-pin-page-container",
     contentWrapper: "flex flex-col items-center justify-start w-full mt-[180px] sm:mt-[200px] relative z-10 pb-0 sm:pb-8",
     titleContainer: "text-center space-y-5 relative w-full max-w-[500px] px-4 sm:px-0",
     title: "text-2xl-plus font-semibold text-iw-darkGrayishBlue",
