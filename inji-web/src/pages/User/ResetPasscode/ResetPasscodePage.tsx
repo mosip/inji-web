@@ -6,50 +6,11 @@ import {api} from '../../../utils/api';
 import {useCookies} from 'react-cookie';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {ResetPasscodePageStyles} from './ResetPasscodePageStyles';
-import {InfoIcon} from '../../../components/Common/Icons/InfoIcon';
 import {ROUTES} from "../../../utils/constants";
 import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePage/PasscodePageTemplate";
-
-interface InstructionItem {
-    id: string;
-    className: string;
-    content: React.ReactNode;
-}
-
-interface InstructionContentProps {
-    instructionItems: InstructionItem[];
-    className: string;
-    testId: string;
-}
-
-const InstructionContent: React.FC<InstructionContentProps> = ({
-                                                                   instructionItems,
-                                                                   className,
-                                                                   testId
-                                                               }) => {
-    return (
-        <div data-testid={testId} className={className}>
-            {instructionItems.map((item) => (
-                item.id === "text-reset-question" ? (
-                    <p
-                        key={item.id}
-                        data-testid={item.id}
-                        className={item.className}
-                    >
-                        {item.content}
-                    </p>
-                ) : (
-                    <li
-                        key={item.id}
-                        data-testid={item.id}
-                        className={item.className}
-                    >
-                        {item.content}
-                    </li>)
-            ))}
-        </div>
-    );
-};
+import {Instruction} from "../../../components/Common/Instruction/Instruction";
+import {InstructionStyles} from "../../../components/Common/Instruction/InstructionStyles";
+import {InstructionItem} from "../../../types/data";
 
 export const ResetPasscodePage: React.FC = () => {
     const {removeWallet, walletId} = useUser();
@@ -90,7 +51,6 @@ export const ResetPasscodePage: React.FC = () => {
     function getInstruction(id: number) {
         return {
             id: `text-reset-info${id}`,
-            className: ResetPasscodePageStyles.instructionText,
             content: (
                 <Trans
                     i18nKey={t(`resetInstruction.info${id}.message`)}
@@ -99,7 +59,7 @@ export const ResetPasscodePage: React.FC = () => {
                         highlighter: t(`resetInstruction.info${id}.highlighter`, {ns: 'ResetPasscodePage'}),
                     }}
                     components={{
-                        strong: <strong className={ResetPasscodePageStyles.instructionTextStrong}/>
+                        strong: <strong className={InstructionStyles.instructionTextStrong}/>
                     }}
                 />
             )
@@ -107,11 +67,6 @@ export const ResetPasscodePage: React.FC = () => {
     }
 
     const instructionItems: InstructionItem[] = [
-        {
-            id: "text-reset-question",
-            className: ResetPasscodePageStyles.instructionQuestion,
-            content: t('resetInstruction.question')
-        },
         getInstruction(1),
         getInstruction(2),
         getInstruction(3),
@@ -121,18 +76,8 @@ export const ResetPasscodePage: React.FC = () => {
 
     const renderContent = () => (
         <Fragment>
-            <div className={ResetPasscodePageStyles.instructionBox}>
-                <InfoIcon
-                    testId="icon-reset-instruction"
-                    className="mt-[0.1rem]"
-                />
-                <InstructionContent
-                    testId="text-reset-instruction"
-                    className={ResetPasscodePageStyles.instructionContent}
-                    instructionItems={instructionItems}
-                />
-            </div>
-
+            <Instruction instructionItems={instructionItems} question={t('resetInstruction.question')}
+                         testId={"reset"}/>
             <SolidButton
                 fullWidth={true}
                 testId="btn-forget-passcode"

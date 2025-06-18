@@ -1,4 +1,5 @@
 import React from 'react';
+import LogomarkImage from '../../assets/Logomark.png';
 
 interface BackgroundDecoratorProps {
     circleCount?: number;
@@ -46,7 +47,7 @@ export const BackgroundDecorator: React.FC<BackgroundDecoratorProps> = ({
                     className="flex items-center justify-center"
                     data-testid={"logo-inji-web-container"}
                 >
-                    <img src={require("../../assets/Logomark.png")} alt={"Inji Web Logo"}
+                    <img src={LogomarkImage} alt={"Inji Web Logo"}
                          data-testid={"logo-inji-web"}/>
                 </div>
             </div>

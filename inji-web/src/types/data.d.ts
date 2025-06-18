@@ -160,3 +160,8 @@ export interface MenuItemType {
     icon?: React.ReactNode;
     color?: string;
 }
+
+export interface InstructionItem {
+    id: string;
+    content: React.ReactNode;
+}
