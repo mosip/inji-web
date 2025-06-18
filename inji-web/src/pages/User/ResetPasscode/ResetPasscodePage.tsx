@@ -48,7 +48,7 @@ export const ResetPasscodePage: React.FC = () => {
         }
     };
 
-    function getInstruction(id: number) {
+    function getInstructionItem(id: number) {
         return {
             id: `text-reset-info${id}`,
             content: (
@@ -67,11 +67,11 @@ export const ResetPasscodePage: React.FC = () => {
     }
 
     const instructionItems: InstructionItem[] = [
-        getInstruction(1),
-        getInstruction(2),
-        getInstruction(3),
-        getInstruction(4),
-        getInstruction(5)
+        getInstructionItem(1),
+        getInstructionItem(2),
+        getInstructionItem(3),
+        getInstructionItem(4),
+        getInstructionItem(5)
     ];
 
     const renderContent = () => (
