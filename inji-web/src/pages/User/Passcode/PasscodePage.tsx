@@ -23,9 +23,6 @@ export const PasscodePage: React.FC = () => {
     const [confirmPasscode, setConfirmPasscode] = useState<string[]>(
         Array(6).fill('')
     );
-    //TODO: isPasscodeCorrect state variable is not used anywhere in the code, consider removing it if not needed
-    const [isPasscodeCorrect, setIsPasscodeCorrect] = useState<boolean | null>(null);
-
     const {fetchUserProfile} = useUser();
 
     const fetchWallets = async () => {
@@ -101,9 +98,7 @@ export const PasscodePage: React.FC = () => {
                 setError(t('error.incorrectPasscodeError'));
                 throw responseData;
             }
-            setIsPasscodeCorrect(true);
         } catch (error) {
-            setIsPasscodeCorrect(false);
             throw error;
         }
     };
@@ -149,7 +144,6 @@ export const PasscodePage: React.FC = () => {
                         errorData.errorMessage ?? t('unknown-error')
                     }`
                 );
-                setIsPasscodeCorrect(false);
                 throw errorData;
             }
 
@@ -157,7 +151,6 @@ export const PasscodePage: React.FC = () => {
             await unlockWallet(createdWallet.walletId, pin);
 
             setWallets([{walletId: createdWallet.walletId}]);
-            setIsPasscodeCorrect(true);
         } catch (error) {
             throw error;
         }
@@ -165,7 +158,6 @@ export const PasscodePage: React.FC = () => {
 
     const handleSubmit = async () => {
         setError('');
-        setIsPasscodeCorrect(null);
         setLoading(true);
 
         try {
@@ -189,7 +181,6 @@ export const PasscodePage: React.FC = () => {
                 'Error occurred while setting up Wallet or loading user profile',
                 error
             );
-            setIsPasscodeCorrect(false);
         } finally {
             setLoading(false);
         }
