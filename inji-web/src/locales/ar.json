@@ -89,7 +89,8 @@
     "setPasscodeDescription": "يرجى تذكر رمز المرور الخاص بك أو تخزينه بأمان. ستحتاج إليه في كل مرة تصل فيها إلى المحفظة.",
     "enterPasscode": "أدخل رمز المرور للمتابعة",
     "enterPasscodeDescription": "استخدم نفس رمز المرور الذي قمت بتعيينه سابقًا للوصول إلى حسابك أو محفظتك.",
-    "confirmPasscode": "تأكيد رمز المرور",
+    "enterPasscodeLabel": "أدخل رمز المرور",
+    "confirmPasscodeLabel": "تأكيد رمز المرور",
     "forgotPasscode": "نسيت رمز المرور",
     "passcodeWarning": "تأكد من تذكر كلمة المرور لتسجيل الدخول في المستقبل",
     "error": {

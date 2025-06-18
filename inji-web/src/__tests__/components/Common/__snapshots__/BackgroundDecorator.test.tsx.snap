@@ -7,7 +7,7 @@ exports[`BackgroundDecorator Component matches snapshot with custom props 1`] = 
     data-testid="custom-decorator"
   >
     <div
-      class="absolute top-[100px]"
+      class="absolute"
       style="top: 100px;"
     >
       <div
@@ -52,8 +52,8 @@ exports[`BackgroundDecorator Component matches snapshot with default props 1`] =
     data-testid="background-decorator"
   >
     <div
-      class="absolute top-[116px]"
-      style="top: 116px;"
+      class="absolute"
+      style="top: 73px;"
     >
       <div
         class="absolute rounded-full border overflow-hidden"

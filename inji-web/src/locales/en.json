@@ -89,7 +89,8 @@
     "setPasscodeDescription":"Please remember or securely store your passcode. You’ll need it each time you access the wallet.",
     "enterPasscode":"Enter Your Passcode to Continue",
     "enterPasscodeDescription":"Use the same passcode you set earlier to access your account or wallet.",
-    "confirmPasscode":"Confirm Passcode",
+    "enterPasscodeLabel": "Enter Passcode",
+    "confirmPasscodeLabel":"Confirm Passcode",
     "forgotPasscode":"Forgot Passcode",
     "passcodeWarning":"Make sure you remember the password for future login",
     "error":{

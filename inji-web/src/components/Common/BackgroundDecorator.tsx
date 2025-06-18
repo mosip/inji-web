@@ -10,7 +10,7 @@ interface BackgroundDecoratorProps {
 
 export const BackgroundDecorator: React.FC<BackgroundDecoratorProps> = ({
                                                                             circleCount = 6,
-                                                                            topOffset = 116,
+                                                                            topOffset = 73,
                                                                             baseRadius = 96,
                                                                             testId = 'background-decorator',
                                                                         }) => {
@@ -20,7 +20,7 @@ export const BackgroundDecorator: React.FC<BackgroundDecoratorProps> = ({
             data-testid={testId}
         >
             <div
-                className={`absolute top-[${topOffset}px]`}
+                className={`absolute`}
                 style={{top: `${topOffset}px`}}
             >
                 {[...Array(circleCount)].map((_, index) => {

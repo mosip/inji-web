@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {api, MethodType} from '../../../utils/api';
 import {useCookies} from 'react-cookie';
@@ -220,12 +220,12 @@ export const PasscodePage: React.FC = () => {
 
     const renderContent = () => {
         return (
-            <Fragment>
+            <div className={PasscodePageStyles.contentContainer}>
                 {<div className={PasscodePageStyles.inputWrapper}>
-                    {renderPasscodeInput(t('enterPasscode'), passcode, setPasscode, "passcode")}
+                    {renderPasscodeInput(t('enterPasscodeLabel'), passcode, setPasscode, "passcode")}
 
                     {isUserCreatingWallet() &&
-                        renderPasscodeInput(t('confirmPasscode'), confirmPasscode, setConfirmPasscode, "confirm-passcode")
+                        renderPasscodeInput(t('confirmPasscodeLabel'), confirmPasscode, setConfirmPasscode, "confirm-passcode")
                     }
                 </div>}
                 {!isUserCreatingWallet() && renderForgotPasscodeButton()}
@@ -240,7 +240,7 @@ export const PasscodePage: React.FC = () => {
                         className={isButtonDisabled ? PasscodePageStyles.disabledButton : ''}
                     />
                 </div>
-            </Fragment>
+            </div>
         );
     };
 

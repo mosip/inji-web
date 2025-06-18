@@ -89,7 +89,8 @@
     "setPasscodeDescription": "Veuillez mémoriser ou stocker en toute sécurité votre code d'accès. Vous en aurez besoin à chaque accès au portefeuille.",
     "enterPasscode": "Entrez votre code d'accès pour continuer",
     "enterPasscodeDescription": "Utilisez le même code d'accès que vous avez défini précédemment pour accéder à votre compte ou portefeuille.",
-    "confirmPasscode": "Confirmer le code d'accès",
+    "enterPasscodeLabel": "Entrez le code d'accès",
+    "confirmPasscodeLabel": "Confirmez le code d'accès",
     "forgotPasscode": "Mot de passe oublié",
     "passcodeWarning": "Assurez-vous de vous souvenir du mot de passe pour une future connexion",
     "error": {
