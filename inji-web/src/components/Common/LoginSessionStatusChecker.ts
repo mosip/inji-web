@@ -4,7 +4,7 @@ import {useUser} from '../../hooks/User/useUser';
 import {KEYS, ROUTES} from '../../utils/constants';
 
 import {User} from "../../types/data";
-import {storage} from "../../utils/storage";
+import {Storage} from "../../utils/Storage";
 
 const loginProtectedPrefixes = [ROUTES.USER];
 
@@ -70,7 +70,7 @@ const LoginSessionStatusChecker = () => {
                 return;
             }
             const cachedWalletId = walletId;
-            const storageWalletId = storage.getItem(KEYS.WALLET_ID);
+            const storageWalletId = Storage.getItem(KEYS.WALLET_ID);
 
             validateWalletUnlockStatus(
                 cachedWalletId,

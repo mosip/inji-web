@@ -1,4 +1,4 @@
-export class storage {
+export class Storage {
     static readonly SESSION_INFO = "download_session"
     static readonly SELECTED_LANGUAGE = "selected_language"
 

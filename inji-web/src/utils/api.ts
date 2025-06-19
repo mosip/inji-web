@@ -6,7 +6,7 @@ import {
 } from "../types/data";
 import i18n from "i18next";
 import { KEYS } from "./constants";
-import {storage} from "./storage";
+import {Storage} from "./Storage";
 
 export enum MethodType {
     GET,
@@ -153,7 +153,7 @@ export class api {
 
     static downloadVCInloginFlow: ApiRequest = {
         url: () => {
-            const walletId = storage.getItem(KEYS.WALLET_ID);
+            const walletId = Storage.getItem(KEYS.WALLET_ID);
             return api.mimotoHost + `/wallets/${walletId}/credentials`;
         },
         methodType: MethodType.POST,
@@ -170,7 +170,7 @@ export class api {
 
     static fetchWalletVCs: ApiRequest = {
         url: () => {
-            const walletId = storage.getItem(KEYS.WALLET_ID);
+            const walletId = Storage.getItem(KEYS.WALLET_ID);
             return (
                 api.mimotoHost +
                 `/wallets/${walletId}/credentials`
@@ -188,7 +188,7 @@ export class api {
 
     static fetchWalletCredentialPreview: ApiRequest = {
         url: (credentialId: string) => {
-            const walletId = storage.getItem(KEYS.WALLET_ID);
+            const walletId = Storage.getItem(KEYS.WALLET_ID);
             return (
                 api.mimotoHost +
                 `/wallets/${walletId}/credentials/${credentialId}?action=inline`
@@ -207,7 +207,7 @@ export class api {
 
     static downloadWalletCredentialPdf: ApiRequest = {
         url: (credentialId: string) => {
-            const walletId = storage.getItem(KEYS.WALLET_ID);
+            const walletId = Storage.getItem(KEYS.WALLET_ID);
             return (
                 api.mimotoHost +
                 `/wallets/${walletId}/credentials/${credentialId}?action=download`
@@ -226,7 +226,7 @@ export class api {
 
     static deleteWalletCredential: ApiRequest = {
         url: (credentialId: string) => {
-            const walletId = storage.getItem(KEYS.WALLET_ID);
+            const walletId = Storage.getItem(KEYS.WALLET_ID);
             return (
                 api.mimotoHost +
                 `/wallets/${walletId}/credentials/${credentialId}`

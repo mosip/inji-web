@@ -3,7 +3,7 @@ import {UserContextType} from "../../types/contextTypes";
 import {ErrorType, User} from "../../types/data";
 import {KEYS} from "../../utils/constants";
 import {api, MethodType} from "../../utils/api";
-import {storage} from "../../utils/storage";
+import {Storage} from "../../utils/Storage";
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
@@ -16,24 +16,24 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const saveUser = (userData: User) => {
-        storage.setItem(KEYS.USER, JSON.stringify(userData));
+        Storage.setItem(KEYS.USER, JSON.stringify(userData));
         setUser(userData);
     };
 
     const removeUser = () => {
-        storage.removeItem(KEYS.USER);
-        storage.removeItem(KEYS.WALLET_ID);
+        Storage.removeItem(KEYS.USER);
+        Storage.removeItem(KEYS.WALLET_ID);
         setUser(null);
         setWalletId(null);
     };
 
     const removeWallet = () => {
-        storage.removeItem(KEYS.WALLET_ID);
+        Storage.removeItem(KEYS.WALLET_ID);
         setWalletId(null);
     };
 
     const isUserLoggedIn = () => {
-        return !!storage.getItem(KEYS.WALLET_ID)
+        return !!Storage.getItem(KEYS.WALLET_ID)
     };
 
     const fetchUserProfile = async () => {
@@ -56,7 +56,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
             saveUser(userData);
             setWalletId(responseData.walletId);
-            storage.setItem(KEYS.WALLET_ID, responseData.walletId);
+            Storage.setItem(KEYS.WALLET_ID, responseData.walletId);
             setIsLoading(false);
             return {user: userData, walletId: responseData.walletId};
         } catch (error) {
