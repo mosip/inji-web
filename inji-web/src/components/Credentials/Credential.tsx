@@ -1,25 +1,18 @@
 import React, {useState} from "react";
-import {
-    getCredentialTypeDisplayObjectForCurrentLanguage,
-} from "../../utils/i18n";
+import {getCredentialTypeDisplayObjectForCurrentLanguage,} from "../../utils/i18n";
 import {ItemBox} from "../Common/ItemBox";
 import {generateCodeChallenge, generateRandomString} from "../../utils/misc";
 import {addNewSession} from "../../utils/sessions";
 import {useSelector} from "react-redux";
 import {api} from "../../utils/api";
 import {CredentialProps} from "../../types/components";
-import {
-    CodeChallengeObject,
-    CredentialConfigurationObject
-} from "../../types/data";
+import {CodeChallengeObject, CredentialConfigurationObject} from "../../types/data";
 
 import {RootState} from "../../types/redux";
 import {DataShareExpiryModal} from "../../modals/DataShareExpiryModal";
-import {useTranslation} from "react-i18next";
 import {useUser} from "../../hooks/User/useUser";
 
 export const Credential: React.FC<CredentialProps> = (props) => {
-    const {t} = useTranslation("CredentialsPage");
     const credentials = useSelector(
         (state: RootState) => state.credentials.credentials
     );

@@ -18,12 +18,12 @@ export const Issuer: React.FC<IssuerProps> = ({issuer, index}) => {
         ? ROUTES.USER_ISSUER(issuer.issuer_id)
         : ROUTES.ISSUER(issuer.issuer_id);
 
-    return <React.Fragment>
+    return (
         <ItemBox index={index}
                  url={issuerDisplayObject?.logo?.url}
                  title={issuerDisplayObject?.name}
                  description={issuerDisplayObject?.description}
                  onClick={() => navigate(credentialsPagePath)}/>
-    </React.Fragment>
+    )
 }
 

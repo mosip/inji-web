@@ -63,8 +63,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
             console.error('Error fetching user profile:', error);
             setError(error as ErrorType);
             removeUser();
-            //TODO: redundant removeItem as removeUser already does this
-            storage.removeItem(KEYS.WALLET_ID);
             setIsLoading(false);
             throw error;
         }

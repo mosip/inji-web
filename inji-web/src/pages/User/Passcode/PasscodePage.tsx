@@ -118,8 +118,7 @@ export const PasscodePage: React.FC = () => {
             const pin = passcode.join('');
             const confirmPin = confirmPasscode.join('');
 
-            //TODO: isUserCreatingWallet check is not needed, as we are already checking if wallets.length === 0 when calling this function
-            if (isUserCreatingWallet() && pin !== confirmPin) {
+            if (pin !== confirmPin) {
                 setError(t('error.passcodeMismatchError'));
                 throw new Error('Pin and Confirm Pin mismatch');
             }
