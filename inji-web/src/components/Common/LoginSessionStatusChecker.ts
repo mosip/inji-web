@@ -17,17 +17,21 @@ const LoginSessionStatusChecker = () => {
     const location = useLocation();
     const {removeUser, fetchUserProfile} = useUser();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const userFromLocalStorage = localStorage.getItem(KEYS.USER);
-    const walletIdFromLocalStorage = localStorage.getItem(KEYS.WALLET_ID);
+    const [isSessionActive, setIsSessionActive] = useState<boolean>(false);
+    const userFromLocalStorage = Storage.getItem(KEYS.USER);
+    const walletIdFromLocalStorage = Storage.getItem(KEYS.WALLET_ID);
 
     useEffect(() => {
         setIsLoggedIn(!!userFromLocalStorage && !!walletIdFromLocalStorage);
+        setIsSessionActive(!!userFromLocalStorage);
     }, [userFromLocalStorage, walletIdFromLocalStorage]);
 
     useEffect(() => {
-        if (isLoggedIn)
+        if (isSessionActive) {
+            console.debug("Session is active in local, checking user info from backend...");
             fetchSessionAndUserInfo();
-    }, [isLoggedIn]);
+        }
+    }, [isSessionActive]);
 
     useEffect(() => {
         const handleStorageChange = (event: any) => {
@@ -54,7 +58,7 @@ const LoginSessionStatusChecker = () => {
             );
             if (user) {
                 navigate(ROUTES.PASSCODE);
-                localStorage.removeItem(KEYS.WALLET_ID);
+                Storage.removeItem(KEYS.WALLET_ID);
             }
         }
     };
@@ -81,7 +85,7 @@ const LoginSessionStatusChecker = () => {
         } catch (error) {
             console.error('Error occurred while fetching user profile:', error);
             removeUser();
-            localStorage.removeItem(KEYS.WALLET_ID);
+            Storage.removeItem(KEYS.WALLET_ID);
             if (isLoggedIn || (!isLoggedIn && isLoginProtectedRoute(location.pathname))) {
                 navigate(ROUTES.ROOT);
             }
