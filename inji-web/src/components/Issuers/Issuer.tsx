@@ -5,7 +5,7 @@ import {ItemBox} from "../Common/ItemBox";
 import {IssuerProps} from "../../types/components";
 import {useSelector} from "react-redux";
 import {RootState} from "../../types/redux";
-import { IssuerWellknownDisplayArrayObject } from "../../types/data";
+import {IssuerWellknownDisplayArrayObject} from "../../types/data";
 import {useUser} from "../../hooks/User/useUser";
 import {ROUTES} from "../../utils/constants";
 
@@ -13,9 +13,8 @@ export const Issuer: React.FC<IssuerProps> = ({issuer, index}) => {
     const language = useSelector((state: RootState) => state.common.language);
     const issuerDisplayObject: IssuerWellknownDisplayArrayObject = getIssuerDisplayObjectForCurrentLanguage(issuer.display, language);
     const navigate = useNavigate();
-    const {user} = useUser();
-    const isLoggedIn = user?.displayName;
-    const credentialsPagePath = isLoggedIn
+    const {isUserLoggedIn} = useUser();
+    const credentialsPagePath = isUserLoggedIn()
         ? ROUTES.USER_ISSUER(issuer.issuer_id)
         : ROUTES.ISSUER(issuer.issuer_id);
 

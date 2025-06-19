@@ -27,7 +27,7 @@ describe("Testing the Layout of LandingPageWrapper -> ", () => {
         ['matches snapshot when user is logged in', true],
         ['matches snapshot when user is not logged in', false],
     ])('%s', (description, isLoggedIn) => {
-        mockUseUser.mockReturnValue({isUserLoggedIn: isLoggedIn});
+        mockUseUser.mockReturnValue({isUserLoggedIn: () => isLoggedIn});
 
         const {asFragment} = renderWithProvider(<LandingPageWrapper {...mockLandingPageWrapperProps} />);
 
@@ -35,12 +35,12 @@ describe("Testing the Layout of LandingPageWrapper -> ", () => {
     });
 });
 
-describe("Testing the Functionality of LandingPageWrapper -> ", () => {
+describe("Testing the Functionality of LandingPageWrapper ->", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         mockNavigateFn.mockReset();
         // mockUseNavigate();
-        mockUseUser.mockReturnValue({isUserLoggedIn: true});
+        mockUseUser.mockReturnValue({isUserLoggedIn: () => true});
     });
 
     afterEach(() => {
@@ -58,7 +58,7 @@ describe("Testing the Functionality of LandingPageWrapper -> ", () => {
         ['navigates to home when user is logged in', true, ROUTES.USER_HOME],
         ['navigates to root when user is not logged in', false, ROUTES.ROOT],
     ])('should %s', (description, isLoggedIn, expectedRoute) => {
-        mockUseUser.mockReturnValue({isUserLoggedIn: isLoggedIn});
+        mockUseUser.mockReturnValue({isUserLoggedIn: () => isLoggedIn});
         renderWithProvider(<LandingPageWrapper {...mockLandingPageWrapperProps} />);
         const homeButton = screen.getByTestId("btn-home-download-result");
 

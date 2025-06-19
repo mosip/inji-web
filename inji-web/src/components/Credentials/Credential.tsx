@@ -102,7 +102,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
                 url={credentialObject.logo}
                 title={credentialObject.name}
                 onClick={() => {
-                    isUserLoggedIn || selectedIssuer.qr_code_type !== "OnlineSharing"
+                    isUserLoggedIn() || selectedIssuer.qr_code_type !== "OnlineSharing"
                                                     ? onSuccess(-1)
                                                     : setCredentialExpiry(true);
                 }}

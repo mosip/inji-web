@@ -17,6 +17,7 @@ import {navigateToUserHome} from "../../utils/navigationUtils";
 import {CircleSkeleton} from '../Common/CircleSkeleton';
 import {InfoFieldSkeleton} from '../Common/InfoFieldSkeleton';
 import {DropdownItem} from "../../types/data";
+import {storage} from "../../utils/storage";
 
 type UserHeaderProps = {
     headerRef: React.RefObject<HTMLDivElement>;
@@ -80,7 +81,8 @@ export const Header: React.FC<UserHeaderProps> = ({
 
             if (response.ok) {
                 removeUser();
-                localStorage.removeItem(KEYS.WALLET_ID);
+                //TODO: wallet id is already removed in removeUser, check if this is needed
+                storage.removeItem(KEYS.WALLET_ID);
                 window.location.replace('/');
             } else {
                 const parsedResponse = await response.json();

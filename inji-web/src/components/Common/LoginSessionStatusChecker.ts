@@ -4,6 +4,7 @@ import {useUser} from '../../hooks/User/useUser';
 import {KEYS, ROUTES} from '../../utils/constants';
 
 import {User} from "../../types/data";
+import {storage} from "../../utils/storage";
 
 const loginProtectedPrefixes = [ROUTES.USER];
 
@@ -14,7 +15,7 @@ const isLoginProtectedRoute = (pathname: string) => {
 const LoginSessionStatusChecker = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const {user, walletId, removeUser, fetchUserProfile, isLoading} = useUser();
+    const {removeUser, fetchUserProfile} = useUser();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const userFromLocalStorage = localStorage.getItem(KEYS.USER);
     const walletIdFromLocalStorage = localStorage.getItem(KEYS.WALLET_ID);
@@ -24,7 +25,8 @@ const LoginSessionStatusChecker = () => {
     }, [userFromLocalStorage, walletIdFromLocalStorage]);
 
     useEffect(() => {
-        fetchSessionAndUserInfo();
+        if (isLoggedIn)
+            fetchSessionAndUserInfo();
     }, [isLoggedIn]);
 
     useEffect(() => {
@@ -68,7 +70,7 @@ const LoginSessionStatusChecker = () => {
                 return;
             }
             const cachedWalletId = walletId;
-            const storageWalletId = localStorage.getItem(KEYS.WALLET_ID);
+            const storageWalletId = storage.getItem(KEYS.WALLET_ID);
 
             validateWalletUnlockStatus(
                 cachedWalletId,

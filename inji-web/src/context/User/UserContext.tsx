@@ -3,35 +3,38 @@ import {UserContextType} from "../../types/contextTypes";
 import {ErrorType, User} from "../../types/data";
 import {KEYS} from "../../utils/constants";
 import {api, MethodType} from "../../utils/api";
+import {storage} from "../../utils/storage";
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export const UserProvider: React.FC<{children: React.ReactNode}> = ({
-                                                                        children
-                                                                    }) => {
+export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
+                                                                          children
+                                                                      }) => {
     const [user, setUser] = useState<User | null>(null);
     const [walletId, setWalletId] = useState<string | null>(null);
     const [error, setError] = useState<ErrorType | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const saveUser = (userData: User) => {
-        localStorage.setItem(KEYS.USER, JSON.stringify(userData));
+        storage.setItem(KEYS.USER, JSON.stringify(userData));
         setUser(userData);
     };
 
     const removeUser = () => {
-        localStorage.removeItem(KEYS.USER);
-        localStorage.removeItem(KEYS.WALLET_ID);
+        storage.removeItem(KEYS.USER);
+        storage.removeItem(KEYS.WALLET_ID);
         setUser(null);
         setWalletId(null);
     };
 
     const removeWallet = () => {
-        localStorage.removeItem(KEYS.WALLET_ID);
+        storage.removeItem(KEYS.WALLET_ID);
         setWalletId(null);
     };
 
-    const isUserLoggedIn = React.useMemo(() => !!user && !!walletId, [user, walletId]);
+    const isUserLoggedIn = () => {
+        return !!storage.getItem(KEYS.WALLET_ID)
+    };
 
     const fetchUserProfile = async () => {
         try {
@@ -53,14 +56,15 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
 
             saveUser(userData);
             setWalletId(responseData.walletId);
-            localStorage.setItem(KEYS.WALLET_ID, responseData.walletId);
+            storage.setItem(KEYS.WALLET_ID, responseData.walletId);
             setIsLoading(false);
             return {user: userData, walletId: responseData.walletId};
         } catch (error) {
             console.error('Error fetching user profile:', error);
             setError(error as ErrorType);
             removeUser();
-            localStorage.removeItem(KEYS.WALLET_ID);
+            //TODO: redundant removeItem as removeUser already does this
+            storage.removeItem(KEYS.WALLET_ID);
             setIsLoading(false);
             throw error;
         }
