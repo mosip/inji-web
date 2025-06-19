@@ -39,7 +39,6 @@ describe("Testing the Functionality of LandingPageWrapper ->", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         mockNavigateFn.mockReset();
-        // mockUseNavigate();
         mockUseUser.mockReturnValue({isUserLoggedIn: () => true});
     });
 

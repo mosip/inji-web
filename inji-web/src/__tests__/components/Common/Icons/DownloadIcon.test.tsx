@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import {render} from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { DownloadIcon } from '../../../../components/Common/Icons/DownloadIcon';
+import {DownloadIcon} from '../../../../components/Common/Icons/DownloadIcon';
 
 describe('DownloadIcon Component', () => {
   const defaultProps = {
