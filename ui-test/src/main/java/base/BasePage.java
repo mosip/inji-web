@@ -117,31 +117,7 @@ public class BasePage {
             otpInputs.get(i).sendKeys(Character.toString(otp.charAt(i)));
         }
     }
-    public void ByVisibleElement(WebDriver driver,By locator) {
-        System.setProperty("webdriver.gecko.driver","D://Selenium Environment//Drivers//geckodriver.exe"); 
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", locator);
-    }
-	public void enterOtpDigitsJS(WebDriver driver, By locator, String otp) {
-	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-	    wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(locator, otp.length() - 1));
-	    wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
 
-	    List<WebElement> inputs = driver.findElements(locator);
-	    if (inputs.size() < otp.length()) {
-	        throw new RuntimeException("Expected at least " + otp.length() + " input fields, but found " + inputs.size());
-	    }
-
-	    JavascriptExecutor js = (JavascriptExecutor) driver;
-	    for (int i = 0; i < otp.length(); i++) {
-	        WebElement input = inputs.get(i);
-	        System.out.println("Field " + i + " value: " + input.getAttribute("value"));
-	        js.executeScript(
-	            "arguments[0].focus(); arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input', { bubbles: true }));",
-	            input, String.valueOf(otp.charAt(i))
-	        );
-}
-	    }
 	public static boolean isElementEnabled(WebDriver driver ,By by) {
 		try {
 			(new WebDriverWait(driver, Duration.ofSeconds(10))).until(ExpectedConditions.visibilityOfElementLocated(by));
