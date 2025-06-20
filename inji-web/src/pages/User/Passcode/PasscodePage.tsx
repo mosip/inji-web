@@ -8,7 +8,7 @@ import {useUser} from '../../../hooks/User/useUser';
 import {PasscodeInput} from '../../../components/Common/Input/PasscodeInput';
 import {navigateToUserHome} from "../../../utils/navigationUtils";
 import {PasscodePageStyles} from './PasscodePageStyles';
-import {ROUTES} from "../../../utils/constants";
+import {HTTP_STATUS_CODES, ROUTES} from "../../../utils/constants";
 import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePage/PasscodePageTemplate";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 
@@ -35,6 +35,11 @@ export const PasscodePage: React.FC = () => {
                 },
                 credentials: 'include'
             });
+
+            if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
+                console.log("Here we are redirecting to root page as session is expired");
+                navigate("/")
+            }
 
             const responseData = await response.json();
 
