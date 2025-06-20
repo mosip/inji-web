@@ -128,7 +128,7 @@ public class HomePage extends BasePage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return isElementIsVisible(driver, By.xpath("//*[@data-testid='DownloadResult-Title']"));
+        return isElementIsVisible(driver, By.xpath("//p[@data-testid='title-download-result']"));
     }
 
     public Boolean isMosipNationalIdDisplayed() {
@@ -381,7 +381,7 @@ public class HomePage extends BasePage {
     }
 
     public void clickOnContinueAsGuest() {
-        clickOnElement(driver, By.xpath("//*[@data-testid='HomeBanner-Guest-Login']"));
+        clickOnElement(driver, By.xpath("//button[@data-testid='home-banner-guest-login']"));
     }
 
     public boolean isCredentialsSimplifiedDescriptionTextDisplayed(){

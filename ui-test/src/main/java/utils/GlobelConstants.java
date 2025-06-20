@@ -43,4 +43,8 @@ public class GlobelConstants {
 	public static final String TRTR = "</th></tr>";
 	public static final String SKIPPED = "Skipped";
 	public static final String KNOWN_ISSUE_SUBSET_STRING = "known issue;";
+	public static final String ProfileText = "My Profile";
+	public static final String windowTitle = "Forgot Your Passcode?";
+	public static final String userResetInfo1 = "Reset your wallet to regain access and re-download your cards.";
+	public static final String MisMatchError = "Passcodes do not match. Please ensure both passcode fields match exactly. Re-enter and try again.";
 }

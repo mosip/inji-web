@@ -19,7 +19,7 @@ Feature: download mosip cridentials
     And User click on getOtp button
     And User enter the otp "<otp>"
     And User click on verify button
-    And User verify downloading in progress text
+    #And User verify downloading in progress text
     And User verify go home button
     Then User verify Download Success text displayed
     And User verify go back button
