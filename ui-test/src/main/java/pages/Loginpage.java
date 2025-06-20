@@ -95,10 +95,10 @@ public class Loginpage extends BasePage {
 
 	public void enterConfirmPasscode(String string) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By
-				.xpath("//div[@data-testid='confirm-passcode-container']//input[@type='password' and @maxlength='1']")));
-		List<WebElement> confirmFields = driver.findElements(
-				By.xpath("//div[@data-testid='confirm-passcode-container']//input[@type='password' and @maxlength='1']"));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
+				"//div[@data-testid='confirm-passcode-container']//input[@type='password' and @maxlength='1']")));
+		List<WebElement> confirmFields = driver.findElements(By
+				.xpath("//div[@data-testid='confirm-passcode-container']//input[@type='password' and @maxlength='1']"));
 
 		if (confirmFields.size() < string.length()) {
 			throw new RuntimeException("Not enough confirm passcode input fields found: expected " + string.length()
@@ -141,8 +141,7 @@ public class Loginpage extends BasePage {
 		}
 		return isElementIsVisible(driver,
 				By.xpath("//button[@data-testid='btn-toggle-visibility-passcode']/*[@data-testid='eye-view']"));
-		
-		
+
 	}
 
 	public Boolean isSubmitButtonEnabled() {
@@ -178,8 +177,8 @@ public class Loginpage extends BasePage {
 	}
 
 	public void clickonuserprofiledropdownbutton() {
-		clickOnElement(driver,
-				By.xpath("//div[@data-testid='profile-details']/div/div[@class='relative inline-block cursor-pointer']"));
+		clickOnElement(driver, By
+				.xpath("//div[@data-testid='profile-details']/div/div[@class='relative inline-block cursor-pointer']"));
 	}
 
 	public void clickonLogout() {
@@ -187,8 +186,8 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean confirmPasscodeSecondTimeLogin() {
-		return isElementNotVisible(driver,
-				By.xpath("//div[@data-testid='confirm-passcode-container']//input[@type='password' and @maxlength='1']"));
+		return isElementNotVisible(driver, By
+				.xpath("//div[@data-testid='confirm-passcode-container']//input[@type='password' and @maxlength='1']"));
 	}
 
 	public void clickonAddCardsButton() {
@@ -310,7 +309,8 @@ public class Loginpage extends BasePage {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		List<WebElement> collapsedText = driver.findElements(By.xpath("//div[@data-testid='sidebar-container']//span[text()='Home']"));
+		List<WebElement> collapsedText = driver
+				.findElements(By.xpath("//div[@data-testid='sidebar-container']//span[text()='Home']"));
 
 		return (collapsedText.isEmpty() || !collapsedText.get(0).isDisplayed());
 
@@ -324,7 +324,8 @@ public class Loginpage extends BasePage {
 			e.printStackTrace();
 		}
 
-		return isElementIsVisible(driver, By.xpath("(//div[@data-testid='sidebar-container']/div/div)[1]/div[@class='hidden sm:block flex items-center justify-center p-2 rounded-lg shadow-[0_-0.5px_4px_-1px_rgba(0,0,0,0.078),_0_4px_4px_-1px_rgba(0,0,0,0.078)] ml-6 mr-4']"));
+		return isElementIsVisible(driver, By.xpath(
+				"(//div[@data-testid='sidebar-container']/div/div)[1]/div[@class='hidden sm:block flex items-center justify-center p-2 rounded-lg shadow-[0_-0.5px_4px_-1px_rgba(0,0,0,0.078),_0_4px_4px_-1px_rgba(0,0,0,0.078)] ml-6 mr-4']"));
 
 	}
 
@@ -413,7 +414,8 @@ public class Loginpage extends BasePage {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return isElementIsVisible(driver, By.xpath("//div[contains(@class, 'items-start')]/*[@data-testid='back-arrow-icon']"));
+		return isElementIsVisible(driver,
+				By.xpath("//div[contains(@class, 'items-start')]/*[@data-testid='back-arrow-icon']"));
 	}
 
 	public Boolean isHomeArrowButtonDisplayed() {
@@ -523,7 +525,6 @@ public class Loginpage extends BasePage {
 
 	}
 
-	
 	public Boolean isInfoTextForgetPasswordDisplayed() {
 		try {
 			Thread.sleep(3000);
@@ -532,13 +533,12 @@ public class Loginpage extends BasePage {
 		}
 		return isElementIsVisible(driver, By.xpath("//p[@data-testid='subtitle-reset-passcode']"));
 	}
-	
+
 	public String getResetUserInfoOnForgetPasswordWindow() {
 		return getElementText(driver, By.xpath("//p[@data-testid='subtitle-reset-passcode']"));
 
 	}
-	
-	
+
 	public Boolean isResetUserInfoOnForgetPasswordDisplayed() {
 		try {
 			Thread.sleep(3000);
