@@ -79,16 +79,32 @@ sequenceDiagram
     fe ->> interceptor: Make request
     interceptor ->> be: intercepts and Forward request
     be -->> interceptor: Response from backend
-    interceptor ->> interceptor: Check if response is unAuthorized
-    alt is unAuthorized
-        interceptor ->> fe: Redirect to passcode page <br/>(/ [location.state from will pass the current path])
-        fe ->> user: User clicks on sign in with *
-        fe ->> fe: open /passcode [location.state will be as previous] Ask user to enter passcode
-        user ->> fe: Perform login
-        fe ->> fe: On successful login, <br/>return to location.state if present else to home page
-        note over fe: User is redirected to the page they were on before and user needs to re-trigger the action
-    else isAuthorized
-        interceptor ->> fe: Forward response
-        Note over fe: Continue with the response
+    interceptor ->> interceptor: Check if user is logged in
+    alt isLoggedIn
+        activate interceptor
+        interceptor ->> interceptor: Check if response is unAuthorized
+        alt [check] is unAuthorized
+            activate fe
+            rect rgb(255, 240, 230, 0.5)
+                interceptor ->> fe: Redirect to passcode page <br/>(/ [location.state from will pass the current path])
+                fe ->> user: User clicks on sign in with *
+                fe ->> fe: Ask login - open root / [location.state will be as previous] Ask user to enter passcode
+                user ->> fe: Perform login
+                fe ->> fe: On successful login, <br/>return to location.state if present else to home page
+            end
+            note over fe: User is redirected to the page they were on before and user needs to re-trigger the action
+            deactivate fe
+        else [check] isAuthorized
+            rect rgb(230, 255, 230, 0.4)
+                interceptor ->> fe: Forward response
+                note over fe: Continue with the response
+            end
+        end
+        deactivate interceptor
+    else guest mode
+        rect rgb(230, 255, 230, 0.4)
+            interceptor ->> fe: Forward response
+            note over fe: Continue with the response
+        end
     end
 ```
