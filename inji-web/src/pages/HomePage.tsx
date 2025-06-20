@@ -4,8 +4,9 @@ import {HomeFeatures} from "../components/Home/HomeFeatures";
 import {HomeQuickTip} from "../components/Home/HomeQuickTip";
 import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
-import { useLocation } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import {LoginFailedModal} from '../components/Login/LoginFailedModal'
+import {api} from "../utils/api.ts";
 
 const Status = {
     SUCCESS: "success",
@@ -17,6 +18,20 @@ export const HomePage: React.FC = () => {
     const [toastVisible, setToastVisible] = useState(false);
     const location = useLocation();
     const [isLoginFailed, setLoginFailed] = useState(false);
+
+    useEffect(() => {
+        api.instance.get("/users/me")
+            .then((response: { data: any; }) => {
+                console.log("got response from /users/me", response.data);
+            })
+            .catch((reason: any) => {
+                console.error("Error fetching user data:", reason.status);
+            })
+            .finally(() => {
+                console.log("Finished fetching user data");
+            })
+    }, []);
+
 
     // to stop scrolling the blurred background when login failed modal is showing up, scrolling is locked.
     useEffect(() => {
@@ -35,7 +50,7 @@ export const HomePage: React.FC = () => {
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         if (params.get("status") === Status.FAILURE) {
-          setLoginFailed(true);
+            setLoginFailed(true);
         }
     }, [location]);
 
@@ -47,17 +62,17 @@ export const HomePage: React.FC = () => {
             toastId: "toast-wrapper"
         });
     };
-  
+
     return (
         <div>
-        <div className={"pb-20 flex flex-col gap-y-4 "}>
-            <HomeBanner />
-            <HomeFeatures />
-            <HomeQuickTip onClick={() => showToast(t("QuickTip.toastText"))} />
+            <div className={"pb-20 flex flex-col gap-y-4 "}>
+                <HomeBanner/>
+                <HomeFeatures/>
+                <HomeQuickTip onClick={() => showToast(t("QuickTip.toastText"))}/>
+            </div>
+
+            {isLoginFailed && <LoginFailedModal/>}
         </div>
 
-        {isLoginFailed && <LoginFailedModal/>}
-    </div>
-    
     );
 };

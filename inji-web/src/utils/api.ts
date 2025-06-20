@@ -7,6 +7,7 @@ import {
 import i18n from "i18next";
 import { KEYS } from "./constants";
 import {Storage} from "./Storage";
+import axios from "axios";
 
 export enum MethodType {
     GET,
@@ -20,8 +21,31 @@ export enum ContentTypes {
     FORM_URL_ENCODED = "application/x-www-form-urlencoded",
 }
 
+const apiInstance = axios.create({
+    baseURL: window._env_.MIMOTO_URL,
+    withCredentials: true,
+});
+
+export function request(){
+    const fetchWalletCredentials = api.fetchWalletVCs;
+    // const response = await fetch(fetchWalletCredentials.url(), {
+    //     method: "GET",
+    //     headers: fetchWalletCredentials.headers("en"),
+    //     credentials: "include"
+    // });
+
+    return api.instance.request({
+        url: fetchWalletCredentials.url(),
+        method: MethodType[fetchWalletCredentials.methodType],
+        headers: fetchWalletCredentials.headers("en"),
+        credentials: (fetchWalletCredentials.credentials === "include")
+    })
+}
+
 export class api {
     static mimotoHost = window._env_.MIMOTO_URL;
+
+    static instance = apiInstance
 
     static authorizationRedirectionUrl = window.location.origin + "/redirect";
 
