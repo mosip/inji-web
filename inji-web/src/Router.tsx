@@ -24,14 +24,14 @@ import {ProfilePage} from './pages/User/Profile/ProfilePage';
 import {Pages, ROUTES} from "./utils/constants";
 
 function RedirectToUserHome() {
+    console.log("Redirecting to user home page");
     return <Navigate to={ROUTES.USER_HOME} replace/>;
 }
 
 export const AppRouter = () => {
     const location = useLocation();
     const language = useSelector((state: RootState) => state.common.language);
-    const {user, walletId} = useUser();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const {isUserLoggedIn} = useUser();
 
     const headerRef = useRef<HTMLDivElement>(null);
     const footerRef = useRef<HTMLDivElement>(null);
@@ -60,14 +60,6 @@ export const AppRouter = () => {
             window.removeEventListener('resize', updateHeights);
         };
     }, [location.pathname]);
-
-    useEffect(() => {
-        const updateLoginState = () => {
-            setIsLoggedIn(!!user && !!walletId);
-        };
-
-        updateLoginState();
-    }, [user, walletId]);
 
     const wrapElement = (element: JSX.Element, isBGNeeded: boolean = true) => {
         return (
@@ -99,7 +91,7 @@ export const AppRouter = () => {
                 <Route
                     path={ROUTES.ROOT}
                     element={
-                        isLoggedIn ? (
+                        isUserLoggedIn() ? (
                             <RedirectToUserHome/>
                         ) : (
                             wrapElement(<HomePage/>, false)

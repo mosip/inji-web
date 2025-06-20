@@ -15,9 +15,16 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     const [error, setError] = useState<ErrorType | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
+    // This stores the info related to whether user has authenticated or not
     const saveUser = (userData: User) => {
         Storage.setItem(KEYS.USER, JSON.stringify(userData));
         setUser(userData);
+    };
+
+    // This stores the info related to whether user has unlocked wallet or not
+    const saveWalletId = (walletId: string) => {
+        Storage.setItem(KEYS.WALLET_ID, walletId);
+        setWalletId(walletId);
     };
 
     const removeUser = () => {
@@ -32,8 +39,12 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         setWalletId(null);
     };
 
+    // Logged in = authenticated + unlocked wallet
     const isUserLoggedIn = () => {
-        return !!Storage.getItem(KEYS.WALLET_ID)
+        console.log("Checking if user is logged in...");
+        const user = Storage.getItem(KEYS.USER);
+        const walletId = Storage.getItem(KEYS.WALLET_ID);
+        return !!user && !!walletId
     };
 
     const fetchUserProfile = async () => {
@@ -55,8 +66,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
             };
 
             saveUser(userData);
-            setWalletId(responseData.walletId);
-            Storage.setItem(KEYS.WALLET_ID, responseData.walletId);
             setIsLoading(false);
             return {user: userData, walletId: responseData.walletId};
         } catch (error) {
@@ -77,6 +86,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
             isUserLoggedIn,
             fetchUserProfile,
             saveUser,
+            saveWalletId,
             removeUser,
             removeWallet
         }),

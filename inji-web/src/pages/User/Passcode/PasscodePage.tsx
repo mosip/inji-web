@@ -23,7 +23,7 @@ export const PasscodePage: React.FC = () => {
     const [confirmPasscode, setConfirmPasscode] = useState<string[]>(
         Array(6).fill('')
     );
-    const {fetchUserProfile} = useUser();
+    const {fetchUserProfile, saveWalletId} = useUser();
 
     const fetchWallets = async () => {
         try {
@@ -51,29 +51,31 @@ export const PasscodePage: React.FC = () => {
 
     useEffect(() => {
         const fetchWalletsAndUserDetails = async () => {
-            await fetchWallets();
             try {
+                console.log("Fetching wallets and user details on PasscodePage mount");
                 await fetchUserProfile();
             } catch (error) {
                 console.error(
                     'Error occurred while fetching User profile:',
                     error
                 );
+                //TODO: Handle user profile fetch error
             }
+            await fetchWallets();
         };
         fetchWalletsAndUserDetails();
     }, []);
 
-    useEffect(() => {
-        const handleStorageChange = (e: StorageEvent) => {
-            if (e.key === 'walletId') {
-                fetchWallets();
-            }
-        };
-
-        window.addEventListener('storage', handleStorageChange);
-        return () => window.removeEventListener('storage', handleStorageChange);
-    }, []);
+    // useEffect(() => {
+    //     const handleStorageChange = (e: StorageEvent) => {
+    //         if (e.key === 'walletId') {
+    //             fetchWallets();
+    //         }
+    //     };
+    //
+    //     window.addEventListener('storage', handleStorageChange);
+    //     return () => window.removeEventListener('storage', handleStorageChange);
+    // }, []);
 
     const unlockWallet = async (walletId: string, pin: string) => {
         if (!walletId) {
@@ -98,6 +100,7 @@ export const PasscodePage: React.FC = () => {
                 setError(t('error.incorrectPasscodeError'));
                 throw responseData;
             }
+            saveWalletId(walletId)
         } catch (error) {
             throw error;
         }
@@ -175,6 +178,7 @@ export const PasscodePage: React.FC = () => {
 
                 await unlockWallet(walletId, formattedPasscode);
             }
+            console.log("Passcode submitted successfully, fetching user profile and navigating to home");
             await fetchUserProfileAndNavigate();
         } catch (error) {
             console.error(
