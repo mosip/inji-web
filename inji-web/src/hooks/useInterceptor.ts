@@ -1,18 +1,21 @@
 import {useEffect} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import {api} from "../utils/api";
+import {ROUTES} from "../utils/constants";
+import {useUser} from "./User/useUser";
 
 export function useAxiosInterceptor() {
     const navigate = useNavigate();
     const location = useLocation();
+    const {removeUser} = useUser()
 
     const interceptor = api.instance.interceptors.response.use(function (response: any) {
-        console.log("interceptor response", response);
         return response;
     }, function (error: { response: { status: number; }; }) {
-        console.log("interceptor error out", error.response);
         if( error.response && error.response.status === 401) {
-            navigate("user/passcode", {
+            console.warn("Unauthorized access detected. Redirecting to / page.");
+            removeUser()
+            navigate(ROUTES.ROOT, {
                 state: {
                     from: location.pathname + location.search + location.hash
                 }
