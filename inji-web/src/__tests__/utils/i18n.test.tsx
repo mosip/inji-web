@@ -39,7 +39,7 @@ const mockStorage = {
   SELECTED_LANGUAGE: 'selectedLanguage',
 };
 
-jest.mock('../../utils/storage', () => ({
+jest.mock('../../utils/Storage', () => ({
   storage: mockStorage,
 }));
 

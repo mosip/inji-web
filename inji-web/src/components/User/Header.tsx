@@ -11,7 +11,7 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
 import {useTranslation} from 'react-i18next';
 import DropdownArrowIcon from '../Common/DropdownArrowIcon';
-import {KEYS, ROUTES} from '../../utils/constants';
+import {ROUTES} from '../../utils/constants';
 import {convertStringIntoPascalCase} from "../../utils/misc";
 import {navigateToUserHome} from "../../utils/navigationUtils";
 import {CircleSkeleton} from '../Common/CircleSkeleton';
@@ -80,14 +80,13 @@ export const Header: React.FC<UserHeaderProps> = ({
 
             if (response.ok) {
                 removeUser();
-                localStorage.removeItem(KEYS.WALLET_ID);
-                window.location.replace('/');
+                window.location.replace(ROUTES.ROOT);
             } else {
                 const parsedResponse = await response.json();
                 const errorCode = parsedResponse?.errors[0].errorCode;
                 if (errorCode === 'user_logout_error') {
                     removeUser();
-                    window.location.replace('/');
+                    window.location.replace(ROUTES.ROOT);
                 }
                 throw new Error(parsedResponse?.errors[0]?.errorMessage);
             }

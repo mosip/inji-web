@@ -7,7 +7,7 @@ import hi from '../locales/hi.json';
 import kn from '../locales/kn.json';
 import ar from '../locales/ar.json';
 import pt from '../locales/pt.json';
-import {storage} from "./storage";
+import {Storage} from "./Storage";
 import {
     CredentialTypeDisplayArrayObject,
     IssuerWellknownDisplayArrayObject,
@@ -28,12 +28,12 @@ export const LanguagesSupported: LanguageObject[] = [
 
 export const defaultLanguage = window._env_.DEFAULT_LANG;
 
-const selected_language = storage.getItem(storage.SELECTED_LANGUAGE);
+const selected_language = Storage.getItem(Storage.SELECTED_LANGUAGE);
 i18n
     .use(initReactI18next) // passes i18n down to react-i18next
     .init({
         resources,
-        lng: selected_language ? selected_language : defaultLanguage,
+        lng: selected_language ?? defaultLanguage,
         fallbackLng: defaultLanguage,
         interpolation: {
             escapeValue: false // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
@@ -41,7 +41,7 @@ i18n
     });
 
 export const switchLanguage = async (language: string) => {
-    storage.setItem(storage.SELECTED_LANGUAGE, language);
+    Storage.setItem(Storage.SELECTED_LANGUAGE, language);
     await i18n.changeLanguage(language);
 }
 export const getIssuerDisplayObjectForCurrentLanguage = (displayArray: IssuerWellknownDisplayArrayObject[], language: string = i18n.language) => {

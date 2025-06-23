@@ -1,9 +1,8 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useUser} from '../../hooks/User/useUser';
 import {KEYS, ROUTES} from '../../utils/constants';
-
-import {User} from "../../types/data";
+import {Storage} from "../../utils/Storage";
 
 const loginProtectedPrefixes = [ROUTES.USER];
 
@@ -11,26 +10,61 @@ const isLoginProtectedRoute = (pathname: string) => {
     return loginProtectedPrefixes.some((prefix) => pathname.startsWith(prefix));
 }
 
+/**
+ * LoginSessionStatusChecker component checks the login session status
+ * and redirects the user to the appropriate page based on their login state.
+ * It listens for changes in the local storage to update the session status.
+ * It relies on the storage data to determine if the user is logged in or not.
+ */
 const LoginSessionStatusChecker = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const {user, walletId, removeUser, fetchUserProfile, isLoading} = useUser();
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const userFromLocalStorage = localStorage.getItem(KEYS.USER);
-    const walletIdFromLocalStorage = localStorage.getItem(KEYS.WALLET_ID);
+    const {removeUser, fetchUserProfile} = useUser();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-        setIsLoggedIn(!!userFromLocalStorage && !!walletIdFromLocalStorage);
-    }, [userFromLocalStorage, walletIdFromLocalStorage]);
+    const validateStatus = useCallback(() => {
+        const user = Storage.getItem(KEYS.USER);
+        const isSessionActive: boolean = !!user
+        const walletId = Storage.getItem(KEYS.WALLET_ID);
+        const isLoggedIn = !!walletId && isSessionActive;
 
-    useEffect(() => {
-        fetchSessionAndUserInfo();
-    }, [isLoggedIn]);
+        // User is not logged in and trying to access a login protected route
+        if (!isLoggedIn && isLoginProtectedRoute(location.pathname)) {
+            // Session is active but user required to enter passcode to unlock wallet
+            // user can reset-passcode when session is active but not logged out state
+            if (isSessionActive && location.pathname !== ROUTES.USER_RESET_PASSCODE) {
+                console.warn('Session is active but no wallet ID found, redirecting to /user/passcode to unlock wallet from path - ', location.pathname);
+                navigate(ROUTES.PASSCODE);
+            } else {
+                console.warn('User is not logged in, redirecting to / to login');
+                removeUser();
+                navigate(ROUTES.ROOT);
+            }
+        }
+    }, [navigate, location.pathname, removeUser]);
 
+
+    const fetchUser = useCallback(async () => {
+        try {
+            setIsLoading(true)
+            await fetchUserProfile();
+            setIsLoading(false)
+        } catch (error) {
+            console.error('Error fetching user profile:', error);
+            if (isLoginProtectedRoute(location.pathname)) {
+                console.warn(". Redirecting to / page as accessing protected route");
+                navigate(ROUTES.ROOT)
+            }
+        }
+    }, [fetchUserProfile, location.pathname, navigate]);
+
+    // on app launch, populate the data from backend
     useEffect(() => {
+        fetchUser();
+
         const handleStorageChange = (event: any) => {
-            if (event.key === KEYS.USER) {
-                fetchSessionAndUserInfo();
+            if (event.key === KEYS.USER || event.key === KEYS.WALLET_ID) {
+                fetchUser();
             }
         };
 
@@ -38,53 +72,12 @@ const LoginSessionStatusChecker = () => {
         return () => window.removeEventListener('storage', handleStorageChange);
     }, []);
 
-    const validateWalletUnlockStatus = (
-        cachedWalletId: string | null,
-        storageWalletId: string | null,
-        navigate: (path: string) => void,
-        user: User
-    ) => {
-        if (cachedWalletId && (cachedWalletId === storageWalletId)) {
-            console.info('Wallet is unlocked!');
-        } else {
-            console.warn(
-                'Wallet exists but is locked, redirecting to `/user/passcode` to unlock the wallet.'
-            );
-            if (user) {
-                navigate(ROUTES.PASSCODE);
-                localStorage.removeItem(KEYS.WALLET_ID);
-            }
+    // on every path change, validate the status. This happens after app launch handlers are set up
+    useEffect(() => {
+        if (!isLoading) {
+            validateStatus();
         }
-    };
-
-    const fetchSessionAndUserInfo = async () => {
-        try {
-            const {user, walletId} = await fetchUserProfile();
-            if (user && !walletId) {
-                console.warn(
-                    'No wallet ID found for the user, redirecting to `/user/passcode`'
-                );
-                navigate(ROUTES.PASSCODE);
-                return;
-            }
-            const cachedWalletId = walletId;
-            const storageWalletId = localStorage.getItem(KEYS.WALLET_ID);
-
-            validateWalletUnlockStatus(
-                cachedWalletId,
-                storageWalletId,
-                navigate,
-                user
-            );
-        } catch (error) {
-            console.error('Error occurred while fetching user profile:', error);
-            removeUser();
-            localStorage.removeItem(KEYS.WALLET_ID);
-            if (isLoggedIn || (!isLoggedIn && isLoginProtectedRoute(location.pathname))) {
-                navigate(ROUTES.ROOT);
-            }
-        }
-    };
+    }, [location.pathname, validateStatus, isLoading]);
 
     return null;
 };

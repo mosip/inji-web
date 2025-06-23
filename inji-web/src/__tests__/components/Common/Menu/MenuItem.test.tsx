@@ -1,6 +1,7 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
 import {MenuItem} from '../../../../components/Common/Menu/MenuItem';
+import {Clickable} from "../../../../components/Common/Clickable";
 
 describe('MenuItem Component', () => {
   const mockOnClick = jest.fn();
@@ -45,9 +46,9 @@ describe('MenuItem Component', () => {
     const mockContainerClick = jest.fn();
 
     render(
-      <div onClick={mockContainerClick}>
+      <Clickable onClick={mockContainerClick} testId={`${testId}-wrapper`}>
         <MenuItem label={label} onClick={mockOnClick} testId={testId} />
-      </div>
+      </Clickable>
     );
 
     const menuItem = screen.getByTestId("menu-item-test-menu");
