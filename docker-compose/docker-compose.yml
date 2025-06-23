@@ -76,7 +76,7 @@ services:
       - '3004:3004'
     environment:
       - DEFAULT_LANG=en
-      - MIMOTO_URL=http://localhost:3004/v1/mimoto
+      - MIMOTO_URL=http://localhost:8099/v1/mimoto
     volumes:
       - ./config/mimoto-issuers-config.json:/home/mosip/mimoto-issuers-config.json
       - ./config/mimoto-trusted-verifiers.json:/home/mosip/mimoto-trusted-verifiers.json
