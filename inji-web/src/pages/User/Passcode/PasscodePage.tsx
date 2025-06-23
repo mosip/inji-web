@@ -36,11 +36,6 @@ export const PasscodePage: React.FC = () => {
                 credentials: 'include'
             });
 
-            if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
-                console.log("Here we are redirecting to root page as session is expired");
-                navigate("/")
-            }
-
             const responseData = await response.json();
 
             if (!response.ok) {

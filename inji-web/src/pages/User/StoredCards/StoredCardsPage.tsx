@@ -5,7 +5,7 @@ import {NavBackArrowButton} from '../../../components/Common/Buttons/NavBackArro
 import {WalletCredential} from "../../../types/data";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../types/redux";
-import {api} from "../../../utils/api";
+import {api, request} from "../../../utils/api";
 import {SolidButton} from "../../../components/Common/Buttons/SolidButton";
 import {SpinningLoader} from "../../../components/Common/SpinningLoader";
 import {SearchBar} from "../../../components/Common/SearchBar/SearchBar";
@@ -20,12 +20,14 @@ import {StoredCardsPageStyles} from "./StoredCardsPageStyles";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 import {navigateToUserHome} from "../../../utils/navigationUtils";
 import {HTTP_STATUS_CODES, ROUTES} from "../../../utils/constants";
+import {useApi} from "../../../hooks/useApi";
 
 export const StoredCardsPage: React.FC = () => {
     const {t} = useTranslation('StoredCards');
     const navigate = useNavigate();
     const [credentials, setCredentials] = useState<WalletCredential[]>([]);
     const [filteredCredentials, setFilteredCredentials] = useState<WalletCredential[]>([]);
+    const walletCredentials = useApi<WalletCredential[]>()
     const [loading, setLoading] = useState(true);
     const language = useSelector((state: RootState) => state.common.language);
     const [error, setError] = useState<string>();
@@ -35,24 +37,31 @@ export const StoredCardsPage: React.FC = () => {
         setLoading(true)
         try {
             const fetchWalletCredentials = api.fetchWalletVCs;
-            const response = await fetch(fetchWalletCredentials.url(), {
-                method: "GET",
-                headers: fetchWalletCredentials.headers(language),
-                credentials: "include"
-            });
+            // const response = await fetch(fetchWalletCredentials.url(), {
+            //     method: "GET",
+            //     headers: fetchWalletCredentials.headers(language),
+            //     credentials: "include"
+            // });
 
-            if (response.ok) {
-                const responseData = await response.json();
-                setCredentials(responseData);
-                setFilteredCredentials(responseData)
+            const response = await walletCredentials.fetchData({
+                headers: fetchWalletCredentials.headers(language),
+                body: undefined,
+                apiRequest: fetchWalletCredentials
+            })
+
+            console.log("response", response);
+
+            if (response.status === HTTP_STATUS_CODES.OK) {
+                const responseData = response.data;
+                setCredentials(responseData!);
+                setFilteredCredentials(responseData!)
             } else {
                 if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
                     console.error("Unauthorized access - redirecting to root");
                     navigate(ROUTES.ROOT);
                     return;
                 }
-                const responseData = await response.json();
-                console.error("Error fetching credentials:", responseData);
+                console.error("Error fetching credentials:", response.status, response.error);
                 const invalidWalletRequests = [
                     "Wallet key not found in session",
                     "Wallet is locked",
@@ -66,8 +75,10 @@ export const StoredCardsPage: React.FC = () => {
                         setError("serviceUnavailable");
                         break;
                     case HTTP_STATUS_CODES.BAD_REQUEST:
+                        const errorMessage = response.error?.response?.data.errorMessage;
+                        console.log("Bad request error:", errorMessage);
                         setError(
-                            invalidWalletRequests.includes(responseData.errorMessage)
+                            invalidWalletRequests.includes(errorMessage ?? "")
                                 ? "invalidWalletRequest"
                                 : "invalidRequest"
                         );

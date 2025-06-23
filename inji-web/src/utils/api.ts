@@ -26,19 +26,13 @@ const apiInstance = axios.create({
     withCredentials: true,
 });
 
-export function request(){
-    const fetchWalletCredentials = api.fetchWalletVCs;
-    // const response = await fetch(fetchWalletCredentials.url(), {
-    //     method: "GET",
-    //     headers: fetchWalletCredentials.headers("en"),
-    //     credentials: "include"
-    // });
-
+export function request(headers : any, body: any, apiRequest: ApiRequest){
     return api.instance.request({
-        url: fetchWalletCredentials.url(),
-        method: MethodType[fetchWalletCredentials.methodType],
-        headers: fetchWalletCredentials.headers("en"),
-        credentials: (fetchWalletCredentials.credentials === "include")
+        url: apiRequest.url(),
+        method: MethodType[apiRequest.methodType],
+        headers: headers,
+        data: body,
+        withCredentials: (apiRequest.credentials === "include"),
     })
 }
 

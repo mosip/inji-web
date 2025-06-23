@@ -19,19 +19,6 @@ export const HomePage: React.FC = () => {
     const location = useLocation();
     const [isLoginFailed, setLoginFailed] = useState(false);
 
-    useEffect(() => {
-        api.instance.get("/users/me")
-            .then((response: { data: any; }) => {
-                console.log("got response from /users/me", response.data);
-            })
-            .catch((reason: any) => {
-                console.error("Error fetching user data:", reason.status);
-            })
-            .finally(() => {
-                console.log("Finished fetching user data");
-            })
-    }, []);
-
 
     // to stop scrolling the blurred background when login failed modal is showing up, scrolling is locked.
     useEffect(() => {
