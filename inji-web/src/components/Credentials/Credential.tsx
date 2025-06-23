@@ -11,6 +11,7 @@ import {CodeChallengeObject, CredentialConfigurationObject} from "../../types/da
 import {RootState} from "../../types/redux";
 import {DataShareExpiryModal} from "../../modals/DataShareExpiryModal";
 import {useUser} from "../../hooks/User/useUser";
+import { buildAuthorizationUrl } from "../../utils/misc";
 
 export const Credential: React.FC<CredentialProps> = (props) => {
     const credentials = useSelector(
@@ -55,17 +56,14 @@ export const Credential: React.FC<CredentialProps> = (props) => {
         if (
             validateIfAuthServerSupportRequiredGrantTypes(grantTypesSupported)
         ) {
-            window.open(
-                api.authorization(
-                    selectedIssuer,
-                    filteredCredentialConfig,
-                    state,
-                    code_challenge,
-                    authorizationEndpoint
-                ),
-                "_self",
-                "noopener"
-            );
+            const url = buildAuthorizationUrl(
+                selectedIssuer,
+                filteredCredentialConfig,
+                state,
+                code_challenge,
+                authorizationEndpoint!
+              );
+              window.open(url, "_self", "noopener");
         } else {
             props.setErrorObj({
                 code: "errors.authorizationGrantTypeNotSupportedByWallet.code",
