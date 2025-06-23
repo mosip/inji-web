@@ -23,7 +23,7 @@ export const PasscodePage: React.FC = () => {
     const [confirmPasscode, setConfirmPasscode] = useState<string[]>(
         Array(6).fill('')
     );
-    const {fetchUserProfile, saveWalletId} = useUser();
+    const {saveWalletId} = useUser();
 
     const fetchWallets = async () => {
         try {
@@ -37,6 +37,7 @@ export const PasscodePage: React.FC = () => {
             });
 
             const responseData = await response.json();
+            console.log("Response Data:", responseData);
 
             if (!response.ok) {
                 throw responseData;
@@ -50,20 +51,10 @@ export const PasscodePage: React.FC = () => {
     };
 
     useEffect(() => {
-        const fetchWalletsAndUserDetails = async () => {
-            try {
-                console.log("Fetching wallets and user details on PasscodePage mount");
-                await fetchUserProfile();
-            } catch (error) {
-                console.error(
-                    'Error occurred while fetching User profile:',
-                    error
-                );
-                //TODO: Handle user profile fetch error
-            }
+        const fetchWalletDetails = async () => {
             await fetchWallets();
         };
-        fetchWalletsAndUserDetails();
+        fetchWalletDetails();
     }, []);
 
     useEffect(() => {
@@ -102,16 +93,6 @@ export const PasscodePage: React.FC = () => {
             }
             saveWalletId(walletId)
         } catch (error) {
-            throw error;
-        }
-    };
-
-    const fetchUserProfileAndNavigate = async () => {
-        try {
-            await fetchUserProfile();
-            navigateToUserHome(navigate);
-        } catch (error) {
-            setError('Failed to fetch user profile');
             throw error;
         }
     };
@@ -179,7 +160,7 @@ export const PasscodePage: React.FC = () => {
                 await unlockWallet(walletId, formattedPasscode);
             }
             console.log("Passcode submitted successfully, fetching user profile and navigating to home");
-            await fetchUserProfileAndNavigate();
+            await navigateToUserHome(navigate);
         } catch (error) {
             console.error(
                 'Error occurred while setting up Wallet or loading user profile',

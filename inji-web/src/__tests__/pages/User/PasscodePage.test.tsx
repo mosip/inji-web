@@ -1,5 +1,6 @@
 import React from 'react';
-import {render, screen, within} from '@testing-library/react';
+import {render, screen, waitFor, within} from '@testing-library/react';
+import {fetchMock} from "../../../test-utils/setupFetchMock";
 import {MemoryRouter} from 'react-router-dom';
 import {CookiesProvider} from 'react-cookie';
 import {PasscodePage} from '../../../pages/User/Passcode/PasscodePage';
@@ -38,6 +39,9 @@ describe('Passcode', () => {
     );
   };
 
+  beforeEach(() => {
+  })
+
   test('renders passcode page', () => {
     renderWithProviders(<PasscodePage />);
     const page = screen.getByTestId('passcode-page');
@@ -56,25 +60,48 @@ describe('Passcode', () => {
     expect(title).toHaveTextContent(/Set Passcode|Enter Passcode/);
   });
 
-  test("renders passcode input field", () => {
+  test("renders passcode input field", async () => {
+      fetchMock.mockResolvedValueOnce({
+          ok: true,
+          json: async () => ([{"walletId":"2c2e1810-19c8-4c85-910d-aa1622412413","walletName":null}]),
+          headers: {
+              get: () => null,
+          },
+      });
     renderWithProviders(<PasscodePage />);
-    const passcodeInput = screen.getByTestId("passcode-container");
-    expect(passcodeInput).toBeInTheDocument();
 
+    const passcodeInput = await waitFor(() => screen.getByTestId("passcode-container"));
+    expect(passcodeInput).toBeInTheDocument();
     expect(within(passcodeInput).getByTestId("label-passcode")).toHaveTextContent("Enter Passcode");
   });
 
-  test("renders confirm passcode input field when wallet does not exist", () => {
+  test("renders confirm passcode input field when wallet does not exist", async () => {
+      fetchMock.mockResolvedValueOnce({
+          ok: true,
+          json: async () => ([]),
+          headers: {
+              get: () => null,
+          },
+      });
     renderWithProviders(<PasscodePage />);
+
+    await waitFor(() => screen.getByTestId("confirm-passcode-container"));
     const confirmPasscodeInput = screen.getByTestId("confirm-passcode-container");
     expect(confirmPasscodeInput).toBeInTheDocument();
     expect(confirmPasscodeInput).toHaveTextContent("Confirm Passcode");
   });
 
 
-  test("renders submit button", () => {
+  test("renders submit button", async () => {
+      fetchMock.mockResolvedValueOnce({
+          ok: true,
+          json: async () => ([{"walletId":"2c2e1810-19c8-4c85-910d-aa1622412413","walletName":null}]),
+          headers: {
+              get: () => null,
+          },
+      });
     renderWithProviders(<PasscodePage />);
-    const submitButton = screen.getByTestId("btn-submit-passcode");
-    expect(submitButton).toBeInTheDocument();
+
+    await waitFor(()=>expect(screen.getByTestId("btn-submit-passcode")).toBeInTheDocument())
   });
 }); 
