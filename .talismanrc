@@ -22,7 +22,7 @@ fileignoreconfig:
 - filename: helm/inji-web/templates/configmap.yaml
   checksum: f238e115674a518c94ea702831a02d41bc73124aa7852b8ef7d588eb27308f77
 - filename: inji-web/nginx.conf
-  checksum: ad2ad36daa595266c02e48f1dbc875ebcfe409fb57685c16b5e50df4a0c5ec08
+  checksum: 093b4c1ff986bbe13ad89593f0528a02b6dc93eea3eb5952d9244ca4f970b2f6
 - filename: inji-web/src/__tests__/utils/misc.test.tsx
   checksum: 4863d9274e25e1b34c8acd4721a609a2aa68051e644e9f049d521cc15a1575f8
 - filename: inji-web/src/test-utils/mockUtils.tsx
