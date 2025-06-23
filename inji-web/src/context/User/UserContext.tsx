@@ -15,13 +15,13 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     const [error, setError] = useState<ErrorType | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    // This stores the info related to whether user has authenticated or not
+    // This stores the user info which indicates whether user has authenticated or not
     const saveUser = (userData: User) => {
         Storage.setItem(KEYS.USER, JSON.stringify(userData));
         setUser(userData);
     };
 
-    // This stores the info related to whether user has unlocked wallet or not
+    // This stores the wallet ID which indicates whether user has unlocked wallet or not
     const saveWalletId = (walletId: string) => {
         Storage.setItem(KEYS.WALLET_ID, walletId);
         setWalletId(walletId);

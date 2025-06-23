@@ -9,99 +9,91 @@ import {DownloadSessionProvider} from "../../../context/User/DownloadSessionCont
 
 // Mocking the useTranslation hook from react-i18next
 jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => {
-      const translations: Record<string, string> = {
-        "setPasscode":"Set Passcode",
-        "enterPasscode":"Enter Passcode",
-        "enterPasscodeLabel":"Enter Passcode",
-        "confirmPasscodeLabel":"Confirm Passcode",
-        "resetasscode":"Reset Passcode",
-        "setPasscodeDescription":"Set your passcode to get started",
-        "enterPasscodeDescription":"Enter your 6 digit passcode",
-        "passcodeWarning":"Make sure you remember the password for future login",
-      };
-      return translations[key] || key;
-    }
-  })
+    useTranslation: () => ({
+        t: (key: string) => {
+            const translations: Record<string, string> = {
+                "setPasscode": "Set Passcode",
+                "enterPasscode": "Enter Passcode",
+                "enterPasscodeLabel": "Enter Passcode",
+                "confirmPasscodeLabel": "Confirm Passcode",
+                "resetasscode": "Reset Passcode",
+                "setPasscodeDescription": "Set your passcode to get started",
+                "enterPasscodeDescription": "Enter your 6 digit passcode",
+                "passcodeWarning": "Make sure you remember the password for future login",
+            };
+            return translations[key] || key;
+        }
+    })
 }));
 
 describe('Passcode', () => {
-  const renderWithProviders = (ui: React.ReactElement) => {
-    return render(
-        <CookiesProvider>
-            <UserProvider>
-              <DownloadSessionProvider>
-                <MemoryRouter>{ui}</MemoryRouter>
-              </DownloadSessionProvider>
-            </UserProvider>
-        </CookiesProvider>
-    );
-  };
+    const renderWithProviders = (ui: React.ReactElement) => {
+        return render(
+            <CookiesProvider>
+                <UserProvider>
+                    <DownloadSessionProvider>
+                        <MemoryRouter>{ui}</MemoryRouter>
+                    </DownloadSessionProvider>
+                </UserProvider>
+            </CookiesProvider>
+        );
+    };
 
-  beforeEach(() => {
-  })
+    beforeEach(() => {
+    })
 
-  test('renders passcode page', () => {
-    renderWithProviders(<PasscodePage />);
-    const page = screen.getByTestId('passcode-page');
-    expect(page).toBeInTheDocument();
-  });
+    test('renders passcode page', () => {
+        renderWithProviders(<PasscodePage/>);
+        const page = screen.getByTestId('passcode-page');
+        expect(page).toBeInTheDocument();
+    });
 
-  test('renders passcode logo', () => {
-    renderWithProviders(<PasscodePage />);
-    const logo = screen.getByTestId('logo-inji-web-container');
-    expect(logo).toBeInTheDocument();
-  });
+    test('renders passcode logo', () => {
+        renderWithProviders(<PasscodePage/>);
+        const logo = screen.getByTestId('logo-inji-web-container');
+        expect(logo).toBeInTheDocument();
+    });
 
-  test('renders passcode title', () => {
-    renderWithProviders(<PasscodePage />);
-    const title = screen.getByTestId('title-passcode');
-    expect(title).toHaveTextContent(/Set Passcode|Enter Passcode/);
-  });
+    test('renders passcode title', () => {
+        renderWithProviders(<PasscodePage/>);
+        const title = screen.getByTestId('title-passcode');
+        expect(title).toHaveTextContent(/Set Passcode|Enter Passcode/);
+    });
 
-  test("renders passcode input field", async () => {
-      fetchMock.mockResolvedValueOnce({
-          ok: true,
-          json: async () => ([{"walletId":"2c2e1810-19c8-4c85-910d-aa1622412413","walletName":null}]),
-          headers: {
-              get: () => null,
-          },
-      });
-    renderWithProviders(<PasscodePage />);
+    test("renders passcode input field", async () => {
+        mockWalletsAPIResponse([{"walletId": "2c2e1810-19c8-4c85-910d-aa1622412413", "walletName": null}]);
+        renderWithProviders(<PasscodePage/>);
 
-    const passcodeInput = await waitFor(() => screen.getByTestId("passcode-container"));
-    expect(passcodeInput).toBeInTheDocument();
-    expect(within(passcodeInput).getByTestId("label-passcode")).toHaveTextContent("Enter Passcode");
-  });
+        const passcodeInput = await screen.findByTestId("passcode-container");
+        expect(passcodeInput).toBeInTheDocument();
+        expect(within(passcodeInput).getByTestId("label-passcode")).toHaveTextContent("Enter Passcode");
+    });
 
-  test("renders confirm passcode input field when wallet does not exist", async () => {
-      fetchMock.mockResolvedValueOnce({
-          ok: true,
-          json: async () => ([]),
-          headers: {
-              get: () => null,
-          },
-      });
-    renderWithProviders(<PasscodePage />);
+    test("renders confirm passcode input field when wallet does not exist", async () => {
+        mockWalletsAPIResponse([])
+        renderWithProviders(<PasscodePage/>);
 
-    await waitFor(() => screen.getByTestId("confirm-passcode-container"));
-    const confirmPasscodeInput = screen.getByTestId("confirm-passcode-container");
-    expect(confirmPasscodeInput).toBeInTheDocument();
-    expect(confirmPasscodeInput).toHaveTextContent("Confirm Passcode");
-  });
+        await screen.findByTestId("confirm-passcode-container");
+        const confirmPasscodeInput = screen.getByTestId("confirm-passcode-container");
+        expect(confirmPasscodeInput).toBeInTheDocument();
+        expect(confirmPasscodeInput).toHaveTextContent("Confirm Passcode");
+    });
 
 
-  test("renders submit button", async () => {
-      fetchMock.mockResolvedValueOnce({
-          ok: true,
-          json: async () => ([{"walletId":"2c2e1810-19c8-4c85-910d-aa1622412413","walletName":null}]),
-          headers: {
-              get: () => null,
-          },
-      });
-    renderWithProviders(<PasscodePage />);
+    test("renders submit button", async () => {
+        mockWalletsAPIResponse([{"walletId": "2c2e1810-19c8-4c85-910d-aa1622412413", "walletName": null}]);
+        renderWithProviders(<PasscodePage/>);
 
-    await waitFor(()=>expect(screen.getByTestId("btn-submit-passcode")).toBeInTheDocument())
-  });
+        await screen.findByTestId("btn-submit-passcode")
+    });
+
+    function mockWalletsAPIResponse(response: object) {
+        fetchMock.mockResolvedValueOnce({
+            ok: true,
+            json: async () => (response),
+            headers: {
+                get: () => null,
+            },
+        });
+    }
 }); 
