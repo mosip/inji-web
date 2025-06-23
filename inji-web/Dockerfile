@@ -1,5 +1,5 @@
 # Use a more recent and secure Node.js version
-FROM node:lts as build
+FROM node:lts AS build
 
 # Set the working directory in the container to /home/mosip
 ARG container_user=mosip
@@ -32,8 +32,8 @@ COPY . .
 RUN npm run build
 
 # Use a specific, secure Nginx version
-FROM nginx:stable
-
+FROM nginx:1.28.0-alpine3.21-slim
+RUN apk add --no-cache shadow
 # Set ARGs as environment variables
 ARG SOURCE
 ARG COMMIT_HASH

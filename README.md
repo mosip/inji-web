@@ -50,23 +50,30 @@ $ npm start
  * Run `npm test` to run tests
 
 
-- Build and run Docker for a service:
+- Build and run Docker for a service: 
 ```
+# Navigate to the project's root directory and then run the following commands
 $ cd ./inji-web
-$ docker build -f -t <dockerImageName>:<tag> .
+$ docker build -t <dockerImageName>:<tag> .
 # add the environments you wish to update as env while running the docker image
 $ docker run -e DEFAULT_LANG=en  -it -p 3004:3004 <dockerImageName>:<tag>
 ```
 
-- Run Using Docker Compose 
+- Run Using Docker Compose:
 ```
-$ cd ./inji-web
+# Navigate to the project's root directory and then run the following commands
+$ cd ./docker-compose
+
+# Start the services
 $ docker-compose up
 ```
 
-- Stop Using Docker Compose
+- Stop Using Docker Compose:
 ```
-$ cd ./inji-web
+# Navigate to the project's root directory and then run the following commands
+$ cd ./docker-compose
+
+# Stop the services
 $ docker-compose down
 ```
 
