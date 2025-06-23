@@ -28,21 +28,23 @@ const LoginSessionStatusChecker = () => {
         const walletId = Storage.getItem(KEYS.WALLET_ID);
         const isLoggedIn = !!walletId && isSessionActive;
 
-        // user can reset-passcode when session is active but not logged out state
-        if (isSessionActive && !isLoggedIn && location.pathname !== ROUTES.USER_RESET_PASSCODE && isLoginProtectedRoute(location.pathname)) {
+        // User is not logged in and trying to access a login protected route
+        if (!isLoggedIn && isLoginProtectedRoute(location.pathname)) {
             // Session is active but user required to enter passcode to unlock wallet
-            console.warn('Session is active but no wallet ID found, redirecting to `/user/passcode` to unlock wallet from path - ', location.pathname);
-            navigate(ROUTES.PASSCODE);
-        } else if (!isLoggedIn && isLoginProtectedRoute(location.pathname)) {
-            // User is not logged in and trying to access a login protected route
-            console.warn('User is not logged in, redirecting to `/` to login');
-            removeUser();
-            navigate(ROUTES.ROOT);
+            // user can reset-passcode when session is active but not logged out state
+            if (isSessionActive && location.pathname !== ROUTES.USER_RESET_PASSCODE) {
+                console.warn('Session is active but no wallet ID found, redirecting to /user/passcode to unlock wallet from path - ', location.pathname);
+                navigate(ROUTES.PASSCODE);
+            } else {
+                console.warn('User is not logged in, redirecting to / to login');
+                removeUser();
+                navigate(ROUTES.ROOT);
+            }
         }
     }, [navigate, location.pathname, removeUser]);
 
 
-    const fetchInfo = useCallback(async () => {
+    const fetchUser = useCallback(async () => {
         try {
             setIsLoading(true)
             await fetchUserProfile();
@@ -54,15 +56,15 @@ const LoginSessionStatusChecker = () => {
                 navigate(ROUTES.ROOT)
             }
         }
-    }, [fetchUserProfile]);
+    }, [fetchUserProfile, location.pathname, navigate]);
 
     // on app launch, populate the data from backend
     useEffect(() => {
-        fetchInfo();
+        fetchUser();
 
         const handleStorageChange = (event: any) => {
             if (event.key === KEYS.USER || event.key === KEYS.WALLET_ID) {
-                fetchInfo();
+                fetchUser();
             }
         };
 
