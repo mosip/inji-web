@@ -41,7 +41,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
     // Logged in = authenticated + unlocked wallet
     const isUserLoggedIn = () => {
-        console.log("Checking if user is logged in...");
         const user = Storage.getItem(KEYS.USER);
         const walletId = Storage.getItem(KEYS.WALLET_ID);
         return !!user && !!walletId

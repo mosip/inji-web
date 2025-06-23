@@ -37,7 +37,6 @@ export const PasscodePage: React.FC = () => {
             });
 
             const responseData = await response.json();
-            console.log("Response Data:", responseData);
 
             if (!response.ok) {
                 throw responseData;
@@ -159,7 +158,6 @@ export const PasscodePage: React.FC = () => {
 
                 await unlockWallet(walletId, formattedPasscode);
             }
-            console.log("Passcode submitted successfully, fetching user profile and navigating to home");
             await navigateToUserHome(navigate);
         } catch (error) {
             console.error(

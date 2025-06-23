@@ -24,7 +24,6 @@ import {ProfilePage} from './pages/User/Profile/ProfilePage';
 import {Pages, ROUTES} from "./utils/constants";
 
 function RedirectToUserHome() {
-    console.log("Redirecting to user home page");
     return <Navigate to={ROUTES.USER_HOME} replace/>;
 }
 
