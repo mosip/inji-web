@@ -85,6 +85,7 @@ export type ApiRequest = {
     methodType: MethodType;
     headers: (...args: string[]) => any;
     credentials?:RequestCredentials;
+    responseType?: "json" | "text" | "blob";
 };
 
 export type LanguageObject = {
