@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {getActiveSession, removeActiveSession} from '../utils/sessions';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {NavBar} from '../components/Common/NavBar';
@@ -31,8 +31,7 @@ export const RedirectionPage: React.FC = () => {
     const displayObject = getIssuerDisplayObjectForCurrentLanguage(session?.selectedIssuer?.display ?? []);
     const language = useSelector((state: RootState) => state.common.language);
     const [cookies] = useCookies(["XSRF-TOKEN"]);
-    const {isLoading, fetchUserProfile, isUserLoggedIn} = useUser();
-    const hasFetchedRef = useRef(false);
+    const {isUserLoggedIn} = useUser();
     const navigate = useNavigate();
     const {addSession, updateSession} = useDownloadSessionDetails();
 
@@ -100,10 +99,10 @@ export const RedirectionPage: React.FC = () => {
                     issuerId,
                     credentialType,
                     vcStorageExpiryLimitInTimes,
-                    isUserLoggedIn
+                    isUserLoggedIn()
                 );
 
-            if (isUserLoggedIn) {
+            if (isUserLoggedIn()) {
                 await handleLoggedInDownloadFlow(issuerId, requestBody);
             } else {
                 await handleGuestDownloadFlow(requestBody);
@@ -115,23 +114,10 @@ export const RedirectionPage: React.FC = () => {
 
     useEffect(() => {
         const downloadCredential = async () => {
-            if (!isLoading && !hasFetchedRef.current) {
-                hasFetchedRef.current = true;
-                await fetchToken();
-            }
-            if (isLoading) {
-                try {
-                    await fetchUserProfile();
-                } catch (error) {
-                    console.log(
-                        'Error occurred while fetching user profile:',
-                        error
-                    );
-                }
-            }
-        };
-        downloadCredential();
-    }, [isLoading]);
+            await fetchToken();
+        }
+        downloadCredential().then(r => console.info("Downloaded credential call finished"));
+    }, []);
 
     const loadStatusOfRedirection = () => {
         if (!session) {

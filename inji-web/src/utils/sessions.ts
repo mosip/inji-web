@@ -1,14 +1,14 @@
-import {storage} from "./storage";
+import {Storage} from "./Storage";
 import {SessionObject} from "../types/data";
 
 export const addNewSession = (session: SessionObject) => {
     let activeSessions = getAllActiveSession();
     activeSessions = activeSessions.concat([session]);
-    storage.setItem(storage.SESSION_INFO, JSON.stringify(activeSessions));
+    Storage.setItem(Storage.SESSION_INFO, JSON.stringify(activeSessions));
 }
 
 export const getAllActiveSession: () => SessionObject[] = () => {
-    const activeSessions = storage.getItem(storage.SESSION_INFO);
+    const activeSessions = Storage.getItem(Storage.SESSION_INFO);
     if (activeSessions) {
         return JSON.parse(activeSessions);
     }
@@ -22,6 +22,6 @@ export const getActiveSession = (state: string | null) => {
 
 export const removeActiveSession = (state: string) => {
     const remainingSessions = getAllActiveSession().filter(session => session.state !== state);
-    storage.setItem(storage.SESSION_INFO, JSON.stringify(remainingSessions));
+    Storage.setItem(Storage.SESSION_INFO, JSON.stringify(remainingSessions));
 }
 

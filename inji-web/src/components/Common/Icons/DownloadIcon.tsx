@@ -33,14 +33,14 @@ const GradientDownloadIcon = () => {
                 fill="url(#paint0_linear_862_1366)"/>
             <defs>
                 <linearGradient id="paint0_linear_862_1366" x1="0" y1="9" x2="18" y2="9" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#FF5300"/>
-                    <stop offset="0.16" stop-color="#FB5103"/>
-                    <stop offset="0.31" stop-color="#F04C0F"/>
-                    <stop offset="0.46" stop-color="#DE4322"/>
-                    <stop offset="0.61" stop-color="#C5363C"/>
-                    <stop offset="0.75" stop-color="#A4265F"/>
-                    <stop offset="0.9" stop-color="#7C1389"/>
-                    <stop offset="1" stop-color="#5B03AD"/>
+                    <stop stopColor="#FF5300"/>
+                    <stop offset="0.16" stopColor="#FB5103"/>
+                    <stop offset="0.31" stopColor="#F04C0F"/>
+                    <stop offset="0.46" stopColor="#DE4322"/>
+                    <stop offset="0.61" stopColor="#C5363C"/>
+                    <stop offset="0.75" stopColor="#A4265F"/>
+                    <stop offset="0.9" stopColor="#7C1389"/>
+                    <stop offset="1" stopColor="#5B03AD"/>
                 </linearGradient>
             </defs>
         </svg>

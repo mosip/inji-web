@@ -37,7 +37,7 @@ describe('PasscodeInput', () => {
         render(<PasscodeInput {...defaultProps} />);
 
         const inputs = screen.getAllByTestId('input-test-passcode-input');
-        await userEvent.type(inputs[0], '1');
+        userEvent.type(inputs[0], '1');
 
         expect(mockOnChange).toHaveBeenCalledWith(['1', '', '', '', '', '']);
     });
@@ -46,7 +46,7 @@ describe('PasscodeInput', () => {
         render(<PasscodeInput {...defaultProps} />);
 
         const inputs = screen.getAllByTestId('input-test-passcode-input');
-        await userEvent.type(inputs[0], '1');
+        userEvent.type(inputs[0], '1');
 
         // Focus should move to the next input
         expect(document.activeElement).toBe(inputs[1]);
@@ -67,7 +67,7 @@ describe('PasscodeInput', () => {
         render(<PasscodeInput {...defaultProps} />);
 
         const inputs = screen.getAllByTestId('input-test-passcode-input');
-        await userEvent.type(inputs[0], 'a');
+        userEvent.type(inputs[0], 'a');
 
         expect(mockOnChange).not.toHaveBeenCalled();
     });
@@ -82,12 +82,12 @@ describe('PasscodeInput', () => {
         expect(inputs[0]).toHaveAttribute('type', 'password');
 
         // Click to show passcode
-        await userEvent.click(toggleButton);
+        userEvent.click(toggleButton);
         expect(inputs[0]).toHaveAttribute('type', 'text');
         expect(screen.getByTestId("eye-view")).toBeInTheDocument()
 
         // Click again to hide passcode
-        await userEvent.click(toggleButton);
+        userEvent.click(toggleButton);
         expect(inputs[0]).toHaveAttribute('type', 'password');
         expect(screen.getByTestId("eye-view-slash")).toBeInTheDocument()
     });

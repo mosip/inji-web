@@ -3,35 +3,48 @@ import {UserContextType} from "../../types/contextTypes";
 import {ErrorType, User} from "../../types/data";
 import {KEYS} from "../../utils/constants";
 import {api, MethodType} from "../../utils/api";
+import {Storage} from "../../utils/Storage";
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export const UserProvider: React.FC<{children: React.ReactNode}> = ({
-                                                                        children
-                                                                    }) => {
+export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
+                                                                          children
+                                                                      }) => {
     const [user, setUser] = useState<User | null>(null);
     const [walletId, setWalletId] = useState<string | null>(null);
     const [error, setError] = useState<ErrorType | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
+    // This stores the user info which indicates whether user has authenticated or not
     const saveUser = (userData: User) => {
-        localStorage.setItem(KEYS.USER, JSON.stringify(userData));
+        Storage.setItem(KEYS.USER, JSON.stringify(userData));
         setUser(userData);
     };
 
+    // This stores the wallet ID which indicates whether user has unlocked wallet or not
+    const saveWalletId = (walletId: string) => {
+        Storage.setItem(KEYS.WALLET_ID, walletId);
+        setWalletId(walletId);
+    };
+
     const removeUser = () => {
-        localStorage.removeItem(KEYS.USER);
-        localStorage.removeItem(KEYS.WALLET_ID);
+        Storage.removeItem(KEYS.USER);
+        Storage.removeItem(KEYS.WALLET_ID);
         setUser(null);
         setWalletId(null);
     };
 
     const removeWallet = () => {
-        localStorage.removeItem(KEYS.WALLET_ID);
+        Storage.removeItem(KEYS.WALLET_ID);
         setWalletId(null);
     };
 
-    const isUserLoggedIn = React.useMemo(() => !!user && !!walletId, [user, walletId]);
+    // Logged in = authenticated + unlocked wallet
+    const isUserLoggedIn = () => {
+        const user = Storage.getItem(KEYS.USER);
+        const walletId = Storage.getItem(KEYS.WALLET_ID);
+        return !!user && !!walletId
+    };
 
     const fetchUserProfile = async () => {
         try {
@@ -52,15 +65,12 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
             };
 
             saveUser(userData);
-            setWalletId(responseData.walletId);
-            localStorage.setItem(KEYS.WALLET_ID, responseData.walletId);
             setIsLoading(false);
             return {user: userData, walletId: responseData.walletId};
         } catch (error) {
             console.error('Error fetching user profile:', error);
             setError(error as ErrorType);
             removeUser();
-            localStorage.removeItem(KEYS.WALLET_ID);
             setIsLoading(false);
             throw error;
         }
@@ -75,6 +85,7 @@ export const UserProvider: React.FC<{children: React.ReactNode}> = ({
             isUserLoggedIn,
             fetchUserProfile,
             saveUser,
+            saveWalletId,
             removeUser,
             removeWallet
         }),

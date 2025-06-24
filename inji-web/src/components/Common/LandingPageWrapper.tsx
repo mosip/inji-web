@@ -18,7 +18,7 @@ export const LandingPageWrapper: React.FC<LandingPageWrapperProps> = (props) => 
     const navigate = useNavigate();
     const {t} = useTranslation("RedirectionPage");
     const {isUserLoggedIn} = useUser();
-    const wrapperConfig = isUserLoggedIn
+    const wrapperConfig = isUserLoggedIn()
         ? {
             navUrl: ROUTES.USER_HOME,
             classNames: {

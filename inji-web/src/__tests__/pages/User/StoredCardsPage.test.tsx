@@ -152,7 +152,6 @@ describe('Testing of StoredCardsPage ->', () => {
         (global.fetch as jest.Mock).mockResolvedValueOnce({
             ok: true,
             json: async () => {
-                console.log("hi")
                 return mockCredentials;
             },
         });

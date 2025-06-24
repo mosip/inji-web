@@ -1,22 +1,24 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import {render, screen, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {Menu} from "../../../../components/Common/Menu/Menu";
+import {Clickable} from "../../../../components/Common/Clickable";
 
 describe('EllipsisMenu Component', () => {
     const mockMenuItems = [
-        { label: 'Edit', onClick: jest.fn(), id: "edit" },
-        { label: 'Delete', onClick: jest.fn(), id: "delete" }
+        {label: 'Edit', onClick: jest.fn(), id: "edit"},
+        {label: 'Delete', onClick: jest.fn(), id: "delete"}
     ];
 
     beforeEach(() => {
         jest.clearAllMocks();
     });
-    
+
     const triggerComponent = <span data-testid="trigger-menu">...</span>;
 
     it('renders correctly and matches snapshot', () => {
-        const { asFragment } = render(<Menu triggerComponent={triggerComponent} menuItems={mockMenuItems} testId={"test-view"}/>);
+        const {asFragment} = render(<Menu triggerComponent={triggerComponent} menuItems={mockMenuItems}
+                                          testId={"test-view"}/>);
         expect(asFragment()).toMatchSnapshot();
     });
 
@@ -82,10 +84,10 @@ describe('EllipsisMenu Component', () => {
         const mockContainerClick = jest.fn();
 
         render(
-            <div onClick={mockContainerClick}>
-            <Menu triggerComponent={triggerComponent} menuItems={mockMenuItems} testId={"test-view"}/>
-        </div>
-    );
+            <Clickable onClick={mockContainerClick} testId={'test-view-wrapper'}>
+                <Menu triggerComponent={triggerComponent} menuItems={mockMenuItems} testId={"test-view"}/>
+            </Clickable>
+        );
 
         const button = screen.getByTestId('trigger-menu');
         fireEvent.click(button);
@@ -98,8 +100,8 @@ describe('EllipsisMenu Component', () => {
             <div>
                 <div data-testid="outside-element">Outside</div>
                 <Menu triggerComponent={triggerComponent} menuItems={mockMenuItems} testId={"test-view"}/>
-        </div>
-    );
+            </div>
+        );
 
         // Open the menu
         const button = screen.getByTestId('trigger-menu');

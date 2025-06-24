@@ -46,7 +46,7 @@ export const DownloadResult: React.FC<DownloadResultProps> = ({title, subTitle, 
     };
 
     return (
-        isUserLoggedIn ? (
+        isUserLoggedIn() ? (
             <div
                 data-testid="download-result-container"
                 className={DownloadResultStyles.container}>

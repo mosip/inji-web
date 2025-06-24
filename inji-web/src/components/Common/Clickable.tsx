@@ -4,7 +4,7 @@ export interface ClickableProps {
     onClick: () => void;
     children: React.ReactNode;
     testId: string;
-    className: string;
+    className?: string;
 }
 
 export const Clickable: React.FC<ClickableProps> = ({

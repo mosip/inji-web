@@ -25,7 +25,7 @@ const mockUseUser = useUser as jest.Mock;
 describe('Testing of DownloadResult -> ', () => {
     beforeEach(() => {
         jest.clearAllMocks();
-        mockUseUser.mockReturnValue({isUserLoggedIn: false});
+        mockUseUser.mockReturnValue({isUserLoggedIn: () => false});
     });
 
     it('matches snapshot when user is not logged in', () => {
@@ -37,7 +37,7 @@ describe('Testing of DownloadResult -> ', () => {
     });
 
     it('matches snapshot when user is logged in', () => {
-        mockUseUser.mockReturnValue({isUserLoggedIn: true});
+        mockUseUser.mockReturnValue({isUserLoggedIn: () => true});
 
         const {asFragment} = renderWithProvider(
             <DownloadResult title="Title" subTitle="SubTitle" state={RequestStatus.DONE}/>
@@ -47,7 +47,7 @@ describe('Testing of DownloadResult -> ', () => {
     });
 
     it('renders div wrapper when user is logged in', () => {
-        mockUseUser.mockReturnValue({isUserLoggedIn: true});
+        mockUseUser.mockReturnValue({isUserLoggedIn: () => true});
 
         renderWithProvider(<DownloadResult title="Title" subTitle="SubTitle" state={RequestStatus.DONE}/>);
 

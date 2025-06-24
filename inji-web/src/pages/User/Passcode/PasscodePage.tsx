@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {api, MethodType} from '../../../utils/api';
 import {useCookies} from 'react-cookie';
@@ -17,13 +17,13 @@ export const PasscodePage: React.FC = () => {
     const navigate = useNavigate();
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
-    const [wallets, setWallets] = useState<any[]>([]);
+    const [wallets, setWallets] = useState<any[] | undefined>(undefined);
     const [cookies] = useCookies(['XSRF-TOKEN']);
     const [passcode, setPasscode] = useState<string[]>(Array(6).fill(''));
     const [confirmPasscode, setConfirmPasscode] = useState<string[]>(
         Array(6).fill('')
     );
-    const {fetchUserProfile} = useUser();
+    const {saveWalletId} = useUser();
 
     const fetchWallets = async () => {
         try {
@@ -50,18 +50,10 @@ export const PasscodePage: React.FC = () => {
     };
 
     useEffect(() => {
-        const fetchWalletsAndUserDetails = async () => {
+        const fetchWalletDetails = async () => {
             await fetchWallets();
-            try {
-                await fetchUserProfile();
-            } catch (error) {
-                console.error(
-                    'Error occurred while fetching User profile:',
-                    error
-                );
-            }
         };
-        fetchWalletsAndUserDetails();
+        fetchWalletDetails();
     }, []);
 
     useEffect(() => {
@@ -98,17 +90,8 @@ export const PasscodePage: React.FC = () => {
                 setError(t('error.incorrectPasscodeError'));
                 throw responseData;
             }
+            saveWalletId(walletId)
         } catch (error) {
-            throw error;
-        }
-    };
-
-    const fetchUserProfileAndNavigate = async () => {
-        try {
-            await fetchUserProfile();
-            navigateToUserHome(navigate);
-        } catch (error) {
-            setError('Failed to fetch user profile');
             throw error;
         }
     };
@@ -118,7 +101,7 @@ export const PasscodePage: React.FC = () => {
             const pin = passcode.join('');
             const confirmPin = confirmPasscode.join('');
 
-            if (isUserCreatingWallet() && pin !== confirmPin) {
+            if (pin !== confirmPin) {
                 setError(t('error.passcodeMismatchError'));
                 throw new Error('Pin and Confirm Pin mismatch');
             }
@@ -164,7 +147,7 @@ export const PasscodePage: React.FC = () => {
             if (isUserCreatingWallet()) {
                 await createWallet();
             } else {
-                const walletId = wallets[0].walletId;
+                const walletId = wallets ? wallets[0].walletId : undefined
                 const formattedPasscode = passcode.join('');
 
                 if (formattedPasscode.length !== 6) {
@@ -175,7 +158,7 @@ export const PasscodePage: React.FC = () => {
 
                 await unlockWallet(walletId, formattedPasscode);
             }
-            await fetchUserProfileAndNavigate();
+            await navigateToUserHome(navigate);
         } catch (error) {
             console.error(
                 'Error occurred while setting up Wallet or loading user profile',
@@ -191,7 +174,7 @@ export const PasscodePage: React.FC = () => {
         (isUserCreatingWallet() && confirmPasscode.includes(''));
 
     function isUserCreatingWallet() {
-        return wallets.length === 0;
+        return wallets?.length === 0;
     }
 
     const pageTitle = isUserCreatingWallet() ? t('setPasscode') : t('enterPasscode');
@@ -203,7 +186,7 @@ export const PasscodePage: React.FC = () => {
                 ROUTES.USER_RESET_PASSCODE,
                 {
                     state: {
-                        walletId: wallets[0].walletId
+                        walletId: wallets ? wallets[0].walletId : undefined
                     }
                 }
             );
@@ -221,25 +204,32 @@ export const PasscodePage: React.FC = () => {
     const renderContent = () => {
         return (
             <div className={PasscodePageStyles.contentContainer}>
-                {<div className={PasscodePageStyles.inputWrapper}>
-                    {renderPasscodeInput(t('enterPasscodeLabel'), passcode, setPasscode, "passcode")}
+                {wallets &&
+                    <Fragment>
+                        {<div className={PasscodePageStyles.inputWrapper}>
+                            {renderPasscodeInput(t('enterPasscodeLabel'), passcode, setPasscode, "passcode")}
 
-                    {isUserCreatingWallet() &&
-                        renderPasscodeInput(t('confirmPasscodeLabel'), confirmPasscode, setConfirmPasscode, "confirm-passcode")
-                    }
-                </div>}
-                {!isUserCreatingWallet() && renderForgotPasscodeButton()}
+                            {isUserCreatingWallet() &&
+                                renderPasscodeInput(t('confirmPasscodeLabel'), confirmPasscode, setConfirmPasscode, "confirm-passcode")
+                            }
+                        </div>
+                        }
+                        {
+                            !isUserCreatingWallet() && renderForgotPasscodeButton()
+                        }
+                        <div className={PasscodePageStyles.buttonContainer}>
+                            <SolidButton
+                                fullWidth={true}
+                                testId="btn-submit-passcode"
+                                onClick={handleSubmit}
+                                title={loading ? t('submitting') : t('submit')}
+                                disabled={isButtonDisabled}
+                                className={isButtonDisabled ? PasscodePageStyles.disabledButton : ''}
+                            />
+                        </div>
+                    </Fragment>
+                }
 
-                <div className={PasscodePageStyles.buttonContainer}>
-                    <SolidButton
-                        fullWidth={true}
-                        testId="btn-submit-passcode"
-                        onClick={handleSubmit}
-                        title={loading ? t('submitting') : t('submit')}
-                        disabled={isButtonDisabled}
-                        className={isButtonDisabled ? PasscodePageStyles.disabledButton : ''}
-                    />
-                </div>
             </div>
         );
     };
