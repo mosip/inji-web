@@ -55,9 +55,8 @@ export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId
 
 export const downloadCredentialPDF = async (
     response: any,
-    credentialType: string
+    fileName: string
 ) => {
-    let fileName = `${credentialType}.pdf`;
     const url = window.URL.createObjectURL(response);
     const link = document.createElement("a");
     link.href = url;
