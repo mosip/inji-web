@@ -182,9 +182,6 @@ describe("Testing the Functionality of Credentials", () => {
         // guest
         (useUser as jest.Mock).mockReturnValue({ isUserLoggedIn: () => false });
         
-        // state stays Defaul (OnlineSharing)
-        setMockUseSelectorState(mockState);
-    
         renderWithProvider(
           <Credential
             credentialId="InsuranceCredential"
@@ -229,50 +226,48 @@ describe("Testing the Functionality of Credentials", () => {
         },
       ] as const;
     
-      describe("Click behavior: no expiry modal, always redirects", () => {
-        test.each(noModalCases)(
-          "does NOT show expiry modal %s, and calls redirect",
-          async ({ isLoggedIn, qr_code_type }) => {
+    test.each(noModalCases)(
+        "does NOT show expiry modal %s, and calls redirect",
+        async ({ isLoggedIn, qr_code_type }) => {
 
-            // 1) override login state
-            (useUser as jest.Mock).mockReturnValue({
-              isUserLoggedIn: () => isLoggedIn,
-            });
-    
-            // 2) override qr_code_type in redux state
-            setMockUseSelectorState({
-              ...mockState,
-              issuers: {
-                selected_issuer: {
-                  ...mockState.issuers.selected_issuer,
-                  qr_code_type,
-                },
-              },
-            });
-    
-            // 3) render & click
-            renderWithProvider(
-              <Credential
-                credentialId="InsuranceCredential"
-                index={1}
-                credentialWellknown={credential}
-                setErrorObj={mockSetErrorObj}
-              />
-            );
-            const itemBox = screen.getByTestId("ItemBox-Outer-Container-1");
-            await userEvent.click(itemBox);
-    
-            // 4) assertions
-            expect(screen.queryByTestId("DataShareExpiryModal")).toBeNull();
-            expect(buildAuthorizationUrl).toHaveBeenCalledTimes(1);
-            expect(window.open).toHaveBeenCalledWith(
-              "https://redirect.mock/constructed",
-              "_self",
-              "noopener"
-            );
-          }
+        // 1) override login state
+        (useUser as jest.Mock).mockReturnValue({
+            isUserLoggedIn: () => isLoggedIn,
+        });
+
+        // 2) override qr_code_type in redux state
+        setMockUseSelectorState({
+            ...mockState,
+            issuers: {
+            selected_issuer: {
+                ...mockState.issuers.selected_issuer,
+                qr_code_type,
+            },
+            },
+        });
+
+        // 3) render & click
+        renderWithProvider(
+            <Credential
+            credentialId="InsuranceCredential"
+            index={1}
+            credentialWellknown={credential}
+            setErrorObj={mockSetErrorObj}
+            />
         );
-      });
+        const itemBox = screen.getByTestId("ItemBox-Outer-Container-1");
+        await userEvent.click(itemBox);
+
+        // 4) assertions
+        expect(screen.queryByTestId("DataShareExpiryModal")).toBeNull();
+        expect(buildAuthorizationUrl).toHaveBeenCalledTimes(1);
+        expect(window.open).toHaveBeenCalledWith(
+            "https://redirect.mock/constructed",
+            "_self",
+            "noopener"
+        );
+        }
+    );
 
     afterEach(() => {
         jest.clearAllMocks();
