@@ -210,17 +210,22 @@ describe("Testing the Functionality of Credentials", () => {
           "noopener"
         );
       });
-      
+
       const noModalCases = [
         {
-          name: "when user is logged in",
+          name: "when user is logged in and has OnlineSharing issuer",
           isLoggedIn: true,
           qr_code_type: "OnlineSharing",
         },
         {
-          name: "when guest user has OfflineSharing issuer",
+          name: "when user is logged in and has EmbeddedVC issuer",
+          isLoggedIn: true,
+          qr_code_type: "EmbeddedVC",
+        },
+        {
+          name: "when guest user has EmbeddedVC issuer",
           isLoggedIn: false,
-          qr_code_type: "OfflineSharing",
+          qr_code_type: "EmbeddedVC",
         },
       ] as const;
     
