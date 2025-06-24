@@ -160,7 +160,6 @@ describe("Testing the Functionality of Credentials", () => {
     
         // Find and click the ItemBox
         const container = screen.getByTestId("ItemBox-Outer-Container-1");
-        console.log("Found ItemBox outer HTML:", container.outerHTML);
         await userEvent.click(container);
     
         // Assert: buildAuthorizationUrl called once
