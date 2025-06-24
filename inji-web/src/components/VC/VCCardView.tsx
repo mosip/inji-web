@@ -2,7 +2,7 @@ import {ApiRequest, WalletCredential} from "../../types/data";
 import {VCStyles} from "./VCStyles";
 import React, {useEffect, useState} from "react";
 import {Clickable} from "../Common/Clickable";
-import {api, MethodType} from "../../utils/api";
+import {api} from "../../utils/api";
 import {downloadCredentialPDF} from "../../utils/misc";
 import {useSelector} from "react-redux";
 import {RootState} from "../../types/redux";
@@ -16,6 +16,7 @@ import {useNavigate} from "react-router-dom";
 import {RiDeleteBin6Line} from "react-icons/ri";
 import {BsBoxArrowRight} from "react-icons/bs";
 import {showToast} from "../Common/toast/ToastWrapper";
+import {NetworkResult, useApi} from "../../hooks/useApi";
 
 export function VCCardView(props: Readonly<{
     credential: WalletCredential,
@@ -29,6 +30,7 @@ export function VCCardView(props: Readonly<{
         keyPrefix: "cardView"
     })
     const navigate = useNavigate();
+    const cardViewApi = useApi()
 
     useEffect(() => {
         if (error) {
@@ -43,26 +45,34 @@ export function VCCardView(props: Readonly<{
 
     const executeCredentialApiRequest = async (
         apiCall: ApiRequest,
-        onSuccess: (response: Response) => Promise<void>,
+        onSuccess: (response: NetworkResult<any>) => Promise<void>,
         errorType: string = "downloadError"
     ) => {
         try {
-            const response = await fetch(
-                apiCall.url(props.credential.credentialId),
-                {
-                    method: MethodType[apiCall.methodType],
-                    headers: apiCall.headers(language),
-                    credentials: apiCall.credentials
-                }
-            );
+            // const response = await fetch(
+            //     apiCall.url(props.credential.credentialId),
+            //     {
+            //         method: MethodType[apiCall.methodType],
+            //         headers: apiCall.headers(language),
+            //         credentials: apiCall.credentials
+            //     }
+            // );
+            const response = await cardViewApi.fetchData({
+                url: apiCall.url(props.credential.credentialId),
+                headers: apiCall.headers(language),
+                apiRequest: apiCall,
+            })
 
+            console.log("response for fetch ", response);
+
+            //TODO: This is not required anymore as interceptor handles it, remove it later
             if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
                 console.error("Unauthorized access - redirecting to root page");
                 navigate(ROUTES.ROOT);
                 return;
             }
 
-            if (!response.ok) {
+            if (response.status !== HTTP_STATUS_CODES.OK) {
                 console.error(`Failed to fetch request, got ${errorType} with response - `, response);
                 setError(errorType);
                 return;
@@ -80,7 +90,7 @@ export function VCCardView(props: Readonly<{
         await executeCredentialApiRequest(
             api.fetchWalletCredentialPreview,
             async (response) => {
-                const pdfContent: Blob = await response.blob();
+                const pdfContent: Blob = response.data;
                 console.info("Credential preview fetched successfully");
                 setPreviewContent(pdfContent);
             }
@@ -97,8 +107,9 @@ export function VCCardView(props: Readonly<{
         await executeCredentialApiRequest(
             api.downloadWalletCredentialPdf,
             async (response) => {
-                const pdfContent = await response.blob();
-                const disposition = response.headers.get("Content-Disposition");
+                console.log("response for download", response);
+                const pdfContent = await response.data;
+                const disposition = response.headers["Content-Disposition"] ?? "";
                 const fileNameMatch = /filename="(.+)"/.exec(disposition ?? "");
                 const fileName = fileNameMatch?.[1] ?? "download.pdf";
 
@@ -132,7 +143,7 @@ export function VCCardView(props: Readonly<{
     };
 
     const clearPreview = () => {
-        setPreviewContent("");
+        setPreviewContent(undefined);
     }
 
     return (

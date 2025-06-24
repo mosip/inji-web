@@ -5,7 +5,7 @@ import {NavBackArrowButton} from '../../../components/Common/Buttons/NavBackArro
 import {WalletCredential} from "../../../types/data";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../types/redux";
-import {api, request} from "../../../utils/api";
+import {api} from "../../../utils/api";
 import {SolidButton} from "../../../components/Common/Buttons/SolidButton";
 import {SpinningLoader} from "../../../components/Common/SpinningLoader";
 import {SearchBar} from "../../../components/Common/SearchBar/SearchBar";
@@ -37,15 +37,9 @@ export const StoredCardsPage: React.FC = () => {
         setLoading(true)
         try {
             const fetchWalletCredentials = api.fetchWalletVCs;
-            // const response = await fetch(fetchWalletCredentials.url(), {
-            //     method: "GET",
-            //     headers: fetchWalletCredentials.headers(language),
-            //     credentials: "include"
-            // });
 
             const response = await walletCredentials.fetchData({
                 headers: fetchWalletCredentials.headers(language),
-                body: undefined,
                 apiRequest: fetchWalletCredentials
             })
 

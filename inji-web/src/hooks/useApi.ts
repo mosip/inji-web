@@ -1,13 +1,20 @@
-// hooks/useApi.ts
-import {useState, useCallback} from "react";
+import {useState} from "react";
 import {ApiRequest} from "../types/data";
 import {api, MethodType} from "../utils/api";
 
-interface FetchResult<T> {
+export interface NetworkResult<T> {
     data: T | null;
     error: Error | null;
     status: number | null;
     loading: boolean;
+    headers: object;
+}
+
+interface RequestConfig {
+    url?: string;
+    headers?: Record<string, string>;
+    body?: any;
+    apiRequest: ApiRequest;
 }
 
 interface UseApiReturn<T> {
@@ -15,13 +22,7 @@ interface UseApiReturn<T> {
     error: Error | null;
     loading: boolean;
     status: number | null;
-    fetchData: (
-        requestConfig: {
-            headers?: Record<string, string>;
-            body?: any;
-            apiRequest: ApiRequest;
-        }
-    ) => Promise<FetchResult<T>>;
+    fetchData: (arg0: RequestConfig) => Promise<NetworkResult<T>>;
 }
 
 export function useApi<T = any>(): UseApiReturn<T> {
@@ -34,31 +35,31 @@ export function useApi<T = any>(): UseApiReturn<T> {
                                  headers,
                                  body,
                                  apiRequest,
-                             }: {
-        headers?: Record<string, string>;
-        body?: any;
-        apiRequest: ApiRequest;
-    }): Promise<FetchResult<T>> {
+                                 url = undefined
+                             }: RequestConfig): Promise<NetworkResult<T>> {
         setLoading(true);
         setError(null);
         setStatus(null);
 
-        let result: FetchResult<T> = {
+        let result: NetworkResult<T> = {
             data: null,
             error: null,
             status: null,
             loading: true,
+            headers: {}
         };
 
         try {
             const response = await api.instance.request({
-                url: apiRequest.url(),
+                url: url ?? apiRequest.url(),
                 method: MethodType[apiRequest.methodType],
                 headers,
                 data: body,
                 withCredentials: apiRequest.credentials === "include",
+                responseType: apiRequest.responseType ?? "json",
             });
 
+            console.log("API response:", response);
             setData(response.data);
             setStatus(response.status);
 
@@ -67,6 +68,7 @@ export function useApi<T = any>(): UseApiReturn<T> {
                 error: null,
                 status: response.status,
                 loading: false,
+                headers: response.headers || {}
             };
         } catch (err: any) {
             const parsedError = err instanceof Error ? err : new Error("Unknown error");
@@ -79,6 +81,7 @@ export function useApi<T = any>(): UseApiReturn<T> {
                 error: parsedError,
                 status: err?.response?.status || null,
                 loading: false,
+                headers: err?.response?.headers || {}
             };
         } finally {
             setLoading(false);

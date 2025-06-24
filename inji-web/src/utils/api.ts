@@ -220,7 +220,8 @@ export class api {
                 "Accept": ContentTypes.PDF
             };
         },
-        credentials: "include"
+        credentials: "include",
+        responseType: "blob"
     };
 
     static downloadWalletCredentialPdf: ApiRequest = {
@@ -239,7 +240,8 @@ export class api {
                 "Accept": ContentTypes.PDF
             };
         },
-        credentials: "include"
+        credentials: "include",
+        responseType: "blob"
     };
 
     static deleteWalletCredential: ApiRequest = {
