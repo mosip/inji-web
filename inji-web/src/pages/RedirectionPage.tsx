@@ -72,7 +72,7 @@ export const RedirectionPage: React.FC = () => {
         if (state !== RequestStatus.ERROR) {
             await downloadCredentialPDF(
                 credentialDownloadResponse,
-                credentialType
+                credentialType + ".pdf"
             );
             setCompletedDownload(true);
         }
