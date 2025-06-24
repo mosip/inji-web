@@ -550,16 +550,16 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
             tabindex="0"
           >
             <div
-              class="flex items-center overflow-scroll gap-6 sm:gap-4"
+              class="flex items-center gap-6 sm:gap-4 min-w-0 overflow-x-auto scrollbar-hide"
             >
               <img
                 alt="Credential Type Logo"
-                class="w-16 h-16 sm:w-20 sm:h-20"
+                class="w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0"
                 data-testid="issuer-logo"
                 src="logo1.png"
               />
               <span
-                class="text-sm font-semibold text-iw-title"
+                class="text-sm font-semibold text-iw-title whitespace-nowrap flex-shrink-0"
                 data-testid="credential-type-display-name"
               >
                 Drivers License
@@ -621,16 +621,16 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
             tabindex="0"
           >
             <div
-              class="flex items-center overflow-scroll gap-6 sm:gap-4"
+              class="flex items-center gap-6 sm:gap-4 min-w-0 overflow-x-auto scrollbar-hide"
             >
               <img
                 alt="Credential Type Logo"
-                class="w-16 h-16 sm:w-20 sm:h-20"
+                class="w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0"
                 data-testid="issuer-logo"
                 src="logo2.png"
               />
               <span
-                class="text-sm font-semibold text-iw-title"
+                class="text-sm font-semibold text-iw-title whitespace-nowrap flex-shrink-0"
                 data-testid="credential-type-display-name"
               >
                 Health Card
