@@ -1,8 +1,9 @@
 import {SpinningLoader} from "../Common/SpinningLoader";
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 
 import {Document, Page, pdfjs} from "react-pdf";
 import {pdfWorkerSource} from "../../utils/constants";
+import {PDFViewerStyles} from "./PDFViewerStyles";
 
 pdfjs.GlobalWorkerOptions.workerSrc = pdfWorkerSource(pdfjs.version);
 
@@ -35,11 +36,7 @@ export function PDFViewer(props: Readonly<{ previewContent: Blob }>) {
     }
 
     return (
-        <div
-            ref={containerRef}
-            className="w-full max-h-screen overflow-auto"
-            style={{position: 'relative'}}
-        >
+        <div ref={containerRef} className={PDFViewerStyles.container}>
             <Document
                 file={blobUrl}
                 onLoadSuccess={onDocumentLoadSuccess}
