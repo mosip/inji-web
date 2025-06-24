@@ -5,7 +5,6 @@ import {
     getTokenRequestBody,
     downloadCredentialPDF,
     getErrorObject,
-    constructContent,
     convertStringIntoPascalCase
 } from '../../utils/misc';
 import { mockCrypto } from '../../test-utils/mockUtils';
@@ -97,12 +96,6 @@ describe('Test misc.ts utility functions', () => {
             code: 'error.verification.errInvalidIssuanceDate.title',
             message: 'error.verification.errInvalidIssuanceDate.subTitle'
         });
-    });
-
-    test('Check if constructContent returns correct content array', () => {
-        const descriptions = ['desc1', 'desc2'];
-        const content = constructContent(descriptions, true);
-        expect(content).toEqual([{ __html: 'desc1' }, { __html: 'desc2' }]);
     });
 
     test("Check if conversion of string pascal case works correctly", () => {

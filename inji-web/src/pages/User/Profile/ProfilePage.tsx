@@ -13,6 +13,7 @@ import {ProfilePageStyles} from "./ProfilePageStyles";
 export const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation('User');
+  //TODO: get the user info from backend
   const { user, isLoading } = useUser();
   const location = useLocation();
   const previousPagePath = location.state?.from;
