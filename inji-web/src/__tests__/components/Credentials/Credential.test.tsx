@@ -104,7 +104,7 @@ describe("Testing the Functionality of Credentials", () => {
     beforeEach(() => {
         setMockUseSelectorState(mockState);
 
-        (buildAuthorizationUrl as jest.Mock).mockReturnValue("https://redirect.example.com/?a=1");
+        (buildAuthorizationUrl as jest.Mock).mockReturnValue("https://redirect.mock/constructed");
 
         (useUser as jest.Mock).mockReturnValue({ isUserLoggedIn: () => true });
 
@@ -165,17 +165,108 @@ describe("Testing the Functionality of Credentials", () => {
     
         // Assert: buildAuthorizationUrl called once
         expect(buildAuthorizationUrl).toHaveBeenCalledTimes(1);
-        const callArgs = (buildAuthorizationUrl as jest.Mock).mock.calls[0];
         
-        // Verify positions of args:
-        expect(callArgs.length).toBeGreaterThanOrEqual(5);
-        expect(callArgs[0]).toMatchObject({ issuer_id: "issuer1" });
-        expect(callArgs[1]).toEqual(credential);
-        expect(callArgs[4]).toBe("https://test-auth-server/authorize");
-    
+        // // Verify positions of args:
+        const [ issuerArg, credentialArg, , , authEndpointArg ] = (buildAuthorizationUrl as jest.Mock).mock.calls[0];
+
+        expect(issuerArg).toMatchObject({ issuer_id: "issuer1" });
+        expect(credentialArg).toBe(credential);
+        expect(authEndpointArg).toBe("https://test-auth-server/authorize");
+
         // Assert window.open called with returned URL
         expect(window.open).toHaveBeenCalledTimes(1);
-        expect(window.open).toHaveBeenCalledWith("https://redirect.example.com/?a=1", "_self", "noopener");
+        expect(window.open).toHaveBeenCalledWith("https://redirect.mock/constructed", "_self", "noopener");
+      });
+      
+      test("Shows expiry modal when guest user downloads card configured for OnlineSharing", async () => {
+        // guest
+        (useUser as jest.Mock).mockReturnValue({ isUserLoggedIn: () => false });
+        
+        // state stays Defaul (OnlineSharing)
+        setMockUseSelectorState(mockState);
+    
+        renderWithProvider(
+          <Credential
+            credentialId="InsuranceCredential"
+            index={1}
+            credentialWellknown={credential}
+            setErrorObj={mockSetErrorObj}
+          />
+        );
+        const itemBox = screen.getByTestId("ItemBox-Outer-Container-1");
+        await userEvent.click(itemBox);
+    
+        // modal appears
+        expect(screen.getByTestId("DataShareExpiryModal")).toBeInTheDocument();
+        expect(buildAuthorizationUrl).not.toHaveBeenCalled();
+        expect(window.open).not.toHaveBeenCalled();
+    
+        // confirm and then redirect
+        await userEvent.click(screen.getByTestId("expiry-confirm"));
+        expect(buildAuthorizationUrl).toHaveBeenCalledTimes(1);
+        expect(window.open).toHaveBeenCalledWith(
+          "https://redirect.mock/constructed",
+          "_self",
+          "noopener"
+        );
+      });
+      
+      const noModalCases = [
+        {
+          name: "when user is logged in",
+          isLoggedIn: true,
+          qr_code_type: "OnlineSharing",
+        },
+        {
+          name: "when guest user has OfflineSharing issuer",
+          isLoggedIn: false,
+          qr_code_type: "OfflineSharing",
+        },
+      ] as const;
+    
+      describe("Click behavior: no expiry modal, always redirects", () => {
+        test.each(noModalCases)(
+          "does NOT show expiry modal %s, and calls redirect",
+          async ({ isLoggedIn, qr_code_type }) => {
+
+            // 1) override login state
+            (useUser as jest.Mock).mockReturnValue({
+              isUserLoggedIn: () => isLoggedIn,
+            });
+    
+            // 2) override qr_code_type in redux state
+            setMockUseSelectorState({
+              ...mockState,
+              issuers: {
+                selected_issuer: {
+                  ...mockState.issuers.selected_issuer,
+                  qr_code_type,
+                },
+              },
+            });
+    
+            // 3) render & click
+            renderWithProvider(
+              <Credential
+                credentialId="InsuranceCredential"
+                index={1}
+                credentialWellknown={credential}
+                setErrorObj={mockSetErrorObj}
+              />
+            );
+            const itemBox = screen.getByTestId("ItemBox-Outer-Container-1");
+            await userEvent.click(itemBox);
+    
+            // 4) assertions
+            expect(screen.queryByTestId("DataShareExpiryModal")).toBeNull();
+            expect(buildAuthorizationUrl).toHaveBeenCalledTimes(1);
+            expect(window.open).toHaveBeenCalledWith(
+              "https://redirect.mock/constructed",
+              "_self",
+              "noopener"
+            );
+          }
+        );
       });
 
     afterEach(() => {
@@ -185,149 +276,3 @@ describe("Testing the Functionality of Credentials", () => {
         window.open = originalOpen;
     });
 });
-  
-describe("Credential Component Expiry-Modal Behavior", () => {
-    let originalOpen: typeof window.open;
-
-    beforeAll(() => {
-      originalOpen = window.open;
-      window.open = jest.fn();
-    });
-    afterAll(() => {
-      window.open = originalOpen;
-    });
-  
-    beforeEach(() => {
-      jest.clearAllMocks();
-  
-      (useUser as jest.Mock).mockReturnValue({ isUserLoggedIn: () => true });
-        
-      (buildAuthorizationUrl as jest.Mock).mockReturnValue("https://redirect.mock/constructed");
-
-      setMockUseSelectorState(mockState);
-  
-      // i18n mocks
-      (getIssuerDisplayObjectForCurrentLanguage as jest.Mock).mockReturnValue(
-        mockIssuerDisplayArrayObject
-      );
-      (getCredentialTypeDisplayObjectForCurrentLanguage as jest.Mock).mockReturnValue(
-        mockCredentialTypeDisplayArrayObject
-      );
-    });
-
-  
-    test("When user is logged in: clicking does NOT show expiry modal, and calls redirect", async () => {
-  
-      renderWithProvider(
-        <Credential
-          credentialId="InsuranceCredential"
-          index={1}
-          credentialWellknown={credential}
-          setErrorObj={mockSetErrorObj}
-        />
-      );
-  
-      const itemBox = screen.getByTestId("ItemBox-Outer-Container-1");
-      await userEvent.click(itemBox);
-   
-      // No expiry modal
-      expect(screen.queryByTestId("DataShareExpiryModal")).toBeNull();
-  
-      // Redirect via buildAuthorizationUrl
-      expect(buildAuthorizationUrl).toHaveBeenCalledTimes(1);
-      const args = (buildAuthorizationUrl as jest.Mock).mock.calls[0];
-      expect(args[0]).toMatchObject({ issuer_id: "issuer1" });
-      expect(args[1]).toEqual(credential);
-      expect(args[4]).toBe("https://test-auth-server/authorize");
-      expect(window.open).toHaveBeenCalledWith("https://redirect.mock/constructed", "_self", "noopener");
-    });
-  
-    test("Guest user + qr_code_type === 'OnlineSharing': clicking Shows expiry modal", async () => {
-
-      // Arrange: mock useUser to return isUserLoggedIn: false
-      (useUser as jest.Mock).mockReturnValue({ isUserLoggedIn: () => false });
-  
-      (buildAuthorizationUrl as jest.Mock).mockReturnValue("https://redirect.mock/constructed");
-  
-      // Ensure selected_issuer.qr_code_type is "OnlineSharing"
-      const guestIssuer = { issuer_id: "issuer1", qr_code_type: "OnlineSharing" };
-      setMockUseSelectorState({
-        issuers: { selected_issuer: guestIssuer },
-        common: { language: "en", vcStorageExpiryLimitInTimes: 5 },
-        credentials: {
-          credentials: {
-            authorization_endpoint: "https://test-auth-server/authorize",
-            grant_types_supported: ["authorization_code"],
-          },
-        },
-      });
-  
-      renderWithProvider(
-        <Credential
-          credentialId="InsuranceCredential"
-          index={1}
-          credentialWellknown={credential}
-          setErrorObj={mockSetErrorObj}
-        />
-      );
-  
-      const itemBox = screen.getByTestId("ItemBox-Outer-Container-1");
-      await userEvent.click(itemBox);
-  
-      // Expiry modal should appear
-      const modal = screen.getByTestId("DataShareExpiryModal");
-      expect(modal).toBeInTheDocument();
-  
-      // No redirect yet
-      expect(buildAuthorizationUrl).not.toHaveBeenCalled();
-      expect(window.open).not.toHaveBeenCalled();
-  
-      // Simulate confirm in modal
-      const confirmBtn = screen.getByTestId("expiry-confirm");
-      await userEvent.click(confirmBtn);
-  
-      // Now redirect
-      expect(buildAuthorizationUrl).toHaveBeenCalledTimes(1);
-      expect(window.open).toHaveBeenCalledWith("https://redirect.mock/constructed", "_self", "noopener");
-    });
-  
-    test("Guest user + qr_code_type !== 'OnlineSharing': clicking does NOT show expiry modal, and calls redirect", async () => {
-      // // Arrange: mock useUser to return isUserLoggedIn: false
-      (useUser as jest.Mock).mockReturnValue({ isUserLoggedIn: () => false });
-  
-      (buildAuthorizationUrl as jest.Mock).mockReturnValue("https://redirect.mock/constructed");
-  
-      // selected_issuer.qr_code_type is something else
-      const guestIssuerOffline = { issuer_id: "issuer1", qr_code_type: "OfflineSharing" };
-      setMockUseSelectorState({
-        issuers: { selected_issuer: guestIssuerOffline }, 
-        common: { language: "en", vcStorageExpiryLimitInTimes: 5 },
-        credentials: {
-          credentials: {
-            authorization_endpoint: "https://test-auth-server/authorize",
-            grant_types_supported: ["authorization_code"],
-          },
-        },
-      });
-  
-      renderWithProvider(
-        <Credential
-          credentialId="InsuranceCredential"
-          index={1}
-          credentialWellknown={credential}
-          setErrorObj={mockSetErrorObj}
-        />
-      );
-  
-      const itemBox = screen.getByTestId("ItemBox-Outer-Container-1");
-      await userEvent.click(itemBox);
-  
-      // No expiry modal
-      expect(screen.queryByTestId("DataShareExpiryModal")).toBeNull();
-  
-      // Redirect directly
-      expect(buildAuthorizationUrl).toHaveBeenCalledTimes(1);
-      expect(window.open).toHaveBeenCalledWith("https://redirect.mock/constructed", "_self", "noopener");
-      
-    });
-  });
