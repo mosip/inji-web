@@ -69,22 +69,6 @@ export const downloadCredentialPDF = async (
     window.URL.revokeObjectURL(url);
 };
 
-export const previewCredentialPDF = async (
-    response: any,
-    credentialType: string
-) => {
-    let fileName = `${credentialType}.pdf`;
-    const url = window.URL.createObjectURL(response);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', fileName);
-    link.setAttribute('target', '_blank');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
-};
-
 export const getErrorObject = (downloadResponse: any) => {
     const errorCode = downloadResponse?.errors ? downloadResponse?.errors[0]?.errorCode : "";
     if([
@@ -107,15 +91,6 @@ export const getErrorObject = (downloadResponse: any) => {
         message: "error.generic.subTitle"
     }
 }
-export const constructContent = (descriptions: string[],applyHTML:boolean) => {
-    return descriptions.map((desc, index) => {
-        if (applyHTML) {
-            return { __html: desc };
-        }
-        return desc;
-    });
-};
-
 export const convertStringIntoPascalCase = (text: string | undefined) => {
     return (
         text?.toLocaleLowerCase()
