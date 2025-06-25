@@ -1,8 +1,8 @@
 import {useEffect} from 'react';
-import {useNavigate, useLocation} from 'react-router-dom';
-import {api} from "../utils/api";
+import {useLocation, useNavigate} from 'react-router-dom';
 import {ROUTES} from "../utils/constants";
 import {useUser} from "./User/useUser";
+import {apiInstance} from "./useApi";
 
 //TODO: Add tests for this hook
 export function useInterceptor() {
@@ -10,7 +10,7 @@ export function useInterceptor() {
     const location = useLocation();
     const {removeUser, isUserLoggedIn} = useUser()
 
-    const interceptor = api.instance.interceptors.response.use(function (response: any) {
+    const interceptor = apiInstance.interceptors.response.use(function (response: any) {
         return response;
     }, function (error: {
         response: {
@@ -18,8 +18,10 @@ export function useInterceptor() {
             status: number;
         };
     }) {
+        const isFetchingWallets = error.response?.config?.url.includes('/wallets');
+        console.log("useInterceptor error:", error.response?.config?.url, "Status:", error.response?.status);
         // Redirect to / page on logged-in user if unauthorized access is detected
-        if (isUserLoggedIn()) {
+        if (isUserLoggedIn() || isFetchingWallets) {
             if (error.response && error.response.status === 401) {
                 console.warn("Unauthorized access detected. Redirecting to / page.");
                 removeUser()
@@ -35,7 +37,7 @@ export function useInterceptor() {
 
     useEffect(() => {
         return () => {
-            api.instance.interceptors.response.eject(interceptor);
+            apiInstance.interceptors.response.eject(interceptor);
         };
     }, [navigate, location, interceptor]);
 }

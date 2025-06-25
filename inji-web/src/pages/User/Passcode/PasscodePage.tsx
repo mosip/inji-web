@@ -8,41 +8,46 @@ import {useUser} from '../../../hooks/User/useUser';
 import {PasscodeInput} from '../../../components/Common/Input/PasscodeInput';
 import {navigateToUserHome} from "../../../utils/navigationUtils";
 import {PasscodePageStyles} from './PasscodePageStyles';
-import {HTTP_STATUS_CODES, ROUTES} from "../../../utils/constants";
+import {ROUTES} from "../../../utils/constants";
 import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePage/PasscodePageTemplate";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
+import {useApi} from "../../../hooks/useApi";
+import {Wallet} from "../../../types/data";
 
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');
     const navigate = useNavigate();
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
-    const [wallets, setWallets] = useState<any[] | undefined>(undefined);
+    const [wallets, setWallets] = useState<any[] | null>(null);
     const [cookies] = useCookies(['XSRF-TOKEN']);
     const [passcode, setPasscode] = useState<string[]>(Array(6).fill(''));
     const [confirmPasscode, setConfirmPasscode] = useState<string[]>(
         Array(6).fill('')
     );
     const {saveWalletId} = useUser();
+    const createWalletApi = useApi<Wallet>();
+    const walletsApi = useApi<Wallet[]>();
+    const unlockWalletApi = useApi<Wallet>();
 
     const fetchWallets = async () => {
         try {
-            const response = await fetch(api.fetchWallets.url(), {
-                method: MethodType[api.fetchWallets.methodType],
+            const response = await walletsApi.fetchData({
+                apiRequest: api.fetchWallets,
                 headers: {
                     ...api.fetchWallets.headers(),
                     'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
                 },
-                credentials: 'include'
-            });
+            })
 
-            const responseData = await response.json();
 
-            if (!response.ok) {
-                throw responseData;
+            if (!response.ok()) {
+                console.error('Error occurred while fetching Wallets:', response.error);
+                setError(t('error.fetchWalletsError'));
             }
 
-            setWallets(responseData);
+            console.log("Fetched Wallets:", response.data);
+            setWallets(response.data);
         } catch (error) {
             console.error('Error occurred while fetching Wallets:', error);
             setError(t('error.fetchWalletsError'));
@@ -75,20 +80,20 @@ export const PasscodePage: React.FC = () => {
         }
 
         try {
-            const response = await fetch(api.fetchWalletDetails.url(walletId), {
-                method: MethodType[api.fetchWalletDetails.methodType],
+            const response = await unlockWalletApi.fetchData({
+                apiRequest: api.fetchWalletDetails,
                 headers: {
                     ...api.fetchWalletDetails.headers(),
                     'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
                 },
-                credentials: api.fetchWalletDetails.credentials,
-                body: JSON.stringify({walletPin: pin})
-            });
+                body: ({walletPin: pin}),
+                url: api.fetchWalletDetails.url(walletId),
+            })
 
-            const responseData = await response.json();
-            if (!response.ok) {
+            if (!response.ok()) {
+                console.error("Error occurred while unlocking Wallet:", response.error);
                 setError(t('error.incorrectPasscodeError'));
-                throw responseData;
+                throw response.error;
             }
             saveWalletId(walletId)
         } catch (error) {
@@ -106,31 +111,29 @@ export const PasscodePage: React.FC = () => {
                 throw new Error('Pin and Confirm Pin mismatch');
             }
 
-            const response = await fetch(api.createWalletWithPin.url(), {
-                method: 'POST',
+            const response = await createWalletApi.fetchData({
+              apiRequest: api.createWalletWithPin,
                 headers: {
                     ...api.createWalletWithPin.headers(),
                     'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
                 },
-                credentials: 'include',
                 body: JSON.stringify({
                     walletPin: pin,
                     confirmWalletPin: confirmPasscode.join(''),
                     walletName: null
-                })
-            });
+                }),
+            })
 
-            if (!response.ok) {
-                const errorData = await response.json();
+            if (!response.ok()) {
                 setError(
                     `${t('error.createWalletError')}: ${
-                        errorData.errorMessage ?? t('unknown-error')
+                        response.error?.errorMessage ?? t('unknown-error')
                     }`
                 );
-                throw errorData;
+                throw response.error;
             }
 
-            const createdWallet = await response.json();
+            const createdWallet = response.data!;
             await unlockWallet(createdWallet.walletId, pin);
 
             setWallets([{walletId: createdWallet.walletId}]);

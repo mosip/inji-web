@@ -5,7 +5,7 @@ import {
     IssuerObject
 } from "../types/data";
 import i18n from "i18next";
-import { KEYS } from "./constants";
+import {KEYS, ROUTES} from "./constants";
 import {Storage} from "./Storage";
 import axios from "axios";
 
@@ -21,27 +21,12 @@ export enum ContentTypes {
     FORM_URL_ENCODED = "application/x-www-form-urlencoded",
 }
 
-const apiInstance = axios.create({
-    baseURL: window._env_.MIMOTO_URL,
-    withCredentials: true,
-});
 
-export function request(headers : any, body: any, apiRequest: ApiRequest){
-    return api.instance.request({
-        url: apiRequest.url(),
-        method: MethodType[apiRequest.methodType],
-        headers: headers,
-        data: body,
-        withCredentials: (apiRequest.credentials === "include"),
-    })
-}
 
 export class api {
     static mimotoHost = window._env_.MIMOTO_URL;
 
-    static instance = apiInstance
-
-    static authorizationRedirectionUrl = window.location.origin + "/redirect";
+    static authorizationRedirectionUrl = window.location.origin + ROUTES.REDIRECT;
 
     static fetchIssuers: ApiRequest = {
         url: () => api.mimotoHost + "/issuers",
@@ -80,7 +65,8 @@ export class api {
                 "Content-Type": ContentTypes.FORM_URL_ENCODED,
                 "Cache-Control": "no-cache, no-store, must-revalidate"
             };
-        }
+        },
+        responseType: "blob"
     };
     static authorization = (
         currentIssuer: IssuerObject,
@@ -146,6 +132,7 @@ export class api {
         }
     };
 
+    //TODO: rename this to unlockWallet
     static fetchWalletDetails: ApiRequest = {
         url: (walletId: string) =>
             api.mimotoHost + `/wallets/${walletId}/unlock`,
@@ -189,6 +176,7 @@ export class api {
     static fetchWalletVCs: ApiRequest = {
         url: () => {
             const walletId = Storage.getItem(KEYS.WALLET_ID);
+            // const walletId = "dummy";
             return (
                 api.mimotoHost +
                 `/wallets/${walletId}/credentials`

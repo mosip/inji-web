@@ -166,3 +166,7 @@ export interface InstructionItem {
     id: string;
     content: React.ReactNode;
 }
+export interface Wallet {
+    walletId: string;
+    walletName: string;
+}
