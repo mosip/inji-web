@@ -81,13 +81,13 @@ export const PasscodePage: React.FC = () => {
 
         try {
             const response = await unlockWalletApi.fetchData({
-                apiRequest: api.fetchWalletDetails,
+                apiRequest: api.unlockWallet,
                 headers: {
-                    ...api.fetchWalletDetails.headers(),
+                    ...api.unlockWallet.headers(),
                     'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
                 },
                 body: ({walletPin: pin}),
-                url: api.fetchWalletDetails.url(walletId),
+                url: api.unlockWallet.url(walletId),
             })
 
             if (!response.ok()) {

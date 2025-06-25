@@ -106,7 +106,8 @@ export class api {
             return {
                 "Content-Type": ContentTypes.JSON
             };
-        }
+        },
+        credentials: "include"
     };
 
     // Fetch wallets API
@@ -132,8 +133,7 @@ export class api {
         }
     };
 
-    //TODO: rename this to unlockWallet
-    static fetchWalletDetails: ApiRequest = {
+    static unlockWallet: ApiRequest = {
         url: (walletId: string) =>
             api.mimotoHost + `/wallets/${walletId}/unlock`,
         methodType: MethodType.POST,
