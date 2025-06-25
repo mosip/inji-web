@@ -1,8 +1,7 @@
 import sha256 from 'crypto-js/sha256';
 import Base64 from 'crypto-js/enc-base64';
 import {api} from "./api";
-import {TokenRequestBody} from "../types/data";
-import { IssuerObject,CredentialConfigurationObject,CodeChallengeObject } from '../types/data';
+import { IssuerObject,CredentialConfigurationObject,CodeChallengeObject, TokenRequestBody } from '../types/data';
 
 export const generateCodeChallenge = (verifier = generateRandomString()) => {
     const hashedVerifier = sha256(verifier);
@@ -71,7 +70,7 @@ export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId
 }
 
 export const downloadCredentialPDF = async (
-    response: any,
+    response: Blob,
     fileName: string
 ) => {
     const url = window.URL.createObjectURL(response);
