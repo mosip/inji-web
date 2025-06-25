@@ -170,3 +170,30 @@ export interface Wallet {
     walletId: string;
     walletName: string;
 }
+
+export type ApiError = AxiosError<ErrorType | ResponseTypeObject>;
+
+export interface NetworkResult<T> {
+    data: T | null;
+    error: ApiError | Error | null;
+    status: number | null;
+    loading: boolean;
+    headers: object;
+    ok: () => boolean;
+}
+
+export interface RequestConfig {
+    url?: string;
+    headers?: Record<string, string>;
+    body?: any;
+    apiRequest: ApiRequest;
+}
+
+export interface UseApiReturn<T> {
+    data: T | null;
+    error: Error | null;
+    state: RequestStatus;
+    status: number | null;
+    fetchData: (arg0: RequestConfig) => Promise<NetworkResult<T>>;
+    ok: () => boolean;
+}
