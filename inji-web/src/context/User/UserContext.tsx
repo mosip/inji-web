@@ -4,6 +4,7 @@ import {ErrorType, User} from "../../types/data";
 import {KEYS} from "../../utils/constants";
 import {api, MethodType} from "../../utils/api";
 import {Storage} from "../../utils/Storage";
+import {useApi} from "../../hooks/useApi.ts";
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
@@ -14,6 +15,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     const [walletId, setWalletId] = useState<string | null>(null);
     const [error, setError] = useState<ErrorType | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const userProfile = useApi<User>()
 
     // This stores the user info which indicates whether user has authenticated or not
     const saveUser = (userData: User) => {
@@ -28,6 +30,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     };
 
     const removeUser = () => {
+        console.log("Removing user data from storage");
         Storage.removeItem(KEYS.USER);
         Storage.removeItem(KEYS.WALLET_ID);
         setUser(null);
@@ -49,14 +52,15 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     const fetchUserProfile = async () => {
         try {
             setIsLoading(true);
-            const response = await fetch(api.fetchUserProfile.url(), {
-                method: MethodType[api.fetchUserProfile.methodType],
-                headers: {...api.fetchUserProfile.headers()},
-                credentials: api.fetchUserProfile.credentials
-            });
+            const  response = await userProfile.fetchData({
+                apiRequest: api.fetchUserProfile,
+            })
 
-            const responseData = await response.json();
-            if (!response.ok) throw responseData;
+            //TODO: check if this is still needed
+            if (!response.ok) {
+                throw response.error
+            };
+            const responseData = response.data
 
             const userData: User = {
                 displayName: responseData.displayName,
