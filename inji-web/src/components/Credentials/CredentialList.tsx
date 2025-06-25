@@ -4,12 +4,12 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../types/redux";
 import {EmptyListContainer} from "../Common/EmptyListContainer";
 import {useTranslation} from "react-i18next";
-import {RequestStatus} from "../../hooks/useFetch";
 import {SpinningLoader} from "../Common/SpinningLoader";
 import {HeaderTile} from "../Common/HeaderTile";
 import {DownloadResult} from "../Redirection/DownloadResult";
 import {CredentialConfigurationObject} from "../../types/data";
 import {defaultLanguage} from "../../utils/i18n";
+import {RequestStatus} from "../../utils/constants";
 
 interface CredentialListProps {
     state: RequestStatus;

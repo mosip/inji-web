@@ -49,3 +49,9 @@ export const HTTP_STATUS_CODES = {
 }
 
 export const pdfWorkerSource = (pdfVersion : string) => `//unpkg.com/pdfjs-dist@${pdfVersion}/build/pdf.worker.min.mjs`;
+
+export enum RequestStatus {
+    LOADING,
+    DONE,
+    ERROR
+}

@@ -3,8 +3,8 @@ import {  screen, fireEvent } from '@testing-library/react';
 import { SearchIssuer } from '../../../components/Issuers/SearchIssuer';
 import { reduxStore } from '../../../redux/reduxStore';
 import { storeFilteredIssuers } from '../../../redux/reducers/issuersReducer';
-import { RequestStatus } from '../../../hooks/useFetch';
 import { renderWithProvider,mockUseTranslation } from '../../../test-utils/mockUtils';
+import {RequestStatus} from "../../../utils/constants";
 
 mockUseTranslation();
 

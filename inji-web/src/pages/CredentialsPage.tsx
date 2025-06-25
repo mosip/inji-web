@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {RequestStatus} from "../hooks/useFetch";
 import {NavBar} from "../components/Common/NavBar";
 import {useDispatch, useSelector} from "react-redux";
 import {storeSelectedIssuer} from "../redux/reducers/issuersReducer";
@@ -9,12 +8,18 @@ import {api} from "../utils/api";
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 
-import {ApiRequest, IssuerObject, IssuerWellknownDisplayArrayObject, ResponseTypeObject} from "../types/data";
+import {
+    ApiRequest,
+    IssuerObject,
+    IssuerWellknownDisplayArrayObject,
+    ResponseTypeObject
+} from "../types/data";
 import {getIssuerDisplayObjectForCurrentLanguage} from "../utils/i18n";
 import {RootState} from "../types/redux";
 import {isObjectEmpty} from "../utils/misc";
 import {CredentialListWrapper} from "../components/Credentials/CredentialListWrapper";
 import {useApi} from "../hooks/useApi";
+import {RequestStatus} from "../utils/constants";
 
 // This page is hit on guest mode
 export const CredentialsPage: React.FC = () => {

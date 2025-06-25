@@ -1,9 +1,9 @@
 import {renderWithRouter} from '../../../test-utils/mockUtils';
 import {screen, waitFor} from '@testing-library/react';
-import {RequestStatus} from '../../../hooks/useFetch';
 import {setMockUseDispatchReturnValue} from '../../../test-utils/mockReactRedux';
 import {CredentialTypesPage} from '../../../pages/User/CredentialTypes/CredentialTypesPage';
 import {useApi} from "../../../hooks/useApi";
+import {RequestStatus} from "../../../utils/constants";
 
 jest.mock('../../../hooks/useApi.ts', () => ({
     useApi: jest.fn(),

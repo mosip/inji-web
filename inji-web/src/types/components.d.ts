@@ -1,6 +1,6 @@
 import {IssuerObject} from "./data";
 import React from "react";
-import {RequestStatus} from "../hooks/useFetch";
+import {RequestStatus} from "../utils/constants";
 
 export type HomeFeatureItemProps = {
     itemno: number;

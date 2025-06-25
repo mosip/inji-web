@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
-import {RequestStatus} from '../../../hooks/useFetch';
 import {useDispatch, useSelector} from 'react-redux';
 import {storeSelectedIssuer} from '../../../redux/reducers/issuersReducer';
 import {storeCredentials, storeFilteredCredentials} from '../../../redux/reducers/credentialsReducer';
 import {api} from '../../../utils/api';
-import {ApiRequest, IssuerObject, IssuerWellknownDisplayArrayObject, ResponseTypeObject} from '../../../types/data';
+import {
+    ApiRequest,
+    IssuerObject,
+    IssuerWellknownDisplayArrayObject,
+    ResponseTypeObject
+} from '../../../types/data';
 import {getIssuerDisplayObjectForCurrentLanguage} from '../../../utils/i18n';
 import {RootState} from '../../../types/redux';
 import {isObjectEmpty} from '../../../utils/misc';
@@ -14,7 +18,7 @@ import {CredentialTypesPageStyles} from "./CredentialTypesPageStyles";
 import {useDownloadSessionDetails} from "../../../hooks/User/useDownloadSession";
 import {CredentialTypesPageContent} from "../../../components/User/CredentialTypes/CredentialTypesPageContent";
 import {Header} from "../../../components/User/CredentialTypes/Header";
-import {ROUTES} from "../../../utils/constants";
+import {RequestStatus, ROUTES} from "../../../utils/constants";
 import {useApi} from "../../../hooks/useApi";
 
 type CredentialTypesPageProps = {

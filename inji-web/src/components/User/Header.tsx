@@ -11,12 +11,13 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
 import {useTranslation} from 'react-i18next';
 import DropdownArrowIcon from '../Common/DropdownArrowIcon';
-import {ROUTES} from '../../utils/constants';
+import {HTTP_STATUS_CODES, ROUTES} from '../../utils/constants';
 import {convertStringIntoPascalCase} from "../../utils/misc";
 import {navigateToUserHome} from "../../utils/navigationUtils";
 import {CircleSkeleton} from '../Common/CircleSkeleton';
 import {InfoFieldSkeleton} from '../Common/InfoFieldSkeleton';
 import {DropdownItem} from "../../types/data";
+import {useApi} from "../../hooks/useApi";
 
 type UserHeaderProps = {
     headerRef: React.RefObject<HTMLDivElement>;
@@ -41,6 +42,7 @@ export const Header: React.FC<UserHeaderProps> = ({
     const displayNameFromLocalStorage = user?.displayName;
     const hasProfilePictureUrl = user?.profilePictureUrl;
     const {t} = useTranslation('User');
+    const logout = useApi()
 
     useEffect(() => {
         setDisplayName(displayNameFromLocalStorage);
@@ -70,19 +72,29 @@ export const Header: React.FC<UserHeaderProps> = ({
     const handleLogout = async () => {
         try {
             const apiRequest = api.userLogout;
-            const response = await fetch(apiRequest.url(), {
-                method: 'POST',
-                credentials: 'include',
+            // const response = await fetch(apiRequest.url(), {
+            //     method: 'POST',
+            //     credentials: 'include',
+            //     headers: {
+            //         'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
+            //     }
+            // });
+            const response = await logout.fetchData({
+                apiRequest: apiRequest,
                 headers: {
                     'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
                 }
-            });
+            })
 
-            if (response.ok) {
+            console.log("Logout response: ", response);
+
+            if (response.status === HTTP_STATUS_CODES.OK) {
+                console.log("Logout successful, removing user data ", response);
                 removeUser();
-                window.location.replace(ROUTES.ROOT);
+                // window.location.replace(ROUTES.ROOT);
             } else {
-                const parsedResponse = await response.json();
+                const parsedResponse = response.data;
+                // const parsedResponse = await response.json();
                 const errorCode = parsedResponse?.errors[0].errorCode;
                 if (errorCode === 'user_logout_error') {
                     removeUser();

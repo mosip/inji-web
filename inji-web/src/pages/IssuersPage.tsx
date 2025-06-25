@@ -1,5 +1,4 @@
 import React, {useEffect} from "react";
-import {RequestStatus} from "../hooks/useFetch";
 import {IntroBox} from "../components/Common/IntroBox";
 import {SearchIssuer} from "../components/Issuers/SearchIssuer";
 import {IssuersList} from "../components/Issuers/IssuersList";
@@ -10,6 +9,7 @@ import {ApiRequest, IssuerObject} from "../types/data";
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 import {useApi} from "../hooks/useApi";
+import {RequestStatus} from "../utils/constants";
 
 export const IssuersPage: React.FC<IssuerPageProps> = ({className}) => {
     const {state, fetchData} = useApi();

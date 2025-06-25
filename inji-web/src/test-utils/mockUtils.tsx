@@ -177,6 +177,7 @@ export const mockApiObject = () =>{
     }));
 };
 
+//TODO: remove this mock
 export const mockUseFetch = () =>{
     jest.mock('../hooks/useFetch', () => {
         const RequestStatus = {

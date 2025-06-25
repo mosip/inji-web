@@ -1,9 +1,9 @@
 import React from 'react';
 import { CredentialList } from '../../../components/Credentials/CredentialList';
-import { RequestStatus } from '../../../hooks/useFetch';
 import { mockCredentials } from '../../../test-utils/mockObjects';
 import { renderWithProvider, mockUseTranslation} from '../../../test-utils/mockUtils';
 import { setMockUseSelectorState } from '../../../test-utils/mockReactRedux';
+import {RequestStatus} from "../../../utils/constants";
 
 describe("Testing the Layout of CredentialList Layouts", () => {
     beforeEach(() => {

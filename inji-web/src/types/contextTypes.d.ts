@@ -1,6 +1,6 @@
 import {CredentialTypeDisplayArrayObject, ErrorType, User} from "./data";
-import {RequestStatus} from "../hooks/useFetch";
 import {Dispatch, SetStateAction} from "react";
+import {RequestStatus} from "../utils/constants";
 
 export type UserContextType = {
     user: User | null;

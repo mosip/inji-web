@@ -1,9 +1,8 @@
 import {useState} from "react";
 import {ApiRequest} from "../types/data";
 import {MethodType} from "../utils/api";
-import {RequestStatus} from "./useFetch";
 import axios from "axios";
-import {HTTP_STATUS_CODES} from "../utils/constants";
+import {HTTP_STATUS_CODES, RequestStatus} from "../utils/constants";
 
 export interface NetworkResult<T> {
     data: T | null;
