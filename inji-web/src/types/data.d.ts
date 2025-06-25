@@ -88,6 +88,7 @@ export type ApiRequest = {
     headers: (...args: string[]) => any;
     credentials?:RequestCredentials;
     responseType?: "json" | "text" | "blob";
+    includeXSRFToken?: boolean;
 };
 
 export type LanguageObject = {

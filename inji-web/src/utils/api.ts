@@ -137,7 +137,8 @@ export class api {
                 "Content-Type": ContentTypes.JSON
             };
         },
-        credentials: "include"
+        credentials: "include",
+        includeXSRFToken: true
     };
 
     static deleteWallet: ApiRequest = {
