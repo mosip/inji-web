@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {NetworkResult, RequestConfig, UseApiReturn} from "../types/data";
-import {MethodType} from "../utils/api";
+import {ContentTypes, MethodType} from "../utils/api";
 import axios from "axios";
 import {HTTP_STATUS_CODES, RequestStatus} from "../utils/constants";
 
@@ -34,13 +34,29 @@ export function useApi<T = any>(): UseApiReturn<T> {
         try {
             console.log("fetching data with config:", body)
 //TODO: Move mimoto host as baseURL in here
+            //TODO: rename apiRequest to requestConfig
+            const requestHeaders = headers ?? apiRequest.headers();
+            const contentType = requestHeaders["Content-Type"] ?? ContentTypes.JSON;
+            let requestBody;
+            switch (contentType) {
+                case ContentTypes.JSON:
+                    requestBody = body;
+                    break;
+                case ContentTypes.FORM_URL_ENCODED:
+                    requestBody = new URLSearchParams(body);
+                    break;
+                default:
+                    requestBody = JSON.stringify(body);
+                    break;
+            }
             const response = await apiInstance.request({
                 url: url ?? apiRequest.url(),
                 method: MethodType[apiRequest.methodType],
-                headers: headers ?? apiRequest.headers(),
-                data: JSON.stringify(body),
+                headers: requestHeaders,
+                data: requestBody,
                 withCredentials: apiRequest.credentials === "include",
                 responseType: apiRequest.responseType ?? "json",
+                withXSRFToken: apiRequest.includeXSRFToken ?? false,
             });
 
             setData(response.data);
