@@ -1,6 +1,9 @@
 import {useState} from "react";
 import {ApiRequest} from "../types/data";
-import {api, MethodType} from "../utils/api";
+import {MethodType} from "../utils/api";
+import {RequestStatus} from "./useFetch";
+import axios from "axios";
+import {HTTP_STATUS_CODES} from "../utils/constants";
 
 export interface NetworkResult<T> {
     data: T | null;
@@ -8,6 +11,7 @@ export interface NetworkResult<T> {
     status: number | null;
     loading: boolean;
     headers: object;
+    ok: () => boolean;
 }
 
 interface RequestConfig {
@@ -20,16 +24,26 @@ interface RequestConfig {
 interface UseApiReturn<T> {
     data: T | null;
     error: Error | null;
-    loading: boolean;
+    state: RequestStatus;
     status: number | null;
     fetchData: (arg0: RequestConfig) => Promise<NetworkResult<T>>;
+    ok: () => boolean;
 }
+
+export const apiInstance = axios.create({
+    baseURL: window._env_.MIMOTO_URL,
+    withCredentials: true,
+});
 
 export function useApi<T = any>(): UseApiReturn<T> {
     const [data, setData] = useState<T | null>(null);
     const [error, setError] = useState<Error | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
     const [status, setStatus] = useState<number | null>(null);
+    const [state, setState] = useState<RequestStatus>(RequestStatus.LOADING);
+
+    const ok = () => {
+        return status !== null && status >= HTTP_STATUS_CODES.OK && status < HTTP_STATUS_CODES.MULTIPLE_CHOICES;
+    };
 
     async function fetchData({
                                  headers,
@@ -37,29 +51,25 @@ export function useApi<T = any>(): UseApiReturn<T> {
                                  apiRequest,
                                  url = undefined
                              }: RequestConfig): Promise<NetworkResult<T>> {
-        setLoading(true);
+        setState(RequestStatus.LOADING)
         setError(null);
         setStatus(null);
 
-        let result: NetworkResult<T> = {
-            data: null,
-            error: null,
-            status: null,
-            loading: true,
-            headers: {}
-        };
+        let result: NetworkResult<T>;
 
         try {
-            const response = await api.instance.request({
+            console.log("fetching data with config:", body)
+//TODO: Move mimoto host as baseURL in here
+            const response = await apiInstance.request({
                 url: url ?? apiRequest.url(),
                 method: MethodType[apiRequest.methodType],
-                headers,
-                data: body,
+                headers: headers ?? apiRequest.headers(),
+                data: JSON.stringify(body),
                 withCredentials: apiRequest.credentials === "include",
                 responseType: apiRequest.responseType ?? "json",
             });
 
-            console.log("API response:", response);
+            console.log("API response: ", response);
             setData(response.data);
             setStatus(response.status);
 
@@ -68,27 +78,29 @@ export function useApi<T = any>(): UseApiReturn<T> {
                 error: null,
                 status: response.status,
                 loading: false,
-                headers: response.headers || {}
+                headers: response.headers || {},
+                ok: () => response.status >= 200 && response.status < 300
             };
+            setState(RequestStatus.DONE);
         } catch (err: any) {
             const parsedError = err instanceof Error ? err : new Error("Unknown error");
 
             setError(parsedError);
-            setStatus(err?.response?.status || null);
+            setStatus(err?.response?.status ?? null);
 
             result = {
                 data: null,
                 error: parsedError,
-                status: err?.response?.status || null,
+                status: err?.response?.status ?? null,
                 loading: false,
-                headers: err?.response?.headers || {}
+                headers: err?.response?.headers ?? {},
+                ok: () => false
             };
-        } finally {
-            setLoading(false);
+            setState(RequestStatus.ERROR)
         }
 
         return result;
     }
 
-    return {data, error, loading, status, fetchData};
+    return {data, error, state, status, fetchData, ok};
 }
