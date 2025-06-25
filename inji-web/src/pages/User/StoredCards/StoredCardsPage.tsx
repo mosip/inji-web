@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-dom';
 import {NavBackArrowButton} from '../../../components/Common/Buttons/NavBackArrowButton';
-import {WalletCredential} from "../../../types/data";
+import {ApiError, ErrorType, WalletCredential} from "../../../types/data";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../types/redux";
 import {api} from "../../../utils/api";
@@ -19,7 +19,7 @@ import {BorderedButton} from "../../../components/Common/Buttons/BorderedButton"
 import {StoredCardsPageStyles} from "./StoredCardsPageStyles";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 import {navigateToUserHome} from "../../../utils/navigationUtils";
-import {HTTP_STATUS_CODES, ROUTES} from "../../../utils/constants";
+import {HTTP_STATUS_CODES} from "../../../utils/constants";
 import {useApi} from "../../../hooks/useApi";
 
 export const StoredCardsPage: React.FC = () => {
@@ -27,7 +27,7 @@ export const StoredCardsPage: React.FC = () => {
     const navigate = useNavigate();
     const [credentials, setCredentials] = useState<WalletCredential[]>([]);
     const [filteredCredentials, setFilteredCredentials] = useState<WalletCredential[]>([]);
-    const walletCredentials = useApi<WalletCredential[]>()
+    const walletCredentialsApi = useApi<WalletCredential[]>()
     const [loading, setLoading] = useState(true);
     const language = useSelector((state: RootState) => state.common.language);
     const [error, setError] = useState<string>();
@@ -38,24 +38,23 @@ export const StoredCardsPage: React.FC = () => {
         try {
             const fetchWalletCredentials = api.fetchWalletVCs;
 
-            const response = await walletCredentials.fetchData({
+            const response = await walletCredentialsApi.fetchData({
                 headers: fetchWalletCredentials.headers(language),
                 apiRequest: fetchWalletCredentials
             })
 
-            console.log("response", response);
-
-            if (response.status === HTTP_STATUS_CODES.OK) {
-                const responseData = response.data;
-                setCredentials(responseData!);
-                setFilteredCredentials(responseData!)
+            if (response.ok()) {
+                const responseData = response.data!;
+                setCredentials(responseData);
+                setFilteredCredentials(responseData)
             } else {
-                if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
-                    console.error("Unauthorized access - redirecting to root");
-                    navigate(ROUTES.ROOT);
+                console.error("Error fetching credentials:", response.status, response.error);
+                if (response.error?.message === ('Network Error')) {
+                    console.error('Network error: Please check your internet connection.');
+                    setError("networkError");
                     return;
                 }
-                console.error("Error fetching credentials:", response.status, response.error);
+
                 const invalidWalletRequests = [
                     "Wallet key not found in session",
                     "Wallet is locked",
@@ -68,36 +67,29 @@ export const StoredCardsPage: React.FC = () => {
                     case HTTP_STATUS_CODES.SERVICE_UNAVAILABLE:
                         setError("serviceUnavailable");
                         break;
-                    case HTTP_STATUS_CODES.BAD_REQUEST:
-                        const errorMessage = response.error?.response?.data.errorMessage;
-                        console.log("Bad request error:", errorMessage);
+                    case HTTP_STATUS_CODES.BAD_REQUEST: {
+                        const errorMessage = ((response.error as ApiError)?.response?.data as ErrorType).errorMessage ?? "";
                         setError(
                             invalidWalletRequests.includes(errorMessage ?? "")
                                 ? "invalidWalletRequest"
                                 : "invalidRequest"
                         );
                         break;
+                    }
                     default:
                         setError("unknownError");
                 }
             }
         } catch (error) {
-            console.error("Failed to fetch credentials:", error);
-            if (error instanceof TypeError && error.message === 'Failed to fetch' && !navigator.onLine) {
-                console.error('Network error: Please check your internet connection.');
-                setError("networkError");
-            } else {
-                console.error('An unknown error occurred');
-                setError("unknownError");
-            }
-
+            console.error("An unknown error occurred. Failed to fetch credentials:", error);
+            setError("unknownError");
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchWalletCredentials().then(_ => console.debug("Credentials fetched successfully"));
+        void fetchWalletCredentials();
     }, []);
 
     const filterCredentials = (searchText: string) => {

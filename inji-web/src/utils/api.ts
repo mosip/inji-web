@@ -1,13 +1,7 @@
-import {
-    ApiRequest,
-    CodeChallengeObject,
-    CredentialConfigurationObject,
-    IssuerObject
-} from "../types/data";
+import {ApiRequest, CodeChallengeObject, CredentialConfigurationObject, IssuerObject} from "../types/data";
 import i18n from "i18next";
 import {KEYS, ROUTES} from "./constants";
 import {Storage} from "./Storage";
-import axios from "axios";
 
 export enum MethodType {
     GET,
@@ -130,7 +124,8 @@ export class api {
             return {
                 "Content-Type": ContentTypes.JSON
             };
-        }
+        },
+        credentials: "include"
     };
 
     static unlockWallet: ApiRequest = {
@@ -175,8 +170,8 @@ export class api {
 
     static fetchWalletVCs: ApiRequest = {
         url: () => {
-            const walletId = Storage.getItem(KEYS.WALLET_ID);
-            // const walletId = "dummy";
+            // const walletId = Storage.getItem(KEYS.WALLET_ID);
+            const walletId = "dummy";
             return (
                 api.mimotoHost +
                 `/wallets/${walletId}/credentials`

@@ -1,5 +1,7 @@
 import {MethodType} from "../utils/api";
 import React from "react";
+import {RequestStatus} from "../utils/constants.ts";
+import {AxiosError} from "axios";
 // This file contains type definitions for various objects / models used in the application.
 
 export type IssuerWellknownDisplayArrayObject = {
@@ -111,6 +113,7 @@ export type User = {
     displayName: string;
     profilePictureUrl: string;
     email: string;
+    walletId?: string;
 };
 
 export type SidebarItemType = {

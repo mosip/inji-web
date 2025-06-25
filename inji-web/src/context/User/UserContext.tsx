@@ -2,9 +2,9 @@ import React, {createContext, useState} from "react";
 import {UserContextType} from "../../types/contextTypes";
 import {ErrorType, User} from "../../types/data";
 import {KEYS} from "../../utils/constants";
-import {api, MethodType} from "../../utils/api";
+import {api} from "../../utils/api";
 import {Storage} from "../../utils/Storage";
-import {useApi} from "../../hooks/useApi.ts";
+import {useApi} from "../../hooks/useApi";
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
@@ -56,11 +56,10 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
                 apiRequest: api.fetchUserProfile,
             })
 
-            //TODO: check if this is still needed
-            if (!response.ok) {
+            if (!response.ok()) {
                 throw response.error
             };
-            const responseData = response.data
+            const responseData = response.data!
 
             const userData: User = {
                 displayName: responseData.displayName,
@@ -88,6 +87,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
             isLoading,
             isUserLoggedIn,
             fetchUserProfile,
+            // TODO: do not expose saveUser as its not used elsewhere
             saveUser,
             saveWalletId,
             removeUser,

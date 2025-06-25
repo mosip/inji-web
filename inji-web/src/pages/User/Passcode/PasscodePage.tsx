@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {api, MethodType} from '../../../utils/api';
+import {api} from '../../../utils/api';
 import {useCookies} from 'react-cookie';
 import {SolidButton} from '../../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
@@ -12,7 +12,7 @@ import {ROUTES} from "../../../utils/constants";
 import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePage/PasscodePageTemplate";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 import {useApi} from "../../../hooks/useApi";
-import {Wallet} from "../../../types/data";
+import {ApiError, ErrorType, Wallet} from "../../../types/data";
 
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');
@@ -112,7 +112,7 @@ export const PasscodePage: React.FC = () => {
             }
 
             const response = await createWalletApi.fetchData({
-              apiRequest: api.createWalletWithPin,
+                apiRequest: api.createWalletWithPin,
                 headers: {
                     ...api.createWalletWithPin.headers(),
                     'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
@@ -125,10 +125,9 @@ export const PasscodePage: React.FC = () => {
             })
 
             if (!response.ok()) {
+                const errorMessage = ((response.error as ApiError)?.response?.data as ErrorType).errorMessage ?? t('unknown-error');
                 setError(
-                    `${t('error.createWalletError')}: ${
-                        response.error?.errorMessage ?? t('unknown-error')
-                    }`
+                    `${t('error.createWalletError')}: ${errorMessage}`
                 );
                 throw response.error;
             }

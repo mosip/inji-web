@@ -1,4 +1,4 @@
-import {ApiRequest, WalletCredential} from "../../types/data";
+import {ApiRequest, NetworkResult, WalletCredential} from "../../types/data";
 import {VCStyles} from "./VCStyles";
 import React, {useEffect, useState} from "react";
 import {Clickable} from "../Common/Clickable";
@@ -16,7 +16,7 @@ import {useNavigate} from "react-router-dom";
 import {RiDeleteBin6Line} from "react-icons/ri";
 import {BsBoxArrowRight} from "react-icons/bs";
 import {showToast} from "../Common/toast/ToastWrapper";
-import {NetworkResult, useApi} from "../../hooks/useApi";
+import {useApi} from "../../hooks/useApi";
 
 export function VCCardView(props: Readonly<{
     credential: WalletCredential,

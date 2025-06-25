@@ -1,33 +1,8 @@
 import {useState} from "react";
-import {ApiRequest} from "../types/data";
+import {NetworkResult, RequestConfig, UseApiReturn} from "../types/data";
 import {MethodType} from "../utils/api";
 import axios from "axios";
 import {HTTP_STATUS_CODES, RequestStatus} from "../utils/constants";
-
-export interface NetworkResult<T> {
-    data: T | null;
-    error: Error | null;
-    status: number | null;
-    loading: boolean;
-    headers: object;
-    ok: () => boolean;
-}
-
-interface RequestConfig {
-    url?: string;
-    headers?: Record<string, string>;
-    body?: any;
-    apiRequest: ApiRequest;
-}
-
-interface UseApiReturn<T> {
-    data: T | null;
-    error: Error | null;
-    state: RequestStatus;
-    status: number | null;
-    fetchData: (arg0: RequestConfig) => Promise<NetworkResult<T>>;
-    ok: () => boolean;
-}
 
 export const apiInstance = axios.create({
     baseURL: window._env_.MIMOTO_URL,
@@ -68,7 +43,6 @@ export function useApi<T = any>(): UseApiReturn<T> {
                 responseType: apiRequest.responseType ?? "json",
             });
 
-            console.log("API response: ", response);
             setData(response.data);
             setStatus(response.status);
 
