@@ -29,6 +29,7 @@ export const ROUTES = {
     ISSUERS: `/${Pages.ISSUERS}`,
     USER_ISSUER: (id: string) => `/${Pages.USER}/${Pages.ISSUERS}/${id}`,
     ISSUER: (id: string) => `/${Pages.ISSUERS}/${id}`,
+    REDIRECT: `/${Pages.REDIRECT}`,
     CREDENTIALS: `/${Pages.USER}/${Pages.CREDENTIALS}`,
     PROFILE: `/${Pages.USER}/${Pages.PROFILE}`,
     FAQ: `/${Pages.FAQ}`,
@@ -38,6 +39,7 @@ export const ROUTES = {
 
 export const HTTP_STATUS_CODES = {
     OK: 200,
+    MULTIPLE_CHOICES: 300,
     BAD_REQUEST: 400,
     UNAUTHORIZED: 401,
     FORBIDDEN: 403,
