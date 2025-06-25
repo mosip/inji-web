@@ -76,12 +76,10 @@ export function VCCardView(props: Readonly<{
     };
 
     const preview = async () => {
-        console.info("Fetching credential preview for:", props.credential.credentialId);
         await executeCredentialApiRequest(
             api.fetchWalletCredentialPreview,
             async (response) => {
                 const pdfContent: Blob = await response.blob();
-                console.info("Credential preview fetched successfully");
                 setPreviewContent(pdfContent);
             }
         );
