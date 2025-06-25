@@ -49,14 +49,7 @@ export function VCCardView(props: Readonly<{
         errorType: string = "downloadError"
     ) => {
         try {
-            // const response = await fetch(
-            //     apiCall.url(props.credential.credentialId),
-            //     {
-            //         method: MethodType[apiCall.methodType],
-            //         headers: apiCall.headers(language),
-            //         credentials: apiCall.credentials
-            //     }
-            // );
+            //TODO: separate api call for download and preview
             const response = await cardViewApi.fetchData({
                 url: apiCall.url(props.credential.credentialId),
                 headers: apiCall.headers(language),
@@ -106,7 +99,7 @@ export function VCCardView(props: Readonly<{
             api.downloadWalletCredentialPdf,
             async (response) => {
                 console.log("response for download", response);
-                const pdfContent = await response.data;
+                const pdfContent : Blob = response.data;
                 const disposition = response.headers["Content-Disposition"] ?? "";
                 const fileNameMatch = /filename="(.+)"/.exec(disposition ?? "");
                 const fileName = fileNameMatch?.[1] ?? "download.pdf";
