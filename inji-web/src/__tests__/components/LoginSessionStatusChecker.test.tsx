@@ -41,14 +41,8 @@ describe('LoginSessionStatusChecker', () => {
     });
 
     test('should redirect to passcode page when session is active but no wallet ID', async () => {
-
         (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
-        // Mock storage with user but no wallet ID
-        (Storage.getItem as jest.Mock).mockImplementation((key) => {
-            if (key === KEYS.USER) return JSON.stringify({username: 'testUser'});
-            if (key === KEYS.WALLET_ID) return null;
-            return null;
-        });
+        setupMockActiveSessionInStorage()
 
         render(<LoginSessionStatusChecker/>);
 
@@ -58,7 +52,6 @@ describe('LoginSessionStatusChecker', () => {
     });
 
     test('should redirect to root page when accessing protected route without being logged in', async () => {
-
         (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
         // Mock storage with no user and no wallet ID
         (Storage.getItem as jest.Mock).mockReturnValue(null);
@@ -70,19 +63,31 @@ describe('LoginSessionStatusChecker', () => {
     });
 
     test('should not redirect when user is logged in and accessing protected route', () => {
-
         (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
-        // Mock storage with user and wallet ID (fully logged in)
-        (Storage.getItem as jest.Mock).mockImplementation((key) => {
-            if (key === KEYS.USER) return JSON.stringify({username: 'testUser'});
-            if (key === KEYS.WALLET_ID) return 'wallet-123';
-            return null;
-        });
+        setupMockLoggedInStorage();
 
         render(<LoginSessionStatusChecker/>);
 
         expect(mockNavigate).not.toHaveBeenCalled();
     });
+
+    test.each([ROUTES.PASSCODE, ROUTES.USER_RESET_PASSCODE])('should not redirect when accessing passcode related route - %s with active session', (route) => {
+        (useLocation as jest.Mock).mockReturnValue({pathname: route});
+        setupMockActiveSessionInStorage();
+
+        render(<LoginSessionStatusChecker/>);
+
+        expect(mockNavigate).not.toHaveBeenCalled();
+    })
+
+    test("should not redirect when accessing non-protected route when session is active", () => {
+        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.FAQ});
+        setupMockLoggedInStorage()
+
+        render(<LoginSessionStatusChecker/>);
+
+        expect(mockNavigate).not.toHaveBeenCalled();
+    })
 
     test('should fetch user profile on mount', () => {
         (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
@@ -115,10 +120,10 @@ describe('LoginSessionStatusChecker', () => {
         });
     })
 
-    test("should recheck on storage change of USER key", async () => {
+    test.each([KEYS.USER, KEYS.WALLET_ID])("should recheck on storage change of %s key", async (storageKey) => {
         (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
         const mockStorageEvent = new StorageEvent('storage', {
-            key: KEYS.USER,
+            key: storageKey,
             newValue: undefined
         });
         render(<LoginSessionStatusChecker/>);
@@ -129,30 +134,18 @@ describe('LoginSessionStatusChecker', () => {
         await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT))
     })
 
-    test("should recheck on storage change of walletId key", async () => {
-        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
-        const mockStorageEvent = new StorageEvent('storage', {
-            key: KEYS.WALLET_ID,
-            newValue: undefined
-        });
-        render(<LoginSessionStatusChecker/>);
-
-        window.dispatchEvent(mockStorageEvent);
-
-        expect(mockFetchUserProfile).toHaveBeenCalled();
-        await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT))
-    })
-
-    test("should not redirect when accessing non-protected route when session is active", () => {
-        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.FAQ});
+    function setupMockLoggedInStorage() {
         (Storage.getItem as jest.Mock).mockImplementation((key) => {
             if (key === KEYS.USER) return JSON.stringify({username: 'testUser'});
             if (key === KEYS.WALLET_ID) return 'wallet-123';
             return null;
         });
+    }
 
-        render(<LoginSessionStatusChecker/>);
-
-        expect(mockNavigate).not.toHaveBeenCalled();
-    })
+    function setupMockActiveSessionInStorage() {
+        (Storage.getItem as jest.Mock).mockImplementation((key) => {
+            if (key === KEYS.USER) return JSON.stringify({username: 'testUser'});
+            return null;
+        });
+    }
 });

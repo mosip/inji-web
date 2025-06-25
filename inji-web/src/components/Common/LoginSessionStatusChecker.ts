@@ -22,41 +22,54 @@ const LoginSessionStatusChecker = () => {
     const {removeUser, fetchUserProfile} = useUser();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
+    const redirectToLogin = useCallback(() => {
+        removeUser()
+        console.warn("Redirecting to / page as accessing protected route without login");
+        navigate(ROUTES.ROOT)
+    },[navigate, removeUser]);
+
     const validateStatus = useCallback(() => {
         const user = Storage.getItem(KEYS.USER);
         const isSessionActive: boolean = !!user
         const walletId = Storage.getItem(KEYS.WALLET_ID);
         const isLoggedIn = !!walletId && isSessionActive;
+        const isPasscodeRelatedRoute = location.pathname === ROUTES.USER_RESET_PASSCODE || location.pathname === ROUTES.PASSCODE;
 
-        // User is not logged in and trying to access a login protected route
-        if (!isLoggedIn && isLoginProtectedRoute(location.pathname)) {
-            // Session is active but user required to enter passcode to unlock wallet
-            // user can reset-passcode when session is active but not logged out state
-            if (isSessionActive && location.pathname !== ROUTES.USER_RESET_PASSCODE) {
-                console.warn('Session is active but no wallet ID found, redirecting to /user/passcode to unlock wallet from path - ', location.pathname);
+        /**
+         * If user is not logged in, ask them to login again or unlock wallet based on the session state.
+         */
+        if (!isLoggedIn) {
+            // User can stay on passcode routes if session is active
+            if (isPasscodeRelatedRoute && isSessionActive) {
+                return;
+            }
+
+            // Redirect based on session state
+            if (isSessionActive) {
+                // Session active but wallet locked - redirect to passcode
+                console.warn('Session active but wallet locked, redirecting to passcode page');
                 navigate(ROUTES.PASSCODE);
             } else {
-                console.warn('User is not logged in, redirecting to / to login');
-                removeUser();
-                navigate(ROUTES.ROOT);
+                // No active session - clear user data and redirect to log in
+                redirectToLogin()
             }
         }
-    }, [navigate, location.pathname, removeUser]);
+    }, [navigate, location.pathname, redirectToLogin]);
 
 
     const fetchUser = useCallback(async () => {
         try {
             setIsLoading(true)
+            console.log("fetching user profile")
             await fetchUserProfile();
             setIsLoading(false)
         } catch (error) {
             console.error('Error fetching user profile:', error);
             if (isLoginProtectedRoute(location.pathname)) {
-                console.warn(". Redirecting to / page as accessing protected route");
-                navigate(ROUTES.ROOT)
+                redirectToLogin();
             }
         }
-    }, [fetchUserProfile, location.pathname, navigate]);
+    }, [redirectToLogin, fetchUserProfile, location.pathname]);
 
     // on app launch, populate the data from backend
     useEffect(() => {
@@ -64,6 +77,7 @@ const LoginSessionStatusChecker = () => {
 
         const handleStorageChange = (event: any) => {
             if (event.key === KEYS.USER || event.key === KEYS.WALLET_ID) {
+                console.log("Storage change detected for key:", event.key);
                 fetchUser();
             }
         };
@@ -75,6 +89,7 @@ const LoginSessionStatusChecker = () => {
     // on every path change, validate the status. This happens after app launch handlers are set up
     useEffect(() => {
         if (!isLoading) {
+            console.log("Validating status for path - ", location.pathname);
             validateStatus();
         }
     }, [location.pathname, validateStatus, isLoading]);
