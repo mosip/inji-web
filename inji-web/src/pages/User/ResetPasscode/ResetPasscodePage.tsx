@@ -11,6 +11,7 @@ import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePag
 import {Instruction} from "../../../components/Common/Instruction/Instruction";
 import {InstructionStyles} from "../../../components/Common/Instruction/InstructionStyles";
 import {InstructionItem} from "../../../types/data";
+import {useApi} from "../../../hooks/useApi";
 
 export const ResetPasscodePage: React.FC = () => {
     const {removeWallet, walletId} = useUser();
@@ -19,6 +20,7 @@ export const ResetPasscodePage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [error, setError] = React.useState<string | null>(null);
+    const resetPasscode = useApi()
 
     const handleBackNavigation = () => {
         navigate(ROUTES.PASSCODE);
@@ -26,19 +28,18 @@ export const ResetPasscodePage: React.FC = () => {
 
     const handleForgotPasscode = async () => {
         try {
-            const response = await fetch(
-                api.deleteWallet.url(location.state?.walletId ?? walletId),
-                {
-                    method: 'DELETE',
-                    headers: {
-                        ...api.deleteWallet.headers(),
-                        'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
-                    },
-                    credentials: 'include'
-                }
-            );
-            if (!response.ok) {
-                throw await response.json();
+            const  response = await resetPasscode.fetchData({
+                url: api.deleteWallet.url(location.state?.walletId ?? walletId),
+                apiRequest: api.deleteWallet,
+                headers: {
+                    ...api.deleteWallet.headers(),
+                    'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
+                },
+            })
+
+            if (!response.ok()) {
+                console.error('Error occurred while deleting Wallet:', error);
+                setError(t('resetFailure'));
             }
             removeWallet();
             navigate(ROUTES.PASSCODE);
