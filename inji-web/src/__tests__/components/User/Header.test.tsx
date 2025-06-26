@@ -2,14 +2,9 @@ import {setMockUseSelectorState} from '../../../test-utils/mockReactRedux';
 import {mockNavigateFn, setMockUseLocation} from '../../../test-utils/mockRouter';
 import {fireEvent, render, screen, waitFor} from '@testing-library/react'
 import {Header} from '../../../components/User/Header';
-import {useCookies} from 'react-cookie';
 import {useUser} from '../../../hooks/User/useUser';
 import * as i18n from '../../../utils/i18n';
 import {mockApiResponse, mockUseApi} from "../../../test-utils/setupUseApiMock";
-
-jest.mock('react-cookie', () => ({
-    useCookies: jest.fn(),
-}));
 
 jest.mock('../../../hooks/User/useUser', () => ({
     useUser: jest.fn(),
@@ -48,7 +43,6 @@ describe('Header', () => {
         mockNavigateFn.mockReset();
         setMockUseLocation({pathname: '/'});
 
-        (useCookies as jest.Mock).mockReturnValue([{'XSRF-TOKEN': 'token'}]);
         (useUser as jest.Mock).mockReturnValue({
             user: {displayName: 'John Doe', profilePictureUrl: ''},
             removeUser: mockRemoveUser,

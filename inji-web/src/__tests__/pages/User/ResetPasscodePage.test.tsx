@@ -2,7 +2,6 @@ import React from 'react';
 import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {useUser} from '../../../hooks/User/useUser';
-import {useCookies} from 'react-cookie';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {ResetPasscodePage} from '../../../pages/User/ResetPasscode/ResetPasscodePage';
@@ -91,10 +90,6 @@ jest.mock('../../../hooks/User/useUser.tsx', () => ({
     useUser: jest.fn()
 }));
 
-jest.mock('react-cookie', () => ({
-    useCookies: jest.fn()
-}));
-
 jest.mock('react-router-dom', () => ({
     useNavigate: jest.fn(),
     useLocation: jest.fn()
@@ -125,9 +120,6 @@ describe('ResetPasscodePage Component', () => {
             removeWallet: mockRemoveWallet,
             walletId: 'mock-wallet-id'
         });
-        (useCookies as jest.Mock).mockReturnValue([
-            {'XSRF-TOKEN': 'mock-xsrf-token'}
-        ]);
         (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
         (useLocation as jest.Mock).mockReturnValue({
             state: {walletId: 'location-wallet-id'}
