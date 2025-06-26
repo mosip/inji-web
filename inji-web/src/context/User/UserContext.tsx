@@ -53,7 +53,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         try {
             setIsLoading(true);
             const  response = await userProfile.fetchData({
-                apiRequest: api.fetchUserProfile,
+                apiConfig: api.fetchUserProfile,
             })
 
             if (!response.ok()) {

@@ -70,7 +70,7 @@ export const Header: React.FC<UserHeaderProps> = ({
     const handleLogout = async () => {
         try {
             const response = await logoutRequest.fetchData({
-                apiRequest: api.userLogout,
+                apiConfig: api.userLogout,
             })
 
             if (response.ok()) {

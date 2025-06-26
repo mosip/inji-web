@@ -191,7 +191,7 @@ export interface RequestConfig {
     url?: string;
     headers?: Record<string, string>;
     body?: any;
-    apiRequest: ApiRequest;
+    apiConfig: ApiRequest;
 }
 
 export interface UseApiReturn<T> {

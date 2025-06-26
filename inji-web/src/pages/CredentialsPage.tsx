@@ -43,7 +43,7 @@ export const CredentialsPage: React.FC = () => {
             let response = await fetchData(
                 {
                     url: apiRequest.url(params.issuerId ?? ""),
-                    apiRequest
+                    apiConfig: apiRequest
                 }
             );
 
@@ -54,7 +54,7 @@ export const CredentialsPage: React.FC = () => {
             response = await fetchData(
                 {
                     url: apiRequest.url(params.issuerId ?? ""),
-                    apiRequest
+                    apiConfig: apiRequest
                 }
             );
 

@@ -82,7 +82,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
             let apiRequest: ApiRequest = api.fetchSpecificIssuer;
             const {data: issuerResponse} = await issuer.fetchData({
                 url: apiRequest.url(params.issuerId ?? ''),
-                apiRequest: apiRequest
+                apiConfig: apiRequest
             });
             dispatch(storeSelectedIssuer(issuerResponse?.response));
             setSelectedIssuer(issuerResponse?.response);
@@ -90,7 +90,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
             apiRequest = api.fetchIssuersConfiguration;
             const {data: issuerConfigurationResponse} = await issuersConfiguration.fetchData({
                 url: apiRequest.url(params.issuerId ?? ''),
-                apiRequest: apiRequest
+                apiConfig: apiRequest
             })
             dispatch(storeFilteredCredentials(issuerConfigurationResponse?.response));
             dispatch(storeCredentials(issuerConfigurationResponse?.response));

@@ -53,7 +53,7 @@ export function VCCardView(props: Readonly<{
             const response = await cardViewApi.fetchData({
                 url: apiCall.url(props.credential.credentialId),
                 headers: apiCall.headers(language),
-                apiRequest: apiCall,
+                apiConfig: apiCall,
             })
 
             console.log("response for fetch ", response);

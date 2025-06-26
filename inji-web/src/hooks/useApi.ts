@@ -20,9 +20,9 @@ export function useApi<T = any>(): UseApiReturn<T> {
     };
 
     async function fetchData({
-                                 headers,
+                                 headers = undefined,
                                  body,
-                                 apiRequest,
+                                 apiConfig,
                                  url = undefined
                              }: RequestConfig): Promise<NetworkResult<T>> {
         setState(RequestStatus.LOADING)
@@ -34,8 +34,7 @@ export function useApi<T = any>(): UseApiReturn<T> {
         try {
             console.log("fetching data with config:", body)
 //TODO: Move mimoto host as baseURL in here
-            //TODO: rename apiRequest to requestConfig
-            const requestHeaders = headers ?? apiRequest.headers();
+            const requestHeaders = headers ?? apiConfig.headers();
             const contentType = requestHeaders["Content-Type"] ?? ContentTypes.JSON;
             let requestBody;
             switch (contentType) {
@@ -50,13 +49,13 @@ export function useApi<T = any>(): UseApiReturn<T> {
                     break;
             }
             const response = await apiInstance.request({
-                url: url ?? apiRequest.url(),
-                method: MethodType[apiRequest.methodType],
+                url: url ?? apiConfig.url(),
+                method: MethodType[apiConfig.methodType],
                 headers: requestHeaders,
                 data: requestBody,
-                withCredentials: apiRequest.credentials === "include",
-                responseType: apiRequest.responseType ?? "json",
-                withXSRFToken: apiRequest.includeXSRFToken ?? false,
+                withCredentials: apiConfig.credentials === "include",
+                responseType: apiConfig.responseType ?? "json",
+                withXSRFToken: apiConfig.includeXSRFToken ?? false,
             });
 
             setData(response.data);

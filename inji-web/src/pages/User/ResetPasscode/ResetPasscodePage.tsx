@@ -28,7 +28,7 @@ export const ResetPasscodePage: React.FC = () => {
         try {
             const  response = await resetPasscode.fetchData({
                 url: api.deleteWallet.url(location.state?.walletId ?? walletId),
-                apiRequest: api.deleteWallet,
+                apiConfig: api.deleteWallet,
             })
 
             if (!response.ok()) {

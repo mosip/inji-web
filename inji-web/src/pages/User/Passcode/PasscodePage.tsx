@@ -31,7 +31,7 @@ export const PasscodePage: React.FC = () => {
     const fetchWallets = async () => {
         try {
             const response = await walletsApi.fetchData({
-                apiRequest: api.fetchWallets,
+                apiConfig: api.fetchWallets,
             })
 
 
@@ -75,7 +75,7 @@ export const PasscodePage: React.FC = () => {
 
         try {
             const response = await unlockWalletApi.fetchData({
-                apiRequest: api.unlockWallet,
+                apiConfig: api.unlockWallet,
                 body: {walletPin: pin},
                 url: api.unlockWallet.url(walletId),
             })
@@ -102,7 +102,7 @@ export const PasscodePage: React.FC = () => {
             }
 
             const response = await createWalletApi.fetchData({
-                apiRequest: api.createWalletWithPin,
+                apiConfig: api.createWalletWithPin,
                 body: {
                     walletPin: pin,
                     confirmWalletPin: confirmPasscode.join(''),

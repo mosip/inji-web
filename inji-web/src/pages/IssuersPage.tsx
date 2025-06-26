@@ -21,7 +21,7 @@ export const IssuersPage: React.FC<IssuerPageProps> = ({className}) => {
             const apiRequest: ApiRequest = api.fetchIssuers;
             const {data: response} = await fetchData(
                 {
-                    apiRequest,
+                    apiConfig: apiRequest,
                 }
             );
             const issuers = response?.response?.issuers.filter(

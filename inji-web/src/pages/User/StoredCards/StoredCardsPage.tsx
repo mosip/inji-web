@@ -40,7 +40,7 @@ export const StoredCardsPage: React.FC = () => {
 
             const response = await walletCredentialsApi.fetchData({
                 headers: fetchWalletCredentials.headers(language),
-                apiRequest: fetchWalletCredentials
+                apiConfig: fetchWalletCredentials
             })
 
             if (response.ok()) {
