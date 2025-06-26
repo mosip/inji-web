@@ -98,7 +98,6 @@ export class api {
         methodType: MethodType.POST,
         headers: () => {
             return {
-                "Content-Type": ContentTypes.JSON
             };
         },
         credentials: "include"
@@ -113,7 +112,8 @@ export class api {
                 "Content-Type": ContentTypes.JSON
             };
         },
-        credentials: "include"
+        credentials: "include",
+        includeXSRFToken: true
     };
 
     // Post wallet API with PIN
@@ -125,7 +125,8 @@ export class api {
                 "Content-Type": ContentTypes.JSON
             };
         },
-        credentials: "include"
+        credentials: "include",
+        includeXSRFToken: true
     };
 
     static unlockWallet: ApiRequest = {
@@ -149,7 +150,8 @@ export class api {
                 "Content-Type": ContentTypes.JSON
             };
         },
-        credentials: "include"
+        credentials: "include",
+        includeXSRFToken: true
     };
 
     static downloadVCInloginFlow: ApiRequest = {
@@ -166,7 +168,8 @@ export class api {
                 "Accept-Language": locale
             };
         },
-        credentials: "include"
+        credentials: "include",
+        includeXSRFToken: true
     };
 
     static fetchWalletVCs: ApiRequest = {

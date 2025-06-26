@@ -1,7 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {api} from '../../../utils/api';
-import {useCookies} from 'react-cookie';
 import {SolidButton} from '../../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
 import {useUser} from '../../../hooks/User/useUser';
@@ -20,7 +19,6 @@ export const PasscodePage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [wallets, setWallets] = useState<any[] | null>(null);
-    const [cookies] = useCookies(['XSRF-TOKEN']);
     const [passcode, setPasscode] = useState<string[]>(Array(6).fill(''));
     const [confirmPasscode, setConfirmPasscode] = useState<string[]>(
         Array(6).fill('')
@@ -34,10 +32,6 @@ export const PasscodePage: React.FC = () => {
         try {
             const response = await walletsApi.fetchData({
                 apiRequest: api.fetchWallets,
-                headers: {
-                    ...api.fetchWallets.headers(),
-                    'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
-                },
             })
 
 
@@ -82,11 +76,7 @@ export const PasscodePage: React.FC = () => {
         try {
             const response = await unlockWalletApi.fetchData({
                 apiRequest: api.unlockWallet,
-                headers: {
-                    ...api.unlockWallet.headers(),
-                    'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
-                },
-                body: ({walletPin: pin}),
+                body: {walletPin: pin},
                 url: api.unlockWallet.url(walletId),
             })
 
@@ -113,15 +103,11 @@ export const PasscodePage: React.FC = () => {
 
             const response = await createWalletApi.fetchData({
                 apiRequest: api.createWalletWithPin,
-                headers: {
-                    ...api.createWalletWithPin.headers(),
-                    'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
-                },
-                body: JSON.stringify({
+                body: {
                     walletPin: pin,
                     confirmWalletPin: confirmPasscode.join(''),
                     walletName: null
-                }),
+                },
             })
 
             if (!response.ok()) {

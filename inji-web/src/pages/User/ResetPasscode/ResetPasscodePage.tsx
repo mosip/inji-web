@@ -3,7 +3,6 @@ import {SolidButton} from '../../../components/Common/Buttons/SolidButton';
 import {Trans, useTranslation} from 'react-i18next';
 import {useUser} from '../../../hooks/User/useUser';
 import {api} from '../../../utils/api';
-import {useCookies} from 'react-cookie';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {ResetPasscodePageStyles} from './ResetPasscodePageStyles';
 import {ROUTES} from "../../../utils/constants";
@@ -16,7 +15,6 @@ import {useApi} from "../../../hooks/useApi";
 export const ResetPasscodePage: React.FC = () => {
     const {removeWallet, walletId} = useUser();
     const {t} = useTranslation('ResetPasscodePage');
-    const [cookies] = useCookies(['XSRF-TOKEN']);
     const navigate = useNavigate();
     const location = useLocation();
     const [error, setError] = React.useState<string | null>(null);
@@ -31,10 +29,6 @@ export const ResetPasscodePage: React.FC = () => {
             const  response = await resetPasscode.fetchData({
                 url: api.deleteWallet.url(location.state?.walletId ?? walletId),
                 apiRequest: api.deleteWallet,
-                headers: {
-                    ...api.deleteWallet.headers(),
-                    'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
-                },
             })
 
             if (!response.ok()) {

@@ -55,6 +55,7 @@ export type IssuerObject = {
     ovp_qr_enabled: boolean;
     scopes_supported: string[];
 };
+
 export type ResponseTypeObject = {
     id?: string;
     version?: string;
@@ -62,11 +63,16 @@ export type ResponseTypeObject = {
     responsetime?: string;
     metadata?: string;
     response?: any;
-    errors?: [];
+    errors?: ErrorType[];
 
     access_token?: string;
     expires_in?: number;
     token_type?: string;
+};
+
+export type ErrorType = {
+    errorCode: string;
+    errorMessage: string;
 };
 
 type DownloadSessionCredentialTypeObj = {
@@ -122,11 +128,6 @@ export type SidebarItemType = {
     text: string;
     path: string;
     key: string;
-};
-
-export type ErrorType = {
-    errorCode: string;
-    errorMessage: string;
 };
 
 export type DropdownItem = {

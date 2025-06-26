@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {LanguageSelector} from '../Common/LanguageSelector';
 import {api} from '../../utils/api';
-import {useCookies} from 'react-cookie';
 import {toast} from 'react-toastify';
 import {useUser} from '../../hooks/User/useUser';
 import HamburgerMenu from '../../assets/HamburgerMenu.svg';
@@ -11,12 +10,12 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
 import {useTranslation} from 'react-i18next';
 import DropdownArrowIcon from '../Common/DropdownArrowIcon';
-import {HTTP_STATUS_CODES, ROUTES} from '../../utils/constants';
+import {ROUTES} from '../../utils/constants';
 import {convertStringIntoPascalCase} from "../../utils/misc";
 import {navigateToUserHome} from "../../utils/navigationUtils";
 import {CircleSkeleton} from '../Common/CircleSkeleton';
 import {InfoFieldSkeleton} from '../Common/InfoFieldSkeleton';
-import {DropdownItem} from "../../types/data";
+import {ApiError, DropdownItem, ResponseTypeObject} from "../../types/data";
 import {useApi} from "../../hooks/useApi";
 
 type UserHeaderProps = {
@@ -35,14 +34,13 @@ export const Header: React.FC<UserHeaderProps> = ({
     );
     const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
     const [isHamburgerMenuOpen, setIsHamburgerMenuOpen] = useState(false);
-    const [cookies] = useCookies(['XSRF-TOKEN']);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const hamburgerMenuRef = useRef<HTMLImageElement>(null);
     const {user, removeUser,isLoading} = useUser();
     const displayNameFromLocalStorage = user?.displayName;
     const hasProfilePictureUrl = user?.profilePictureUrl;
     const {t} = useTranslation('User');
-    const logout = useApi()
+    const logoutRequest = useApi()
 
     useEffect(() => {
         setDisplayName(displayNameFromLocalStorage);
@@ -71,36 +69,21 @@ export const Header: React.FC<UserHeaderProps> = ({
 
     const handleLogout = async () => {
         try {
-            const apiRequest = api.userLogout;
-            // const response = await fetch(apiRequest.url(), {
-            //     method: 'POST',
-            //     credentials: 'include',
-            //     headers: {
-            //         'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
-            //     }
-            // });
-            const response = await logout.fetchData({
-                apiRequest: apiRequest,
-                headers: {
-                    'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
-                }
+            const response = await logoutRequest.fetchData({
+                apiRequest: api.userLogout,
             })
 
-            console.log("Logout response: ", response);
-
-            if (response.status === HTTP_STATUS_CODES.OK) {
-                console.log("Logout successful, removing user data ", response);
+            if (response.ok()) {
                 removeUser();
-                // window.location.replace(ROUTES.ROOT);
+                window.location.replace(ROUTES.ROOT);
             } else {
-                const parsedResponse = response.data;
-                // const parsedResponse = await response.json();
-                const errorCode = parsedResponse?.errors[0].errorCode;
+                const parsedResponse = ((response.error as ApiError)?.response?.data as ResponseTypeObject).errors
+                const errorCode = parsedResponse?.[0].errorCode;
                 if (errorCode === 'user_logout_error') {
                     removeUser();
                     window.location.replace(ROUTES.ROOT);
                 }
-                throw new Error(parsedResponse?.errors[0]?.errorMessage);
+                throw new Error(parsedResponse?.[0]?.errorMessage);
             }
         } catch (error) {
             console.error('Logout failed with error:', error);
