@@ -33,7 +33,6 @@ export function useApi<T = any>(): UseApiReturn<T> {
 
         try {
             console.log("fetching data with config:", body)
-//TODO: Move mimoto host as baseURL in here
             const requestHeaders = headers ?? apiConfig.headers();
             const contentType = requestHeaders["Content-Type"] ?? ContentTypes.JSON;
             let requestBody;

@@ -4,7 +4,6 @@ import {ROUTES} from "../utils/constants";
 import {useUser} from "./User/useUser";
 import {apiInstance} from "./useApi";
 
-//TODO: Add tests for this hook
 export function useInterceptor() {
     const navigate = useNavigate();
     const location = useLocation();
