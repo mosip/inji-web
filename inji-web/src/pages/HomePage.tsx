@@ -6,7 +6,6 @@ import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
 import {useLocation} from 'react-router-dom';
 import {LoginFailedModal} from '../components/Login/LoginFailedModal'
-import {api} from "../utils/api.ts";
 
 const Status = {
     SUCCESS: "success",

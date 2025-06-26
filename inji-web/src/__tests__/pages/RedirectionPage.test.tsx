@@ -2,10 +2,9 @@ import React from 'react';
 import {RedirectionPage} from '../../pages/RedirectionPage';
 import {getActiveSession} from '../../utils/sessions';
 import {getErrorObject} from '../../utils/misc';
-import {mockusei18n, renderWithRouter} from '../../test-utils/mockUtils';
+import {mockusei18n, renderWithProvider, renderWithRouter} from '../../test-utils/mockUtils';
 import {mockApiResponse, mockUseApi} from "../../test-utils/setupUseApiMock";
 import {RequestStatus} from "../../utils/constants";
-import {api, ContentTypes} from "../../utils/api";
 
 //todo : extract the local method to mockUtils, which is added to bypass the routing problems
 // Mock the utility functions
@@ -57,6 +56,13 @@ describe('Testing the Functionality of RedirectionPage', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
+
+    test("check if getSession is called with the sessionId from url search params state", () => {
+        jest.spyOn(require('react-router-dom'), 'useSearchParams').mockReturnValue([new URLSearchParams('state=sessionId1'), jest.fn()]);
+        renderWithProvider(<RedirectionPage/>)
+
+        expect(getActiveSession).toHaveBeenCalledWith('sessionId1');
+    })
 
     test('Check if NavBar component is rendered', () => {
         const {asFragment} = renderWithRouter(<RedirectionPage/>);

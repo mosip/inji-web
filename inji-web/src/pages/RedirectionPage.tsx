@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {getActiveSession, removeActiveSession} from '../utils/sessions';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import {NavBar} from '../components/Common/NavBar';
 import {DownloadResult} from '../components/Redirection/DownloadResult';
 import {api} from '../utils/api';
@@ -16,9 +16,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../types/redux";
 
 export const RedirectionPage: React.FC = () => {
-    //TODO: replace useLocation with useSearchParams to avoid parsing the query params manually
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
+    const [searchParams] = useSearchParams();
     const redirectedSessionId = searchParams.get("state");
     const activeSessionInfo: any = getActiveSession(redirectedSessionId);
     const credentialType = activeSessionInfo?.selectedCredentialType?.type;
