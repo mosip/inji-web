@@ -11,8 +11,6 @@ import {ConfirmationModal} from "../../modals/ConfirmationModal";
 import {useTranslation} from "react-i18next";
 import {VCDetailView} from "./VCDetailView";
 import {DownloadIcon} from "../Common/Icons/DownloadIcon";
-import {HTTP_STATUS_CODES, ROUTES} from "../../utils/constants";
-import {useNavigate} from "react-router-dom";
 import {RiDeleteBin6Line} from "react-icons/ri";
 import {BsBoxArrowRight} from "react-icons/bs";
 import {showToast} from "../Common/toast/ToastWrapper";
@@ -29,8 +27,9 @@ export function VCCardView(props: Readonly<{
     const {t} = useTranslation('StoredCards', {
         keyPrefix: "cardView"
     })
-    const navigate = useNavigate();
-    const cardViewApi = useApi()
+    const previewApi = useApi()
+    const downloadApi = useApi()
+    const deleteApi = useApi()
 
     useEffect(() => {
         if (error) {
@@ -44,28 +43,19 @@ export function VCCardView(props: Readonly<{
     }, [error, t])
 
     const executeCredentialApiRequest = async (
-        apiCall: ApiRequest,
+        apiConfig: ApiRequest,
         onSuccess: (response: NetworkResult<any>) => Promise<void>,
+        apiInstance: ReturnType<typeof useApi>,
         errorType: string = "downloadError"
     ) => {
         try {
-            //TODO: separate api call for download and preview
-            const response = await cardViewApi.fetchData({
-                url: apiCall.url(props.credential.credentialId),
-                headers: apiCall.headers(language),
-                apiConfig: apiCall,
+            const response = await apiInstance.fetchData({
+                url: apiConfig.url(props.credential.credentialId),
+                headers: apiConfig.headers(language),
+                apiConfig: apiConfig,
             })
 
-            console.log("response for fetch ", response);
-
-            //TODO: This is not required anymore as interceptor handles it, remove it later
-            if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
-                console.error("Unauthorized access - redirecting to root page");
-                navigate(ROUTES.ROOT);
-                return;
-            }
-
-            if (response.status !== HTTP_STATUS_CODES.OK) {
+            if (!response.ok()) {
                 console.error(`Failed to fetch request, got ${errorType} with response - `, response);
                 setError(errorType);
                 return;
@@ -84,7 +74,8 @@ export function VCCardView(props: Readonly<{
             async (response) => {
                 const pdfContent: Blob = response.data;
                 setPreviewContent(pdfContent);
-            }
+            },
+            previewApi,
         );
     };
 
@@ -99,14 +90,15 @@ export function VCCardView(props: Readonly<{
             api.downloadWalletCredentialPdf,
             async (response) => {
                 console.log("response for download", response);
-                const pdfContent : Blob = response.data;
+                const pdfContent: Blob = response.data;
                 const disposition = response.headers["Content-Disposition"] ?? "";
                 const fileNameMatch = /filename="(.+)"/.exec(disposition ?? "");
                 const fileName = fileNameMatch?.[1] ?? "download.pdf";
 
                 await downloadCredentialPDF(pdfContent, fileName);
                 console.info("Credential PDF downloaded successfully");
-            }
+            },
+            downloadApi,
         );
     };
 
@@ -123,6 +115,7 @@ export function VCCardView(props: Readonly<{
                     console.info("Credential deleted successfully.");
                     props.refreshCredentials();
                 },
+                deleteApi,
                 "deleteError"
             );
         } catch (error) {
@@ -137,10 +130,39 @@ export function VCCardView(props: Readonly<{
         setPreviewContent(undefined);
     }
 
+    const menuItems = [
+        {
+            label: t('menu.view'),
+            onClick: () => {
+                void preview();
+            },
+            id: "view",
+            icon: <BsBoxArrowRight data-testid={"icon-view"} size={18}
+                                   className={VCStyles.cardView.menuIcon}/>
+        },
+        {
+            label: t('download'),
+            onClick: () => {
+                void download();
+            },
+            id: "download",
+            icon: <DownloadIcon testId={"icon-download"}/>
+        },
+        {
+            label: t('menu.delete'),
+            onClick: handleDelete,
+            id: "delete",
+            icon: <RiDeleteBin6Line data-testid={"icon-delete"} size={18}
+                                    className={VCStyles.cardView.menuIcon}
+                                    color={"var(--iw-color-red)"}/>,
+            color: "var(--iw-color-red)"
+        },
+    ];
+
     return (
         <Clickable onClick={preview} testId={"vc-card-view"}
                    className={VCStyles.cardView.container}>
-            <VCDetailView previewContent={previewContent!!} onClose={clearPreview} onDownload={download}
+            <VCDetailView previewContent={previewContent!} onClose={clearPreview} onDownload={download}
                           credential={props.credential}/>
             {
                 showDeleteConfirmation && (
@@ -175,30 +197,7 @@ export function VCCardView(props: Readonly<{
                               className={VCStyles.cardView.downloadIcon}/>
                 <EllipsisMenu
                     testId={"mini-view-card"}
-                    menuItems={[
-                        {
-                            label: t('menu.view'),
-                            onClick: preview,
-                            id: "view",
-                            icon: <BsBoxArrowRight data-testid={"icon-view"} size={18}
-                                                   className={VCStyles.cardView.menuIcon}/>
-                        },
-                        {
-                            label: t('download'),
-                            onClick: download,
-                            id: "download",
-                            icon: <DownloadIcon testId={"icon-download"}/>
-                        },
-                        {
-                            label: t('menu.delete'),
-                            onClick: handleDelete,
-                            id: "delete",
-                            icon: <RiDeleteBin6Line data-testid={"icon-delete"} size={18}
-                                                    className={VCStyles.cardView.menuIcon}
-                                                    color={"var(--iw-color-red)"}/>,
-                            color: "var(--iw-color-red)"
-                        },
-                    ]}
+                    menuItems={menuItems}
                 />
             </div>
         </Clickable>

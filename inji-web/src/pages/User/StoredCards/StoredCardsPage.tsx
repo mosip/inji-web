@@ -48,8 +48,8 @@ export const StoredCardsPage: React.FC = () => {
                 setCredentials(responseData);
                 setFilteredCredentials(responseData)
             } else {
-                console.error("Error fetching credentials:", response.status, response.error);
-                if (response.error?.message === ('Network Error')) {
+                console.error("Error fetching credentials:", response.status, response.error,  !navigator.onLine);
+                if (response.error?.message === ('Network Error') &&  !navigator.onLine) {
                     console.error('Network error: Please check your internet connection.');
                     setError("networkError");
                     return;

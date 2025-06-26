@@ -174,8 +174,7 @@ export class api {
 
     static fetchWalletVCs: ApiRequest = {
         url: () => {
-            // const walletId = Storage.getItem(KEYS.WALLET_ID);
-            const walletId = "dummy";
+            const walletId = Storage.getItem(KEYS.WALLET_ID);
             return (
                 api.mimotoHost +
                 `/wallets/${walletId}/credentials`
