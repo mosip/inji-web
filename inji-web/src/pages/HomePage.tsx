@@ -16,7 +16,7 @@ export const HomePage: React.FC = () => {
     const {t} = useTranslation("HomePage");
     const [toastVisible, setToastVisible] = useState(false);
     const location = useLocation();
-    const [isLoginFailed, setLoginFailed] = useState(false);
+    const [isLoginFailed, setIsLoginFailed] = useState(false);
 
 
     // to stop scrolling the blurred background when login failed modal is showing up, scrolling is locked.
@@ -36,7 +36,7 @@ export const HomePage: React.FC = () => {
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         if (params.get("status") === Status.FAILURE) {
-            setLoginFailed(true);
+            setIsLoginFailed(true);
         }
     }, [location]);
 
