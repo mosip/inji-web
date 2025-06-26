@@ -158,3 +158,32 @@ export const mockNavBarProps: NavBarProps = {
     link: '/test-link',
     search: true,
 };
+
+export const credentialWellknown: IssuerConfigurationObject = {
+    credentials_supported: [
+        {
+            name: "InsuranceCredential",
+            scope: "mosip_vc_ldp",
+            display: [
+                {
+                    name: "Health Insurance",
+                    locale: "en",
+                    logo: "https://url.com"
+                }
+            ]
+        },
+        {
+            name: "AnotherCredential",
+            scope: "mosip_ldp_vc",
+            display: [
+                {
+                    name: "Another Credential",
+                    locale: "en",
+                    logo: "https://url.com"
+                }
+            ]
+        }
+    ],
+    "authorization_endpoint": "https://env.net/authorize",
+    "grant_types_supported": ["authorization_code"]
+};
