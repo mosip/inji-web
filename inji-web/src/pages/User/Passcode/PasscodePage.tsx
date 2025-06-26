@@ -1,11 +1,10 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import {api} from '../../../utils/api';
 import {SolidButton} from '../../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
 import {useUser} from '../../../hooks/User/useUser';
 import {PasscodeInput} from '../../../components/Common/Input/PasscodeInput';
-import {navigateToUserHome} from "../../../utils/navigationUtils";
 import {PasscodePageStyles} from './PasscodePageStyles';
 import {ROUTES} from "../../../utils/constants";
 import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePage/PasscodePageTemplate";
@@ -16,6 +15,7 @@ import {ApiError, ErrorType, Wallet} from "../../../types/data";
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams()
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [wallets, setWallets] = useState<any[] | null>(null);
@@ -127,6 +127,12 @@ export const PasscodePage: React.FC = () => {
         }
     };
 
+    const handleUnlockSuccess = () => {
+        // If the user was asked to re-login due to an expired session, redirect them to the page they were trying to access
+        const redirectTo = searchParams.get('redirectTo') ?? ROUTES.USER_HOME;
+        navigate(redirectTo);
+    }
+
     const handleSubmit = async () => {
         setError('');
         setLoading(true);
@@ -146,7 +152,7 @@ export const PasscodePage: React.FC = () => {
 
                 await unlockWallet(walletId, formattedPasscode);
             }
-            await navigateToUserHome(navigate);
+            handleUnlockSuccess()
         } catch (error) {
             console.error(
                 'Error occurred while setting up Wallet or loading user profile',

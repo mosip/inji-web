@@ -21,13 +21,14 @@ export function useInterceptor() {
         const isFetchingWallets = error.response?.config?.url.includes('/wallets');
         console.log("useInterceptor error:", error.response?.config?.url, "Status:", error.response?.status);
         // Redirect to / page on logged-in user if unauthorized access is detected
+        const currentRoute = location.pathname + location.search + location.hash;
         if (isUserLoggedIn() || isFetchingWallets) {
             if (error.response && error.response.status === 401) {
                 console.warn("Unauthorized access detected. Redirecting to / page.");
                 removeUser()
-                navigate(ROUTES.ROOT, {
+                navigate(ROUTES.ROOT,{
                     state: {
-                        from: location.pathname + location.search + location.hash
+                        from: currentRoute,
                     }
                 })
             }

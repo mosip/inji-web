@@ -1,6 +1,7 @@
 export const KEYS = {
     USER: 'user',
     WALLET_ID: 'walletId',
+    REDIRECT_TO: 'redirectTo',
 };
 
 // This constant exposes the pages used in the application. This will be used only by the Router component.

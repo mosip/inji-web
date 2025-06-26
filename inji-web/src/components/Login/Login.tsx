@@ -1,20 +1,21 @@
-import { FcGoogle } from "react-icons/fc";
-import React, { useState} from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
 import '../../index.css';
-import { useTranslation } from "react-i18next";
-import { BorderedButton } from "../Common/Buttons/BorderedButton";
-import { GoogleSignInButton } from "../Common/Buttons/GoogleSignInButton";
+import {useTranslation} from "react-i18next";
+import {BorderedButton} from "../Common/Buttons/BorderedButton";
+import {GoogleSignInButton} from "../Common/Buttons/GoogleSignInButton";
 
 export const Login: React.FC = () => {
   const { t } = useTranslation("HomePage");
+  const location = useLocation()
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleGoogleLogin = () => {
       setIsLoading(true);
-      window.location.href =
-          window._env_.MIMOTO_URL + "/oauth2/authorize/google";
+      window.location.href = location.state?.from
+          ? `${window._env_.MIMOTO_URL}/oauth2/authorize/google?redirectTo=${encodeURIComponent(location.state.from)}`
+          : `${window._env_.MIMOTO_URL}/oauth2/authorize/google`;
   };
 
   const Separator:React.FC=()=>{
@@ -26,7 +27,7 @@ export const Login: React.FC = () => {
       </div>
     );
   }
-  
+
   return (
     <div className="flex flex-col items-center justify-center w-[100%] max-w-[400px] mx-auto rounded-2xl">
         <div data-testid="login-logo" className="flex justify-center items-center">
@@ -50,12 +51,12 @@ export const Login: React.FC = () => {
         <Separator/>
 
         <div className="w-full">
-          <BorderedButton 
-              testId="home-banner-guest-login" 
+          <BorderedButton
+              testId="home-banner-guest-login"
               onClick={() => navigate("/issuers")}
               title={
               t("Login.loginGuest")
-            } 
+            }
           />
         </div>
     </div>
