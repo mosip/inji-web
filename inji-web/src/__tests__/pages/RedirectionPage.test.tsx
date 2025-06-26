@@ -22,6 +22,11 @@ jest.mock('../../hooks/useApi.ts', () => ({
     useApi: () => mockUseApi
 }))
 
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useSearchParams: jest.fn(() => [new URLSearchParams('state=sessionId1'), jest.fn()]),
+}));
+
 describe('Testing the Layout of RedirectionPage', () => {
     mockusei18n();
     test('Check if the layout is matching with the snapshots', () => {
@@ -32,6 +37,7 @@ describe('Testing the Layout of RedirectionPage', () => {
             }
         });
         mockApiResponse({})
+        jest.spyOn(require('react-router-dom'), 'useSearchParams').mockReturnValue([new URLSearchParams('state=sessionId1'), jest.fn()]);
 
         const {asFragment} = renderWithRouter(<RedirectionPage/>);
 
@@ -51,6 +57,7 @@ describe('Testing the Functionality of RedirectionPage', () => {
             }
         });
         mockApiResponse()
+        jest.spyOn(require('react-router-dom'), 'useSearchParams').mockReturnValue([new URLSearchParams('state=sessionId1'), jest.fn()]);
     });
 
     afterEach(() => {
@@ -58,7 +65,6 @@ describe('Testing the Functionality of RedirectionPage', () => {
     });
 
     test("check if getSession is called with the sessionId from url search params state", () => {
-        jest.spyOn(require('react-router-dom'), 'useSearchParams').mockReturnValue([new URLSearchParams('state=sessionId1'), jest.fn()]);
         renderWithProvider(<RedirectionPage/>)
 
         expect(getActiveSession).toHaveBeenCalledWith('sessionId1');
@@ -90,4 +96,9 @@ describe('Testing the Functionality of RedirectionPage', () => {
 
         expect(asFragment()).toMatchSnapshot();
     });
+
+    test.todo("check if credential download API with right params is called for logged in user")
+    test.todo("check if redirects to stored cards page after successful download for logged in user")
+    test.todo("check if credential download API with right params is called for guest mode")
+    test.todo("check is success download state is shown after successful download for guest mode")
 });
