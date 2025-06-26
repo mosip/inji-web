@@ -5,6 +5,7 @@ import { Header } from '../../../components/User/Header';
 import { useCookies } from 'react-cookie';
 import { useUser } from '../../../hooks/User/useUser';
 import * as i18n from '../../../utils/i18n';
+import {mockApiResponse, mockUseApi} from "../../../test-utils/setupUseApiMock";
 jest.mock('react-cookie', () => ({
   useCookies: jest.fn(),
 }));
@@ -12,6 +13,10 @@ jest.mock('react-cookie', () => ({
 jest.mock('../../../hooks/User/useUser', () => ({
   useUser: jest.fn(),
 }));
+
+jest.mock('../../../hooks/useApi.ts', () => ({
+  useApi: () => mockUseApi
+}))
 
 jest.mock('../../../utils/i18n', () => ({
     isRTL: jest.fn(),
@@ -107,10 +112,10 @@ describe('Header', () => {
   });
 
   it('logs out and redirects on logout click', async () => {
-    const mockFetch = jest.spyOn(global, 'fetch').mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({}),
-    } as Response);
+    mockApiResponse({
+      response: {}
+    })
+
 
     const { getByTestId, getByText } = render(
       <Header headerRef={mockHeaderRef} headerHeight={50} />
@@ -120,10 +125,10 @@ describe('Header', () => {
     fireEvent.click(getByText('ProfileDropdown.logout'));
 
     await waitFor(() => {
-      expect(mockFetch).toHaveBeenCalled();
-      expect(mockRemoveUser).toHaveBeenCalled();
+      expect(mockUseApi.fetchData).toHaveBeenCalled();
     });
+      expect(mockRemoveUser).toHaveBeenCalled();
 
-    mockFetch.mockRestore();
+    mockUseApi.fetchData.mockRestore();
   });
 });
