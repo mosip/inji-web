@@ -58,7 +58,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
             if (!response.ok()) {
                 throw response.error
-            };
+            }
             const responseData = response.data!
 
             const userData: User = {
@@ -87,8 +87,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
             isLoading,
             isUserLoggedIn,
             fetchUserProfile,
-            // TODO: do not expose saveUser as its not used elsewhere
-            saveUser,
             saveWalletId,
             removeUser,
             removeWallet
