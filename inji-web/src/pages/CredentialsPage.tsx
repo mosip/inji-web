@@ -46,6 +46,10 @@ export const CredentialsPage: React.FC = () => {
                     apiConfig: apiRequest
                 }
             );
+            if(response.state === RequestStatus.ERROR) {
+                toast.error(t("errorContent"));
+                return;
+            }
 
             dispatch(storeSelectedIssuer(response?.data?.response));
             setSelectedIssuer(response?.data?.response);
@@ -63,10 +67,6 @@ export const CredentialsPage: React.FC = () => {
         };
         fetchCall();
     }, []);
-
-    if (state === RequestStatus.ERROR) {
-        toast.error(t("errorContent"));
-    }
 
     return (
         <div

@@ -1,11 +1,11 @@
 import React from 'react';
-import {render, screen, waitFor, within} from '@testing-library/react';
-import {fetchMock} from "../../../test-utils/setupFetchMock";
+import {render, screen, within} from '@testing-library/react';
 import {MemoryRouter} from 'react-router-dom';
 import {CookiesProvider} from 'react-cookie';
 import {PasscodePage} from '../../../pages/User/Passcode/PasscodePage';
 import {UserProvider} from "../../../context/User/UserContext";
 import {DownloadSessionProvider} from "../../../context/User/DownloadSessionContext";
+import {mockApiResponse, mockUseApi} from "../../../test-utils/setupUseApiMock";
 
 // Mocking the useTranslation hook from react-i18next
 jest.mock('react-i18next', () => ({
@@ -25,6 +25,12 @@ jest.mock('react-i18next', () => ({
         }
     })
 }));
+
+jest.mock("../../../hooks/useApi.ts", () => {
+    return {
+        useApi: () => mockUseApi
+    };
+});
 
 describe('Passcode', () => {
     const renderWithProviders = (ui: React.ReactElement) => {
@@ -61,7 +67,7 @@ describe('Passcode', () => {
     });
 
     test("renders passcode input field", async () => {
-        mockWalletsAPIResponse([{"walletId": "2c2e1810-19c8-4c85-910d-aa1622412413", "walletName": null}]);
+        mockApiResponse({response: [{"walletId": "2c2e1810-19c8-4c85-910d-aa1622412413", "walletName": null}]})
         renderWithProviders(<PasscodePage/>);
 
         const passcodeInput = await screen.findByTestId("passcode-container");
@@ -70,7 +76,7 @@ describe('Passcode', () => {
     });
 
     test("renders confirm passcode input field when wallet does not exist", async () => {
-        mockWalletsAPIResponse([])
+        mockApiResponse({response: []})
         renderWithProviders(<PasscodePage/>);
 
         await screen.findByTestId("confirm-passcode-container");
@@ -81,19 +87,9 @@ describe('Passcode', () => {
 
 
     test("renders submit button", async () => {
-        mockWalletsAPIResponse([{"walletId": "2c2e1810-19c8-4c85-910d-aa1622412413", "walletName": null}]);
+        mockApiResponse({response: [{"walletId": "2c2e1810-19c8-4c85-910d-aa1622412413", "walletName": null}]})
         renderWithProviders(<PasscodePage/>);
 
         await screen.findByTestId("btn-submit-passcode")
     });
-
-    function mockWalletsAPIResponse(response: object) {
-        fetchMock.mockResolvedValueOnce({
-            ok: true,
-            json: async () => (response),
-            headers: {
-                get: () => null,
-            },
-        });
-    }
-}); 
+});

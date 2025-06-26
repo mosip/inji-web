@@ -182,7 +182,7 @@ export interface NetworkResult<T> {
     data: T | null;
     error: ApiError | Error | null;
     status: number | null;
-    loading: boolean;
+    state: RequestStatus;
     headers: object;
     ok: () => boolean;
 }

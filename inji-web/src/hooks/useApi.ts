@@ -65,7 +65,7 @@ export function useApi<T = any>(): UseApiReturn<T> {
                 data: response.data,
                 error: null,
                 status: response.status,
-                loading: false,
+                state: RequestStatus.DONE,
                 headers: response.headers || {},
                 ok: () => response.status >= 200 && response.status < 300
             };
@@ -80,7 +80,7 @@ export function useApi<T = any>(): UseApiReturn<T> {
                 data: null,
                 error: parsedError,
                 status: err?.response?.status ?? null,
-                loading: false,
+                state: RequestStatus.ERROR,
                 headers: err?.response?.headers ?? {},
                 ok: () => false
             };

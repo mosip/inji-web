@@ -8,6 +8,7 @@ import {toast} from 'react-toastify';
 import {ResetPasscodePage} from '../../../pages/User/ResetPasscode/ResetPasscodePage';
 import {useApi} from '../../../hooks/useApi';
 import {api} from "../../../utils/api";
+import {mockUseApi} from "../../../test-utils/setupUseApiMock";
 
 jest.mock('react-i18next', () => {
     const translations: { [key: string]: string } = {
@@ -105,10 +106,7 @@ jest.mock('react-toastify', () => ({
     }
 }));
 
-const mockUseApi = {
-    fetchData: jest.fn()
-};
-jest.mock('../../../hooks/useApi.ts', () => ({
+jest.mock("../../../hooks/useApi", () => ({
     useApi: () => mockUseApi
 }));
 
@@ -206,10 +204,7 @@ describe('ResetPasscodePage Component', () => {
         await waitForApiToBeCalled()
         expect(mockUseApi.fetchData).toHaveBeenCalledWith({
             url: expect.stringContaining('wallets/location-wallet-id'),
-            headers: expect.objectContaining({
-                'X-XSRF-TOKEN': 'mock-xsrf-token'
-            }),
-            apiRequest: api.deleteWallet,
+            apiConfig: api.deleteWallet,
         })
         expect(mockRemoveWallet).toHaveBeenCalledTimes(1);
         expect(mockNavigate).toHaveBeenCalledTimes(1);
@@ -246,7 +241,7 @@ describe('ResetPasscodePage Component', () => {
         expect(mockUseApi.fetchData).toHaveBeenCalledWith(
             expect.objectContaining({
                 url: expect.stringContaining('wallets/mock-wallet-id'),
-                apiRequest: api.deleteWallet,
+                apiConfig: api.deleteWallet,
             })
         );
         expect(mockRemoveWallet).toHaveBeenCalledTimes(1);
