@@ -55,11 +55,6 @@ export const StoredCardsPage: React.FC = () => {
                     return;
                 }
 
-                const invalidWalletRequests = [
-                    "Wallet key not found in session",
-                    "Wallet is locked",
-                    "Invalid Wallet ID. Session and request Wallet ID do not match"
-                ];
                 switch (response.status) {
                     case HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR:
                         setError("internalServerError");
@@ -69,8 +64,13 @@ export const StoredCardsPage: React.FC = () => {
                         break;
                     case HTTP_STATUS_CODES.BAD_REQUEST: {
                         const errorMessage = ((response.error as ApiError)?.response?.data as ErrorType).errorMessage ?? "";
+                        const invalidWalletRequests = [
+                            "Wallet key not found in session",
+                            "Wallet is locked",
+                            "Invalid Wallet ID. Session and request Wallet ID do not match"
+                        ];
                         setError(
-                            invalidWalletRequests.includes(errorMessage ?? "")
+                            invalidWalletRequests.includes(errorMessage)
                                 ? "invalidWalletRequest"
                                 : "invalidRequest"
                         );

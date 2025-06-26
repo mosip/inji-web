@@ -8,8 +8,10 @@ import {
     mockUseTranslation,
     renderWithRouter
 } from '../../../test-utils/mockUtils';
-import {KEYS} from "../../../utils/constants";
+import {KEYS, RequestStatus} from "../../../utils/constants";
 import React from "react";
+import {mockApiResponse, mockApiResponseSequence, mockUseApi} from "../../../test-utils/setupUseApiMock";
+import {api} from "../../../utils/api";
 
 mockUseTranslation()
 mockApiObject()
@@ -17,6 +19,12 @@ mockApiObject()
 jest.mock("../../../components/Preview/PDFViewer", () => ({
     PDFViewer: () => <div data-testid="pdf-viewer">Mock PDF Viewer</div>
 }));
+
+jest.mock("../../../hooks/useApi.ts", () => {
+    return {
+        useApi: () => mockUseApi,
+    };
+})
 
 describe('Testing of StoredCardsPage ->', () => {
     let localStorageMock: {
@@ -26,8 +34,6 @@ describe('Testing of StoredCardsPage ->', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         mockusei18n();
-        // Reset fetch mock
-        global.fetch = jest.fn();
         localStorageMock = mockLocalStorage();
 
         localStorageMock.setItem('selectedLanguage', 'en');
@@ -58,10 +64,7 @@ describe('Testing of StoredCardsPage ->', () => {
         });
 
         it('check if the "No credentials found" layout is matching with snapshot', async () => {
-            (global.fetch as jest.Mock).mockResolvedValueOnce({
-                ok: true,
-                json: async () => [],
-            });
+            mockApiResponse({response: []})
 
             const {asFragment} = renderWithRouter(<StoredCardsPage/>);
             await waitForLoaderDisappearance()
@@ -70,10 +73,7 @@ describe('Testing of StoredCardsPage ->', () => {
         });
 
         it('should check if listing of credentials is matching snapshot', async () => {
-            (global.fetch as jest.Mock).mockResolvedValueOnce({
-                ok: true,
-                json: async () => mockCredentials,
-            });
+            mockApiResponse({response: mockCredentials})
 
             const {asFragment} = renderWithRouter(<StoredCardsPage/>);
             await waitForLoaderDisappearance();
@@ -82,7 +82,10 @@ describe('Testing of StoredCardsPage ->', () => {
         });
 
         it('should check if error while fetching credentials is matching snapshot', async () => {
-            (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'));
+            mockApiResponse({
+                error: new Error('Network error'),
+                status: null
+            });
 
             const {asFragment} = renderWithRouter(<StoredCardsPage/>);
             await waitForLoaderDisappearance()
@@ -118,12 +121,7 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should navigate to dashboard home when Add credential button in blank document is clicked in smaller screens', async () => {
-        (global.fetch as jest.Mock).mockImplementation(() =>
-            new Promise(resolve => setTimeout(() => resolve({
-                ok: true,
-                json: async () => mockCredentials
-            }), 100))
-        );
+        mockApiResponse({response: mockCredentials})
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance();
@@ -136,12 +134,7 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should show loading state initially', async () => {
-        (global.fetch as jest.Mock).mockImplementation(() =>
-            new Promise(resolve => setTimeout(() => resolve({
-                ok: true,
-                json: async () => mockCredentials
-            }), 100))
-        );
+        mockApiResponse({response: mockCredentials});
 
         renderWithRouter(<StoredCardsPage/>);
 
@@ -149,12 +142,7 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should display credentials when fetch is successful', async () => {
-        (global.fetch as jest.Mock).mockResolvedValueOnce({
-            ok: true,
-            json: async () => {
-                return mockCredentials;
-            },
-        });
+        mockApiResponse({response: mockCredentials})
 
         renderWithRouter(<StoredCardsPage/>);
 
@@ -165,10 +153,7 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should display "No Cards Stored!" when no credentials are returned', async () => {
-        (global.fetch as jest.Mock).mockResolvedValueOnce({
-            ok: true,
-            json: async () => [],
-        });
+        mockApiResponse({response: []})
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance()
@@ -181,32 +166,40 @@ describe('Testing of StoredCardsPage ->', () => {
         {
             name: 'internal server error',
             fetchResponse: {
-                ok: false,
                 status: 500,
-                json: async () => ({errorMessage: 'Internal Server Error', errorCode: "internal_server_error"}),
+                error: {response: {data: {errorMessage: 'Internal Server Error', errorCode: "internal_server_error"}}}
             },
             expectedTitle: 'Server Error',
-            expectedMessage: 'Something went wrong on our end. Please try again later.',
+            expectedMessage: 'Something went wrong on our end. Please try again later.'
         },
         {
             name: 'service unavailable',
             fetchResponse: {
-                ok: false,
                 status: 503,
-                json: async () => ({
-                    errorMessage: 'service_unavailable',
-                    errorCode: "Unavailable to connect to service"
-                }),
+                error: {
+                    response: {
+                        data: {
+                            errorMessage: 'service_unavailable',
+                            errorCode: "Unavailable to connect to service"
+                        }
+                    }
+                }
             },
             expectedTitle: 'Service Unavailable',
-            expectedMessage: 'We\'re currently experiencing some issues processing your request. Please try again later',
+            expectedMessage: 'We\'re currently experiencing some issues processing your request. Please try again later'
         },
         {
             name: 'invalid wallet request - Wallet key not found in session',
             fetchResponse: {
-                ok: false,
                 status: 400,
-                json: async () => ({errorMessage: 'Wallet key not found in session', errorCode: "invalid_request"}),
+                error: {
+                    response: {
+                        data: {
+                            errorMessage: 'Wallet key not found in session',
+                            errorCode: "invalid_request"
+                        }
+                    }
+                }
             },
             expectedTitle: "Something Went Wrong",
             expectedMessage: "We couldn’t verify your wallet information. Please try again later."
@@ -214,21 +207,24 @@ describe('Testing of StoredCardsPage ->', () => {
         {
             name: 'invalid wallet request - Wallet is locked',
             fetchResponse: {
-                ok: false,
                 status: 400,
-                json: async () => ({errorMessage: 'Wallet is locked', errorCode: "invalid_request"}),
+                error: {response: {data: {errorMessage: 'Wallet is locked', errorCode: "invalid_request"}}}
             },
             expectedTitle: "Something Went Wrong",
             expectedMessage: "We couldn’t verify your wallet information. Please try again later."
-        }, {
+        },
+        {
             name: 'invalid wallet request - Invalid Wallet ID',
             fetchResponse: {
-                ok: false,
                 status: 400,
-                json: async () => ({
-                    errorMessage: "Invalid Wallet ID. Session and request Wallet ID do not match",
-                    errorCode: "invalid_request"
-                }),
+                error: {
+                    response: {
+                        data: {
+                            errorMessage: 'Invalid Wallet ID. Session and request Wallet ID do not match',
+                            errorCode: "invalid_request"
+                        }
+                    }
+                }
             },
             expectedTitle: "Something Went Wrong",
             expectedMessage: "We couldn’t verify your wallet information. Please try again later."
@@ -236,9 +232,10 @@ describe('Testing of StoredCardsPage ->', () => {
         {
             name: 'invalid request',
             fetchResponse: {
-                ok: false,
                 status: 400,
-                json: async () => ({errorMessage: 'Some other error', errorCode: "invalid_request"}),
+                error: {
+                    response: {data: {errorMessage: 'Invalid request', errorCode: "invalid_request"}}
+                }
             },
             expectedTitle: "Request Error",
             expectedMessage: "Your request contains invalid information. Please try again later."
@@ -246,34 +243,34 @@ describe('Testing of StoredCardsPage ->', () => {
         {
             name: 'unknown error',
             fetchResponse: {
-                ok: false,
                 status: 418,
-                json: async () => ({errorMessage: 'I am a teapot'}),
+                error: {errorMessage: 'I am a teapot'}
             },
             expectedTitle: "Something Went Wrong",
             expectedMessage: "An unexpected error occurred. Please refresh the page or try again shortly."
-        },
+        }
     ];
     it.each(errorScenarios)('should display error message for $name', async ({
                                                                                  fetchResponse,
                                                                                  expectedTitle,
                                                                                  expectedMessage
                                                                              }) => {
-        (global.fetch as jest.Mock).mockResolvedValueOnce(fetchResponse);
+        mockApiResponse({
+            ...fetchResponse,
+            state: RequestStatus.ERROR
+        })
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance();
 
-        expect(screen.getByText(expectedTitle)).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByText(expectedTitle)).toBeInTheDocument()
+        })
         expect(screen.getByText(expectedMessage)).toBeInTheDocument();
     });
 
     it('should redirect to root page when response is unAuthorized', () => {
-        (global.fetch as jest.Mock).mockResolvedValueOnce({
-            ok: false,
-            status: 401,
-            json: async () => ({errorMessage: 'Unauthorized'}),
-        });
+        mockApiResponse({error: {isAxiosError: true, response: {data: {errorMessage: "Unauthorized"}}}, status: 401});
 
         renderWithRouter(<StoredCardsPage/>);
 
@@ -282,9 +279,7 @@ describe('Testing of StoredCardsPage ->', () => {
 
     it('should display network error message when network error occurs', async () => {
         const onlineMock = mockNavigatorOnline(false);
-        (global.fetch as jest.Mock).mockRejectedValueOnce(
-            new TypeError('Failed to fetch')
-        );
+        mockApiResponse({error: {isAxiosError: true, message: 'Network Error', code: 'ERR_NETWORK'}, status: null});
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance();
@@ -297,7 +292,7 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should display generic error message when any unknown error occurs', async () => {
-        (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('Network slow error'));
+        mockApiResponse({error: {isAxiosError: true, message: 'Network Error', code: 'ERR_NETWORK'}, status: null});
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance()
@@ -307,10 +302,7 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should filter credentials when using search bar', async () => {
-        (global.fetch as jest.Mock).mockResolvedValueOnce({
-            ok: true,
-            json: async () => mockCredentials,
-        });
+        mockApiResponse({response: mockCredentials})
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance()
@@ -323,10 +315,7 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should display "No cards match your search" when search has no matches', async () => {
-        (global.fetch as jest.Mock).mockResolvedValueOnce({
-            ok: true,
-            json: async () => mockCredentials,
-        });
+        mockApiResponse({response: mockCredentials})
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance()
@@ -338,10 +327,7 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should reset filtered credentials when search is cleared', async () => {
-        (global.fetch as jest.Mock).mockResolvedValueOnce({
-            ok: true,
-            json: async () => mockCredentials,
-        });
+        mockApiResponse({response: mockCredentials})
 
         renderWithRouter(<StoredCardsPage/>);
 
@@ -362,20 +348,10 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should call download api when clicked on download icon in card', async () => {
-        (global.fetch as jest.Mock)
-            .mockResolvedValueOnce(
-                {
-                    ok: true,
-                    json: async () => mockCredentials,
-                }
-            )
-            .mockResolvedValueOnce({
-                ok: true,
-                blob: async () => new Blob(),
-                headers: {
-                    get: () => 'attachment; filename="credential.pdf"',
-                },
-            });
+        mockApiResponseSequence([{response: mockCredentials}, {
+            response: new Blob(),
+            headers: {get: () => 'attachment; filename="credential.pdf"'}
+        }]);
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance()
@@ -383,32 +359,23 @@ describe('Testing of StoredCardsPage ->', () => {
         const downloadButton = screen.getAllByTestId('icon-download')[0];
         fireEvent.click(downloadButton);
 
-        expect(global.fetch).toHaveBeenCalledWith(
-            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1?action=download"),
-            expect.objectContaining({
-                "credentials": "include",
-                "headers": {"Accept": "application/pdf", "Accept-Language": "en", "Content-Type": "application/json"},
-                "method": "GET"
-            })
+        expect(mockUseApi.fetchData).toHaveBeenCalledWith(
+            {
+                apiConfig: api.downloadWalletCredentialPdf,
+                url: expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1?action=download"),
+                headers: {"Accept": "application/pdf", "Accept-Language": "en", "Content-Type": "application/json"}
+            }
         );
     });
 
     it('should delete credential and call fetch all credentials api again when user deletes a card', async () => {
-        const mockDeleteResponse = {
-            ok: true,
-            json: async () => ({message: 'Credential deleted successfully'}),
-        };
-
-        (global.fetch as jest.Mock)
-            .mockResolvedValueOnce({
-                ok: true,
-                json: async () => mockCredentials,
-            })
-            .mockResolvedValueOnce(mockDeleteResponse)
-            .mockResolvedValueOnce({
-                ok: true,
-                json: async () => [mockCredentials[1]],
-            });
+        mockApiResponseSequence([
+            {response: mockCredentials},
+            {
+                response: {message: 'Credential deleted successfully'},
+            },
+            {response: [mockCredentials[1]]}
+        ])
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance();
@@ -419,22 +386,19 @@ describe('Testing of StoredCardsPage ->', () => {
         const deleteButton = screen.getByTestId('icon-delete');
         fireEvent.click(deleteButton);
         fireEvent.click(screen.getByRole('button', {name: "Confirm"}));
-        expect(global.fetch).toHaveBeenCalledWith(
-            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1"),
-            expect.objectContaining({
-                "credentials": "include",
+        expect(mockUseApi.fetchData).toHaveBeenCalledWith(
+            {
+                url: expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1"),
                 "headers": {"Content-Type": "application/json"},
-                "method": "DELETE"
-            })
+                apiConfig: api.deleteWalletCredential,
+            }
         );
 
         // Check if fetch for all credentials is called again
-        expect(global.fetch).toHaveBeenCalledWith(
-            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials"),
+        expect(mockUseApi.fetchData).toHaveBeenCalledWith(
             expect.objectContaining({
-                "credentials": "include",
-                "headers": {"Accept-Language": "en", "Content-Type": "application/json"},
-                "method": "GET"
+                "headers": {"Content-Type": "application/json", "Accept-Language": "en"},
+                apiConfig: api.fetchWalletVCs
             })
         );
         await waitFor(() =>
@@ -448,4 +412,5 @@ describe('Testing of StoredCardsPage ->', () => {
             expect(screen.queryByTestId('loader-credentials')).not.toBeInTheDocument();
         });
     }
-});
+})
+;

@@ -4,13 +4,14 @@ export const mockUseApi = {
     fetchData: jest.fn(),
     state: RequestStatus.LOADING,
     data: null,
-    error: null, status: null,
+    error: null,
+    status: null,
     ok: () => false
 };
 
 type MockApiResponseOptions = {
     response?: object;
-    status?: number;
+    status?: number | null;
     error?: any;
     headers?: object;
     state?: RequestStatus;
@@ -21,7 +22,7 @@ export function mockApiResponse({
                                     status = 200,
                                     error = null,
                                     headers = {},
-                                    state = RequestStatus.LOADING
+                                    state = RequestStatus.DONE,
                                 }: MockApiResponseOptions = {}) {
     mockUseApi.fetchData.mockResolvedValueOnce({
         ok: () => status === 200,
@@ -31,4 +32,14 @@ export function mockApiResponse({
         headers,
         state
     });
+}
+
+export function mockApiResponseSequence(
+    responses: MockApiResponseOptions[]
+) {
+    responses.forEach(
+        (mockData) => {
+            mockApiResponse(mockData)
+        }
+    );
 }
