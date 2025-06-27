@@ -323,10 +323,6 @@ public class StepDef {
 		}
 	}
 
-	@Then("User verify go back button")
-	public void user_verify_go_back_button() {
-//		Assert.assertTrue(homePage.isBackButtonDisplayed());
-	}
 
 	@Then("User verify that langauge button is displayed")
 	public void verify_that_language_button_is_displayed() {
