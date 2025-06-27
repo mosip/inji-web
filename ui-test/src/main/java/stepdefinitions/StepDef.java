@@ -173,6 +173,7 @@ public class StepDef {
 	@When("User click on verify button")
 	public void user_click_on_verify_button() {
 		try {
+			homePage.waitForseconds();
 			homePage.clickOnVerify();
 			test.log(Status.PASS, "User clicked on verify button");
 		} catch (NoSuchElementException e) {
@@ -185,8 +186,7 @@ public class StepDef {
 
 	@Then("User verify Download Success text displayed")
 	public void user_verify_download_success_text_displayed() throws Exception {
-		try {
-			Thread.sleep(10000);
+		try {			
 			baseTest.getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 			Assert.assertTrue(homePage.isSuccessMessageDisplayed());
 			test.log(Status.PASS, "Verified that Download Success text is displayed");
@@ -1813,6 +1813,8 @@ public class StepDef {
 	@Then("User clicks on proceed button")
 	public void user_clicks_on_proceed_button() {
 		try {
+			
+			homePage.waitForseconds();
 			homePage.clickOnProccedCustomButton();
 			test.log(Status.PASS, "User clicked on 'Proceed Custom' button");
 
@@ -1833,8 +1835,10 @@ public class StepDef {
 
 	@Then("Use click on procced button")
 	public void use_click_on_procced_button() {
-		try {
+		try {			
+			homePage.waitForseconds();
 			homePage.clickOnProccedCustomButton();
+			homePage.waitForseconds();
 			homePage.clickOnProccedConsentButton();
 			test.log(Status.PASS, "User successfully clicked on the Proceed button.");
 		} catch (NoSuchElementException e) {

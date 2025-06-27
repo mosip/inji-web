@@ -90,15 +90,11 @@ public class StepDefOIDCLogin {
 
 	@Then("user performs token-based login using Gmail refresh token")
 	public void user_performs_token_login_using_refresh_token() throws Exception {
-		System.out.println("[DEBUG] Starting token-based login using Gmail refresh token");
 		String idToken = HttpUtils.getIdToken();
 		String sessionCookie = HttpUtils.getSessionCookieFromIdToken(idToken);
 		String cookieName = getProperty("injiweb.cookie.name") != null ? getProperty("injiweb.cookie.name") : "SESSION";
 		String sessionCookieValue = sessionCookie.contains("=") ? sessionCookie.split("=", 2)[1].split(";")[0].trim()
 				: sessionCookie;
-
-		System.out.println(sessionCookieValue);
-
 		driver.get(baseUrl);
 
 		try {
@@ -112,10 +108,8 @@ public class StepDefOIDCLogin {
 			throw e;
 		}
 
-		// 1. Delete all cookies to avoid conflicts
 		driver.manage().deleteAllCookies();
 
-		// 2. generate cookie
 		Cookie myCookie = new Cookie.Builder(cookieName, sessionCookieValue).path("/v1/mimoto").isHttpOnly(true)
 				.isSecure(true).build();
 		Thread.sleep(10000);
@@ -168,7 +162,7 @@ public class StepDefOIDCLogin {
 		loginpage.enterConfirmPasscode(string);
 	}
 
-	@Then("user click on toggle button for confimration")
+	@Then("user click on toggle button for confirmation")
 	public void user_click_on_toggle_button_for_confimration() {
 		loginpage.clickonToggleButtonConfimration();
 	}
@@ -221,8 +215,7 @@ public class StepDefOIDCLogin {
 
 		try {
 
-			assertEquals(loginpage.getMismatchErrorText().trim(),
-					globelConstants.MisMatchError);
+			assertEquals(loginpage.getMismatchErrorText().trim(), globelConstants.MisMatchError);
 			test.log(Status.PASS,
 					"Passcodes do not match. Please ensure both passcode fields match exactly. Re-enter and try again.");
 		} catch (AssertionError | NoSuchElementException e) {
@@ -261,8 +254,7 @@ public class StepDefOIDCLogin {
 	public void user_verify_current_url() {
 		try {
 			loginpage.waituntilpagecompletelyloaded();
-			String currentUrl = loginpage.getCurrentUrlUserHome(); // Should return full URL like
-																	// "https://injiweb.qa-inji1.mosip.net/user/home"
+			String currentUrl = loginpage.getCurrentUrlUserHome();																	
 			assertEquals(currentUrl, baseUrl + "user/home", "URL did not match expected user home");
 			test.log(Status.PASS, "User successfully redirected to user home page");
 		} catch (AssertionError | NoSuchElementException e) {
@@ -632,7 +624,7 @@ public class StepDefOIDCLogin {
 			throw e;
 		}
 	}
-	
+
 	@Then("user verify user info on resetpasscode available")
 	public void user_verify_user_info_on_resetpasscode_available() {
 
@@ -648,7 +640,6 @@ public class StepDefOIDCLogin {
 		}
 
 	}
-	
 
 	@Then("user verify forget passcode button")
 	public void user_verify_forget_passcode_button() {
@@ -848,7 +839,7 @@ public class StepDefOIDCLogin {
 
 	@Then("User verifies redirect to issuer detail page for {string}")
 	public void user_verifies_redirect_to_issuer_page(String issuerKey) {
-		String baseUrl = getProperty("injiweb.base.url"); // https://injiweb.qa-inji1.mosip.net/
+		String baseUrl = getProperty("injiweb.base.url");
 
 		String issuerDisplayName = getProperty("injiweb.base.url");
 		if ("mosip".equalsIgnoreCase(issuerKey)) {

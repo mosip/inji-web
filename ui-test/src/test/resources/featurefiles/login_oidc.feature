@@ -1,36 +1,33 @@
 Feature: OIDC Login for InjiWeb
-  
+
   @oidcLogin
-  Scenario: User first time login
+  Scenario Outline: User first time login with OIDC using various passcode attempts
     When user performs token-based login using Gmail refresh token
     Then user verifies the submit button is not enabled
-    And user enters the passcode "123456"
+    And user enters the passcode "<initialPasscode>"
     Then user click on toggle button
     Then user verify the toggle button
-    And user enters the passcode for confirmation "123455"
+    And user enters the passcode for confirmation "<wrongConfirmation1>"
     And user click on submit button
     Then user prints error message for mismatch
     Then user prints verify message for mismatch
-    And user enters the passcode for confirmation "abcdef"
-    Then user click on toggle button for confimration
-    And user enters the passcode for confirmation "123456"
-    And user click on toggle button for confimration
+    And user enters the passcode for confirmation "<stringPasscode>"
+    Then user click on toggle button for confirmation
+    And user enters the passcode for confirmation "<initialPasscode>"
+    And user click on toggle button for confirmation
     Then user toggles the password visibility using keyboard and verifies it
     And user click on submit button
     Then user click on dropdown box for profile
     Then user click on logout button
-    When user performs token-based login using Gmail refresh token
-    And user enters the passcode "12345"
-    Then user verifies the submit button is not enabled
-    And user enters the passcode "123456"
-    Then user toggles the password visibility using keyboard and verifies it
-    And user click on submit button
-  
-  
+
+    Examples:
+      | initialPasscode | wrongConfirmation1 | stringPasscode |
+      | 123456          | 123455             | abcdef         |
+
   @oidcLogin
-  Scenario: Profile page verification
+  Scenario Outline: User verifies Profile page options
     When user performs token-based login using Gmail refresh token
-    And user enters the passcode "123456"
+    And user enters the passcode "<initialPasscode>"
     And user click on submit button
     Then user verify current url userhome
     Then user click on dropdown box for profile
@@ -48,11 +45,15 @@ Feature: OIDC Login for InjiWeb
     Then user selects profile option
     Then user click on home arrow button verify userhome page
     Then user verify current url userhome
-	
+
+    Examples:
+      | initialPasscode |
+      | 123456          |
+
   @oidcLogin
-  Scenario: User home page verification
+  Scenario Outline: User home page verification for all the options
     When user performs token-based login using Gmail refresh token
-    And user enters the passcode "123456"
+    And user enters the passcode "<initialPasscode>"
     And user click on submit button
     Then user verify home button
     And user verify stored cards button
@@ -86,10 +87,14 @@ Feature: OIDC Login for InjiWeb
     And user click on FAQ link
     Then user verify current url faq
 
+    Examples:
+      | initialPasscode |
+      | 123456          |
+
   @oidcLogin
-  Scenario: User download card verification
+  Scenario Outline: User download card verification and verifies it
     When user performs token-based login using Gmail refresh token
-    And user enters the passcode "123456"
+    And user enters the passcode "<initialPasscode>"
     And user click on submit button
     Then user click on stored credentials button
     Then user verify current url usercredentials
@@ -105,9 +110,9 @@ Feature: OIDC Login for InjiWeb
     And User verify vid input box header
     And User enter the uin
     And User click on getOtp button
-    And User enter the otp "111111"
+    And User enter the otp "<otp>"
     And User click on verify button
-    Then user click on stored credentials button  
+    Then user click on stored credentials button
     Then User click on cards button
     And User search the issuers sunbird
     And User verify sunbird cridentials button
@@ -119,7 +124,7 @@ Feature: OIDC Login for InjiWeb
     And User enter the full name
     And User enter the date of birth
     And User click on login button
-    Then user click on stored credentials button  
+    Then user click on stored credentials button
     Then User click on cards button
     And User search the issuers sunbird
     And User verify sunbird cridentials button
@@ -135,13 +140,14 @@ Feature: OIDC Login for InjiWeb
     And User enter the date of birth
     And User click on login button
     Then user verifies card search functionality
-	Then user verifies cards are in horizontal order
+    Then user verifies cards are in horizontal order
+
     Examples:
-      | policy number | full name        | date of birth | Validity |
-      | 1207205244    | automationtest1  | 01-01-2024     | 3        |
+      | initialPasscode | otp    |
+      | 123456          | 111111 |
 
   @oidcLogin
-  Scenario: Reset page verification
+  Scenario Outline: User Reset passcode and verify login with new passcode
     When user performs token-based login using Gmail refresh token
     Then user verify forget passcode option
     Then user click on forget passcode option
@@ -153,19 +159,28 @@ Feature: OIDC Login for InjiWeb
     Then user verify forget passcode button
     Then user verify forget passcode button enabled
     Then user click on forget passcode button
-    And user enters the passcode "111111"
-    And user enters the passcode for confirmation "123455"
+    And user enters the passcode "<resetPasscode>"
+    And user enters the passcode for confirmation "<wrongConfirmation1>"
     And user click on submit button
     Then user prints verify message for mismatch
-    And user enters the passcode for confirmation "111111"
+    And user enters the passcode for confirmation "<resetPasscode>"
     And user click on submit button
     Then user click on dropdown box for profile
     Then user click on logout button
     When user performs token-based login using Gmail refresh token
-    And user enters the passcode "111111"
+    And user enters the passcode "<resetPasscode>"
     And user click on submit button
     Then user verify current url userhome
     Then user click on stored credentials button
     Then user verify current url usercredentials
     Then user verify no cards stored message
     Then user verify substring when no cards stored
+    Then user click on dropdown box for profile
+    Then user click on logout button
+    When user performs token-based login using Gmail refresh token
+    Then user verify forget passcode option
+    Then user click on forget passcode option
+
+    Examples:
+      | resetPasscode | wrongConfirmation1 |
+      | 111111        | 123455             |

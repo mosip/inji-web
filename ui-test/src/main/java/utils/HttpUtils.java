@@ -49,8 +49,7 @@ public class HttpUtils {
 			throw new RuntimeException("id_token not found in response: " + response);
 		}
 
-		String idToken = idTokenNode.asText();
-		System.out.println("Obtained id_token: " + idToken); // Debug log
+		String idToken = idTokenNode.asText();		
 		return idToken;
 	}
 
@@ -64,10 +63,10 @@ public class HttpUtils {
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("POST");
 		conn.setRequestProperty("Accept", "application/json");
-		conn.setRequestProperty("Authorization", "Bearer " + idToken); // 👈 required
+		conn.setRequestProperty("Authorization", "Bearer " + idToken);
 		conn.setDoOutput(true);
 
-		// Send empty JSON body
+
 		String body = "{}";
 		try (OutputStream os = conn.getOutputStream()) {
 			os.write(body.getBytes("UTF-8"));
@@ -86,11 +85,10 @@ public class HttpUtils {
 		}
 
 		String sessionCookie = cookie.split(";")[0];
-		System.out.println("Received session cookie: " + sessionCookie); // Debug log
 		return sessionCookie;
 	}
 
-	// Helpers
+
 	private static Properties loadProperties() {
 		Properties props = new Properties();
 		try (FileInputStream fis = new FileInputStream(PROPERTIES_PATH)) {

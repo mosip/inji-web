@@ -138,4 +138,10 @@ public class BasePage {
 			throw new AssertionError("Timed out waiting for URL to contain: " + partialUrl, e);
 		}
 	}
+	
+	public void waitForSeconds(WebDriver driver,int seconds) {
+	    new WebDriverWait(driver, Duration.ofSeconds(seconds))
+	        .until(webDriver -> true); 
+	}
+	
 }

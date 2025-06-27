@@ -65,11 +65,6 @@ public class HomePage extends BasePage {
 	}
 
 	public Boolean isLogoDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
-		}
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='Header-InjiWeb-Logo-Container']"));
 	}
 
@@ -94,48 +89,27 @@ public class HomePage extends BasePage {
 	}
 
 	public Boolean isListOfCredentialsTypeDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='HeaderTile-Text']"));
 	}
 
 	public void clickOnVerify() {
 		clickOnElement(driver, By.xpath("//button[@id='verify_otp']"));
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
-		}
+
 		if (isElementIsVisible(driver, By.xpath("//button[@id='verify_otp']"))) {
 			clickOnElement(driver, By.xpath("//button[@id='verify_otp']"));
 		}
 	}
 
 	public Boolean isSuccessMessageDisplayed() {
-		try {
-			Thread.sleep(6000);
-			;
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//p[@data-testid='title-download-result']"));
 	}
 
 	public Boolean isMosipNationalIdDisplayed() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//h3[@data-testid='ItemBox-Text']"));
 	}
 
-	//
+
 	public void enterIssuersInSearchBox(String string) {
 		enterText(driver, By.xpath("//input[@type='text']"), string);
 		if (isElementIsVisible(driver, By.xpath("//p[@data-testid='IntroBox-SubText']"))) {
@@ -143,14 +117,9 @@ public class HomePage extends BasePage {
 		}
 	}
 
-	//
+
 	public Boolean isGoHomeButtonDisplayed() {
-		try {
-			Thread.sleep(4000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		return isElementIsVisible(driver, By.xpath("//*[text()='Go To Home']"));
 	}
 
@@ -158,19 +127,13 @@ public class HomePage extends BasePage {
 		return isElementIsVisible(driver, By.xpath("//*[@class='cursor-pointer']"));
 	}
 
-	//
 	public Boolean isLanguageDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//button[@class='inline-flex items-center font-semibold']"));
 	}
 
-	//
+
 	public void clickOnLanguageButton() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		if (isElementIsVisible(driver, By.xpath("//div[@data-testid='HeaderTile-Text']"))) {
 			clickOnElement(driver, By.xpath("//div[@data-testid='HeaderTile-Text']"));
 		}
@@ -196,27 +159,15 @@ public class HomePage extends BasePage {
 	public void selectOtherLangauge() {
 		clickOnElement(driver, By.xpath("(//button[@type='button'])[3]"));
 
-		try {
-			Thread.sleep(7000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
-
-	//
 	public Boolean isNoIssuerFoundMessageDisplayed() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
-		}
+
 		return isElementIsVisible(driver, By.xpath("//p[@data-testid='EmptyList-Text']"));
 	}
-//
-//	public void isPdfDownloaded() {
-//		 Download download = page.waitForDownload((
-//	}
+	
+	public void isPdfDownloaded() {
+		Download download = page.waitForDownload((
+	}
 
 	public void clickOnArabicLanguage() {
 		clickOnElement(driver, By.xpath("//button[contains(text(), 'عربي')]"));
@@ -445,7 +396,6 @@ public class HomePage extends BasePage {
 	public boolean isYourDocumentsDownloadedImageDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem2-Image']"));
 	}
-
 	public boolean isEasySharingImageDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem3-Image']"));
 	}
@@ -456,6 +406,10 @@ public class HomePage extends BasePage {
 
 	public boolean isWiderAccessAndCompatibilityImageDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem5-Image']"));
+	}
+	
+	public void waitForseconds() {
+		waitForSeconds(driver,15);
 	}
 
 }

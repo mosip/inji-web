@@ -33,38 +33,18 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isgoogleButtonDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//button[@data-testid='google-login-button']"));
 	}
 
 	public Boolean isgoolgeLoginButtonVisible() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//button[@data-testid='google-login-button']"));
 	}
 
 	public Boolean VerifygoogleSigninPage() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//input[@type='email']"));
 	}
 
 	public Boolean verifySuccessfulLogin() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.cssSelector("[data-testid='profile-icon']"));
 	}
 
@@ -124,9 +104,8 @@ public class Loginpage extends BasePage {
 
 	public void focusToggleButtonWithKeyboard() {
 		WebElement toggleButton = driver.findElement(By.xpath("(//button[@type='button'])[2]"));
-		toggleButton.sendKeys(Keys.TAB); // optional if already focused
-		toggleButton.sendKeys(Keys.SPACE); // SPACE toggles the button
-		// or use Keys.ENTER if applicable
+		toggleButton.sendKeys(Keys.TAB); 
+		toggleButton.sendKeys(Keys.SPACE); 
 	}
 
 	public void clickonToggleButtonConfimration() {
@@ -134,22 +113,12 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isToggleAppearinPlainTextFormat() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver,
 				By.xpath("//button[@data-testid='btn-toggle-visibility-passcode']/*[@data-testid='eye-view']"));
 
 	}
 
 	public Boolean isSubmitButtonEnabled() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementEnabled(driver, By.xpath("//button[@data-testid='btn-submit-passcode']"));
 	}
 
@@ -158,21 +127,11 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isMismatchErroDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='error-passcode']"));
 	}
 
 	public String getMismatchErrorText() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		System.out.println(getElementText(driver, By.xpath("//div[@data-testid='error-passcode']")));
+		
 		return getElementText(driver, By.xpath("//div[@data-testid='error-passcode']"));
 	}
 
@@ -196,33 +155,15 @@ public class Loginpage extends BasePage {
 
 	public Boolean isProfileDetailsDisplayed() {
 
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='profile-details']"));
 	}
 
 	public Boolean isProfileImageDisplayed() {
 
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='profile-details']//img[@alt='Profile Pic']"));
 	}
 
 	public Boolean isProfileDropDownDisplayed() {
-
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 
 		return isElementIsVisible(driver,
 				By.xpath("//div[@data-testid='profile-details']//div[@class='relative inline-block cursor-pointer']"));
@@ -230,12 +171,6 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isProfileNameDisplayed() {
-
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='profile-details']//span"));
 
@@ -261,38 +196,17 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isHomeButtonDisplayed() {
-
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		return isElementIsVisible(driver, By.xpath("//span[normalize-space(text())='Home']"));
 
 	}
 
 	public Boolean isCollapseButtonDisplayed() {
-
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		return isElementIsVisible(driver,
 				By.xpath("//button[@class='absolute top-1/4 sm:top-9 p-2 z-40 right-[-20px]']"));
 
 	}
 
 	public Boolean isHomeStringDisplayedBeforeCollpase() {
-
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='sidebar-container']//span[text()='Home']"));
 
 	}
@@ -304,11 +218,6 @@ public class Loginpage extends BasePage {
 
 	public Boolean isHomeStringDisplayedAfterCollpase() {
 
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		List<WebElement> collapsedText = driver
 				.findElements(By.xpath("//div[@data-testid='sidebar-container']//span[text()='Home']"));
 
@@ -318,11 +227,6 @@ public class Loginpage extends BasePage {
 
 	public Boolean isIconVisibleAfterCollpase() {
 
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 
 		return isElementIsVisible(driver, By.xpath(
 				"(//div[@data-testid='sidebar-container']/div/div)[1]/div[@class='hidden sm:block flex items-center justify-center p-2 rounded-lg shadow-[0_-0.5px_4px_-1px_rgba(0,0,0,0.078),_0_4px_4px_-1px_rgba(0,0,0,0.078)] ml-6 mr-4']"));
@@ -336,11 +240,6 @@ public class Loginpage extends BasePage {
 
 	public Boolean isVerifyStoredCredentialsButtonDisplayed() {
 
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 
 		return isElementIsVisible(driver, By.xpath("//span[text()='Stored Cards']"));
 
@@ -352,23 +251,12 @@ public class Loginpage extends BasePage {
 
 	public Boolean isAddCardButtonDisplayed() {
 
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		return isElementIsVisible(driver, By.xpath("//button[@data-testid='btn-add-cards']"));
 
 	}
 
 	public Boolean isnoCardsAddedMessageDisplayed() {
 
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 
 		return isElementIsVisible(driver, By.xpath("//h2[@data-testid='no-credentials-downloaded-title']"));
 
@@ -376,11 +264,6 @@ public class Loginpage extends BasePage {
 
 	public Boolean isnoCardsAddedMessageSubstringMessage() {
 
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 
 		return isElementIsVisible(driver, By.xpath("//span[@data-testid='no-credentials-downloaded-message']"));
 
@@ -409,66 +292,31 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isArrowButtonDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver,
 				By.xpath("//div[contains(@class, 'items-start')]/*[@data-testid='back-arrow-icon']"));
 	}
 
 	public Boolean isHomeArrowButtonDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//button[@data-testid='btn-home']"));
 	}
 
 	public Boolean isProfilePhotoDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//img[@data-testid='profile-page-picture']"));
 	}
 
 	public Boolean isLabelFullnameDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//h3[@data-testid='label-full-name']"));
 	}
 
 	public Boolean isLabelFullnameValueDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//p[@data-testid='value-full-name']"));
 	}
 
 	public Boolean isLabelFullnameInfoDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//h3[@data-testid='label-email']"));
 	}
 
 	public Boolean isLabelFullnameInfoValueDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//p[@data-testid='value-email']"));
 	}
 
@@ -486,11 +334,6 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isForgetPasscodeOptionDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//button[@data-testid='btn-forgot-passcode']"));
 	}
 
@@ -508,11 +351,6 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isbackButtonDisplayedOnForgetpasscode() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//button[@data-testid='btn-back-arrow-container']"));
 	}
 
@@ -526,11 +364,6 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isInfoTextForgetPasswordDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//p[@data-testid='subtitle-reset-passcode']"));
 	}
 
@@ -540,29 +373,17 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isResetUserInfoOnForgetPasswordDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+
 		return isElementIsVisible(driver, By.xpath("//p[@data-testid='subtitle-reset-passcode']"));
 	}
 
 	public Boolean isForgetPasscodeButtonDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+
 		return isElementIsVisible(driver, By.xpath("//button[@data-testid='btn-set-new-passcode']"));
 	}
 
 	public Boolean isForgetPasscodeButtonenabled() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+
 		return isElementEnabled(driver, By.xpath("//button[@data-testid='btn-set-new-passcode']"));
 	}
 
@@ -590,26 +411,22 @@ public class Loginpage extends BasePage {
 		Map<String, Boolean> status = new HashMap<>();
 
 		try {
-			// 1. Text highlight check
 			String textXPath = "//span[normalize-space()='" + menuName + "' and contains(@class, 'text-[#2B011C]')]";
 			status.put("textHighlighted", driver.findElements(By.xpath(textXPath)).size() > 0);
 
-			// 2. Icon highlight check (robust SVG lookup)
 			String iconXPath = "//span[normalize-space()='" + menuName
 					+ "']/preceding-sibling::div//*[name()='svg']//*[name()='path']";
 			List<WebElement> iconPaths = driver.findElements(By.xpath(iconXPath));
 			if (!iconPaths.isEmpty()) {
 				String strokeColor = iconPaths.get(0).getAttribute("stroke");
-				System.out.println(menuName + " icon stroke: " + strokeColor);
 				status.put("iconHighlighted",
 						strokeColor != null && (strokeColor.contains("--iw-color-dashboardSideBarMenuIconActive")
 								|| strokeColor.equals("var(--iw-color-dashboardSideBarMenuIconActive)")));
 			} else {
-				System.out.println(menuName + " icon not found.");
+				
 				status.put("iconHighlighted", false);
 			}
 
-			// 3. Visual bar presence
 			String barXPath = "//span[normalize-space()='" + menuName
 					+ "']/preceding-sibling::div[contains(@class, 'w-1') and contains(@class, 'absolute')]";
 			status.put("barPresent", driver.findElements(By.xpath(barXPath)).size() > 0);
@@ -648,8 +465,6 @@ public class Loginpage extends BasePage {
 				throw new AssertionError("Expected card '" + cardName + "' not found after search.");
 			}
 		}
-
-		// Negative test: try an invalid string
 		inputBox.clear();
 		inputBox.sendKeys("abcdef");
 		sleep(1000);
@@ -676,7 +491,6 @@ public class Loginpage extends BasePage {
 			int previousX = cards.get(i - 1).getLocation().getY();
 			int currentX = cards.get(i).getLocation().getY();
 
-			// If Y-coordinate is the same, they are on the same row (horizontal)
 			if (currentX != previousX) {
 				return false;
 			}
@@ -685,11 +499,6 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isProfileDropDownOptionsDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='profile-dropdown']"));
 	}
 
@@ -714,11 +523,9 @@ public class Loginpage extends BasePage {
 	}
 
 	public String constructIssuerPageUrl(String baseUrl, String issuerDisplayName) {
-		// Remove trailing slash if any
 		if (baseUrl.endsWith("/")) {
 			baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
 		}
-		// Encode issuer name (optional, if needed)
 		return baseUrl + "/user/issuers/" + issuerDisplayName;
 	}
 
