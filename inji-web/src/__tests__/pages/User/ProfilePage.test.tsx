@@ -1,12 +1,12 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
 import {ProfilePage} from '../../../pages/User/Profile/ProfilePage';
-import {useUser} from '../../../hooks/User/useUser';
 import {MemoryRouter, useLocation} from 'react-router-dom';
 import {navigateToUserHome} from "../../../utils/navigationUtils";
+import {mockApiResponse, mockUseApi} from "../../../test-utils/setupUseApiMock";
+import {RequestStatus} from '../../../utils/constants';
 
 // Mocks
-jest.mock('../../../hooks/User/useUser.tsx');
 jest.mock('../../../utils/navigationUtils.ts', () => ({
   navigateToUserHome: jest.fn(),
 }));
@@ -45,9 +45,11 @@ jest.mock('react-router-dom', () => {
   };
 });
 
-const mockedUseLocation = useLocation as jest.Mock;
+jest.mock("../../../hooks/useApi.ts", () => ({
+    useApi: () => mockUseApi,
+}))
 
-const mockedUseUser = useUser as jest.Mock;
+const mockedUseLocation = useLocation as jest.Mock;
 
 const renderWithRouter = () =>
   render(
@@ -56,16 +58,21 @@ const renderWithRouter = () =>
     </MemoryRouter>
   );
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('ProfilePage', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    mockApiResponse({
+      response: ({
+        profilePictureUrl: 'https://example.com/photo.jpg',
+        displayName: 'John Doe',
+        email: 'john@example.com',
+        walletId: '12345',
+      })
+    })
+  });
+
   it('renders loading skeletons when loading', () => {
-    mockedUseUser.mockReturnValue({
-      user: null,
-      isLoading: true,
-    });
     mockedUseLocation.mockReturnValue({ state: { from: '/user' } });
 
     renderWithRouter();
@@ -75,20 +82,19 @@ describe('ProfilePage', () => {
     expect(screen.queryAllByRole('presentation')).toHaveLength(0);
   });
 
-  it('renders user data when loaded', () => {
-    mockedUseUser.mockReturnValue({
-      user: {
-        profilePictureUrl: 'http://example.com/photo.jpg',
-        displayName: 'John Doe',
-        email: 'john@example.com',
-      },
-      isLoading: false,
-    });
+  it('renders user data when loaded', async () => {
     mockedUseLocation.mockReturnValue({});
+    mockUseApi.state = RequestStatus.DONE;
+    mockUseApi.data = {
+      profilePictureUrl: 'https://example.com/photo.jpg',
+      displayName: 'John Doe',
+      email: 'john@example.com',
+      walletId: '12345',
+    }
 
     renderWithRouter();
 
-    expect(screen.getByTestId('profile-page-picture')).toBeInTheDocument();
+    await screen.findByTestId('profile-page-picture');
     expect(screen.getByText('ProfilePage.fullName')).toBeInTheDocument();
     expect(screen.getByText('ProfilePage.emailAddress')).toBeInTheDocument();
     expect(screen.getByText('John Doe')).toBeInTheDocument();
@@ -96,10 +102,6 @@ describe('ProfilePage', () => {
   });
 
   it('calls back click with location.state.from', () => {
-    mockedUseUser.mockReturnValue({
-      user: null,
-      isLoading: true,
-    });
     mockedUseLocation.mockReturnValue({ state: { from: '/user' } });
 
     renderWithRouter();
@@ -109,10 +111,6 @@ describe('ProfilePage', () => {
   });
 
   it('navigates to home if no location.state.from', () => {
-    mockedUseUser.mockReturnValue({
-      user: null,
-      isLoading: true,
-    });
     mockedUseLocation.mockReturnValue({});
 
     renderWithRouter();
@@ -122,10 +120,6 @@ describe('ProfilePage', () => {
   });
 
   it('navigates to home on Go Home button click', () => {
-    mockedUseUser.mockReturnValue({
-      user: null,
-      isLoading: true,
-    });
     mockedUseLocation.mockReturnValue({});
 
     renderWithRouter();

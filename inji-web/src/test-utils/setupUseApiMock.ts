@@ -3,7 +3,7 @@ import {RequestStatus} from "../utils/constants";
 export const mockUseApi = {
     fetchData: jest.fn(),
     state: RequestStatus.LOADING,
-    data: null,
+    data: null as any,
     error: null,
     status: null,
     ok: () => false
