@@ -5,6 +5,7 @@ import {Header} from '../../../components/User/Header';
 import {useUser} from '../../../hooks/User/useUser';
 import * as i18n from '../../../utils/i18n';
 import {mockApiResponse, mockUseApi} from "../../../test-utils/setupUseApiMock";
+import {userProfile} from "../../../test-utils/mockObjects";
 
 jest.mock('../../../hooks/User/useUser', () => ({
     useUser: jest.fn(),
@@ -44,7 +45,7 @@ describe('Header', () => {
         setMockUseLocation({pathname: '/'});
 
         (useUser as jest.Mock).mockReturnValue({
-            user: {displayName: 'John Doe', profilePictureUrl: ''},
+            user: userProfile,
             removeUser: mockRemoveUser,
             isLoading: false,
         });

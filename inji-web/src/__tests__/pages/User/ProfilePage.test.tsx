@@ -3,8 +3,9 @@ import {fireEvent, render, screen} from '@testing-library/react';
 import {ProfilePage} from '../../../pages/User/Profile/ProfilePage';
 import {MemoryRouter, useLocation} from 'react-router-dom';
 import {navigateToUserHome} from "../../../utils/navigationUtils";
-import {mockApiResponse, mockUseApi} from "../../../test-utils/setupUseApiMock";
+import {mockUseApi} from "../../../test-utils/setupUseApiMock";
 import {RequestStatus} from '../../../utils/constants';
+import {userProfile} from "../../../test-utils/mockObjects";
 
 // Mocks
 jest.mock('../../../utils/navigationUtils.ts', () => ({
@@ -61,15 +62,6 @@ const renderWithRouter = () =>
 describe('ProfilePage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-
-    mockApiResponse({
-      response: ({
-        profilePictureUrl: 'https://example.com/photo.jpg',
-        displayName: 'John Doe',
-        email: 'john@example.com',
-        walletId: '12345',
-      })
-    })
   });
 
   it('renders loading skeletons when loading', () => {
@@ -85,12 +77,7 @@ describe('ProfilePage', () => {
   it('renders user data when loaded', async () => {
     mockedUseLocation.mockReturnValue({});
     mockUseApi.state = RequestStatus.DONE;
-    mockUseApi.data = {
-      profilePictureUrl: 'https://example.com/photo.jpg',
-      displayName: 'John Doe',
-      email: 'john@example.com',
-      walletId: '12345',
-    }
+    mockUseApi.data = userProfile
 
     renderWithRouter();
 
