@@ -25,11 +25,8 @@ export function useInterceptor() {
             if (error.response && error.response.status === 401) {
                 console.warn("Unauthorized access detected. Redirecting to / page.");
                 removeUser()
-                navigate(ROUTES.ROOT,{
-                    state: {
-                        from: currentRoute,
-                    }
-                })
+                window.sessionStorage.setItem("redirectTo", currentRoute);
+                navigate(ROUTES.ROOT)
             }
         }
         return Promise.reject(error);

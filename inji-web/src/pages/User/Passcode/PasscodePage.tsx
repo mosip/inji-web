@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {useNavigate, useSearchParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {api} from '../../../utils/api';
 import {SolidButton} from '../../../components/Common/Buttons/SolidButton';
 import {useTranslation} from 'react-i18next';
@@ -15,7 +15,6 @@ import {ApiError, ErrorType, Wallet} from "../../../types/data";
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');
     const navigate = useNavigate();
-    const [searchParams] = useSearchParams()
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [wallets, setWallets] = useState<any[] | null>(null);
@@ -40,7 +39,6 @@ export const PasscodePage: React.FC = () => {
                 setError(t('error.fetchWalletsError'));
             }
 
-            console.log("Fetched Wallets:", response.data);
             setWallets(response.data);
         } catch (error) {
             console.error('Error occurred while fetching Wallets:', error);
@@ -129,7 +127,7 @@ export const PasscodePage: React.FC = () => {
 
     const handleUnlockSuccess = () => {
         // If the user was asked to re-login due to an expired session, redirect them to the page they were trying to access
-        const redirectTo = searchParams.get('redirectTo') ?? ROUTES.USER_HOME;
+        const redirectTo = window.sessionStorage.getItem('redirectTo') ?? ROUTES.USER_HOME;
         navigate(redirectTo);
     }
 
