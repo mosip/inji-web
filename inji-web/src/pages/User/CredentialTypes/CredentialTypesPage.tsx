@@ -4,15 +4,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {storeSelectedIssuer} from '../../../redux/reducers/issuersReducer';
 import {storeCredentials, storeFilteredCredentials} from '../../../redux/reducers/credentialsReducer';
 import {api} from '../../../utils/api';
-import {
-    ApiRequest,
-    IssuerObject,
-    IssuerWellknownDisplayArrayObject,
-    ResponseTypeObject
-} from '../../../types/data';
+import {ApiRequest, IssuerWellknownDisplayArrayObject, ResponseTypeObject} from '../../../types/data';
 import {getIssuerDisplayObjectForCurrentLanguage} from '../../../utils/i18n';
 import {RootState} from '../../../types/redux';
-import {isObjectEmpty} from '../../../utils/misc';
 import {navigateToUserHome} from "../../../utils/navigationUtils";
 import {CredentialTypesPageStyles} from "./CredentialTypesPageStyles";
 import {useDownloadSessionDetails} from "../../../hooks/User/useDownloadSession";
@@ -31,14 +25,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
     const params = useParams<CredentialParamProps>();
     const dispatch = useDispatch();
     const language = useSelector((state: RootState) => state.common.language);
-    let displayObject = {} as IssuerWellknownDisplayArrayObject;
-    let [selectedIssuer, setSelectedIssuer] = useState({} as IssuerObject);
-    if (!isObjectEmpty(selectedIssuer)) {
-        displayObject = getIssuerDisplayObjectForCurrentLanguage(
-            selectedIssuer.display,
-            language
-        );
-    }
+    const [displayObject, setDisplayObject] = useState<IssuerWellknownDisplayArrayObject>();
     const navigate = useNavigate();
     const location = useLocation();
     const {
@@ -85,7 +72,10 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
                 apiConfig: apiRequest
             });
             dispatch(storeSelectedIssuer(issuerResponse?.response));
-            setSelectedIssuer(issuerResponse?.response);
+            setDisplayObject(getIssuerDisplayObjectForCurrentLanguage(
+                issuerResponse?.response.display,
+                language
+            ))
 
             apiRequest = api.fetchIssuersConfiguration;
             const {data: issuerConfigurationResponse} = await issuersConfiguration.fetchData({

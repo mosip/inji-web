@@ -1,17 +1,12 @@
-import {renderWithRouter} from '../../../test-utils/mockUtils';
 import {screen, waitFor} from '@testing-library/react';
 import {setMockUseDispatchReturnValue} from '../../../test-utils/mockReactRedux';
 import {CredentialTypesPage} from '../../../pages/User/CredentialTypes/CredentialTypesPage';
-import {useApi} from "../../../hooks/useApi";
-import {RequestStatus} from "../../../utils/constants";
+import {mockApiResponseSequence, mockUseApi} from "../../../test-utils/setupUseApiMock";
+import {renderWithRouter} from "../../../test-utils/mockUtils";
+import {credentialWellknown} from "../../../test-utils/mockObjects";
 
 jest.mock('../../../hooks/useApi.ts', () => ({
-    useApi: jest.fn(),
-    RequestStatus: {
-        LOADING: 0,
-        DONE: 1,
-        ERROR: 2,
-    },
+    useApi: () => mockUseApi
 }));
 
 jest.mock('react-toastify', () => ({
@@ -37,48 +32,28 @@ jest.mock('react-i18next', () => ({
     },
 }));
 
-
 describe('CredentialTypesPage', () => {
-    const mockUseApi = useApi as jest.Mock;
-    const fetchDataMock = jest
-        .fn()
-        .mockResolvedValueOnce({
-            data: {response: {display: [{language: 'en', name: 'Issuer1'}]}},
-            status: 200,
-            headers: {},
-            state: RequestStatus.DONE,
-            error: null
-        })
-        .mockResolvedValueOnce({
-            data: {response: []},
-            status: 200,
-            headers: {},
-            state: RequestStatus.DONE,
-            error: null
-        });
     beforeEach(() => {
         jest.clearAllMocks();
         setMockUseDispatchReturnValue(jest.fn());
-        mockUseApi.mockReturnValue({state: RequestStatus.DONE, fetchData: fetchDataMock});
+        mockApiResponseSequence([
+            {response: {response: {display: [{language: 'en', name: 'Issuer1'}]}}},
+            {response: credentialWellknown}
+        ])
     });
 
     it('renders CredentialTypesPage component', () => {
-        mockUseApi.mockReturnValue({
-            state: RequestStatus.DONE,
-            fetchData: jest.fn(),
-        });
+        const {asFragment} = renderWithRouter(<CredentialTypesPage backUrl="/user/home"/>);
 
-        renderWithRouter(<CredentialTypesPage backUrl="/user/home"/>);
-
-        expect(screen.getByTestId('credential-types-page-container')).toBeInTheDocument();
-    });
-
-    it('matches snapshot after data loads', async () => {
-        const {asFragment} = renderWithRouter(<CredentialTypesPage/>);
-
-        await waitFor(() => expect(fetchDataMock).toHaveBeenCalledTimes(2));
-        expect(screen.getByText('Issuer1')).toBeInTheDocument();
         expect(asFragment()).toMatchSnapshot();
     });
 
+    it('matches snapshot after data loads', async () => {
+        renderWithRouter(<CredentialTypesPage/>);
+
+        await waitFor(() => expect(mockUseApi.fetchData).toHaveBeenCalledTimes(2));
+
+        expect(screen.getByTestId('credential-types-page-container')).toBeInTheDocument();
+        await screen.findByText('Issuer1')
+    });
 });
