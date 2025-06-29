@@ -132,12 +132,6 @@ public class StepDef {
 		}
 	}
 
-	@Given("Load application url {string}")
-	public void load_application_url(String string) {
-//		String currentURL = driver.getCurrentUrl();
-//		Assert.assertEquals(currentURL, string);
-	}
-
 	@When("User click on download mosip credentials button")
 	public void user_click_on_download_mosip_credentials_button() {
 		try {
@@ -186,7 +180,7 @@ public class StepDef {
 
 	@Then("User verify Download Success text displayed")
 	public void user_verify_download_success_text_displayed() throws Exception {
-		try {			
+		try {
 			baseTest.getDriver().manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 			Assert.assertTrue(homePage.isSuccessMessageDisplayed());
 			test.log(Status.PASS, "Verified that Download Success text is displayed");
@@ -225,11 +219,6 @@ public class StepDef {
 			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
 			throw e;
 		}
-	}
-
-	@Then("User click on {string} button")
-	public void user_click_on_button(String string) {
-
 	}
 
 	@Then("User search the issuers with {string}")
@@ -322,7 +311,6 @@ public class StepDef {
 			throw e;
 		}
 	}
-
 
 	@Then("User verify that langauge button is displayed")
 	public void verify_that_language_button_is_displayed() {
@@ -844,10 +832,6 @@ public class StepDef {
 	@Then("User validate the list of credential types title of the page for Sunbird")
 	public void user_validate_the_list_of_credential_types_title_of_the_page_for_sunbird() {
 		try {
-			System.out.println("Veridonia Insurance Company Text Displayed: "
-					+ homePage.isVeridoniaInsuranceCompanyTextDisplayed());
-			System.out.println("Credential Types Displayed: " + homePage.isCredentialTypesDisplayed());
-
 			assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialType,
 					"List of credential types title for Sunbird does not match");
 			test.log(Status.PASS, "User successfully validated the list of credential types title for Sunbird");
@@ -903,8 +887,6 @@ public class StepDef {
 	@Then("User validate the list of credential types title of the page in tamil laguage for sunbird")
 	public void user_validate_the_list_of_credential_types_title_of_the_page_in_tamil_language_for_sunbird() {
 		try {
-			System.out.println("Credential Types Displayed: " + homePage.isCredentialTypesDisplayed());
-
 			assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInTamil,
 					"List of credential types title in Tamil for Sunbird does not match");
 			test.log(Status.PASS,
@@ -934,8 +916,6 @@ public class StepDef {
 	@Then("User validate the list of credential types title of the page in kannada laguage for sunbird")
 	public void user_validate_the_list_of_credential_types_title_of_the_page_in_kannada_language_for_sunbird() {
 		try {
-			System.out.println("Credential Types Displayed: " + homePage.isCredentialTypesDisplayed());
-
 			assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInKannada,
 					"List of credential types title in Kannada for Sunbird does not match");
 			test.log(Status.PASS,
@@ -965,8 +945,6 @@ public class StepDef {
 	@Then("User validate the list of credential types title of the page in hindi laguage for sunbird")
 	public void user_validate_the_list_of_credential_types_title_of_the_page_in_hindi_language_for_sunbird() {
 		try {
-			System.out.println("Credential Types Displayed: " + homePage.isCredentialTypesDisplayed());
-
 			assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInHindi,
 					"List of credential types title in Hindi for Sunbird does not match");
 			test.log(Status.PASS,
@@ -996,8 +974,6 @@ public class StepDef {
 	@Then("User validate the list of credential types title of the page in french laguage for sunbird")
 	public void user_validate_the_list_of_credential_types_title_of_the_page_in_french_language_for_sunbird() {
 		try {
-			System.out.println("Credential Types Displayed: " + homePage.isCredentialTypesDisplayed());
-
 			assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInFrench,
 					"List of credential types title in French for Sunbird does not match");
 			test.log(Status.PASS,
@@ -1027,8 +1003,6 @@ public class StepDef {
 	@Then("User validate the list of credential types title of the page in portugues laguage for sunbird")
 	public void user_validate_the_list_of_credential_types_title_of_the_page_in_portuguese_language_for_sunbird() {
 		try {
-			System.out.println("Credential Types Displayed: " + homePage.isCredentialTypesDisplayed());
-
 			assertEquals(homePage.isCredentialTypesDisplayed(), globelConstants.ListOfCredentialTypeInPortugues,
 					"List of credential types title in Portuguese for Sunbird does not match");
 			test.log(Status.PASS,
@@ -1058,8 +1032,6 @@ public class StepDef {
 	@Then("User verify all the languages")
 	public void user_verify_all_the_languages() {
 		try {
-			System.out.println("Languages in Language Filter: " + homePage.verifyLanguagesInLanguageFilter());
-
 			assertTrue(homePage.verifyLanguagesInLanguageFilter(),
 					"Language verification in the language filter failed");
 			test.log(Status.PASS, "User successfully verified all the languages in the language filter");
@@ -1093,7 +1065,7 @@ public class StepDef {
 		((JavascriptExecutor) baseTest.getDriver()).executeScript("window.open('" + baseTest.url + "')");
 
 		Set<String> allWindowHandles = baseTest.getDriver().getWindowHandles();
-		System.out.println(allWindowHandles);
+
 		if (allWindowHandles.size() >= 2) {
 			String secondWindowHandle = allWindowHandles.toArray(new String[0])[1];
 			baseTest.getDriver().switchTo().window(secondWindowHandle);
@@ -1105,7 +1077,6 @@ public class StepDef {
 	@Then("User verify About inji open")
 	public void UserSwitchToAboutInjiTab() throws InterruptedException {
 		Set<String> allWindowHandles = baseTest.getDriver().getWindowHandles();
-		System.out.println(allWindowHandles);
 		if (allWindowHandles.size() >= 2) {
 			String secondWindowHandle = allWindowHandles.toArray(new String[0])[1];
 			baseTest.getDriver().switchTo().window(secondWindowHandle);
@@ -1186,8 +1157,6 @@ public class StepDef {
 	@Then("User verify that Faq button is displayed")
 	public void user_verify_that_faq_button_displayed() {
 		try {
-			System.out.println("Faq Button Displayed: " + homePage.isFaqPageDisplayed());
-
 			assertTrue(homePage.isFaqPageDisplayed(), "Faq button is not displayed");
 			test.log(Status.PASS, "User successfully verified that the Faq button is displayed");
 		} catch (AssertionError e) {
@@ -1282,31 +1251,6 @@ public class StepDef {
 		}
 	}
 
-	@Then("User verify that About Inji Web is displayed")
-	public void user_verify_that_about_inji_web_displayed() {
-		try {
-			System.out.println("About Inji Web Displayed: " + homePage.isAboutDisplayed());
-
-			assertTrue(homePage.isAboutDisplayed(), "About Inji Web section is not displayed");
-			test.log(Status.PASS, "User successfully verified that the About Inji Web section is displayed");
-		} catch (AssertionError e) {
-			test.log(Status.FAIL, "Assertion failed: " + e.getMessage());
-			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-			throw e;
-		} catch (NoSuchElementException e) {
-			test.log(Status.FAIL, "Element not found while verifying About Inji Web section: " + e.getMessage());
-			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-			throw e;
-		} catch (Exception e) {
-			test.log(Status.FAIL, "Unexpected error while verifying About Inji Web section: " + e.getMessage());
-			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-			throw e;
-		}
-	}
-
 	@Then("User verify that on home page searchbox is present")
 	public void user_verify_that_on_home_page_searchbox_is_present() {
 		try {
@@ -1330,30 +1274,10 @@ public class StepDef {
 		}
 	}
 
-	@Then("User verifies clicking on the About Inji page")
-	public void user_verify_click_on_about_inji_page() {
-		try {
-			homePage.clickOnAboutInji();
-			test.log(Status.PASS, "User successfully clicked on the About Inji page");
-		} catch (NoSuchElementException e) {
-			test.log(Status.FAIL, "Element not found while clicking on the About Inji page: " + e.getMessage());
-			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-			throw e;
-		} catch (Exception e) {
-			test.log(Status.FAIL, "Unexpected error while clicking on the About Inji page: " + e.getMessage());
-			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-			throw e;
-		}
-	}
-
 	@When("User verify the logo of the issuer")
 	public void user_verify_the_logo_of_the_issuer() {
 		try {
 			boolean isDisplayed = homePage.isIssuerLogoDisplayed();
-			System.out.println("Issuer Logo Displayed: " + isDisplayed);
-
 			assertTrue(isDisplayed, "Issuer logo is not displayed");
 			test.log(Status.PASS, "User successfully verified that the issuer logo is displayed");
 		} catch (AssertionError e) {
@@ -1809,7 +1733,7 @@ public class StepDef {
 	@Then("User clicks on proceed button")
 	public void user_clicks_on_proceed_button() {
 		try {
-			
+
 			homePage.waitForseconds();
 			homePage.clickOnProccedCustomButton();
 			test.log(Status.PASS, "User clicked on 'Proceed Custom' button");
@@ -1831,7 +1755,7 @@ public class StepDef {
 
 	@Then("Use click on procced button")
 	public void use_click_on_procced_button() {
-		try {			
+		try {
 			homePage.waitForseconds();
 			homePage.clickOnProccedCustomButton();
 			homePage.waitForseconds();
@@ -2049,9 +1973,6 @@ public class StepDef {
 		try {
 			String isInsuranceTextDisplayed = homePage.isVeridoniaInsuranceCompanyTextDisplayed();
 			String isCredentialTypesDisplayed = homePage.isCredentialTypesDisplayed();
-
-			System.out.println("Veridonia Insurance Company Text Displayed: " + isInsuranceTextDisplayed);
-			System.out.println("Credential Types Displayed: " + isCredentialTypesDisplayed);
 
 			assertEquals(isCredentialTypesDisplayed, globelConstants.ListOfCredentialType,
 					"Credential types title does not match the expected text.");

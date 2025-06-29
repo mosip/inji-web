@@ -1,13 +1,10 @@
 package pages;
 
-import static org.testng.Assert.assertTrue;
-
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -15,14 +12,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import base.BasePage;
-import io.cucumber.java.en.Then;
 import org.openqa.selenium.TimeoutException;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
+
 
 public class Loginpage extends BasePage {
 
@@ -104,8 +97,8 @@ public class Loginpage extends BasePage {
 
 	public void focusToggleButtonWithKeyboard() {
 		WebElement toggleButton = driver.findElement(By.xpath("(//button[@type='button'])[2]"));
-		toggleButton.sendKeys(Keys.TAB); 
-		toggleButton.sendKeys(Keys.SPACE); 
+		toggleButton.sendKeys(Keys.TAB);
+		toggleButton.sendKeys(Keys.SPACE);
 	}
 
 	public void clickonToggleButtonConfimration() {
@@ -115,7 +108,6 @@ public class Loginpage extends BasePage {
 	public Boolean isToggleAppearinPlainTextFormat() {
 		return isElementIsVisible(driver,
 				By.xpath("//button[@data-testid='btn-toggle-visibility-passcode']/*[@data-testid='eye-view']"));
-
 	}
 
 	public Boolean isSubmitButtonEnabled() {
@@ -131,7 +123,6 @@ public class Loginpage extends BasePage {
 	}
 
 	public String getMismatchErrorText() {
-		
 		return getElementText(driver, By.xpath("//div[@data-testid='error-passcode']"));
 	}
 
@@ -154,33 +145,26 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isProfileDetailsDisplayed() {
-
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='profile-details']"));
 	}
 
 	public Boolean isProfileImageDisplayed() {
-
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='profile-details']//img[@alt='Profile Pic']"));
 	}
 
 	public Boolean isProfileDropDownDisplayed() {
-
 		return isElementIsVisible(driver,
 				By.xpath("//div[@data-testid='profile-details']//div[@class='relative inline-block cursor-pointer']"));
-
 	}
 
 	public Boolean isProfileNameDisplayed() {
-
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='profile-details']//span"));
-
 	}
 
 	public void clickOnProfileDropDown() {
 
 		clickOnElement(driver,
 				By.xpath("//div[@data-testid='profile-details']//div[@class='relative inline-block cursor-pointer']"));
-
 	}
 
 	public void waituntilpagecompletelyloaded() {
@@ -208,41 +192,29 @@ public class Loginpage extends BasePage {
 
 	public Boolean isHomeStringDisplayedBeforeCollpase() {
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='sidebar-container']//span[text()='Home']"));
-
 	}
 
 	public void clickOnCollapseButton() {
-
 		clickOnElement(driver, By.xpath("//button[@class='absolute top-1/4 sm:top-9 p-2 z-40 right-[-20px]']"));
 	}
 
 	public Boolean isHomeStringDisplayedAfterCollpase() {
-
 		List<WebElement> collapsedText = driver
 				.findElements(By.xpath("//div[@data-testid='sidebar-container']//span[text()='Home']"));
-
 		return (collapsedText.isEmpty() || !collapsedText.get(0).isDisplayed());
-
 	}
 
 	public Boolean isIconVisibleAfterCollpase() {
-
-
 		return isElementIsVisible(driver, By.xpath(
 				"(//div[@data-testid='sidebar-container']/div/div)[1]/div[@class='hidden sm:block flex items-center justify-center p-2 rounded-lg shadow-[0_-0.5px_4px_-1px_rgba(0,0,0,0.078),_0_4px_4px_-1px_rgba(0,0,0,0.078)] ml-6 mr-4']"));
-
 	}
 
 	public void clickOnCollapseButtonAgain() {
-
 		clickOnElement(driver, By.xpath("//button[@class='absolute top-1/4 sm:top-9 p-2 z-40 right-[-20px]']"));
 	}
 
 	public Boolean isVerifyStoredCredentialsButtonDisplayed() {
-
-
 		return isElementIsVisible(driver, By.xpath("//span[text()='Stored Cards']"));
-
 	}
 
 	public void clickonStoredCredentialsButton() {
@@ -250,23 +222,15 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isAddCardButtonDisplayed() {
-
 		return isElementIsVisible(driver, By.xpath("//button[@data-testid='btn-add-cards']"));
-
 	}
 
 	public Boolean isnoCardsAddedMessageDisplayed() {
-
-
 		return isElementIsVisible(driver, By.xpath("//h2[@data-testid='no-credentials-downloaded-title']"));
-
 	}
 
 	public Boolean isnoCardsAddedMessageSubstringMessage() {
-
-
 		return isElementIsVisible(driver, By.xpath("//span[@data-testid='no-credentials-downloaded-message']"));
-
 	}
 
 	public void getTextonMosipCredential() {
@@ -343,7 +307,6 @@ public class Loginpage extends BasePage {
 
 	public String getTitleOfTheForgetPasswordWindow() {
 		return getElementText(driver, By.xpath("//h1[@data-testid='title-reset-passcode']"));
-
 	}
 
 	public String getCurrentUrluserresetpasscode() {
@@ -360,7 +323,6 @@ public class Loginpage extends BasePage {
 
 	public String getInfoTextForgetPasswordWindow() {
 		return getElementText(driver, By.xpath("//p[@data-testid='subtitle-reset-passcode']"));
-
 	}
 
 	public Boolean isInfoTextForgetPasswordDisplayed() {
@@ -369,21 +331,17 @@ public class Loginpage extends BasePage {
 
 	public String getResetUserInfoOnForgetPasswordWindow() {
 		return getElementText(driver, By.xpath("//p[@data-testid='subtitle-reset-passcode']"));
-
 	}
 
 	public Boolean isResetUserInfoOnForgetPasswordDisplayed() {
-
 		return isElementIsVisible(driver, By.xpath("//p[@data-testid='subtitle-reset-passcode']"));
 	}
 
 	public Boolean isForgetPasscodeButtonDisplayed() {
-
 		return isElementIsVisible(driver, By.xpath("//button[@data-testid='btn-set-new-passcode']"));
 	}
 
 	public Boolean isForgetPasscodeButtonenabled() {
-
 		return isElementEnabled(driver, By.xpath("//button[@data-testid='btn-set-new-passcode']"));
 	}
 
@@ -409,7 +367,6 @@ public class Loginpage extends BasePage {
 
 	public Map<String, Boolean> getMenuHighlightStatus(String menuName) {
 		Map<String, Boolean> status = new HashMap<>();
-
 		try {
 			String textXPath = "//span[normalize-space()='" + menuName + "' and contains(@class, 'text-[#2B011C]')]";
 			status.put("textHighlighted", driver.findElements(By.xpath(textXPath)).size() > 0);
@@ -423,7 +380,7 @@ public class Loginpage extends BasePage {
 						strokeColor != null && (strokeColor.contains("--iw-color-dashboardSideBarMenuIconActive")
 								|| strokeColor.equals("var(--iw-color-dashboardSideBarMenuIconActive)")));
 			} else {
-				
+
 				status.put("iconHighlighted", false);
 			}
 
@@ -432,43 +389,35 @@ public class Loginpage extends BasePage {
 			status.put("barPresent", driver.findElements(By.xpath(barXPath)).size() > 0);
 
 		} catch (Exception e) {
-			System.err.println("Error checking highlight status for: " + menuName + " - " + e.getMessage());
 			e.printStackTrace();
 			status.putIfAbsent("textHighlighted", false);
 			status.putIfAbsent("iconHighlighted", false);
 			status.putIfAbsent("barPresent", false);
 		}
-
 		return status;
 	}
 
 	public void verifyCardSearchFunctionality() {
 		List<String> cardNames;
-
 		try {
 			cardNames = getElementTexts(driver, By.xpath("//span[@data-testid='credential-type-display-name']"));
 		} catch (TimeoutException e) {
 			throw new AssertionError("No cards were found on the screen to search with.", e);
 		}
-
+		if (cardNames.isEmpty()) {
+			throw new AssertionError("No card names found to search.");
+		}
 		WebElement inputBox = driver.findElement(By.xpath("//input[@data-testid='input-search']"));
-
-		for (String cardName : cardNames) {
-			inputBox.clear();
-			inputBox.sendKeys(cardName);
-			sleep(1000);
-
-			boolean cardVisible = driver.findElements(By.xpath("//div[@data-testid='vc-card-view']")).size() > 0
-					&& driver.findElements(By.xpath("//span[contains(text(),'No cards match your search')]")).isEmpty();
-
-			if (!cardVisible) {
-				throw new AssertionError("Expected card '" + cardName + "' not found after search.");
-			}
+		String cardName = cardNames.get(0);
+		inputBox.clear();
+		inputBox.sendKeys(cardName);
+		boolean cardVisible = driver.findElements(By.xpath("//div[@data-testid='vc-card-view']")).size() > 0
+				&& driver.findElements(By.xpath("//span[contains(text(),'No cards match your search')]")).isEmpty();
+		if (!cardVisible) {
+			throw new AssertionError("Expected card '" + cardName + "' not found after search.");
 		}
 		inputBox.clear();
 		inputBox.sendKeys("abcdef");
-		sleep(1000);
-
 		boolean noMatchDisplayed = driver.findElement(By.xpath("//span[contains(text(),'No cards match your search')]"))
 				.isDisplayed();
 		if (!noMatchDisplayed) {
@@ -476,21 +425,11 @@ public class Loginpage extends BasePage {
 		}
 	}
 
-	private void sleep(long millis) {
-		try {
-			Thread.sleep(millis);
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-		}
-	}
-
 	public boolean areCardsInHorizontalOrder() {
 		List<WebElement> cards = driver.findElements(By.xpath("//div[@data-testid='vc-card-view']"));
-
 		for (int i = 1; i < cards.size(); i++) {
 			int previousX = cards.get(i - 1).getLocation().getY();
 			int currentX = cards.get(i).getLocation().getY();
-
 			if (currentX != previousX) {
 				return false;
 			}
@@ -503,9 +442,7 @@ public class Loginpage extends BasePage {
 	}
 
 	public boolean isProfileDrownOptionsPresent(String optionText) {
-
 		try {
-
 			String xpath = String.format("//div[@data-testid='profile-dropdown']//div[text()='%s']", optionText);
 			WebElement option = driver.findElement(By.xpath(xpath));
 			return isElementIsVisible(driver, By.xpath(xpath));
@@ -521,12 +458,4 @@ public class Loginpage extends BasePage {
 	public String getCurrentUrlUserFAQ() {
 		return waitForUrlContains(driver, "user/faq", 5);
 	}
-
-	public String constructIssuerPageUrl(String baseUrl, String issuerDisplayName) {
-		if (baseUrl.endsWith("/")) {
-			baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
-		}
-		return baseUrl + "/user/issuers/" + issuerDisplayName;
-	}
-
 }

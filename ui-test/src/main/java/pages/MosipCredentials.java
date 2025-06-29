@@ -57,7 +57,6 @@ public class MosipCredentials extends BasePage {
 	}
 
 	public Boolean isLoginPageLableDisplayed() {
-
 		return isElementIsVisible(driver, By.xpath("//label[@for='Mosip vid']"));
 	}
 
@@ -74,13 +73,11 @@ public class MosipCredentials extends BasePage {
 	}
 
 	public Boolean isVidInputBoxHeaderDisplayed() {
-
 		return isElementIsVisible(driver, By.xpath("//label[text() = 'UIN/VID']"));
 	}
 
 	public Boolean isDownloadingDescriptionTextDisplayed() {
-
-		return isElementIsVisible(driver, By.xpath("//*[@data-testid='DownloadResult-SubTitle']"));
+		return isElementIsVisible(driver, By.xpath("//*[@data-testid='title-download-result']"));
 	}
 
 }

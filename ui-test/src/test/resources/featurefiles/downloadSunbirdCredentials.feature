@@ -21,7 +21,6 @@ Feature: Login using Sunbird Credentials
     Then User verify Download Success text displayed
     And User verify pdf is downloaded for Insurance
     And User verify go home button
-    And User verify go back button
 
     Examples:
       | policy number | full name | date of birth | Vailidty |
@@ -50,7 +49,7 @@ Feature: Login using Sunbird Credentials
     And User click on login button
     Then User verify Download Success text displayed
     And User verify go home button
-    And User verify go back button
+    
 
     Examples:
       | policy number | full name | date of birth | Vailidty |

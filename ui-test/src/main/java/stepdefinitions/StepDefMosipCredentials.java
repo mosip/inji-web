@@ -199,7 +199,7 @@ public class StepDefMosipCredentials {
 
 	@When("User verify login page lables")
 	public void user_verify_login_page_labels() {
-		try {
+		try {			
 			mosipCredentials.clickOnLoginWithOtp();
 			assertTrue(mosipCredentials.isLoginPageLableDisplayed(), "Login page label is not displayed");
 			test.log(Status.PASS, "User successfully verified the login page labels");

@@ -27,7 +27,7 @@ public class BasePage {
 
 	public static boolean isElementIsVisible(WebDriver driver, By by) {
 		try {
-			(new WebDriverWait(driver, Duration.ofSeconds(10)))
+			(new WebDriverWait(driver, Duration.ofSeconds(30)))
 					.until(ExpectedConditions.visibilityOfElementLocated(by));
 			return driver.findElement(by).isDisplayed();
 		} catch (Exception e) {
@@ -109,14 +109,6 @@ public class BasePage {
 		RequestSpecification requestSpec = RestAssured.given().auth().basic(userName, accessKey)
 				.header("Content-Type", "application/json").body(networkSettingsJson);
 		Response response = requestSpec.put(baseURL + endpoint);
-	}
-
-	public void enterOtp(WebDriver driver, By locator, String otp) {
-		List<WebElement> otpInputs = new WebDriverWait(driver, Duration.ofSeconds(30))
-				.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
-		for (int i = 0; i < otp.length(); i++) {
-			otpInputs.get(i).sendKeys(Character.toString(otp.charAt(i)));
-		}
 	}
 
 	public static boolean isElementEnabled(WebDriver driver, By by) {

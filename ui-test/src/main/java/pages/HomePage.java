@@ -165,10 +165,6 @@ public class HomePage extends BasePage {
 		return isElementIsVisible(driver, By.xpath("//p[@data-testid='EmptyList-Text']"));
 	}
 	
-	public void isPdfDownloaded() {
-		Download download = page.waitForDownload((
-	}
-
 	public void clickOnArabicLanguage() {
 		clickOnElement(driver, By.xpath("//button[contains(text(), 'عربي')]"));
 	}

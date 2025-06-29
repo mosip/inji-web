@@ -13,11 +13,9 @@ public class SunbirdCredentials extends BasePage {
 	public Boolean isDownloadSunbirdCredentialsDisplayed() {
 		try {
 			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+		} catch (InterruptedException e) {			
 			e.printStackTrace();
 		}
-
 		return isElementIsVisible(driver, By.xpath("//*[text()='StayProtected Insurance']"));
 
 	}
@@ -26,7 +24,6 @@ public class SunbirdCredentials extends BasePage {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return isElementIsVisible(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-0']"));
@@ -41,7 +38,7 @@ public class SunbirdCredentials extends BasePage {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		clickOnElement(driver, By.xpath("//*[text()='StayProtected Insurance']"));
@@ -69,8 +66,7 @@ public class SunbirdCredentials extends BasePage {
 
 		try {
 			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+		} catch (InterruptedException e) {			
 			e.printStackTrace();
 		}
 	}
@@ -112,12 +108,6 @@ public class SunbirdCredentials extends BasePage {
 	}
 
 	public Boolean isVehicleInsuranceDisplayed() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-1']"));
 	}
 

@@ -3,24 +3,19 @@ package stepdefinitions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.testng.Assert.assertTrue;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
-
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
-
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -33,6 +28,7 @@ import utils.GlobelConstants;
 import utils.ScreenshotUtil;
 import utils.HttpUtils;
 
+
 public class StepDefOIDCLogin {
 
 	public WebDriver driver;
@@ -43,25 +39,9 @@ public class StepDefOIDCLogin {
 	private GlobelConstants globelConstants;
 	private Loginpage loginpage;
 
-	private static final String CONFIG_PATH = "src/test/resources/config.properties";
-	private static final Properties props = loadProperties();
-	private String sessionCookieName;
+	private String sessionCookieName = "SESSION";
 	private String sessionCookieValue;
-	String baseUrl = getProperty("injiweb.base.url");
-
-	private static Properties loadProperties() {
-		Properties p = new Properties();
-		try (FileInputStream fis = new FileInputStream(CONFIG_PATH)) {
-			p.load(fis);
-		} catch (IOException e) {
-			throw new RuntimeException("Failed to load config.properties", e);
-		}
-		return p;
-	}
-
-	private static String getProperty(String key) {
-		return props.getProperty(key);
-	}
+	String baseUrl = HttpUtils.get("mosip.inji.web.url");
 
 	public static void updateConfigProperty(String key, String value) throws IOException {
 		File file = new File("src/test/resources/config.properties");
@@ -83,16 +63,12 @@ public class StepDefOIDCLogin {
 		this.mosipCredentials = new MosipCredentials(driver);
 		this.loginpage = new Loginpage(driver);
 		this.setNetwork = new SetNetwork();
-
-		this.sessionCookieName = getProperty("injiweb.cookie.name") != null ? getProperty("injiweb.cookie.name")
-				: "SESSION";
 	}
 
 	@Then("user performs token-based login using Gmail refresh token")
 	public void user_performs_token_login_using_refresh_token() throws Exception {
 		String idToken = HttpUtils.getIdToken();
 		String sessionCookie = HttpUtils.getSessionCookieFromIdToken(idToken);
-		String cookieName = getProperty("injiweb.cookie.name") != null ? getProperty("injiweb.cookie.name") : "SESSION";
 		String sessionCookieValue = sessionCookie.contains("=") ? sessionCookie.split("=", 2)[1].split(";")[0].trim()
 				: sessionCookie;
 		driver.get(baseUrl);
@@ -110,14 +86,18 @@ public class StepDefOIDCLogin {
 
 		driver.manage().deleteAllCookies();
 
-		Cookie myCookie = new Cookie.Builder(cookieName, sessionCookieValue).path("/v1/mimoto").isHttpOnly(true)
-				.isSecure(true).build();
+		Cookie myCookie = new Cookie.Builder(sessionCookieName, sessionCookieValue)
+				.path("/v1/mimoto")
+				.isHttpOnly(true)
+				.isSecure(true)
+				.build();
+
 		Thread.sleep(10000);
 		driver.manage().addCookie(myCookie);
 		Thread.sleep(10000);
 		driver.navigate().refresh();
 	}
-
+	
 	@Then("user enters the passcode {string}")
 	public void user_enters_passcode(String string) throws InterruptedException {
 		loginpage.enterPasscode(string);
@@ -835,26 +815,6 @@ public class StepDefOIDCLogin {
 			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
 			throw e;
 		}
-	}
-
-	@Then("User verifies redirect to issuer detail page for {string}")
-	public void user_verifies_redirect_to_issuer_page(String issuerKey) {
-		String baseUrl = getProperty("injiweb.base.url");
-
-		String issuerDisplayName = getProperty("injiweb.base.url");
-		if ("mosip".equalsIgnoreCase(issuerKey)) {
-			issuerDisplayName = "Mosip(QA_devInt)";
-		} else if ("sunbird".equalsIgnoreCase(issuerKey)) {
-			issuerDisplayName = "StayProtected Insurance";
-		} else {
-			throw new IllegalArgumentException("Unknown issuer key: " + issuerKey);
-		}
-		String expectedUrl = loginpage.constructIssuerPageUrl(baseUrl, issuerDisplayName);
-
-		String actualUrl = driver.getCurrentUrl();
-
-		assertTrue(actualUrl.contains(expectedUrl),
-				"Expected redirect URL to contain: " + expectedUrl + ", but got: " + actualUrl);
 	}
 
 	@Then("user click on collapse button")

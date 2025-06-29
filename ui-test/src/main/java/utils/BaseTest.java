@@ -32,7 +32,6 @@ import java.util.List;
 import java.io.*;
 import java.util.Properties;
 
-
 public class BaseTest {
 	public void setDriver(WebDriver driver) {
 		this.driver = driver;
@@ -52,11 +51,11 @@ public class BaseTest {
 	public String PdfNameForMosip = "MosipVerifiableCredential.pdf";
 	public String PdfNameForInsurance = "InsuranceCredential.pdf";
 	public String PdfNameForLifeInsurance = "InsuranceCredential.pdf";
-	 private static ExtentReports extent;
-	 private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
+	private static ExtentReports extent;
+	private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
-		String username = System.getenv("BROWSERSTACK_USERNAME");
-		String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
+	String username = System.getenv("BROWSERSTACK_USERNAME");
+	String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
 	public final String URL = "https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
 
 	private Scenario scenario;
@@ -69,13 +68,13 @@ public class BaseTest {
 		try {
 			bsLocal.start(bsLocalArgs);
 		} catch (Exception e) {
-		
+
 			e.printStackTrace();
 		}
 		totalCount++;
-		   ExtentReportManager.initReport();
-	        ExtentReportManager.createTest(scenario.getName()); 
-	        ExtentReportManager.logStep("Scenario Started: " + scenario.getName());
+		ExtentReportManager.initReport();
+		ExtentReportManager.createTest(scenario.getName());
+		ExtentReportManager.logStep("Scenario Started: " + scenario.getName());
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability("browserName", "Chrome");
 		capabilities.setCapability("browserVersion", "latest");
@@ -91,24 +90,23 @@ public class BaseTest {
 		driver.get(url);
 	}
 
+	@BeforeStep
+	public void beforeStep(Scenario scenario) {
+		String stepName = getStepName(scenario);
+		ExtentCucumberAdapter.getCurrentStep().log(Status.INFO, "➡️ Step Started: " + stepName);
+	}
 
-    @BeforeStep
-    public void beforeStep(Scenario scenario) {
-        String stepName = getStepName(scenario);
-        ExtentCucumberAdapter.getCurrentStep().log(Status.INFO, "➡️ Step Started: " + stepName);
-    }
+	@AfterStep
+	public void afterStep(Scenario scenario) {
+		String stepName = getStepName(scenario);
 
-    @AfterStep
-    public void afterStep(Scenario scenario) {
-        String stepName = getStepName(scenario);
-
-        if (scenario.isFailed()) {
-            ExtentCucumberAdapter.getCurrentStep().log(Status.FAIL, "❌ Step Failed: " + stepName);
-            captureScreenshot();
-        } else {
-            ExtentCucumberAdapter.getCurrentStep().log(Status.PASS, "✅ Step Passed: " + stepName);
-        }
-    }
+		if (scenario.isFailed()) {
+			ExtentCucumberAdapter.getCurrentStep().log(Status.FAIL, "❌ Step Failed: " + stepName);
+			captureScreenshot();
+		} else {
+			ExtentCucumberAdapter.getCurrentStep().log(Status.PASS, "✅ Step Passed: " + stepName);
+		}
+	}
 
 	@After
 	public void afterScenario(Scenario scenario) {
@@ -123,46 +121,43 @@ public class BaseTest {
 		ExtentReportManager.flushReport();
 	}
 
+	private String getStepName(Scenario scenario) {
+		try {
+			Field testCaseField = scenario.getClass().getDeclaredField("testCase");
+			testCaseField.setAccessible(true);
+			io.cucumber.plugin.event.TestCase testCase = (io.cucumber.plugin.event.TestCase) testCaseField
+					.get(scenario);
+			List<TestStep> testSteps = testCase.getTestSteps();
 
+			for (TestStep step : testSteps) {
+				if (step instanceof PickleStepTestStep) {
+					return ((PickleStepTestStep) step).getStep().getText();
+				}
+			}
+		} catch (Exception e) {
+			return "Unknown Step";
+		}
+		return "Unknown Step";
+	}
 
-
-    private String getStepName(Scenario scenario) {
-        try {
-            Field testCaseField = scenario.getClass().getDeclaredField("testCase");
-            testCaseField.setAccessible(true);
-            io.cucumber.plugin.event.TestCase testCase = (io.cucumber.plugin.event.TestCase) testCaseField.get(scenario);
-            List<TestStep> testSteps = testCase.getTestSteps();
-
-            for (TestStep step : testSteps) {
-                if (step instanceof PickleStepTestStep) {
-                    return ((PickleStepTestStep) step).getStep().getText();
-                }
-            }
-        } catch (Exception e) {
-            return "Unknown Step";
-        }
-        return "Unknown Step";
-    }
-
-    private void captureScreenshot() {
-        if (driver != null) {
-            byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-            ExtentCucumberAdapter.getCurrentStep().addScreenCaptureFromBase64String(
-                    java.util.Base64.getEncoder().encodeToString(screenshot),
-                    "Failure Screenshot"
-            );
-        }
-    }
-
+	private void captureScreenshot() {
+		if (driver != null) {
+			byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+			ExtentCucumberAdapter.getCurrentStep().addScreenCaptureFromBase64String(
+					java.util.Base64.getEncoder().encodeToString(screenshot), "Failure Screenshot");
+		}
+	}
 
 	@AfterAll
 	public static void afterAll() {
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			utils.HttpUtils.cleanupWallets();
 			System.out.println("Shutdown hook triggered. Uploading report...");
-            if (extent != null) {
-                extent.flush();
-            }
-            pushReportsToS3();
+			utils.HttpUtils.cleanupWallets();
+			if (extent != null) {
+				extent.flush();
+			}
+			pushReportsToS3();
 		}));
 
 	}
@@ -188,8 +183,9 @@ public class BaseTest {
 
 		executeLsCommand(System.getProperty("user.dir") + "/test-output/");
 		String timestamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm").format(new Date());
-		String name = InjiWebConfigManager.getapiEndUser() + "-"+timestamp + "-T-" + totalCount + "-P-" + passedCount + "-F-" + failedCount + ".html";
-		String newFileName = "InjiWebUi-" +name;
+		String name = InjiWebConfigManager.getapiEndUser() + "-" + timestamp + "-T-" + totalCount + "-P-" + passedCount
+				+ "-F-" + failedCount + ".html";
+		String newFileName = "InjiWebUi-" + name;
 		File originalReportFile = new File(System.getProperty("user.dir") + "/test-output/ExtentReport.html");
 		File newReportFile = new File(System.getProperty("user.dir") + "/test-output/" + newFileName);
 
@@ -206,13 +202,8 @@ public class BaseTest {
 			S3Adapter s3Adapter = new S3Adapter();
 			boolean isStoreSuccess = false;
 			try {
-				isStoreSuccess = s3Adapter.putObject(
-						ConfigManager.getS3Account(),
-						"",
-						null, null,
-						newFileName,
-						newReportFile
-				);
+				isStoreSuccess = s3Adapter.putObject(ConfigManager.getS3Account(), "", null, null, newFileName,
+						newReportFile);
 				System.out.println("isStoreSuccess:: " + isStoreSuccess);
 			} catch (Exception e) {
 				System.out.println("Error occurred while pushing the object: " + e.getLocalizedMessage());
@@ -257,6 +248,7 @@ public class BaseTest {
 			System.err.println("Error executing directory listing command: " + e.getMessage());
 		}
 	}
+
 	public static String[] fetchIssuerTexts() {
 		String issuerSearchText = null;
 		String issuerSearchTextforSunbird = null;
@@ -270,8 +262,7 @@ public class BaseTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return new String[]{issuerSearchText, issuerSearchTextforSunbird};
+		return new String[] { issuerSearchText, issuerSearchTextforSunbird };
 	}
-
 
 }
