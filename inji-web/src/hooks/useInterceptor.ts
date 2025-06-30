@@ -3,7 +3,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {KEYS, ROUTES} from "../utils/constants";
 import {useUser} from "./User/useUser";
 import {apiInstance} from "./useApi";
-import {Storage} from "../utils/Storage";
+import {AppStorage} from "../utils/AppStorage.ts";
 
 export function useInterceptor() {
     const navigate = useNavigate();
@@ -25,7 +25,7 @@ export function useInterceptor() {
         if (isUserLoggedIn() || isFetchingWallets) {
             if (error.response && error.response.status === 401) {
                 removeUser()
-                Storage.setItem(KEYS.REDIRECT_TO, currentRoute, true);
+                AppStorage.setItem(KEYS.REDIRECT_TO, currentRoute, true);
                 console.warn("Unauthorized access detected. Redirecting to / page.");
                 navigate(ROUTES.ROOT)
             }

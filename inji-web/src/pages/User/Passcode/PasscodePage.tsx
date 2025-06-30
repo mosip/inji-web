@@ -11,7 +11,7 @@ import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePag
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 import {useApi} from "../../../hooks/useApi";
 import {ApiError, ErrorType, Wallet} from "../../../types/data";
-import {Storage} from "../../../utils/Storage";
+import {AppStorage} from "../../../utils/AppStorage";
 
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');
@@ -129,10 +129,10 @@ export const PasscodePage: React.FC = () => {
     const handleUnlockSuccess = () => {
         // If the user was asked to re-login due to an expired session, redirect them to the page they were trying to access
         let redirectPath: string = ROUTES.USER_HOME
-        const storedRedirectPath = Storage.getItem(KEYS.REDIRECT_TO, true);
+        const storedRedirectPath = AppStorage.getItem(KEYS.REDIRECT_TO, true);
         if (storedRedirectPath) {
             redirectPath = storedRedirectPath!;
-            Storage.removeItem(KEYS.REDIRECT_TO, true);
+            AppStorage.removeItem(KEYS.REDIRECT_TO, true);
         }
         navigate(redirectPath);
     }

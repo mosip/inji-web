@@ -4,7 +4,7 @@ import {useUser} from "../../hooks/User/useUser";
 import {useLocation, useNavigate} from "react-router-dom";
 import {apiInstance} from "../../hooks/useApi";
 import {ROUTES} from "../../utils/constants";
-import {Storage} from "../../utils/Storage";
+import {AppStorage} from "../../utils/AppStorage";
 
 // Mock dependencies
 jest.mock("react-router-dom", () => ({
@@ -27,8 +27,8 @@ jest.mock("../../hooks/useApi", () => ({
     }
 }));
 
-jest.mock("../../utils/Storage.ts", () => ({
-    Storage: {
+jest.mock("../../utils/AppStorage.ts", () => ({
+    AppStorage: {
         setItem: jest.fn(),
     },
 }))
@@ -116,11 +116,11 @@ describe("useInterceptor", () => {
             }
         };
 
-        return errorCallback(mockError).catch((error) => {
+        return errorCallback(mockError).catch((error : object) => {
             expect(removeUserMock).toHaveBeenCalled();
             expect(navigateMock).toHaveBeenCalledWith(ROUTES.ROOT);
-            expect(Storage.setItem).toHaveBeenCalledTimes(1)
-            expect(Storage.setItem).toHaveBeenCalledWith("redirectTo", "/test-path?test=true#test", true)
+            expect(AppStorage.setItem).toHaveBeenCalledTimes(1)
+            expect(AppStorage.setItem).toHaveBeenCalledWith("redirectTo", "/test-path?test=true#test", true)
             expect(error).toBe(mockError);
         });
     });
@@ -142,8 +142,8 @@ describe("useInterceptor", () => {
         return errorCallback(mockError).catch((error: Error) => {
             expect(removeUserMock).toHaveBeenCalled();
             expect(navigateMock).toHaveBeenCalledWith(ROUTES.ROOT);
-            expect(Storage.setItem).toHaveBeenCalledTimes(1)
-            expect(Storage.setItem).toHaveBeenCalledWith("redirectTo", "/test-path?test=true#test", true)
+            expect(AppStorage.setItem).toHaveBeenCalledTimes(1)
+            expect(AppStorage.setItem).toHaveBeenCalledWith("redirectTo", "/test-path?test=true#test", true)
             expect(error).toBe(mockError);
         });
     });
@@ -168,7 +168,7 @@ describe("useInterceptor", () => {
             }
         };
 
-        return errorCallback(mockError).catch((error) => {
+        return errorCallback(mockError).catch(() => {
             // Verify no redirection happened
             expect(removeUserMock).not.toHaveBeenCalled();
             expect(navigateMock).not.toHaveBeenCalled();
@@ -195,7 +195,7 @@ describe("useInterceptor", () => {
             }
         };
 
-        return errorCallback(mockError).catch((error) => {
+        return errorCallback(mockError).catch(() => {
             // Verify no redirection happened
             expect(removeUserMock).not.toHaveBeenCalled();
             expect(navigateMock).not.toHaveBeenCalled();

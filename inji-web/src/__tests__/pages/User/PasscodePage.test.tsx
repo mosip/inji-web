@@ -7,7 +7,7 @@ import {UserProvider} from "../../../context/User/UserContext";
 import {DownloadSessionProvider} from "../../../context/User/DownloadSessionContext";
 import {mockApiResponse, mockApiResponseSequence, mockUseApi} from "../../../test-utils/setupUseApiMock";
 import {setMockUseSelectorState} from "../../../test-utils/mockReactRedux";
-import {Storage} from "../../../utils/Storage";
+import {AppStorage} from "../../../utils/AppStorage";
 import userEvent from "@testing-library/user-event";
 import {useUser} from "../../../hooks/User/useUser";
 
@@ -42,8 +42,8 @@ jest.mock('react-router-dom', () => ({
     useLocation: jest.fn()
 }));
 
-jest.mock("../../../utils/Storage.ts", () => ({
-    Storage: {
+jest.mock("../../../utils/AppStorage.ts", () => ({
+    AppStorage: {
         getItem: jest.fn(),
         removeItem: jest.fn(),
         setItem: jest.fn(),
@@ -159,7 +159,7 @@ describe('Passcode', () => {
 
 // Testing for re-login scenario in case of session expiry
     test("should redirect to previous url post unlock if available", async () => {
-        (Storage.getItem as jest.Mock).mockReturnValue("/previous-url");
+        (AppStorage.getItem as jest.Mock).mockReturnValue("/previous-url");
         mockApiResponseSequence([
             {response: [{"walletId": "2c2e1810-19c8-4c85-910d-aa1622412413", "walletName": null}]},
             {response: [{"walletId": "2c2e1810-19c8-4c85-910d-aa1622412413", "walletName": null}]},
@@ -170,7 +170,7 @@ describe('Passcode', () => {
         userEvent.click(screen.getByTestId("btn-submit-passcode"));
 
         await waitFor(() =>
-            expect(Storage.removeItem).toHaveBeenCalledWith("redirectTo", true)
+            expect(AppStorage.removeItem).toHaveBeenCalledWith("redirectTo", true)
         )
         expect(mockNavigate).toHaveBeenCalledTimes(1)
         expect(mockNavigate).toHaveBeenCalledWith("/previous-url");

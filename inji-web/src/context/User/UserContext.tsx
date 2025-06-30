@@ -3,7 +3,7 @@ import {UserContextType} from "../../types/contextTypes";
 import {ErrorType, User} from "../../types/data";
 import {KEYS} from "../../utils/constants";
 import {api} from "../../utils/api";
-import {Storage} from "../../utils/Storage";
+import {AppStorage} from "../../utils/AppStorage.ts";
 import {useApi} from "../../hooks/useApi";
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -19,32 +19,32 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
     // This stores the user info which indicates whether user has authenticated or not
     const saveUser = (userData: User) => {
-        Storage.setItem(KEYS.USER, JSON.stringify(userData));
+        AppStorage.setItem(KEYS.USER, JSON.stringify(userData));
         setUser(userData);
     };
 
     // This stores the wallet ID which indicates whether user has unlocked wallet or not
     const saveWalletId = (walletId: string) => {
-        Storage.setItem(KEYS.WALLET_ID, walletId);
+        AppStorage.setItem(KEYS.WALLET_ID, walletId);
         setWalletId(walletId);
     };
 
     const removeUser = () => {
-        Storage.removeItem(KEYS.USER);
-        Storage.removeItem(KEYS.WALLET_ID);
+        AppStorage.removeItem(KEYS.USER);
+        AppStorage.removeItem(KEYS.WALLET_ID);
         setUser(null);
         setWalletId(null);
     };
 
     const removeWallet = () => {
-        Storage.removeItem(KEYS.WALLET_ID);
+        AppStorage.removeItem(KEYS.WALLET_ID);
         setWalletId(null);
     };
 
     // Logged in = authenticated + unlocked wallet
     const isUserLoggedIn = () => {
-        const user = Storage.getItem(KEYS.USER);
-        const walletId = Storage.getItem(KEYS.WALLET_ID);
+        const user = AppStorage.getItem(KEYS.USER);
+        const walletId = AppStorage.getItem(KEYS.WALLET_ID);
         return !!user && !!walletId
     };
 

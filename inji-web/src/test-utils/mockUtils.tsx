@@ -62,7 +62,7 @@ export const mockNavigatorOnline = (isOnline: boolean) => {
 
 // Mock for storage module
 export const mockStorageModule = () => {
-    jest.mock('../utils/Storage', () => ({
+    jest.mock('../utils/AppStorage.ts', () => ({
         storage: {
             getItem: jest.fn(),
             setItem: jest.fn(),

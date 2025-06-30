@@ -2,7 +2,7 @@ import {useCallback, useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useUser} from '../../hooks/User/useUser';
 import {KEYS, ROUTES} from '../../utils/constants';
-import {Storage} from "../../utils/Storage";
+import {AppStorage} from "../../utils/AppStorage";
 
 const loginProtectedPrefixes = [ROUTES.USER];
 
@@ -31,9 +31,9 @@ const LoginSessionStatusChecker = () => {
     }, [navigate, removeUser]);
 
     const validateStatus = useCallback(() => {
-        const user = Storage.getItem(KEYS.USER);
+        const user = AppStorage.getItem(KEYS.USER);
         const isSessionActive: boolean = !!user
-        const walletId = Storage.getItem(KEYS.WALLET_ID);
+        const walletId = AppStorage.getItem(KEYS.WALLET_ID);
         const isLoggedIn = !!walletId && isSessionActive;
         const isPasscodeRelatedRoute = location.pathname === ROUTES.USER_RESET_PASSCODE || location.pathname === ROUTES.PASSCODE;
 

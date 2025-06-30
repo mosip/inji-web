@@ -2,7 +2,7 @@ import React from 'react';
 import {render, waitFor} from '@testing-library/react';
 import {useUser} from '../../hooks/User/useUser';
 import {useLocation, useNavigate} from 'react-router-dom';
-import {Storage} from '../../utils/Storage';
+import {AppStorage} from '../../utils/AppStorage';
 import {KEYS, ROUTES} from '../../utils/constants';
 import LoginSessionStatusChecker from "../../components/Common/LoginSessionStatusChecker";
 
@@ -16,8 +16,8 @@ jest.mock('../../hooks/User/useUser', () => ({
     useUser: jest.fn(),
 }));
 
-jest.mock('../../utils/Storage', () => ({
-    Storage: {
+jest.mock('../../utils/AppStorage.ts', () => ({
+    AppStorage: {
         getItem: jest.fn(),
     },
 }));
@@ -54,7 +54,7 @@ describe('LoginSessionStatusChecker', () => {
     test('should redirect to root page when accessing protected route without being logged in', async () => {
         (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
         // Mock storage with no user and no wallet ID
-        (Storage.getItem as jest.Mock).mockReturnValue(null);
+        (AppStorage.getItem as jest.Mock).mockReturnValue(null);
 
         render(<LoginSessionStatusChecker/>);
 
@@ -64,7 +64,7 @@ describe('LoginSessionStatusChecker', () => {
 
     test("should not redirect to root page when fetching user profile fails and path is already root page", async () => {
         (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.ROOT});
-        (Storage.getItem as jest.Mock).mockReturnValue(null);
+        (AppStorage.getItem as jest.Mock).mockReturnValue(null);
         mockFetchUserProfile.mockRejectedValue(new Error("Fetch failed"));
 
         render(<LoginSessionStatusChecker/>);
@@ -145,7 +145,7 @@ describe('LoginSessionStatusChecker', () => {
     })
 
     function setupMockLoggedInStorage() {
-        (Storage.getItem as jest.Mock).mockImplementation((key) => {
+        (AppStorage.getItem as jest.Mock).mockImplementation((key) => {
             if (key === KEYS.USER) return JSON.stringify({username: 'testUser'});
             if (key === KEYS.WALLET_ID) return 'wallet-123';
             return null;
@@ -153,7 +153,7 @@ describe('LoginSessionStatusChecker', () => {
     }
 
     function setupMockActiveSessionInStorage() {
-        (Storage.getItem as jest.Mock).mockImplementation((key) => {
+        (AppStorage.getItem as jest.Mock).mockImplementation((key) => {
             if (key === KEYS.USER) return JSON.stringify({username: 'testUser'});
             return null;
         });
