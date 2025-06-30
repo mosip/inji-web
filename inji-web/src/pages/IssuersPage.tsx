@@ -35,7 +35,7 @@ export const IssuersPage: React.FC<IssuerPageProps> = ({className}) => {
             dispatch(storeIssuers(issuers));
         }
 
-        const fetchCall = async () => {
+        const initializeIssuersData = async () => {
             if(isUserLoggedIn()){
                 fetchUserProfile().then(async () => {
                     await fetchIssuers();
@@ -47,7 +47,7 @@ export const IssuersPage: React.FC<IssuerPageProps> = ({className}) => {
             }
         };
 
-        void fetchCall();
+        void initializeIssuersData();
     }, []);
 
     if (state === RequestStatus.ERROR || fetchUserProfileError) {
