@@ -19,7 +19,7 @@ type ErrorProps = {
     action?: React.ReactNode;
 };
 
-export function Error({
+export function ErrorDisplay({
                           message,
                           helpText,
                           testId,

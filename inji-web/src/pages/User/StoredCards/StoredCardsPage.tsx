@@ -14,7 +14,7 @@ import {VCCardView} from "../../../components/VC/VCCardView";
 import {FlatList} from "../../../components/Common/List/FlatList";
 import {DocumentIcon} from "../../../components/Common/Icons/DocumentIcon";
 import {PageTitle} from "../../../components/Common/PageTitle/PageTitle";
-import {Error} from "../../../components/Error/Error";
+import {ErrorDisplay} from "../../../components/Error/ErrorDisplay";
 import {BorderedButton} from "../../../components/Common/Buttons/BorderedButton";
 import {StoredCardsPageStyles} from "./StoredCardsPageStyles";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
@@ -160,7 +160,7 @@ export const StoredCardsPage: React.FC = () => {
 
         if (error) {
             return (
-                <Error
+                <ErrorDisplay
                     message={t(`error.${error}.title`)}
                     helpText={t(`error.${error}.message`)}
                     testId={"stored-credentials"}

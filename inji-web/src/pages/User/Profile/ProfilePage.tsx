@@ -12,7 +12,7 @@ import {useApi} from "../../../hooks/useApi";
 import {User} from "../../../types/data";
 import {RequestStatus} from "../../../utils/constants";
 import {api} from "../../../utils/api";
-import {Error} from "../../../components/Error/Error";
+import {ErrorDisplay} from "../../../components/Error/ErrorDisplay";
 import {BorderedButton} from "../../../components/Common/Buttons/BorderedButton";
 
 export const ProfilePage: React.FC = () => {
@@ -104,10 +104,10 @@ export const ProfilePage: React.FC = () => {
             </div>
 
             {/* Main profile section */}
-            {error ? (<Error message={t('error.title')}
-                             helpText={t('error.message')}
-                             testId={"profile"}
-                             action={<BorderedButton title={commonTranslation('goToHome')}
+            {error ? (<ErrorDisplay message={t('error.title')}
+                                    helpText={t('error.message')}
+                                    testId={"profile"}
+                                    action={<BorderedButton title={commonTranslation('goToHome')}
                                                      onClick={handleGoToHome}
                                                      testId={"btn-go-to-home"}
                              />}
