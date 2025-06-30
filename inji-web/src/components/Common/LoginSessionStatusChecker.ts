@@ -24,7 +24,7 @@ const LoginSessionStatusChecker = () => {
 
     const redirectToLogin = useCallback(() => {
         removeUser()
-        if(location.pathname === ROUTES.ROOT)
+        if (location.pathname === ROUTES.ROOT)
             return
         console.warn("Redirecting to / page as accessing protected route without login");
         navigate(ROUTES.ROOT)
@@ -62,7 +62,6 @@ const LoginSessionStatusChecker = () => {
     const fetchUser = useCallback(async () => {
         try {
             setIsLoading(true)
-            console.log("fetching user profile")
             await fetchUserProfile();
             setIsLoading(false)
         } catch (error) {
@@ -75,12 +74,11 @@ const LoginSessionStatusChecker = () => {
 
     // on app launch, populate the data from backend
     useEffect(() => {
-        fetchUser();
+        void fetchUser();
 
         const handleStorageChange = (event: any) => {
             if (event.key === KEYS.USER || event.key === KEYS.WALLET_ID) {
-                console.log("Storage change detected for key:", event.key);
-                fetchUser();
+                void fetchUser();
             }
         };
 
@@ -91,7 +89,6 @@ const LoginSessionStatusChecker = () => {
     // on every path change, validate the status. This happens after app launch handlers are set up
     useEffect(() => {
         if (!isLoading) {
-            console.log("Validating status for path - ", location.pathname);
             validateStatus();
         }
     }, [location.pathname, validateStatus, isLoading]);
