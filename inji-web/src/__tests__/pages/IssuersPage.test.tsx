@@ -128,7 +128,7 @@ describe("IssuersPage", () => {
 
     it("should show error toast when API request fails", async () => {
         mockIsUserLoggedIn.mockReturnValue(false);
-        mockUseApi.state = RequestStatus.ERROR;
+        mockUseApi.fetchData.mockReset()
         mockApiResponse({
             error: new Error("Failed to fetch issuers"),
             state: RequestStatus.ERROR,

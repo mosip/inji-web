@@ -1,10 +1,11 @@
-import {screen, waitFor} from '@testing-library/react';
+import {fireEvent, screen, waitFor} from '@testing-library/react';
 import {setMockUseDispatchReturnValue, setMockUseSelectorState} from '../../../test-utils/mockReactRedux';
 import {CredentialTypesPage} from '../../../pages/User/CredentialTypes/CredentialTypesPage';
-import {mockApiResponseSequence, mockUseApi} from "../../../test-utils/setupUseApiMock";
+import {mockApiResponse, mockApiResponseSequence, mockUseApi} from "../../../test-utils/setupUseApiMock";
 import {renderWithRouter} from "../../../test-utils/mockUtils";
 import {credentialWellknown, mockCredentials, mockIssuerObjectList, userProfile} from "../../../test-utils/mockObjects";
 import {api} from "../../../utils/api";
+import {RequestStatus} from "../../../utils/constants";
 
 const mockFetchUserProfile = jest.fn();
 const mockIsUserLoggedIn = jest.fn();
@@ -18,14 +19,6 @@ jest.mock('react-toastify', () => ({
     toast: {
         error: jest.fn(),
     },
-}));
-
-jest.mock('../../../components/Common/Buttons/NavBackArrowButton', () => ({
-    NavBackArrowButton: (props: { onClick?: () => void }) => (
-        <button data-testid="back-button" onClick={props.onClick}>
-            Back
-        </button>
-    ),
 }));
 
 jest.mock('../../../hooks/User/useUser', () => ({
@@ -43,6 +36,12 @@ jest.mock('react-i18next', () => ({
         init: () => {
         },
     },
+}));
+
+const mockNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockNavigate,
 }));
 
 describe('CredentialTypesPage', () => {
@@ -103,15 +102,53 @@ describe('CredentialTypesPage', () => {
         });
     });
 
-    it.todo('should show error when fetching issuer fails');
+    it('should show error when fetching issuer fails', async () => {
+        mockUseApi.fetchData.mockReset()
+        // mockUseApi.fetchData.mockRejectedValueOnce(new Error('Error fetching issuer'));
+        mockApiResponse({
+            error: new Error("Error fetching issuer"),
+            status: 400,
+            state: RequestStatus.ERROR
+        })
+        // mockUseApi.state = RequestStatus.ERROR
+
+        renderWithRouter(<CredentialTypesPage/>);
+
+        await waitFor(() => expect(mockUseApi.fetchData).toHaveBeenCalledWith({
+            apiConfig: api.fetchSpecificIssuer,
+            url: expect.stringContaining("/issuers")
+        }));
+        expect(screen.getByText("emptyContainerContent")).toBeInTheDocument();
+    });
 
     it.todo('should show error when fetching issuer configuration fails');
 
-    it.todo('should navigate to credentials page when download status is DONE');
+    it.todo('should navigate to credentials page when download is successful');
 
     it.todo('cleans up download session IDs on unmount');
 
-    it.todo('should navigate to backUrl when provided and back button is clicked');
+    it('should navigate to home when Home button is clicked', () => {
+        renderWithRouter(<CredentialTypesPage backUrl={"/previous-url"}/>);
 
-    it.todo('should navigate to previous path when available and back button is clicked')
+        fireEvent.click(screen.getByRole("button", {name: "Common:home"}))
+
+        expect(mockNavigate).toHaveBeenCalledWith("/user/home");
+    });
+
+    it('should navigate to previous path when available and back button is clicked', () => {
+        const previousPath = '/previous-path';
+        renderWithRouter(<CredentialTypesPage backUrl={previousPath}/>);
+
+        fireEvent.click(screen.getByTestId("back-arrow-icon"));
+
+        expect(mockNavigate).toHaveBeenCalledWith(previousPath);
+    })
+
+    it('should navigate to home when back button is clicked', () => {
+        renderWithRouter(<CredentialTypesPage/>);
+
+        fireEvent.click(screen.getByTestId("back-arrow-icon"));
+
+        expect(mockNavigate).toHaveBeenCalledWith("/user/home");
+    })
 });
