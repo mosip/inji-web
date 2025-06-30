@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {useNavigate} from "react-router-dom";
 import '../../index.css';
 import {useTranslation} from "react-i18next";
@@ -7,11 +7,9 @@ import {GoogleSignInButton} from "../Common/Buttons/GoogleSignInButton";
 
 export const Login: React.FC = () => {
   const { t } = useTranslation("HomePage");
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleGoogleLogin = () => {
-      setIsLoading(true);
       window.location.href = `${window._env_.MIMOTO_URL}/oauth2/authorize/google`;
   };
 
