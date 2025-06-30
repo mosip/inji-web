@@ -6,11 +6,12 @@ import {useTranslation} from 'react-i18next';
 import {useUser} from '../../../hooks/User/useUser';
 import {PasscodeInput} from '../../../components/Common/Input/PasscodeInput';
 import {PasscodePageStyles} from './PasscodePageStyles';
-import {ROUTES} from "../../../utils/constants";
+import {KEYS, ROUTES} from "../../../utils/constants";
 import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePage/PasscodePageTemplate";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 import {useApi} from "../../../hooks/useApi";
 import {ApiError, ErrorType, Wallet} from "../../../types/data";
+import {Storage} from "../../../utils/Storage";
 
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');
@@ -50,7 +51,7 @@ export const PasscodePage: React.FC = () => {
         const fetchWalletDetails = async () => {
             await fetchWallets();
         };
-        fetchWalletDetails();
+        void fetchWalletDetails();
     }, []);
 
     useEffect(() => {
@@ -127,8 +128,13 @@ export const PasscodePage: React.FC = () => {
 
     const handleUnlockSuccess = () => {
         // If the user was asked to re-login due to an expired session, redirect them to the page they were trying to access
-        const redirectTo = window.sessionStorage.getItem('redirectTo') ?? ROUTES.USER_HOME;
-        navigate(redirectTo);
+        let redirectPath: string = ROUTES.USER_HOME
+        const storedRedirectPath = Storage.getItem(KEYS.REDIRECT_TO, true);
+        if (storedRedirectPath) {
+            redirectPath = storedRedirectPath!;
+            Storage.removeItem(KEYS.REDIRECT_TO, true);
+        }
+        navigate(redirectPath);
     }
 
     const handleSubmit = async () => {
