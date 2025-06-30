@@ -6,16 +6,13 @@ import {navigateToUserHome} from "../../../utils/navigationUtils";
 import {mockUseApi} from "../../../test-utils/setupUseApiMock";
 import {RequestStatus} from '../../../utils/constants';
 import {userProfile} from "../../../test-utils/mockObjects";
+import {mockUseTranslation} from "../../../test-utils/mockUtils";
 
 // Mocks
 jest.mock('../../../utils/navigationUtils.ts', () => ({
   navigateToUserHome: jest.fn(),
 }));
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: (key: string) => key,
-  }),
-}));
+mockUseTranslation()
 jest.mock('../../../components/Common/Buttons/NavBackArrowButton.tsx', () => ({
   NavBackArrowButton: ({ onBackClick }: { onBackClick: () => void }) => (
     <button onClick={onBackClick}>Back</button>
@@ -62,11 +59,10 @@ const renderWithRouter = () =>
 describe('ProfilePage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+
+    mockedUseLocation.mockReturnValue({});
   });
-
   it('renders loading skeletons when loading', () => {
-    mockedUseLocation.mockReturnValue({ state: { from: '/user' } });
-
     renderWithRouter();
 
     expect(screen.getByTestId('profile-page')).toBeInTheDocument();
@@ -75,15 +71,14 @@ describe('ProfilePage', () => {
   });
 
   it('renders user data when loaded', async () => {
-    mockedUseLocation.mockReturnValue({});
     mockUseApi.state = RequestStatus.DONE;
     mockUseApi.data = userProfile
 
     renderWithRouter();
 
     await screen.findByTestId('profile-page-picture');
-    expect(screen.getByText('ProfilePage.fullName')).toBeInTheDocument();
-    expect(screen.getByText('ProfilePage.emailAddress')).toBeInTheDocument();
+    expect(screen.getByText('Full Name')).toBeInTheDocument();
+    expect(screen.getByText('Email Address')).toBeInTheDocument();
     expect(screen.getByText('John Doe')).toBeInTheDocument();
     expect(screen.getByText('john@example.com')).toBeInTheDocument();
   });
@@ -98,20 +93,43 @@ describe('ProfilePage', () => {
   });
 
   it('navigates to home if no location.state.from', () => {
-    mockedUseLocation.mockReturnValue({});
-
     renderWithRouter();
+
     fireEvent.click(screen.getByText('Back'));
 
     expect(navigateToUserHome).toHaveBeenCalledWith(mockedNavigate);
   });
 
   it('navigates to home on Go Home button click', () => {
-    mockedUseLocation.mockReturnValue({});
-
     renderWithRouter();
+
     fireEvent.click(screen.getByText('Go Home'));
 
     expect(navigateToUserHome).toHaveBeenCalledWith(mockedNavigate);
   });
+
+  it('should show error when fetching profile fails', async () => {
+    mockUserProfileError();
+
+    renderWithRouter();
+
+    await screen.findByText('Profile Not Available');
+    expect(screen.getByText("We couldn’t load your profile details due to a technical issue. Please try again later.")).toBeInTheDocument()
+    expect(screen.getByRole('button',{name: "goToHome"})).toBeInTheDocument()
+  });
+
+  it('should navigate to home on clicking Error CTA in Profile page', () => {
+    mockUserProfileError()
+
+    renderWithRouter();
+
+    fireEvent.click(screen.getByRole('button', { name: 'goToHome' }));
+
+    expect(navigateToUserHome).toHaveBeenCalledWith(mockedNavigate);
+  });
+
+  function mockUserProfileError() {
+    mockUseApi.state = RequestStatus.ERROR;
+    mockUseApi.error = new Error('Failed to fetch profile');
+  }
 });

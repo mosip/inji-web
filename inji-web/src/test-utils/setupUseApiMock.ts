@@ -4,7 +4,7 @@ export const mockUseApi = {
     fetchData: jest.fn(),
     state: RequestStatus.LOADING,
     data: null as any,
-    error: null,
+    error: null as any,
     status: null,
     ok: () => false
 };
