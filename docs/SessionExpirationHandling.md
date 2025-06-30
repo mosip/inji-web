@@ -7,7 +7,7 @@ In case of the scenario where the logged in user's session has expired, and the 
 ## Flow of User session expiration and re-authentication
 
 
-When an expired user tries to perform an action that requires authentication, 
+In an expired session when user tries to perform an action that requires authentication, 
 the frontend will receive a 401 Unauthorized response from the backend. 
 The frontend will then redirect the user to the passcode page, where they can re-authenticate. To capture this for multiple actions, an interceptor is used to handle the 401 Unauthorized response and redirect the user to login again.
 
@@ -53,39 +53,6 @@ sequenceDiagram
     end
 ```
 
-
-```mermaid
-sequenceDiagram
-    participant Browser
-    participant ReactApp
-    participant SpringSecurity
-    participant CustomAuthRequestRepo
-    participant OAuthProvider
-
-    Browser->>ReactApp: Navigate to /dashboard
-    ReactApp->>SpringSecurity: GET /dashboard (No token or expired)
-
-    SpringSecurity-->>ReactApp: 302 Redirect to /oauth2/authorize
-    SpringSecurity->>CustomAuthRequestRepo: saveAuthorizationRequest()
-
-    note right of CustomAuthRequestRepo: Extract current route (/dashboard)\nand store it in session or cookie\nas `redirectTo`
-
-    Browser->>OAuthProvider: Redirect to Auth server
-    OAuthProvider->>Browser: Redirect back to /login/oauth2/code/{provider}
-
-    Browser->>SpringSecurity: Request with code
-    SpringSecurity->>CustomAuthRequestRepo: loadAuthorizationRequest()
-
-    note right of CustomAuthRequestRepo: Load and remove `redirectTo`\nfrom session or cookie
-
-    SpringSecurity->>SpringSecurity: OAuth2AuthenticationSuccessHandler invoked
-    SpringSecurity->>SpringSecurity: Extract `redirectTo` from request/session
-    SpringSecurity-->>Browser: Redirect to /dashboard (redirectTo)
-
-    Browser->>ReactApp: Render /dashboard
-
-
-```
 ## Storing of previous page url in session
 
 When the user is asked for re-login due to session expiry while performing any authenticated action, the current page URL (or the page they were trying to access) is stored in the session storage. This allows the application to redirect the user back to that page after successful authentication.

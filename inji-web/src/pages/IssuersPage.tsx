@@ -13,7 +13,7 @@ import {RequestStatus} from "../utils/constants";
 import {useUser} from "../hooks/User/useUser";
 
 export const IssuersPage: React.FC<IssuerPageProps> = ({className}) => {
-    const {fetchData} = useApi();
+    const {state, fetchData} = useApi();
     const dispatch = useDispatch();
     const {t} = useTranslation("IssuersPage");
     const {isUserLoggedIn, fetchUserProfile} = useUser()
@@ -21,12 +21,12 @@ export const IssuersPage: React.FC<IssuerPageProps> = ({className}) => {
     useEffect(() => {
         async function fetchIssuers() {
             const apiRequest: ApiRequest = api.fetchIssuers;
-            const {data: response, state} = await fetchData(
+            const {data: response, state: issuerResponseState} = await fetchData(
                 {
                     apiConfig: apiRequest,
                 }
             );
-            if (state === RequestStatus.ERROR) {
+            if (issuerResponseState === RequestStatus.ERROR) {
                 toast.error(t("errorContent"));
                 return
             }
