@@ -14,6 +14,7 @@ import {CredentialTypesPageContent} from "../../../components/User/CredentialTyp
 import {Header} from "../../../components/User/CredentialTypes/Header";
 import {RequestStatus, ROUTES} from "../../../utils/constants";
 import {useApi} from "../../../hooks/useApi";
+import {useUser} from "../../../hooks/User/useUser";
 
 type CredentialTypesPageProps = {
     backUrl?: string;
@@ -35,9 +36,12 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
         setLatestDownloadedSessionId
     } = useDownloadSessionDetails();
 
+    const [state, setState] = useState<RequestStatus>(RequestStatus.LOADING);
+
     const [downloadStatus, setDownloadStatus] = useState<RequestStatus | null>(null);
-    const issuer = useApi<ResponseTypeObject>()
-    const issuersConfiguration = useApi<ResponseTypeObject>()
+    const issuerApi = useApi<ResponseTypeObject>()
+    const issuersConfigurationApi = useApi<ResponseTypeObject>()
+    const {fetchUserProfile} = useUser()
 
     useEffect(() => {
         const status = currentSessionDownloadId ? downloadInProgressSessions[currentSessionDownloadId]?.downloadStatus : null;
@@ -59,33 +63,47 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
     }, [downloadStatus])
 
     useEffect(() => {
-        if (issuersConfiguration.state === RequestStatus.ERROR || issuer.state === RequestStatus.ERROR) {
+        if (issuersConfigurationApi.state === RequestStatus.ERROR || issuerApi.state === RequestStatus.ERROR) {
             setDownloadStatus(RequestStatus.ERROR);
         }
-    }, [issuersConfiguration.state, issuer.state])
+    }, [issuersConfigurationApi.state, issuerApi.state])
 
     useEffect(() => {
         const fetchCall = async () => {
-            let apiRequest: ApiRequest = api.fetchSpecificIssuer;
-            const {data: issuerResponse} = await issuer.fetchData({
-                url: apiRequest.url(params.issuerId ?? ''),
-                apiConfig: apiRequest
-            });
-            dispatch(storeSelectedIssuer(issuerResponse?.response));
-            setDisplayObject(getIssuerDisplayObjectForCurrentLanguage(
-                issuerResponse?.response.display,
-                language
-            ))
+           fetchUserProfile().then(async ()=>{
+               let apiRequest: ApiRequest = api.fetchSpecificIssuer;
+               const {data: issuerResponse, error: issuerResponseError} = await issuerApi.fetchData({
+                   url: apiRequest.url(params.issuerId ?? ''),
+                   apiConfig: apiRequest
+               });
+               if(issuerResponseError) {
+                   setState(RequestStatus.ERROR)
+                   return
+               }
+               dispatch(storeSelectedIssuer(issuerResponse?.response));
+               setDisplayObject(getIssuerDisplayObjectForCurrentLanguage(
+                   issuerResponse?.response.display,
+                   language
+               ))
 
-            apiRequest = api.fetchIssuersConfiguration;
-            const {data: issuerConfigurationResponse} = await issuersConfiguration.fetchData({
-                url: apiRequest.url(params.issuerId ?? ''),
-                apiConfig: apiRequest
-            })
-            dispatch(storeFilteredCredentials(issuerConfigurationResponse?.response));
-            dispatch(storeCredentials(issuerConfigurationResponse?.response));
+               apiRequest = api.fetchIssuersConfiguration;
+               const {data: issuerConfigurationResponse, error: issuerConfigurationResponseError} = await issuersConfigurationApi.fetchData({
+                   url: apiRequest.url(params.issuerId ?? ''),
+                   apiConfig: apiRequest
+               })
+               if(issuerConfigurationResponseError) {
+                   setState(RequestStatus.ERROR)
+                   return
+               }
+               dispatch(storeFilteredCredentials(issuerConfigurationResponse?.response));
+               dispatch(storeCredentials(issuerConfigurationResponse?.response));
+
+           }).catch((error: any) =>{
+                console.error("Error fetching user profile:", error);
+                setState(RequestStatus.ERROR)
+           })
         };
-        fetchCall();
+        void fetchCall();
     }, []);
 
     const previousPagePath = location.state?.from;
@@ -107,7 +125,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
         >
             <Header onBackClick={handleBackClick} displayObject={displayObject}
                     onClick={() => navigateToUserHome(navigate)}/>
-            <CredentialTypesPageContent downloadStatus={downloadStatus} state={issuersConfiguration.state}/>
+            <CredentialTypesPageContent downloadStatus={downloadStatus} state={state}/>
         </div>
     );
 };

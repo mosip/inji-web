@@ -62,6 +62,16 @@ describe('LoginSessionStatusChecker', () => {
         expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT);
     });
 
+    test("should not redirect to root page when fetching user profile fails and path is already root page", async () => {
+        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.ROOT});
+        (Storage.getItem as jest.Mock).mockReturnValue(null);
+        mockFetchUserProfile.mockRejectedValue(new Error("Fetch failed"));
+
+        render(<LoginSessionStatusChecker/>);
+
+        expect(mockNavigate).not.toHaveBeenCalled();
+    })
+
     test('should not redirect when user is logged in and accessing protected route', () => {
         (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
         setupMockLoggedInStorage();

@@ -7,8 +7,8 @@ import "../src/utils/i18n";
 import {Provider} from "react-redux";
 import {reduxStore} from "./redux/reduxStore";
 import {AppToaster} from "./components/Common/toast/AppToaster";
-import { CookiesProvider } from 'react-cookie';
-import { BrowserRouter } from "react-router-dom";
+import {CookiesProvider} from 'react-cookie';
+import {BrowserRouter} from "react-router-dom";
 import {UserProvider} from "./context/User/UserContext";
 import {DownloadSessionProvider} from "./context/User/DownloadSessionContext";
 

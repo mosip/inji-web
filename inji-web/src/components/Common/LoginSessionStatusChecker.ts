@@ -23,9 +23,9 @@ const LoginSessionStatusChecker = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const redirectToLogin = useCallback(() => {
+        removeUser()
         if(location.pathname === ROUTES.ROOT)
             return
-        removeUser()
         console.warn("Redirecting to / page as accessing protected route without login");
         navigate(ROUTES.ROOT)
     }, [navigate, removeUser]);
