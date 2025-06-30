@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import '../../index.css';
 import {useTranslation} from "react-i18next";
 import {BorderedButton} from "../Common/Buttons/BorderedButton";
@@ -7,15 +7,12 @@ import {GoogleSignInButton} from "../Common/Buttons/GoogleSignInButton";
 
 export const Login: React.FC = () => {
   const { t } = useTranslation("HomePage");
-  const location = useLocation()
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleGoogleLogin = () => {
       setIsLoading(true);
-      window.location.href = location.state?.from
-          ? `${window._env_.MIMOTO_URL}/oauth2/authorize/google?redirectTo=${encodeURIComponent(location.state.from)}`
-          : `${window._env_.MIMOTO_URL}/oauth2/authorize/google`;
+      window.location.href = `${window._env_.MIMOTO_URL}/oauth2/authorize/google`;
   };
 
   const Separator:React.FC=()=>{
