@@ -88,29 +88,49 @@ sequenceDiagram
 ```
 ## Storing of previous page url in session
 
-When the user is redirected to the OAuth provider for authentication, the current page URL (or the page they were trying to access) is stored in the session. This allows the application to redirect the user back to that page after successful authentication.
+When the user is asked for re-login due to session expiry while performing any authenticated action, the current page URL (or the page they were trying to access) is stored in the session storage. This allows the application to redirect the user back to that page after successful authentication.
+
+##### Why Session Storage
+- Session storage is a web storage mechanism that allows you to store data for the duration of the page session.
+- Its lifecycle is tied to the browser tab, meaning it persists as long as the tab is open. And its persistent across page reloads and restores.
+- It is accessible only within the same tab and not shared across tabs or windows.
 
 ```mermaid
 
 sequenceDiagram
     participant be as Backend (Mimoto)
+    participant interceptor as Frontend (Inji Web)<br/> Interceptor
     participant fe as Frontend (Inji Web)
+    participant AppStorage
     participant user as User
     
     note over be, user: Scenario: User is logged in , session has expired, and user tries to access stored cards page
     
     user ->> fe: 1. Perform any protected action (e.g., open stored cards)
-    fe ->> be: 2. API call (eg., GET /wallets/wallet-id/credentials)
-    be ->> fe: 3. Reject with 401 Unauthorized
-    fe ->> fe: 4. Catch it in interceptor<br/> redirect to "/"<br/> [location.state will be the current path]
-    user ->> fe: 5. User clicks on "Sign in with *"
-    fe ->> be: 6. open auth page with previous path (eg - stored cards) in search params <br/> [/oauth2/authorize/google?redirectTo=${encodeURIComponent(location.state.from)}]
-    be ->> be: 7. CustomAuthorizationRequestRepository stores the redirectTo path in session
-    be ->> user: 8. Redirect to OAuth provider (Google, etc.)
-    user ->> be: 9. User authenticates with OAuth provider
-    be ->> be: 10. On success authentication,<br/> construct redirect URL with redirectTo path from session (eg., /passcode?redirectTo=stored-cards)
-    be ->> fe: 11. redirect to redirect URL (Passcode page)
-    fe ->> user: 12. ask user to unlock
-    fe ->> fe: 13. on successful unlock, navigate to redirectTo from query or home
-    
+    fe ->> interceptor: 2. API call (eg., GET /wallets/wallet-id/credentials)
+    interceptor ->> be: 3. Forward request to backend
+    be ->> interceptor: 4. Reject with 401 Unauthorized
+    interceptor ->> interceptor: 5. Check if user is logged in or fetching wallets
+    note over interceptor: Reason for checking while fetching wallets is that,<br/>while fetching wallets only the session will be active but<br/>wallet will be in locked state (not loggged in)
+    alt isLoggedIn || fetching wallets
+        activate interceptor
+        interceptor ->> AppStorage: 6.1 Store the current path in session storage <br/> (eg., /wallets/<wallet-id>/credentials)
+        interceptor ->> fe: 6.2 Redirect to root (/) page <br/> (eg., /)
+        fe ->> user: 7. User clicks on "Sign in with *"
+        fe ->> user: 8. Open authentication page <br/> (/oauth2/authorize/google)
+        user ->> fe: 9. User authenticates with OAuth provider
+        fe ->> user: 10. Unlock Wallet (Passcode page)
+        fe ->> AppStorage: 11. On successful unlock, get redirectTo
+        fe ->> fe: 12. is redirectTo present?
+        alt redirectTo Available in storage 
+            fe ->> fe: 13. Redirect to redirectTo <br/> (eg., /wallets/<wallet-id>/credentials)
+        else redirectTo Not Available in storage
+            fe ->> fe: 13. Redirect to home page <br/> (eg., /home)
+        end
+    else guest mode
+        rect rgb(230, 255, 230, 0.4)
+            interceptor ->> fe: 6. Forward response
+            note over fe: Continue with the response
+        end
+    end
 ```

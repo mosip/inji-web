@@ -18,8 +18,7 @@ export function useInterceptor() {
             status: number;
         };
     }) {
-        const isFetchingWallets = error.response?.config?.url.includes('/wallets');
-        console.log("useInterceptor error:", error.response?.config?.url, "Status:", error.response?.status);
+        const isFetchingWallets = error.response?.config?.url.endsWith('/wallets');
         // Redirect to / page on logged-in user if unauthorized access is detected
         const currentRoute = location.pathname + location.search + location.hash;
         if (isUserLoggedIn() || isFetchingWallets) {
