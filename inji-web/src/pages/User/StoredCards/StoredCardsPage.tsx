@@ -19,7 +19,7 @@ import {BorderedButton} from "../../../components/Common/Buttons/BorderedButton"
 import {StoredCardsPageStyles} from "./StoredCardsPageStyles";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 import {navigateToUserHome} from "../../../utils/navigationUtils";
-import {HTTP_STATUS_CODES} from "../../../utils/constants";
+import {HTTP_STATUS_CODES, NETWORK_ERROR_MESSAGE} from "../../../utils/constants";
 import {useApi} from "../../../hooks/useApi";
 
 export const StoredCardsPage: React.FC = () => {
@@ -49,7 +49,7 @@ export const StoredCardsPage: React.FC = () => {
                 setFilteredCredentials(responseData)
             } else {
                 console.error("Error fetching credentials:", response.status, response.error,  !navigator.onLine);
-                if (response.error?.message === ('Network Error') &&  !navigator.onLine) {
+                if (response.error?.message === (NETWORK_ERROR_MESSAGE) &&  !navigator.onLine) {
                     console.error('Network error: Please check your internet connection.');
                     setError("networkError");
                     return;

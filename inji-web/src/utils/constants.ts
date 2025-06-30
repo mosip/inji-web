@@ -49,10 +49,12 @@ export const HTTP_STATUS_CODES = {
     SERVICE_UNAVAILABLE: 503,
 }
 
-export const pdfWorkerSource = (pdfVersion : string) => `//unpkg.com/pdfjs-dist@${pdfVersion}/build/pdf.worker.min.mjs`;
+export const NETWORK_ERROR_MESSAGE = "Network Error"
 
 export enum RequestStatus {
     LOADING,
     DONE,
     ERROR
 }
+
+export const pdfWorkerSource = (pdfVersion : string) => `//unpkg.com/pdfjs-dist@${pdfVersion}/build/pdf.worker.min.mjs`;
