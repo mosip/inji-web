@@ -8,7 +8,7 @@ export type UserContextType = {
     error: ErrorType | null;
     isLoading: boolean;
     isUserLoggedIn: () => boolean;
-    fetchUserProfile: () => Promise<{ user: User; walletId: string }>;
+    fetchUserProfile: () => Promise<{ user: User; walletId: string | undefined }>;
     saveWalletId: (string) => void;
     removeUser: () => void;
     removeWallet: () => void;

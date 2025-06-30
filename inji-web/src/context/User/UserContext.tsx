@@ -15,7 +15,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     const [walletId, setWalletId] = useState<string | null>(null);
     const [error, setError] = useState<ErrorType | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const userProfile = useApi<User>()
+    const userProfileApi = useApi<User>()
 
     // This stores the user info which indicates whether user has authenticated or not
     const saveUser = (userData: User) => {
@@ -30,7 +30,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     };
 
     const removeUser = () => {
-        console.log("Removing user data from storage");
         Storage.removeItem(KEYS.USER);
         Storage.removeItem(KEYS.WALLET_ID);
         setUser(null);
@@ -52,7 +51,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     const fetchUserProfile = async () => {
         try {
             setIsLoading(true);
-            const  response = await userProfile.fetchData({
+            const  response = await userProfileApi.fetchData({
                 apiConfig: api.fetchUserProfile,
             })
 

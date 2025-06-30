@@ -18,7 +18,7 @@ export const ResetPasscodePage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [error, setError] = React.useState<string | null>(null);
-    const resetPasscode = useApi()
+    const resetPasscodeApi = useApi()
 
     const handleBackNavigation = () => {
         navigate(ROUTES.PASSCODE);
@@ -26,7 +26,7 @@ export const ResetPasscodePage: React.FC = () => {
 
     const handleForgotPasscode = async () => {
         try {
-            const  response = await resetPasscode.fetchData({
+            const  response = await resetPasscodeApi.fetchData({
                 url: api.deleteWallet.url(location.state?.walletId ?? walletId),
                 apiConfig: api.deleteWallet,
             })

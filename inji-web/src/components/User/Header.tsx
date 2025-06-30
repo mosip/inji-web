@@ -40,7 +40,7 @@ export const Header: React.FC<UserHeaderProps> = ({
     const displayNameFromLocalStorage = user?.displayName;
     const hasProfilePictureUrl = user?.profilePictureUrl;
     const {t} = useTranslation('User');
-    const logoutRequest = useApi()
+    const logoutRequestApi = useApi()
 
     useEffect(() => {
         setDisplayName(displayNameFromLocalStorage);
@@ -69,7 +69,7 @@ export const Header: React.FC<UserHeaderProps> = ({
 
     const handleLogout = async () => {
         try {
-            const response = await logoutRequest.fetchData({
+            const response = await logoutRequestApi.fetchData({
                 apiConfig: api.userLogout,
             })
 
