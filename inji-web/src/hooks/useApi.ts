@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {ApiResult, RequestConfig, UseApiReturn} from "../types/data";
+import {ApiRequest, ApiResult} from "../types/data";
 import {ContentTypes, MethodType} from "../utils/api";
 import axios from "axios";
 import {HTTP_STATUS_CODES, RequestStatus} from "../utils/constants";
@@ -8,6 +8,22 @@ export const apiInstance = axios.create({
     baseURL: window._env_.MIMOTO_URL,
     withCredentials: true,
 });
+
+export interface RequestConfig {
+    url?: string;
+    headers?: Record<string, string>;
+    body?: any;
+    apiConfig: ApiRequest;
+}
+
+export interface UseApiReturn<T> {
+    data: T | null;
+    error: Error | null;
+    state: RequestStatus;
+    status: number | null;
+    fetchData: (arg0: RequestConfig) => Promise<ApiResult<T>>;
+    ok: () => boolean;
+}
 
 export function useApi<T = any>(): UseApiReturn<T> {
     const [data, setData] = useState<T | null>(null);

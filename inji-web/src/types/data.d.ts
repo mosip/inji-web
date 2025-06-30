@@ -187,18 +187,3 @@ export interface ApiResult<T> {
     ok: () => boolean;
 }
 
-export interface RequestConfig {
-    url?: string;
-    headers?: Record<string, string>;
-    body?: any;
-    apiConfig: ApiRequest;
-}
-
-export interface UseApiReturn<T> {
-    data: T | null;
-    error: Error | null;
-    state: RequestStatus;
-    status: number | null;
-    fetchData: (arg0: RequestConfig) => Promise<ApiResult<T>>;
-    ok: () => boolean;
-}
