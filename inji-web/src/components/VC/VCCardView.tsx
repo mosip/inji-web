@@ -1,4 +1,4 @@
-import {ApiRequest, NetworkResult, WalletCredential} from "../../types/data";
+import {ApiRequest, ApiResult, WalletCredential} from "../../types/data";
 import {VCStyles} from "./VCStyles";
 import React, {useEffect, useState} from "react";
 import {Clickable} from "../Common/Clickable";
@@ -44,7 +44,7 @@ export function VCCardView(props: Readonly<{
 
     const executeCredentialApiRequest = async (
         apiConfig: ApiRequest,
-        onSuccess: (response: NetworkResult<any>) => Promise<void>,
+        onSuccess: (response: ApiResult<any>) => Promise<void>,
         apiInstance: ReturnType<typeof useApi>,
         errorType: string = "downloadError"
     ) => {

@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {NetworkResult, RequestConfig, UseApiReturn} from "../types/data";
+import {ApiResult, RequestConfig, UseApiReturn} from "../types/data";
 import {ContentTypes, MethodType} from "../utils/api";
 import axios from "axios";
 import {HTTP_STATUS_CODES, RequestStatus} from "../utils/constants";
@@ -24,12 +24,12 @@ export function useApi<T = any>(): UseApiReturn<T> {
                                  body,
                                  apiConfig,
                                  url = undefined
-                             }: RequestConfig): Promise<NetworkResult<T>> {
+                             }: RequestConfig): Promise<ApiResult<T>> {
         setState(RequestStatus.LOADING)
         setError(null);
         setStatus(null);
 
-        let result: NetworkResult<T>;
+        let result: ApiResult<T>;
 
         try {
             console.log("fetching data with config:", body)

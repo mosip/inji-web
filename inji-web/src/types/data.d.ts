@@ -178,7 +178,7 @@ export interface Wallet {
 
 export type ApiError = AxiosError<ErrorType | ResponseTypeObject>;
 
-export interface NetworkResult<T> {
+export interface ApiResult<T> {
     data: T | null;
     error: ApiError | Error | null;
     status: number | null;
@@ -199,6 +199,6 @@ export interface UseApiReturn<T> {
     error: Error | null;
     state: RequestStatus;
     status: number | null;
-    fetchData: (arg0: RequestConfig) => Promise<NetworkResult<T>>;
+    fetchData: (arg0: RequestConfig) => Promise<ApiResult<T>>;
     ok: () => boolean;
 }
