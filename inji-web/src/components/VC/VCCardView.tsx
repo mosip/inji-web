@@ -89,14 +89,12 @@ export function VCCardView(props: Readonly<{
         await executeCredentialApiRequest(
             api.downloadWalletCredentialPdf,
             async (response) => {
-                console.log("response for download", response);
                 const pdfContent: Blob = response.data;
                 const disposition = response.headers["Content-Disposition"] ?? "";
                 const fileNameMatch = /filename="(.+)"/.exec(disposition ?? "");
                 const fileName = fileNameMatch?.[1] ?? "download.pdf";
 
                 await downloadCredentialPDF(pdfContent, fileName);
-                console.info("Credential PDF downloaded successfully");
             },
             downloadApi,
         );
@@ -107,12 +105,10 @@ export function VCCardView(props: Readonly<{
     }
 
     const deleteCredential = async () => {
-        console.debug("Delete credential clicked for:", props.credential.credentialId);
         try {
             await executeCredentialApiRequest(
                 api.deleteWalletCredential,
                 async () => {
-                    console.info("Credential deleted successfully.");
                     props.refreshCredentials();
                 },
                 deleteApi,
