@@ -144,7 +144,7 @@ describe('CredentialTypesPage', () => {
         expect(mockNavigate).toHaveBeenCalledWith(previousPath);
     })
 
-    it('should navigate to home when back button is clicked', () => {
+    it('should navigate to home when back button is clicked & previous path not available', () => {
         renderWithRouter(<CredentialTypesPage/>);
 
         fireEvent.click(screen.getByTestId("back-arrow-icon"));

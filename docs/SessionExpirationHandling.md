@@ -30,7 +30,7 @@ sequenceDiagram
         alt [check] is unAuthorized
             activate fe
             rect rgb(255, 240, 230, 0.5)
-                interceptor ->> fe: Redirect to passcode page <br/>(/ [location.state from will pass the current path])
+                interceptor ->> fe: Redirect to login page <br/>(/ [Current location will be stored for redirect after login])
                 fe ->> user: User clicks on sign in with *
                 fe ->> fe: Ask login - open root / [location.state will be as previous] Ask user to enter passcode
                 user ->> fe: Perform login
