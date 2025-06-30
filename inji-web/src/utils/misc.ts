@@ -16,15 +16,23 @@ export const generateCodeChallenge = (verifier = generateRandomString()) => {
     };
 }
 
-export const generateRandomString = (length = 43, charset='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~') => {
-    let randomString = '';
-    for (let i = 0; i < 43; i++) {
+export const generateRandomString = (length = 43, charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~') => {
+    const charsetLength = charset.length;
+    const randomString = [];
+    const maxValidSelector = Math.floor(0x100000000 / charsetLength) * charsetLength;
+    
+    while (randomString.length < length) {
         const array = new Uint32Array(1);
-        const randomOffset = crypto.getRandomValues(array)[0] / (2 ** 32) * charset.length;
-        const randomIndex = Math.floor( randomOffset );
-        randomString += charset[randomIndex];
+        const randomValue = crypto.getRandomValues(array)[0];
+
+        // Reject values outside the max valid range to avoid bias
+        if (randomValue < maxValidSelector) {
+            const index = randomValue % charsetLength;
+            randomString.push(charset[index]);
+        }
     }
-    return randomString;
+
+    return randomString.join('');
 };
 
 export const isObjectEmpty = (object: any) => {
