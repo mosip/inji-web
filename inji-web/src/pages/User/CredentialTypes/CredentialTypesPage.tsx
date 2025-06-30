@@ -97,7 +97,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
                }
                dispatch(storeFilteredCredentials(issuerConfigurationResponse?.response));
                dispatch(storeCredentials(issuerConfigurationResponse?.response));
-
+               setState(RequestStatus.DONE)
            }).catch((error: any) =>{
                 console.error("Error fetching user profile:", error);
                 setState(RequestStatus.ERROR)

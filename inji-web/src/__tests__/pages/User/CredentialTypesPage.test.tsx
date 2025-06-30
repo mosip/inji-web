@@ -1,9 +1,9 @@
 import {screen, waitFor} from '@testing-library/react';
-import {setMockUseDispatchReturnValue} from '../../../test-utils/mockReactRedux';
+import {setMockUseDispatchReturnValue, setMockUseSelectorState} from '../../../test-utils/mockReactRedux';
 import {CredentialTypesPage} from '../../../pages/User/CredentialTypes/CredentialTypesPage';
 import {mockApiResponseSequence, mockUseApi} from "../../../test-utils/setupUseApiMock";
 import {renderWithRouter} from "../../../test-utils/mockUtils";
-import {credentialWellknown, userProfile} from "../../../test-utils/mockObjects";
+import {credentialWellknown, mockCredentials, mockIssuerObjectList, userProfile} from "../../../test-utils/mockObjects";
 import {api} from "../../../utils/api";
 
 const mockFetchUserProfile = jest.fn();
@@ -55,15 +55,26 @@ describe('CredentialTypesPage', () => {
         ])
 
         mockFetchUserProfile.mockResolvedValue(userProfile)
+
+        setMockUseSelectorState({
+            credentials: {
+                credentials: mockCredentials,
+                filtered_credentials: mockCredentials,
+            },
+            issuers: {selected_issuer: mockIssuerObjectList[0] as any},
+            common: {
+                language: "en"
+            }
+        });
     });
 
-    it('renders CredentialTypesPage component', () => {
+    it('matches snapshot after data loads', () => {
         const {asFragment} = renderWithRouter(<CredentialTypesPage backUrl="/user/home"/>);
 
         expect(asFragment()).toMatchSnapshot();
     });
 
-    it('matches snapshot after data loads', async () => {
+    it('renders CredentialTypesPage component', async () => {
         renderWithRouter(<CredentialTypesPage/>);
 
         await waitFor(() => expect(mockUseApi.fetchData).toHaveBeenCalledTimes(2));
@@ -77,6 +88,7 @@ describe('CredentialTypesPage', () => {
         })
         expect(screen.getByTestId('credential-types-page-container')).toBeInTheDocument();
         await screen.findByText('Issuer1')
+        await screen.findByText("Health Insurance")
     });
 
     it('should show error when fetchUserProfile fails', async () => {
