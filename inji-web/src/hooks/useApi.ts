@@ -65,7 +65,7 @@ export function useApi<T = any>(): UseApiReturn<T> {
                 status: response.status,
                 state: RequestStatus.DONE,
                 headers: response.headers || {},
-                ok: () => response.status >= 200 && response.status < 300
+                ok: () => response.status >= HTTP_STATUS_CODES.OK && response.status < HTTP_STATUS_CODES.MULTIPLE_CHOICES
             };
             setState(RequestStatus.DONE);
         } catch (err: any) {
