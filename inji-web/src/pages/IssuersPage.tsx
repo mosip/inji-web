@@ -13,21 +13,23 @@ import {RequestStatus} from "../utils/constants";
 import {useUser} from "../hooks/User/useUser";
 
 export const IssuersPage: React.FC<IssuerPageProps> = ({className}) => {
-    const {state, fetchData} = useApi();
+    const {fetchData} = useApi();
     const dispatch = useDispatch();
     const {t} = useTranslation("IssuersPage");
-    const {isUserLoggedIn, fetchUserProfile, error: fetchUserProfileError} = useUser()
+    const {isUserLoggedIn, fetchUserProfile} = useUser()
 
     useEffect(() => {
         async function fetchIssuers() {
             const apiRequest: ApiRequest = api.fetchIssuers;
-            const {data: response} = await fetchData(
+            const {data: response, state} = await fetchData(
                 {
                     apiConfig: apiRequest,
                 }
             );
-            if(!response)
+            if (state === RequestStatus.ERROR) {
+                toast.error(t("errorContent"));
                 return
+            }
             const issuers = response?.response?.issuers.filter(
                 (issuer: IssuerObject) => issuer.protocol !== "OTP"
             );
@@ -36,11 +38,12 @@ export const IssuersPage: React.FC<IssuerPageProps> = ({className}) => {
         }
 
         const initializeIssuersData = async () => {
-            if(isUserLoggedIn()){
+            if (isUserLoggedIn()) {
                 fetchUserProfile().then(async () => {
                     await fetchIssuers();
                 }).catch((error: any) => {
                     console.error("Error fetching user profile:", error);
+                    toast.error(t("errorContent"));
                 })
             } else {
                 await fetchIssuers();
@@ -49,10 +52,6 @@ export const IssuersPage: React.FC<IssuerPageProps> = ({className}) => {
 
         void initializeIssuersData();
     }, []);
-
-    if (state === RequestStatus.ERROR || fetchUserProfileError) {
-        toast.error(t("errorContent"));
-    }
 
     return (
         <div data-testid="Home-Page-Container">

@@ -40,7 +40,7 @@ const LoginSessionStatusChecker = () => {
         /**
          * If user is not logged in, ask them to login again or unlock wallet based on the session state.
          */
-        if (!isLoggedIn) {
+        if (!isLoggedIn && isLoginProtectedRoute(location.pathname)) {
             // User can stay on passcode routes if session is active
             if (isPasscodeRelatedRoute && isSessionActive) {
                 return;

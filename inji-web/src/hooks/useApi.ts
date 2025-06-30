@@ -32,7 +32,6 @@ export function useApi<T = any>(): UseApiReturn<T> {
         let result: ApiResult<T>;
 
         try {
-            console.log("fetching data with config:", body)
             const requestHeaders = headers ?? apiConfig.headers();
             const contentType = requestHeaders["Content-Type"] ?? ContentTypes.JSON;
             let requestBody;

@@ -63,12 +63,6 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
     }, [downloadStatus])
 
     useEffect(() => {
-        if (issuersConfigurationApi.state === RequestStatus.ERROR || issuerApi.state === RequestStatus.ERROR) {
-            setDownloadStatus(RequestStatus.ERROR);
-        }
-    }, [issuersConfigurationApi.state, issuerApi.state])
-
-    useEffect(() => {
         const fetchCall = async () => {
            fetchUserProfile().then(async ()=>{
                let apiRequest: ApiRequest = api.fetchSpecificIssuer;
