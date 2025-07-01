@@ -109,7 +109,7 @@ export function useApi<T = any>(): UseApiReturn<T> {
 
                     // Case : String
                     else if (typeof res.data === 'string') {
-                        if (contentType.includes('application/json')) {
+                        if (contentType.includes(ContentTypes.JSON)) {
                             errorData = JSON.parse(res.data);
                         } else {
                             errorData = {message: res.data};
@@ -122,7 +122,7 @@ export function useApi<T = any>(): UseApiReturn<T> {
                     }
                 }
 
-                if (errorData && typeof errorData === 'object') {
+                if (errorData) {
                     parsedError = {
                         ...err,
                         response: {

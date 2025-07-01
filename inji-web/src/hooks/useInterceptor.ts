@@ -27,13 +27,19 @@ export function useInterceptor() {
          * 4. DELETE /wallets/:walletId - Delete a wallet API
          * 5. POST /wallets/:walletId/unlock - Unlock a wallet API
          */
-        // Redirect to / page on logged-in user if unauthorized access is detected
+            // Redirect to / page on logged-in user if unauthorized access is detected
         const currentRoute = location.pathname + location.search + location.hash;
-        const isSessionActive : boolean = !!AppStorage.getItem(KEYS.USER);
+        const isPasscodeRelatedRoute = location.pathname === ROUTES.USER_RESET_PASSCODE || location.pathname === ROUTES.PASSCODE;
+
+        const isSessionActive: boolean = !!AppStorage.getItem(KEYS.USER);
         if (isUserLoggedIn() || isSessionActive) {
             if (error.response && error.response.status === 401) {
                 removeUser()
-                AppStorage.setItem(KEYS.REDIRECT_TO, currentRoute, true);
+                // Avoid redirecting to passcode related pages in case of unauthorized access and re-login. This avoids unnecessary redirections to passcode related pages. If this is not leads to below sort of scenario.
+                // Scenario: User authenticated via Provider -> tries to access passcode related page -> session expire & got unauthorized access
+                // -> redirect to log in -> user logs in again -> enter passcode -> submit -> user is redirected to passcode page again // Here user us required to enter passcode again, which is not required.
+                if (!isPasscodeRelatedRoute)
+                    AppStorage.setItem(KEYS.REDIRECT_TO, currentRoute, true);
                 console.warn("Unauthorized access detected. Redirecting to / page.");
                 navigate(ROUTES.ROOT)
             }

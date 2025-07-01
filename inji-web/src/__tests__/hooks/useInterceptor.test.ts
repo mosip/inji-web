@@ -1,4 +1,4 @@
-import {renderHook} from "@testing-library/react";
+import {render, renderHook} from "@testing-library/react";
 import {useInterceptor} from "../../hooks/useInterceptor";
 import {useUser} from "../../hooks/User/useUser";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -6,6 +6,8 @@ import {apiInstance} from "../../hooks/useApi";
 import {ROUTES} from "../../utils/constants";
 import {AppStorage} from "../../utils/AppStorage";
 import {userProfile} from "../../test-utils/mockObjects";
+import LoginSessionStatusChecker from "../../components/Common/LoginSessionStatusChecker.ts";
+import React from "react";
 
 jest.mock("react-router-dom", () => ({
     useNavigate: jest.fn(),
@@ -134,6 +136,30 @@ describe("useInterceptor", () => {
         const errorCallback = getErrorCallback();
 
         await assertRedirectToLogin(errorCallback, mockError)
+        assertStoringOfCurrentLocation()
+    })
+
+    test.each([ROUTES.PASSCODE, ROUTES.USER_RESET_PASSCODE])('should redirect to login when accessing protected API in passcode related page - %s and response is unauthorized', async (route) => {
+        (useLocation as jest.Mock).mockReturnValue({
+            pathname: route,
+            search: null,
+            hash: null
+        });
+        const mockError = {
+            response: {
+                status: 401,
+                config: {
+                    url: "/wallets/123/unlock"
+                }
+            }
+        };
+        isUserLoggedInMock.mockReturnValue(false);
+        (AppStorage.getItem as jest.Mock).mockReturnValue(JSON.stringify({...userProfile, walletId: null}))
+
+        const errorCallback = getErrorCallback();
+
+        await assertRedirectToLogin(errorCallback, mockError)
+        expect(AppStorage.setItem).not.toHaveBeenCalled()
     })
 
     test("should not redirect for non-401 errors", async () => {
@@ -172,11 +198,14 @@ describe("useInterceptor", () => {
         expect(navigateMock).not.toHaveBeenCalled();
     });
 
+    function assertStoringOfCurrentLocation() {
+        expect(AppStorage.setItem).toHaveBeenCalledTimes(1);
+        expect(AppStorage.setItem).toHaveBeenCalledWith("redirectTo", "/test-path?test=true#test", true);
+    }
+
     async function assertRedirectToLogin(errorCallback: (arg0: { response: { status: number; config: { url: string; }; }; }) => any, mockError: { response: { status: number; config: { url: string } } }) {
         await expect(errorCallback(mockError)).rejects.toBe(mockError);
         expect(removeUserMock).toHaveBeenCalled();
         expect(navigateMock).toHaveBeenCalledWith(ROUTES.ROOT);
-        expect(AppStorage.setItem).toHaveBeenCalledTimes(1);
-        expect(AppStorage.setItem).toHaveBeenCalledWith("redirectTo", "/test-path?test=true#test", true);
     }
 });
