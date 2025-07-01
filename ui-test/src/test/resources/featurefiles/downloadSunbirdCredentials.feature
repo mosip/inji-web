@@ -21,7 +21,6 @@ Feature: Login using Sunbird Credentials
     Then User verify Download Success text displayed
     And User verify pdf is downloaded for Insurance
     And User verify go home button
-    And User verify go back button
 
     Examples:
       | policy number | full name | date of birth | Vailidty |
@@ -50,7 +49,7 @@ Feature: Login using Sunbird Credentials
     And User click on login button
     Then User verify Download Success text displayed
     And User verify go home button
-    And User verify go back button
+    
 
     Examples:
       | policy number | full name | date of birth | Vailidty |
@@ -82,7 +81,7 @@ Feature: Login using Sunbird Credentials
     Examples:
       | policy number | full name | date of birth | Vailidty |
       |     1207202 | automationtest1      | 01-01-2024    |  3 |
-#
+
   @smoke @VerifyAndDownloadVcViaVehicleInsuranceWithInvaildName
   Scenario Outline: download vc via sunbird with invalid name
     Then User gets the title of the page
