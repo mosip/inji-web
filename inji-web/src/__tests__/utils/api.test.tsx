@@ -1,6 +1,6 @@
-import { ApiRequest, CodeChallengeObject, CredentialConfigurationObject, IssuerObject, IssuerConfigurationObject } from "../../types/data";
+import {ApiRequest, CodeChallengeObject, CredentialConfigurationObject, IssuerObject} from "../../types/data";
 import i18n from "i18next";
-import { api as originalApi, MethodType } from '../../utils/api';
+import {api as originalApi, MethodType} from '../../utils/api';
 
 type ApiModule = {
   api: typeof originalApi;
@@ -91,54 +91,25 @@ describe('Testing API Class', () => {
       desc: 'Issuer Description',
       protocol: 'OpenId4VCI',
       issuer_id: 'issuer123',
-      authorization_endpoint: 'http://auth.server/authorize',
-      credentials_endpoint: 'http://credentials.endpoint',
+      authorization_endpoint: 'https://auth.server/authorize',
+      credentials_endpoint: 'https://credentials.endpoint',
       display: [
         {
           name: 'Issuer Display Name',
           language: 'en',
           locale: 'en-US',
-          logo: { url: 'http://example.com/logo.png', alt_text:'Logo' },
+          logo: { url: 'https://example.com/logo.png', alt_text:'Logo' },
           title: 'Issuer Title',
           description: 'Description of the issuer'
         }
       ],
       client_id: 'client123',
       redirect_uri: 'https://api.collab.mossip.net/redirect',
-      token_endpoint: 'http://token.endpoint',
-      proxy_token_endpoint: 'http://proxy.token.endpoint',
+      token_endpoint: 'https://token.endpoint',
+      proxy_token_endpoint: 'https://proxy.token.endpoint',
       client_alias: 'clientAlias',
       ovp_qr_enabled: true,
       scopes_supported: ['openid', 'profile']
-    };
-
-    const credentialWellknown: IssuerConfigurationObject = {
-        credentials_supported: [
-            {
-                name: "InsuranceCredential",
-                scope: "mosip_vc_ldp",
-                display: [
-                    {
-                        name: "Health Insurance",
-                        locale: "en",
-                        logo: "https://url.com"
-                    }
-                ]
-            },
-            {
-                name: "AnotherCredential",
-                scope: "mosip_ldp_vc",
-                display: [
-                    {
-                        name: "Another Credential",
-                        locale: "en",
-                        logo: "https://url.com"
-                    }
-                ]
-            }
-        ],
-        "authorization_endpoint": "https://env.net/authorize",
-        "grant_types_supported": ["authorization_code"]
     };
 
     const filterCredentialWellknown: CredentialConfigurationObject = {
@@ -148,7 +119,7 @@ describe('Testing API Class', () => {
         {
           name: 'Credential Name',
           locale: 'en-US',
-          logo: 'http://example.com/logo.png',
+          logo: 'https://example.com/logo.png',
         }
       ],
     };
@@ -164,10 +135,10 @@ describe('Testing API Class', () => {
       filterCredentialWellknown,
       state,
       code_challenge,
-      'http://auth.server/authorize'
+      'https://auth.server/authorize'
     );
     expect(url).toBe(
-      'http://auth.server/authorize' +
+      'https://auth.server/authorize' +
       '?response_type=code&' +
       'client_id=client123&' +
       'scope=openid&' +

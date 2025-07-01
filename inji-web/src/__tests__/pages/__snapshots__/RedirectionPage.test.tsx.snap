@@ -384,7 +384,7 @@ exports[`Testing the Functionality of RedirectionPage Check if NavBar component 
 </DocumentFragment>
 `;
 
-exports[`Testing the Functionality of RedirectionPage Check if it displays error message if state is ERROR 1`] = `
+exports[`Testing the Functionality of RedirectionPage Check if displays error message if state is ERROR 1`] = `
 <DocumentFragment>
   <div
     data-testid="Redirection-Page-Container"

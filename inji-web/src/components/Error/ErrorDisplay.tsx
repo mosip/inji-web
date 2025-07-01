@@ -12,19 +12,19 @@ const ErrorIcon: React.FC = () => {
     </div>
 }
 
-type ErrorProps = {
+type ErrorDisplayProps = {
     message: string;
     helpText: string;
     testId: string;
     action?: React.ReactNode;
 };
 
-export function Error({
+export function ErrorDisplay({
                           message,
                           helpText,
                           testId,
                           action
-                      }: Readonly<ErrorProps>) {
+                      }: Readonly<ErrorDisplayProps>) {
     return (
         <div
             data-testid={`error-container-${testId}`}

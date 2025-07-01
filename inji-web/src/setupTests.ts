@@ -10,5 +10,6 @@ global.window._env_ = {
     DEFAULT_FONT_URL: "",
     DEFAULT_THEME: "purple_theme",
     DEFAULT_TITLE: "Inji Web Test",
-    DEFAULT_LANG: 'en'
+    DEFAULT_LANG: 'en',
+    MIMOTO_URL: 'https://mimoto.inji.io',
 };

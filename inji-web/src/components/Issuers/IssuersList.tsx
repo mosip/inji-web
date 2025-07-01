@@ -5,11 +5,11 @@ import {IssuerObject} from "../../types/data";
 import {RootState} from "../../types/redux";
 import {useTranslation} from "react-i18next";
 import {EmptyListContainer} from "../Common/EmptyListContainer";
-import {RequestStatus} from "../../hooks/useFetch";
 import {SpinningLoader} from "../Common/SpinningLoader";
 import {IssuersListProps} from "../../types/components";
 import {HeaderTile} from "../Common/HeaderTile";
 import {GradientWrapper} from "../Common/GradientWrapper";
+import {RequestStatus} from "../../utils/constants";
 
 export const IssuersList: React.FC<IssuersListProps> = ({state}) => {
     const issuers = useSelector((state: RootState) => state.issuers);
@@ -32,7 +32,7 @@ export const IssuersList: React.FC<IssuersListProps> = ({state}) => {
             <HeaderTile content={t("containerHeading")} subContent={t("containerSubHeading")}/>
             <div className={`flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 p-2 sm:p-3 md:p-4 pb-16 sm:pb-20`}>
                 {issuers.filtered_issuers.map((issuer: IssuerObject, index: number) =>
-                    <div className={`flex items-center justify-center`}>
+                    <div className={`flex items-center justify-center`} key={issuer.issuer_id}>
                         <Issuer issuer={issuer} key={index} index={index}/>
                     </div>)
                 }

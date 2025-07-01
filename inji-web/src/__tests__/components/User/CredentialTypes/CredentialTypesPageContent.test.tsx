@@ -2,8 +2,8 @@ import React from 'react';
 import {render, screen, waitFor} from '@testing-library/react';
 import {
     CredentialTypesPageContent
-} from "../../../../components/User/CredentialTypes/CredentialTypesPageContent.tsx";
-import {RequestStatus} from "../../../../hooks/useFetch";
+} from "../../../../components/User/CredentialTypes/CredentialTypesPageContent";
+import {RequestStatus} from "../../../../utils/constants";
 
 const mockDownloadResult = jest.fn();
 const mockCredentialListWrapper = jest.fn();

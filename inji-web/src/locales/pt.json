@@ -399,7 +399,11 @@
       "title": "Meu Perfil",
       "homeTitle": "Início",
       "fullName": "Nome completo",
-      "emailAddress": "Endereço de e-mail"
+      "emailAddress": "Endereço de e-mail",
+      "error": {
+        "title": "Perfil não disponível",
+        "message": "Não foi possível carregar os detalhes do seu perfil devido a um problema técnico. Por favor, tente novamente mais tarde."
+      }
     }
   },
   "StoredCards": {

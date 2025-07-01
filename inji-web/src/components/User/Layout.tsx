@@ -4,7 +4,7 @@ import {Header} from './Header';
 import {Footer} from '../PageTemplate/Footer';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../types/redux';
-import {getCredentialTypeDisplayObjectForCurrentLanguage, getDirCurrentLanguage, isRTL} from '../../utils/i18n';
+import {getCredentialTypeDisplayObjectForCurrentLanguage, getDirCurrentLanguage} from '../../utils/i18n';
 import {Outlet} from 'react-router-dom';
 import DashboardBgTop from '../../assets/Background.svg';
 import DashboardBgBottom from '../../assets/DashboardBgBottom.svg';
@@ -12,10 +12,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import {CrossIconButton} from '../Common/Buttons/CrossIconButton';
 import LayoutStyles from "../Common/LayoutStyles";
 import {useDownloadSessionDetails} from '../../hooks/User/useDownloadSession';
-import {RequestStatus} from "../../hooks/useFetch";
 import {useTranslation} from "react-i18next";
 import {showToast} from "../Common/toast/ToastWrapper";
 import {CloseButtonProps} from "react-toastify/dist/components";
+import {RequestStatus} from "../../utils/constants";
 
 export const Layout: React.FC = () => {
     const {t} = useTranslation('Layout')

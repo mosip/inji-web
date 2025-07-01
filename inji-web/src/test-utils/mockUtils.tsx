@@ -1,7 +1,7 @@
 import React, {createRef, ReactElement} from 'react';
 import {render, RenderOptions} from '@testing-library/react';
 import {Provider} from 'react-redux';
-import {BrowserRouter, Route, BrowserRouter as Router, Routes} from 'react-router-dom';
+import {BrowserRouter, BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import {reduxStore} from '../redux/reduxStore';
 import {UserProvider} from '../context/User/UserContext';
 import {DownloadSessionProvider} from '../context/User/DownloadSessionContext';
@@ -62,7 +62,7 @@ export const mockNavigatorOnline = (isOnline: boolean) => {
 
 // Mock for storage module
 export const mockStorageModule = () => {
-    jest.mock('../utils/Storage', () => ({
+    jest.mock('../utils/AppStorage.ts', () => ({
         storage: {
             getItem: jest.fn(),
             setItem: jest.fn(),
@@ -91,10 +91,6 @@ export const mockLocalStorage = () => {
     return localStorageMock;
   };
 
-// API Mock
-export const mockApi = {
-    authorizationRedirectionUrl: 'https://mockurl.com'
-};
 
 // Crypto Mock
 export const mockCrypto = {
@@ -115,24 +111,12 @@ export const mockUseTranslation = () => {
         }),
     }));
 };
-export const mockUseGetIssuerDisplayObjectForCurrentLanguage = () => {
-    jest.mock('../utils/i18n', () => ({
-        getIssuerDisplayObjectForCurrentLanguage: jest.fn(),
-    }));
-};
 
 export const mockUseSearchCredentials = () => {
     jest.mock('../components/Credentials/SearchCredential', () => ({
         SearchCredential: () => <></>,
     }));
  };
-
-              
-export const mockUseSpinningLoader = () => {
-    jest.mock('../components/Common/SpinningLoader', () => ({
-        SpinningLoader: () => <></>,
-    }));
-};
 
 export const mockUseLanguageSelector = () => {
     jest.mock('../components/Common/LanguageSelector', () => ({
@@ -175,28 +159,6 @@ export const mockApiObject = () =>{
             },
         },
     }));
-};
-
-export const mockUseFetch = () =>{
-    jest.mock('../hooks/useFetch', () => {
-        const RequestStatus = {
-          LOADING: 'LOADING',
-          DONE: 'DONE',
-          ERROR: 'ERROR',
-        };
-        return {
-          useFetch: () => jest.fn(),
-          RequestStatus,
-        };
-      });
-};
-
-export const mockusemisc = ()=>{
-    jest.mock('../utils/misc', () => ({
-        downloadCredentialPDF: jest.fn(),
-        getErrorObject: jest.fn(),
-        getTokenRequestBody: jest.fn(),
-      }));
 };
 
 export const mockusei18n = ()=>{

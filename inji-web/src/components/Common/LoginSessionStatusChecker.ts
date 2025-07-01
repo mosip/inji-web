@@ -2,7 +2,7 @@ import {useCallback, useEffect, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useUser} from '../../hooks/User/useUser';
 import {KEYS, ROUTES} from '../../utils/constants';
-import {Storage} from "../../utils/Storage";
+import {AppStorage} from "../../utils/AppStorage";
 
 const loginProtectedPrefixes = [ROUTES.USER];
 
@@ -22,26 +22,41 @@ const LoginSessionStatusChecker = () => {
     const {removeUser, fetchUserProfile} = useUser();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const validateStatus = useCallback(() => {
-        const user = Storage.getItem(KEYS.USER);
-        const isSessionActive: boolean = !!user
-        const walletId = Storage.getItem(KEYS.WALLET_ID);
-        const isLoggedIn = !!walletId && isSessionActive;
+    const redirectToLogin = useCallback(() => {
+        removeUser()
+        if (location.pathname !== ROUTES.ROOT) {
+            console.warn("Redirecting to / page as accessing protected route without login from ",location.pathname);
+            navigate(ROUTES.ROOT)
+        }
+    }, [location.pathname, navigate, removeUser]);
 
-        // User is not logged in and trying to access a login protected route
+    const validateStatus = useCallback(() => {
+        const user = AppStorage.getItem(KEYS.USER);
+        const isSessionActive: boolean = !!user
+        const walletId = AppStorage.getItem(KEYS.WALLET_ID);
+        const isLoggedIn = !!walletId && isSessionActive;
+        const isPasscodeRelatedRoute = location.pathname === ROUTES.USER_RESET_PASSCODE || location.pathname === ROUTES.PASSCODE;
+
+        /**
+         * If user is not logged in, ask them to login again or unlock wallet based on the session state.
+         */
         if (!isLoggedIn && isLoginProtectedRoute(location.pathname)) {
-            // Session is active but user required to enter passcode to unlock wallet
-            // user can reset-passcode when session is active but not logged out state
-            if (isSessionActive && location.pathname !== ROUTES.USER_RESET_PASSCODE) {
-                console.warn('Session is active but no wallet ID found, redirecting to /user/passcode to unlock wallet from path - ', location.pathname);
+            // User can stay on passcode routes if session is active
+            if (isPasscodeRelatedRoute && isSessionActive) {
+                return;
+            }
+
+            // Redirect based on session state
+            if (isSessionActive) {
+                // Session active but wallet locked - redirect to passcode
+                console.warn('Session active but wallet locked, redirecting to passcode page');
                 navigate(ROUTES.PASSCODE);
             } else {
-                console.warn('User is not logged in, redirecting to / to login');
-                removeUser();
-                navigate(ROUTES.ROOT);
+                // No active session - clear user data and redirect to log in
+                redirectToLogin()
             }
         }
-    }, [navigate, location.pathname, removeUser]);
+    }, [navigate, location.pathname, redirectToLogin]);
 
 
     const fetchUser = useCallback(async () => {
@@ -52,24 +67,24 @@ const LoginSessionStatusChecker = () => {
         } catch (error) {
             console.error('Error fetching user profile:', error);
             if (isLoginProtectedRoute(location.pathname)) {
-                console.warn(". Redirecting to / page as accessing protected route");
-                navigate(ROUTES.ROOT)
+                redirectToLogin();
             }
         }
-    }, [fetchUserProfile, location.pathname, navigate]);
+    }, [redirectToLogin, fetchUserProfile, location.pathname]);
 
     // on app launch, populate the data from backend
     useEffect(() => {
-        fetchUser();
+        void fetchUser();
 
         const handleStorageChange = (event: any) => {
             if (event.key === KEYS.USER || event.key === KEYS.WALLET_ID) {
-                fetchUser();
+                void fetchUser();
             }
         };
 
         window.addEventListener('storage', handleStorageChange);
         return () => window.removeEventListener('storage', handleStorageChange);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // on every path change, validate the status. This happens after app launch handlers are set up

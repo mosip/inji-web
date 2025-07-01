@@ -1,6 +1,6 @@
 import {CredentialTypeDisplayArrayObject, ErrorType, User} from "./data";
-import {RequestStatus} from "../hooks/useFetch";
 import {Dispatch, SetStateAction} from "react";
+import {RequestStatus} from "../utils/constants";
 
 export type UserContextType = {
     user: User | null;
@@ -8,8 +8,7 @@ export type UserContextType = {
     error: ErrorType | null;
     isLoading: boolean;
     isUserLoggedIn: () => boolean;
-    fetchUserProfile: () => Promise<{ user: User; walletId: string }>;
-    saveUser: (user: User) => void;
+    fetchUserProfile: () => Promise<{ user: User; walletId: string | undefined }>;
     saveWalletId: (string) => void;
     removeUser: () => void;
     removeWallet: () => void;

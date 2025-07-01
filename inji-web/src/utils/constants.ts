@@ -1,6 +1,7 @@
 export const KEYS = {
     USER: 'user',
     WALLET_ID: 'walletId',
+    REDIRECT_TO: 'redirectTo',
 };
 
 // This constant exposes the pages used in the application. This will be used only by the Router component.
@@ -29,6 +30,7 @@ export const ROUTES = {
     ISSUERS: `/${Pages.ISSUERS}`,
     USER_ISSUER: (id: string) => `/${Pages.USER}/${Pages.ISSUERS}/${id}`,
     ISSUER: (id: string) => `/${Pages.ISSUERS}/${id}`,
+    REDIRECT: `/${Pages.REDIRECT}`,
     CREDENTIALS: `/${Pages.USER}/${Pages.CREDENTIALS}`,
     PROFILE: `/${Pages.USER}/${Pages.PROFILE}`,
     FAQ: `/${Pages.FAQ}`,
@@ -37,12 +39,22 @@ export const ROUTES = {
 } as const;
 
 export const HTTP_STATUS_CODES = {
+    OK: 200,
+    MULTIPLE_CHOICES: 300,
     BAD_REQUEST: 400,
     UNAUTHORIZED: 401,
     FORBIDDEN: 403,
     NOT_FOUND: 404,
     INTERNAL_SERVER_ERROR: 500,
     SERVICE_UNAVAILABLE: 503,
+}
+
+export const NETWORK_ERROR_MESSAGE = "Network Error"
+
+export enum RequestStatus {
+    LOADING,
+    DONE,
+    ERROR
 }
 
 export const pdfWorkerSource = (pdfVersion : string) => `//unpkg.com/pdfjs-dist@${pdfVersion}/build/pdf.worker.min.mjs`;

@@ -1,8 +1,7 @@
 import sha256 from 'crypto-js/sha256';
 import Base64 from 'crypto-js/enc-base64';
 import {api} from "./api";
-import {TokenRequestBody} from "../types/data";
-import { IssuerObject,CredentialConfigurationObject,CodeChallengeObject } from '../types/data';
+import { IssuerObject,CredentialConfigurationObject,CodeChallengeObject, TokenRequestBody } from '../types/data';
 
 export const generateCodeChallenge = (verifier = generateRandomString()) => {
     const hashedVerifier = sha256(verifier);
@@ -79,7 +78,7 @@ export const getTokenRequestBody = (code: string, codeVerifier: string, issuerId
 }
 
 export const downloadCredentialPDF = async (
-    response: any,
+    response: Blob,
     fileName: string
 ) => {
     const url = window.URL.createObjectURL(response);
@@ -87,22 +86,6 @@ export const downloadCredentialPDF = async (
     link.href = url;
     link.setAttribute("download", fileName);
     link.setAttribute("target", "_blank");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
-};
-
-export const previewCredentialPDF = async (
-    response: any,
-    credentialType: string
-) => {
-    let fileName = `${credentialType}.pdf`;
-    const url = window.URL.createObjectURL(response);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', fileName);
-    link.setAttribute('target', '_blank');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -131,15 +114,6 @@ export const getErrorObject = (downloadResponse: any) => {
         message: "error.generic.subTitle"
     }
 }
-export const constructContent = (descriptions: string[],applyHTML:boolean) => {
-    return descriptions.map((desc, index) => {
-        if (applyHTML) {
-            return { __html: desc };
-        }
-        return desc;
-    });
-};
-
 export const convertStringIntoPascalCase = (text: string | undefined) => {
     return (
         text?.toLocaleLowerCase()

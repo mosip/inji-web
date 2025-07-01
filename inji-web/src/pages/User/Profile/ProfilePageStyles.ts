@@ -7,6 +7,7 @@ export const ProfilePageStyles = {
   profileSection: "flex flex-col items-center md:flex-row space-y-5 md:space-x-10 bg-white p-5 rounded-lg shadow-xl",
   profilePicture: "rounded-full sm:m-7 flex-shrink-0 min-w-[80px] min-h-[80px] md:min-w-[150px] md:min-h-[150px] object-cover",
   profilePictureSkeleton: "min-w-[80px] min-h-[80px] md:min-w-[150px] md:min-h-[150px] sm:m-7 flex-shrink-0",
+  contentContainer: "flex flex-col items-center align-middle justify-center md:flex-row space-y-5 md:space-x-10 bg-white p-5 rounded-lg shadow-xl",
   horizontalDivider: "w-[90%] md:hidden border-t border-gray-200",
   infoContainer: "w-full flex flex-col space-y-4 flex-grow"
 };

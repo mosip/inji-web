@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-dom';
 import {NavBackArrowButton} from '../../../components/Common/Buttons/NavBackArrowButton';
-import {WalletCredential} from "../../../types/data";
+import {ApiError, ErrorType, WalletCredential} from "../../../types/data";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../types/redux";
 import {api} from "../../../utils/api";
@@ -14,18 +14,20 @@ import {VCCardView} from "../../../components/VC/VCCardView";
 import {FlatList} from "../../../components/Common/List/FlatList";
 import {DocumentIcon} from "../../../components/Common/Icons/DocumentIcon";
 import {PageTitle} from "../../../components/Common/PageTitle/PageTitle";
-import {Error} from "../../../components/Error/Error";
+import {ErrorDisplay} from "../../../components/Error/ErrorDisplay";
 import {BorderedButton} from "../../../components/Common/Buttons/BorderedButton";
 import {StoredCardsPageStyles} from "./StoredCardsPageStyles";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 import {navigateToUserHome} from "../../../utils/navigationUtils";
-import {HTTP_STATUS_CODES, ROUTES} from "../../../utils/constants";
+import {HTTP_STATUS_CODES, NETWORK_ERROR_MESSAGE} from "../../../utils/constants";
+import {useApi} from "../../../hooks/useApi";
 
 export const StoredCardsPage: React.FC = () => {
     const {t} = useTranslation('StoredCards');
     const navigate = useNavigate();
     const [credentials, setCredentials] = useState<WalletCredential[]>([]);
     const [filteredCredentials, setFilteredCredentials] = useState<WalletCredential[]>([]);
+    const walletCredentialsApi = useApi<WalletCredential[]>()
     const [loading, setLoading] = useState(true);
     const language = useSelector((state: RootState) => state.common.language);
     const [error, setError] = useState<string>();
@@ -35,29 +37,24 @@ export const StoredCardsPage: React.FC = () => {
         setLoading(true)
         try {
             const fetchWalletCredentials = api.fetchWalletVCs;
-            const response = await fetch(fetchWalletCredentials.url(), {
-                method: "GET",
-                headers: fetchWalletCredentials.headers(language),
-                credentials: "include"
-            });
 
-            if (response.ok) {
-                const responseData = await response.json();
+            const response = await walletCredentialsApi.fetchData({
+                headers: fetchWalletCredentials.headers(language),
+                apiConfig: fetchWalletCredentials
+            })
+
+            if (response.ok()) {
+                const responseData = response.data!;
                 setCredentials(responseData);
                 setFilteredCredentials(responseData)
             } else {
-                if (response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
-                    console.error("Unauthorized access - redirecting to root");
-                    navigate(ROUTES.ROOT);
+                console.error("Error fetching credentials:", response.status, response.error,  !navigator.onLine);
+                if (response.error?.message === (NETWORK_ERROR_MESSAGE) &&  !navigator.onLine) {
+                    console.error('Network error: Please check your internet connection.');
+                    setError("networkError");
                     return;
                 }
-                const responseData = await response.json();
-                console.error("Error fetching credentials:", responseData);
-                const invalidWalletRequests = [
-                    "Wallet key not found in session",
-                    "Wallet is locked",
-                    "Invalid Wallet ID. Session and request Wallet ID do not match"
-                ];
+
                 switch (response.status) {
                     case HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR:
                         setError("internalServerError");
@@ -65,34 +62,34 @@ export const StoredCardsPage: React.FC = () => {
                     case HTTP_STATUS_CODES.SERVICE_UNAVAILABLE:
                         setError("serviceUnavailable");
                         break;
-                    case HTTP_STATUS_CODES.BAD_REQUEST:
+                    case HTTP_STATUS_CODES.BAD_REQUEST: {
+                        const errorMessage = ((response.error as ApiError)?.response?.data as ErrorType).errorMessage ?? "";
+                        const invalidWalletRequests = [
+                            "Wallet key not found in session",
+                            "Wallet is locked",
+                            "Invalid Wallet ID. Session and request Wallet ID do not match"
+                        ];
                         setError(
-                            invalidWalletRequests.includes(responseData.errorMessage)
+                            invalidWalletRequests.includes(errorMessage)
                                 ? "invalidWalletRequest"
                                 : "invalidRequest"
                         );
                         break;
+                    }
                     default:
                         setError("unknownError");
                 }
             }
         } catch (error) {
-            console.error("Failed to fetch credentials:", error);
-            if (error instanceof TypeError && error.message === 'Failed to fetch' && !navigator.onLine) {
-                console.error('Network error: Please check your internet connection.');
-                setError("networkError");
-            } else {
-                console.error('An unknown error occurred');
-                setError("unknownError");
-            }
-
+            console.error("An unknown error occurred. Failed to fetch credentials:", error);
+            setError("unknownError");
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchWalletCredentials().then(_ => console.debug("Credentials fetched successfully"));
+        void fetchWalletCredentials();
     }, []);
 
     const filterCredentials = (searchText: string) => {
@@ -163,7 +160,7 @@ export const StoredCardsPage: React.FC = () => {
 
         if (error) {
             return (
-                <Error
+                <ErrorDisplay
                     message={t(`error.${error}.title`)}
                     helpText={t(`error.${error}.message`)}
                     testId={"stored-credentials"}

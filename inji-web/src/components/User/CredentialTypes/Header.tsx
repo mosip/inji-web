@@ -8,7 +8,7 @@ import {HeaderStyles} from "./HeaderStyles";
 
 interface HeaderPops {
     onBackClick: () => void,
-    displayObject: IssuerWellknownDisplayArrayObject,
+    displayObject: IssuerWellknownDisplayArrayObject | undefined,
     onClick: () => void,
 }
 
