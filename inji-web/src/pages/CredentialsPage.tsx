@@ -1,25 +1,29 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {RequestStatus, useFetch} from "../hooks/useFetch";
 import {NavBar} from "../components/Common/NavBar";
 import {useDispatch, useSelector} from "react-redux";
 import {storeSelectedIssuer} from "../redux/reducers/issuersReducer";
-import {
-    storeCredentials,
-    storeFilteredCredentials
-} from "../redux/reducers/credentialsReducer";
+import {storeCredentials, storeFilteredCredentials} from "../redux/reducers/credentialsReducer";
 import {api} from "../utils/api";
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 
-import {ApiRequest, IssuerWellknownDisplayArrayObject, IssuerObject} from "../types/data";
+import {
+    ApiRequest,
+    IssuerObject,
+    IssuerWellknownDisplayArrayObject,
+    ResponseTypeObject
+} from "../types/data";
 import {getIssuerDisplayObjectForCurrentLanguage} from "../utils/i18n";
 import {RootState} from "../types/redux";
 import {isObjectEmpty} from "../utils/misc";
 import {CredentialListWrapper} from "../components/Credentials/CredentialListWrapper";
+import {useApi} from "../hooks/useApi";
+import {RequestStatus} from "../utils/constants";
 
+// This page is hit on guest mode
 export const CredentialsPage: React.FC = () => {
-    const {state, fetchRequest} = useFetch();
+    const {state, fetchData} = useApi<ResponseTypeObject>();
     const params = useParams<CredentialParamProps>();
     const dispatch = useDispatch();
     const {t} = useTranslation("CredentialsPage");
@@ -36,33 +40,33 @@ export const CredentialsPage: React.FC = () => {
     useEffect(() => {
         const fetchCall = async () => {
             let apiRequest: ApiRequest = api.fetchSpecificIssuer;
-            let response = await fetchRequest(
-                apiRequest.url(params.issuerId ?? ""),
-                apiRequest.methodType,
-                apiRequest.headers(),
-                apiRequest.credentials
+            let response = await fetchData(
+                {
+                    url: apiRequest.url(params.issuerId ?? ""),
+                    apiConfig: apiRequest
+                }
             );
+            if(response.state === RequestStatus.ERROR) {
+                toast.error(t("errorContent"));
+                return;
+            }
 
-            dispatch(storeSelectedIssuer(response?.response));
-            setSelectedIssuer(response?.response);
+            dispatch(storeSelectedIssuer(response?.data?.response));
+            setSelectedIssuer(response?.data?.response);
 
             apiRequest = api.fetchIssuersConfiguration;
-            response = await fetchRequest(
-                apiRequest.url(params.issuerId ?? ""),
-                apiRequest.methodType,
-                apiRequest.headers(),
-                apiRequest.credentials
+            response = await fetchData(
+                {
+                    url: apiRequest.url(params.issuerId ?? ""),
+                    apiConfig: apiRequest
+                }
             );
 
-            dispatch(storeFilteredCredentials(response?.response));
-            dispatch(storeCredentials(response?.response));
+            dispatch(storeFilteredCredentials(response?.data?.response));
+            dispatch(storeCredentials(response?.data?.response));
         };
         fetchCall();
     }, []);
-
-    if (state === RequestStatus.ERROR) {
-        toast.error(t("errorContent"));
-    }
 
     return (
         <div

@@ -9,10 +9,11 @@ import {
     renderWithProvider,
     setupShowToastMock
 } from "../../../test-utils/mockUtils";
-import { setMockUseSelectorState } from '../../../test-utils/mockReactRedux';
-import {fetchMock} from "../../../test-utils/setupFetchMock";
-import {KEYS} from "../../../utils/constants";
+import {setMockUseSelectorState} from '../../../test-utils/mockReactRedux';
+import {KEYS, RequestStatus} from "../../../utils/constants";
 import {mockVerifiableCredentials} from "../../../test-utils/mockObjects";
+import {mockApiResponse, mockUseApi} from "../../../test-utils/setupUseApiMock";
+import {api} from "../../../utils/api";
 
 jest.mock('react-toastify', () => {
     return {
@@ -23,6 +24,10 @@ jest.mock('react-toastify', () => {
         ToastContainer: () => <div data-testid="toast-wrapper"/>
     };
 });
+
+jest.mock('../../../hooks/useApi', () => ({
+    useApi: () => mockUseApi
+}))
 
 jest.mock('../../../components/Common/toast/ToastWrapper', () => ({
     showToast: jest.fn()
@@ -113,13 +118,10 @@ describe('VCCardView Component', () => {
     //Preview of Card
 
     it('should call download api when clicked on card for previewing VC', () => {
-        fetchMock.mockResolvedValueOnce({
-            ok: true,
-            blob: async () => new Blob(),
-            headers: {
-                get: () => 'attachment; filename="credential.pdf"',
-            },
-        });
+        mockApiResponse({
+            response: new Blob(),
+            headers: {"Content-Disposition": 'attachment; filename="credential.pdf"'},
+        })
         renderWithProvider(
             <VCCardView
                 refreshCredentials={refreshCredentialsMock}
@@ -131,17 +133,14 @@ describe('VCCardView Component', () => {
         const card = screen.getByRole('menuitem');
         fireEvent.click(card);
 
-        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(mockUseApi.fetchData).toHaveBeenCalledTimes(1);
     });
 
     it('should call download api when pressing enter key for previewing VC', () => {
-        fetchMock.mockResolvedValueOnce({
-            ok: true,
-            blob: async () => new Blob(),
-            headers: {
-                get: () => 'attachment; filename="credential.pdf"',
-            },
-        });
+        mockApiResponse({
+            response: new Blob(),
+            headers: {"Content-Disposition": 'attachment; filename="credential.pdf"'},
+        })
         renderWithProvider(
             <VCCardView
                 refreshCredentials={refreshCredentialsMock}
@@ -152,14 +151,17 @@ describe('VCCardView Component', () => {
         const card = screen.getByRole('menuitem');
         fireEvent.keyDown(card, {key: 'Enter'});
 
-        expect(fetchMock).toHaveBeenCalledTimes(1);
-        expect(fetchMock).toHaveBeenCalledWith(
-            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1?action=inline"),
-            expect.objectContaining({
-                "credentials": "include",
-                "headers": {"Accept": "application/pdf", "Accept-Language": "en", "Content-Type": "application/json"},
-                "method": "GET"
-            })
+        expect(mockUseApi.fetchData).toHaveBeenCalledTimes(1);
+        expect(mockUseApi.fetchData).toHaveBeenCalledWith(
+            {
+                apiConfig: api.fetchWalletCredentialPreview,
+                url: expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1?action=inline"),
+                headers: expect.objectContaining({
+                    "Accept": "application/pdf",
+                    "Accept-Language": "en",
+                    "Content-Type": "application/json",
+                })
+            }
         );
     });
 
@@ -174,16 +176,13 @@ describe('VCCardView Component', () => {
         const card = screen.getByRole('menuitem');
         fireEvent.keyDown(card, {key: '1'});
 
-        expect(fetchMock).not.toBeCalled()
+        expect(mockUseApi.fetchData).not.toBeCalled()
     });
 
     it('should call download api when download icon is clicked', () => {
-        fetchMock.mockResolvedValueOnce({
-            ok: true,
-            blob: async () => new Blob(),
-            headers: {
-                get: () => 'attachment; filename="credential.pdf"',
-            },
+        mockApiResponse({
+            response: new Blob(),
+            headers: {"Content-Disposition": 'attachment; filename="credential.pdf"'}
         });
         renderWithProvider(
             <VCCardView
@@ -195,22 +194,26 @@ describe('VCCardView Component', () => {
         const downloadIcon = screen.getByTestId('icon-download');
         fireEvent.click(downloadIcon);
 
-        expect(fetchMock).toHaveBeenCalledTimes(1);
-        expect(fetchMock).toHaveBeenCalledWith(
-            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1?action=download"),
-            expect.objectContaining({
-                "credentials": "include",
-                "headers": {"Accept": "application/pdf", "Accept-Language": "en", "Content-Type": "application/json"},
-                "method": "GET"
-            })
+        expect(mockUseApi.fetchData).toHaveBeenCalledTimes(1);
+        expect(mockUseApi.fetchData).toHaveBeenCalledWith(
+            {
+                apiConfig: api.downloadWalletCredentialPdf,
+                url: expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1?action=download"),
+                headers: expect.objectContaining({
+                    "Accept": "application/pdf",
+                    "Accept-Language": "en",
+                    "Content-Type": "application/json",
+                })
+            }
         );
     })
 
     it("should show error when preview fails", async () => {
-        fetchMock.mockRejectedValueOnce({
-            ok: false,
+        mockApiResponse({
+            error: {response: {data: {"errorMessage": "Internal Server Error"}}},
             status: 500,
-        });
+            state: RequestStatus.ERROR
+        })
 
         renderWithProvider(
             <VCCardView
@@ -233,10 +236,7 @@ describe('VCCardView Component', () => {
     });
 
     it('should redirect to root page when user clicks on preview an unauthorized access is detetected', () => {
-        fetchMock.mockResolvedValueOnce({
-            ok: false,
-            status: 401,
-        });
+        mockApiResponse({state: RequestStatus.ERROR, status: 401})
 
         renderWithProvider(
             <VCCardView
@@ -248,15 +248,15 @@ describe('VCCardView Component', () => {
         const card = screen.getByTestId("vc-card-view");
         fireEvent.click(card);
 
-        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(mockUseApi.fetchData).toHaveBeenCalledTimes(1);
         expect(window.location.href).toBe("http://localhost/");
     });
 
     it("should show the content given by the preview API when clicked on the card", async () => {
-        fetchMock.mockResolvedValueOnce({
-            ok: true,
-            blob: async () => new Blob(['{"Name": "John"}'], {type: "application/pdf"}),
-        });
+        mockApiResponse({
+            response: new Blob(['{"Name": "John"}'], {type: "application/pdf"}),
+            headers: {"Content-Disposition": 'attachment; filename="credential.pdf"'}
+        })
 
         renderWithProvider(
             <VCCardView
@@ -267,7 +267,7 @@ describe('VCCardView Component', () => {
 
         const card = screen.getByTestId("vc-card-view");
         fireEvent.click(card);
-        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(mockUseApi.fetchData).toHaveBeenCalledTimes(1);
 
         await screen.findByTestId("vc-detail-view")
         await waitFor(() => {
@@ -276,10 +276,7 @@ describe('VCCardView Component', () => {
     })
 
     it("should show error when download fails", async () => {
-        fetchMock.mockRejectedValueOnce({
-            ok: false,
-            status: 500,
-        });
+        mockApiResponse({state: RequestStatus.ERROR, status: 500})
 
         renderWithProvider(
             <VCCardView
@@ -299,10 +296,7 @@ describe('VCCardView Component', () => {
     })
 
     it('should redirect to root page when user downloads card but response is unauthorized', () => {
-        fetchMock.mockResolvedValueOnce({
-            ok: false,
-            status: 401,
-        });
+        mockApiResponse({state: RequestStatus.ERROR, status: 401})
 
         renderWithProvider(
             <VCCardView
@@ -314,7 +308,7 @@ describe('VCCardView Component', () => {
         const downloadIcon = screen.getByTestId('icon-download');
         fireEvent.click(downloadIcon);
 
-        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(mockUseApi.fetchData).toHaveBeenCalledTimes(1);
         expect(window.location.href).toBe("http://localhost/");
     });
 
@@ -341,10 +335,7 @@ describe('VCCardView Component', () => {
     });
 
     it('should call delete API when clicked on delete option in delete menu and confirmed it', () => {
-        fetchMock.mockResolvedValueOnce({
-            ok: true,
-        });
-
+        mockApiResponse()
         renderWithProvider(
             <VCCardView
                 refreshCredentials={refreshCredentialsMock}
@@ -360,22 +351,18 @@ describe('VCCardView Component', () => {
         const confirmButton = screen.getByRole('button', {name: 'Confirm'});
         fireEvent.click(confirmButton);
 
-        expect(fetchMock).toHaveBeenCalledTimes(1);
-        expect(fetchMock).toHaveBeenCalledWith(
-            expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1"),
-            expect.objectContaining({
-                "credentials": "include",
-                "headers": {"Content-Type": "application/json"},
-                "method": "DELETE"
-            })
+        expect(mockUseApi.fetchData).toHaveBeenCalledTimes(1);
+        expect(mockUseApi.fetchData).toHaveBeenCalledWith(
+            {
+                url: expect.stringContaining("wallets/faa0e18f-0935-4fab-8ab3-0c546c0ca714/credentials/cred-1"),
+                headers: {"Content-Type": "application/json"},
+                apiConfig: api.deleteWalletCredential,
+            }
         );
     });
 
     it('should call refresh credentials method from prop post deletion of VC', async () => {
-        fetchMock.mockResolvedValueOnce({
-            ok: true,
-        });
-
+        mockApiResponse({response: {}, status: 200,});
         renderWithProvider(
             <VCCardView
                 refreshCredentials={refreshCredentialsMock}
@@ -390,7 +377,7 @@ describe('VCCardView Component', () => {
         fireEvent.click(deleteOption);
         const confirmButton = screen.getByRole('button', {name: 'Confirm'});
         fireEvent.click(confirmButton);
-        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(mockUseApi.fetchData).toHaveBeenCalledTimes(1);
 
         await waitFor(() =>
             expect(refreshCredentialsMock).toHaveBeenCalledTimes(1)
@@ -398,10 +385,7 @@ describe('VCCardView Component', () => {
     });
 
     it('should not call delete API when clicked on delete option in delete menu and cancelled it', () => {
-        fetchMock.mockResolvedValueOnce({
-            ok: true,
-        });
-
+        mockApiResponse()
         renderWithProvider(
             <VCCardView
                 refreshCredentials={refreshCredentialsMock}
@@ -417,15 +401,11 @@ describe('VCCardView Component', () => {
         const cancelButton = screen.getByRole('button', {name: 'Cancel'});
         fireEvent.click(cancelButton);
 
-        expect(fetchMock).not.toBeCalled()
+        expect(mockUseApi.fetchData).not.toBeCalled()
     });
 
     it("should show error when delete fails", async () => {
-        fetchMock.mockRejectedValueOnce({
-            ok: false,
-            status: 500,
-        });
-
+        mockApiResponse({state: RequestStatus.ERROR, status: 500})
         renderWithProvider(
             <VCCardView
                 refreshCredentials={refreshCredentialsMock}
@@ -449,11 +429,7 @@ describe('VCCardView Component', () => {
     });
 
     it('should redirect to root page when user deletes card but response is unauthorized access', () => {
-        fetchMock.mockResolvedValueOnce({
-            ok: false,
-            status: 401,
-        });
-
+        mockApiResponse({state: RequestStatus.ERROR, status: 401})
         renderWithProvider(
             <VCCardView
                 refreshCredentials={refreshCredentialsMock}
@@ -469,7 +445,7 @@ describe('VCCardView Component', () => {
         const confirmButton = screen.getByRole('button', {name: 'Confirm'});
         fireEvent.click(confirmButton);
 
-        expect(fetchMock).toHaveBeenCalledTimes(1);
+        expect(mockUseApi.fetchData).toHaveBeenCalledTimes(1);
         expect(window.location.href).toBe("http://localhost/");
     });
 

@@ -22,12 +22,14 @@ import {CredentialTypesPage} from './pages/User/CredentialTypes/CredentialTypesP
 import {ResetPasscodePage} from './pages/User/ResetPasscode/ResetPasscodePage';
 import {ProfilePage} from './pages/User/Profile/ProfilePage';
 import {Pages, ROUTES} from "./utils/constants";
+import {useInterceptor} from "./hooks/useInterceptor";
 
 function RedirectToUserHome() {
     return <Navigate to={ROUTES.USER_HOME} replace/>;
 }
 
 export const AppRouter = () => {
+    useInterceptor()
     const location = useLocation();
     const language = useSelector((state: RootState) => state.common.language);
     const {isUserLoggedIn} = useUser();

@@ -1,11 +1,6 @@
 import {screen} from '@testing-library/react';
 import {Header} from '../../../components/PageTemplate/Header';
-import {createRefElement, mockCrypto} from '../../../test-utils/mockUtils';
-import {
-    renderWithProvider,
-    mockUseLanguageSelector
-} from "../../../test-utils/mockUtils";
-import {useCookies} from "react-cookie";
+import {createRefElement, mockCrypto, mockUseLanguageSelector, renderWithProvider} from '../../../test-utils/mockUtils';
 
 mockUseLanguageSelector();
 global.crypto = mockCrypto;
@@ -15,13 +10,6 @@ jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useNavigate: () => mockedUsedNavigate
 }));
-
-jest.mock("react-cookie", () => {
-    return {
-        ...jest.requireActual("react-cookie"),
-        useCookies: jest.fn().mockReturnValue([{},jest.fn()])
-    };
-});
 
 global.fetch = jest.fn(() =>
     Promise.resolve(
@@ -34,10 +22,6 @@ global.fetch = jest.fn(() =>
 
 describe("Header Container Layout Test", () => {
     test("Check if the layout is matching with the snapshots", () => {
-        (useCookies as jest.Mock).mockReturnValue([
-            {"XSRF-TOKEN": "test-xsrf-token"},
-            jest.fn()
-        ]);
         const {asFragment} = renderWithProvider(
             <Header headerRef={createRefElement()} />
         );
@@ -47,10 +31,6 @@ describe("Header Container Layout Test", () => {
 
 describe("Testing Header Container Functionality", () => {
     beforeEach(() => {
-        (useCookies as jest.Mock).mockReturnValue([
-            {"XSRF-TOKEN": "test-xsrf-token"},
-            jest.fn()
-        ]);
         renderWithProvider(<Header headerRef={createRefElement()} />);
     });
 

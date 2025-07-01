@@ -1,8 +1,8 @@
 import { IssuersList } from '../../../components/Issuers/IssuersList';
-import { RequestStatus } from '../../../hooks/useFetch';
 import { mockIssuerObjectList } from '../../../test-utils/mockObjects';
 import { renderWithProvider,mockUseTranslation, mockCrypto } from '../../../test-utils/mockUtils';
 import { setMockUseSelectorState } from '../../../test-utils/mockReactRedux';
+import {RequestStatus} from "../../../utils/constants";
 mockUseTranslation();
 global.crypto = mockCrypto;
 

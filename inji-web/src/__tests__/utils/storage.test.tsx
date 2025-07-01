@@ -1,7 +1,7 @@
-import { Storage } from '../../utils/Storage';
-import { mockLocalStorage, mockStorageModule } from '../../test-utils/mockUtils';
+import { AppStorage } from '../../utils/AppStorage';
+import { mockLocalStorage } from '../../test-utils/mockUtils';
 
-jest.mock('../../utils/Storage.ts');
+jest.mock('../../utils/AppStorage.ts');
 
 describe('Test storage class functionality', () => {
   let localStorageMock: ReturnType<typeof mockLocalStorage>;
@@ -13,39 +13,39 @@ describe('Test storage class functionality', () => {
   });
 
   test('Check if an item is set and retrieved correctly', () => {
-    const key = Storage.SELECTED_LANGUAGE;
+    const key = AppStorage.SELECTED_LANGUAGE;
     const value = 'en';
 
-    (Storage.setItem as jest.Mock).mockImplementation((key, value) => {
+    (AppStorage.setItem as jest.Mock).mockImplementation((key, value) => {
       localStorageMock.setItem(key, JSON.stringify(value));
     });
-    (Storage.getItem as jest.Mock).mockImplementation((key) => {
+    (AppStorage.getItem as jest.Mock).mockImplementation((key) => {
       const data = localStorageMock.getItem(key);
       return data ? JSON.parse(data) : null;
     });
 
-    Storage.setItem(key, value);
-    const storedValue = Storage.getItem(key);
+    AppStorage.setItem(key, value);
+    const storedValue = AppStorage.getItem(key);
 
     expect(localStorageMock.setItem).toHaveBeenCalledWith(key, JSON.stringify(value));
     expect(storedValue).toBe(value);
   });
 
   test('Check if null is returned for a non-existent key', () => {
-    (Storage.getItem as jest.Mock).mockImplementation((key) => {
+    (AppStorage.getItem as jest.Mock).mockImplementation((key) => {
       const data = localStorageMock.getItem(key);
       return data ? JSON.parse(data) : null;
     });
   
-    const storedValue = Storage.getItem('non_existent_key');
+    const storedValue = AppStorage.getItem('non_existent_key');
     expect(storedValue).toBeNull();
   });
   
   test('Check if invalid JSON is handled gracefully', () => {
-    const key = Storage.SESSION_INFO;
+    const key = AppStorage.SESSION_INFO;
     localStorageMock.setItem(key, 'invalid_json');
   
-    (Storage.getItem as jest.Mock).mockImplementation((key) => {
+    (AppStorage.getItem as jest.Mock).mockImplementation((key) => {
       const data = localStorageMock.getItem(key);
       try {
         return data ? JSON.parse(data) : null;
@@ -54,24 +54,24 @@ describe('Test storage class functionality', () => {
       }
     });
   
-    const storedValue = Storage.getItem(key);
+    const storedValue = AppStorage.getItem(key);
     expect(storedValue).toBeNull();
   });
   
   test('Check if setting null or undefined values is handled correctly', () => {
-    const key = Storage.SELECTED_LANGUAGE;
+    const key = AppStorage.SELECTED_LANGUAGE;
   
-    (Storage.setItem as jest.Mock).mockImplementation((key, value) => {
+    (AppStorage.setItem as jest.Mock).mockImplementation((key, value) => {
       if (value !== null && value !== undefined) {
         localStorageMock.setItem(key, JSON.stringify(value));
       }
     });
   
-    Storage.setItem(key, null);
+    AppStorage.setItem(key, null);
     let storedValue = localStorageMock.getItem(key);
     expect(storedValue).toBeNull();
   
-    Storage.setItem(key, undefined);
+    AppStorage.setItem(key, null);
     storedValue = localStorageMock.getItem(key);
     expect(storedValue).toBeNull();
   });

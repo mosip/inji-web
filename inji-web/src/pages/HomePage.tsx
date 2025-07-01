@@ -4,7 +4,7 @@ import {HomeFeatures} from "../components/Home/HomeFeatures";
 import {HomeQuickTip} from "../components/Home/HomeQuickTip";
 import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
-import { useLocation } from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import {LoginFailedModal} from '../components/Login/LoginFailedModal'
 
 const Status = {
@@ -16,7 +16,8 @@ export const HomePage: React.FC = () => {
     const {t} = useTranslation("HomePage");
     const [toastVisible, setToastVisible] = useState(false);
     const location = useLocation();
-    const [isLoginFailed, setLoginFailed] = useState(false);
+    const [isLoginFailed, setIsLoginFailed] = useState(false);
+
 
     // to stop scrolling the blurred background when login failed modal is showing up, scrolling is locked.
     useEffect(() => {
@@ -35,7 +36,7 @@ export const HomePage: React.FC = () => {
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         if (params.get("status") === Status.FAILURE) {
-          setLoginFailed(true);
+            setIsLoginFailed(true);
         }
     }, [location]);
 
@@ -47,17 +48,17 @@ export const HomePage: React.FC = () => {
             toastId: "toast-wrapper"
         });
     };
-  
+
     return (
         <div>
-        <div className={"pb-20 flex flex-col gap-y-4 "}>
-            <HomeBanner />
-            <HomeFeatures />
-            <HomeQuickTip onClick={() => showToast(t("QuickTip.toastText"))} />
+            <div className={"pb-20 flex flex-col gap-y-4 "}>
+                <HomeBanner/>
+                <HomeFeatures/>
+                <HomeQuickTip onClick={() => showToast(t("QuickTip.toastText"))}/>
+            </div>
+
+            {isLoginFailed && <LoginFailedModal/>}
         </div>
 
-        {isLoginFailed && <LoginFailedModal/>}
-    </div>
-    
     );
 };

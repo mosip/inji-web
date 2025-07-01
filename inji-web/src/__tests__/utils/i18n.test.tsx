@@ -39,8 +39,8 @@ const mockStorage = {
   SELECTED_LANGUAGE: 'selectedLanguage',
 };
 
-jest.mock('../../utils/Storage', () => ({
-  storage: mockStorage,
+jest.mock('../../utils/AppStorage.ts', () => ({
+  AppStorage: mockStorage,
 }));
 
 // Mock window

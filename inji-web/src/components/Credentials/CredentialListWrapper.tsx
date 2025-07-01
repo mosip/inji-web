@@ -1,6 +1,6 @@
 import React from "react";
 import {CredentialList} from "./CredentialList";
-import {RequestStatus} from "../../hooks/useFetch";
+import {RequestStatus} from "../../utils/constants";
 
 interface CredentialListWrapperProps {
     state: RequestStatus;

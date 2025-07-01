@@ -1,11 +1,12 @@
 import React from 'react';
-import {render, screen, fireEvent, waitFor} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {useUser} from '../../../hooks/User/useUser';
-import {useCookies} from 'react-cookie';
-import {useNavigate, useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {ResetPasscodePage} from '../../../pages/User/ResetPasscode/ResetPasscodePage';
+import {api} from "../../../utils/api";
+import {mockUseApi} from "../../../test-utils/setupUseApiMock";
 
 jest.mock('react-i18next', () => {
     const translations: { [key: string]: string } = {
@@ -88,10 +89,6 @@ jest.mock('../../../hooks/User/useUser.tsx', () => ({
     useUser: jest.fn()
 }));
 
-jest.mock('react-cookie', () => ({
-    useCookies: jest.fn()
-}));
-
 jest.mock('react-router-dom', () => ({
     useNavigate: jest.fn(),
     useLocation: jest.fn()
@@ -103,7 +100,9 @@ jest.mock('react-toastify', () => ({
     }
 }));
 
-global.fetch = jest.fn();
+jest.mock("../../../hooks/useApi", () => ({
+    useApi: () => mockUseApi
+}));
 
 describe('ResetPasscodePage Component', () => {
     const mockNavigate = jest.fn();
@@ -112,18 +111,14 @@ describe('ResetPasscodePage Component', () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        (global.fetch as jest.Mock).mockResolvedValue({
-            ok: true,
-            json: async () => ({})
+        mockUseApi.fetchData = jest.fn().mockResolvedValue({
+            ok: () => true,
+            data: {}
         });
-
         (useUser as jest.Mock).mockReturnValue({
             removeWallet: mockRemoveWallet,
             walletId: 'mock-wallet-id'
         });
-        (useCookies as jest.Mock).mockReturnValue([
-            {'XSRF-TOKEN': 'mock-xsrf-token'}
-        ]);
         (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
         (useLocation as jest.Mock).mockReturnValue({
             state: {walletId: 'location-wallet-id'}
@@ -197,17 +192,11 @@ describe('ResetPasscodePage Component', () => {
 
         fireEvent.click(screen.getByTestId('btn-set-new-passcode'));
 
-        await waitForFetchApiToBeCalled()
-        expect(global.fetch).toHaveBeenCalledWith(
-            expect.stringContaining('wallets/location-wallet-id'),
-            expect.objectContaining({
-                method: 'DELETE',
-                headers: expect.objectContaining({
-                    'X-XSRF-TOKEN': 'mock-xsrf-token'
-                }),
-                credentials: 'include'
-            })
-        );
+        await waitForApiToBeCalled()
+        expect(mockUseApi.fetchData).toHaveBeenCalledWith({
+            url: expect.stringContaining('wallets/location-wallet-id'),
+            apiConfig: api.deleteWallet,
+        })
         expect(mockRemoveWallet).toHaveBeenCalledTimes(1);
         expect(mockNavigate).toHaveBeenCalledTimes(1);
         expect(mockNavigate).toHaveBeenCalledWith('/user/passcode');
@@ -215,16 +204,18 @@ describe('ResetPasscodePage Component', () => {
     });
 
     test('should handle failed wallet reset: display error toast and not remove wallet or navigate', async () => {
-        (global.fetch as jest.Mock).mockResolvedValue({
-            ok: false,
-            json: async () => ({error: 'Wallet deletion failed'})
+        (mockUseApi.fetchData as jest.Mock) = jest.fn().mockResolvedValue({
+            ok: true,
+            data: null,
+            error: ({error: 'Wallet deletion failed'}),
+            status: 500
         });
 
         render(<ResetPasscodePage/>);
 
         fireEvent.click(screen.getByTestId('btn-set-new-passcode'));
 
-        await waitForFetchApiToBeCalled()
+        await waitForApiToBeCalled()
         expect(mockRemoveWallet).not.toHaveBeenCalled();
         expect(mockNavigate).not.toHaveBeenCalled();
         await screen.findByText('Something went wrong while resetting your wallet. Please try again in a moment.')
@@ -237,10 +228,12 @@ describe('ResetPasscodePage Component', () => {
 
         fireEvent.click(screen.getByTestId('btn-set-new-passcode'));
 
-        await waitForFetchApiToBeCalled()
-        expect(global.fetch).toHaveBeenCalledWith(
-            expect.stringContaining('wallets/mock-wallet-id'),
-            expect.any(Object)
+        await waitForApiToBeCalled()
+        expect(mockUseApi.fetchData).toHaveBeenCalledWith(
+            expect.objectContaining({
+                url: expect.stringContaining('wallets/mock-wallet-id'),
+                apiConfig: api.deleteWallet,
+            })
         );
         expect(mockRemoveWallet).toHaveBeenCalledTimes(1);
         expect(mockNavigate).toHaveBeenCalledTimes(1);
@@ -248,7 +241,7 @@ describe('ResetPasscodePage Component', () => {
     });
 
     test('should handle network error during wallet reset: display error toast and not remove wallet or navigate', async () => {
-        (global.fetch as jest.Mock).mockRejectedValue(
+        (mockUseApi.fetchData).mockRejectedValue(
             new Error('Network error')
         );
 
@@ -256,15 +249,15 @@ describe('ResetPasscodePage Component', () => {
 
         fireEvent.click(screen.getByTestId('btn-set-new-passcode'));
 
-        await waitForFetchApiToBeCalled();
+        await waitForApiToBeCalled();
         expect(mockRemoveWallet).not.toHaveBeenCalled();
         expect(mockNavigate).not.toHaveBeenCalled();
         await screen.findByText('Something went wrong while resetting your wallet. Please try again in a moment.')
     });
 
-    async function waitForFetchApiToBeCalled() {
+    async function waitForApiToBeCalled() {
         await waitFor(() => {
-            expect(global.fetch).toHaveBeenCalledTimes(1);
+            expect(mockUseApi.fetchData).toHaveBeenCalledTimes(1);
         });
     }
 });

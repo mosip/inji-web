@@ -399,7 +399,11 @@
       "title":"My Profile",
       "homeTitle":"Home",
       "fullName":"Full Name",
-      "emailAddress":"Email Address"
+      "emailAddress":"Email Address",
+      "error": {
+        "title": "Profile Not Available",
+        "message": "We couldn’t load your profile details due to a technical issue. Please try again later."
+      }
     }
   },
   "StoredCards": {

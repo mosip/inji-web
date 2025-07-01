@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
 import {CredentialListWrapper} from '../../../components/Credentials/CredentialListWrapper';
-import {RequestStatus} from '../../../hooks/useFetch';
+import {RequestStatus} from "../../../utils/constants";
 
 const mockCredentialList = jest.fn();
 

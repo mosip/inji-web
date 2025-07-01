@@ -1,11 +1,11 @@
 import React from "react";
-import {RequestStatus} from "../../hooks/useFetch";
 import {SpinningLoader} from "../Common/SpinningLoader";
 import {ErrorSheildIcon} from "../Common/ErrorSheildIcon";
 import {SuccessSheildIcon} from "../Common/SuccessSheildIcon";
 import {LandingPageWrapper} from "../Common/LandingPageWrapper";
 import {useUser} from "../../hooks/User/useUser";
 import {DownloadResultStyles} from "./DownloadResultStyles";
+import {RequestStatus} from "../../utils/constants";
 
 interface DisplayConfig {
     icon: JSX.Element;

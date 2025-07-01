@@ -1,12 +1,7 @@
-import {
-    ApiRequest,
-    CodeChallengeObject,
-    CredentialConfigurationObject,
-    IssuerObject
-} from "../types/data";
+import {ApiRequest, CodeChallengeObject, CredentialConfigurationObject, IssuerObject} from "../types/data";
 import i18n from "i18next";
-import { KEYS } from "./constants";
-import {Storage} from "./Storage";
+import {KEYS, ROUTES} from "./constants";
+import {AppStorage} from "./AppStorage";
 
 export enum MethodType {
     GET,
@@ -20,10 +15,12 @@ export enum ContentTypes {
     FORM_URL_ENCODED = "application/x-www-form-urlencoded",
 }
 
+
+
 export class api {
     static mimotoHost = window._env_.MIMOTO_URL;
 
-    static authorizationRedirectionUrl = window.location.origin + "/redirect";
+    static authorizationRedirectionUrl = window.location.origin + ROUTES.REDIRECT;
 
     static fetchIssuers: ApiRequest = {
         url: () => api.mimotoHost + "/issuers",
@@ -62,7 +59,8 @@ export class api {
                 "Content-Type": ContentTypes.FORM_URL_ENCODED,
                 "Cache-Control": "no-cache, no-store, must-revalidate"
             };
-        }
+        },
+        responseType: "blob"
     };
     static authorization = (
         currentIssuer: IssuerObject,
@@ -100,9 +98,9 @@ export class api {
         methodType: MethodType.POST,
         headers: () => {
             return {
-                "Content-Type": ContentTypes.JSON
             };
-        }
+        },
+        credentials: "include"
     };
 
     // Fetch wallets API
@@ -114,7 +112,8 @@ export class api {
                 "Content-Type": ContentTypes.JSON
             };
         },
-        credentials: "include"
+        credentials: "include",
+        includeXSRFToken: true
     };
 
     // Post wallet API with PIN
@@ -125,10 +124,12 @@ export class api {
             return {
                 "Content-Type": ContentTypes.JSON
             };
-        }
+        },
+        credentials: "include",
+        includeXSRFToken: true
     };
 
-    static fetchWalletDetails: ApiRequest = {
+    static unlockWallet: ApiRequest = {
         url: (walletId: string) =>
             api.mimotoHost + `/wallets/${walletId}/unlock`,
         methodType: MethodType.POST,
@@ -137,7 +138,8 @@ export class api {
                 "Content-Type": ContentTypes.JSON
             };
         },
-        credentials: "include"
+        credentials: "include",
+        includeXSRFToken: true
     };
 
     static deleteWallet: ApiRequest = {
@@ -148,12 +150,13 @@ export class api {
                 "Content-Type": ContentTypes.JSON
             };
         },
-        credentials: "include"
+        credentials: "include",
+        includeXSRFToken: true
     };
 
     static downloadVCInloginFlow: ApiRequest = {
         url: () => {
-            const walletId = Storage.getItem(KEYS.WALLET_ID);
+            const walletId = AppStorage.getItem(KEYS.WALLET_ID);
             return api.mimotoHost + `/wallets/${walletId}/credentials`;
         },
         methodType: MethodType.POST,
@@ -165,12 +168,13 @@ export class api {
                 "Accept-Language": locale
             };
         },
-        credentials: "include"
+        credentials: "include",
+        includeXSRFToken: true
     };
 
     static fetchWalletVCs: ApiRequest = {
         url: () => {
-            const walletId = Storage.getItem(KEYS.WALLET_ID);
+            const walletId = AppStorage.getItem(KEYS.WALLET_ID);
             return (
                 api.mimotoHost +
                 `/wallets/${walletId}/credentials`
@@ -188,7 +192,7 @@ export class api {
 
     static fetchWalletCredentialPreview: ApiRequest = {
         url: (credentialId: string) => {
-            const walletId = Storage.getItem(KEYS.WALLET_ID);
+            const walletId = AppStorage.getItem(KEYS.WALLET_ID);
             return (
                 api.mimotoHost +
                 `/wallets/${walletId}/credentials/${credentialId}?action=inline`
@@ -202,12 +206,13 @@ export class api {
                 "Accept": ContentTypes.PDF
             };
         },
-        credentials: "include"
+        credentials: "include",
+        responseType: "blob"
     };
 
     static downloadWalletCredentialPdf: ApiRequest = {
         url: (credentialId: string) => {
-            const walletId = Storage.getItem(KEYS.WALLET_ID);
+            const walletId = AppStorage.getItem(KEYS.WALLET_ID);
             return (
                 api.mimotoHost +
                 `/wallets/${walletId}/credentials/${credentialId}?action=download`
@@ -221,12 +226,13 @@ export class api {
                 "Accept": ContentTypes.PDF
             };
         },
-        credentials: "include"
+        credentials: "include",
+        responseType: "blob"
     };
 
     static deleteWalletCredential: ApiRequest = {
         url: (credentialId: string) => {
-            const walletId = Storage.getItem(KEYS.WALLET_ID);
+            const walletId = AppStorage.getItem(KEYS.WALLET_ID);
             return (
                 api.mimotoHost +
                 `/wallets/${walletId}/credentials/${credentialId}`
