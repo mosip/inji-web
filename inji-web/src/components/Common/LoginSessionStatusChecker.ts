@@ -84,6 +84,7 @@ const LoginSessionStatusChecker = () => {
 
         window.addEventListener('storage', handleStorageChange);
         return () => window.removeEventListener('storage', handleStorageChange);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // on every path change, validate the status. This happens after app launch handlers are set up

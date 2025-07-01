@@ -49,21 +49,17 @@ export const PasscodePage: React.FC = () => {
     };
 
     useEffect(() => {
-        const fetchWalletDetails = async () => {
-            await fetchWallets();
-        };
-        void fetchWalletDetails();
-    }, []);
+        void fetchWallets();
 
-    useEffect(() => {
         const handleStorageChange = (e: StorageEvent) => {
             if (e.key === 'walletId') {
-                fetchWallets();
+                void fetchWallets();
             }
         };
 
         window.addEventListener('storage', handleStorageChange);
         return () => window.removeEventListener('storage', handleStorageChange);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const unlockWallet = async (walletId: string, pin: string) => {

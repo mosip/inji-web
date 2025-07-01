@@ -53,7 +53,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
         if (downloadStatus === RequestStatus.DONE) {
             navigate(ROUTES.CREDENTIALS)
         }
-    }, [downloadStatus])
+    }, [downloadStatus, navigate])
 
     useEffect(() => {
         const fetchIssuerAndConfiguration = async () => {
@@ -100,6 +100,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
             setCurrentSessionDownloadId(null);
             setLatestDownloadedSessionId(null);
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const previousPagePath = location.state?.from;
