@@ -28,7 +28,7 @@ const LoginSessionStatusChecker = () => {
             console.warn("Redirecting to / page as accessing protected route without login from ",location.pathname);
             navigate(ROUTES.ROOT)
         }
-    }, [navigate, removeUser]);
+    }, [location.pathname, navigate, removeUser]);
 
     const validateStatus = useCallback(() => {
         const user = AppStorage.getItem(KEYS.USER);
