@@ -44,9 +44,9 @@ sequenceDiagram
     fe ->> interceptor: 2. API call (eg., GET /wallets/wallet-id/credentials)
     interceptor ->> be: 3. Forward request to backend
     be ->> interceptor: 4. Reject with <br/> 401 Unauthorized response (due to session expiration)
-    interceptor ->> interceptor: 5. Check if <br/>user is client is logged in (as per frontend: user available in AppStorage)<br/> or <br/>client session (as per frontend: walletId available in AppStorage) active
+    interceptor ->> interceptor: 5. Check if <br/> is logged in (as per frontend: user available in AppStorage)<br/> or <br/> session active (as per frontend: walletId available in AppStorage)
     note over interceptor: Reason for checking<br/>1. client is logged in - Only for logged in users re-login should be prompted if session expires<br/>2. If user session is active - For flows like Create wallet / fetch wallet etc, where user is not logged in but session is active, <br/>we should prompt for re-login in case session expires.
-    alt isClientLoggedIn || isClientSessionActive
+    alt isLoggedIn || isSessionActive
         activate interceptor
         interceptor ->> AppStorage: 6.1 Store the current path in session storage <br/> (eg., /wallets/<wallet-id>/credentials)
         interceptor ->> fe: 6.2 Redirect to root (/) page <br/> (eg., /)
@@ -70,6 +70,11 @@ sequenceDiagram
 ```
 
 ### Key Definitions
-- **isClientLoggedIn**: A boolean flag indicating whether the user logged in, tracked in frontend.
-- **isClientSessionActive**: A boolean flag indicating whether the user session is active, tracked in frontend.
+
+```
+Logged-in user = Authentication via Provider (session active) + Unlocked wallet using Passcode.
+```
+
+- **isLoggedIn**: A boolean flag indicating whether the user logged in, tracked in frontend.
+- **isSessionActive**: A boolean flag indicating whether the user session is active, tracked in frontend.
 - **redirectTo**: A string representing the URL to redirect the user after successful authentication, stored in session storage.

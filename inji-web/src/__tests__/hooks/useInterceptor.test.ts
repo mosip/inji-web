@@ -1,4 +1,4 @@
-import {render, renderHook} from "@testing-library/react";
+import {renderHook} from "@testing-library/react";
 import {useInterceptor} from "../../hooks/useInterceptor";
 import {useUser} from "../../hooks/User/useUser";
 import {useLocation, useNavigate} from "react-router-dom";
@@ -6,8 +6,6 @@ import {apiInstance} from "../../hooks/useApi";
 import {ROUTES} from "../../utils/constants";
 import {AppStorage} from "../../utils/AppStorage";
 import {userProfile} from "../../test-utils/mockObjects";
-import LoginSessionStatusChecker from "../../components/Common/LoginSessionStatusChecker.ts";
-import React from "react";
 
 jest.mock("react-router-dom", () => ({
     useNavigate: jest.fn(),
