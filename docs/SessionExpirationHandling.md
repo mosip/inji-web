@@ -2,56 +2,14 @@
 
 ## Overview
 
-In case of the scenario where the logged in user's session has expired, and the user tries to perform an action that requires authentication. User is required to re-login again to continue.
+In case of the scenario where the logged-in user's session has expired, and the user tries to perform an action that requires authentication. User is required to re-login again to continue.
 
 ## Flow of User session expiration and re-authentication
 
 
 In an expired session when user tries to perform an action that requires authentication, 
 the frontend will receive a 401 Unauthorized response from the backend. 
-The frontend will then redirect the user to the passcode page, where they can re-authenticate. To capture this for multiple actions, an interceptor is used to handle the 401 Unauthorized response and redirect the user to login again.
-
-### Technical Sequence Diagram
-
-```mermaid
-sequenceDiagram
-    participant user as User
-    participant fe as Inji Web
-    participant interceptor as Inji Web Interceptor
-    participant be as Mimoto Backend
-    Note over fe, be: Any network request
-    fe ->> interceptor: Make request
-    interceptor ->> be: intercepts and Forward request
-    be -->> interceptor: Response from backend
-    interceptor ->> interceptor: Check if user is logged in
-    alt isLoggedIn
-        activate interceptor
-        interceptor ->> interceptor: Check if response is unAuthorized
-        alt [check] is unAuthorized
-            activate fe
-            rect rgb(255, 240, 230, 0.5)
-                interceptor ->> fe: Redirect to login page <br/>(/ [Current location will be stored for redirect after login])
-                fe ->> user: User clicks on sign in with *
-                fe ->> fe: Ask login - open root / [location.state will be as previous] Ask user to enter passcode
-                user ->> fe: Perform login
-                fe ->> fe: On successful login, <br/>return to location.state if present else to home page
-            end
-            note over fe: User is redirected to the page they were on before and user needs to re-trigger the action
-            deactivate fe
-        else [check] isAuthorized
-            rect rgb(230, 255, 230, 0.4)
-                interceptor ->> fe: Forward response
-                note over fe: Continue with the response
-            end
-        end
-        deactivate interceptor
-    else guest mode
-        rect rgb(230, 255, 230, 0.4)
-            interceptor ->> fe: Forward response
-            note over fe: Continue with the response
-        end
-    end
-```
+The frontend will then redirect the user to the root page, where they can re-authenticate by clicking `Login with *`. To capture this for multiple actions, an interceptor is used to handle the 401 Unauthorized response and redirect the user to login again.
 
 ## Storing of previous page url in session
 
@@ -62,24 +20,33 @@ When the user is asked for re-login due to session expiry while performing any a
 - Its lifecycle is tied to the browser tab, meaning it persists as long as the tab is open. And its persistent across page reloads and restores.
 - It is accessible only within the same tab and not shared across tabs or windows.
 
+## Technical Sequence Diagram
+
+Actors involved:
+1. **Backend** (Mimoto) - Handles API requests and responses.
+2. **Frontend Interceptor** - Intercepts API calls and handles session management.
+3. **Frontend** (Inji Web) - The user interface that interacts with the backend.
+4. **AppStorage** - Manages session storage & local storage for the application.
+5. **User** - The end user interacting with the application.
+
 ```mermaid
 
 sequenceDiagram
     participant be as Backend (Mimoto)
-    participant interceptor as Frontend (Inji Web)<br/> Interceptor
+    participant interceptor as Frontend<br/> Interceptor
     participant fe as Frontend (Inji Web)
     participant AppStorage
     participant user as User
     
-    note over be, user: Scenario: User is logged in , session has expired, and user tries to access stored cards page
+    note over be, user: Scenario: User is logged in , session has expired,<br/> and user tries to access any protected page (Eg - stored cards)
     
     user ->> fe: 1. Perform any protected action (e.g., open stored cards)
     fe ->> interceptor: 2. API call (eg., GET /wallets/wallet-id/credentials)
     interceptor ->> be: 3. Forward request to backend
-    be ->> interceptor: 4. Reject with 401 Unauthorized
-    interceptor ->> interceptor: 5. Check if user is logged in or fetching wallets
-    note over interceptor: Reason for checking while fetching wallets is that,<br/>while fetching wallets only the session will be active but<br/>wallet will be in locked state (not loggged in)
-    alt isLoggedIn || fetching wallets
+    be ->> interceptor: 4. Reject with <br/> 401 Unauthorized response (due to session expiration)
+    interceptor ->> interceptor: 5. Check if <br/>user is client is logged in (as per frontend: user available in AppStorage)<br/> or <br/>client session (as per frontend: walletId available in AppStorage) active
+    note over interceptor: Reason for checking<br/>1. client is logged in - Only for logged in users re-login should be prompted if session expires<br/>2. If user session is active - For flows like Create wallet / fetch wallet etc, where user is not logged in but session is active, <br/>we should prompt for re-login in case session expires.
+    alt isClientLoggedIn || isClientSessionActive
         activate interceptor
         interceptor ->> AppStorage: 6.1 Store the current path in session storage <br/> (eg., /wallets/<wallet-id>/credentials)
         interceptor ->> fe: 6.2 Redirect to root (/) page <br/> (eg., /)
@@ -101,3 +68,8 @@ sequenceDiagram
         end
     end
 ```
+
+### Key Definitions
+- **isClientLoggedIn**: A boolean flag indicating whether the user logged in, tracked in frontend.
+- **isClientSessionActive**: A boolean flag indicating whether the user session is active, tracked in frontend.
+- **redirectTo**: A string representing the URL to redirect the user after successful authentication, stored in session storage.
