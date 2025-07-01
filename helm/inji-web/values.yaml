@@ -416,7 +416,7 @@ metrics:
 ## Slash is important!
 inji_web:
   inji_web_port: '3004'
-  inji_web_service_host: 'mimoto.mimoto'
+  inji_web_service_host: 'mimoto.injiweb'
   configmaps:
     injiweb-ui:
       DEFAULT_THEME: ''
