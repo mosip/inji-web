@@ -6,7 +6,6 @@ import {apiInstance} from "../../hooks/useApi";
 import {ROUTES} from "../../utils/constants";
 import {AppStorage} from "../../utils/AppStorage";
 
-// Mock dependencies
 jest.mock("react-router-dom", () => ({
     useNavigate: jest.fn(),
     useLocation: jest.fn()
@@ -33,28 +32,23 @@ jest.mock("../../utils/AppStorage.ts", () => ({
     },
 }))
 describe("useInterceptor", () => {
-    // Setup mocks before each test
     let navigateMock: jest.Mock;
     let removeUserMock: jest.Mock;
     let isUserLoggedInMock: jest.Mock;
     let interceptorMock: number;
 
     beforeEach(() => {
-        // Reset mocks
         jest.clearAllMocks();
 
-        // Setup navigate mock
         navigateMock = jest.fn();
         (useNavigate as jest.Mock).mockReturnValue(navigateMock);
 
-        // Setup location mock
         (useLocation as jest.Mock).mockReturnValue({
             pathname: "/test-path",
             search: "?test=true",
             hash: "#test"
         });
 
-        // Setup user hook mocks
         removeUserMock = jest.fn();
         isUserLoggedInMock = jest.fn();
         (useUser as jest.Mock).mockReturnValue({
@@ -62,51 +56,43 @@ describe("useInterceptor", () => {
             isUserLoggedIn: isUserLoggedInMock
         });
 
-        // Setup interceptor mock
         interceptorMock = 123; // Some arbitrary interceptor ID
         (apiInstance.interceptors.response.use as jest.Mock).mockReturnValue(interceptorMock);
     });
 
+    const getErrorCallback = () => {
+        renderHook(() => useInterceptor());
+        return (apiInstance.interceptors.response.use as jest.Mock).mock.calls[0][1];
+    };
+
     test("should set up response interceptor on mount", () => {
-        // Render the hook
         renderHook(() => useInterceptor());
 
-        // Verify interceptor was set up
         expect(apiInstance.interceptors.response.use).toHaveBeenCalled();
     });
 
     test("should clean up interceptor on unmount", () => {
-        // Render the hook with ability to unmount
         const {unmount} = renderHook(() => useInterceptor());
 
-        // Unmount the component
         unmount();
 
-        // Verify the interceptor was removed
         expect(apiInstance.interceptors.response.eject).toHaveBeenCalledWith(interceptorMock);
     });
 
     test("should handle successful responses correctly", () => {
-        // Render the hook
         renderHook(() => useInterceptor());
 
-        // Get the success callback from the interceptor
         const successCallback = (apiInstance.interceptors.response.use as jest.Mock).mock.calls[0][0];
-
-        // Test with a sample response
         const mockResponse = {data: "test data"};
         const result = successCallback(mockResponse);
 
-        // The success callback should just return the response
         expect(result).toBe(mockResponse);
     });
 
-    test("should redirect to root when logged-in user receives 401", () => {
+    test("should redirect to root when logged-in user receives 401 on logged in", async () => {
         isUserLoggedInMock.mockReturnValue(true);
+        const errorCallback = getErrorCallback()
 
-        renderHook(() => useInterceptor());
-
-        const errorCallback = (apiInstance.interceptors.response.use as jest.Mock).mock.calls[0][1];
         const mockError = {
             response: {
                 status: 401,
@@ -116,16 +102,10 @@ describe("useInterceptor", () => {
             }
         };
 
-        return errorCallback(mockError).catch((error : object) => {
-            expect(removeUserMock).toHaveBeenCalled();
-            expect(navigateMock).toHaveBeenCalledWith(ROUTES.ROOT);
-            expect(AppStorage.setItem).toHaveBeenCalledTimes(1)
-            expect(AppStorage.setItem).toHaveBeenCalledWith("redirectTo", "/test-path?test=true#test", true)
-            expect(error).toBe(mockError);
-        });
+        await assertRedirectToLogin(errorCallback, mockError);
     });
 
-    test("should redirect to root when fetching wallets and receives 401", () => {
+    test("should redirect to root when fetching wallets and receives 401", async () => {
         const mockError = {
             response: {
                 status: 401,
@@ -135,30 +115,16 @@ describe("useInterceptor", () => {
             }
         };
         isUserLoggedInMock.mockReturnValue(false);
-        renderHook(() => useInterceptor());
 
-        const errorCallback = (apiInstance.interceptors.response.use as jest.Mock).mock.calls[0][1];
+        const errorCallback = getErrorCallback();
 
-        return errorCallback(mockError).catch((error: Error) => {
-            expect(removeUserMock).toHaveBeenCalled();
-            expect(navigateMock).toHaveBeenCalledWith(ROUTES.ROOT);
-            expect(AppStorage.setItem).toHaveBeenCalledTimes(1)
-            expect(AppStorage.setItem).toHaveBeenCalledWith("redirectTo", "/test-path?test=true#test", true)
-            expect(error).toBe(mockError);
-        });
+        await assertRedirectToLogin(errorCallback, mockError)
     });
 
-    test("should not redirect for non-401 errors", () => {
-        // Mock user as logged in
+    test("should not redirect for non-401 errors", async () => {
         isUserLoggedInMock.mockReturnValue(true);
 
-        // Render the hook
-        renderHook(() => useInterceptor());
-
-        // Get the error callback from the interceptor
-        const errorCallback = (apiInstance.interceptors.response.use as jest.Mock).mock.calls[0][1];
-
-        // Mock a 500 error
+        const errorCallback = getErrorCallback()
         const mockError = {
             response: {
                 status: 500,
@@ -168,24 +134,16 @@ describe("useInterceptor", () => {
             }
         };
 
-        return errorCallback(mockError).catch(() => {
-            // Verify no redirection happened
-            expect(removeUserMock).not.toHaveBeenCalled();
-            expect(navigateMock).not.toHaveBeenCalled();
-        });
+        await expect(errorCallback(mockError)).rejects.toBe(mockError);
+        expect(removeUserMock).not.toHaveBeenCalled();
+        expect(navigateMock).not.toHaveBeenCalled();
     });
 
-    test("should not redirect for 401 when user is not logged in and not fetching wallets", () => {
-        // Mock user as logged out
+    test("should not redirect for 401 when user is not logged in and accessing any protected api", async () => {
         isUserLoggedInMock.mockReturnValue(false);
 
-        // Render the hook
-        renderHook(() => useInterceptor());
+        const errorCallback = getErrorCallback();
 
-        // Get the error callback from the interceptor
-        const errorCallback = (apiInstance.interceptors.response.use as jest.Mock).mock.calls[0][1];
-
-        // Mock a 401 error for a non-wallets endpoint
         const mockError = {
             response: {
                 status: 401,
@@ -194,11 +152,16 @@ describe("useInterceptor", () => {
                 }
             }
         };
-
-        return errorCallback(mockError).catch(() => {
-            // Verify no redirection happened
-            expect(removeUserMock).not.toHaveBeenCalled();
-            expect(navigateMock).not.toHaveBeenCalled();
-        });
+        await expect(errorCallback(mockError)).rejects.toBe(mockError);
+        expect(removeUserMock).not.toHaveBeenCalled();
+        expect(navigateMock).not.toHaveBeenCalled();
     });
+
+    async function assertRedirectToLogin(errorCallback: (arg0: { response: { status: number; config: { url: string; }; }; }) => any, mockError: { response: { status: number; config: { url: string } } }) {
+        await expect(errorCallback(mockError)).rejects.toBe(mockError);
+        expect(removeUserMock).toHaveBeenCalled();
+        expect(navigateMock).toHaveBeenCalledWith(ROUTES.ROOT);
+        expect(AppStorage.setItem).toHaveBeenCalledTimes(1);
+        expect(AppStorage.setItem).toHaveBeenCalledWith("redirectTo", "/test-path?test=true#test", true);
+    }
 });
