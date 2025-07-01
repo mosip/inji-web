@@ -85,13 +85,12 @@ export function VCCardView(props: Readonly<{
     };
 
     const download = async () => {
-        console.info("Downloading credential PDF for:", props.credential.credentialId);
         await executeCredentialApiRequest(
             api.downloadWalletCredentialPdf,
             async (response) => {
                 const pdfContent: Blob = response.data;
                 const headers = response.headers as Record<string, string>;
-                const disposition = headers["Content-Disposition"] ?? "";
+                const disposition = headers["content-disposition"] ?? "";
                 const fileNameMatch = /filename="(.+)"/.exec(disposition ?? "");
                 const fileName = fileNameMatch?.[1] ?? "download.pdf";
 

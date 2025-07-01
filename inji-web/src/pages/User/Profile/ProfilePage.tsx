@@ -33,6 +33,7 @@ export const ProfilePage: React.FC = () => {
         }
 
         void fetchProfileInfo()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleBackClick = () => {
@@ -81,25 +82,23 @@ export const ProfilePage: React.FC = () => {
         );
     };
 
-    function handleGoToHome() {
+    const handleGoToHome = () => {
         navigateToUserHome(navigate)
-    }
+    };
 
-    function renderProfile() {
-        return <div
-            className={ProfilePageStyles.contentContainer}>
-            <div>{renderProfilePicture()}</div>
+    const renderProfile = () => <div
+        className={ProfilePageStyles.contentContainer}>
+        <div>{renderProfilePicture()}</div>
 
-            <hr
-                data-testid="profile-page-horizontal-rule"
-                className={ProfilePageStyles.horizontalDivider}
-            />
+        <hr
+            data-testid="profile-page-horizontal-rule"
+            className={ProfilePageStyles.horizontalDivider}
+        />
 
-            <div className={ProfilePageStyles.infoContainer}>
-                {renderInfoFields()}
-            </div>
-        </div>;
-    }
+        <div className={ProfilePageStyles.infoContainer}>
+            {renderInfoFields()}
+        </div>
+    </div>;
 
     return (
         <div className={ProfilePageStyles.container}>
