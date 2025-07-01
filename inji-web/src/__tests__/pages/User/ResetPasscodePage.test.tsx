@@ -5,7 +5,6 @@ import {useUser} from '../../../hooks/User/useUser';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {ResetPasscodePage} from '../../../pages/User/ResetPasscode/ResetPasscodePage';
-import {useApi} from '../../../hooks/useApi';
 import {api} from "../../../utils/api";
 import {mockUseApi} from "../../../test-utils/setupUseApiMock";
 
@@ -205,7 +204,7 @@ describe('ResetPasscodePage Component', () => {
     });
 
     test('should handle failed wallet reset: display error toast and not remove wallet or navigate', async () => {
-        (useApi().fetchData as jest.Mock) = jest.fn().mockResolvedValue({
+        (mockUseApi.fetchData as jest.Mock) = jest.fn().mockResolvedValue({
             ok: true,
             data: null,
             error: ({error: 'Wallet deletion failed'}),

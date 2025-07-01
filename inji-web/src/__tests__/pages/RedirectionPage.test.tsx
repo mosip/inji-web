@@ -1,7 +1,7 @@
 import React from 'react';
 import {RedirectionPage} from '../../pages/RedirectionPage';
 import {getActiveSession} from '../../utils/sessions';
-import {getErrorObject} from '../../utils/misc';
+import {downloadCredentialPDF, getErrorObject} from '../../utils/misc';
 import {mockusei18n, renderWithProvider, renderWithRouter} from '../../test-utils/mockUtils';
 import {mockApiResponse, mockUseApi} from "../../test-utils/setupUseApiMock";
 import {RequestStatus} from "../../utils/constants";
@@ -76,24 +76,41 @@ describe('Testing the Functionality of RedirectionPage', () => {
         expect(asFragment()).toMatchSnapshot();
     });
 
-    test('Check if it displays error message if state is ERROR', async () => {
-        (getErrorObject as jest.Mock).mockReturnValue({code: 'error.generic.title', message: 'error.generic.subTitle'});
-        mockApiResponse({error: true, state: RequestStatus.ERROR, status: 500})
-
+    test.each([
+        {
+            name: 'displays error message if state is ERROR',
+            setup: () => {
+                (getErrorObject as jest.Mock).mockReturnValue({
+                    code: 'error.generic.title',
+                    message: 'error.generic.subTitle'
+                });
+                mockApiResponse({error: true, state: RequestStatus.ERROR, status: 500});
+            }
+        },
+        {
+            name: 'DownloadResult component shows loading state',
+            setup: () => {
+                // Default setup already includes loading state
+            }
+        },
+        {
+            name: 'DownloadResult component shows success state',
+            setup: () => {
+                (downloadCredentialPDF as jest.Mock).mockResolvedValueOnce(true);
+                mockApiResponse({
+                    response: new Blob(),
+                    headers: {
+                        "Content-Disposition": "attachment; filename=credential",
+                        "Content-Type": "application/pdf"
+                    },
+                    status: 200,
+                    state: RequestStatus.DONE
+                });
+            }
+        }
+    ])('Check if $name', async ({setup}) => {
+        setup();
         const {asFragment} = renderWithRouter(<RedirectionPage/>);
-
-        expect(asFragment()).toMatchSnapshot();
-    });
-
-    test('Check if DownloadResult component shows loading state', () => {
-        const {asFragment} = renderWithRouter(<RedirectionPage/>);
-
-        expect(asFragment()).toMatchSnapshot();
-    });
-
-    test('Check if DownloadResult component shows success state', async () => {
-        const {asFragment} = renderWithRouter(<RedirectionPage/>);
-
         expect(asFragment()).toMatchSnapshot();
     });
 
