@@ -1,4 +1,4 @@
-import {AppStorage} from "../../utils/AppStorage.ts";
+import {AppStorage} from "../../utils/AppStorage";
 import {CommonReducerActionType} from "../../types/redux";
 import {defaultLanguage} from "../../utils/i18n";
 

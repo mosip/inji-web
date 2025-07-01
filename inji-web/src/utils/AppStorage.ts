@@ -6,7 +6,7 @@ export class AppStorage {
         return windowSession ? window.sessionStorage : localStorage;
     }
 
-    static readonly setItem = (key: string, value: string, windowSession: boolean = false): void => {
+    static readonly setItem = (key: string, value: string | null, windowSession: boolean = false): void => {
         if (value) {
             this.getStorageEngine(windowSession).setItem(key, JSON.stringify(value));
         }

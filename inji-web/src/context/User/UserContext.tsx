@@ -3,7 +3,7 @@ import {UserContextType} from "../../types/contextTypes";
 import {ErrorType, User} from "../../types/data";
 import {KEYS} from "../../utils/constants";
 import {api} from "../../utils/api";
-import {AppStorage} from "../../utils/AppStorage.ts";
+import {AppStorage} from "../../utils/AppStorage";
 import {useApi} from "../../hooks/useApi";
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);

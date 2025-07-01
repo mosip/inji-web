@@ -7,7 +7,7 @@ import hi from '../locales/hi.json';
 import kn from '../locales/kn.json';
 import ar from '../locales/ar.json';
 import pt from '../locales/pt.json';
-import {AppStorage} from "./AppStorage.ts";
+import {AppStorage} from "./AppStorage";
 import {
     CredentialTypeDisplayArrayObject,
     IssuerWellknownDisplayArrayObject,

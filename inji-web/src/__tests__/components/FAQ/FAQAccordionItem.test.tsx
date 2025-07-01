@@ -1,13 +1,15 @@
 import React from 'react';
 import {fireEvent, screen} from '@testing-library/react';
 import {FAQAccordionItem} from "../../../components/Faq/FAQAccordionItem";
-import { renderWithProvider } from '../../../test-utils/mockUtils';
+import {renderWithProvider} from '../../../test-utils/mockUtils';
 
 
-describe("Testing the Layout of Faq Accordion",() => {
+describe("Testing the Layout of Faq Accordion", () => {
     test('Check if the layout is matching with the snapshots', () => {
         const openHandler = jest.fn();
-        const{asFragment} = renderWithProvider(<FAQAccordionItem id={1} title={"FaqTitle"} content={["FaqContent"]} open={1} setOpen={openHandler} />);
+        const {asFragment} = renderWithProvider(<FAQAccordionItem id={1} title={"FaqTitle"} content={["FaqContent"]}
+                                                                  open={1} setOpen={openHandler}
+                                                                  key={"test-faq-item"}/>);
         expect(asFragment()).toMatchSnapshot();
     });
 
@@ -20,6 +22,7 @@ describe("Testing the Layout of Faq Accordion",() => {
                 content={['FaqContent']}
                 open={0}
                 setOpen={openHandler}
+                key={"test-faq-item"}
             />
         );
         const faqElement = screen.getByTestId('Faq-Item-Container');
@@ -34,6 +37,7 @@ describe("Testing the Layout of Faq Accordion",() => {
                 content={['FaqContent']}
                 open={1}
                 setOpen={openHandler}
+                key={"test-faq-item"}
             />
         );
         const faqElement = screen.getByTestId('Faq-Item-Container');
@@ -51,6 +55,7 @@ describe('Testing the Functionality of Faq Accordition Item', () => {
                 content={['FaqContent']}
                 open={0}
                 setOpen={openHandler}
+                key={"test-faq-item"}
             />
         );
         const faqElement = screen.getByTestId('Faq-Item-Container');

@@ -1,4 +1,4 @@
-import {AppStorage} from "./AppStorage.ts";
+import {AppStorage} from "./AppStorage";
 import {SessionObject} from "../types/data";
 
 export const addNewSession = (session: SessionObject) => {

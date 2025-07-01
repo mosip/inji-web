@@ -71,7 +71,7 @@ describe('Test storage class functionality', () => {
     let storedValue = localStorageMock.getItem(key);
     expect(storedValue).toBeNull();
   
-    AppStorage.setItem(key, undefined);
+    AppStorage.setItem(key, null);
     storedValue = localStorageMock.getItem(key);
     expect(storedValue).toBeNull();
   });
