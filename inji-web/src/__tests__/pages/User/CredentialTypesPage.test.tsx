@@ -144,6 +144,7 @@ describe('CredentialTypesPage', () => {
         expect(mockNavigate).toHaveBeenCalledWith(previousPath);
     })
 
+    it.todo('should show loader while downloading card')
     it('should navigate to home when back button is clicked & previous path not available', () => {
         renderWithRouter(<CredentialTypesPage/>);
 

@@ -50,20 +50,13 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
     }, [currentSessionDownloadId, downloadInProgressSessions]);
 
     useEffect(() => {
-        return (() => {
-            setCurrentSessionDownloadId(null);
-            setLatestDownloadedSessionId(null);
-        })
-    }, []);
-
-    useEffect(() => {
         if (downloadStatus === RequestStatus.DONE) {
             navigate(ROUTES.CREDENTIALS)
         }
     }, [downloadStatus])
 
     useEffect(() => {
-        const fetchCall = async () => {
+        const fetchIssuerAndConfiguration = async () => {
             try {
                 await fetchUserProfile();
                 let apiRequest: ApiRequest = api.fetchSpecificIssuer;
@@ -101,7 +94,12 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
                 setState(RequestStatus.ERROR);
             }
         };
-        void fetchCall();
+        void fetchIssuerAndConfiguration();
+
+        return (() => {
+            setCurrentSessionDownloadId(null);
+            setLatestDownloadedSessionId(null);
+        })
     }, []);
 
     const previousPagePath = location.state?.from;

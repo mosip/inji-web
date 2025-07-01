@@ -115,7 +115,6 @@ describe('Testing the Functionality of RedirectionPage', () => {
     });
 
     test.todo("check if credential download API with right params is called for logged in user")
-    test.todo("check if redirects to stored cards page after successful download for logged in user")
+    test.todo("check if redirects to issuer page after successful download initiation for logged in user")
     test.todo("check if credential download API with right params is called for guest mode")
-    test.todo("check is success download state is shown after successful download for guest mode")
 });
