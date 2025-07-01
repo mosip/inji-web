@@ -34,6 +34,7 @@ export const ResetPasscodePage: React.FC = () => {
             if (!response.ok()) {
                 console.error('Error occurred while deleting Wallet:', error);
                 setError(t('resetFailure'));
+                return
             }
             removeWallet();
             navigate(ROUTES.PASSCODE);

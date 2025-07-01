@@ -3,7 +3,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {KEYS, ROUTES} from "../utils/constants";
 import {useUser} from "./User/useUser";
 import {apiInstance} from "./useApi";
-import {AppStorage} from "../utils/AppStorage.ts";
+import {AppStorage} from "../utils/AppStorage";
 
 export function useInterceptor() {
     const navigate = useNavigate();
@@ -18,10 +18,19 @@ export function useInterceptor() {
             status: number;
         };
     }) {
-        const isFetchingWallets = error.response?.config?.url.endsWith('/wallets');
+        /**
+         * Logged-in user = Authentication via Provider (e.g. Google) + Unlocked wallet using Passcode.
+         * Authenticated APIs that requires user to be authenticated but not necessarily with unlocked wallet.
+         * 1. GET /users/me - User profile API
+         * 2. GET /wallets - Get all wallets API
+         * 3. POST /wallets - Create a new wallet API
+         * 4. DELETE /wallets/:walletId - Delete a wallet API
+         * 5. POST /wallets/:walletId/unlock - Unlock a wallet API
+         */
         // Redirect to / page on logged-in user if unauthorized access is detected
         const currentRoute = location.pathname + location.search + location.hash;
-        if (isUserLoggedIn() || isFetchingWallets) {
+        const isSessionActive : boolean = !!AppStorage.getItem(KEYS.USER);
+        if (isUserLoggedIn() || isSessionActive) {
             if (error.response && error.response.status === 401) {
                 removeUser()
                 AppStorage.setItem(KEYS.REDIRECT_TO, currentRoute, true);

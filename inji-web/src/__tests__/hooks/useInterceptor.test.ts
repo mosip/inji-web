@@ -5,6 +5,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {apiInstance} from "../../hooks/useApi";
 import {ROUTES} from "../../utils/constants";
 import {AppStorage} from "../../utils/AppStorage";
+import {userProfile} from "../../test-utils/mockObjects";
 
 jest.mock("react-router-dom", () => ({
     useNavigate: jest.fn(),
@@ -29,6 +30,7 @@ jest.mock("../../hooks/useApi", () => ({
 jest.mock("../../utils/AppStorage.ts", () => ({
     AppStorage: {
         setItem: jest.fn(),
+        getItem: jest.fn(() => null)
     },
 }))
 describe("useInterceptor", () => {
@@ -89,37 +91,50 @@ describe("useInterceptor", () => {
         expect(result).toBe(mockResponse);
     });
 
-    test("should redirect to root when logged-in user receives 401 on logged in", async () => {
-        isUserLoggedInMock.mockReturnValue(true);
-        const errorCallback = getErrorCallback()
+    const sessionExpiredScenarios = [
+        {
+            description: "Session expired for logged-in (authenticated + unlocked wallet) user",
+            url: "/wallets/123/credentials",
+            loggedIn: true
+        },
+        {
+            description: "Session expired for authenticated user, hitting user profile API",
+            url: "/users/me",
+            loggedIn: false
+        },
+        {
+            description: "Session expired for authenticated user who is trying to unlock wallet",
+            url: "/wallets/123/unlock",
+            loggedIn: false
+        },
+        {
+            description: "Session expired for authenticated user, hitting delete wallets API",
+            url: "/wallets/123",
+            loggedIn: false
+        },
+        {
+            description: "Session expired for authenticated user, hitting create wallet or get all wallets API",
+            url: "/wallets",
+            loggedIn: false
+        }
+    ]
 
+    test.each(sessionExpiredScenarios)("should redirect to login (root page) when accessing any protected API and response is unauthorized ($description)", async ({ loggedIn, url}) => {
+        isUserLoggedInMock.mockReturnValue(loggedIn);
         const mockError = {
             response: {
                 status: 401,
                 config: {
-                    url: "/some-endpoint"
+                    url: url
                 }
             }
         };
-
-        await assertRedirectToLogin(errorCallback, mockError);
-    });
-
-    test("should redirect to root when fetching wallets and receives 401", async () => {
-        const mockError = {
-            response: {
-                status: 401,
-                config: {
-                    url: "/wallets"
-                }
-            }
-        };
-        isUserLoggedInMock.mockReturnValue(false);
+        (AppStorage.getItem as jest.Mock).mockReturnValue(JSON.stringify({...userProfile, walletId: null}))
 
         const errorCallback = getErrorCallback();
 
         await assertRedirectToLogin(errorCallback, mockError)
-    });
+    })
 
     test("should not redirect for non-401 errors", async () => {
         isUserLoggedInMock.mockReturnValue(true);
@@ -139,7 +154,7 @@ describe("useInterceptor", () => {
         expect(navigateMock).not.toHaveBeenCalled();
     });
 
-    test("should not redirect for 401 when user is not logged in and accessing any protected api", async () => {
+    test("should not redirect for 401 when user is not logged in and accessing any unprotected api", async () => {
         isUserLoggedInMock.mockReturnValue(false);
 
         const errorCallback = getErrorCallback();
@@ -148,7 +163,7 @@ describe("useInterceptor", () => {
             response: {
                 status: 401,
                 config: {
-                    url: "/some-other-endpoint"
+                    url: "unprotected-endpoint"
                 }
             }
         };

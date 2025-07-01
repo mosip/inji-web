@@ -38,6 +38,7 @@ export const PasscodePage: React.FC = () => {
             if (!response.ok()) {
                 console.error('Error occurred while fetching Wallets:', response.error);
                 setError(t('error.fetchWalletsError'));
+                return
             }
 
             setWallets(response.data);

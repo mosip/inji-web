@@ -24,10 +24,10 @@ const LoginSessionStatusChecker = () => {
 
     const redirectToLogin = useCallback(() => {
         removeUser()
-        if (location.pathname === ROUTES.ROOT)
-            return
-        console.warn("Redirecting to / page as accessing protected route without login");
-        navigate(ROUTES.ROOT)
+        if (location.pathname !== ROUTES.ROOT) {
+            console.warn("Redirecting to / page as accessing protected route without login from ",location.pathname);
+            navigate(ROUTES.ROOT)
+        }
     }, [navigate, removeUser]);
 
     const validateStatus = useCallback(() => {
