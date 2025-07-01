@@ -123,7 +123,7 @@ describe('CredentialTypesPage', () => {
 
     it.todo('should show error when fetching issuer configuration fails');
 
-    it.todo('should navigate to credentials page when download is successful');
+    it.todo('should navigate to stored cards page when download is successful');
 
     it.todo('cleans up download session IDs on unmount');
 
