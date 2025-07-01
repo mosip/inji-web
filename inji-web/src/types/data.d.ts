@@ -92,8 +92,8 @@ export type ApiRequest = {
     url: (...args: string[]) => string;
     methodType: MethodType;
     headers: (...args: string[]) => any;
-    credentials?:RequestCredentials;
-    responseType?: "json" | "text" | "blob";
+    credentials?: RequestCredentials;
+    responseType?: "json" | "blob";
     includeXSRFToken?: boolean;
 };
 
@@ -113,7 +113,7 @@ export type WalletCredential = {
 export type FAQAccordionItemType = {
     key: string;
     title: string;
-    content: (string | {__html: string})[];
+    content: (string | { __html: string })[];
 };
 
 export type User = {
@@ -159,6 +159,7 @@ type GuestRequestBody = {
 }
 
 export type TokenRequestBody = LoggedInRequestBody | GuestRequestBody;
+
 export interface MenuItemType {
     label: string;
     onClick: () => void;
@@ -171,6 +172,7 @@ export interface InstructionItem {
     id: string;
     content: React.ReactNode;
 }
+
 export interface Wallet {
     walletId: string;
     walletName: string;

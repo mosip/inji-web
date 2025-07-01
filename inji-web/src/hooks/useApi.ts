@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {ApiRequest, ApiResult} from "../types/data";
 import {ContentTypes, MethodType} from "../utils/api";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import {HTTP_STATUS_CODES, RequestStatus} from "../utils/constants";
 
 export const apiInstance = axios.create({
@@ -53,10 +53,10 @@ export function useApi<T = any>(): UseApiReturn<T> {
             let requestBody;
             switch (contentType) {
                 case ContentTypes.JSON:
-                    requestBody = body;
+                    requestBody = JSON.stringify(body);
                     break;
                 case ContentTypes.FORM_URL_ENCODED:
-                    requestBody = new URLSearchParams(body);
+                    requestBody = new URLSearchParams(body).toString();
                     break;
                 default:
                     requestBody = JSON.stringify(body);
@@ -85,18 +85,66 @@ export function useApi<T = any>(): UseApiReturn<T> {
             };
             setState(RequestStatus.DONE);
         } catch (err: any) {
-            const parsedError = err instanceof Error ? err : new Error("Unknown error");
+            let parsedError: AxiosError = err;
+            let status = err?.response?.status ?? null;
+            let headers = err?.response?.headers ?? {};
+            let errorData: any = null;
+
+            const res = err?.response;
+
+            const contentType: string  = res?.headers?.["Content-Type"] || res?.data?.type || ContentTypes.JSON;
+
+            try {
+                if (res?.data) {
+                    // Case : Blob
+                    if (res.data instanceof Blob) {
+                        const text = await res.data.text();
+
+                        if (contentType.includes(ContentTypes.JSON)) {
+                            errorData = JSON.parse(text);
+                        } else {
+                            errorData = {message: text};
+                        }
+                    }
+
+                    // Case : String
+                    else if (typeof res.data === 'string') {
+                        if (contentType.includes('application/json')) {
+                            errorData = JSON.parse(res.data);
+                        } else {
+                            errorData = {message: res.data};
+                        }
+                    }
+
+                    // Case : JSON Object or any other type
+                    else {
+                        errorData = res.data;
+                    }
+                }
+
+                if (errorData && typeof errorData === 'object') {
+                    parsedError = {
+                        ...err,
+                        response: {
+                            ...res,
+                            data: errorData,
+                        },
+                    } as AxiosError;
+                }
+            } catch (parseErr) {
+                console.warn('Error parsing error response:', parseErr);
+            }
 
             setError(parsedError);
-            setStatus(err?.response?.status ?? null);
+            setStatus(status);
 
             result = {
                 data: null,
                 error: parsedError,
-                status: err?.response?.status ?? null,
+                status,
                 state: RequestStatus.ERROR,
-                headers: err?.response?.headers ?? {},
-                ok: () => false
+                headers,
+                ok: () => false,
             };
             setState(RequestStatus.ERROR)
         }
