@@ -64,38 +64,42 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
 
     useEffect(() => {
         const fetchCall = async () => {
-           fetchUserProfile().then(async ()=>{
-               let apiRequest: ApiRequest = api.fetchSpecificIssuer;
-               const {data: issuerResponse, error: issuerResponseError} = await issuerApi.fetchData({
-                   url: apiRequest.url(params.issuerId ?? ''),
-                   apiConfig: apiRequest
-               });
-               if(issuerResponseError) {
-                   setState(RequestStatus.ERROR)
-                   return
-               }
-               dispatch(storeSelectedIssuer(issuerResponse?.response));
-               setDisplayObject(getIssuerDisplayObjectForCurrentLanguage(
-                   issuerResponse?.response.display,
-                   language
-               ))
+            try {
+                await fetchUserProfile();
+                let apiRequest: ApiRequest = api.fetchSpecificIssuer;
+                const {data: issuerResponse, error: issuerResponseError} = await issuerApi.fetchData({
+                    url: apiRequest.url(params.issuerId ?? ''),
+                    apiConfig: apiRequest
+                });
+                if (issuerResponseError) {
+                    setState(RequestStatus.ERROR);
+                    return;
+                }
+                dispatch(storeSelectedIssuer(issuerResponse?.response));
+                setDisplayObject(getIssuerDisplayObjectForCurrentLanguage(
+                    issuerResponse?.response.display,
+                    language
+                ))
 
-               apiRequest = api.fetchIssuersConfiguration;
-               const {data: issuerConfigurationResponse, error: issuerConfigurationResponseError} = await issuersConfigurationApi.fetchData({
-                   url: apiRequest.url(params.issuerId ?? ''),
-                   apiConfig: apiRequest
-               })
-               if(issuerConfigurationResponseError) {
-                   setState(RequestStatus.ERROR)
-                   return
-               }
-               dispatch(storeFilteredCredentials(issuerConfigurationResponse?.response));
-               dispatch(storeCredentials(issuerConfigurationResponse?.response));
-               setState(RequestStatus.DONE)
-           }).catch((error: any) =>{
-                console.error("Error fetching user profile:", error);
-                setState(RequestStatus.ERROR)
-           })
+                apiRequest = api.fetchIssuersConfiguration;
+                const {
+                    data: issuerConfigurationResponse,
+                    error: issuerConfigurationResponseError
+                } = await issuersConfigurationApi.fetchData({
+                    url: apiRequest.url(params.issuerId ?? ''),
+                    apiConfig: apiRequest
+                })
+                if (issuerConfigurationResponseError) {
+                    setState(RequestStatus.ERROR);
+                    return;
+                }
+                dispatch(storeFilteredCredentials(issuerConfigurationResponse?.response));
+                dispatch(storeCredentials(issuerConfigurationResponse?.response));
+                setState(RequestStatus.DONE);
+            } catch (error: any) {
+                console.error("Error fetching user profile or issuers info:", error);
+                setState(RequestStatus.ERROR);
+            }
         };
         void fetchCall();
     }, []);

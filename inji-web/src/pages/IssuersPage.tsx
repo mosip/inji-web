@@ -39,12 +39,13 @@ export const IssuersPage: React.FC<IssuerPageProps> = ({className}) => {
 
         const initializeIssuersData = async () => {
             if (isUserLoggedIn()) {
-                fetchUserProfile().then(async () => {
+                try {
+                    await fetchUserProfile();
                     await fetchIssuers();
-                }).catch((error: any) => {
+                } catch (error: any) {
                     console.error("Error fetching user profile:", error);
                     toast.error(t("errorContent"));
-                })
+                }
             } else {
                 await fetchIssuers();
             }
