@@ -1,6 +1,7 @@
 import {IssuerConfigurationObject, WalletCredential} from '../types/data';
-import { LandingPageWrapperProps } from '../components/Common/LandingPageWrapper';
-import { NavBarProps } from '../types/components';
+import {LandingPageWrapperProps} from '../components/Common/LandingPageWrapper';
+import {NavBarProps} from '../types/components';
+
 export const mockIssuerDisplayArrayObject = {
     name: "Name",
     language: "en",
@@ -48,7 +49,7 @@ export const mockCredentials: IssuerConfigurationObject = {
     "grant_types_supported": ["authorization_code"]
 };
 
-export const mockVerifiableCredentials : WalletCredential[] = [
+export const mockVerifiableCredentials: WalletCredential[] = [
     {
         credentialId: 'cred-1',
         issuerDisplayName: 'DMV',
@@ -67,33 +68,33 @@ export const mockVerifiableCredentials : WalletCredential[] = [
 
 
 export const mockIssuerObject = {
-        name: 'Test Issuer',
-        desc: 'Test Description',
-        protocol: 'OTP' as 'OTP', // Explicitly set the type to 'OTP' or 'OpenId4VCI'
-        issuer_id: 'test-issuer',
-        authorization_endpoint: 'https://auth.test.com',
-        credentials_endpoint: 'https://credentials.test.com',
-        display: [{
-            name: "Name",
-            language: "en",
-            locale: "en",
-            logo: {
-                url: "https://url.com",
-                alt_text: "alt text of the url"
-            },
-            title: "Title",
-            description: "Description",
-        }],
-        client_id: 'test-client-id',
-        redirect_uri:'test-redirect-uri',
-        token_endpoint:'test-token_endpoint',
-        proxy_token_endpoint:'test-proxy_token_endpoint',
-        client_alias:'',
-        ovp_qr_enabled: true,
-        scopes_supported: ['scope1', 'scope2']
+    name: 'Test Issuer',
+    desc: 'Test Description',
+    protocol: 'OTP' as 'OTP', // Explicitly set the type to 'OTP' or 'OpenId4VCI'
+    issuer_id: 'test-issuer',
+    authorization_endpoint: 'https://auth.test.com',
+    credentials_endpoint: 'https://credentials.test.com',
+    display: [{
+        name: "Name",
+        language: "en",
+        locale: "en",
+        logo: {
+            url: "https://url.com",
+            alt_text: "alt text of the url"
+        },
+        title: "Title",
+        description: "Description",
+    }],
+    client_id: 'test-client-id',
+    redirect_uri: 'test-redirect-uri',
+    token_endpoint: 'test-token_endpoint',
+    proxy_token_endpoint: 'test-proxy_token_endpoint',
+    client_alias: '',
+    ovp_qr_enabled: true,
+    scopes_supported: ['scope1', 'scope2']
 }
 
-export const mockIssuerObjectList =  [
+export const mockIssuerObjectList = [
     {
         name: 'Issuer 1',
         desc: 'Description 1',
@@ -106,7 +107,7 @@ export const mockIssuerObjectList =  [
                 name: 'Issuer 1',
                 language: 'en',
                 locale: 'en-US',
-                logo: { url: 'https://issuer1.com/logo.png', alt_text: 'Issuer 1 Logo' },
+                logo: {url: 'https://issuer1.com/logo.png', alt_text: 'Issuer 1 Logo'},
                 title: 'Issuer 1 Title',
                 description: 'Issuer 1 Description',
             },
@@ -131,7 +132,7 @@ export const mockIssuerObjectList =  [
                 name: 'Issuer 2',
                 language: 'en',
                 locale: 'en-US',
-                logo: { url: 'https://issuer2.com/logo.png', alt_text: 'Issuer 2 Logo' },
+                logo: {url: 'https://issuer2.com/logo.png', alt_text: 'Issuer 2 Logo'},
                 title: 'Issuer 2 Title',
                 description: 'Issuer 2 Description',
             },
@@ -157,4 +158,40 @@ export const mockNavBarProps: NavBarProps = {
     title: 'Test Title',
     link: '/test-link',
     search: true,
+};
+
+export const credentialWellknown: IssuerConfigurationObject = {
+    credentials_supported: [
+        {
+            name: "InsuranceCredential",
+            scope: "mosip_vc_ldp",
+            display: [
+                {
+                    name: "Health Insurance",
+                    locale: "en",
+                    logo: "https://url.com"
+                }
+            ]
+        },
+        {
+            name: "AnotherCredential",
+            scope: "mosip_ldp_vc",
+            display: [
+                {
+                    name: "Another Credential",
+                    locale: "en",
+                    logo: "https://url.com"
+                }
+            ]
+        }
+    ],
+    "authorization_endpoint": "https://env.net/authorize",
+    "grant_types_supported": ["authorization_code"]
+};
+
+export const userProfile = {
+    profilePictureUrl: 'https://example.com/photo.jpg',
+    displayName: 'John Doe',
+    email: 'john@example.com',
+    walletId: '12345',
 };

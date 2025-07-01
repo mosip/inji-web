@@ -3,11 +3,11 @@ import { mockStorageModule } from '../../test-utils/mockUtils';
 import { SessionObject } from '../../types/data';
 
 // Set up the storage mock before the tests run
-jest.mock('../../utils/Storage');
+jest.mock('../../utils/AppStorage');
 mockStorageModule();
 
 // Import the mocked storage after setting up the mock
-import { Storage as mockStorage } from '../../utils/Storage';
+import { AppStorage as mockStorage } from '../../utils/AppStorage';
 
 describe('Test Session Management Functions', () => {
   const mockSession: SessionObject = {

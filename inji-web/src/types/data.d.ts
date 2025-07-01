@@ -1,5 +1,7 @@
 import {MethodType} from "../utils/api";
 import React from "react";
+import {RequestStatus} from "../utils/constants.ts";
+import {AxiosError} from "axios";
 // This file contains type definitions for various objects / models used in the application.
 
 export type IssuerWellknownDisplayArrayObject = {
@@ -53,6 +55,7 @@ export type IssuerObject = {
     ovp_qr_enabled: boolean;
     scopes_supported: string[];
 };
+
 export type ResponseTypeObject = {
     id?: string;
     version?: string;
@@ -60,11 +63,16 @@ export type ResponseTypeObject = {
     responsetime?: string;
     metadata?: string;
     response?: any;
-    errors?: [];
+    errors?: ErrorType[];
 
     access_token?: string;
     expires_in?: number;
     token_type?: string;
+};
+
+export type ErrorType = {
+    errorCode: string;
+    errorMessage: string;
 };
 
 type DownloadSessionCredentialTypeObj = {
@@ -84,7 +92,9 @@ export type ApiRequest = {
     url: (...args: string[]) => string;
     methodType: MethodType;
     headers: (...args: string[]) => any;
-    credentials?:RequestCredentials;
+    credentials?: RequestCredentials;
+    responseType?: "json" | "blob";
+    includeXSRFToken?: boolean;
 };
 
 export type LanguageObject = {
@@ -103,13 +113,14 @@ export type WalletCredential = {
 export type FAQAccordionItemType = {
     key: string;
     title: string;
-    content: (string | {__html: string})[];
+    content: (string | { __html: string })[];
 };
 
 export type User = {
     displayName: string;
     profilePictureUrl: string;
     email: string;
+    walletId?: string;
 };
 
 export type SidebarItemType = {
@@ -117,11 +128,6 @@ export type SidebarItemType = {
     text: string;
     path: string;
     key: string;
-};
-
-export type ErrorType = {
-    errorCode: string;
-    errorMessage: string;
 };
 
 export type DropdownItem = {
@@ -153,6 +159,7 @@ type GuestRequestBody = {
 }
 
 export type TokenRequestBody = LoggedInRequestBody | GuestRequestBody;
+
 export interface MenuItemType {
     label: string;
     onClick: () => void;
@@ -165,3 +172,20 @@ export interface InstructionItem {
     id: string;
     content: React.ReactNode;
 }
+
+export interface Wallet {
+    walletId: string;
+    walletName: string;
+}
+
+export type ApiError = AxiosError<ErrorType | ResponseTypeObject>;
+
+export interface ApiResult<T> {
+    data: T | null;
+    error: ApiError | Error | null;
+    status: number | null;
+    state: RequestStatus;
+    headers: object;
+    ok: () => boolean;
+}
+

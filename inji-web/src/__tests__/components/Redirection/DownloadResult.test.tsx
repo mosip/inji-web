@@ -1,8 +1,8 @@
 import {renderWithProvider} from '../../../test-utils/mockUtils';
 import {DownloadResult} from '../../../components/Redirection/DownloadResult';
-import {RequestStatus} from '../../../hooks/useFetch';
 import {screen} from "@testing-library/react";
 import {useUser} from "../../../hooks/User/useUser";
+import {RequestStatus} from "../../../utils/constants";
 
 const mockLandingPageWrapper = jest.fn();
 jest.mock('../../../components/Common/LandingPageWrapper', () => ({

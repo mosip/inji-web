@@ -1,25 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {getActiveSession, removeActiveSession} from '../utils/sessions';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import {NavBar} from '../components/Common/NavBar';
-import {RequestStatus, useFetch} from '../hooks/useFetch';
 import {DownloadResult} from '../components/Redirection/DownloadResult';
-import {api, MethodType} from '../utils/api';
+import {api} from '../utils/api';
 import {SessionObject, TokenRequestBody} from '../types/data';
 import {useTranslation} from 'react-i18next';
 import {downloadCredentialPDF, getErrorObject, getTokenRequestBody} from '../utils/misc';
 import {getIssuerDisplayObjectForCurrentLanguage} from '../utils/i18n';
-import {RootState} from '../types/redux';
-import {useSelector} from 'react-redux';
-import {useCookies} from 'react-cookie';
 import {useUser} from '../hooks/User/useUser';
-import {ROUTES} from "../utils/constants";
+import {RequestStatus, ROUTES} from "../utils/constants";
 import {useDownloadSessionDetails} from "../hooks/User/useDownloadSession";
+import {useApi} from "../hooks/useApi";
+import {useSelector} from "react-redux";
+import {RootState} from "../types/redux";
 
 export const RedirectionPage: React.FC = () => {
-    const {error, state, response, fetchRequest} = useFetch();
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
+    const [searchParams] = useSearchParams();
     const redirectedSessionId = searchParams.get("state");
     const activeSessionInfo: any = getActiveSession(redirectedSessionId);
     const credentialType = activeSessionInfo?.selectedCredentialType?.type;
@@ -30,28 +27,21 @@ export const RedirectionPage: React.FC = () => {
     const [completedDownload, setCompletedDownload] = useState<boolean>(false);
     const displayObject = getIssuerDisplayObjectForCurrentLanguage(session?.selectedIssuer?.display ?? []);
     const language = useSelector((state: RootState) => state.common.language);
-    const [cookies] = useCookies(["XSRF-TOKEN"]);
     const {isUserLoggedIn} = useUser();
     const navigate = useNavigate();
     const {addSession, updateSession} = useDownloadSessionDetails();
+    const vcDownloadApi = useApi()
 
     const handleLoggedInDownloadFlow = async (issuerId: string, requestBody: TokenRequestBody) => {
-        const apiRequest = api.downloadVCInloginFlow;
         const downloadId = addSession(credentialTypeDisplayObj, RequestStatus.LOADING);
         navigate(ROUTES.USER_ISSUER(issuerId))
-        let credentialDownloadResponse = await fetch(
-            apiRequest.url(),
-            {
-                method: MethodType[apiRequest.methodType],
-                headers: {
-                    ...apiRequest.headers(language),
-                    'X-XSRF-TOKEN': cookies['XSRF-TOKEN']
-                },
-                credentials: apiRequest.credentials,
-                body: JSON.stringify(requestBody),
-            }
-        );
-        if (credentialDownloadResponse.ok) {
+        const credentialDownloadResponse = await vcDownloadApi.fetchData({
+            body: requestBody,
+            apiConfig: api.downloadVCInloginFlow,
+            headers: api.downloadVCInloginFlow.headers(language)
+        });
+
+        if (credentialDownloadResponse.ok()) {
             updateSession(downloadId, RequestStatus.DONE)
         } else {
             updateSession(downloadId, RequestStatus.ERROR)
@@ -60,18 +50,14 @@ export const RedirectionPage: React.FC = () => {
 
     const handleGuestDownloadFlow = async (requestBody: TokenRequestBody) => {
         const urlState = searchParams.get('state') ?? '';
-        const apiRequest = api.fetchTokenAnddownloadVc;
-        const credentialDownloadResponse = await fetchRequest(
-            apiRequest.url(),
-            apiRequest.methodType,
-            apiRequest.headers(),
-            apiRequest.credentials,
-            new URLSearchParams(requestBody)
-        );
+        const credentialDownloadResponse = await vcDownloadApi.fetchData({
+            body: requestBody,
+            apiConfig: api.fetchTokenAnddownloadVc
+        })
 
-        if (state !== RequestStatus.ERROR) {
+        if (credentialDownloadResponse.state !== RequestStatus.ERROR) {
             await downloadCredentialPDF(
-                credentialDownloadResponse,
+                credentialDownloadResponse.data,
                 credentialType + ".pdf"
             );
             setCompletedDownload(true);
@@ -116,7 +102,7 @@ export const RedirectionPage: React.FC = () => {
         const downloadCredential = async () => {
             await fetchToken();
         }
-        downloadCredential().then(r => console.info("Downloaded credential call finished"));
+        void downloadCredential();
     }, []);
 
     const loadStatusOfRedirection = () => {
@@ -125,8 +111,8 @@ export const RedirectionPage: React.FC = () => {
                                    subTitle={t("error.invalidSession.subTitle")}
                                    state={RequestStatus.ERROR}/>
         }
-        if (state === RequestStatus.ERROR && error) {
-            const errorObject = getErrorObject(response);
+        if (vcDownloadApi.state === RequestStatus.ERROR) {
+            const errorObject = getErrorObject(vcDownloadApi.data);
             return <DownloadResult title={t(errorObject.code)}
                                    subTitle={t(errorObject.message)}
                                    state={RequestStatus.ERROR}/>

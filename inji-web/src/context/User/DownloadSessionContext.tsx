@@ -1,8 +1,8 @@
 import {CredentialTypeDisplayArrayObject} from "../../types/data";
-import {RequestStatus} from "../../hooks/useFetch";
 import React, {createContext, useMemo, useState} from "react";
 import {DownloadSessionContextType} from "../../types/contextTypes";
 import {generateRandomString} from "../../utils/misc";
+import {RequestStatus} from "../../utils/constants";
 
 export interface SessionStatus {
     credentialTypeDisplayObj: CredentialTypeDisplayArrayObject[];

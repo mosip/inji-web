@@ -5,7 +5,7 @@ import { render, screen, act } from '@testing-library/react';
 import { Layout } from '../../../components/User/Layout';
 import * as i18n from '../../../utils/i18n';
 import { showToast } from '../../../components/Common/toast/ToastWrapper';
-import { RequestStatus } from '../../../hooks/useFetch';
+import {RequestStatus} from "../../../utils/constants";
 
 jest.mock('../../../components/User/Header', () => ({
   Header: ({ headerRef, headerHeight }: any) => (

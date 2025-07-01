@@ -1,9 +1,9 @@
-import {RequestStatus} from "../../../hooks/useFetch";
 import React from "react";
 import {DownloadResult} from "../../Redirection/DownloadResult";
 import {CredentialTypesPageStyles} from "../../../pages/User/CredentialTypes/CredentialTypesPageStyles";
 import {useTranslation} from "react-i18next";
 import {CredentialListWrapper} from "../../Credentials/CredentialListWrapper";
+import {RequestStatus} from "../../../utils/constants";
 
 interface CredentialTypesPageContentProps {
     downloadStatus: RequestStatus | null;
