@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen, fireEvent, waitFor, within} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor, within} from '@testing-library/react';
 import {VCDetailView} from "../../../components/VC/VCDetailView";
 import {mockUseTranslation} from "../../../test-utils/mockUtils";
 import {mockVerifiableCredentials} from "../../../test-utils/mockObjects";
@@ -8,9 +8,9 @@ import {WalletCredential} from "../../../types/data";
 mockUseTranslation()
 jest.mock('../../../components/Preview/PDFViewer', () => ({
   PDFViewer: ({ previewContent } : {
-      previewContent: string
+      previewContent: Blob
   }) => (
-    <div data-testid="pdf-viewer">{previewContent}</div>
+    <div data-testid="pdf-viewer">{previewContent && previewContent instanceof Blob ? "Test PDF Content" : ""}</div>
   ),
 }));
 
@@ -18,7 +18,7 @@ describe('VCDetailView', () => {
   const mockCredential : WalletCredential = mockVerifiableCredentials[0];
 
   const mockProps = {
-    previewContent: 'Test PDF Content',
+    previewContent: new Blob(['Test PDF Content'], { type: "application/pdf" }),
     onClose: jest.fn(),
     onDownload: jest.fn().mockResolvedValue(undefined),
     credential: mockCredential
@@ -39,7 +39,12 @@ describe('VCDetailView', () => {
   });
 
   it('should not render modal when previewContent is empty', () => {
-    render(<VCDetailView {...mockProps} previewContent="" />);
+    render(<VCDetailView {...({
+        previewContent: null as any as Blob, // Simulating no content
+        onClose: jest.fn(),
+        onDownload: jest.fn().mockResolvedValue(undefined),
+        credential: mockCredential
+    })} />);
 
     expect(screen.queryByTestId('vc-card-detail-view')).not.toBeInTheDocument();
   });
