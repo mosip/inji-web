@@ -122,7 +122,23 @@ export const AppRouter = () => {
                     element={wrapElement(<AuthorizationPage/>)}
                 />
                 <Route path={Pages.USER}>
-                    <Route path={Pages.PASSCODE} element={wrapElement(<PasscodePage/>)}/>
+                    <Route path={Pages.PASSCODE} element={
+                        isUserLoggedIn() ? (
+                            <RedirectToUserHome/>
+                        ) : (
+                            wrapElement(<PasscodePage/>, false)
+                        )
+                    }/>
+                    <Route
+                        path={Pages.RESET_PASSCODE}
+                        element={
+                            isUserLoggedIn() ? (
+                                <RedirectToUserHome/>
+                            ) : (
+                                wrapElement(<ResetPasscodePage/>, false)
+                            )
+                        }
+                    />
                     <Route element={<Layout/>}>
                         <Route path={Pages.ISSUERS} element={<RedirectToUserHome/>}/>
                         <Route path={Pages.HOME} element={<DashboardHomePage/>}/>
@@ -136,10 +152,6 @@ export const AppRouter = () => {
                         <Route path={Pages.PROFILE} element={<ProfilePage/>}/>
                         <Route path={Pages.FAQ} element={<FAQPage withHome={true}/>}/>
                     </Route>
-                    <Route
-                        path={Pages.RESET_PASSCODE}
-                        element={wrapElement(<ResetPasscodePage/>)}
-                    />
                 </Route>
 
                 <Route path="/*" element={wrapElement(<PageNotFound/>)}/>
