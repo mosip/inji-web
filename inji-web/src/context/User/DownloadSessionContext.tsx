@@ -81,6 +81,7 @@ export const DownloadSessionProvider: React.FC<{ children: React.ReactNode }> = 
             setCurrentSessionDownloadId,
             setLatestDownloadedSessionId
         }),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [downloadInProgressSessions, currentSessionDownloadId, latestDownloadedSessionId]
     );
 

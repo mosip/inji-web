@@ -90,6 +90,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
             removeUser,
             removeWallet
         }),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [user, walletId, error, isLoading]
     );
 

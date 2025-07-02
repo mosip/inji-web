@@ -38,7 +38,7 @@ export const CredentialsPage: React.FC = () => {
     }
 
     useEffect(() => {
-        const fetchCall = async () => {
+        const fetchIssuerAndConfiguration = async () => {
             let apiRequest: ApiRequest = api.fetchSpecificIssuer;
             let response = await fetchData(
                 {
@@ -65,7 +65,8 @@ export const CredentialsPage: React.FC = () => {
             dispatch(storeFilteredCredentials(response?.data?.response));
             dispatch(storeCredentials(response?.data?.response));
         };
-        fetchCall();
+        void fetchIssuerAndConfiguration();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

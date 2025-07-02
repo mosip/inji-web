@@ -44,7 +44,7 @@ export function useInterceptor() {
                 navigate(ROUTES.ROOT)
             }
         }
-        return Promise.reject(error);
+        return Promise.reject(error as unknown as Error);
     });
 
     useEffect(() => {

@@ -99,10 +99,8 @@ export const RedirectionPage: React.FC = () => {
     };
 
     useEffect(() => {
-        const downloadCredential = async () => {
-            await fetchToken();
-        }
-        void downloadCredential();
+        void fetchToken();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const loadStatusOfRedirection = () => {
