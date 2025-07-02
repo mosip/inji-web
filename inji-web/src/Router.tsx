@@ -85,19 +85,19 @@ export const AppRouter = () => {
         );
     };
 
+    function renderBasedOnAuthStatus(Element: React.FC) {
+        return isUserLoggedIn() ? (
+            <RedirectToUserHome/>
+        ) : (
+            wrapElement(<Element/>, false)
+        );
+    }
+
     return (
         <>
             <LoginSessionStatusChecker/>
             <Routes>
-                <Route
-                    path={ROUTES.ROOT}
-                    element={
-                        isUserLoggedIn() ? (
-                            <RedirectToUserHome/>
-                        ) : (
-                            wrapElement(<HomePage/>, false)
-                        )
-                    }
+                <Route path={ROUTES.ROOT} element={renderBasedOnAuthStatus(HomePage)}
                 />
                 <Route
                     path={Pages.ISSUERS}
@@ -122,22 +122,8 @@ export const AppRouter = () => {
                     element={wrapElement(<AuthorizationPage/>)}
                 />
                 <Route path={Pages.USER}>
-                    <Route path={Pages.PASSCODE} element={
-                        isUserLoggedIn() ? (
-                            <RedirectToUserHome/>
-                        ) : (
-                            wrapElement(<PasscodePage/>, false)
-                        )
-                    }/>
-                    <Route
-                        path={Pages.RESET_PASSCODE}
-                        element={
-                            isUserLoggedIn() ? (
-                                <RedirectToUserHome/>
-                            ) : (
-                                wrapElement(<ResetPasscodePage/>, false)
-                            )
-                        }
+                    <Route path={Pages.PASSCODE} element={renderBasedOnAuthStatus(PasscodePage)}/>
+                    <Route path={Pages.RESET_PASSCODE} element={renderBasedOnAuthStatus(ResetPasscodePage)}
                     />
                     <Route element={<Layout/>}>
                         <Route path={Pages.ISSUERS} element={<RedirectToUserHome/>}/>
