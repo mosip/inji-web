@@ -27,6 +27,24 @@ export const PasscodePage: React.FC = () => {
     const createWalletApi = useApi<Wallet>();
     const walletsApi = useApi<Wallet[]>();
     const unlockWalletApi = useApi<Wallet>();
+    const [canUnlockWallet, setCanUnlockWallet] = useState<boolean>(true);
+
+    const handleWalletStatusError = (errorCode: string, checkElseCase: boolean) => {
+        if (
+            errorCode === 'temporarily_locked' ||
+            errorCode === 'permanently_locked' ||
+            errorCode === 'last_attempt_before_lockout'
+        ) {
+            setError(t(`error.walletStatus.${errorCode}`));
+            if (errorCode != 'last_attempt_before_lockout') {
+                setCanUnlockWallet(false);
+                setPasscode(Array(6).fill(''));
+                setConfirmPasscode(Array(6).fill(''));
+            }
+        } else if (checkElseCase) {
+            setError(t('error.incorrectPasscodeError'));
+        }
+    }
 
     const fetchWallets = async () => {
         try {
@@ -46,13 +64,7 @@ export const PasscodePage: React.FC = () => {
 
             if (wallets && wallets.length > 0) {
                 const walletStatus = wallets[0].walletStatus;
-                if (
-                    walletStatus === 'wallet_temporarily_locked' ||
-                    walletStatus === 'wallet_permanently_locked' ||
-                    walletStatus === 'last_attempt_before_lockout'
-                ) {
-                    setError(t(`error.status.${walletStatus}`));
-                }
+                handleWalletStatusError(walletStatus, false);
             }
         } catch (error) {
             console.error('Error occurred while fetching Wallets:', error);
@@ -81,67 +93,51 @@ export const PasscodePage: React.FC = () => {
             throw new Error('Wallet not found');
         }
 
-        try {
-            const response = await unlockWalletApi.fetchData({
-                apiConfig: api.unlockWallet,
-                body: {walletPin: pin},
-                url: api.unlockWallet.url(walletId),
-            })
+        const response = await unlockWalletApi.fetchData({
+            apiConfig: api.unlockWallet,
+            body: {walletPin: pin},
+            url: api.unlockWallet.url(walletId),
+        })
 
-            if (!response.ok()) {
-                console.error("Error occurred while unlocking Wallet:", response.error);
-                const errorCode = ((response.error as ApiError)?.response?.data as ErrorType).errorCode;
-                if (
-                    errorCode === 'wallet_temporarily_locked' ||
-                    errorCode === 'wallet_permanently_locked' ||
-                    errorCode === 'last_attempt_before_lockout'
-                ) {
-                    setError(t(`error.status.${errorCode}`));
-                } else {
-                    setError(t('error.incorrectPasscodeError'));
-                }
-                throw response.error;
-            }
-            saveWalletId(walletId)
-        } catch (error) {
-            throw error;
+        if (!response.ok()) {
+            console.error("Error occurred while unlocking Wallet:", response.error);
+            const errorCode = ((response.error as ApiError)?.response?.data as ErrorType).errorCode;
+            handleWalletStatusError(errorCode, true);
+            throw response.error;
         }
+        saveWalletId(walletId)
     };
 
     const createWallet = async () => {
-        try {
-            const pin = passcode.join('');
-            const confirmPin = confirmPasscode.join('');
+        const pin = passcode.join('');
+        const confirmPin = confirmPasscode.join('');
 
-            if (pin !== confirmPin) {
-                setError(t('error.passcodeMismatchError'));
-                throw new Error('Pin and Confirm Pin mismatch');
-            }
-
-            const response = await createWalletApi.fetchData({
-                apiConfig: api.createWalletWithPin,
-                body: {
-                    walletPin: pin,
-                    confirmWalletPin: confirmPasscode.join(''),
-                    walletName: null
-                },
-            })
-
-            if (!response.ok()) {
-                const errorMessage = ((response.error as ApiError)?.response?.data as ErrorType).errorMessage ?? t('unknown-error');
-                setError(
-                    `${t('error.createWalletError')}: ${errorMessage}`
-                );
-                throw response.error;
-            }
-
-            const createdWallet = response.data!;
-            await unlockWallet(createdWallet.walletId, pin);
-
-            setWallets([{walletId: createdWallet.walletId}]);
-        } catch (error) {
-            throw error;
+        if (pin !== confirmPin) {
+            setError(t('error.passcodeMismatchError'));
+            throw new Error('Pin and Confirm Pin mismatch');
         }
+
+        const response = await createWalletApi.fetchData({
+            apiConfig: api.createWalletWithPin,
+            body: {
+                walletPin: pin,
+                confirmWalletPin: confirmPasscode.join(''),
+                walletName: null
+            },
+        })
+
+        if (!response.ok()) {
+            const errorMessage = ((response.error as ApiError)?.response?.data as ErrorType).errorMessage ?? t('unknown-error');
+            setError(
+                `${t('error.createWalletError')}: ${errorMessage}`
+            );
+            throw response.error;
+        }
+
+        const createdWallet = response.data!;
+        await unlockWallet(createdWallet.walletId, pin);
+
+        setWallets([{walletId: createdWallet.walletId}]);
     };
 
     const handleUnlockSuccess = () => {
@@ -214,7 +210,8 @@ export const PasscodePage: React.FC = () => {
     }
 
     function renderPasscodeInput(label: string, value: string[], onChange: (values: string[]) => void, testId: string) {
-        return <PasscodeInput label={label} value={value} onChange={onChange} testId={testId}/>;
+        return <PasscodeInput label={label} value={value} onChange={onChange} testId={testId}
+                              canUnlockWallet={canUnlockWallet}/>;
     }
 
     const renderContent = () => {

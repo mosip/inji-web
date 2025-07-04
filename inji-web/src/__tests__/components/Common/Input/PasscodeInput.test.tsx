@@ -9,7 +9,8 @@ describe('PasscodeInput', () => {
         label: 'Test Passcode',
         value: ['', '', '', '', '', ''],
         onChange: mockOnChange,
-        testId: 'test-passcode-input'
+        testId: 'test-passcode-input',
+        canUnlockWallet: true
     };
 
     beforeEach(() => {

@@ -100,9 +100,9 @@
       "createWalletError":"Wallet creation unsuccessful",
       "incorrectPasscodeError":"That passcode doesn’t seem right. Please try again, or tap ‘Forgot Passcode’ if you need help resetting it",
       "fetchWalletsError":"Error in fetching wallets",
-      "status": {
-        "wallet_temporarily_locked": "You’ve reached the maximum number of attempts. Your wallet is now temporarily locked for sometime",
-        "wallet_permanently_locked": "Your, wallet has been permanently locked due to multiple failed attempts. Please click on forgot password to reset your wallet to continue",
+      "walletStatus": {
+        "temporarily_locked": "You’ve reached the maximum number of attempts. Your wallet is now temporarily locked for sometime",
+        "permanently_locked": "Your wallet has been permanently locked due to multiple failed attempts. Please click on forgot password to reset your wallet to continue",
         "last_attempt_before_lockout": "Incorrect passcode. Last attempt remaining before your wallet is permanently locked"
       }
     }
