@@ -1,11 +1,12 @@
 import React, {createRef, ReactElement} from 'react';
 import {render, RenderOptions} from '@testing-library/react';
 import {Provider} from 'react-redux';
-import {BrowserRouter, BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, BrowserRouter as Router, MemoryRouter, Route, Routes} from 'react-router-dom';
 import {reduxStore} from '../redux/reduxStore';
 import {UserProvider} from '../context/User/UserContext';
 import {DownloadSessionProvider} from '../context/User/DownloadSessionContext';
 import {showToast} from '../components/Common/toast/ToastWrapper';
+import {CookiesProvider} from "react-cookie";
 
 export const setupShowToastMock = () => {
     (showToast as jest.Mock).mockClear();
@@ -26,9 +27,9 @@ export const setupShowToastMock = () => {
             expect(showToast).toHaveBeenCalledWith(
                 expect.objectContaining({
                     message,
-                    ...(type && { type }),
-                    ...(testId && { testId }),
-                    ...(options && { options })
+                    ...(type && {type}),
+                    ...(testId && {testId}),
+                    ...(options && {options})
                 })
             );
         },
@@ -75,21 +76,21 @@ export const mockStorageModule = () => {
 // Mock for localStorage
 export const mockLocalStorage = () => {
     let store: { [key: string]: string } = {};
-  
+
     const localStorageMock = {
-      getItem: jest.fn((key: string) => store[key] || null),
-      setItem: jest.fn((key: string, value: string) => {
-        store[key] = value;
-      })
+        getItem: jest.fn((key: string) => store[key] || null),
+        setItem: jest.fn((key: string, value: string) => {
+            store[key] = value;
+        })
     };
-  
-    Object.defineProperty(window, 'localStorage', { 
-      value: localStorageMock,
-      writable: true
+
+    Object.defineProperty(window, 'localStorage', {
+        value: localStorageMock,
+        writable: true
     });
-  
+
     return localStorageMock;
-  };
+};
 
 
 // Crypto Mock
@@ -116,7 +117,7 @@ export const mockUseSearchCredentials = () => {
     jest.mock('../components/Credentials/SearchCredential', () => ({
         SearchCredential: () => <></>,
     }));
- };
+};
 
 export const mockUseLanguageSelector = () => {
     jest.mock('../components/Common/LanguageSelector', () => ({
@@ -124,7 +125,8 @@ export const mockUseLanguageSelector = () => {
     }));
 };
 
-interface RenderWithProviderOptions extends Omit<RenderOptions, 'queries'> {}
+interface RenderWithProviderOptions extends Omit<RenderOptions, 'queries'> {
+}
 
 export const renderWithProvider = (element: ReactElement, options?: RenderWithProviderOptions) => {
     return render(
@@ -138,18 +140,30 @@ export const renderWithProvider = (element: ReactElement, options?: RenderWithPr
         options
     );
 };
-    
-export const mockUseParams = ()=>{
-    jest.mock('react-router-dom', () => ({
-        ...jest.requireActual('react-router-dom'),
-        useParams: () => ({ issuerId: 'test-issuer-id' }),
-      }));   
+
+export const renderMemoryRouterWithProvider = (element: ReactElement, initialEntries? : Array<string>) => {
+        return render(
+            <CookiesProvider>
+                <UserProvider>
+                    <DownloadSessionProvider>
+                        <MemoryRouter initialEntries={initialEntries}>{element}</MemoryRouter>
+                    </DownloadSessionProvider>
+                </UserProvider>
+            </CookiesProvider>
+        );
 };
 
-export const mockApiObject = () =>{
+export const mockUseParams = () => {
+    jest.mock('react-router-dom', () => ({
+        ...jest.requireActual('react-router-dom'),
+        useParams: () => ({issuerId: 'test-issuer-id'}),
+    }));
+};
+
+export const mockApiObject = () => {
     return jest.mock('../utils/api.ts', () => ({
         api: {
-          mimotoHost: 'https://mocked-api-host',
+            mimotoHost: 'https://mocked-api-host',
             fetchWalletVCs: {
                 url: jest.fn().mockReturnValue('/api/wallet/credentials'),
                 headers: jest.fn().mockReturnValue({
@@ -161,28 +175,28 @@ export const mockApiObject = () =>{
     }));
 };
 
-export const mockusei18n = ()=>{
+export const mockusei18n = () => {
     jest.mock('react-i18next', () => ({
         useTranslation: () => ({
-          t: (key: string) => key,
+            t: (key: string) => key,
         }),
         initReactI18next: {
-          type: '3rdParty',
-          init: jest.fn(),
+            type: '3rdParty',
+            init: jest.fn(),
         },
-      }));
+    }));
 
 };
 
 export const mockWindowLocation = (url: string) => {
     const location = new URL(url) as unknown as Location;
     Object.defineProperty(window, 'location', {
-      value: location,
-      writable: true,
+        value: location,
+        writable: true,
     });
-  };
+};
 
-export const renderWithRouter = (Element: React.ReactElement, { route = '/' } = {}) => {
+export const renderWithRouter = (Element: React.ReactElement, {route = '/'} = {}) => {
     window.history.pushState({}, 'Test page', route);
     return render(
         <BrowserRouter>
@@ -197,8 +211,8 @@ export const renderWithRouter = (Element: React.ReactElement, { route = '/' } = 
             </Provider>
         </BrowserRouter>
     );
-  };
+};
 
 export const createRefElement = () => {
-  return createRef<HTMLDivElement>();
+    return createRef<HTMLDivElement>();
 };
