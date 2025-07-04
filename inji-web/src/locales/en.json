@@ -103,7 +103,7 @@
       "status": {
         "wallet_temporarily_locked": "You’ve reached the maximum number of attempts. Your wallet is now temporarily locked for sometime",
         "wallet_permanently_locked": "Your, wallet has been permanently locked due to multiple failed attempts. Please click on forgot password to reset your wallet to continue",
-        "one_attempt_left_before_permanent_lock": "Incorrect passcode. Last attempt remaining before your wallet is permanently locked"
+        "last_attempt_before_lockout": "Incorrect passcode. Last attempt remaining before your wallet is permanently locked"
       }
     }
   },

@@ -103,7 +103,7 @@
       "status": {
         "wallet_temporarily_locked": "Vous avez atteint le nombre maximal de tentatives. Votre portefeuille est temporairement bloqué.",
         "wallet_permanently_locked": "Votre portefeuille a été définitivement verrouillé suite à plusieurs tentatives infructueuses. Veuillez cliquer sur « Mot de passe oublié » pour réinitialiser votre portefeuille et continuer.",
-        "one_attempt_left_before_permanent_lock": "Code d'accès incorrect. Dernière tentative avant le blocage définitif de votre portefeuille."
+        "last_attempt_before_lockout": "Code d'accès incorrect. Dernière tentative avant le blocage définitif de votre portefeuille."
       }
     }
   },

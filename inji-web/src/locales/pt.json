@@ -103,7 +103,7 @@
       "status": {
         "wallet_temporarily_locked": "Você atingiu o número máximo de tentativas. Sua carteira está temporariamente bloqueada por algum tempo.",
         "wallet_permanently_locked": "Sua carteira foi bloqueada permanentemente devido a várias tentativas frustradas. Clique em \"Esqueceu a senha?\" para redefinir sua carteira e continuar.",
-        "one_attempt_left_before_permanent_lock": "Senha incorreta. Última tentativa restante antes que sua carteira seja bloqueada permanentemente."
+        "last_attempt_before_lockout": "Senha incorreta. Última tentativa restante antes que sua carteira seja bloqueada permanentemente."
       }
     }
   },

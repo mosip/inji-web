@@ -49,7 +49,7 @@ export const PasscodePage: React.FC = () => {
                 if (
                     walletStatus === 'wallet_temporarily_locked' ||
                     walletStatus === 'wallet_permanently_locked' ||
-                    walletStatus === 'one_attempt_left_before_permanent_lock'
+                    walletStatus === 'last_attempt_before_lockout'
                 ) {
                     setError(t(`error.status.${walletStatus}`));
                 }
@@ -94,7 +94,7 @@ export const PasscodePage: React.FC = () => {
                 if (
                     errorCode === 'wallet_temporarily_locked' ||
                     errorCode === 'wallet_permanently_locked' ||
-                    errorCode === 'one_attempt_left_before_permanent_lock'
+                    errorCode === 'last_attempt_before_lockout'
                 ) {
                     setError(t(`error.status.${errorCode}`));
                 } else {
