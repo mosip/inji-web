@@ -4,7 +4,7 @@ import {AppRouter} from "../Router";
 import * as useUserModule from "../hooks/User/useUser";
 import {renderMemoryRouterWithProvider} from "../test-utils/mockUtils";
 import {AppStorage} from "../utils/AppStorage";
-import {userProfile} from "../test-utils/mockObjects";
+import {mockStore, userProfile} from "../test-utils/mockObjects";
 
 jest.mock('../components/Preview/PDFViewer', () => ({
     PDFViewer: ({previewContent}: {
@@ -13,15 +13,6 @@ jest.mock('../components/Preview/PDFViewer', () => ({
         <div data-testid="pdf-viewer">{previewContent && previewContent instanceof Blob ? "Test PDF Content" : ""}</div>
     ),
 }));
-const mockStore = {
-    getState: () => ({
-        common: {
-            language: 'en'
-        }
-    }),
-    subscribe: jest.fn(),
-    dispatch: jest.fn(),
-};
 
 jest.mock('react-redux', () => ({
     ...jest.requireActual('react-redux'),

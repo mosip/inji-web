@@ -70,7 +70,7 @@ export const mockVerifiableCredentials: WalletCredential[] = [
 export const mockIssuerObject = {
     name: 'Test Issuer',
     desc: 'Test Description',
-    protocol: 'OTP' as 'OTP', // Explicitly set the type to 'OTP' or 'OpenId4VCI'
+    protocol: 'OTP' as const, // Explicitly set the type to 'OTP' or 'OpenId4VCI'
     issuer_id: 'test-issuer',
     authorization_endpoint: 'https://auth.test.com',
     credentials_endpoint: 'https://credentials.test.com',
@@ -194,4 +194,14 @@ export const userProfile = {
     displayName: 'John Doe',
     email: 'john@example.com',
     walletId: '12345',
+};
+
+export const mockStore = {
+    getState: () => ({
+        common: {
+            language: 'en'
+        }
+    }),
+    subscribe: jest.fn(),
+    dispatch: jest.fn(),
 };
