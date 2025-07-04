@@ -98,8 +98,13 @@
       "passcodeLengthError": "O PIN deve ter 6 dígitos.",
       "passcodeMismatchError": "As senhas não correspondem. Certifique-se de que ambos os campos de senha correspondam exatamente. Digite novamente e tente novamente.",
       "createWalletError": "Falha na criação da carteira.",
-      "incorrectPasscodeError": "Senha inválida. A senha que você digitou está incorreta. Verifique e tente novamente ou clique em \"Esqueci a senha\" para redefini-la.",
-      "fetchWalletsError": "Erro ao buscar carteiras."
+      "incorrectPasscodeError": "Essa senha não parece correta. Tente novamente ou toque em \"Esqueci a senha\" se precisar de ajuda para redefini-la.",
+      "fetchWalletsError": "Erro ao buscar carteiras.",
+      "status": {
+        "wallet_temporarily_locked": "Você atingiu o número máximo de tentativas. Sua carteira está temporariamente bloqueada por algum tempo.",
+        "wallet_permanently_locked": "Sua carteira foi bloqueada permanentemente devido a várias tentativas frustradas. Clique em \"Esqueceu a senha?\" para redefinir sua carteira e continuar.",
+        "one_attempt_left_before_permanent_lock": "Senha incorreta. Última tentativa restante antes que sua carteira seja bloqueada permanentemente."
+      }
     }
   },
   "ResetPasscodePage": {

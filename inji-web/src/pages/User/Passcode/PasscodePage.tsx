@@ -41,7 +41,19 @@ export const PasscodePage: React.FC = () => {
                 return
             }
 
-            setWallets(response.data);
+            const wallets = response.data;
+            setWallets(wallets);
+
+            if (wallets && wallets.length > 0) {
+                const walletStatus = wallets[0].walletStatus;
+                if (
+                    walletStatus === 'wallet_temporarily_locked' ||
+                    walletStatus === 'wallet_permanently_locked' ||
+                    walletStatus === 'one_attempt_left_before_permanent_lock'
+                ) {
+                    setError(t(`error.status.${walletStatus}`));
+                }
+            }
         } catch (error) {
             console.error('Error occurred while fetching Wallets:', error);
             setError(t('error.fetchWalletsError'));
@@ -78,7 +90,16 @@ export const PasscodePage: React.FC = () => {
 
             if (!response.ok()) {
                 console.error("Error occurred while unlocking Wallet:", response.error);
-                setError(t('error.incorrectPasscodeError'));
+                const errorCode = ((response.error as ApiError)?.response?.data as ErrorType).errorCode;
+                if (
+                    errorCode === 'wallet_temporarily_locked' ||
+                    errorCode === 'wallet_permanently_locked' ||
+                    errorCode === 'one_attempt_left_before_permanent_lock'
+                ) {
+                    setError(t(`error.status.${errorCode}`));
+                } else {
+                    setError(t('error.incorrectPasscodeError'));
+                }
                 throw response.error;
             }
             saveWalletId(walletId)

@@ -98,8 +98,13 @@
       "passcodeLengthError":"Please Enter 6 digits in the Pin",
       "passcodeMismatchError":"Passcodes do not match. Please ensure both passcode fields match exactly. Re-enter and try again.",
       "createWalletError":"Wallet creation unsuccessful",
-      "incorrectPasscodeError":"Invalid Passcode. The passcode you entered is incorrect. Please check and try again, or click 'Forgot Passcode' to reset it.",
-      "fetchWalletsError":"Error in fetching wallets"
+      "incorrectPasscodeError":"That passcode doesn’t seem right. Please try again, or tap ‘Forgot Passcode’ if you need help resetting it",
+      "fetchWalletsError":"Error in fetching wallets",
+      "status": {
+        "wallet_temporarily_locked": "You’ve reached the maximum number of attempts. Your wallet is now temporarily locked for sometime",
+        "wallet_permanently_locked": "Your, wallet has been permanently locked due to multiple failed attempts. Please click on forgot password to reset your wallet to continue",
+        "one_attempt_left_before_permanent_lock": "Incorrect passcode. Last attempt remaining before your wallet is permanently locked"
+      }
     }
   },
   "ResetPasscodePage": {
