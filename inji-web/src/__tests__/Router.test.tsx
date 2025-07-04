@@ -3,6 +3,8 @@ import {screen} from "@testing-library/react";
 import {AppRouter} from "../Router";
 import * as useUserModule from "../hooks/User/useUser";
 import {renderMemoryRouterWithProvider} from "../test-utils/mockUtils";
+import {AppStorage} from "../utils/AppStorage";
+import {userProfile} from "../test-utils/mockObjects";
 
 jest.mock('../components/Preview/PDFViewer', () => ({
     PDFViewer: ({previewContent}: {
@@ -45,8 +47,13 @@ jest.mock("../pages/User/ResetPasscode/ResetPasscodePage", () => ({
 jest.mock("../pages/User/Home/HomePage.tsx", () => ({
     HomePage: () => <div>UserHomePage</div>
 }));
-jest.mock("../components/User/Header.tsx",() => ({
+jest.mock("../components/User/Header.tsx", () => ({
     Header: () => <div data-testid="user-header">User Header</div>
+}));
+jest.mock("../utils/AppStorage.ts", () => ({
+    AppStorage: {
+        getItem: jest.fn(),
+    },
 }));
 
 describe("AppRouter", () => {
@@ -64,56 +71,51 @@ describe("AppRouter", () => {
         expect(screen.getByTestId("footer")).toBeInTheDocument();
     });
 
-    it("redirects to user home when logged in and url is root page", () => {
-        (useUserModule.useUser as jest.Mock).mockReturnValue({ isUserLoggedIn: () => true });
-        renderMemoryRouterWithProvider(<AppRouter/>, ["/"]);
+    it.each`
+    route                    | notExpected           | expected
+    ${"/"}                   | ${"HomePage"}          | ${"UserHomePage"}
+    ${"/user/passcode"}      | ${"PasscodePage"}     | ${"UserHomePage"}
+    ${"/user/reset-passcode"}| ${"ResetPasscodePage"}| ${"UserHomePage"}
+`(
+        "redirects to user home when logged in and url is $route",
+        ({route, notExpected, expected}) => {
+            (useUserModule.useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => true});
 
-        expect(screen.getByText("UserHomePage")).toBeInTheDocument();
-    });
+            renderMemoryRouterWithProvider(<AppRouter/>, [route]);
 
-    it("redirects to user home when logged in and url is passcode page", () => {
-        (useUserModule.useUser as jest.Mock).mockReturnValue({ isUserLoggedIn: () => true });
-        renderMemoryRouterWithProvider(<AppRouter/>, ["/user/passcode"]);
+            expect(screen.queryByText(notExpected)).not.toBeInTheDocument();
+            expect(screen.getByText(expected)).toBeInTheDocument();
+        }
+    );
 
-        expect(screen.queryByText("PasscodePage")).not.toBeInTheDocument();
-        expect(screen.getByText("UserHomePage")).toBeInTheDocument();
-    });
+    it.each`
+    route                      | expectedPage         | notExpectedPage
+    ${"/user/passcode"}        | ${"PasscodePage"}    | ${"UserHomePage"}
+    ${"/user/reset-passcode"}  | ${"ResetPasscodePage"} | ${"UserHomePage"}
+`(
+        'should not redirect to home page when user is not logged in (but session active) when url is $route',
+        ({route, expectedPage, notExpectedPage}) => {
+            (useUserModule.useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => false});
+            // Mock storage with user (active session) but locked wallet
+            (AppStorage.getItem as jest.Mock).mockReturnValue(JSON.stringify(userProfile));
 
-    it('should not redirect to home page when user is not logged in (but session active) when url is passcode page', () => {
-        (useUserModule.useUser as jest.Mock).mockReturnValue({ isUserLoggedIn: () => false });
-        renderMemoryRouterWithProvider(<AppRouter/>, ["/user/passcode"]);
+            renderMemoryRouterWithProvider(<AppRouter/>, [route]);
 
-        expect(screen.getByText("PasscodePage")).toBeInTheDocument();
-        expect(screen.queryByText("UserHomePage")).not.toBeInTheDocument();
-    });
+            expect(screen.getByText(expectedPage)).toBeInTheDocument();
+            expect(screen.queryByText(notExpectedPage)).not.toBeInTheDocument();
+        }
+    );
 
-    it('should not redirect to home page when user is not logged in (but session active) when url is reset-passcode page', () => {
-        (useUserModule.useUser as jest.Mock).mockReturnValue({ isUserLoggedIn: () => false });
-        renderMemoryRouterWithProvider(<AppRouter/>, ["/user/passcode"]);
-
-        expect(screen.getByText("PasscodePage")).toBeInTheDocument();
-        expect(screen.queryByText("UserHomePage")).not.toBeInTheDocument();
-    });
-
-    it("redirects to user home when logged in and url is reset-passcode page", () => {
-        (useUserModule.useUser as jest.Mock).mockReturnValue({ isUserLoggedIn: () => true });
-        renderMemoryRouterWithProvider(<AppRouter/>, ["/user/reset-passcode"]);
-
-        expect(screen.queryByText("ResetPasscodePage")).not.toBeInTheDocument();
-        expect(screen.getByText("UserHomePage")).toBeInTheDocument();
-    });
-
-    it("renders 404 page for unknown route when in logged in mode", () => {
-        (useUserModule.useUser as jest.Mock).mockReturnValue({ isUserLoggedIn: () => true });
-        renderMemoryRouterWithProvider(<AppRouter/>, ["/unknown"]);
-
-        expect(screen.getByText(/not found/i)).toBeInTheDocument();
-    });
-
-    it("renders 404 page for unknown route when in guest mode", () => {
-        (useUserModule.useUser as jest.Mock).mockReturnValue({ isUserLoggedIn: () => false });
-        renderMemoryRouterWithProvider(<AppRouter/>, ["/unknown"]);
-
-        expect(screen.getByText(/not found/i)).toBeInTheDocument();
-    });
+    it.each`
+    isLoggedIn | description                | route         | expectedText
+    ${true}    | ${"logged in mode"}        | ${"/unknown"} | ${/not found/i}
+    ${false}   | ${"guest mode"}            | ${"/unknown"} | ${/not found/i}
+`(
+        "renders 404 page for unknown route when in $description",
+        ({isLoggedIn, route, expectedText}) => {
+            (useUserModule.useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => isLoggedIn});
+            renderMemoryRouterWithProvider(<AppRouter/>, [route]);
+            expect(screen.getByText(expectedText)).toBeInTheDocument();
+        }
+    );
 });
