@@ -40,12 +40,8 @@ public class BaseTest {
 	private static int passedCount = 0;
 	private static int failedCount = 0;
 	private static int totalCount = 0;
-
 	public static WebDriver driver;
-
-	public static final String url = System.getenv("env") != null ? System.getenv("TEST_URL")
-			: "https://injiweb.qa-inji1.mosip.net/";
-
+	public static final String url = System.getenv("TEST_URL");	
 	private long scenarioStartTime;
 	public static JavascriptExecutor jse;
 	public String PdfNameForMosip = "MosipVerifiableCredential.pdf";
@@ -152,7 +148,6 @@ public class BaseTest {
 	public static void afterAll() {
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			utils.HttpUtils.cleanupWallets();
-			System.out.println("Shutdown hook triggered. Uploading report...");
 			utils.HttpUtils.cleanupWallets();
 			if (extent != null) {
 				extent.flush();
@@ -182,14 +177,13 @@ public class BaseTest {
 		}
 
 		executeLsCommand(System.getProperty("user.dir") + "/test-output/");
-		String timestamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm").format(new Date());
-		String name = InjiWebConfigManager.getapiEndUser() + "-" + timestamp + "-T-" + totalCount + "-P-" + passedCount
-				+ "-F-" + failedCount + ".html";
-		String newFileName = "InjiWebUi-" + name;
-		File originalReportFile = new File(System.getProperty("user.dir") + "/test-output/ExtentReport.html");
+		String originalFileName = ExtentReportManager.getCurrentReportFileName();
+		File originalReportFile = new File(System.getProperty("user.dir") + "/test-output/" + originalFileName);
+		String nameWithoutExt = originalFileName.replace(".html", "");
+		String newFileName = nameWithoutExt + "-T-" + totalCount + "-P-" + passedCount + "-F-" + failedCount + ".html";
+
 		File newReportFile = new File(System.getProperty("user.dir") + "/test-output/" + newFileName);
 
-		// Rename the file
 		if (originalReportFile.renameTo(newReportFile)) {
 			System.out.println("Report renamed to: " + newFileName);
 		} else {
@@ -218,11 +212,9 @@ public class BaseTest {
 			Process process;
 
 			if (os.contains("win")) {
-				// Windows command (show all files including hidden)
 				String windowsDirectoryPath = directoryPath.replace("/", File.separator);
 				process = Runtime.getRuntime().exec(new String[] { "cmd.exe", "/c", "dir /a " + windowsDirectoryPath });
 			} else {
-				// Unix-like command (show all files including hidden)
 				process = Runtime.getRuntime().exec(new String[] { "/bin/sh", "-c", "ls -al " + directoryPath });
 			}
 
