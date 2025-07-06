@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
@@ -20,28 +19,20 @@ public class ExtentReportManager {
 
 	public static void initReport() {
 		if (extent == null) {
-			// ✅ Safely get envUrl and trim trailing slash
 			String envUrl = BaseTest.url;
 			if (envUrl.endsWith("/")) {
 				envUrl = envUrl.substring(0, envUrl.length() - 1);
 			}
-
-			// ✅ Safe timestamp
 			timestamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm").format(new Date());
-
 			String domainOnly = envUrl.replaceFirst("https?://", "");
 			String formattedEnvName = "InjiWebUi-" + domainOnly;
 			currentReportFileName = formattedEnvName + "-" + timestamp + ".html";
-
 			ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("test-output/" + currentReportFileName);
 			htmlReporter.config().setTheme(Theme.DARK);
 			htmlReporter.config().setDocumentTitle("Automation Report");
 			htmlReporter.config().setReportName(formattedEnvName);
-
 			extent = new ExtentReports();
 			extent.attachReporter(htmlReporter);
-
-			// ✅ Pass envUrl and timestamp explicitly
 			addSystemInfo(envUrl, timestamp);
 		}
 	}
