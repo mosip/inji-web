@@ -75,7 +75,7 @@ export const PasscodePageTemplate: React.FC<PasscodePageTemplateProps> = ({
                             >
                                 <div className={PasscodePageTemplateStyles.errorContentWrapper}>
                                     <div className={PasscodePageTemplateStyles.errorTextContainer}>
-                                        <span className={PasscodePageTemplateStyles.errorText}>
+                                        <span data-testid={`error-msg-${testId}`}  className={PasscodePageTemplateStyles.errorText}>
                                           {error}
                                         </span>
                                     </div>

@@ -4,5 +4,5 @@ export const PasscodePageStyles = {
   forgotPasscodeContainer: "w-full mx-auto flex justify-start sm:mb-2 mb-1",
   forgotPasscodeButton: "text-sm md:text-md font-semibold",
   buttonContainer: "w-full",
-  disabledButton: "bg-iw-gray74"
+  disabledButton: "grayscale"
 };
