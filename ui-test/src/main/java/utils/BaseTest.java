@@ -64,7 +64,6 @@ public class BaseTest {
 		try {
 			bsLocal.start(bsLocalArgs);
 		} catch (Exception e) {
-
 			e.printStackTrace();
 		}
 		totalCount++;
@@ -121,10 +120,8 @@ public class BaseTest {
 		try {
 			Field testCaseField = scenario.getClass().getDeclaredField("testCase");
 			testCaseField.setAccessible(true);
-			io.cucumber.plugin.event.TestCase testCase = (io.cucumber.plugin.event.TestCase) testCaseField
-					.get(scenario);
+			io.cucumber.plugin.event.TestCase testCase = (io.cucumber.plugin.event.TestCase) testCaseField.get(scenario);
 			List<TestStep> testSteps = testCase.getTestSteps();
-
 			for (TestStep step : testSteps) {
 				if (step instanceof PickleStepTestStep) {
 					return ((PickleStepTestStep) step).getStep().getText();
@@ -140,7 +137,7 @@ public class BaseTest {
 		if (driver != null) {
 			byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
 			ExtentCucumberAdapter.getCurrentStep().addScreenCaptureFromBase64String(
-					java.util.Base64.getEncoder().encodeToString(screenshot), "Failure Screenshot");
+				java.util.Base64.getEncoder().encodeToString(screenshot), "Failure Screenshot");
 		}
 	}
 
@@ -152,11 +149,15 @@ public class BaseTest {
 			if (extent != null) {
 				extent.flush();
 			}
+			try {
+				Thread.sleep(5000); // ensure report file is flushed before rename
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			pushReportsToS3();
 		}));
-
 	}
-
+	
 	public WebDriver getDriver() {
 		return driver;
 	}
@@ -170,24 +171,21 @@ public class BaseTest {
 		executeLsCommand(System.getProperty("user.dir") + "/utils/");
 		executeLsCommand(System.getProperty("user.dir") + "/screenshots/");
 
-		try {
-			Thread.sleep(20000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		executeLsCommand(System.getProperty("user.dir") + "/test-output/");
 		String originalFileName = ExtentReportManager.getCurrentReportFileName();
 		File originalReportFile = new File(System.getProperty("user.dir") + "/test-output/" + originalFileName);
 		String nameWithoutExt = originalFileName.replace(".html", "");
 		String newFileName = nameWithoutExt + "-T-" + totalCount + "-P-" + passedCount + "-F-" + failedCount + ".html";
-
 		File newReportFile = new File(System.getProperty("user.dir") + "/test-output/" + newFileName);
 
+		System.out.println("Attempting to rename report file...");
+		System.out.println("Original: " + originalReportFile.getAbsolutePath());
+		System.out.println("Target:   " + newReportFile.getAbsolutePath());
+
 		if (originalReportFile.renameTo(newReportFile)) {
-			System.out.println("Report renamed to: " + newFileName);
+			System.out.println("✅ Report renamed to: " + newFileName);
 		} else {
-			System.out.println("Failed to rename the report file.");
+			System.out.println("❌ Failed to rename the report file.");
 		}
 
 		executeLsCommand(newReportFile.getAbsolutePath());
@@ -196,8 +194,7 @@ public class BaseTest {
 			S3Adapter s3Adapter = new S3Adapter();
 			boolean isStoreSuccess = false;
 			try {
-				isStoreSuccess = s3Adapter.putObject(ConfigManager.getS3Account(), "", null, null, newFileName,
-						newReportFile);
+				isStoreSuccess = s3Adapter.putObject(ConfigManager.getS3Account(), "", null, null, newFileName, newReportFile);
 				System.out.println("isStoreSuccess:: " + isStoreSuccess);
 			} catch (Exception e) {
 				System.out.println("Error occurred while pushing the object: " + e.getLocalizedMessage());
@@ -256,5 +253,4 @@ public class BaseTest {
 		}
 		return new String[] { issuerSearchText, issuerSearchTextforSunbird };
 	}
-
 }
