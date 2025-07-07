@@ -65,7 +65,7 @@ export const PasscodePage: React.FC = () => {
     const unlockWallet = async (walletId: string, pin: string) => {
         if (!walletId) {
             setError(t('error.walletNotFoundError'));
-            navigate(ROUTES.PASSCODE);
+            navigate(ROUTES.USER_PASSCODE);
             throw new Error('Wallet not found');
         }
 

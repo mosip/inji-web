@@ -22,41 +22,49 @@ const LoginSessionStatusChecker = () => {
     const {removeUser, fetchUserProfile} = useUser();
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
+    const isRootPage = useCallback(() => location.pathname === ROUTES.ROOT, [location.pathname]);
+
     const redirectToLogin = useCallback(() => {
         removeUser()
-        if (location.pathname !== ROUTES.ROOT) {
-            console.warn("Redirecting to / page as accessing protected route without login from ",location.pathname);
+        if (!isRootPage()) {
+            console.warn("Redirecting to / page as accessing protected route without login from ", location.pathname);
             navigate(ROUTES.ROOT)
         }
-    }, [location.pathname, navigate, removeUser]);
+    }, [isRootPage, location.pathname, navigate, removeUser]);
+
 
     const validateStatus = useCallback(() => {
         const user = AppStorage.getItem(KEYS.USER);
         const isSessionActive: boolean = !!user
         const walletId = AppStorage.getItem(KEYS.WALLET_ID);
         const isLoggedIn = !!walletId && isSessionActive;
-        const isPasscodeRelatedRoute = location.pathname === ROUTES.USER_RESET_PASSCODE || location.pathname === ROUTES.PASSCODE;
+        const isPasscodeRelatedRoute = location.pathname === ROUTES.USER_RESET_PASSCODE || location.pathname === ROUTES.USER_PASSCODE;
 
         /**
-         * If user is not logged in, ask them to login again or unlock wallet based on the session state.
+         * If user is not logged in, ask them to login again or unlock wallet based on the session state for a protected route.
+         * Guest routes are accessible without any restriction.
+         * Root page is a special case that is both a guest and a protected route.
+         *      - redirects to passcode page if session is active.
+         *      - redirects to home page if already logged in. (Handled in AppRouter.tsx)
+         *      - no redirection if on guest mode.
          */
-        if (!isLoggedIn && isLoginProtectedRoute(location.pathname)) {
-            // User can stay on passcode routes if session is active
-            if (isPasscodeRelatedRoute && isSessionActive) {
-                return;
-            }
 
+        if (!isLoggedIn && (isLoginProtectedRoute(location.pathname) || isRootPage())) {
             // Redirect based on session state
             if (isSessionActive) {
+                // User can stay on passcode routes if session is active
+                if (isPasscodeRelatedRoute) {
+                    return;
+                }
                 // Session active but wallet locked - redirect to passcode
                 console.warn('Session active but wallet locked, redirecting to passcode page');
-                navigate(ROUTES.PASSCODE);
+                navigate(ROUTES.USER_PASSCODE);
             } else {
                 // No active session - clear user data and redirect to log in
                 redirectToLogin()
             }
         }
-    }, [navigate, location.pathname, redirectToLogin]);
+    }, [location.pathname, isRootPage, navigate, redirectToLogin]);
 
 
     const fetchUser = useCallback(async () => {
