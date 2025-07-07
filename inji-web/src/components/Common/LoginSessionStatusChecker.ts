@@ -25,7 +25,7 @@ const LoginSessionStatusChecker = () => {
     const redirectToLogin = useCallback(() => {
         removeUser()
         if (location.pathname !== ROUTES.ROOT) {
-            console.warn("Redirecting to / page as accessing protected route without login from ",location.pathname);
+            console.warn("Redirecting to / page as accessing protected route without login from ", location.pathname);
             navigate(ROUTES.ROOT)
         }
     }, [location.pathname, navigate, removeUser]);
@@ -40,21 +40,20 @@ const LoginSessionStatusChecker = () => {
         /**
          * If user is not logged in, ask them to login again or unlock wallet based on the session state.
          */
-        if (!isLoggedIn && isLoginProtectedRoute(location.pathname)) {
+        // Redirect based on session state
+        if (isSessionActive) {
             // User can stay on passcode routes if session is active
-            if (isPasscodeRelatedRoute && isSessionActive) {
+            if (isPasscodeRelatedRoute) {
                 return;
             }
-
-            // Redirect based on session state
-            if (isSessionActive) {
-                // Session active but wallet locked - redirect to passcode
-                console.warn('Session active but wallet locked, redirecting to passcode page');
-                navigate(ROUTES.PASSCODE);
-            } else {
-                // No active session - clear user data and redirect to log in
-                redirectToLogin()
-            }
+            // Session active but wallet locked - redirect to passcode
+            console.warn('Session active but wallet locked, redirecting to passcode page');
+            navigate(ROUTES.PASSCODE);
+        }
+        // Trying to access a login protected route without being logged in
+        else if (!isLoggedIn && isLoginProtectedRoute(location.pathname)) {
+            // No active session - clear user data and redirect to log in
+            redirectToLogin()
         }
     }, [navigate, location.pathname, redirectToLogin]);
 

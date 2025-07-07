@@ -36,8 +36,14 @@ describe('LoginSessionStatusChecker', () => {
         });
     });
 
-    test('should redirect to passcode page when session is active but no wallet ID', async () => {
-        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
+    const excludedKeys = ['USER_RESET_PASSCODE', 'PASSCODE', 'USER_ISSUER', 'ISSUER'];
+    const nonPasscodeRelatedRoutes = Object.entries(ROUTES)
+        .filter(([key]) => !excludedKeys.includes(key))
+        .map(([_, value]) => value);
+    nonPasscodeRelatedRoutes.push(ROUTES.USER_ISSUER("issuer1"), ROUTES.ISSUER("issuer1"));
+
+    test.each(nonPasscodeRelatedRoutes)('should redirect to passcode page when session is active but no wallet ID for path %s', async (route) => {
+        (useLocation as jest.Mock).mockReturnValue({pathname: route});
         setupMockActiveSessionInStorage()
 
         render(<LoginSessionStatusChecker/>);
@@ -46,6 +52,17 @@ describe('LoginSessionStatusChecker', () => {
             expect(mockNavigate).toHaveBeenCalledWith(ROUTES.PASSCODE)
         )
     });
+
+    const passcodeRelatedRoutes = [ROUTES.PASSCODE, ROUTES.USER_RESET_PASSCODE];
+    test.each(passcodeRelatedRoutes)('should not redirect to login when accessing passcode related route - %s with active session', (route) => {
+        (useLocation as jest.Mock).mockReturnValue({pathname: route});
+        setupMockActiveSessionInStorage();
+
+        render(<LoginSessionStatusChecker/>);
+
+        expect(mockNavigate).not.toHaveBeenCalled();
+        expect(mockNavigate).not.toHaveBeenCalledWith(ROUTES.PASSCODE);
+    })
 
     test('should redirect to login (root page) when accessing protected route without being logged in', async () => {
         (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
@@ -76,15 +93,6 @@ describe('LoginSessionStatusChecker', () => {
 
         expect(mockNavigate).not.toHaveBeenCalled();
     });
-
-    test.each([ROUTES.PASSCODE, ROUTES.USER_RESET_PASSCODE])('should not redirect to login when accessing passcode related route - %s with active session', (route) => {
-        (useLocation as jest.Mock).mockReturnValue({pathname: route});
-        setupMockActiveSessionInStorage();
-
-        render(<LoginSessionStatusChecker/>);
-
-        expect(mockNavigate).not.toHaveBeenCalled();
-    })
 
     test("should not redirect to login when accessing non-protected route when session is active", () => {
         (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.FAQ});
