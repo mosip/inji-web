@@ -35,7 +35,7 @@ const LoginSessionStatusChecker = () => {
         const isSessionActive: boolean = !!user
         const walletId = AppStorage.getItem(KEYS.WALLET_ID);
         const isLoggedIn = !!walletId && isSessionActive;
-        const isPasscodeRelatedRoute = location.pathname === ROUTES.USER_RESET_PASSCODE || location.pathname === ROUTES.PASSCODE;
+        const isPasscodeRelatedRoute = location.pathname === ROUTES.USER_RESET_PASSCODE || location.pathname === ROUTES.USER_PASSCODE;
 
         /**
          * If user is not logged in, ask them to login again or unlock wallet based on the session state.
@@ -48,7 +48,7 @@ const LoginSessionStatusChecker = () => {
             }
             // Session active but wallet locked - redirect to passcode
             console.warn('Session active but wallet locked, redirecting to passcode page');
-            navigate(ROUTES.PASSCODE);
+            navigate(ROUTES.USER_PASSCODE);
         }
         // Trying to access a login protected route without being logged in
         else if (!isLoggedIn && isLoginProtectedRoute(location.pathname)) {

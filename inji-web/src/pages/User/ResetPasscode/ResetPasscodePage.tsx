@@ -21,7 +21,7 @@ export const ResetPasscodePage: React.FC = () => {
     const resetPasscodeApi = useApi()
 
     const handleBackNavigation = () => {
-        navigate(ROUTES.PASSCODE);
+        navigate(ROUTES.USER_PASSCODE);
     };
 
     const handleForgotPasscode = async () => {
@@ -37,7 +37,7 @@ export const ResetPasscodePage: React.FC = () => {
                 return
             }
             removeWallet();
-            navigate(ROUTES.PASSCODE);
+            navigate(ROUTES.USER_PASSCODE);
         } catch (error) {
             console.error('Error occurred while deleting Wallet:', error);
             setError(t('resetFailure'));

@@ -36,24 +36,24 @@ describe('LoginSessionStatusChecker', () => {
         });
     });
 
-    const excludedKeys = ['USER_RESET_PASSCODE', 'PASSCODE', 'USER_ISSUER', 'ISSUER'];
-    const nonPasscodeRelatedRoutes = Object.entries(ROUTES)
-        .filter(([key]) => !excludedKeys.includes(key))
+    const excludedKeys = ['USER_RESET_PASSCODE', 'USER_PASSCODE', 'USER_ISSUER', 'ISSUER'];
+    const nonPasscodeRelatedProtectedRoutes = Object.entries(ROUTES)
+        .filter(([key]) => !excludedKeys.includes(key) && key.startsWith('USER'))
         .map(([_, value]) => value);
-    nonPasscodeRelatedRoutes.push(ROUTES.USER_ISSUER("issuer1"), ROUTES.ISSUER("issuer1"));
+    nonPasscodeRelatedProtectedRoutes.push(ROUTES.USER_ISSUER("issuer1"), ROUTES.ISSUER("issuer1"));
 
-    test.each(nonPasscodeRelatedRoutes)('should redirect to passcode page when session is active but no wallet ID for path %s', async (route) => {
+    test.each(nonPasscodeRelatedProtectedRoutes)('should redirect to passcode page when session is active but no wallet ID for path %s', async (route) => {
         (useLocation as jest.Mock).mockReturnValue({pathname: route});
         setupMockActiveSessionInStorage()
 
         render(<LoginSessionStatusChecker/>);
 
         await waitFor(() =>
-            expect(mockNavigate).toHaveBeenCalledWith(ROUTES.PASSCODE)
+            expect(mockNavigate).toHaveBeenCalledWith(ROUTES.USER_PASSCODE)
         )
     });
 
-    const passcodeRelatedRoutes = [ROUTES.PASSCODE, ROUTES.USER_RESET_PASSCODE];
+    const passcodeRelatedRoutes = [ROUTES.USER_PASSCODE, ROUTES.USER_RESET_PASSCODE];
     test.each(passcodeRelatedRoutes)('should not redirect to login when accessing passcode related route - %s with active session', (route) => {
         (useLocation as jest.Mock).mockReturnValue({pathname: route});
         setupMockActiveSessionInStorage();
@@ -61,7 +61,7 @@ describe('LoginSessionStatusChecker', () => {
         render(<LoginSessionStatusChecker/>);
 
         expect(mockNavigate).not.toHaveBeenCalled();
-        expect(mockNavigate).not.toHaveBeenCalledWith(ROUTES.PASSCODE);
+        expect(mockNavigate).not.toHaveBeenCalledWith(ROUTES.USER_PASSCODE);
     })
 
     test('should redirect to login (root page) when accessing protected route without being logged in', async () => {
