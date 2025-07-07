@@ -36,11 +36,22 @@ describe('LoginSessionStatusChecker', () => {
         });
     });
 
-    const excludedKeys = ['USER_RESET_PASSCODE', 'USER_PASSCODE', 'USER_ISSUER', 'ISSUER'];
-    const nonPasscodeRelatedProtectedRoutes = Object.entries(ROUTES)
-        .filter(([key]) => !excludedKeys.includes(key) && key.startsWith('USER'))
+    const protectedRoutes = Object.entries(ROUTES)
+        .filter(([key]) => key.startsWith('USER') && key !== 'USER_ISSUER')
         .map(([_, value]) => value);
-    nonPasscodeRelatedProtectedRoutes.push(ROUTES.USER_ISSUER("issuer1"), ROUTES.ISSUER("issuer1"));
+    protectedRoutes.push(ROUTES.USER_ISSUER("issuer1"), ROUTES.ROOT);
+
+    const protectedRoutesWithoutRoot = protectedRoutes.filter(route => route !== ROUTES.ROOT);
+
+    const nonPasscodeRelatedProtectedRoutes = protectedRoutes.filter(route => route !== ROUTES.USER_RESET_PASSCODE && route !== ROUTES.USER_PASSCODE);
+
+    const unProtectedRoutes = Object.entries(ROUTES)
+        .filter(([key]) => !key.startsWith('USER') && key !== 'ISSUER')
+        .map(([_, value]) => value);
+    unProtectedRoutes.push(ROUTES.ISSUER("issuer1"));
+
+    const passcodeRelatedRoutes = [ROUTES.USER_PASSCODE, ROUTES.USER_RESET_PASSCODE];
+
 
     test.each(nonPasscodeRelatedProtectedRoutes)('should redirect to passcode page when session is active but no wallet ID for path %s', async (route) => {
         (useLocation as jest.Mock).mockReturnValue({pathname: route});
@@ -53,7 +64,15 @@ describe('LoginSessionStatusChecker', () => {
         )
     });
 
-    const passcodeRelatedRoutes = [ROUTES.USER_PASSCODE, ROUTES.USER_RESET_PASSCODE];
+    test.each(unProtectedRoutes)('should not redirect to login when accessing unprotected route - %s with active session', (route) => {
+        (useLocation as jest.Mock).mockReturnValue({pathname: route});
+        setupMockActiveSessionInStorage();
+
+        render(<LoginSessionStatusChecker/>);
+
+        expect(mockNavigate).not.toHaveBeenCalled();
+    })
+
     test.each(passcodeRelatedRoutes)('should not redirect to login when accessing passcode related route - %s with active session', (route) => {
         (useLocation as jest.Mock).mockReturnValue({pathname: route});
         setupMockActiveSessionInStorage();
@@ -64,8 +83,9 @@ describe('LoginSessionStatusChecker', () => {
         expect(mockNavigate).not.toHaveBeenCalledWith(ROUTES.USER_PASSCODE);
     })
 
-    test('should redirect to login (root page) when accessing protected route without being logged in', async () => {
-        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
+    // In case of accessing root page, we should not redirect to root page again
+    test.each(protectedRoutesWithoutRoot)('should redirect to login (root page) when accessing protected route - %s without being logged in', async (route) => {
+        (useLocation as jest.Mock).mockReturnValue({pathname: route});
         // Mock storage with no user and no wallet ID
         (AppStorage.getItem as jest.Mock).mockReturnValue(null);
 
@@ -85,8 +105,9 @@ describe('LoginSessionStatusChecker', () => {
         expect(mockNavigate).not.toHaveBeenCalled();
     })
 
-    test('should not redirect to login when user is logged in and accessing protected route', () => {
-        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
+    // Root page ("/") is a case where if logged in its redirected to user home page or not - This is handled in AppRouter so no extra redirection in LoginSessionStatusChecker
+    test.each(protectedRoutes)('should not redirect to login when user is logged in and accessing protected route - %s', (route) => {
+        (useLocation as jest.Mock).mockReturnValue({pathname: route});
         setupMockLoggedInStorage();
 
         render(<LoginSessionStatusChecker/>);
@@ -94,8 +115,17 @@ describe('LoginSessionStatusChecker', () => {
         expect(mockNavigate).not.toHaveBeenCalled();
     });
 
-    test("should not redirect to login when accessing non-protected route when session is active", () => {
-        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.FAQ});
+    test.each(unProtectedRoutes)('should not redirect to login when user is logged in and accessing unprotected route - %s', (route) => {
+        (useLocation as jest.Mock).mockReturnValue({pathname: route});
+        setupMockLoggedInStorage();
+
+        render(<LoginSessionStatusChecker/>);
+
+        expect(mockNavigate).not.toHaveBeenCalled();
+    });
+
+    test.each(unProtectedRoutes)("should not redirect to login when accessing unprotected route - %s when session is active", (route) => {
+        (useLocation as jest.Mock).mockReturnValue({pathname: route});
         setupMockLoggedInStorage()
 
         render(<LoginSessionStatusChecker/>);
