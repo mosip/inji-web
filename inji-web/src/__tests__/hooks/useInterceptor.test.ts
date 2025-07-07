@@ -137,7 +137,7 @@ describe("useInterceptor", () => {
         assertStoringOfCurrentLocation()
     })
 
-    test.each([ROUTES.PASSCODE, ROUTES.USER_RESET_PASSCODE])('should redirect to login when accessing protected API in passcode related page - %s and response is unauthorized', async (route) => {
+    test.each([ROUTES.USER_PASSCODE, ROUTES.USER_RESET_PASSCODE])('should redirect to login when accessing protected API in passcode related page - %s and response is unauthorized', async (route) => {
         (useLocation as jest.Mock).mockReturnValue({
             pathname: route,
             search: null,
