@@ -40,8 +40,7 @@ public class BaseTest {
 	private static int passedCount = 0;
 	private static int failedCount = 0;
 	private static int totalCount = 0;
-	public static WebDriver driver;
-	public static final String url = System.getenv("TEST_URL");	
+	public static WebDriver driver;	
 	private long scenarioStartTime;
 	public static JavascriptExecutor jse;
 	public String PdfNameForMosip = "MosipVerifiableCredential.pdf";
@@ -49,13 +48,31 @@ public class BaseTest {
 	public String PdfNameForLifeInsurance = "InsuranceCredential.pdf";
 	private static ExtentReports extent;
 	private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
-
 	String username = System.getenv("BROWSERSTACK_USERNAME");
 	String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
 	public final String URL = "https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
-
 	private Scenario scenario;
 
+	
+	public static final String url = System.getenv("TEST_URL") != null && !System.getenv("TEST_URL").isEmpty()
+		    ? System.getenv("TEST_URL")
+		    : loadFromProps("config/injiweb.properties", "injiWebUi");
+
+	private static String loadFromProps(String path, String key) {
+	    Properties props = new Properties();
+	    try (InputStream input = BaseTest.class.getClassLoader().getResourceAsStream(path)) {
+	        if (input != null) {
+	            props.load(input);
+	            return props.getProperty(key); // returns null if not found
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	    return null; // no default fallback
+	}
+
+	
+	
 	@Before
 	public void beforeAll(Scenario scenario) throws MalformedURLException {
 		Local bsLocal = new Local();
