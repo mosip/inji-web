@@ -101,7 +101,7 @@
       "incorrectPasscodeError": "Ce code d'accès ne semble pas correct. Veuillez réessayer ou appuyer sur « Mot de passe oublié » si vous avez besoin d'aide pour le réinitialiser.",
       "fetchWalletsError": "Échec du chargement des portefeuilles.",
       "walletStatus": {
-        "temporarily_locked": "Vous avez atteint le nombre maximal de tentatives. Votre portefeuille est temporairement bloqué.",
+        "temporarily_locked": "Vous avez atteint le nombre maximal de tentatives. Votre portefeuille est temporairement verrouillé. Veuillez réessayer ultérieurement.",
         "permanently_locked": "Votre portefeuille a été définitivement bloqué suite à plusieurs tentatives infructueuses. Cliquez sur « Mot de passe oublié » pour réinitialiser votre portefeuille et continuer.",
         "last_attempt_before_lockout": "Code d'accès incorrect. Dernière tentative avant le blocage définitif de votre portefeuille."
       }
