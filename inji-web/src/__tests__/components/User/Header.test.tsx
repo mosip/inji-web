@@ -109,7 +109,7 @@ describe('Header', () => {
 
     it('logs out and redirects on logout click', async () => {
         mockApiResponse({
-            response: {}
+            data: {}
         })
         render(
             <Header headerRef={mockHeaderRef} headerHeight={50}/>

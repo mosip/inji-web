@@ -119,7 +119,7 @@ describe('VCCardView Component', () => {
 
     it('should call download api when clicked on card for previewing VC', () => {
         mockApiResponse({
-            response: new Blob(),
+            data: new Blob(),
             headers: {"Content-Disposition": 'attachment; filename="credential.pdf"'},
         })
         renderWithProvider(
@@ -138,7 +138,7 @@ describe('VCCardView Component', () => {
 
     it('should call download api when pressing enter key for previewing VC', () => {
         mockApiResponse({
-            response: new Blob(),
+            data: new Blob(),
             headers: {"Content-Disposition": 'attachment; filename="credential.pdf"'},
         })
         renderWithProvider(
@@ -181,7 +181,7 @@ describe('VCCardView Component', () => {
 
     it('should call download api when download icon is clicked', () => {
         mockApiResponse({
-            response: new Blob(),
+            data: new Blob(),
             headers: {"Content-Disposition": 'attachment; filename="credential.pdf"'}
         });
         renderWithProvider(
@@ -254,7 +254,7 @@ describe('VCCardView Component', () => {
 
     it("should show the content given by the preview API when clicked on the card", async () => {
         mockApiResponse({
-            response: new Blob(['{"Name": "John"}'], {type: "application/pdf"}),
+            data: new Blob(['{"Name": "John"}'], {type: "application/pdf"}),
             headers: {"Content-Disposition": 'attachment; filename="credential.pdf"'}
         })
 
@@ -362,7 +362,7 @@ describe('VCCardView Component', () => {
     });
 
     it('should call refresh credentials method from prop post deletion of VC', async () => {
-        mockApiResponse({response: {}, status: 200,});
+        mockApiResponse({data: {}, status: 200,});
         renderWithProvider(
             <VCCardView
                 refreshCredentials={refreshCredentialsMock}
