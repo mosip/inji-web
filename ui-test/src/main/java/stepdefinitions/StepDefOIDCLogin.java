@@ -41,7 +41,7 @@ public class StepDefOIDCLogin {
 
 	private String sessionCookieName = "SESSION";
 	private String sessionCookieValue;
-	String baseUrl = HttpUtils.get("mosip.inji.web.url");
+	String baseUrl = BaseTest.url;
 
 	public static void updateConfigProperty(String key, String value) throws IOException {
 		File file = new File("src/test/resources/config.properties");
@@ -72,7 +72,6 @@ public class StepDefOIDCLogin {
 		String sessionCookieValue = sessionCookie.contains("=") ? sessionCookie.split("=", 2)[1].split(";")[0].trim()
 				: sessionCookie;
 		driver.get(baseUrl);
-
 		try {
 			boolean isDisplayed = loginpage.isgoogleButtonDisplayed();
 			assertTrue(isDisplayed, "google Login Button on Home page");
@@ -83,7 +82,6 @@ public class StepDefOIDCLogin {
 			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
 			throw e;
 		}
-
 		driver.manage().deleteAllCookies();
 
 		Cookie myCookie = new Cookie.Builder(sessionCookieName, sessionCookieValue)
@@ -91,11 +89,10 @@ public class StepDefOIDCLogin {
 				.isHttpOnly(true)
 				.isSecure(true)
 				.build();
-
 		Thread.sleep(10000);
 		driver.manage().addCookie(myCookie);
 		Thread.sleep(10000);
-		driver.navigate().refresh();
+		driver.navigate().refresh();		
 	}
 	
 	@Then("user enters the passcode {string}")

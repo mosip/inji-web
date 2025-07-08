@@ -12,8 +12,7 @@ public class HttpUtils {
 
 	private static final String PROPERTIES_PATH = "src/test/resources/config.properties";
 	private static final Properties properties = loadProperties();
-
-	// Unified method to get from Env > JVM > config.properties
+	public static String baseUrl = BaseTest.url;
 	public static String get(String key) {
 		String envValue = System.getenv(key);
 		if (envValue != null && !envValue.trim().isEmpty()) {
@@ -65,7 +64,6 @@ public class HttpUtils {
 	}
 
 	public static String getSessionCookieFromIdToken(String idToken) throws IOException {
-		String baseUrl = get("mosip.inji.web.url");
 		String tokenLoginUrl = baseUrl + "/v1/mimoto/auth/google/token-login";
 		URL url = new URL(tokenLoginUrl);
 
@@ -95,7 +93,6 @@ public class HttpUtils {
 	}
 
 	public static List<String> getWalletIds(String sessionCookie) throws IOException {
-		String baseUrl = get("mosip.inji.web.url");
 		String walletsUrl = baseUrl + "/v1/mimoto/wallets";
 		URL url = new URL(walletsUrl);
 
@@ -114,7 +111,6 @@ public class HttpUtils {
 	}
 
 	public static void deleteWallet(String walletId, String sessionCookie) throws IOException {
-		String baseUrl = get("mosip.inji.web.url");
 		String deleteUrl = baseUrl + "/v1/mimoto/wallets/" + walletId;
 		HttpURLConnection conn = (HttpURLConnection) new URL(deleteUrl).openConnection();
 		conn.setRequestMethod("DELETE");
