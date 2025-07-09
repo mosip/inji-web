@@ -12,29 +12,25 @@ exports[`ResponsiveIconButtonWithText Component matches snapshot with default pr
       <div
         class="w-full"
       >
-        <div
-          class="w-full bg-iw-primary text-center cursor-pointer items-center text-iw-text font-bold text-sm px-6 py-3 rounded-lg shadow hover:shadow-lg mr-1  bg-gradient-to-r from-iw-primary to-iw-secondary sm:hidden"
+        <button
+          class="w-full bg-iw-primary text-center items-center text-iw-text font-bold text-sm px-6 py-3 rounded-lg shadow text-white mr-1 hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary sm:hidden"
+          data-testid="btn-responsive-button"
         >
-          <button
-            class="text-white font-bold rounded-lg"
-            data-testid="btn-responsive-button"
+          <div
+            class="flex items-center justify-center gap-1.5"
           >
-            <div
-              class="flex items-center justify-center gap-1.5"
-            >
-              <span>
-                <div
-                  data-testid="test-icon"
-                >
-                  Icon
-                </div>
-              </span>
-              <span>
-                Download
-              </span>
-            </div>
-          </button>
-        </div>
+            <span>
+              <div
+                data-testid="test-icon"
+              >
+                Icon
+              </div>
+            </span>
+            <span>
+              Download
+            </span>
+          </div>
+        </button>
       </div>
     </span>
     <div
