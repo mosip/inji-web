@@ -211,7 +211,7 @@ export const PasscodePage: React.FC = () => {
 
     function renderPasscodeInput(label: string, value: string[], onChange: (values: string[]) => void, testId: string) {
         return <PasscodeInput label={label} value={value} onChange={onChange} testId={testId}
-                              canUnlockWallet={canUnlockWallet}/>;
+                              disabled={!canUnlockWallet}/>;
     }
 
     const renderContent = () => {

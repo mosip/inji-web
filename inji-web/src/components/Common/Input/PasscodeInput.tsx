@@ -7,7 +7,7 @@ interface PasscodeInputProps {
     value: string[];
     onChange: (values: string[]) => void;
     testId?: string;
-    canUnlockWallet: boolean;
+    disabled: boolean;
 }
 
 export const PasscodeInput: React.FC<PasscodeInputProps> = ({
@@ -15,7 +15,7 @@ export const PasscodeInput: React.FC<PasscodeInputProps> = ({
                                                                 value,
                                                                 onChange,
                                                                 testId,
-                                                                canUnlockWallet
+                                                                disabled
                                                             }) => {
     const [showPasscode, setShowPasscode] = useState(false);
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -52,7 +52,7 @@ export const PasscodeInput: React.FC<PasscodeInputProps> = ({
                                 inputMode="numeric"
                                 maxLength={1}
                                 value={digit}
-                                disabled={!canUnlockWallet}
+                                disabled={disabled}
                                 onChange={(e) =>
                                     handleInputChange(idx, e.target.value)
                                 }
@@ -85,7 +85,7 @@ export const PasscodeInput: React.FC<PasscodeInputProps> = ({
                     <div className={InputStyles.passcode.toggleGroup}>
                         <button
                             type="button"
-                            disabled={!canUnlockWallet}
+                            disabled={disabled}
                             onClick={() => setShowPasscode((prev) => !prev)}
                             className={InputStyles.passcode.toggleButton}
                             data-testid={`btn-toggle-visibility-${testId}`}
