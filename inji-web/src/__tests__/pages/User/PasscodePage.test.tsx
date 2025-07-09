@@ -10,6 +10,7 @@ import {setMockUseSelectorState} from "../../../test-utils/mockReactRedux";
 import {AppStorage} from "../../../utils/AppStorage";
 import userEvent from "@testing-library/user-event";
 import {useUser} from "../../../hooks/User/useUser";
+import {successWalletResponse} from "../../../test-utils/mockObjects";
 
 // Mocking the useTranslation hook from react-i18next
 jest.mock('react-i18next', () => ({
@@ -89,15 +90,30 @@ describe('Passcode', () => {
         });
     })
 
+    test("check if layout is matching with snapshot when Wallet exists", async () => {
+        mockApiResponse({data: successWalletResponse});
+        const {container} = renderWithProviders(<PasscodePage/>);
+
+        await waitFor(() => {
+            expect(mockUseApi.fetchData).toHaveBeenCalledTimes(1);
+        });
+
+        expect(container).toMatchSnapshot();
+    });
+
+    test("check if layout is matching with snapshot when Wallet doesn't exist", async () => {
+        mockApiResponse({data: []});
+        const {container} = renderWithProviders(<PasscodePage/>);
+
+        await waitFor(() => {
+            expect(mockUseApi.fetchData).toHaveBeenCalledTimes(1);
+        });
+
+        expect(container).toMatchSnapshot();
+    });
 
     test('renders passcode page, logo and title', async () => {
-        mockApiResponse({
-            data: [{
-                walletId: "2c2e1810-19c8-4c85-910d-aa1622412413",
-                walletName: null,
-                walletStatus: null
-            }]
-        })
+        mockApiResponse({data: successWalletResponse})
         renderWithProviders(<PasscodePage/>);
 
         await waitFor(() => {
@@ -115,13 +131,7 @@ describe('Passcode', () => {
     });
 
     test("should render enter passcode container along with forgot passcode and submit buttons when a Wallet exists", async () => {
-        mockApiResponse({
-            data: [{
-                walletId: "2c2e1810-19c8-4c85-910d-aa1622412413",
-                walletName: null,
-                walletStatus:null
-            }]
-        });
+        mockApiResponse({data: successWalletResponse});
         renderWithProviders(<PasscodePage/>);
 
         const passcodeInput = await screen.findByTestId("passcode-container");
@@ -154,18 +164,8 @@ describe('Passcode', () => {
         expect(submitButton).toBeDisabled();
     });
 
-    test.todo("check if layout is matching with snapshot when Wallet exists")
-
-    test.todo("check if layout is matching with snapshot when Wallet doesn't exists")
-
     test("should redirect to forgot passcode page when forgot passcode button is clicked", async () => {
-        mockApiResponse({
-            data: [{
-                walletId: "2c2e1810-19c8-4c85-910d-aa1622412413",
-                walletName: null,
-                walletStatus: null
-            }]
-        })
+        mockApiResponse({data: successWalletResponse})
         renderWithProviders(<PasscodePage/>);
 
         const forgotPasscodeButton = await screen.findByTestId("btn-forgot-passcode");
@@ -177,19 +177,7 @@ describe('Passcode', () => {
     })
 
     test("should redirect to home when successfully unlocked wallet", async () => {
-        mockApiResponseSequence([{
-            data: [{
-                walletId: "2c2e1810-19c8-4c85-910d-aa1622412413",
-                walletName: null,
-                walletStatus: null
-            }]
-        }, {
-            data: [{
-                walletId: "2c2e1810-19c8-4c85-910d-aa1622412413",
-                walletName: null,
-                walletStatus: null
-            }]
-        }])
+        mockApiResponseSequence([{data: successWalletResponse}, {data: successWalletResponse}])
         renderWithProviders(<PasscodePage/>);
 
         await enterPasscode()
@@ -211,15 +199,9 @@ describe('Passcode', () => {
             walletStatus: "permanently_locked",
             expectedError: "Your wallet has been permanently locked due to multiple failed attempts. Please click on forgot password to reset your wallet to continue",
             inputsDisabled: true,
-        },
-        {
-            name: "should display one attempt left before lockout error and enable input boxes when landing on the passcode page for a wallet with one attempt left before permanent lockout",
-            walletStatus: "last_attempt_before_lockout",
-            expectedError: "Incorrect passcode. Last attempt remaining before your wallet is permanently locked",
-            inputsDisabled: false,
-        },
+        }
     ])(
-        "$name",
+        "should display $walletStatus error and disable input boxes and submit button when landing on the passcode page for a already $walletStatus Wallet",
         async ({walletStatus, expectedError, inputsDisabled}) => {
             mockApiResponseSequence([{
                 data: [{
@@ -231,50 +213,24 @@ describe('Passcode', () => {
 
             renderWithProviders(<PasscodePage/>);
 
-            await verifyPasscodeInputsAndSubmitButtonState(expectedError, inputsDisabled, null, true);
+            await verifyPasscodeErrorAndInteractiveElementStatus(expectedError, inputsDisabled, null, true);
         }
     );
 
     test.each([
         {
-            name: "should display temporarily locked error and disable input boxes and submit button when unlock wallet endpoint returns temporarily_locked error code",
             walletStatus: "temporarily_locked",
             expectedError: "You’ve reached the maximum number of attempts. Your wallet is now temporarily locked for sometime",
-            inputsDisabled: true,
-            expectedInputValue: "",
-            submitButtonDisabled: true,
         },
         {
-            name: "should display permanently locked error and disable input boxes and submit button when unlock wallet endpoint returns permanently_locked error code",
             walletStatus: "permanently_locked",
             expectedError: "Your wallet has been permanently locked due to multiple failed attempts. Please click on forgot password to reset your wallet to continue",
-            inputsDisabled: true,
-            expectedInputValue: "",
-            submitButtonDisabled: true,
-        },
-        {
-            name: "should display one attempt left before lockout error and enable input boxes when unlock wallet endpoint returns last_attempt_before_lockout error code",
-            walletStatus: "last_attempt_before_lockout",
-            expectedError: "Incorrect passcode. Last attempt remaining before your wallet is permanently locked",
-            inputsDisabled: false,
-            expectedInputValue: "1",
-            submitButtonDisabled: false,
         },
     ])(
-        "$name",
-        async ({walletStatus, expectedError, inputsDisabled, expectedInputValue, submitButtonDisabled}) => {
-            mockApiResponseSequence([{
-                data: [{
-                    walletId: "2c2e110-19c8-4c85-910d-aa1622412413",
-                    walletName: null,
-                    walletStatus: null
-                }]
-            }, {
-                error: {
-                    response: {
-                        data: {errorCode: walletStatus},
-                    },
-                },
+        "should display $walletStatus error and disable input boxes and submit button when unlock wallet endpoint returns $walletStatus error code",
+        async ({walletStatus, expectedError}) => {
+            mockApiResponseSequence([{data: successWalletResponse}, {
+                error: {response: {data: {errorCode: walletStatus}}},
                 status: 400
             }])
 
@@ -287,27 +243,51 @@ describe('Passcode', () => {
             await enterPasscode();
             userEvent.click(screen.getByTestId("btn-submit-passcode"));
 
-            await verifyPasscodeInputsAndSubmitButtonState(expectedError, inputsDisabled, expectedInputValue, submitButtonDisabled);
+            await screen.findByTestId("error-msg-passcode");
+            await verifyPasscodeErrorAndInteractiveElementStatus(expectedError, true, "", true);
         }
     );
 
-
-// Testing for re-login scenario in case of session expiry
-    test("should redirect to previous url post unlock if available", async () => {
-        (AppStorage.getItem as jest.Mock).mockReturnValue("/previous-url");
+    test("should display one attempt left before lockout error and enable input boxes when landing on the passcode page for a wallet with one attempt left before permanent lockout", async () => {
+        const expectedErrorMsg = "Incorrect passcode. Last attempt remaining before your wallet is permanently locked";
         mockApiResponseSequence([{
             data: [{
                 walletId: "2c2e1810-19c8-4c85-910d-aa1622412413",
                 walletName: null,
-                walletStatus: null
-            }]
-        }, {
-            data: [{
-                walletId: "2c2e1810-19c8-4c85-910d-aa1622412413",
-                walletName: null,
-                walletStatus: null
+                walletStatus: "last_attempt_before_lockout"
             }]
         }])
+
+        renderWithProviders(<PasscodePage/>);
+
+        await screen.findByTestId("error-msg-passcode");
+        await verifyPasscodeErrorAndInteractiveElementStatus(expectedErrorMsg, false, null, true);
+    });
+
+    test("should display one attempt left before lockout error and enable input boxes when unlock wallet endpoint returns last_attempt_before_lockout error code", async () => {
+        const expectedErrorMsg = "Incorrect passcode. Last attempt remaining before your wallet is permanently locked";
+        mockApiResponseSequence([{data: successWalletResponse}, {
+            error: {response: {data: {errorCode: "last_attempt_before_lockout"}}},
+            status: 400
+        }])
+
+        renderWithProviders(<PasscodePage/>);
+
+        await waitFor(() => {
+            expect(mockUseApi.fetchData).toHaveBeenCalledTimes(1);
+        })
+
+        await enterPasscode();
+        userEvent.click(screen.getByTestId("btn-submit-passcode"));
+
+        await screen.findByTestId("error-msg-passcode");
+        await verifyPasscodeErrorAndInteractiveElementStatus(expectedErrorMsg, false, "1", false);
+    });
+
+// Testing for re-login scenario in case of session expiry
+    test("should redirect to previous url post unlock if available", async () => {
+        (AppStorage.getItem as jest.Mock).mockReturnValue("/previous-url");
+        mockApiResponseSequence([{data: successWalletResponse}, {data: successWalletResponse}])
 
         renderWithProviders(<PasscodePage/>);
 
@@ -327,7 +307,7 @@ describe('Passcode', () => {
         inputs.map((input) => userEvent.type(input, '1'));
     }
 
-    const verifyPasscodeInputsAndSubmitButtonState = async (expectedError: string, inputsDisabled: boolean, expectedInputValue: string | null, submitButtonDisabled: boolean) => {
+    const verifyPasscodeErrorAndInteractiveElementStatus = async (expectedError: string, inputsDisabled: boolean, expectedInputValue: string | null, submitButtonDisabled: boolean) => {
         const errorSpan = await screen.findByTestId("error-msg-passcode");
         expect(errorSpan).toHaveTextContent(expectedError);
 
@@ -339,7 +319,7 @@ describe('Passcode', () => {
                 expect(input).not.toBeDisabled();
             }
 
-            if(expectedInputValue) {
+            if (expectedInputValue) {
                 expect(input).toHaveValue(expectedInputValue);
             }
         });
@@ -350,5 +330,8 @@ describe('Passcode', () => {
         } else {
             expect(submitButton).not.toBeDisabled();
         }
+
+        const forgotPasscodeButton = screen.getByTestId("btn-forgot-passcode");
+        expect(forgotPasscodeButton).toBeInTheDocument();
     }
 });

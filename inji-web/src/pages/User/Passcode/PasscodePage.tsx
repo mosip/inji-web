@@ -6,12 +6,18 @@ import {useTranslation} from 'react-i18next';
 import {useUser} from '../../../hooks/User/useUser';
 import {PasscodeInput} from '../../../components/Common/Input/PasscodeInput';
 import {PasscodePageStyles} from './PasscodePageStyles';
-import {KEYS, ROUTES} from "../../../utils/constants";
+import {KEYS, passcodeLength, ROUTES} from "../../../utils/constants";
 import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePage/PasscodePageTemplate";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 import {useApi} from "../../../hooks/useApi";
 import {ApiError, ErrorType, Wallet} from "../../../types/data";
 import {AppStorage} from "../../../utils/AppStorage";
+
+const WalletStatus = {
+    TEMPORARILY_LOCKED: 'temporarily_locked',
+    PERMANENTLY_LOCKED: 'permanently_locked',
+    LAST_ATTEMPT_BEFORE_LOCKOUT: 'last_attempt_before_lockout'
+}
 
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');
@@ -19,30 +25,31 @@ export const PasscodePage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [wallets, setWallets] = useState<any[] | null>(null);
-    const [passcode, setPasscode] = useState<string[]>(Array(6).fill(''));
-    const [confirmPasscode, setConfirmPasscode] = useState<string[]>(
-        Array(6).fill('')
-    );
+
+    const initialPasscodeArray = Array(passcodeLength).fill('');
+    const [passcode, setPasscode] = useState<string[]>(initialPasscodeArray);
+    const [confirmPasscode, setConfirmPasscode] = useState<string[]>(initialPasscodeArray);
+
     const {saveWalletId} = useUser();
     const createWalletApi = useApi<Wallet>();
     const walletsApi = useApi<Wallet[]>();
     const unlockWalletApi = useApi<Wallet>();
     const [canUnlockWallet, setCanUnlockWallet] = useState<boolean>(true);
 
-    const handleWalletStatusError = (errorCode: string, checkElseCase: boolean) => {
+    const handleWalletStatusError = (errorCode: string, fallBackError: string | undefined = undefined) => {
         if (
-            errorCode === 'temporarily_locked' ||
-            errorCode === 'permanently_locked' ||
-            errorCode === 'last_attempt_before_lockout'
+            errorCode === WalletStatus.TEMPORARILY_LOCKED ||
+            errorCode === WalletStatus.PERMANENTLY_LOCKED ||
+            errorCode === WalletStatus.LAST_ATTEMPT_BEFORE_LOCKOUT
         ) {
             setError(t(`error.walletStatus.${errorCode}`));
-            if (errorCode != 'last_attempt_before_lockout') {
+            if (errorCode !== WalletStatus.LAST_ATTEMPT_BEFORE_LOCKOUT) {
                 setCanUnlockWallet(false);
-                setPasscode(Array(6).fill(''));
-                setConfirmPasscode(Array(6).fill(''));
+                setPasscode(initialPasscodeArray);
+                setConfirmPasscode(initialPasscodeArray);
             }
-        } else if (checkElseCase) {
-            setError(t('error.incorrectPasscodeError'));
+        } else if (fallBackError) {
+            setError(t(fallBackError));
         }
     }
 
@@ -64,7 +71,7 @@ export const PasscodePage: React.FC = () => {
 
             if (wallets && wallets.length > 0) {
                 const walletStatus = wallets[0].walletStatus;
-                handleWalletStatusError(walletStatus, false);
+                handleWalletStatusError(walletStatus);
             }
         } catch (error) {
             console.error('Error occurred while fetching Wallets:', error);
@@ -102,8 +109,7 @@ export const PasscodePage: React.FC = () => {
         if (!response.ok()) {
             console.error("Error occurred while unlocking Wallet:", response.error);
             const errorCode = ((response.error as ApiError)?.response?.data as ErrorType).errorCode;
-            handleWalletStatusError(errorCode, true);
-            throw response.error;
+            handleWalletStatusError(errorCode, 'error.incorrectPasscodeError');
         }
         saveWalletId(walletId)
     };
@@ -113,8 +119,8 @@ export const PasscodePage: React.FC = () => {
         const confirmPin = confirmPasscode.join('');
 
         if (pin !== confirmPin) {
+            console.error("Pin and Confirm Pin mismatch");
             setError(t('error.passcodeMismatchError'));
-            throw new Error('Pin and Confirm Pin mismatch');
         }
 
         const response = await createWalletApi.fetchData({
@@ -127,11 +133,9 @@ export const PasscodePage: React.FC = () => {
         })
 
         if (!response.ok()) {
+            console.error("Error occurred while creating Wallet:", response.error);
             const errorMessage = ((response.error as ApiError)?.response?.data as ErrorType).errorMessage ?? t('unknown-error');
-            setError(
-                `${t('error.createWalletError')}: ${errorMessage}`
-            );
-            throw response.error;
+            setError(`${t('error.createWalletError')}: ${errorMessage}`);
         }
 
         const createdWallet = response.data!;
@@ -155,30 +159,22 @@ export const PasscodePage: React.FC = () => {
         setError('');
         setLoading(true);
 
-        try {
-            if (isUserCreatingWallet()) {
-                await createWallet();
-            } else {
-                const walletId = wallets ? wallets[0].walletId : undefined
-                const formattedPasscode = passcode.join('');
+        if (isUserCreatingWallet()) {
+            await createWallet();
+        } else {
+            const walletId = wallets ? wallets[0].walletId : undefined
+            const formattedPasscode = passcode.join('');
 
-                if (formattedPasscode.length !== 6) {
-                    setError(t('error.passcodeLengthError'));
-                    setLoading(false);
-                    return;
-                }
-
-                await unlockWallet(walletId, formattedPasscode);
+            if (formattedPasscode.length !== 6) {
+                setError(t('error.passcodeLengthError'));
+                setLoading(false);
+                return;
             }
-            handleUnlockSuccess()
-        } catch (error) {
-            console.error(
-                'Error occurred while setting up Wallet or loading user profile',
-                error
-            );
-        } finally {
-            setLoading(false);
+
+            await unlockWallet(walletId, formattedPasscode);
         }
+        handleUnlockSuccess()
+        setLoading(false);
     };
 
     const isButtonDisabled =

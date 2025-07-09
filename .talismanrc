@@ -40,9 +40,9 @@ fileignoreconfig:
 - filename: inji-web/src/__tests__/users/login/FailedLoginPage.test.tsx
   checksum: 6f4b1b3d9779ea7b47042b9131cbc482a64e9f1e398a2bb909abbc5661bd4959
 - filename: inji-web/src/pages/User/Passcode/PasscodePage.tsx
-  checksum: d150ac93b7f062bafd6203f27cb96478ecc347524da46d97246b3339edf04647
+  checksum: cecd3ae15b74868ec51b3dbf4b4e1c69ca2dd21c458769e811e7ce4d59b1d64a
 - filename: inji-web/src/__tests__/pages/User/PasscodePage.test.tsx
-  checksum: 77346104c4fb2577bc7b6a7fc610702e7c6f640733e1c50131acc24673fae270
+  checksum: 9846d187bdc540d1d9927304a6adbd3939bfe57adc9cb80f05814e86f8091114
 - filename: inji-web/src/components/PageTemplate/PasscodePage/PasscodePageTemplate.tsx
   checksum: 47b30ab6a488c9d3cf8d4a4a53483b78a52759e0d1535aca1375c750c6ca8fa7
 - filename: inji-web/src/pages/User/Passcode/PasscodePageStyles.ts
@@ -100,11 +100,11 @@ fileignoreconfig:
 - filename: inji-web/src/pages/Dashboard/StoredCards/StoredCardsPage.tsx
   checksum: 1aa60329392751ab42aa8f76298745ff836b2dac3ffd46e4b8796c1fb4f5a53b
 - filename: inji-web/src/components/Common/Input/PasscodeInput.tsx
-  checksum: 92cbb2eec357e6f954a0646a7e7df112ea479196d2a836747a75a1e3c609bec3
+  checksum: 623325e16b2883ca632c66946a072c7094102add69370bf3d804032f1261e382
 - filename: inji-web/src/pages/User/Passcode/PasscodePageStyles.ts
   checksum: 1c3d12c3221704022523f4dfbca83a92ac27c89c613a2d78ee43a89b24362416
 - filename: inji-web/src/__tests__/components/Common/Input/PasscodeInput.test.tsx
-  checksum: 1934b0ec43d9d11285f6703f325396afb6989d7565cd7b5e054aba16a3679c89
+  checksum: b2478542d66092541929433d63e685b36cadf438056b0d74e4da058744907290
 - filename: inji-web/src/hooks/useDownloadSession.tsx
   checksum: 994377a399e455c9b35d18717ee0a6aa6081a6257874fe9cfbbda84ae5dc087c
 - filename: inji-web/src/components/Credentials/CredentialList.tsx
@@ -115,4 +115,6 @@ fileignoreconfig:
   checksum: 2a80ed22695ef98375ec95a7a00b7cef5ca098483debd3a274e7073ca5aba771
 - filename: inji-web/src/__tests__/components/Common/LandingPageWrapper.test.tsx
   checksum: 29a91215a4e4f32e58ea5c5bd927919c8b3428da6cf6bff4f8beca4b563d4aab
+- filename: inji-web/src/utils/constants.ts
+  checksum: c3efb907ae39a2e4ae439508c9164af69c230f97d17033385bf5b8ccab8d6901
 version: ""

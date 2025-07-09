@@ -26,7 +26,7 @@ export function mockApiResponse({
                                 }: MockApiResponseOptions = {}) {
     mockUseApi.fetchData.mockResolvedValueOnce({
         ok: () => status === 200,
-        data: data,
+        data,
         status,
         error,
         headers,
