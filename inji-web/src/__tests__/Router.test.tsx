@@ -52,22 +52,23 @@ describe("AppRouter", () => {
         jest.clearAllMocks();
     });
 
-    it("renders HomePage for root route when not logged in", async () => {
-        (useUserModule.useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => false});
-        renderMemoryRouterWithProvider(<AppRouter/>, ["/"]);
+    const routesWithHomeRedirectionOnLoggedIn = [
+        {route: "/", notExpected: "HomePage", expected: "UserHomePage"},
+        {route: "/user/passcode", notExpected: "PasscodePage", expected: "UserHomePage"},
+        {route: "/user/reset-passcode", notExpected: "ResetPasscodePage", expected: "UserHomePage"},
+    ];
 
-        await screen.findByText("HomePage");
-        expect(screen.getByText("HomePage")).toBeInTheDocument();
-        expect(screen.getByTestId("header")).toBeInTheDocument();
-        expect(screen.getByTestId("footer")).toBeInTheDocument();
-    });
+    const routesWithoutRedirectOnActiveSessionOnly = [
+        {route: "/user/passcode", expectedPage: "PasscodePage", notExpectedPage: "UserHomePage"},
+        {route: "/user/reset-passcode", expectedPage: "ResetPasscodePage", notExpectedPage: "UserHomePage"},
+    ];
 
-    it.each`
-    route                    | notExpected           | expected
-    ${"/"}                   | ${"HomePage"}          | ${"UserHomePage"}
-    ${"/user/passcode"}      | ${"PasscodePage"}     | ${"UserHomePage"}
-    ${"/user/reset-passcode"}| ${"ResetPasscodePage"}| ${"UserHomePage"}
-`(
+    const notFoundRoutes = [
+        {isLoggedIn: true, description: "logged in mode", route: "/unknown", expectedText: /not found/i},
+        {isLoggedIn: false, description: "guest mode", route: "/unknown", expectedText: /not found/i},
+    ];
+
+    it.each(routesWithHomeRedirectionOnLoggedIn)(
         "redirects to user home when logged in and url is $route",
         ({route, notExpected, expected}) => {
             (useUserModule.useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => true});
@@ -79,11 +80,17 @@ describe("AppRouter", () => {
         }
     );
 
-    it.each`
-    route                      | expectedPage         | notExpectedPage
-    ${"/user/passcode"}        | ${"PasscodePage"}    | ${"UserHomePage"}
-    ${"/user/reset-passcode"}  | ${"ResetPasscodePage"} | ${"UserHomePage"}
-`(
+    it("renders HomePage for root route when not logged in", async () => {
+        (useUserModule.useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => false});
+        renderMemoryRouterWithProvider(<AppRouter/>, ["/"]);
+
+        await screen.findByText("HomePage");
+        expect(screen.getByText("HomePage")).toBeInTheDocument();
+        expect(screen.getByTestId("header")).toBeInTheDocument();
+        expect(screen.getByTestId("footer")).toBeInTheDocument();
+    });
+
+    it.each(routesWithoutRedirectOnActiveSessionOnly)(
         'should not redirect to home page when user is not logged in (but session active) when url is $route',
         ({route, expectedPage, notExpectedPage}) => {
             (useUserModule.useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => false});
@@ -97,11 +104,7 @@ describe("AppRouter", () => {
         }
     );
 
-    it.each`
-    isLoggedIn | description                | route         | expectedText
-    ${true}    | ${"logged in mode"}        | ${"/unknown"} | ${/not found/i}
-    ${false}   | ${"guest mode"}            | ${"/unknown"} | ${/not found/i}
-`(
+    it.each(notFoundRoutes)(
         "renders 404 page for unknown route when in $description",
         ({isLoggedIn, route, expectedText}) => {
             (useUserModule.useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => isLoggedIn});
