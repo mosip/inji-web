@@ -96,7 +96,7 @@ export const Header: React.FC<UserHeaderProps> = ({
             label: t('ProfileDropdown.profile'),
             onClick: () => {
                 setIsProfileDropdownOpen(false);    
-                navigate(ROUTES.PROFILE,{state: {from: window.location.pathname}});
+                navigate(ROUTES.USER_PROFILE,{state: {from: window.location.pathname}});
             },
             textColor: 'text-gray-700',
             key: 'Profile-Dropdown-Profile'

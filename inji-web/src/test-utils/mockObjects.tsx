@@ -1,6 +1,7 @@
 import {IssuerConfigurationObject, WalletCredential} from '../types/data';
 import {LandingPageWrapperProps} from '../components/Common/LandingPageWrapper';
 import {NavBarProps} from '../types/components';
+import {ROUTES} from "../utils/constants";
 
 export const mockIssuerDisplayArrayObject = {
     name: "Name",
@@ -205,3 +206,8 @@ export const mockStore = {
     subscribe: jest.fn(),
     dispatch: jest.fn(),
 };
+
+export const unProtectedRoutes = Object.entries(ROUTES)
+    .filter(([key]) => !key.startsWith('USER') && key !== 'ISSUER')
+    .map(([_, value]) => value);
+unProtectedRoutes.push(ROUTES.ISSUER("issuer1"));

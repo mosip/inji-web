@@ -5,6 +5,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {AppStorage} from '../../utils/AppStorage';
 import {KEYS, ROUTES} from '../../utils/constants';
 import LoginSessionStatusChecker from "../../components/Common/LoginSessionStatusChecker";
+import {unProtectedRoutes} from "../../test-utils/mockObjects";
 
 jest.mock('react-router-dom', () => ({
     useNavigate: jest.fn(),
@@ -44,11 +45,6 @@ describe('LoginSessionStatusChecker', () => {
     const protectedRoutesWithoutRoot = protectedRoutes.filter(route => route !== ROUTES.ROOT);
 
     const nonPasscodeRelatedProtectedRoutes = protectedRoutes.filter(route => route !== ROUTES.USER_RESET_PASSCODE && route !== ROUTES.USER_PASSCODE);
-
-    const unProtectedRoutes = Object.entries(ROUTES)
-        .filter(([key]) => !key.startsWith('USER') && key !== 'ISSUER')
-        .map(([_, value]) => value);
-    unProtectedRoutes.push(ROUTES.ISSUER("issuer1"));
 
     const passcodeRelatedRoutes = [ROUTES.USER_PASSCODE, ROUTES.USER_RESET_PASSCODE];
 
@@ -134,7 +130,7 @@ describe('LoginSessionStatusChecker', () => {
     })
 
     test('should fetch user profile on mount', () => {
-        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
+        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.USER_CREDENTIALS});
 
         render(<LoginSessionStatusChecker/>);
 
@@ -142,7 +138,7 @@ describe('LoginSessionStatusChecker', () => {
     });
 
     test('should add and remove storage event listener', () => {
-        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
+        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.USER_CREDENTIALS});
         const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
         const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
 
@@ -154,7 +150,7 @@ describe('LoginSessionStatusChecker', () => {
     });
 
     test("should redirect to login (root page) when fetching user profile fails", async () => {
-        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
+        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.USER_CREDENTIALS});
         mockFetchUserProfile.mockRejectedValue(new Error("Fetch failed"));
 
         render(<LoginSessionStatusChecker/>);
@@ -165,7 +161,7 @@ describe('LoginSessionStatusChecker', () => {
     })
 
     test.each([KEYS.USER, KEYS.WALLET_ID])("should recheck on storage change of %s key", async (storageKey) => {
-        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.CREDENTIALS});
+        (useLocation as jest.Mock).mockReturnValue({pathname: ROUTES.USER_CREDENTIALS});
         const mockStorageEvent = new StorageEvent('storage', {
             key: storageKey,
             newValue: undefined
