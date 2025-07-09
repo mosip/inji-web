@@ -256,18 +256,30 @@ public class BaseTest {
 	}
 
 	public static String[] fetchIssuerTexts() {
-		String issuerSearchText = null;
-		String issuerSearchTextforSunbird = null;
-		String propertyFilePath = System.getProperty("user.dir") + "/src/test/resources/config.properties";
-		Properties properties = new Properties();
+	    String issuerSearchText = System.getenv("issuerSearchText");
+	    String issuerSearchTextforSunbird = System.getenv("issuerSearchTextforSunbird");
+	    
+	    if (issuerSearchText == null || issuerSearchTextforSunbird == null) {
+	        String propertyFilePath = System.getProperty("user.dir") + "/src/test/resources/config.properties";
+	        Properties properties = new Properties();
 
-		try (FileInputStream fileInputStream = new FileInputStream(propertyFilePath)) {
-			properties.load(fileInputStream);
-			issuerSearchText = properties.getProperty("issuerSearchText");
-			issuerSearchTextforSunbird = properties.getProperty("issuerSearchTextforSunbird");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return new String[] { issuerSearchText, issuerSearchTextforSunbird };
+	        try (FileInputStream fileInputStream = new FileInputStream(propertyFilePath)) {
+	            properties.load(fileInputStream);
+
+	            if (issuerSearchText == null) {
+	                issuerSearchText = properties.getProperty("issuerSearchText");
+	            }
+
+	            if (issuerSearchTextforSunbird == null) {
+	                issuerSearchTextforSunbird = properties.getProperty("issuerSearchTextforSunbird");
+	            }
+
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return new String[] { issuerSearchText, issuerSearchTextforSunbird };
 	}
+
 }
