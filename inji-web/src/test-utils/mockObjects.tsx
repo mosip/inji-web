@@ -211,3 +211,11 @@ export const unProtectedRoutes = Object.entries(ROUTES)
     .filter(([key]) => !key.startsWith('USER') && key !== 'ISSUER')
     .map(([_, value]) => value);
 unProtectedRoutes.push(ROUTES.ISSUER("issuer1"));
+
+export const protectedRoutes = Object.entries(ROUTES)
+    .filter(([key]) => key.startsWith('USER') && key !== 'USER_ISSUER')
+    .map(([_, value]) => value);
+protectedRoutes.push(ROUTES.USER_ISSUER("issuer1"), ROUTES.ROOT);
+protectedRoutes.splice(protectedRoutes.indexOf(ROUTES.USER), 1);
+
+export const nonPasscodeRelatedProtectedRoutes = protectedRoutes.filter(route => route !== ROUTES.USER_RESET_PASSCODE && route !== ROUTES.USER_PASSCODE);

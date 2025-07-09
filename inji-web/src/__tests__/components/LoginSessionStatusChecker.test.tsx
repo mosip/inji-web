@@ -5,7 +5,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {AppStorage} from '../../utils/AppStorage';
 import {KEYS, ROUTES} from '../../utils/constants';
 import LoginSessionStatusChecker from "../../components/Common/LoginSessionStatusChecker";
-import {unProtectedRoutes} from "../../test-utils/mockObjects";
+import {nonPasscodeRelatedProtectedRoutes, protectedRoutes, unProtectedRoutes} from "../../test-utils/mockObjects";
 
 jest.mock('react-router-dom', () => ({
     useNavigate: jest.fn(),
@@ -37,14 +37,7 @@ describe('LoginSessionStatusChecker', () => {
         });
     });
 
-    const protectedRoutes = Object.entries(ROUTES)
-        .filter(([key]) => key.startsWith('USER') && key !== 'USER_ISSUER')
-        .map(([_, value]) => value);
-    protectedRoutes.push(ROUTES.USER_ISSUER("issuer1"), ROUTES.ROOT);
-
     const protectedRoutesWithoutRoot = protectedRoutes.filter(route => route !== ROUTES.ROOT);
-
-    const nonPasscodeRelatedProtectedRoutes = protectedRoutes.filter(route => route !== ROUTES.USER_RESET_PASSCODE && route !== ROUTES.USER_PASSCODE);
 
     const passcodeRelatedRoutes = [ROUTES.USER_PASSCODE, ROUTES.USER_RESET_PASSCODE];
 

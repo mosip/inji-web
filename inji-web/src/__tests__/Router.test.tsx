@@ -4,7 +4,8 @@ import {AppRouter} from "../Router";
 import * as useUserModule from "../hooks/User/useUser";
 import {renderMemoryRouterWithProvider} from "../test-utils/mockUtils";
 import {AppStorage} from "../utils/AppStorage";
-import {mockStore, userProfile} from "../test-utils/mockObjects";
+import {mockStore, nonPasscodeRelatedProtectedRoutes, unProtectedRoutes, userProfile} from "../test-utils/mockObjects";
+import {ROUTES} from "../utils/constants";
 
 jest.mock('../components/Preview/PDFViewer', () => ({
     PDFViewer: ({previewContent}: {
@@ -30,13 +31,13 @@ jest.mock("../pages/HomePage", () => ({
     HomePage: () => <div>HomePage</div>
 }));
 jest.mock("../pages/User/Passcode/PasscodePage", () => ({
-    PasscodePage: () => <div>PasscodePage</div>
+    PasscodePage: () => <div>User/passcodePage</div>
 }));
 jest.mock("../pages/User/ResetPasscode/ResetPasscodePage", () => ({
-    ResetPasscodePage: () => <div>ResetPasscodePage</div>
+    ResetPasscodePage: () => <div>User/reset-passcodePage</div>
 }));
 jest.mock("../pages/User/Home/HomePage.tsx", () => ({
-    HomePage: () => <div>UserHomePage</div>
+    HomePage: () => <div>User/homePage</div>
 }));
 jest.mock("../components/User/Header.tsx", () => ({
     Header: () => <div data-testid="user-header">User Header</div>
@@ -47,26 +48,60 @@ jest.mock("../utils/AppStorage.ts", () => ({
     },
 }));
 
+jest.mock("../pages/AuthorizationPage.tsx", () => ({
+    AuthorizationPage: () => <div>AuthorizationPage</div>
+}));
+
+jest.mock("../pages/CredentialsPage.tsx", () => ({
+    CredentialsPage: () => <div>Issuers/issuer1Page</div>
+}))
+
+jest.mock("../pages/RedirectionPage.tsx", () => ({
+    RedirectionPage: () => <div>RedirectPage</div>
+}));
+
+jest.mock("../pages/User/CredentialTypes/CredentialTypesPage.tsx", () => ({
+    CredentialTypesPage: () => <div>User/issuers/issuer1Page</div>
+}));
+
+jest.mock("../pages/User/Profile/ProfilePage.tsx", () => ({
+    ProfilePage: () => <div>User/profilePage</div>
+}));
+
+jest.mock("../pages/IssuersPage.tsx", () => ({
+    IssuersPage: () => <div data-testid="Home-Page-Container">IssuersPage</div>
+}));
+
+jest.mock("../pages/FAQPage.tsx", () => ({
+    FAQPage: () => <div>FaqPage</div>
+}));
+
+jest.mock("../pages/User/StoredCards/StoredCardsPage.tsx", () => ({
+    StoredCardsPage: () => <div>User/credentialsPage</div>
+}))
+
 describe("AppRouter", () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
     const routesWithHomeRedirectionOnLoggedIn = [
-        {route: "/", notExpected: "HomePage", expected: "UserHomePage"},
-        {route: "/user/passcode", notExpected: "PasscodePage", expected: "UserHomePage"},
-        {route: "/user/reset-passcode", notExpected: "ResetPasscodePage", expected: "UserHomePage"},
+        {route: "/", notExpected: "HomePage", expected: "User/homePage"},
+        {route: "/user/passcode", notExpected: "User/passcodePage", expected: "User/homePage"},
+        {route: "/user/reset-passcode", notExpected: "User/reset-passcodePage", expected: "User/homePage"},
     ];
 
     const routesWithoutRedirectOnActiveSessionOnly = [
-        {route: "/user/passcode", expectedPage: "PasscodePage", notExpectedPage: "UserHomePage"},
-        {route: "/user/reset-passcode", expectedPage: "ResetPasscodePage", notExpectedPage: "UserHomePage"},
+        {route: "/user/passcode", expectedPage: "User/passcodePage", notExpectedPage: "User/homePage"},
+        {route: "/user/reset-passcode", expectedPage: "User/reset-passcodePage", notExpectedPage: "User/homePage"},
     ];
 
     const notFoundRoutes = [
         {isLoggedIn: true, description: "logged in mode", route: "/unknown", expectedText: /not found/i},
         {isLoggedIn: false, description: "guest mode", route: "/unknown", expectedText: /not found/i},
     ];
+
+    const guestModeRoutes = unProtectedRoutes
 
     it.each(routesWithHomeRedirectionOnLoggedIn)(
         "redirects to user home when logged in and url is $route",
@@ -112,4 +147,30 @@ describe("AppRouter", () => {
             expect(screen.getByText(expectedText)).toBeInTheDocument();
         }
     );
+
+    it.each(guestModeRoutes)("renders related guest mode page when route is %s", (route) => {
+        route = route as string
+        (useUserModule.useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => false});
+        renderMemoryRouterWithProvider(<AppRouter/>, [`${route}`]);
+
+        const expectedText = route === "/" ? "HomePage" : `${route.charAt(1).toUpperCase() + route.slice(2)}Page`;
+        expect(screen.getByText(expectedText)).toBeInTheDocument();
+    })
+
+    it.each(nonPasscodeRelatedProtectedRoutes)("renders related protected mode page when route is %s", (route) => {
+        route = route as string
+        (useUserModule.useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => true});
+        renderMemoryRouterWithProvider(<AppRouter/>, [`${route}`]);
+
+        let expectedText;
+        if (route === ROUTES.USER_ISSUERS || route === ROUTES.ROOT) {
+            expectedText = "User/homePage";
+        } else if (route === ROUTES.USER_FAQ || route === ROUTES.USER_ISSUERS) { // common pages
+            expectedText = `${route.charAt(6).toUpperCase() + route.slice(7)}Page`;
+        } else {
+            expectedText = `${route.charAt(1).toUpperCase() + route.slice(2)}Page`;
+        }
+
+        expect(screen.getByText(expectedText)).toBeInTheDocument();
+    })
 });
