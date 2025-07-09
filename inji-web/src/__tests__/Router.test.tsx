@@ -86,14 +86,14 @@ describe("AppRouter", () => {
     });
 
     const routesWithHomeRedirectionOnLoggedIn = [
-        {route: "/", notExpected: "HomePage", expected: "User/homePage"},
-        {route: "/user/passcode", notExpected: "User/passcodePage", expected: "User/homePage"},
-        {route: "/user/reset-passcode", notExpected: "User/reset-passcodePage", expected: "User/homePage"},
+        {route: "/", notExpectedText: "HomePage", expectedText: "User/homePage"},
+        {route: "/user/passcode", notExpectedText: "User/passcodePage", expectedText: "User/homePage"},
+        {route: "/user/reset-passcode", notExpectedText: "User/reset-passcodePage", expectedText: "User/homePage"},
     ];
 
     const routesWithoutRedirectOnActiveSessionOnly = [
-        {route: "/user/passcode", expectedPage: "User/passcodePage", notExpectedPage: "User/homePage"},
-        {route: "/user/reset-passcode", expectedPage: "User/reset-passcodePage", notExpectedPage: "User/homePage"},
+        {route: "/user/passcode", expectedText: "User/passcodePage", notExpectedText: "User/homePage"},
+        {route: "/user/reset-passcode", expectedText: "User/reset-passcodePage", notExpectedText: "User/homePage"},
     ];
 
     const notFoundRoutes = [
@@ -105,13 +105,13 @@ describe("AppRouter", () => {
 
     it.each(routesWithHomeRedirectionOnLoggedIn)(
         "redirects to user home when logged in and url is $route",
-        ({route, notExpected, expected}) => {
+        ({route, notExpectedText, expectedText}) => {
             (useUserModule.useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => true});
 
             renderMemoryRouterWithProvider(<AppRouter/>, [route]);
 
-            expect(screen.queryByText(notExpected)).not.toBeInTheDocument();
-            expect(screen.getByText(expected)).toBeInTheDocument();
+            expect(screen.queryByText(notExpectedText)).not.toBeInTheDocument();
+            expect(screen.getByText(expectedText)).toBeInTheDocument();
         }
     );
 
@@ -127,15 +127,15 @@ describe("AppRouter", () => {
 
     it.each(routesWithoutRedirectOnActiveSessionOnly)(
         'should not redirect to home page when user is not logged in (but session active) when url is $route',
-        ({route, expectedPage, notExpectedPage}) => {
+        ({route, expectedText, notExpectedText}) => {
             (useUserModule.useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => false});
             // Mock storage with user (active session) but locked wallet
             (AppStorage.getItem as jest.Mock).mockReturnValue(JSON.stringify(userProfile));
 
             renderMemoryRouterWithProvider(<AppRouter/>, [route]);
 
-            expect(screen.getByText(expectedPage)).toBeInTheDocument();
-            expect(screen.queryByText(notExpectedPage)).not.toBeInTheDocument();
+            expect(screen.getByText(expectedText)).toBeInTheDocument();
+            expect(screen.queryByText(notExpectedText)).not.toBeInTheDocument();
         }
     );
 
@@ -153,7 +153,7 @@ describe("AppRouter", () => {
         (useUserModule.useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => false});
         renderMemoryRouterWithProvider(<AppRouter/>, [`${route}`]);
 
-        const expectedText = route === "/" ? "HomePage" : `${route.charAt(1).toUpperCase() + route.slice(2)}Page`;
+        const expectedText = route === ROUTES.ROOT ? "HomePage" : getPageLabelFromRoute(route);
         expect(screen.getByText(expectedText)).toBeInTheDocument();
     })
 
@@ -168,9 +168,13 @@ describe("AppRouter", () => {
         } else if (route === ROUTES.USER_FAQ || route === ROUTES.USER_ISSUERS) { // common pages
             expectedText = `${route.charAt(6).toUpperCase() + route.slice(7)}Page`;
         } else {
-            expectedText = `${route.charAt(1).toUpperCase() + route.slice(2)}Page`;
+            expectedText = getPageLabelFromRoute(route);
         }
 
         expect(screen.getByText(expectedText)).toBeInTheDocument();
     })
+
+    function getPageLabelFromRoute(route: string): string {
+        return `${route.charAt(1).toUpperCase() + route.slice(2)}Page`;
+    }
 });
