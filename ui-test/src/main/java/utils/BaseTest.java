@@ -43,7 +43,7 @@ public class BaseTest {
 	public static WebDriver driver;	
 	private long scenarioStartTime;
 	public static JavascriptExecutor jse;
-	public String PdfNameForMosip = "MosipVerifiableCredential.pdf";
+	public String PdfNameForMosip = "MOSIPVerifiableCredential.pdf";
 	public String PdfNameForInsurance = "InsuranceCredential.pdf";
 	public String PdfNameForLifeInsurance = "InsuranceCredential.pdf";
 	private static ExtentReports extent;
