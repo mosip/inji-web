@@ -189,20 +189,16 @@ describe('Passcode', () => {
 
     test.each([
         {
-            name: "should display temporarily locked error and disable input boxes and submit button when landing on the passcode page for a temporarily locked wallet",
             walletStatus: "temporarily_locked",
             expectedError: "You’ve reached the maximum number of attempts. Your wallet is now temporarily locked for sometime",
-            inputsDisabled: true,
         },
         {
-            name: "should display permanently locked error and disable input boxes and submit button when landing on the passcode page for a permanently locked wallet",
             walletStatus: "permanently_locked",
             expectedError: "Your wallet has been permanently locked due to multiple failed attempts. Please click on forgot password to reset your wallet to continue",
-            inputsDisabled: true,
         }
     ])(
         "should display $walletStatus error and disable input boxes and submit button when landing on the passcode page for a already $walletStatus Wallet",
-        async ({walletStatus, expectedError, inputsDisabled}) => {
+        async ({walletStatus, expectedError}) => {
             mockApiResponseSequence([{
                 data: [{
                     walletId: "2c2e1810-19c8-4c85-910d-aa1622412413",
@@ -213,7 +209,7 @@ describe('Passcode', () => {
 
             renderWithProviders(<PasscodePage/>);
 
-            await verifyPasscodeErrorAndInteractiveElementStatus(expectedError, inputsDisabled, null, true);
+            await verifyPasscodeErrorAndInteractiveElementStatus(expectedError, true, null, true);
         }
     );
 

@@ -199,7 +199,7 @@ export const PasscodePage: React.FC = () => {
             const walletId = wallets ? wallets[0].walletId : undefined
             const formattedPasscode = passcode.join('');
 
-            if (formattedPasscode.length !== 6) {
+            if (formattedPasscode.length !== passcodeLength) {
                 setError(t('error.passcodeLengthError'));
                 setLoading(false);
                 return;
