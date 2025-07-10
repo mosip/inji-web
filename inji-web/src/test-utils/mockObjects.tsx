@@ -1,6 +1,7 @@
 import {IssuerConfigurationObject, WalletCredential} from '../types/data';
 import {LandingPageWrapperProps} from '../components/Common/LandingPageWrapper';
 import {NavBarProps} from '../types/components';
+import {ROUTES} from "../utils/constants";
 
 export const mockIssuerDisplayArrayObject = {
     name: "Name",
@@ -70,7 +71,7 @@ export const mockVerifiableCredentials: WalletCredential[] = [
 export const mockIssuerObject = {
     name: 'Test Issuer',
     desc: 'Test Description',
-    protocol: 'OTP' as 'OTP', // Explicitly set the type to 'OTP' or 'OpenId4VCI'
+    protocol: 'OTP' as const, // Explicitly set the type to 'OTP' or 'OpenId4VCI'
     issuer_id: 'test-issuer',
     authorization_endpoint: 'https://auth.test.com',
     credentials_endpoint: 'https://credentials.test.com',
@@ -195,3 +196,26 @@ export const userProfile = {
     email: 'john@example.com',
     walletId: '12345',
 };
+
+export const mockStore = {
+    getState: () => ({
+        common: {
+            language: 'en'
+        }
+    }),
+    subscribe: jest.fn(),
+    dispatch: jest.fn(),
+};
+
+export const unProtectedRoutes = Object.entries(ROUTES)
+    .filter(([key]) => !key.startsWith('USER') && key !== 'ISSUER')
+    .map(([_, value]) => value);
+unProtectedRoutes.push(ROUTES.ISSUER("issuer1"));
+
+export const protectedRoutes = Object.entries(ROUTES)
+    .filter(([key]) => key.startsWith('USER') && key !== 'USER_ISSUER')
+    .map(([_, value]) => value);
+protectedRoutes.push(ROUTES.USER_ISSUER("issuer1"), ROUTES.ROOT);
+protectedRoutes.splice(protectedRoutes.indexOf(ROUTES.USER), 1);
+
+export const nonPasscodeRelatedProtectedRoutes = protectedRoutes.filter(route => route !== ROUTES.USER_RESET_PASSCODE && route !== ROUTES.USER_PASSCODE);

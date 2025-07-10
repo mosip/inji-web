@@ -103,7 +103,7 @@ export const getErrorObject = (downloadResponse: any) => {
         "errInvalidValidFrom",
         "errValidFromIsFutureDate",
         "errInvalidValidUntil"
-    ].indexOf(errorCode) != -1 ){
+    ].indexOf(errorCode) !== -1 ){
         return {
             code: `error.verification.${errorCode}.title`,
             message: `error.verification.${errorCode}.subTitle`

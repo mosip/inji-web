@@ -1,4 +1,4 @@
-import { setMockUseSelectorState } from "../../../test-utils/mockReactRedux";
+import {setMockUseSelectorState} from "../../../test-utils/mockReactRedux";
 import React from "react";
 import {screen} from "@testing-library/react";
 import {Credential} from "../../../components/Credentials/Credential";
@@ -6,18 +6,12 @@ import {
     getCredentialTypeDisplayObjectForCurrentLanguage,
     getIssuerDisplayObjectForCurrentLanguage
 } from "../../../utils/i18n";
-import {
-    mockCredentialTypeDisplayArrayObject,
-    mockIssuerDisplayArrayObject
-} from "../../../test-utils/mockObjects";
-import {
-    renderWithProvider,
-} from "../../../test-utils/mockUtils";
+import {mockCredentialTypeDisplayArrayObject, mockIssuerDisplayArrayObject} from "../../../test-utils/mockObjects";
+import {mockusei18n, renderWithProvider,} from "../../../test-utils/mockUtils";
 import userEvent from "@testing-library/user-event";
-import { CredentialConfigurationObject } from "../../../types/data";
-import { buildAuthorizationUrl } from "../../../utils/misc";
-import { mockusei18n } from "../../../test-utils/mockUtils";
-import { useUser } from "../../../hooks/User/useUser";
+import {CredentialConfigurationObject} from "../../../types/data";
+import {buildAuthorizationUrl} from "../../../utils/misc";
+import {useUser} from "../../../hooks/User/useUser";
 
 jest.mock("../../../components/Common/ItemBox", () => ({
     ItemBox: ({ index, title, url, onClick }: any) => (
@@ -133,7 +127,7 @@ describe("Testing the Functionality of Credentials", () => {
         expect(itemBoxElement).toBeInTheDocument();
     });
 
-    test("Check if content is rendered properly", () => {        
+    test("Check if content is rendered properly", () => {
         renderWithProvider(
             <Credential
                 credentialId="InsuranceCredential"
@@ -157,14 +151,14 @@ describe("Testing the Functionality of Credentials", () => {
             setErrorObj={mockSetErrorObj}
           />
         );
-    
+
         // Find and click the ItemBox
         const container = screen.getByTestId("ItemBox-Outer-Container-1");
-        await userEvent.click(container);
-    
+        userEvent.click(container);
+
         // Assert: buildAuthorizationUrl called once
         expect(buildAuthorizationUrl).toHaveBeenCalledTimes(1);
-        
+
         // // Verify positions of args:
         const [ issuerArg, credentialArg, , , authEndpointArg ] = (buildAuthorizationUrl as jest.Mock).mock.calls[0];
 
@@ -176,11 +170,11 @@ describe("Testing the Functionality of Credentials", () => {
         expect(window.open).toHaveBeenCalledTimes(1);
         expect(window.open).toHaveBeenCalledWith("https://redirect.mock/constructed", "_self", "noopener");
       });
-      
+
       test("Shows expiry modal when guest user downloads card configured for OnlineSharing", async () => {
         // guest
         (useUser as jest.Mock).mockReturnValue({ isUserLoggedIn: () => false });
-        
+
         renderWithProvider(
           <Credential
             credentialId="InsuranceCredential"
@@ -190,15 +184,15 @@ describe("Testing the Functionality of Credentials", () => {
           />
         );
         const itemBox = screen.getByTestId("ItemBox-Outer-Container-1");
-        await userEvent.click(itemBox);
-    
+        userEvent.click(itemBox);
+
         // modal appears
         expect(screen.getByTestId("DataShareExpiryModal")).toBeInTheDocument();
         expect(buildAuthorizationUrl).not.toHaveBeenCalled();
         expect(window.open).not.toHaveBeenCalled();
-    
+
         // confirm and then redirect
-        await userEvent.click(screen.getByTestId("expiry-confirm"));
+        userEvent.click(screen.getByTestId("expiry-confirm"));
         expect(buildAuthorizationUrl).toHaveBeenCalledTimes(1);
         expect(window.open).toHaveBeenCalledWith(
           "https://redirect.mock/constructed",
@@ -224,7 +218,7 @@ describe("Testing the Functionality of Credentials", () => {
           qr_code_type: "EmbeddedVC",
         },
       ] as const;
-    
+
     test.each(noModalCases)(
         "does NOT show expiry modal %s, and calls redirect",
         async ({ isLoggedIn, qr_code_type }) => {
@@ -255,7 +249,7 @@ describe("Testing the Functionality of Credentials", () => {
             />
         );
         const itemBox = screen.getByTestId("ItemBox-Outer-Container-1");
-        await userEvent.click(itemBox);
+        userEvent.click(itemBox);
 
         // 4) assertions
         expect(screen.queryByTestId("DataShareExpiryModal")).toBeNull();

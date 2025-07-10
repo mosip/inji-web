@@ -85,19 +85,19 @@ export const AppRouter = () => {
         );
     };
 
+    function renderBasedOnAuthStatus(Element: React.FC) {
+        return isUserLoggedIn() ? (
+            <RedirectToUserHome/>
+        ) : (
+            wrapElement(<Element/>, false)
+        );
+    }
+
     return (
         <>
             <LoginSessionStatusChecker/>
             <Routes>
-                <Route
-                    path={ROUTES.ROOT}
-                    element={
-                        isUserLoggedIn() ? (
-                            <RedirectToUserHome/>
-                        ) : (
-                            wrapElement(<HomePage/>, false)
-                        )
-                    }
+                <Route path={ROUTES.ROOT} element={renderBasedOnAuthStatus(HomePage)}
                 />
                 <Route
                     path={Pages.ISSUERS}
@@ -122,7 +122,9 @@ export const AppRouter = () => {
                     element={wrapElement(<AuthorizationPage/>)}
                 />
                 <Route path={Pages.USER}>
-                    <Route path={Pages.PASSCODE} element={wrapElement(<PasscodePage/>)}/>
+                    <Route path={Pages.PASSCODE} element={renderBasedOnAuthStatus(PasscodePage)}/>
+                    <Route path={Pages.RESET_PASSCODE} element={renderBasedOnAuthStatus(ResetPasscodePage)}
+                    />
                     <Route element={<Layout/>}>
                         <Route path={Pages.ISSUERS} element={<RedirectToUserHome/>}/>
                         <Route path={Pages.HOME} element={<DashboardHomePage/>}/>
@@ -136,10 +138,6 @@ export const AppRouter = () => {
                         <Route path={Pages.PROFILE} element={<ProfilePage/>}/>
                         <Route path={Pages.FAQ} element={<FAQPage withHome={true}/>}/>
                     </Route>
-                    <Route
-                        path={Pages.RESET_PASSCODE}
-                        element={wrapElement(<ResetPasscodePage/>)}
-                    />
                 </Route>
 
                 <Route path="/*" element={wrapElement(<PageNotFound/>)}/>

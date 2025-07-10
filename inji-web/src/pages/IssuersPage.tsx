@@ -52,6 +52,7 @@ export const IssuersPage: React.FC<IssuerPageProps> = ({className}) => {
         };
 
         void initializeIssuersData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

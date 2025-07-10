@@ -30,12 +30,9 @@ export const DownloadSessionProvider: React.FC<{ children: React.ReactNode }> = 
     ): string => {
         const newDownloadId = generateUniqueDownloadId();
 
-        setDownloadInProgressSessions(prevSessions => {
-            const updatedSessionsMap = {
-                ...prevSessions, [newDownloadId]: {credentialTypeDisplayObj, downloadStatus}
-            };
-            return updatedSessionsMap;
-        });
+        setDownloadInProgressSessions(prevSessions => ({
+            ...prevSessions, [newDownloadId]: {credentialTypeDisplayObj, downloadStatus}
+        }));
 
         setCurrentSessionDownloadId(newDownloadId);
         return newDownloadId;
@@ -48,13 +45,10 @@ export const DownloadSessionProvider: React.FC<{ children: React.ReactNode }> = 
                 return prevSessions;
             }
 
-            const updatedSessionDetails = {...prevSessions[downloadId], downloadStatus};
-            const updatedSessionsMap = {
+            return {
                 ...prevSessions,
-                [downloadId]: updatedSessionDetails
+                [downloadId]: {...prevSessions[downloadId], downloadStatus}
             };
-
-            return updatedSessionsMap;
         });
 
         if (downloadStatus === RequestStatus.DONE || downloadStatus === RequestStatus.ERROR) {
@@ -81,6 +75,7 @@ export const DownloadSessionProvider: React.FC<{ children: React.ReactNode }> = 
             setCurrentSessionDownloadId,
             setLatestDownloadedSessionId
         }),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [downloadInProgressSessions, currentSessionDownloadId, latestDownloadedSessionId]
     );
 
