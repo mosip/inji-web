@@ -424,6 +424,29 @@
       "placeholder": "Recherchez vos cartes par nom",
       "noResults": "Aucune carte ne correspond à votre recherche."
     },
+    "cardView": {
+      "download": "Télécharger",
+      "menu": {
+        "view": "Voir",
+        "delete": "Supprimer"
+      },
+      "error": {
+        "downloadError": "Échec du téléchargement. Veuillez réessayer.",
+        "deleteError": "Échec de la suppression. Réessayez."
+      },
+      "delete": {
+        "confirmation": {
+          "title": "Supprimer la carte !",
+          "message": "Êtes-vous sûr de vouloir supprimer cette carte ?"
+        }
+      }
+    }
+  },
+  "Common": {
+    "home": "Maison",
+    "goToHome": "Aller à l'accueil",
+    "confirm": "Confirmer",
+    "cancel": "Annuler",
     "error": {
       "internalServerError": {
         "title": "Erreur du serveur",
@@ -449,29 +472,6 @@
         "title": "Pas de connexion Internet",
         "message": "Veuillez vérifier votre connexion Internet et réessayer."
       }
-    },
-    "cardView": {
-      "download": "Télécharger",
-      "menu": {
-        "view": "Voir",
-        "delete": "Supprimer"
-      },
-      "error": {
-        "downloadError": "Échec du téléchargement. Veuillez réessayer.",
-        "deleteError": "Échec de la suppression. Réessayez."
-      },
-      "delete": {
-        "confirmation": {
-          "title": "Supprimer la carte !",
-          "message": "Êtes-vous sûr de vouloir supprimer cette carte ?"
-        }
-      }
     }
-  },
-  "Common": {
-    "home": "Maison",
-    "goToHome": "Aller à l'accueil",
-    "confirm": "Confirmer",
-    "cancel": "Annuler"
   }
 }

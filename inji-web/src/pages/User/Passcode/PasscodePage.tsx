@@ -6,11 +6,11 @@ import {useTranslation} from 'react-i18next';
 import {useUser} from '../../../hooks/User/useUser';
 import {PasscodeInput} from '../../../components/Common/Input/PasscodeInput';
 import {PasscodePageStyles} from './PasscodePageStyles';
-import {KEYS, passcodeLength, ROUTES} from "../../../utils/constants";
+import {HTTP_STATUS_CODES, KEYS, NETWORK_ERROR_MESSAGE, passcodeLength, ROUTES} from "../../../utils/constants";
 import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePage/PasscodePageTemplate";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 import {useApi} from "../../../hooks/useApi";
-import {ApiError, ErrorType, Wallet} from "../../../types/data";
+import {ApiError, ApiResult, ErrorType, Wallet} from "../../../types/data";
 import {AppStorage} from "../../../utils/AppStorage";
 
 const WalletStatus = {
@@ -36,7 +36,7 @@ export const PasscodePage: React.FC = () => {
     const unlockWalletApi = useApi<Wallet>();
     const [canUnlockWallet, setCanUnlockWallet] = useState<boolean>(true);
 
-    const handleWalletStatusError = (errorCode: string, fallBackError: string | undefined = undefined) => {
+    const handleWalletStatusError = (errorCode: string, fallBackError: string | undefined = undefined, httpStatusCode: number | null = null) => {
         if (
             errorCode === WalletStatus.TEMPORARILY_LOCKED ||
             errorCode === WalletStatus.PERMANENTLY_LOCKED ||
@@ -49,8 +49,36 @@ export const PasscodePage: React.FC = () => {
                 setConfirmPasscode(initialPasscodeArray);
             }
         } else if (fallBackError) {
-            setError(t(fallBackError));
+            if (httpStatusCode === HTTP_STATUS_CODES.BAD_REQUEST) {
+                setError(t(fallBackError));
+            }
         }
+    }
+
+    const handleCommonErrors = (response: ApiResult<any>, fallBackError: string | undefined = undefined) => {
+        if (response.error?.message === (NETWORK_ERROR_MESSAGE)) {
+            if (!navigator.onLine) {
+                setError(t("Common:error.networkError.message"));
+            } else {
+                setError(t("Common:error.unknownError.message"));
+            }
+            return true;
+        }
+
+        switch (response.status) {
+            case HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR:
+                setError(t("Common:error.internalServerError.message"));
+                return true;
+            case HTTP_STATUS_CODES.SERVICE_UNAVAILABLE:
+                setError(t("Common:error.serviceUnavailable.message"));
+                return true;
+            default:
+                if (fallBackError) {
+                    setError(fallBackError)
+                    return true
+                }
+        }
+        return false;
     }
 
     const fetchWallets = async () => {
@@ -62,7 +90,7 @@ export const PasscodePage: React.FC = () => {
 
             if (!response.ok()) {
                 console.error('Error occurred while fetching Wallets:', response.error);
-                setError(t('error.fetchWalletsError'));
+                handleCommonErrors(response, t('error.fetchWalletsError'));
                 return
             }
 
@@ -95,23 +123,28 @@ export const PasscodePage: React.FC = () => {
 
     const unlockWallet = async (walletId: string, pin: string) => {
         if (!walletId) {
+            console.error(`Wallet not found for Wallet Id: ${walletId}`);
             setError(t('error.walletNotFoundError'));
             navigate(ROUTES.PASSCODE);
-            throw new Error('Wallet not found');
-        }
+        } else {
+            const response = await unlockWalletApi.fetchData({
+                apiConfig: api.unlockWallet,
+                body: {walletPin: pin},
+                url: api.unlockWallet.url(walletId),
+            })
 
-        const response = await unlockWalletApi.fetchData({
-            apiConfig: api.unlockWallet,
-            body: {walletPin: pin},
-            url: api.unlockWallet.url(walletId),
-        })
-
-        if (!response.ok()) {
-            console.error("Error occurred while unlocking Wallet:", response.error);
-            const errorCode = ((response.error as ApiError)?.response?.data as ErrorType).errorCode;
-            handleWalletStatusError(errorCode, 'error.incorrectPasscodeError');
+            if (!response.ok()) {
+                console.error("Error occurred while unlocking Wallet:", response.error);
+                const isErrorHandled = handleCommonErrors(response);
+                if (!isErrorHandled) {
+                    const errorCode = ((response.error as ApiError)?.response?.data as ErrorType).errorCode;
+                    handleWalletStatusError(errorCode, "error.incorrectPasscodeError", response.status);
+                }
+            } else {
+                saveWalletId(walletId)
+                handleUnlockSuccess();
+            }
         }
-        saveWalletId(walletId)
     };
 
     const createWallet = async () => {
@@ -119,29 +152,30 @@ export const PasscodePage: React.FC = () => {
         const confirmPin = confirmPasscode.join('');
 
         if (pin !== confirmPin) {
-            console.error("Pin and Confirm Pin mismatch");
+            console.error("Passcode and Confirm Passcode mismatch");
             setError(t('error.passcodeMismatchError'));
+        } else {
+            const response = await createWalletApi.fetchData({
+                apiConfig: api.createWalletWithPin,
+                body: {
+                    walletPin: pin,
+                    confirmWalletPin: confirmPasscode.join(''),
+                    walletName: null
+                },
+            })
+
+            if (!response.ok()) {
+                console.error("Error occurred while creating Wallet:", response.error);
+                const isErrorHandled = handleCommonErrors(response)
+                if(!isErrorHandled) {
+                    const errorMessage = ((response.error as ApiError)?.response?.data as ErrorType).errorMessage ?? t('Common.error.unknownError');
+                    setError(`${t('error.createWalletError')}: ${errorMessage}`);
+                }
+            } else {
+                const createdWallet = response.data!;
+                await unlockWallet(createdWallet.walletId, pin);
+            }
         }
-
-        const response = await createWalletApi.fetchData({
-            apiConfig: api.createWalletWithPin,
-            body: {
-                walletPin: pin,
-                confirmWalletPin: confirmPasscode.join(''),
-                walletName: null
-            },
-        })
-
-        if (!response.ok()) {
-            console.error("Error occurred while creating Wallet:", response.error);
-            const errorMessage = ((response.error as ApiError)?.response?.data as ErrorType).errorMessage ?? t('unknown-error');
-            setError(`${t('error.createWalletError')}: ${errorMessage}`);
-        }
-
-        const createdWallet = response.data!;
-        await unlockWallet(createdWallet.walletId, pin);
-
-        setWallets([{walletId: createdWallet.walletId}]);
     };
 
     const handleUnlockSuccess = () => {
@@ -173,7 +207,6 @@ export const PasscodePage: React.FC = () => {
 
             await unlockWallet(walletId, formattedPasscode);
         }
-        handleUnlockSuccess()
         setLoading(false);
     };
 

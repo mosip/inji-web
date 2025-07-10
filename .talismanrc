@@ -40,27 +40,27 @@ fileignoreconfig:
 - filename: inji-web/src/__tests__/users/login/FailedLoginPage.test.tsx
   checksum: 6f4b1b3d9779ea7b47042b9131cbc482a64e9f1e398a2bb909abbc5661bd4959
 - filename: inji-web/src/pages/User/Passcode/PasscodePage.tsx
-  checksum: cecd3ae15b74868ec51b3dbf4b4e1c69ca2dd21c458769e811e7ce4d59b1d64a
+  checksum: b58edb4370f1b8647104cf3620cb40d498e0e72e3e156ba6a0533130b21c43be
 - filename: inji-web/src/__tests__/pages/User/PasscodePage.test.tsx
   checksum: 9846d187bdc540d1d9927304a6adbd3939bfe57adc9cb80f05814e86f8091114
 - filename: inji-web/src/components/PageTemplate/PasscodePage/PasscodePageTemplate.tsx
   checksum: 47b30ab6a488c9d3cf8d4a4a53483b78a52759e0d1535aca1375c750c6ca8fa7
 - filename: inji-web/src/pages/User/Passcode/PasscodePageStyles.ts
   checksum: bec4a714aa4793e152402ab1d8843a642d93c11e4fdf7b3657320d911b923683
-- filename: inji-web/src/locales/ar.json
-  checksum: f3a3a76f2e969f715c3074046a5e48ea56b582e539cbdfc8b05e2909033aea1d
-- filename: inji-web/src/locales/fr.json
-  checksum: f45ba4af994ca833ab5db8e5ff515b6a08d37f6f0b915fa04caab16687c5accc
-- filename: inji-web/src/locales/en.json
-  checksum: 96e576c5c2a079c1830a608b46ecd49363a87fab69b907d6d1f98d065409a9af
-- filename: inji-web/src/locales/pt.json
-  checksum: 5c091f5ff841376913c21219c5fbd1fd485712602d1b874a68d7d1e873d306f7
 - filename: inji-web/src/locales/kn.json
-  checksum: cd0af5b05fcc8cc3b1b47a11dfae6ae7aead91c787666879b6d0425168f26b6a
+  checksum: cb31cb07e29d8c07eb5d2d41df73b4f762cb6ad3630848456af497a4bfe9805e
+- filename: inji-web/src/locales/ar.json
+  checksum: c41be08aa0eb750030b19b3f8881b04331a61e06088d3d1223431ec7fec1e3d0
+- filename: inji-web/src/locales/pt.json
+  checksum: 4931f72f12869f39a0780db1b55feaccd4e29e5b4e571bd0437db3f6557d0fc0
+- filename: inji-web/src/locales/en.json
+  checksum: 107d8ef822bfaaf17eec903947c97fac0a17bc19f49cf1e6d00583ce37acac54
 - filename: inji-web/src/locales/ta.json
-  checksum: e2ec97d2b5a6cf54d9183606a0031ff75f70ca43a286adff0b7ffb4bfdae5f3d
+  checksum: 27e129075b37c0c13dbf1270428b64bda19c264cbda8c4cc816d9900226fb103
 - filename: inji-web/src/locales/hi.json
-  checksum: 59b24fc504f0bdd9d445c72c2f6e490e23ddf114d0663cc7b5926ba7ae15408e
+  checksum: 86dceb8e449215c682d8a1f19cbda8c328a2ef3125d278bc9af0bfe9b62dd816
+- filename: inji-web/src/locales/fr.json
+  checksum: 807e85f3dbc9598edea6941569e7fc4ba8185a9e1b1651649d66bd7563c16de7
 - filename: inji-web/src/__tests__/pages/users/__snapshots__/ResetWalletPage.test.tsx.snap
   checksum: 8b7bb5db2e8fea883f150ec71e0d95c6790422e9e3d6eab39896ac2fc2d696c8
 - filename: inji-web/src/__tests__/pages/users/ResetWalletPage.test.tsx
@@ -97,8 +97,8 @@ fileignoreconfig:
   checksum: e23907b2d4b8c19bba4e2a79ecd27970a029be1b8faac952775eb85d9ce64435
 - filename: inji-web/src/components/VC/VCCardView.tsx
   checksum: 1628788ece7b6db63d613a8c27d4d14ec728b9e915ac5bd642d00bec497a445a
-- filename: inji-web/src/pages/Dashboard/StoredCards/StoredCardsPage.tsx
-  checksum: 1aa60329392751ab42aa8f76298745ff836b2dac3ffd46e4b8796c1fb4f5a53b
+- filename: inji-web/src/pages/User/StoredCards/StoredCardsPage.tsx
+  checksum: 3916846123ae42314d164481e33e183608d2b7705334c4e1270f0aee97e54131
 - filename: inji-web/src/components/Common/Input/PasscodeInput.tsx
   checksum: 623325e16b2883ca632c66946a072c7094102add69370bf3d804032f1261e382
 - filename: inji-web/src/pages/User/Passcode/PasscodePageStyles.ts
@@ -116,5 +116,5 @@ fileignoreconfig:
 - filename: inji-web/src/__tests__/components/Common/LandingPageWrapper.test.tsx
   checksum: 29a91215a4e4f32e58ea5c5bd927919c8b3428da6cf6bff4f8beca4b563d4aab
 - filename: inji-web/src/utils/constants.ts
-  checksum: c3efb907ae39a2e4ae439508c9164af69c230f97d17033385bf5b8ccab8d6901
+  checksum: fbdaa8c37e8ae4b6b88db0045bef72cb245f489803ad208c4e86795256e8a5e4
 version: ""
