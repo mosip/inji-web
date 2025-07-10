@@ -1,53 +1,67 @@
 package utils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class ExtentReportManager {
 	private static ExtentReports extent;
 	private static ExtentTest test;
 
+	public static String currentReportFileName;
+	private static String timestamp;
+
 	public static void initReport() {
 		if (extent == null) {
-			String branch = getGitBranch();
-			String commitId = getGitCommitId();
-			String reportName = "Test Execution Report";
-
-			if (branch != null && commitId != null) {
-				reportName += " - Branch: " + branch + ", Commit: " + commitId.substring(0, 7);
-			} else if (branch != null) {
-				reportName += " - Branch: " + branch;
-			} else if (commitId != null) {
-				reportName += " - Commit: " + commitId.substring(0, 7);
+			String envUrl = BaseTest.url;
+			if (envUrl.endsWith("/")) {
+				envUrl = envUrl.substring(0, envUrl.length() - 1);
 			}
-
-			ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("test-output/ExtentReport.html");
+			timestamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm").format(new Date());
+			String domainOnly = envUrl.replaceFirst("https?://", "");
+			String formattedEnvName = "InjiWebUi-" + domainOnly;
+			currentReportFileName = formattedEnvName + "-" + timestamp + ".html";
+			ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("test-output/" + currentReportFileName);
 			htmlReporter.config().setTheme(Theme.DARK);
 			htmlReporter.config().setDocumentTitle("Automation Report");
-			htmlReporter.config().setReportName(reportName);
-
+			htmlReporter.config().setReportName(formattedEnvName);
 			extent = new ExtentReports();
 			extent.attachReporter(htmlReporter);
-			addSystemInfo();
+			addSystemInfo(envUrl, timestamp);
 		}
 	}
 
-	private static void addSystemInfo() {
+	public static String getCurrentReportFileName() {
+		return currentReportFileName;
+	}
+
+	private static void addSystemInfo(String envUrl, String timestamp) {
 		String branch = getGitBranch();
+		if (branch == null || branch.trim().isEmpty()) {
+			branch = System.getenv("BRANCH_NAME");
+		}
+
 		String commitId = getGitCommitId();
+		if (commitId == null || commitId.trim().isEmpty()) {
+			commitId = System.getenv("COMMIT_ID");
+		}
+
+		String testUrl = System.getenv("TEST_URL");
+		if (testUrl == null || testUrl.trim().isEmpty()) {
+			testUrl = envUrl;
+		}
 
 		if (extent != null) {
-			if (branch != null) {
-				extent.setSystemInfo("Git Branch", branch);
-			}
-			if (commitId != null) {
-				extent.setSystemInfo("Git Commit ID", commitId);
-			}
+			extent.setSystemInfo("Git Branch", branch != null ? branch : "N/A");
+			extent.setSystemInfo("Commit ID", commitId != null ? commitId : "N/A");
+			extent.setSystemInfo("TEST_URL", testUrl);
+			extent.setSystemInfo("Execution Time", timestamp);
 		}
 	}
 

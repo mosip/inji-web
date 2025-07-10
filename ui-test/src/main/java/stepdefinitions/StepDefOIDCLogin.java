@@ -41,8 +41,10 @@ public class StepDefOIDCLogin {
 
 	private String sessionCookieName = "SESSION";
 	private String sessionCookieValue;
-	String baseUrl = HttpUtils.get("mosip.inji.web.url");
+	String baseUrl = BaseTest.url;
+	String normalizedBaseUrl = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
 
+	
 	public static void updateConfigProperty(String key, String value) throws IOException {
 		File file = new File("src/test/resources/config.properties");
 		Properties props = new Properties();
@@ -72,7 +74,6 @@ public class StepDefOIDCLogin {
 		String sessionCookieValue = sessionCookie.contains("=") ? sessionCookie.split("=", 2)[1].split(";")[0].trim()
 				: sessionCookie;
 		driver.get(baseUrl);
-
 		try {
 			boolean isDisplayed = loginpage.isgoogleButtonDisplayed();
 			assertTrue(isDisplayed, "google Login Button on Home page");
@@ -83,7 +84,6 @@ public class StepDefOIDCLogin {
 			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
 			throw e;
 		}
-
 		driver.manage().deleteAllCookies();
 
 		Cookie myCookie = new Cookie.Builder(sessionCookieName, sessionCookieValue)
@@ -91,11 +91,10 @@ public class StepDefOIDCLogin {
 				.isHttpOnly(true)
 				.isSecure(true)
 				.build();
-
 		Thread.sleep(10000);
 		driver.manage().addCookie(myCookie);
 		Thread.sleep(10000);
-		driver.navigate().refresh();
+		driver.navigate().refresh();		
 	}
 	
 	@Then("user enters the passcode {string}")
@@ -234,8 +233,8 @@ public class StepDefOIDCLogin {
 	public void user_verify_current_url() {
 		try {
 			loginpage.waituntilpagecompletelyloaded();
-			String currentUrl = loginpage.getCurrentUrlUserHome();																	
-			assertEquals(currentUrl, baseUrl + "user/home", "URL did not match expected user home");
+			String currentUrl = loginpage.getCurrentUrlUserHome();
+			assertEquals(currentUrl, normalizedBaseUrl + "user/home", "URL did not match expected user home");
 			test.log(Status.PASS, "User successfully redirected to user home page");
 		} catch (AssertionError | NoSuchElementException e) {
 			test.log(Status.FAIL, "Assertion/Element error: " + e.getMessage());
@@ -353,7 +352,7 @@ public class StepDefOIDCLogin {
 		try {
 			loginpage.waituntilpagecompletelyloaded();
 			String currentUrl = loginpage.getCurrentUrlUserCredentials();
-			assertEquals(currentUrl, baseUrl + "user/credentials", "URL did not match expected user home");
+			assertEquals(currentUrl, normalizedBaseUrl + "user/credentials", "URL did not match expected user home");
 			test.log(Status.PASS, "User successfully redirected to user credentials page");
 		} catch (AssertionError | NoSuchElementException e) {
 			test.log(Status.FAIL, "Assertion/Element error: " + e.getMessage());
@@ -505,7 +504,6 @@ public class StepDefOIDCLogin {
 	public void user_verify_label_fullname_info_value_value() {
 		try {
 			boolean isDisplayed = loginpage.isLabelFullnameInfoValueDisplayed();
-			;
 			assertTrue(isDisplayed, "Label fullname info value Displayed");
 			test.log(Status.PASS, "User successfully verified Label fullname info value value Displayed");
 		} catch (AssertionError | NoSuchElementException e) {
@@ -564,7 +562,7 @@ public class StepDefOIDCLogin {
 		try {
 			loginpage.waituntilpagecompletelyloaded();
 			String currentUrl = loginpage.getCurrentUrluserresetpasscode();
-			assertEquals(currentUrl, baseUrl + "user/reset-passcode", "URL did not match expected user reset passcode");
+			assertEquals(currentUrl, normalizedBaseUrl + "user/reset-passcode", "URL did not match expected user reset passcode");
 			test.log(Status.PASS, "User successfully redirected to user reset pass code page");
 		} catch (AssertionError | NoSuchElementException e) {
 			test.log(Status.FAIL, "Assertion/Element error: " + e.getMessage());
@@ -667,7 +665,7 @@ public class StepDefOIDCLogin {
 		try {
 			loginpage.waituntilpagecompletelyloaded();
 			String currentUrl = loginpage.getCurrentUrluserpasscode();
-			assertEquals(currentUrl, baseUrl + "user/passcode", "URL did not match expected user home");
+			assertEquals(currentUrl, normalizedBaseUrl + "user/passcode", "URL did not match expected user home");
 			test.log(Status.PASS, "User successfully redirected to user home page");
 		} catch (AssertionError | NoSuchElementException e) {
 			test.log(Status.FAIL, "Assertion/Element error: " + e.getMessage());
@@ -792,7 +790,7 @@ public class StepDefOIDCLogin {
 		try {
 			loginpage.waituntilpagecompletelyloaded();
 			String currentUrl = loginpage.getCurrentUrlUserFAQ();
-			assertEquals(currentUrl, baseUrl + "user/faq", "URL did not match expected user home");
+			assertEquals(currentUrl, normalizedBaseUrl + "user/faq", "URL did not match expected user home");
 			test.log(Status.PASS, "User successfully redirected to user faq page");
 		} catch (AssertionError | NoSuchElementException e) {
 			test.log(Status.FAIL, "Assertion/Element error: " + e.getMessage());
@@ -807,7 +805,7 @@ public class StepDefOIDCLogin {
 		try {
 			loginpage.waituntilpagecompletelyloaded();
 			String currentUrl = loginpage.getCurrentUrlUserFAQ();
-			assertEquals(currentUrl, baseUrl + "user/faq", "URL did not match expected user home");
+			assertEquals(currentUrl, normalizedBaseUrl + "user/faq", "URL did not match expected user home");
 			test.log(Status.PASS, "User successfully redirected to user faq page");
 		} catch (AssertionError | NoSuchElementException e) {
 			test.log(Status.FAIL, "Assertion/Element error: " + e.getMessage());

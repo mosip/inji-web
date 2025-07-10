@@ -40,26 +40,39 @@ public class BaseTest {
 	private static int passedCount = 0;
 	private static int failedCount = 0;
 	private static int totalCount = 0;
-
-	public static WebDriver driver;
-
-	public static final String url = System.getenv("env") != null ? System.getenv("TEST_URL")
-			: "https://injiweb.qa-inji1.mosip.net/";
-
+	public static WebDriver driver;	
 	private long scenarioStartTime;
 	public static JavascriptExecutor jse;
-	public String PdfNameForMosip = "MosipVerifiableCredential.pdf";
+	public String PdfNameForMosip = "MOSIPVerifiableCredential.pdf";
 	public String PdfNameForInsurance = "InsuranceCredential.pdf";
 	public String PdfNameForLifeInsurance = "InsuranceCredential.pdf";
 	private static ExtentReports extent;
 	private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
-
 	String username = System.getenv("BROWSERSTACK_USERNAME");
 	String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
 	public final String URL = "https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
-
 	private Scenario scenario;
 
+	
+	public static final String url = System.getenv("TEST_URL") != null && !System.getenv("TEST_URL").isEmpty()
+		    ? System.getenv("TEST_URL")
+		    : loadFromProps("config/injiweb.properties", "injiWebUi");
+
+	private static String loadFromProps(String path, String key) {
+	    Properties props = new Properties();
+	    try (InputStream input = BaseTest.class.getClassLoader().getResourceAsStream(path)) {
+	        if (input != null) {
+	            props.load(input);
+	            return props.getProperty(key); // returns null if not found
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	    return null; // no default fallback
+	}
+
+	
+	
 	@Before
 	public void beforeAll(Scenario scenario) throws MalformedURLException {
 		Local bsLocal = new Local();
@@ -68,7 +81,6 @@ public class BaseTest {
 		try {
 			bsLocal.start(bsLocalArgs);
 		} catch (Exception e) {
-
 			e.printStackTrace();
 		}
 		totalCount++;
@@ -125,10 +137,8 @@ public class BaseTest {
 		try {
 			Field testCaseField = scenario.getClass().getDeclaredField("testCase");
 			testCaseField.setAccessible(true);
-			io.cucumber.plugin.event.TestCase testCase = (io.cucumber.plugin.event.TestCase) testCaseField
-					.get(scenario);
+			io.cucumber.plugin.event.TestCase testCase = (io.cucumber.plugin.event.TestCase) testCaseField.get(scenario);
 			List<TestStep> testSteps = testCase.getTestSteps();
-
 			for (TestStep step : testSteps) {
 				if (step instanceof PickleStepTestStep) {
 					return ((PickleStepTestStep) step).getStep().getText();
@@ -144,7 +154,7 @@ public class BaseTest {
 		if (driver != null) {
 			byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
 			ExtentCucumberAdapter.getCurrentStep().addScreenCaptureFromBase64String(
-					java.util.Base64.getEncoder().encodeToString(screenshot), "Failure Screenshot");
+				java.util.Base64.getEncoder().encodeToString(screenshot), "Failure Screenshot");
 		}
 	}
 
@@ -152,16 +162,19 @@ public class BaseTest {
 	public static void afterAll() {
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			utils.HttpUtils.cleanupWallets();
-			System.out.println("Shutdown hook triggered. Uploading report...");
 			utils.HttpUtils.cleanupWallets();
 			if (extent != null) {
 				extent.flush();
 			}
+			try {
+				Thread.sleep(5000); // ensure report file is flushed before rename
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			pushReportsToS3();
 		}));
-
 	}
-
+	
 	public WebDriver getDriver() {
 		return driver;
 	}
@@ -175,25 +188,21 @@ public class BaseTest {
 		executeLsCommand(System.getProperty("user.dir") + "/utils/");
 		executeLsCommand(System.getProperty("user.dir") + "/screenshots/");
 
-		try {
-			Thread.sleep(20000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		executeLsCommand(System.getProperty("user.dir") + "/test-output/");
-		String timestamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm").format(new Date());
-		String name = InjiWebConfigManager.getapiEndUser() + "-" + timestamp + "-T-" + totalCount + "-P-" + passedCount
-				+ "-F-" + failedCount + ".html";
-		String newFileName = "InjiWebUi-" + name;
-		File originalReportFile = new File(System.getProperty("user.dir") + "/test-output/ExtentReport.html");
+		String originalFileName = ExtentReportManager.getCurrentReportFileName();
+		File originalReportFile = new File(System.getProperty("user.dir") + "/test-output/" + originalFileName);
+		String nameWithoutExt = originalFileName.replace(".html", "");
+		String newFileName = nameWithoutExt + "-T-" + totalCount + "-P-" + passedCount + "-F-" + failedCount + ".html";
 		File newReportFile = new File(System.getProperty("user.dir") + "/test-output/" + newFileName);
 
-		// Rename the file
+		System.out.println("Attempting to rename report file...");
+		System.out.println("Original: " + originalReportFile.getAbsolutePath());
+		System.out.println("Target:   " + newReportFile.getAbsolutePath());
+
 		if (originalReportFile.renameTo(newReportFile)) {
-			System.out.println("Report renamed to: " + newFileName);
+			System.out.println("✅ Report renamed to: " + newFileName);
 		} else {
-			System.out.println("Failed to rename the report file.");
+			System.out.println("❌ Failed to rename the report file.");
 		}
 
 		executeLsCommand(newReportFile.getAbsolutePath());
@@ -202,8 +211,7 @@ public class BaseTest {
 			S3Adapter s3Adapter = new S3Adapter();
 			boolean isStoreSuccess = false;
 			try {
-				isStoreSuccess = s3Adapter.putObject(ConfigManager.getS3Account(), "", null, null, newFileName,
-						newReportFile);
+				isStoreSuccess = s3Adapter.putObject(ConfigManager.getS3Account(), "", null, null, newFileName, newReportFile);
 				System.out.println("isStoreSuccess:: " + isStoreSuccess);
 			} catch (Exception e) {
 				System.out.println("Error occurred while pushing the object: " + e.getLocalizedMessage());
@@ -218,11 +226,9 @@ public class BaseTest {
 			Process process;
 
 			if (os.contains("win")) {
-				// Windows command (show all files including hidden)
 				String windowsDirectoryPath = directoryPath.replace("/", File.separator);
 				process = Runtime.getRuntime().exec(new String[] { "cmd.exe", "/c", "dir /a " + windowsDirectoryPath });
 			} else {
-				// Unix-like command (show all files including hidden)
 				process = Runtime.getRuntime().exec(new String[] { "/bin/sh", "-c", "ls -al " + directoryPath });
 			}
 
@@ -250,19 +256,30 @@ public class BaseTest {
 	}
 
 	public static String[] fetchIssuerTexts() {
-		String issuerSearchText = null;
-		String issuerSearchTextforSunbird = null;
-		String propertyFilePath = System.getProperty("user.dir") + "/src/test/resources/config.properties";
-		Properties properties = new Properties();
+	    String issuerSearchText = System.getenv("issuerSearchText");
+	    String issuerSearchTextforSunbird = System.getenv("issuerSearchTextforSunbird");
+	    
+	    if (issuerSearchText == null || issuerSearchTextforSunbird == null) {
+	        String propertyFilePath = System.getProperty("user.dir") + "/src/test/resources/config.properties";
+	        Properties properties = new Properties();
 
-		try (FileInputStream fileInputStream = new FileInputStream(propertyFilePath)) {
-			properties.load(fileInputStream);
-			issuerSearchText = properties.getProperty("issuerSearchText");
-			issuerSearchTextforSunbird = properties.getProperty("issuerSearchTextforSunbird");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return new String[] { issuerSearchText, issuerSearchTextforSunbird };
+	        try (FileInputStream fileInputStream = new FileInputStream(propertyFilePath)) {
+	            properties.load(fileInputStream);
+
+	            if (issuerSearchText == null) {
+	                issuerSearchText = properties.getProperty("issuerSearchText");
+	            }
+
+	            if (issuerSearchTextforSunbird == null) {
+	                issuerSearchTextforSunbird = properties.getProperty("issuerSearchTextforSunbird");
+	            }
+
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return new String[] { issuerSearchText, issuerSearchTextforSunbird };
 	}
 
 }

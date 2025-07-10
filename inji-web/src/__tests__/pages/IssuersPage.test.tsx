@@ -5,19 +5,9 @@ import {toast} from "react-toastify";
 import {mockApiResponse, mockUseApi} from "../../test-utils/setupUseApiMock";
 import {useUser} from "../../hooks/User/useUser";
 import {RequestStatus} from "../../utils/constants";
-import {mockIssuerObjectList} from "../../test-utils/mockObjects";
+import {mockIssuerObjectList, mockStore} from "../../test-utils/mockObjects";
 import {IssuersPage} from "../../pages/IssuersPage";
 import {api} from "../../utils/api";
-
-const mockStore = {
-    getState: () => ({
-        common: {
-            language: 'en'
-        }
-    }),
-    subscribe: jest.fn(),
-    dispatch: jest.fn(),
-};
 
 jest.mock("react-redux", () => ({
     ...jest.requireActual('react-redux'),

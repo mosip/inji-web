@@ -85,6 +85,7 @@ export const Layout: React.FC = () => {
                     removeSession(latestDownloadedSessionId);
                 }
             }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [latestDownloadedSessionId, downloadInProgressSessions, setLatestDownloadedSessionId, removeSession]
     )
     ;

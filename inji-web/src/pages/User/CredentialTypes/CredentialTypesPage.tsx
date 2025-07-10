@@ -51,7 +51,7 @@ export const CredentialTypesPage: React.FC<CredentialTypesPageProps> = ({
 
     useEffect(() => {
         if (downloadStatus === RequestStatus.DONE) {
-            navigate(ROUTES.CREDENTIALS)
+            navigate(ROUTES.USER_CREDENTIALS)
         }
     }, [downloadStatus, navigate])
 

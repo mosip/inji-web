@@ -1,17 +1,15 @@
 import React, {useState} from "react";
 import {getCredentialTypeDisplayObjectForCurrentLanguage,} from "../../utils/i18n";
 import {ItemBox} from "../Common/ItemBox";
-import {generateCodeChallenge, generateRandomString} from "../../utils/misc";
+import {buildAuthorizationUrl, generateCodeChallenge, generateRandomString} from "../../utils/misc";
 import {addNewSession} from "../../utils/sessions";
 import {useSelector} from "react-redux";
-import {api} from "../../utils/api";
 import {CredentialProps} from "../../types/components";
 import {CodeChallengeObject, CredentialConfigurationObject} from "../../types/data";
 
 import {RootState} from "../../types/redux";
 import {DataShareExpiryModal} from "../../modals/DataShareExpiryModal";
 import {useUser} from "../../hooks/User/useUser";
-import { buildAuthorizationUrl } from "../../utils/misc";
 
 export const Credential: React.FC<CredentialProps> = (props) => {
     const credentials = useSelector(

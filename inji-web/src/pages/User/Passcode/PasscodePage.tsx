@@ -125,7 +125,7 @@ export const PasscodePage: React.FC = () => {
         if (!walletId) {
             console.error(`Wallet not found for Wallet Id: ${walletId}`);
             setError(t('error.walletNotFoundError'));
-            navigate(ROUTES.PASSCODE);
+            navigate(ROUTES.USER_PASSCODE);
         } else {
             const response = await unlockWalletApi.fetchData({
                 apiConfig: api.unlockWallet,

@@ -36,7 +36,7 @@ public class MosipCredentials extends BasePage {
 
 	public void enterOtp(WebDriver driver, String otpString) {
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}
