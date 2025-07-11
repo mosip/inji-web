@@ -13,7 +13,7 @@ import {useApi} from "../../../hooks/useApi";
 import {ApiError, ApiResult, ErrorType, Wallet} from "../../../types/data";
 import {AppStorage} from "../../../utils/AppStorage";
 
-const WalletStatus = {
+const WalletLockStatus = {
     TEMPORARILY_LOCKED: 'temporarily_locked',
     PERMANENTLY_LOCKED: 'permanently_locked',
     LAST_ATTEMPT_BEFORE_LOCKOUT: 'last_attempt_before_lockout'
@@ -38,12 +38,12 @@ export const PasscodePage: React.FC = () => {
 
     const handleWalletStatusError = (errorCode: string, fallBackError: string | undefined = undefined, httpStatusCode: number | null = null) => {
         if (
-            errorCode === WalletStatus.TEMPORARILY_LOCKED ||
-            errorCode === WalletStatus.PERMANENTLY_LOCKED ||
-            errorCode === WalletStatus.LAST_ATTEMPT_BEFORE_LOCKOUT
+            errorCode === WalletLockStatus.TEMPORARILY_LOCKED ||
+            errorCode === WalletLockStatus.PERMANENTLY_LOCKED ||
+            errorCode === WalletLockStatus.LAST_ATTEMPT_BEFORE_LOCKOUT
         ) {
             setError(t(`error.walletStatus.${errorCode}`));
-            if (errorCode !== WalletStatus.LAST_ATTEMPT_BEFORE_LOCKOUT) {
+            if (errorCode !== WalletLockStatus.LAST_ATTEMPT_BEFORE_LOCKOUT) {
                 setCanUnlockWallet(false);
                 setPasscode(initialPasscodeArray);
                 setConfirmPasscode(initialPasscodeArray);

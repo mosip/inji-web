@@ -187,7 +187,7 @@ describe('Passcode', () => {
         expect(mockNavigate).toHaveBeenCalledWith("/user/home");
     })
 
-    test.each([
+    const walletLockErrorMessages = [
         {
             walletStatus: "temporarily_locked",
             expectedError: "You’ve reached the maximum number of attempts. Your wallet is now temporarily locked for sometime",
@@ -196,7 +196,9 @@ describe('Passcode', () => {
             walletStatus: "permanently_locked",
             expectedError: "Your wallet has been permanently locked due to multiple failed attempts. Please click on forgot password to reset your wallet to continue",
         }
-    ])(
+    ];
+
+    test.each(walletLockErrorMessages)(
         "should display $walletStatus error and disable input boxes and submit button when landing on the passcode page for a already $walletStatus Wallet",
         async ({walletStatus, expectedError}) => {
             mockApiResponseSequence([{
@@ -213,16 +215,7 @@ describe('Passcode', () => {
         }
     );
 
-    test.each([
-        {
-            walletStatus: "temporarily_locked",
-            expectedError: "You’ve reached the maximum number of attempts. Your wallet is now temporarily locked for sometime",
-        },
-        {
-            walletStatus: "permanently_locked",
-            expectedError: "Your wallet has been permanently locked due to multiple failed attempts. Please click on forgot password to reset your wallet to continue",
-        },
-    ])(
+    test.each(walletLockErrorMessages)(
         "should display $walletStatus error and disable input boxes and submit button when unlock wallet endpoint returns $walletStatus error code",
         async ({walletStatus, expectedError}) => {
             mockApiResponseSequence([{data: successWalletResponse}, {
