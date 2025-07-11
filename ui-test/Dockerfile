@@ -58,6 +58,8 @@ COPY --chown=${container_user}:${container_user} ./src/test/resources/config.pro
 COPY --chown=${container_user}:${container_user} ./src/main/java/utils/ /home/mosip/src/main/java/utils/
 COPY --chown=${container_user}:${container_user} ./screenshots/ /home/mosip/screenshots/
 COPY --chown=${container_user}:${container_user} ./resource/ /home/mosip/resource/
+COPY --chown=${container_user}:${container_user} ./application.properties $work_dir/
+COPY ["Biometric Devices", "$work_dir/Biometric Devices"]
 
 COPY --chown=${container_user}:${container_user} ./testNgXmlFiles/ /home/mosip/testNgXmlFiles/
 

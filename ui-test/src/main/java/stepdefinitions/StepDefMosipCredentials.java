@@ -30,282 +30,294 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Base64;
 
-
 public class StepDefMosipCredentials {
-    String pageTitle;
-    public WebDriver driver;
-    BaseTest baseTest;
-    private MosipCredentials mosipCredentials;
-    private SetNetwork setNetwork;
-    ExtentTest test = ExtentReportManager.getTest();
-    private GlobelConstants globelConstants;
-    public static String screenshotPath = System.getProperty("user.dir")+"/test-output/screenshots";
-  
+	String pageTitle;
+	public WebDriver driver;
+	BaseTest baseTest;
+	private MosipCredentials mosipCredentials;
+	private SetNetwork setNetwork;
+	ExtentTest test = ExtentReportManager.getTest();
+	private GlobelConstants globelConstants;
+	public static String screenshotPath = System.getProperty("user.dir") + "/test-output/screenshots";
 
-    public StepDefMosipCredentials() {
-        this.baseTest =  new BaseTest();
-        this.driver = baseTest.getDriver();
-        this.mosipCredentials = new MosipCredentials(driver);
-        this.setNetwork = new SetNetwork();
-    }
+	public StepDefMosipCredentials() {
+		this.baseTest = new BaseTest();
+		this.driver = baseTest.getDriver();
+		this.mosipCredentials = new MosipCredentials(driver);
+		this.setNetwork = new SetNetwork();
+	}
 
+	@Then("User verifies that the mock verifiable credential by e-Signet is displayed")
+	public void user_verify_mock_verifiable_credential_by_e_signet_displayed() {
+		try {
+			boolean isDisplayed = mosipCredentials.isMockVerifiableCredentialDisplayed();
+			System.out.println("Mock Verifiable Credential by e-Signet Displayed: " + isDisplayed);
 
-    @Then("User verifies that the mock verifiable credential by e-Signet is displayed")
-    public void user_verify_mock_verifiable_credential_by_e_signet_displayed() {
-        try {
-            boolean isDisplayed = mosipCredentials.isMockVerifiableCredentialDisplayed();
-            System.out.println("Mock Verifiable Credential by e-Signet Displayed: " + isDisplayed);
+			assertTrue(isDisplayed, "Mock verifiable credential by e-Signet is not displayed");
+			test.log(Status.PASS,
+					"User successfully verified that the mock verifiable credential by e-Signet is displayed");
+		} catch (AssertionError e) {
+			test.log(Status.FAIL, "Assertion failed: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL,
+					"Element not found while verifying the mock verifiable credential by e-Signet: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL,
+					"Unexpected error while verifying the mock verifiable credential by e-Signet: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
 
-            assertTrue(isDisplayed, "Mock verifiable credential by e-Signet is not displayed");
-            test.log(Status.PASS, "User successfully verified that the mock verifiable credential by e-Signet is displayed");
-        } catch (AssertionError e) {
-            test.log(Status.FAIL, "Assertion failed: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (NoSuchElementException e) {
-            test.log(Status.FAIL, "Element not found while verifying the mock verifiable credential by e-Signet: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (Exception e) {
-            test.log(Status.FAIL, "Unexpected error while verifying the mock verifiable credential by e-Signet: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        }
-    }
+	@When("User clicks on the mock verifiable credential by e-Signet button")
+	public void user_click_on_mock_verifiable_credential_by_e_signet_button() {
+		try {
+			mosipCredentials.clickOnMockVerifiableCredential();
+			test.log(Status.PASS, "User successfully clicked on the mock verifiable credential by e-Signet button");
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL,
+					"Element not found while clicking on the mock verifiable credential by e-Signet button: "
+							+ e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL,
+					"Unexpected error while clicking on the mock verifiable credential by e-Signet button: "
+							+ e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
 
-    @When("User clicks on the mock verifiable credential by e-Signet button")
-    public void user_click_on_mock_verifiable_credential_by_e_signet_button() {
-        try {
-            mosipCredentials.clickOnMockVerifiableCredential();
-            test.log(Status.PASS, "User successfully clicked on the mock verifiable credential by e-Signet button");
-        } catch (NoSuchElementException e) {
-            test.log(Status.FAIL, "Element not found while clicking on the mock verifiable credential by e-Signet button: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (Exception e) {
-            test.log(Status.FAIL, "Unexpected error while clicking on the mock verifiable credential by e-Signet button: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        }
-    }
+	@When("User enters the UIN")
+	public void user_enter_the_uin() {
+		try {
+			String uin = AdminTestUtil.autoGeneratedIDValueCache.get("AddIdentity_withValidParameters_smoke_Pos_UIN");
+			mosipCredentials.enterVid(uin);
+			test.log(Status.PASS, "User successfully entered the UIN");
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL, "Element not found while entering the UIN: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL, "Unexpected error while entering the UIN: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
 
-    @When("User enters the UIN")
-    public void user_enter_the_uin() {
-        try {
-        	String uin = AdminTestUtil.autoGeneratedIDValueCache.get("AddIdentity_withValidParameters_smoke_Pos_UIN");
-            mosipCredentials.enterVid(uin);
-            test.log(Status.PASS, "User successfully entered the UIN");
-        } catch (NoSuchElementException e) {
-            test.log(Status.FAIL, "Element not found while entering the UIN: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (Exception e) {
-            test.log(Status.FAIL, "Unexpected error while entering the UIN: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        }
-    }
+	@When("User enter the uin")
+	public void user_enter_the() {
+		try {
+			String uin = AdminTestUtil.autoGeneratedIDValueCache.get("AddIdentity_withValidParameters_smoke_Pos_UIN");
+			mosipCredentials.enterVid(uin);
+			test.log(Status.PASS, "User successfully entered the UIN: " + uin);
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL, "Element not found while entering the UIN: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL, "Unexpected error while entering the UIN: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
 
-    @When("User enter the uin")
-    public void user_enter_the() {
-        try {
-        	String uin = AdminTestUtil.autoGeneratedIDValueCache.get("AddIdentity_withValidParameters_smoke_Pos_UIN");
-            mosipCredentials.enterVid(uin);
-            test.log(Status.PASS, "User successfully entered the UIN: " + uin);
-        } catch (NoSuchElementException e) {
-            test.log(Status.FAIL, "Element not found while entering the UIN: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (Exception e) {
-            test.log(Status.FAIL, "Unexpected error while entering the UIN: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        }
-    }
+	@When("User click on getOtp button")
+	public void user_click_on_get_otp_button() {
+		try {
+			mosipCredentials.clickOnGetOtpButton();
+			test.log(Status.PASS, "User successfully clicked on the Get OTP button");
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL, "Element not found while clicking on the Get OTP button: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL, "Unexpected error while clicking on the Get OTP button: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
 
-    @When("User click on getOtp button")
-    public void user_click_on_get_otp_button() {
-        try {
-            mosipCredentials.clickOnGetOtpButton();
-            test.log(Status.PASS, "User successfully clicked on the Get OTP button");
-        } catch (NoSuchElementException e) {
-            test.log(Status.FAIL, "Element not found while clicking on the Get OTP button: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (Exception e) {
-            test.log(Status.FAIL, "Unexpected error while clicking on the Get OTP button: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        }
-    }
+	@When("User enter the otp {string}")
+	public void user_enter_the_otp(String otpString) {
+		try {
+			Thread.sleep(3000); // Consider replacing this with an explicit wait for better reliability
+			mosipCredentials.enterOtp(baseTest.getDriver(), otpString);
+			test.log(Status.PASS, "User successfully entered the OTP: " + otpString);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt(); // Restore interrupted status
+			test.log(Status.FAIL, "Thread was interrupted while waiting to enter the OTP: " + e.getMessage());
+			throw new RuntimeException(e);
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL, "Element not found while entering the OTP: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL, "Unexpected error while entering the OTP: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
 
-    @When("User enter the otp {string}")
-    public void user_enter_the_otp(String otpString) {
-        try {
-            Thread.sleep(3000); // Consider replacing this with an explicit wait for better reliability
-            mosipCredentials.enterOtp(baseTest.getDriver(), otpString);
-            test.log(Status.PASS, "User successfully entered the OTP: " + otpString);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt(); // Restore interrupted status
-            test.log(Status.FAIL, "Thread was interrupted while waiting to enter the OTP: " + e.getMessage());
-            throw new RuntimeException(e);
-        } catch (NoSuchElementException e) {
-            test.log(Status.FAIL, "Element not found while entering the OTP: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (Exception e) {
-            test.log(Status.FAIL, "Unexpected error while entering the OTP: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        }
-    }
+	@When("User click on mosip national id by e-signet button")
+	public void user_click_on_mosip_national_id_by_e_signet_button() {
+		try {
+			mosipCredentials.clickOnMosipNationalId();
+			test.log(Status.PASS, "User successfully clicked on the MOSIP National ID by e-Signet button");
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL,
+					"Element not found while clicking on the MOSIP National ID by e-Signet button: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL,
+					"Unexpected error while clicking on the MOSIP National ID by e-Signet button: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
 
-    @When("User click on mosip national id by e-signet button")
-    public void user_click_on_mosip_national_id_by_e_signet_button() {
-        try {
-            mosipCredentials.clickOnMosipNationalId();
-            test.log(Status.PASS, "User successfully clicked on the MOSIP National ID by e-Signet button");
-        } catch (NoSuchElementException e) {
-            test.log(Status.FAIL, "Element not found while clicking on the MOSIP National ID by e-Signet button: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (Exception e) {
-            test.log(Status.FAIL, "Unexpected error while clicking on the MOSIP National ID by e-Signet button: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        }
-    }
+	@When("User verify login page lables")
+	public void user_verify_login_page_labels() {
+		try {			
+			mosipCredentials.clickOnLoginWithOtp();
+			assertTrue(mosipCredentials.isLoginPageLableDisplayed(), "Login page label is not displayed");
+			test.log(Status.PASS, "User successfully verified the login page labels");
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL, "Element not found while verifying login page labels: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (AssertionError e) {
+			test.log(Status.FAIL, "Login page label assertion failed: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL, "Unexpected error while verifying login page labels: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
 
+	@When("User verify vid input box header")
+	public void user_verify_vid_input_box_header() {
+		try {
+			assertTrue(mosipCredentials.isVidInputBoxHeaderDisplayed(), "VID input box header is not displayed");
+			test.log(Status.PASS, "User successfully verified the VID input box header");
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL, "Element not found while verifying VID input box header: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (AssertionError e) {
+			test.log(Status.FAIL, "VID input box header assertion failed: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL, "Unexpected error while verifying VID input box header: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
 
-    @When("User verify login page lables")
-    public void user_verify_login_page_labels() {
-        try {
-            mosipCredentials.clickOnLoginWithOtp();
-            assertTrue(mosipCredentials.isLoginPageLableDisplayed(), "Login page label is not displayed");
-            test.log(Status.PASS, "User successfully verified the login page labels");
-        } catch (NoSuchElementException e) {
-            test.log(Status.FAIL, "Element not found while verifying login page labels: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (AssertionError e) {
-            test.log(Status.FAIL, "Login page label assertion failed: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (Exception e) {
-            test.log(Status.FAIL, "Unexpected error while verifying login page labels: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        }
-    }
+	@Then("User verify pdf is downloaded")
+	public String user_verify_pdf_is_downloaded() throws IOException {
+		baseTest.getJse()
+				.executeScript("browserstack_executor: {\"action\": \"fileExists\", \"arguments\": {\"fileName\": \""
+						+ baseTest.PdfNameForMosip + "\"}}");
+		baseTest.getJse().executeScript(
+				"browserstack_executor: {\"action\": \"getFileProperties\", \"arguments\": {\"fileName\": \""
+						+ baseTest.PdfNameForMosip + "\"}}");
 
-    @When("User verify vid input box header")
-    public void user_verify_vid_input_box_header() {
-        try {
-            assertTrue(mosipCredentials.isVidInputBoxHeaderDisplayed(), "VID input box header is not displayed");
-            test.log(Status.PASS, "User successfully verified the VID input box header");
-        } catch (NoSuchElementException e) {
-            test.log(Status.FAIL, "Element not found while verifying VID input box header: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (AssertionError e) {
-            test.log(Status.FAIL, "VID input box header assertion failed: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (Exception e) {
-            test.log(Status.FAIL, "Unexpected error while verifying VID input box header: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        }
-    }
+		String base64EncodedFile = (String) baseTest.getJse().executeScript(
+				"browserstack_executor: {\"action\": \"getFileContent\", \"arguments\": {\"fileName\": \""
+						+ baseTest.PdfNameForMosip + "\"}}");
+		byte[] data = Base64.getDecoder().decode(base64EncodedFile);
+		OutputStream stream = new FileOutputStream(baseTest.PdfNameForMosip);
+		stream.write(data);
 
-    @Then("User verify pdf is downloaded")
-    public String user_verify_pdf_is_downloaded() throws IOException {
-        baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"fileExists\", \"arguments\": {\"fileName\": \"" + baseTest.PdfNameForMosip + "\"}}");
-        baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"getFileProperties\", \"arguments\": {\"fileName\": \"" + baseTest.PdfNameForMosip + "\"}}");
+		System.out.println(stream);
+		stream.close();
 
-        String base64EncodedFile = (String) baseTest.getJse().executeScript("browserstack_executor: {\"action\": \"getFileContent\", \"arguments\": {\"fileName\": \"" + baseTest.PdfNameForMosip + "\"}}");
-        byte[] data = Base64.getDecoder().decode(base64EncodedFile);
-        OutputStream stream = new FileOutputStream(baseTest.PdfNameForMosip);
-        stream.write(data);
+		File pdfFile = new File(System.getProperty("user.dir") + "/" + baseTest.PdfNameForMosip);
+		PDDocument document = PDDocument.load(pdfFile);
 
-        System.out.println(stream);
-        stream.close();
+		PDFTextStripper stripper = new PDFTextStripper();
+		String text = stripper.getText(document);
+		return text;
+	}
 
-        File pdfFile = new File(System.getProperty("user.dir") + "/" + baseTest.PdfNameForMosip);
-        PDDocument document = PDDocument.load(pdfFile);
+	@Then("User verifies 'Downloading in Progress' text")
+	public void user_verify_downloading_in_progress_displayed() {
+		try {
+			assertTrue(mosipCredentials.isDownloadingDescriptionTextDisplayed(),
+					"'Downloading in Progress' text is not displayed");
+			test.log(Status.PASS, "User successfully verified 'Downloading in Progress' text");
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL,
+					"Element not found while verifying 'Downloading in Progress' text: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (AssertionError e) {
+			test.log(Status.FAIL, "'Downloading in Progress' text assertion failed: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL, "Unexpected error while verifying 'Downloading in Progress' text: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
 
-        PDFTextStripper stripper = new PDFTextStripper();
-        String text = stripper.getText(document);
-        return text;
-    }
-
-    @Then("User verifies 'Downloading in Progress' text")
-    public void user_verify_downloading_in_progress_displayed() {
-        try {
-            assertTrue(mosipCredentials.isDownloadingDescriptionTextDisplayed(), "'Downloading in Progress' text is not displayed");
-            test.log(Status.PASS, "User successfully verified 'Downloading in Progress' text");
-        } catch (NoSuchElementException e) {
-            test.log(Status.FAIL, "Element not found while verifying 'Downloading in Progress' text: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (AssertionError e) {
-            test.log(Status.FAIL, "'Downloading in Progress' text assertion failed: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (Exception e) {
-            test.log(Status.FAIL, "Unexpected error while verifying 'Downloading in Progress' text: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        }
-    }
-
-    @Then("User verify downloading in progress text")
-    public void user_VerifyDownloadingInProgressDisplayed() {
-        try {
-            assertTrue(mosipCredentials.isDownloadingDescriptionTextDisplayed(),
-                              "'Downloading in Progress' text is not displayed");
-            test.log(Status.PASS, "User successfully verified 'Downloading in Progress' text.");
-        } catch (AssertionError e) {
-            test.log(Status.FAIL, "Assertion failed: 'Downloading in Progress' text is not displayed.");
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (NoSuchElementException e) {
-            test.log(Status.FAIL, "Element not found: 'Downloading in Progress' text not found on the page.");
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        } catch (Exception e) {
-            test.log(Status.FAIL, "Unexpected error while verifying 'Downloading in Progress' text: " + e.getMessage());
-            test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-            ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-            throw e;
-        }
-    }
-
+	@Then("User verify downloading in progress text")
+	public void user_VerifyDownloadingInProgressDisplayed() {
+		try {
+			assertTrue(mosipCredentials.isDownloadingDescriptionTextDisplayed(),
+					"'Downloading in Progress' text is not displayed");
+			test.log(Status.PASS, "User successfully verified 'Downloading in Progress' text.");
+		} catch (AssertionError e) {
+			test.log(Status.FAIL, "Assertion failed: 'Downloading in Progress' text is not displayed.");
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL, "Element not found: 'Downloading in Progress' text not found on the page.");
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL, "Unexpected error while verifying 'Downloading in Progress' text: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
 
 }
