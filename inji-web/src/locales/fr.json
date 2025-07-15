@@ -98,8 +98,13 @@
       "passcodeLengthError": "Le code PIN doit comporter 6 chiffres.",
       "passcodeMismatchError": "Les codes d'accès ne correspondent pas. Veuillez vous assurer que les deux champs du code correspondent parfaitement. Saisissez-le à nouveau et réessayez.",
       "createWalletError": "Échec de la création du portefeuille.",
-      "incorrectPasscodeError": "Code d'accès invalide. Le code d'accès saisi est incorrect. Veuillez vérifier et réessayer, ou cliquez sur « Mot de passe oublié » pour le réinitialiser.",
-      "fetchWalletsError": "Échec du chargement des portefeuilles."
+      "incorrectPasscodeError": "Le code d'accès semble incorrect. Veuillez réessayer ou appuyer sur « Mot de passe oublié » si vous avez besoin d'aide pour le réinitialiser.",
+      "fetchWalletsError": "Échec du chargement des portefeuilles.",
+      "walletStatus": {
+        "temporarily_locked": "Vous avez atteint le nombre maximal de tentatives. Votre portefeuille est temporairement verrouillé. Veuillez réessayer ultérieurement.",
+        "permanently_locked": "Votre portefeuille a été définitivement bloqué suite à plusieurs tentatives infructueuses. Cliquez sur « Mot de passe oublié » pour réinitialiser votre portefeuille et continuer.",
+        "last_attempt_before_lockout": "Code d'accès incorrect. Dernière tentative avant le blocage définitif de votre portefeuille."
+      }
     }
   },
   "ResetPasscodePage": {
@@ -419,6 +424,29 @@
       "placeholder": "Recherchez vos cartes par nom",
       "noResults": "Aucune carte ne correspond à votre recherche."
     },
+    "cardView": {
+      "download": "Télécharger",
+      "menu": {
+        "view": "Voir",
+        "delete": "Supprimer"
+      },
+      "error": {
+        "downloadError": "Échec du téléchargement. Veuillez réessayer.",
+        "deleteError": "Échec de la suppression. Réessayez."
+      },
+      "delete": {
+        "confirmation": {
+          "title": "Supprimer la carte !",
+          "message": "Êtes-vous sûr de vouloir supprimer cette carte ?"
+        }
+      }
+    }
+  },
+  "Common": {
+    "home": "Maison",
+    "goToHome": "Aller à l'accueil",
+    "confirm": "Confirmer",
+    "cancel": "Annuler",
     "error": {
       "internalServerError": {
         "title": "Erreur du serveur",
@@ -444,29 +472,6 @@
         "title": "Pas de connexion Internet",
         "message": "Veuillez vérifier votre connexion Internet et réessayer."
       }
-    },
-    "cardView": {
-      "download": "Télécharger",
-      "menu": {
-        "view": "Voir",
-        "delete": "Supprimer"
-      },
-      "error": {
-        "downloadError": "Échec du téléchargement. Veuillez réessayer.",
-        "deleteError": "Échec de la suppression. Réessayez."
-      },
-      "delete": {
-        "confirmation": {
-          "title": "Supprimer la carte !",
-          "message": "Êtes-vous sûr de vouloir supprimer cette carte ?"
-        }
-      }
     }
-  },
-  "Common": {
-    "home": "Maison",
-    "goToHome": "Aller à l'accueil",
-    "confirm": "Confirmer",
-    "cancel": "Annuler"
   }
 }

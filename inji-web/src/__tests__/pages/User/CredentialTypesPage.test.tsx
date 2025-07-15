@@ -49,8 +49,8 @@ describe('CredentialTypesPage', () => {
         jest.clearAllMocks();
         setMockUseDispatchReturnValue(jest.fn());
         mockApiResponseSequence([
-            {response: {response: {display: [{language: 'en', name: 'Issuer1'}]}}},
-            {response: credentialWellknown}
+            {data: {response: {display: [{language: 'en', name: 'Issuer1'}]}}},
+            {data: credentialWellknown}
         ])
 
         mockFetchUserProfile.mockResolvedValue(userProfile)

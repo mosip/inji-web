@@ -6,12 +6,18 @@ import {useTranslation} from 'react-i18next';
 import {useUser} from '../../../hooks/User/useUser';
 import {PasscodeInput} from '../../../components/Common/Input/PasscodeInput';
 import {PasscodePageStyles} from './PasscodePageStyles';
-import {KEYS, ROUTES} from "../../../utils/constants";
+import {HTTP_STATUS_CODES, KEYS, NETWORK_ERROR_MESSAGE, passcodeLength, ROUTES} from "../../../utils/constants";
 import {PasscodePageTemplate} from "../../../components/PageTemplate/PasscodePage/PasscodePageTemplate";
 import {TertiaryButton} from "../../../components/Common/Buttons/TertiaryButton";
 import {useApi} from "../../../hooks/useApi";
-import {ApiError, ErrorType, Wallet} from "../../../types/data";
+import {ApiError, ApiResult, ErrorType, Wallet} from "../../../types/data";
 import {AppStorage} from "../../../utils/AppStorage";
+
+const WalletLockStatus = {
+    TEMPORARILY_LOCKED: 'temporarily_locked',
+    PERMANENTLY_LOCKED: 'permanently_locked',
+    LAST_ATTEMPT_BEFORE_LOCKOUT: 'last_attempt_before_lockout'
+}
 
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');
@@ -19,14 +25,61 @@ export const PasscodePage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [wallets, setWallets] = useState<any[] | null>(null);
-    const [passcode, setPasscode] = useState<string[]>(Array(6).fill(''));
-    const [confirmPasscode, setConfirmPasscode] = useState<string[]>(
-        Array(6).fill('')
-    );
+
+    const initialPasscodeArray = Array(passcodeLength).fill('');
+    const [passcode, setPasscode] = useState<string[]>(initialPasscodeArray);
+    const [confirmPasscode, setConfirmPasscode] = useState<string[]>(initialPasscodeArray);
+
     const {saveWalletId} = useUser();
     const createWalletApi = useApi<Wallet>();
     const walletsApi = useApi<Wallet[]>();
     const unlockWalletApi = useApi<Wallet>();
+    const [canUnlockWallet, setCanUnlockWallet] = useState<boolean>(true);
+
+    const handleWalletStatusError = (errorCode: string, fallBackError: string | undefined = undefined, httpStatusCode: number | null = null) => {
+        if (
+            errorCode === WalletLockStatus.TEMPORARILY_LOCKED ||
+            errorCode === WalletLockStatus.PERMANENTLY_LOCKED ||
+            errorCode === WalletLockStatus.LAST_ATTEMPT_BEFORE_LOCKOUT
+        ) {
+            setError(t(`error.walletStatus.${errorCode}`));
+            if (errorCode !== WalletLockStatus.LAST_ATTEMPT_BEFORE_LOCKOUT) {
+                setCanUnlockWallet(false);
+                setPasscode(initialPasscodeArray);
+                setConfirmPasscode(initialPasscodeArray);
+            }
+        } else if (fallBackError) {
+            if (httpStatusCode === HTTP_STATUS_CODES.BAD_REQUEST) {
+                setError(t(fallBackError));
+            }
+        }
+    }
+
+    const handleCommonErrors = (response: ApiResult<any>, fallBackError: string | undefined = undefined) => {
+        if (response.error?.message === (NETWORK_ERROR_MESSAGE)) {
+            if (!navigator.onLine) {
+                setError(t("Common:error.networkError.message"));
+            } else {
+                setError(t("Common:error.unknownError.message"));
+            }
+            return true;
+        }
+
+        switch (response.status) {
+            case HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR:
+                setError(t("Common:error.internalServerError.message"));
+                return true;
+            case HTTP_STATUS_CODES.SERVICE_UNAVAILABLE:
+                setError(t("Common:error.serviceUnavailable.message"));
+                return true;
+            default:
+                if (fallBackError) {
+                    setError(fallBackError)
+                    return true
+                }
+        }
+        return false;
+    }
 
     const fetchWallets = async () => {
         try {
@@ -37,11 +90,17 @@ export const PasscodePage: React.FC = () => {
 
             if (!response.ok()) {
                 console.error('Error occurred while fetching Wallets:', response.error);
-                setError(t('error.fetchWalletsError'));
+                handleCommonErrors(response, t('error.fetchWalletsError'));
                 return
             }
 
-            setWallets(response.data);
+            const wallets = response.data;
+            setWallets(wallets);
+
+            if (wallets && wallets.length > 0) {
+                const walletStatus = wallets[0].walletStatus;
+                handleWalletStatusError(walletStatus);
+            }
         } catch (error) {
             console.error('Error occurred while fetching Wallets:', error);
             setError(t('error.fetchWalletsError'));
@@ -64,12 +123,10 @@ export const PasscodePage: React.FC = () => {
 
     const unlockWallet = async (walletId: string, pin: string) => {
         if (!walletId) {
+            console.error(`Wallet not found for Wallet Id: ${walletId}`);
             setError(t('error.walletNotFoundError'));
             navigate(ROUTES.USER_PASSCODE);
-            throw new Error('Wallet not found');
-        }
-
-        try {
+        } else {
             const response = await unlockWalletApi.fetchData({
                 apiConfig: api.unlockWallet,
                 body: {walletPin: pin},
@@ -78,25 +135,26 @@ export const PasscodePage: React.FC = () => {
 
             if (!response.ok()) {
                 console.error("Error occurred while unlocking Wallet:", response.error);
-                setError(t('error.incorrectPasscodeError'));
-                throw response.error;
+                const isErrorHandled = handleCommonErrors(response);
+                if (!isErrorHandled) {
+                    const errorCode = ((response.error as ApiError)?.response?.data as ErrorType).errorCode;
+                    handleWalletStatusError(errorCode, "error.incorrectPasscodeError", response.status);
+                }
+            } else {
+                saveWalletId(walletId)
+                handleUnlockSuccess();
             }
-            saveWalletId(walletId)
-        } catch (error) {
-            throw error;
         }
     };
 
     const createWallet = async () => {
-        try {
-            const pin = passcode.join('');
-            const confirmPin = confirmPasscode.join('');
+        const pin = passcode.join('');
+        const confirmPin = confirmPasscode.join('');
 
-            if (pin !== confirmPin) {
-                setError(t('error.passcodeMismatchError'));
-                throw new Error('Pin and Confirm Pin mismatch');
-            }
-
+        if (pin !== confirmPin) {
+            console.error("Passcode and Confirm Passcode mismatch");
+            setError(t('error.passcodeMismatchError'));
+        } else {
             const response = await createWalletApi.fetchData({
                 apiConfig: api.createWalletWithPin,
                 body: {
@@ -107,19 +165,16 @@ export const PasscodePage: React.FC = () => {
             })
 
             if (!response.ok()) {
-                const errorMessage = ((response.error as ApiError)?.response?.data as ErrorType).errorMessage ?? t('unknown-error');
-                setError(
-                    `${t('error.createWalletError')}: ${errorMessage}`
-                );
-                throw response.error;
+                console.error("Error occurred while creating Wallet:", response.error);
+                const isErrorHandled = handleCommonErrors(response)
+                if(!isErrorHandled) {
+                    const errorMessage = ((response.error as ApiError)?.response?.data as ErrorType).errorMessage ?? t('Common.error.unknownError');
+                    setError(`${t('error.createWalletError')}: ${errorMessage}`);
+                }
+            } else {
+                const createdWallet = response.data!;
+                await unlockWallet(createdWallet.walletId, pin);
             }
-
-            const createdWallet = response.data!;
-            await unlockWallet(createdWallet.walletId, pin);
-
-            setWallets([{walletId: createdWallet.walletId}]);
-        } catch (error) {
-            throw error;
         }
     };
 
@@ -138,30 +193,21 @@ export const PasscodePage: React.FC = () => {
         setError('');
         setLoading(true);
 
-        try {
-            if (isUserCreatingWallet()) {
-                await createWallet();
-            } else {
-                const walletId = wallets ? wallets[0].walletId : undefined
-                const formattedPasscode = passcode.join('');
+        if (isUserCreatingWallet()) {
+            await createWallet();
+        } else {
+            const walletId = wallets ? wallets[0].walletId : undefined
+            const formattedPasscode = passcode.join('');
 
-                if (formattedPasscode.length !== 6) {
-                    setError(t('error.passcodeLengthError'));
-                    setLoading(false);
-                    return;
-                }
-
-                await unlockWallet(walletId, formattedPasscode);
+            if (formattedPasscode.length !== passcodeLength) {
+                setError(t('error.passcodeLengthError'));
+                setLoading(false);
+                return;
             }
-            handleUnlockSuccess()
-        } catch (error) {
-            console.error(
-                'Error occurred while setting up Wallet or loading user profile',
-                error
-            );
-        } finally {
-            setLoading(false);
+
+            await unlockWallet(walletId, formattedPasscode);
         }
+        setLoading(false);
     };
 
     const isButtonDisabled =
@@ -193,7 +239,8 @@ export const PasscodePage: React.FC = () => {
     }
 
     function renderPasscodeInput(label: string, value: string[], onChange: (values: string[]) => void, testId: string) {
-        return <PasscodeInput label={label} value={value} onChange={onChange} testId={testId}/>;
+        return <PasscodeInput label={label} value={value} onChange={onChange} testId={testId}
+                              disabled={!canUnlockWallet}/>;
     }
 
     const renderContent = () => {

@@ -47,6 +47,7 @@ export const HTTP_STATUS_CODES = {
     NOT_FOUND: 404,
     INTERNAL_SERVER_ERROR: 500,
     SERVICE_UNAVAILABLE: 503,
+    LOCKED: 423
 }
 
 export const NETWORK_ERROR_MESSAGE = "Network Error"
@@ -58,3 +59,5 @@ export enum RequestStatus {
 }
 
 export const pdfWorkerSource = (pdfVersion : string) => `//unpkg.com/pdfjs-dist@${pdfVersion}/build/pdf.worker.min.mjs`;
+
+export const passcodeLength = 6;

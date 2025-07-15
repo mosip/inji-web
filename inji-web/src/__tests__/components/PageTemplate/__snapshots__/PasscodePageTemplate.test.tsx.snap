@@ -110,6 +110,7 @@ exports[`PasscodePageTemplate Component matches snapshot 1`] = `
               >
                 <span
                   class="text-sm text-iw-darkRed break-words whitespace-normal"
+                  data-testid="error-msg-test"
                 >
                   Test Error
                 </span>

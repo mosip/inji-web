@@ -98,8 +98,13 @@
       "passcodeLengthError": "O PIN deve ter 6 dígitos.",
       "passcodeMismatchError": "As senhas não correspondem. Certifique-se de que ambos os campos de senha correspondam exatamente. Digite novamente e tente novamente.",
       "createWalletError": "Falha na criação da carteira.",
-      "incorrectPasscodeError": "Senha inválida. A senha que você digitou está incorreta. Verifique e tente novamente ou clique em \"Esqueci a senha\" para redefini-la.",
-      "fetchWalletsError": "Erro ao buscar carteiras."
+      "incorrectPasscodeError": "A senha não parece correta. Tente novamente ou toque em \"Esqueci a senha\" se precisar de ajuda para redefini-la.",
+      "fetchWalletsError": "Erro ao buscar carteiras.",
+      "walletStatus": {
+        "temporarily_locked": "Você atingiu o número máximo de tentativas. Sua carteira está temporariamente bloqueada. Tente novamente mais tarde.",
+        "permanently_locked": "Sua carteira foi bloqueada permanentemente devido a várias tentativas frustradas. Clique em \"Esqueceu a senha?\" para redefinir sua carteira e continuar.",
+        "last_attempt_before_lockout": "Senha incorreta. Última tentativa restante antes que sua carteira seja bloqueada permanentemente."
+      }
     }
   },
   "ResetPasscodePage": {
@@ -419,6 +424,29 @@
       "placeholder": "Pesquise seus cartões por nome",
       "noResults": "Nenhum cartão corresponde à sua pesquisa."
     },
+    "cardView": {
+      "download": "Baixar",
+      "menu": {
+        "view": "Ver",
+        "delete": "Excluir"
+      },
+      "error": {
+        "downloadError": "Download falhou. Por favor, tente novamente.",
+        "deleteError": "Falha ao excluir. Tente novamente."
+      },
+      "delete": {
+        "confirmation": {
+          "title": "Excluir Cartão!",
+          "message": "Tem certeza que deseja excluir este cartão?"
+        }
+      }
+    }
+  },
+  "Common": {
+    "home": "Lar",
+    "goToHome": "Ir para a página inicial",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
     "error": {
       "internalServerError": {
         "title": "Erro no Servidor",
@@ -444,30 +472,7 @@
         "title": "Sem Conexão com a Internet",
         "message": "Por favor, verifique sua conexão com a internet e tente novamente."
       }
-    },
-    "cardView": {
-      "download": "Baixar",
-      "menu": {
-        "view": "Ver",
-        "delete": "Excluir"
-      },
-      "error": {
-        "downloadError": "Download falhou. Por favor, tente novamente.",
-        "deleteError": "Falha ao excluir. Tente novamente."
-      },
-      "delete": {
-        "confirmation": {
-          "title": "Excluir Cartão!",
-          "message": "Tem certeza que deseja excluir este cartão?"
-        }
-      }
     }
-  },
-  "Common": {
-    "home": "Lar",
-    "goToHome": "Ir para a página inicial",
-    "confirm": "Confirmar",
-    "cancel": "Cancelar"
   }
 }
   

@@ -10,7 +10,7 @@ export const mockUseApi = {
 };
 
 type MockApiResponseOptions = {
-    response?: object;
+    data?: object;
     status?: number | null;
     error?: any;
     headers?: object;
@@ -18,7 +18,7 @@ type MockApiResponseOptions = {
 };
 
 export function mockApiResponse({
-                                    response = {},
+                                    data = {},
                                     status = 200,
                                     error = null,
                                     headers = {},
@@ -26,7 +26,7 @@ export function mockApiResponse({
                                 }: MockApiResponseOptions = {}) {
     mockUseApi.fetchData.mockResolvedValueOnce({
         ok: () => status === 200,
-        data: response,
+        data,
         status,
         error,
         headers,

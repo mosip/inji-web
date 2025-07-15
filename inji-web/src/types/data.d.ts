@@ -174,6 +174,7 @@ export interface InstructionItem {
 }
 
 export interface Wallet {
+    walletStatus: string;
     walletId: string;
     walletName: string;
 }

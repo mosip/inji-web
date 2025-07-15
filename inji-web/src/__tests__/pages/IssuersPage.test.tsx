@@ -58,7 +58,7 @@ describe("IssuersPage", () => {
             error: null,
         });
         mockApiResponse({
-            response: {response: {issuers: mockIssuerObjectList}},
+            data: {response: {issuers: mockIssuerObjectList}},
             state: RequestStatus.LOADING,
         });
     });
@@ -67,7 +67,7 @@ describe("IssuersPage", () => {
         mockIsUserLoggedIn.mockReturnValue(false);
         mockUseApi.state = RequestStatus.LOADING;
         mockApiResponse({
-            response: {response: {issuers: mockIssuerObjectList}},
+            data: {response: {issuers: mockIssuerObjectList}},
             state: RequestStatus.LOADING,
         });
 
@@ -81,7 +81,7 @@ describe("IssuersPage", () => {
         mockIsUserLoggedIn.mockReturnValue(false);
         mockUseApi.state = RequestStatus.DONE;
         mockApiResponse({
-            response: {response: {issuers: mockIssuerObjectList}},
+            data: {response: {issuers: mockIssuerObjectList}},
             state: RequestStatus.DONE,
         });
 
@@ -101,7 +101,7 @@ describe("IssuersPage", () => {
         mockFetchUserProfile.mockResolvedValue({});
         mockUseApi.state = RequestStatus.DONE;
         mockApiResponse({
-            response: {response: {issuers: mockIssuerObjectList}},
+            data: {response: {issuers: mockIssuerObjectList}},
             state: RequestStatus.DONE,
         });
 
@@ -143,7 +143,7 @@ describe("IssuersPage", () => {
 
         mockUseApi.state = RequestStatus.DONE;
         mockApiResponse({
-            response: {response: {issuers: mockIssuerObjectList}},
+            data: {response: {issuers: mockIssuerObjectList}},
             state: RequestStatus.DONE,
         });
 

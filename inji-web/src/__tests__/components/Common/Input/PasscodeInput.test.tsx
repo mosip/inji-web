@@ -9,15 +9,22 @@ describe('PasscodeInput', () => {
         label: 'Test Passcode',
         value: ['', '', '', '', '', ''],
         onChange: mockOnChange,
-        testId: 'test-passcode-input'
+        testId: 'test-passcode-input',
+        disabled: false
     };
 
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
-    it('should match the snapshot of PasscodeInput layout', () => {
+    it('should match the snapshot of PasscodeInput layout when disabled is false', () => {
         const {asFragment} = render(<PasscodeInput {...defaultProps} />);
+
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    it('should match the snapshot of PasscodeInput layout when disabled is true', () => {
+        const {asFragment} = render(<PasscodeInput {...{...defaultProps, disabled: true}} />);
 
         expect(asFragment()).toMatchSnapshot();
     });
@@ -102,5 +109,17 @@ describe('PasscodeInput', () => {
         expect(inputs[3]).toHaveValue('4');
         expect(inputs[4]).toHaveValue('5');
         expect(inputs[5]).toHaveValue('6');
+    });
+
+    it('should disable input buttons and eye toggle button when disabled prop is true', () => {
+        render(<PasscodeInput {...defaultProps} disabled={true} />);
+
+        const inputs = screen.getAllByTestId('input-test-passcode-input');
+        inputs.forEach((input) => {
+            expect(input).toBeDisabled();
+        });
+
+        const toggleButton = screen.getByTestId('btn-toggle-visibility-test-passcode-input');
+        expect(toggleButton).toBeDisabled();
     });
 });

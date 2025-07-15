@@ -64,7 +64,7 @@ describe('Testing of StoredCardsPage ->', () => {
         });
 
         it('check if the "No credentials found" layout is matching with snapshot', async () => {
-            mockApiResponse({response: []})
+            mockApiResponse({data: []})
 
             const {asFragment} = renderWithRouter(<StoredCardsPage/>);
             await waitForLoaderDisappearance()
@@ -73,7 +73,7 @@ describe('Testing of StoredCardsPage ->', () => {
         });
 
         it('should check if listing of credentials is matching snapshot', async () => {
-            mockApiResponse({response: mockCredentials})
+            mockApiResponse({data: mockCredentials})
 
             const {asFragment} = renderWithRouter(<StoredCardsPage/>);
             await waitForLoaderDisappearance();
@@ -121,7 +121,7 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should navigate to dashboard home when Add credential button in blank document is clicked in smaller screens', async () => {
-        mockApiResponse({response: mockCredentials})
+        mockApiResponse({data: mockCredentials})
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance();
@@ -134,7 +134,7 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should show loading state initially', async () => {
-        mockApiResponse({response: mockCredentials});
+        mockApiResponse({data: mockCredentials});
 
         renderWithRouter(<StoredCardsPage/>);
 
@@ -142,7 +142,7 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should display credentials when fetch is successful', async () => {
-        mockApiResponse({response: mockCredentials})
+        mockApiResponse({data: mockCredentials})
 
         renderWithRouter(<StoredCardsPage/>);
 
@@ -153,7 +153,7 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should display "No Cards Stored!" when no credentials are returned', async () => {
-        mockApiResponse({response: []})
+        mockApiResponse({data: []})
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance()
@@ -302,7 +302,7 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should filter credentials when using search bar', async () => {
-        mockApiResponse({response: mockCredentials})
+        mockApiResponse({data: mockCredentials})
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance()
@@ -315,7 +315,7 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should display "No cards match your search" when search has no matches', async () => {
-        mockApiResponse({response: mockCredentials})
+        mockApiResponse({data: mockCredentials})
 
         renderWithRouter(<StoredCardsPage/>);
         await waitForLoaderDisappearance()
@@ -327,7 +327,7 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should reset filtered credentials when search is cleared', async () => {
-        mockApiResponse({response: mockCredentials})
+        mockApiResponse({data: mockCredentials})
 
         renderWithRouter(<StoredCardsPage/>);
 
@@ -348,8 +348,8 @@ describe('Testing of StoredCardsPage ->', () => {
     });
 
     it('should call download api when clicked on download icon in card', async () => {
-        mockApiResponseSequence([{response: mockCredentials}, {
-            response: new Blob(),
+        mockApiResponseSequence([{data: mockCredentials}, {
+            data: new Blob(),
             headers: {get: () => 'attachment; filename="credential.pdf"'}
         }]);
 
@@ -370,11 +370,11 @@ describe('Testing of StoredCardsPage ->', () => {
 
     it('should delete credential and call fetch all credentials api again when user deletes a card', async () => {
         mockApiResponseSequence([
-            {response: mockCredentials},
+            {data: mockCredentials},
             {
-                response: {message: 'Credential deleted successfully'},
+                data: {message: 'Credential deleted successfully'},
             },
-            {response: [mockCredentials[1]]}
+            {data: [mockCredentials[1]]}
         ])
 
         renderWithRouter(<StoredCardsPage/>);

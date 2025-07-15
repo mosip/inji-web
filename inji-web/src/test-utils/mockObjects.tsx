@@ -197,6 +197,12 @@ export const userProfile = {
     walletId: '12345',
 };
 
+export const successWalletResponse = [{
+    walletId: "2c2e1810-19c8-4c85-910d-aa1622412413",
+    walletName: null,
+    walletStatus: null
+}];
+
 export const mockStore = {
     getState: () => ({
         common: {

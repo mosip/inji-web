@@ -162,8 +162,8 @@ export const StoredCardsPage: React.FC = () => {
         if (error) {
             return (
                 <ErrorDisplay
-                    message={t(`error.${error}.title`)}
-                    helpText={t(`error.${error}.message`)}
+                    message={t(`Common:error.${error}.title`)}
+                    helpText={t(`Common:error.${error}.message`)}
                     testId={"stored-credentials"}
                     action={<BorderedButton testId={"btn-go-home"} onClick={navigateToHome}
                                             title={t('Common:goToHome')}/>}

@@ -98,7 +98,7 @@ describe('Testing the Functionality of RedirectionPage', () => {
             setup: () => {
                 (downloadCredentialPDF as jest.Mock).mockResolvedValueOnce(true);
                 mockApiResponse({
-                    response: new Blob(),
+                    data: new Blob(),
                     headers: {
                         "Content-Disposition": "attachment; filename=credential",
                         "Content-Type": "application/pdf"
