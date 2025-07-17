@@ -146,7 +146,11 @@
     "emptyContainerContent": "No issuers found. Please refresh your browser window or try again later",
     "containerHeading": "List of Issuers",
     "containerSubHeading": "Search for your trusted issuer and choose a credential type in the next step.",
-    "errorContent": "The service is currently unavailable now. Please try again later."
+    "errorContent": "The service is currently unavailable now. Please try again later.",
+    "searchIssuerHelpText": {
+      "default": "Search by issuer name using letters, numbers, spaces, hyphens, or parentheses only.",
+      "error": "Please enter a valid issuer name. Only letters, numbers, spaces, hyphens (-), underscores (_), and brackets ( ) are allowed. Special characters are not permitted."
+    }
   },
   "CredentialsPage": {
     "searchText": "Search Credential Type",

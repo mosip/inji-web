@@ -58,15 +58,16 @@ export const SearchIssuer: React.FC = () => {
                 )}
             </div>
             <div className="text-left w-full sm:w-4/4 md:w-3/4 mt-3">
-                {!isSearchValid ? (
-                    <p style={{ color: "red", fontSize: "0.95rem" }}>
-                        Please enter a valid issuer name. Only letters, numbers, spaces, hyphens (-), underscores (_), and brackets ( ) are allowed. Special characters are not permitted.
-                    </p>
-                ) : (
-                    <p style={{ color: "#888", fontSize: "0.95rem" }}>
-                        Search by issuer name using letters, numbers, spaces, hyphens, or parentheses only.
-                    </p>
-                )}
+            {!isSearchValid && (
+                <p style={{ color: "red", fontSize: "0.95rem" }}>
+                    { t("searchIssuerHelpText.error") }
+                </p>)
+            }
+            {isSearchValid && (
+                <p style={{ color: "#888", fontSize: "0.95rem" }}>
+                    { t("searchIssuerHelpText.default") }
+                </p>)
+            }
             </div>
         </div>
     );
