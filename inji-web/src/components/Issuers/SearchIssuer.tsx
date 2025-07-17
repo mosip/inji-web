@@ -17,15 +17,18 @@ export const SearchIssuer: React.FC = () => {
     const language = useSelector((state:RootState) => state.common.language);
     const filterIssuers = async (searchText: string) => {
         setSearchText(searchText);
+        setIsSearchValid(issuerRegex.test(searchText) || searchText === "");
         const filteredIssuers = issuers.filter( (issuer:IssuerObject) => {
             const displayObject = getIssuerDisplayObjectForCurrentLanguage(issuer.display, language);
             return (displayObject?.name?.toLowerCase().indexOf(searchText.toLowerCase()) !== -1 && issuer.protocol !== 'OTP')
         })
         dispatch(storeFilteredIssuers(filteredIssuers));
     }
+    const issuerRegex = /^[a-zA-Z0-9\s\-_()]*$/;
+    const [isSearchValid, setIsSearchValid] = useState(true);
 
     return (
-        <div className="flex justify-center items-center w-full">
+        <div className="flex flex-col justify-center items-center w-full">
             <div
                 data-testid="Search-Issuer-Container"
                 className="w-full sm:w-4/4 md:w-3/4 flex justify-start items-center bg-iw-background shadow-iw rounded-lg"
@@ -52,6 +55,17 @@ export const SearchIssuer: React.FC = () => {
                         color={"var(--iw-color-closeIcon)"}
                         size={20}
                     />
+                )}
+            </div>
+            <div className="text-left w-full sm:w-4/4 md:w-3/4 mt-3">
+                {!isSearchValid ? (
+                    <p style={{ color: "red", fontSize: "0.95rem" }}>
+                        Please enter a valid issuer name. Only letters, numbers, spaces, hyphens (-), underscores (_), and brackets ( ) are allowed. Special characters are not permitted.
+                    </p>
+                ) : (
+                    <p style={{ color: "#888", fontSize: "0.95rem" }}>
+                        Search by issuer name using letters, numbers, spaces, hyphens, or parentheses only.
+                    </p>
                 )}
             </div>
         </div>
