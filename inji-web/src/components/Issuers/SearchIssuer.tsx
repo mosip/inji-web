@@ -29,15 +29,15 @@ export const SearchIssuer: React.FC = () => {
     const [isSearchValid, setIsSearchValid] = useState(true);
 
     return (
-        <div className="flex flex-col justify-center items-center w-full">
+        <div className={SearchIssuerStyles.mainContainer}>
             <div
                 data-testid="Search-Issuer-Container"
-                className="w-full sm:w-4/4 md:w-3/4 flex justify-start items-center bg-iw-background shadow-iw rounded-lg"
+                className={SearchIssuerStyles.searchContainer}
             >
                 <FaSearch
                     data-testid="Search-Issuer-Search-Icon"
                     color={"var(--iw-color-searchIcon)"}
-                    className="m-2 sm:m-3 md:m-4 lg:m-5"
+                    className={SearchIssuerStyles.searchIcon}
                     size={20}
                 />
                 <input
@@ -46,19 +46,19 @@ export const SearchIssuer: React.FC = () => {
                     value={searchText}
                     placeholder={t("Intro.searchText")}
                     onChange={(event) => filterIssuers(event.target.value)}
-                    className="py-2 sm:py-3 md:py-4 lg:py-6 w-3/4 sm:w-11/12 text-iw-searchTitle focus:outline-none overflow-ellipsis ml-0 mr-2 sm:mr-3 md:mr-4 lg:mr-10"
+                    className={SearchIssuerStyles.searchInput}
                 />
                 {searchText.length > 0 && (
                     <IoCloseCircleSharp
                         data-testid="Search-Issuer-Clear-Icon"
                         onClick={() => filterIssuers("")}
-                        className="m-2 sm:m-3 md:m-4 lg:m-5 cursor-pointer"
+                        className={SearchIssuerStyles.clearSearchIcon}
                         color={"var(--iw-color-closeIcon)"}
                         size={20}
                     />
                 )}
             </div>
-            <div className="text-left w-full sm:w-4/4 md:w-3/4 mt-3" data-testid="Search-Issuer-HelperAndError-Text">
+            <div className={SearchIssuerStyles.helperAndErrorTextContainer} data-testid="Search-Issuer-HelperAndError-Text">
             {!isSearchValid && (
                 <p className={SearchIssuerStyles.regexError}>
                     { t("searchIssuer.helpText.error") }
