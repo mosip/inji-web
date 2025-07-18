@@ -58,7 +58,7 @@ export const SearchIssuer: React.FC = () => {
                     />
                 )}
             </div>
-            <div className="text-left w-full sm:w-4/4 md:w-3/4 mt-3">
+            <div className="text-left w-full sm:w-4/4 md:w-3/4 mt-3" data-testid="Search-Issuer-HelperAndError-Text">
             {!isSearchValid && (
                 <p className={SearchIssuerStyles.regexError}>
                     { t("searchIssuer.helpText.error") }
