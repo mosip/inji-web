@@ -147,9 +147,11 @@
     "containerHeading": "Liste des émetteurs",
     "containerSubHeading": "Recherchez votre émetteur de confiance et choisissez un type d'identifiant à l'étape suivante.",
     "errorContent": "Le service est actuellement indisponible. ",
-    "searchIssuerHelpText": {
-      "default": "Recherchez par nom d'émetteur en utilisant uniquement des lettres, des chiffres, des espaces, des traits d'union ou des parenthèses.",
-      "error": "Veuillez saisir un nom d'émetteur valide. Seuls les lettres, chiffres, espaces, tirets (-), traits de soulignement (_) et crochets ( ) sont autorisés. Les caractères spéciaux ne sont pas autorisés."
+    "searchIssuer": {
+      "helpText": {
+        "info": "Recherchez par nom d'émetteur en utilisant uniquement des lettres, des chiffres, des traits d'union (-), des traits de soulignement (_) ou des crochets ( ).",
+        "error": "Veuillez saisir un nom d'émetteur valide. Seuls les lettres, chiffres, espaces, tirets (-), traits de soulignement (_) et crochets ( ) sont autorisés. Les caractères spéciaux ne sont pas autorisés."
+      }
     }
   },
   "CredentialsPage": {

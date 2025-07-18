@@ -37,7 +37,7 @@ exports[`Testing the layout of SearchIssuer Check if the layout is matching with
       class="text-left w-full sm:w-4/4 md:w-3/4 mt-3"
     >
       <p
-        style="color: rgb(136, 136, 136); font-size: 0.95rem;"
+        class="text-iw-subTitle text-sm-plus"
       >
         Search by issuer name using letters, numbers, spaces, hyphens, or parentheses only.
       </p>

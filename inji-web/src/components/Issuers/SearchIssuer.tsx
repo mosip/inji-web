@@ -7,6 +7,7 @@ import {IssuerObject} from "../../types/data";
 import {IoCloseCircleSharp} from "react-icons/io5";
 import {RootState} from "../../types/redux";
 import {getIssuerDisplayObjectForCurrentLanguage} from "../../utils/i18n";
+import { SearchIssuerStyles } from "./SearchIssuerStyles";
 
 export const SearchIssuer: React.FC = () => {
 
@@ -59,13 +60,13 @@ export const SearchIssuer: React.FC = () => {
             </div>
             <div className="text-left w-full sm:w-4/4 md:w-3/4 mt-3">
             {!isSearchValid && (
-                <p style={{ color: "red", fontSize: "0.95rem" }}>
-                    { t("searchIssuerHelpText.error") }
+                <p className={SearchIssuerStyles.regexError}>
+                    { t("searchIssuer.helpText.error") }
                 </p>)
             }
             {isSearchValid && (
-                <p style={{ color: "#888", fontSize: "0.95rem" }}>
-                    { t("searchIssuerHelpText.default") }
+                <p className={SearchIssuerStyles.infoMsg}>
+                    { t("searchIssuer.helpText.info") }
                 </p>)
             }
             </div>
