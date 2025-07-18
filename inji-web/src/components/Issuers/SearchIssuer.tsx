@@ -18,7 +18,7 @@ export const SearchIssuer: React.FC = () => {
     const language = useSelector((state:RootState) => state.common.language);
     const filterIssuers = async (searchText: string) => {
         setSearchText(searchText);
-        setIsSearchValid(issuerRegex.test(searchText) || searchText === "");
+        setIsSearchValid(issuerRegex.test(searchText));
         const filteredIssuers = issuers.filter( (issuer:IssuerObject) => {
             const displayObject = getIssuerDisplayObjectForCurrentLanguage(issuer.display, language);
             return (displayObject?.name?.toLowerCase().indexOf(searchText.toLowerCase()) !== -1 && issuer.protocol !== 'OTP')
