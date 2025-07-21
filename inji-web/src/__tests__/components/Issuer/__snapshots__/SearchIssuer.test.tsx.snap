@@ -3,7 +3,7 @@
 exports[`Testing the layout of SearchIssuer Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
-    class="flex justify-center items-center w-full"
+    class="flex flex-col justify-center items-center w-full"
   >
     <div
       class="w-full sm:w-4/4 md:w-3/4 flex justify-start items-center bg-iw-background shadow-iw rounded-lg"
@@ -32,6 +32,16 @@ exports[`Testing the layout of SearchIssuer Check if the layout is matching with
         type="text"
         value=""
       />
+    </div>
+    <div
+      class="text-left w-full sm:w-4/4 md:w-3/4 mt-3"
+      data-testid="Search-Issuer-HelperAndError-Text"
+    >
+      <p
+        class="text-iw-closeIcon text-sm-plus"
+      >
+        Search by issuer name using letters, numbers, hyphens (-), underscores (_) or brackets ( ) only.
+      </p>
     </div>
   </div>
 </DocumentFragment>

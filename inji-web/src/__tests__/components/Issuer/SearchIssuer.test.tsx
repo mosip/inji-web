@@ -50,3 +50,32 @@ describe('Testing the Functionality of SearchIssuer', () => {
         jest.clearAllMocks();
     })
 });
+
+describe('Testing the Regex Validation and Helper Text of SearchIssuer', () => {
+    beforeEach(() => {
+        reduxStore.dispatch = jest.fn();
+    });
+
+    test('Shows default helper text when input is empty', () => {
+        renderWithProvider(<SearchIssuer />);
+
+        expect(screen.getByText("Search by issuer name using letters, numbers, hyphens (-), underscores (_) or brackets ( ) only.")).toBeInTheDocument;
+    });
+
+    test('Shows default helper text when input is valid', () => {
+        renderWithProvider(<SearchIssuer />);
+        const input = screen.getByTestId('Search-Issuer-Input');
+        fireEvent.change(input, { target: { value: 'AaZz09 _-()' } });
+
+        expect(screen.queryByText("Search by issuer name using letters, numbers, hyphens (-), underscores (_) or brackets ( ) only.")).toBeInTheDocument();
+        expect(screen.queryByText("Please enter a valid issuer name. Only letters, numbers, spaces, hyphens (-), underscores (_), and brackets ( ) are allowed. Special characters are not permitted.")).not.toBeInTheDocument();
+    });
+
+    test('Shows error helper text when input is invalid', () => {
+        renderWithProvider(<SearchIssuer />);
+        const input = screen.getByTestId('Search-Issuer-Input');
+        fireEvent.change(input, { target: { value: 'Issuer@#' } });
+
+        expect(screen.queryByText("Please enter a valid issuer name. Only letters, numbers, spaces, hyphens (-), underscores (_), and brackets ( ) are allowed. Special characters are not permitted.")).toBeInTheDocument();
+    });
+});
