@@ -35,12 +35,16 @@ exports[`Layout component matches snapshot after header and footer heights updat
         src="mock-dashboard-bg-bottom"
       />
       <div
-        class="flex flex-grow flex-col overflow-y-auto relative z-10 p-4"
+        class="flex flex-grow flex-col relative z-10"
       >
         <div
-          data-testid="Outlet"
+          class="flex flex-col items-center justify-center min-h-full overflow-y-auto w-full"
         >
-          Page content
+          <div
+            data-testid="Outlet"
+          >
+            Page content
+          </div>
         </div>
       </div>
     </div>
@@ -88,12 +92,16 @@ exports[`Layout component matches snapshot for default language 1`] = `
         src="mock-dashboard-bg-bottom"
       />
       <div
-        class="flex flex-grow flex-col overflow-y-auto relative z-10 p-4"
+        class="flex flex-grow flex-col relative z-10"
       >
         <div
-          data-testid="Outlet"
+          class="flex flex-col items-center justify-center min-h-full overflow-y-auto w-full"
         >
-          Page content
+          <div
+            data-testid="Outlet"
+          >
+            Page content
+          </div>
         </div>
       </div>
     </div>
@@ -141,12 +149,16 @@ exports[`Layout component matches snapshot for rtl language 1`] = `
         src="mock-dashboard-bg-bottom"
       />
       <div
-        class="flex flex-grow flex-col overflow-y-auto relative z-10 p-4"
+        class="flex flex-grow flex-col relative z-10"
       >
         <div
-          data-testid="Outlet"
+          class="flex flex-col items-center justify-center min-h-full overflow-y-auto w-full"
         >
-          Page content
+          <div
+            data-testid="Outlet"
+          >
+            Page content
+          </div>
         </div>
       </div>
     </div>

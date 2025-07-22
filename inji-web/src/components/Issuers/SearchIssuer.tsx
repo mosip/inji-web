@@ -25,7 +25,7 @@ export const SearchIssuer: React.FC = () => {
         })
         dispatch(storeFilteredIssuers(filteredIssuers));
     }
-    const issuerRegex = /^[a-zA-Z0-9\s\-_()]*$/;
+    const issuerRegex = /^(?!_)(?!.*__)(?!\s{1,}$)[a-zA-Z0-9\s\-_()]*$/;
     const [isSearchValid, setIsSearchValid] = useState(true);
 
     return (
