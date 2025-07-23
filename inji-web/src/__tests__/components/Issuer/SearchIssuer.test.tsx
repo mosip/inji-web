@@ -78,4 +78,34 @@ describe('Testing the Regex Validation and Helper Text of SearchIssuer', () => {
 
         expect(screen.queryByText("Please enter a valid issuer name. Only letters, numbers, spaces, hyphens (-), underscores (_), and brackets ( ) are allowed. Special characters are not permitted.")).toBeInTheDocument();
     });
+
+    test('Shows error when input is only spaces', () => {
+        renderWithProvider(<SearchIssuer />);
+        const input = screen.getByTestId('Search-Issuer-Input');
+        fireEvent.change(input, { target: { value: '     ' } });
+
+        expect(screen.queryByText(
+            "Please enter a valid issuer name. Only letters, numbers, spaces, hyphens (-), underscores (_), and brackets ( ) are allowed. Special characters are not permitted."
+        )).toBeInTheDocument();
+    });
+
+    test('Shows error when input has two underscores', () => {
+        renderWithProvider(<SearchIssuer />);
+        const input = screen.getByTestId('Search-Issuer-Input');
+        fireEvent.change(input, { target: { value: 'Issuer__Name' } });
+
+        expect(screen.queryByText(
+            "Please enter a valid issuer name. Only letters, numbers, spaces, hyphens (-), underscores (_), and brackets ( ) are allowed. Special characters are not permitted."
+        )).toBeInTheDocument();
+    });
+
+    test('Shows error when input starts with underscore (_Issuer)', () => {
+        renderWithProvider(<SearchIssuer />);
+        const input = screen.getByTestId('Search-Issuer-Input');
+        fireEvent.change(input, { target: { value: '_Issuer' } });
+
+        expect(screen.queryByText(
+            "Please enter a valid issuer name. Only letters, numbers, spaces, hyphens (-), underscores (_), and brackets ( ) are allowed. Special characters are not permitted."
+        )).toBeInTheDocument();
+    });
 });

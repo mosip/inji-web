@@ -112,13 +112,13 @@ export const Layout: React.FC = () => {
 
     return (
         <div
-            className="h-screen flex flex-col bg-iw-background font-base overflow-hidden w-full relative"
+            className={LayoutStyles.mainContainer}
             dir={getDirCurrentLanguage(language)}
         >
             <Header headerRef={headerRef} headerHeight={headerHeight}/>
 
             <div
-                className="flex flex-1 overflow-hidden w-full relative"
+                className={LayoutStyles.contentContainer}
                 style={{
                     marginTop: headerHeight,
                     marginBottom: footerHeight,
@@ -127,25 +127,25 @@ export const Layout: React.FC = () => {
             >
                 <Sidebar/>
                 <div
-                    className={
-                        'relative flex flex-col overflow-hidden w-full transition-all duration-300'
-                    }
+                    className={LayoutStyles.sidebarAndOutletContainer}
                     style={{zIndex: 1}}
                 >
                     <img
                         src={DashboardBgTop}
                         alt="Gradient Top Background"
-                        className="absolute top-0 left-0 w-full z-[-1]"
+                        className={LayoutStyles.dashboardBgTop}
                     />
 
                     <img
                         src={DashboardBgBottom}
                         alt="Gardient Bottom Background"
-                        className="absolute bottom-0 left-0 w-full z-[-1]"
+                        className={LayoutStyles.dashboardBgBottom}
                     />
 
-                    <div className="flex flex-grow flex-col overflow-y-auto relative z-10 p-4">
-                        <Outlet />
+                    <div className={LayoutStyles.outletWrapper}>
+                        <div className={LayoutStyles.outletInner}>
+                            <Outlet />
+                        </div>
                     </div>
 
                 </div>
