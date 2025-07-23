@@ -11,7 +11,7 @@ Feature: download mosip cridentials
     When User click on mosip national id by e-signet button
     Then User click on data share content validity
     Then User click on select custom validity button
-    Then user enter validity for data share content "<Vailidty>"
+    Then user enter validity for data share content "<Validity>"
     Then Use click on procced button
     And User verify login page lables
     And User verify vid input box header
@@ -24,7 +24,7 @@ Feature: download mosip cridentials
     Then User verify Download Success text displayed
 
     Examples:
-      | Vailidty |
+      | Validity |
       | 3        |
 
   @smoke @VerifySearchWithInvalidString
@@ -49,7 +49,7 @@ Feature: download mosip cridentials
     When User click on mosip national id by e-signet button
     Then User click on data share content validity
     Then User click on select custom validity button
-    Then user enter validity for data share content "<Vailidty>"
+    Then user enter validity for data share content "<Validity>"
     Then Use click on procced button
     And User verify login page lables
     And User verify vid input box header
@@ -62,7 +62,7 @@ Feature: download mosip cridentials
     And User verify pdf is downloaded
 
     Examples:
-      | Vailidty |
+      | Validity |
       | 3        |
 
   @smoke @VerifyAndDownloadVcViaMosipNatinalIdAndRfreshPage
@@ -76,7 +76,7 @@ Feature: download mosip cridentials
     When User click on mosip national id by e-signet button
     Then User click on data share content validity
     Then User click on select custom validity button
-    Then user enter validity for data share content "<Vailidty>"
+    Then user enter validity for data share content "<Validity>"
     Then Use click on procced button
     And User verify login page lables
     And User verify vid input box header
@@ -90,5 +90,5 @@ Feature: download mosip cridentials
     And user verify the page after Refresh
 
     Examples:
-      | Vailidty |
+      | Validity |
       | 3        |
