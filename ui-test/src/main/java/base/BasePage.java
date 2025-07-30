@@ -8,7 +8,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.yaml.snakeyaml.Yaml;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class BasePage {
 
 	public void clickOnElement(WebDriver driver, By locator) {
@@ -24,6 +26,12 @@ public class BasePage {
 				.until(ExpectedConditions.presenceOfElementLocated(locator));
 		element.click();
 	}
+	
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
+
+    public Logger getLogger() {
+        return logger;
+    }
 
 	public static boolean isElementIsVisible(WebDriver driver, By by) {
 		try {
