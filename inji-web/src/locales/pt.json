@@ -146,7 +146,13 @@
     "emptyContainerContent": "Nenhum emissor encontrado. Atualize a janela do navegador ou tente novamente mais tarde",
     "containerHeading": "Lista de emissores",
     "containerSubHeading": "Pesquise seu emissor confiável e escolha um tipo de credencial na próxima etapa.",
-    "errorContent": "O serviço não está disponível no momento. Tente novamente mais tarde."
+    "errorContent": "O serviço não está disponível no momento. Tente novamente mais tarde.",
+    "searchIssuer": {
+      "helpText": {
+        "info": "Pesquise pelo nome do emissor usando apenas letras, números, hífens (-), sublinhados (_) ou colchetes ( ).",
+        "error": "Insira um nome de emissor válido. Somente letras, números, espaços, hífens (-), sublinhados (_) e colchetes ( ) são permitidos. Caracteres especiais não são permitidos."
+      }
+    }
   },
   "CredentialsPage": {
     "searchText": "Pesquisar tipo de credencial",
