@@ -44,25 +44,33 @@ services:
       - "6379:6379"
     volumes:
       - redis-data:/data
+
   mimoto-service:
     container_name: 'mimoto-service'
     image: 'mosipdev/mimoto:develop'
     user: root
     ports:
-      - '8099:8099'
+      - "8099:8099"
     environment:
       - container_user=mosip
       - active_profile_env=default
       - SPRING_CONFIG_NAME=mimoto
       - SPRING_CONFIG_LOCATION=/home/mosip/
-      - oidc_p12_password=dummypassword
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inji_mimoto # Add Postgres
+      - SPRING_CLOUD_BOOTSTRAP_LOCATION=/home/mosip/mimoto-bootstrap.properties
+      - oidc_p12_password=mosip123
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inji_mimoto
       - SPRING_REDIS_HOST=redis
       - SPRING_REDIS_PORT=6379
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
       - GOOGLE_OAUTH_CLIENT_ID=clientId
       - GOOGLE_OAUTH_CLIENT_SECRET=clientSecret
     volumes:
       - ./config/mimoto-default.properties:/home/mosip/mimoto-default.properties
+      - ./config/mimoto-bootstrap.properties:/home/mosip/mimoto-bootstrap.properties
+      - ./config/mimoto-issuers-config.json:/home/mosip/mimoto-issuers-config.json
+      - ./config/mimoto-trusted-verifiers.json:/home/mosip/mimoto-trusted-verifiers.json
+      - ./config/credential-template.html:/home/mosip/credential-template.html
       - ./certs/oidckeystore.p12:/home/mosip/certs/oidckeystore.p12
     depends_on:
       - datashare
@@ -77,12 +85,9 @@ services:
     environment:
       - DEFAULT_LANG=en
       - MIMOTO_URL=http://localhost:3004/v1/mimoto
-    volumes:
-      - ./config/mimoto-issuers-config.json:/home/mosip/mimoto-issuers-config.json
-      - ./config/mimoto-trusted-verifiers.json:/home/mosip/mimoto-trusted-verifiers.json
-      - ./config/credential-template.html:/home/mosip/credential-template.html
     depends_on:
       - mimoto-service
+
 volumes:
   postgres-data:
   redis-data:
