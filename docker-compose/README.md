@@ -46,7 +46,7 @@ This is not for production use.
    ```
    - **Running Inji Web in IDE and other services like `datashare service` via Docker Compose:**
    ```bash
-      docker-compose up # Comemnt inji web service and start all the other services defined in docker-compose.yml
+      docker-compose up # Use this to comment inji web service and start all the other services defined in docker-compose.yml
       # OR
       docker-compose up datashare other_service_name # To start specific services (replace with actual names)
    ```
