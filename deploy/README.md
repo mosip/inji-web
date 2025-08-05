@@ -12,6 +12,7 @@
 * Config server secerts [steps](https://github.com/mosip/mosip-infra/tree/v1.2.0.2/deployment/v3/mosip/conf-secrets)
 * Config server installation [steps](https://docs.inji.io/readme/setup/deploy#config-server-installation)
 * Object store installation [steps](https://github.com/mosip/mosip-infra/tree/v1.2.0.2/deployment/v3/external/object-store)
+    * Note: Before running the minio install script, update the `EXTERNAL_HOST` value in `install.sh` with the correct minio host.
 
 ## Installing DataShare and injiweb
 ```
