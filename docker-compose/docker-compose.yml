@@ -68,9 +68,6 @@ services:
     volumes:
       - ./config/mimoto-default.properties:/home/mosip/mimoto-default.properties
       - ./config/mimoto-bootstrap.properties:/home/mosip/mimoto-bootstrap.properties
-      - ./config/mimoto-issuers-config.json:/home/mosip/mimoto-issuers-config.json
-      - ./config/mimoto-trusted-verifiers.json:/home/mosip/mimoto-trusted-verifiers.json
-      - ./config/credential-template.html:/home/mosip/credential-template.html
       - ./certs/oidckeystore.p12:/home/mosip/certs/oidckeystore.p12
     depends_on:
       - datashare
@@ -85,6 +82,10 @@ services:
     environment:
       - DEFAULT_LANG=en
       - MIMOTO_URL=http://localhost:3004/v1/mimoto
+    volumes:
+      - ./config/mimoto-issuers-config.json:/home/mosip/mimoto-issuers-config.json
+      - ./config/mimoto-trusted-verifiers.json:/home/mosip/mimoto-trusted-verifiers.json
+      - ./config/credential-template.html:/home/mosip/credential-template.html
     depends_on:
       - mimoto-service
 
