@@ -32,7 +32,7 @@ This is not for production use.
 
 4. Create certs folder in the same directory and create OIDC client. Add key in oidckeystore.p12 and copy this file under certs folder.
    Refer [here](https://docs.inji.io/inji-wallet/inji-mobile/technical-overview/customization-overview/credential_providers) to create client
-   * Update client_id and client_alias as per onboarding in [mimoto-issuers-config.json](config/mimoto-issuers-config.json) file.
+   * Update **client_id** and **client_alias** as per onboarding in [mimoto-issuers-config.json](config/mimoto-issuers-config.json) file.
    * Update `oidc_p12_password` environment variable of Mimoto service in docker-compose.yml to match the password set for the oidckeystore.p12 file.
    * Mimoto uses this same keystore file (oidckeystore.p12) to store keys generated at service startup, which are essential for performing encryption and decryption operations through the KeyManager service.
    
@@ -40,28 +40,27 @@ This is not for production use.
 
 6. Choose your setup for starting the services:
    - **Starting all services via Docker Compose (including Inji Web):**
-     Run the following command to start the services
+     Run the following command
    ```bash
-      docker-compose up
+      docker-compose up (# To run in foreground)
+      # or 
+      docker-compose up -d (# To run in detached mode or background)
    ```
-   - **Running Inji Web in IDE and other services like `datashare service` via Docker Compose:**
-   ```bash
-      docker-compose up # Use this to comment inji web service and start all the other services defined in docker-compose.yml
-      # OR
-      docker-compose up datashare other_service_name # To start specific services (replace with actual names)
-   ```
-   - Use **-d** to run the services in detached mode 
-   
+   - **Running Inji Web in IDE and other services like `mimoto` via Docker Compose:**
+     - Use the [Mimoto `docker-compose.yml`](https://github.com/mosip/mimoto/blob/develop/docker-compose/docker-compose.yml) file to start Mimoto and the required services, and refer to its [README](https://github.com/mosip/mimoto/blob/develop/docker-compose/README.md) for setup instructions.
+
 7. To stop all the services, navigate to docker-compose folder and run the following command
    ```bash
    docker-compose down
    ```
-   
-8. To stop the specific service and remove it, run the following commands
+
+8. To stop a specific service (e.g., inji-web) and remove its container and image, run the following commands
    ```bash
-   docker-compose stop <service_name> # To stop a specific service
-   docker-compose rm <service_name> # To remove a specific service
+   docker-compose stop <service_name> # To stop a specific service container
+   docker-compose rm <service_name> # To remove a specific service container
+   docker rmi <image_name:tag> # To remove a specific service image
    ```
+
 9. Access Apis as
    * http://localhost:8099/v1/mimoto/allProperties
    * http://localhost:8099/v1/mimoto/issuers
