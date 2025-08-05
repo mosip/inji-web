@@ -1,4 +1,4 @@
-# injiweb ui
+# Deployment
 
 ## Pre-requisites
 * Base infrastructure setup
