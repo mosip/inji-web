@@ -61,7 +61,16 @@ This is not for production use.
    docker rmi <image_name:tag> # To remove a specific service image
    ```
 
-9. Access Apis as
+9. **Removing the Docker Volume:**
+   - To remove the persistent data for a specific service within an application, you can delete its individual Docker volume. This is necessary in situations where you need to start fresh or when data has become corrupted.
+   - For example, if you update the oidckeystore.p12 file, the mimoto service might fail to start. This happens because the new .p12 file may not contain the keys that are stored in the database's key alias table. Since these keys are used in the encryption and decryption flow, their absence prevents the service from functioning correctly. To fix this, you must remove the postgres-data volume to clear the old, encrypted data, which allows the service to start correctly with a new dataset.
+
+   - Use the following command to remove the volume:
+   ```Bash
+   docker volume rm <volume_name> # E.g., docker volume rm docker-compose_postgres-data
+   ```
+
+10. Access Apis as
    * http://localhost:8099/v1/mimoto/allProperties
    * http://localhost:8099/v1/mimoto/issuers
    * http://localhost:8099/v1/mimoto/issuers/StayProtected
