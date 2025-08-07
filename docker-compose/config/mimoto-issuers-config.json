@@ -24,7 +24,7 @@
       "token_endpoint": "https://localhost:8099/v1/mimoto/get-token/StayProtected",
       "proxy_token_endpoint": "https://esignet-insurance.collab.mosip.net/v1/esignet/oauth/v2/token",
       "qr_code_type": "OnlineSharing",
-      "credential_issuer_host": "https://injicertify-insurance.dev1.mosip.net",
+      "credential_issuer_host": "https://injicertify-insurance.collab.mosip.net",
       "enabled": "true"
     }
   ]
