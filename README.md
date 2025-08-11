@@ -95,3 +95,4 @@ npm test --u
 npm test -- --coverage
 ```
 
+## [Deployment in K8 cluster](deploy/README.md)
