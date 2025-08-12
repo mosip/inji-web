@@ -21,6 +21,7 @@ services:
       - active_profile_env=inji-default,standalone
       - SPRING_CONFIG_NAME=data-share
       - SPRING_CONFIG_LOCATION=/home/mosip/
+      - DATASHARE_DOMAIN=datashare-service:8097
     volumes:
       - ./config/data-share-inji-default.properties:/home/mosip/data-share-inji-default.properties
       - ./config/data-share-standalone.properties:/home/mosip/data-share-standalone.properties
@@ -44,25 +45,30 @@ services:
       - "6379:6379"
     volumes:
       - redis-data:/data
+
   mimoto-service:
     container_name: 'mimoto-service'
     image: 'mosipdev/mimoto:develop'
     user: root
     ports:
-      - '8099:8099'
+      - "8099:8099"
     environment:
       - container_user=mosip
       - active_profile_env=default
       - SPRING_CONFIG_NAME=mimoto
       - SPRING_CONFIG_LOCATION=/home/mosip/
+      - SPRING_CLOUD_BOOTSTRAP_LOCATION=/home/mosip/mimoto-bootstrap.properties
       - oidc_p12_password=dummypassword
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inji_mimoto # Add Postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inji_mimoto
       - SPRING_REDIS_HOST=redis
       - SPRING_REDIS_PORT=6379
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
       - GOOGLE_OAUTH_CLIENT_ID=clientId
       - GOOGLE_OAUTH_CLIENT_SECRET=clientSecret
     volumes:
       - ./config/mimoto-default.properties:/home/mosip/mimoto-default.properties
+      - ./config/mimoto-bootstrap.properties:/home/mosip/mimoto-bootstrap.properties
       - ./certs/oidckeystore.p12:/home/mosip/certs/oidckeystore.p12
     depends_on:
       - datashare
@@ -83,6 +89,7 @@ services:
       - ./config/credential-template.html:/home/mosip/credential-template.html
     depends_on:
       - mimoto-service
+
 volumes:
   postgres-data:
   redis-data:

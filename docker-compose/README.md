@@ -18,35 +18,183 @@ This is not for production use.
 3. "docker-compose.yml" file with mimoto setup.
 
 ## How to run this setup?
+1. Refer to the [How to create Google Client Credentials](#how-to-create-google-client-credentials) section to create
+   Google client credentials and replace the below placeholders of Mimoto service in the `docker-compose.yml` file with the generated credentials:
+   ```yaml
+       environment:
+         - GOOGLE_OAUTH_CLIENT_ID=<your-client-id>
+         - GOOGLE_OAUTH_CLIENT_SECRET=<your-client-secret>
+   ```
 
-1. Add Id providers as issuers in mimoto-issuers-config.json. For each provider, include the token_endpoint property, which should be an HTTPS URL. This can either be an exposed domain or, for local setups, an ngrok URL if you're using mimoto for local testing with the Inji mobile wallet.
+2. Add identity providers as issuers in the `mimoto-issuers-config.json` file of [docker-compose config folder](config/mimoto-issuers-config.json). For each provider, create a corresponding object with its issuer-specific configuration. Refer to the [Issuers Configuration](#mimoto-issuers-configuration) section for details on how to structure this file and understand each field's purpose and what values need to be updated.
 
-2. Add verifiers clientId and redirect Uri in mimoto-trusted-verifiers.json for Online Sharing
+3. Add or update the verifiers clientId, redirect and response Uris in `mimoto-trusted-verifiers.json` file of [docker-compose config folder](config/mimoto-trusted-verifiers.json) for Verifiable credential Online Sharing.
 
-3. Start esignet services (authorisation server) or use existing esignet service deployed on cloud and update esignet host references in mimoto-default.properties and mimoto-issuers-config.json
+4. In the root directory, create a certs folder and generate an OIDC client. Add the onboard client’s key to the oidckeystore.p12 file and place this file inside the certs folder.
+   Refer to the [official documentation](https://docs.inji.io/inji-wallet/inji-mobile/technical-overview/customization-overview/credential_providers) for guidance on how to create the **oidckeystore.p12** file and add the OIDC client key to it.
+   * The **oidckeystore.p12** file stores keys and certificates, each identified by an alias (e.g., mpartner-default-mimoto-insurance-oidc). Mimoto uses this alias to find the correct entry and access the corresponding private key during the authentication flow.
+   * Update the **client_alias** field in the [mimoto-issuers-config.json](config/mimoto-issuers-config.json) file with this alias so that Mimoto can load the correct key from the keystore.
+   * Also, update the **client_id** field in the same file with the client_id used during the onboarding process.
+   * Set the `oidc_p12_password` environment variable in the Mimoto service configuration inside docker-compose.yml to match the password used for the **oidckeystore.p12** file.
+   * Mimoto also uses this same keystore file (oidckeystore.p12) to store keys generated at service startup, which are essential for performing encryption and decryption operations through the KeyManager service.
 
-4. Create certs folder in the same directory and create OIDC client. Add key in oidckeystore.p12 and copy this file under certs folder. Replace oidc_p12_password environment variable value by password provided in documentation.
-Refer [here](https://docs.mosip.io/inji/inji-mobile-wallet/customization-overview/credential_providers) to create client
-* Update client_id and client_alias as per onboarding in mimoto-issuers-config.json file.
+5. To configure any Mobile Wallet specific configurations refer to the [Inji Mobile Wallet Configuration](#inji-mobile-wallet-configuration) section.
 
-5. Create google client credentials from https://console.cloud.google.com/ and replace
-GOOGLE_OAUTH_CLIENT_ID and GOOGLE_OAUTH_CLIENT_SECRET properties in docker-compose.yml
- 
+6. Choose your setup for starting the services:
+   - **Starting all services via Docker Compose (including Inji Web):**
+     Run the following command
+   ```bash
+      docker-compose up (# To run in foreground)
+      # or 
+      docker-compose up -d (# To run in detached mode or background)
+   ```
+   - **Running Inji Web in IDE and other services like `mimoto` via Docker Compose:**
+     - Use the [Mimoto `docker-compose.yml`](https://github.com/mosip/mimoto/blob/develop/docker-compose/docker-compose.yml) file to start Mimoto and the required services, and refer to its [README](https://github.com/mosip/mimoto/blob/develop/docker-compose/README.md) for setup instructions.
 
-6. Navigate to docker-compose folder and start the docker-compose file
+7. To stop all the services, navigate to docker-compose folder and run the following command
+   ```bash
+   docker-compose down
+   ```
 
-> docker-compose up -d
+8. To stop a specific service (e.g., inji-web) and remove its container and image, run the following commands
+   ```bash
+   docker-compose stop <service_name> # To stop a specific service container
+   docker-compose rm <service_name> # To remove a specific service container
+   docker rmi <image_name:tag> # To remove a specific service image
+   ```
 
-7. Navigate to docker-compose folder and stop the docker-compose file
+9. **Removing the Docker Volume:**
+   - To remove the persistent data for a specific service within an application, you can delete its individual Docker volume. This is necessary in situations where you need to start fresh or when data has become corrupted.
+   - For example, if you update the oidckeystore.p12 file, the mimoto service might fail to start. This happens because the new .p12 file may not contain the keys that are stored in the database's key alias table. Since these keys are used in the encryption and decryption flow, their absence prevents the service from functioning correctly. To fix this, you must remove the postgres-data volume to clear the old, encrypted data, which allows the service to start correctly with a new dataset.
 
-> docker-compose down
+   - Use the following command to remove the volume:
+   ```Bash
+   docker volume rm <volume_name> # E.g., docker volume rm docker-compose_postgres-data
+   ```
 
-8. Access Apis as
+10. Access Apis as
    * http://localhost:8099/v1/mimoto/allProperties
    * http://localhost:8099/v1/mimoto/issuers
    * http://localhost:8099/v1/mimoto/issuers/StayProtected
    * http://localhost:8099/v1/mimoto/issuers/StayProtected/well-known-proxy
 
+## How to create Google Client Credentials
+
+To enable Google OAuth2.0 authentication, follow these steps:
+
+1. **Go to the Google Cloud Console**:
+   - Visit [Google Cloud Console](https://console.cloud.google.com/).
+
+2. **Create a New Project**:
+   - If you don’t already have a project, create a new one by clicking on the project dropdown and selecting "New Project".
+
+3. **Enable the OAuth Consent Screen**:
+   - Navigate to "APIs & Services" > "OAuth consent screen".
+   - Select "External" for the user type and configure the required fields (e.g., app name, support email, etc.).
+   - Save the changes.
+4. **Create OAuth 2.0 Credentials**:
+   - Navigate to "APIs & Services" > "Credentials".
+   - Click "Create Credentials" > "OAuth 2.0 Client IDs".
+   - Select "Web application" as the application type.
+
+5. **Configure Authorized JavaScript Origins**:
+   Depending on your environment, use the following values:
+
+   - **Local or Docker**:
+     ```
+     http://localhost:8099
+     ```
+   - **Deployed domain (e.g., collab.mosip.net)**:
+     ```
+     https://collab.mosip.net
+
+6. **Configure Authorized Redirect URIs**:
+   - **Local or Docker**:
+     ```
+     http://localhost:8099/v1/mimoto/oauth2/callback/google
+     ```
+   - **Deployed domain (e.g., collab.mosip.net)**:
+     ```
+     https://collab.mosip.net/v1/mimoto/oauth2/callback/google
+     ```
+
+7. **Save and Retrieve Client Credentials**:
+   - After saving, you will receive a `Client ID` and `Client Secret`.
+
+## 📄Mimoto Issuers Configuration
+
+The mimoto-issuers-config.json file defines the list of Credential Issuers that support Verifiable Credential issuance using the OpenID4VCI protocol. Mimoto uses it to load Issuer metadata configuration like logo, client details and endpoints needed for initiating and completing credential issuance.
+
+### 🧩Structure and example
+
+```json
+{
+  "issuers": [
+     {
+        "issuer_id": "StayProtected",
+        "credential_issuer": "StayProtected",
+        "display": [
+           {
+              "name": "StayProtected Insurance",
+              "logo": {
+                 "url": "https://raw.githubusercontent.com/tw-mosip/file-server/master/StayProtectedInsurance.png",
+                 "alt_text": "a square logo of a Sunbird"
+              },
+              "language": "en",
+              "title": "Download StayProtected Insurance Credentials",
+              "description": "Download insurance credential"
+           }
+        ],
+        "protocol": "OpenId4VCI",
+        "client_id": "esignet-sunbird-partner",
+        "client_alias": "esignet-sunbird-partner",
+        "wellknown_endpoint": "https://injicertify-insurance.collab.mosip.net/v1/certify/issuance/.well-known/openid-credential-issuer",
+        "redirect_uri": "io.mosip.residentapp.inji://oauthredirect",
+        "authorization_audience": "https://esignet-insurance.collab.mosip.net/v1/esignet/oauth/v2/token",
+        "token_endpoint": "https://localhost:8099/v1/mimoto/get-token/StayProtected",
+        "proxy_token_endpoint": "https://esignet-insurance.collab.mosip.net/v1/esignet/oauth/v2/token",
+        "qr_code_type": "OnlineSharing",
+        "credential_issuer_host": "https://injicertify-insurance.collab.mosip.net",
+        "enabled": "true"
+     }
+  ]
+}
+```
+
+### Issuer configuration field Descriptions
+
+| Field                    | Description                                                                                                                                                                      | Value                                                                                                                                                                                                                                         | Required  |
+| ------------------------ |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|
+| `issuer_id`              | Unique identifier for the Issuer                                                                                                                                                 | Use your own Issuer's name, e.g., `"HealthInsuranceIssuer"`                                                                                                                                                                                   | Mandatory |
+| `credential_issuer`      | Logical name (usually the same as `issuer_id`)                                                                                                                                   | Same as above or a recognizable alias                                                                                                                                                                                                         | Mandatory |
+| `display[]`              | A list of display configurations, one per supported language. Each object includes localized fields like `name`, `logo.url`, `logo.alt_text`, `language`, `title`, `description` | Provide user-facing display metadata such as Issuer name, logo, and descriptions. You can customize existing entries or add new ones for each supported language                                                                              | Mandatory |
+| `protocol`               | Protocol used; must be `"OpenId4VCI"`                                                                                                                                            | Do not change unless the protocol evolves                                                                                                                                                                                                     | Mandatory |
+| `client_id`              | OAuth client ID registered with the Issuer during onboarding                                                                                                                     | Replace with the client ID provided when onboarding Issuer with the Issuer’s authorization server                                                                                                                                             | Mandatory |
+| `client_alias`           | Internal alias for the Issuer (e.g., used to fetch secure credentials of Issuer from keystore file `oidckeystore.p12`)                                                           | Set this to the alias value provided while inserting an entry for the Issuer into oidckeystore.p12 file during Issuer onboarding                                                                                                              | Mandatory |
+| `wellknown_endpoint`     | URL to the Issuer's `.well-known/openid-credential-issuer` endpoint as per OpenID4VCI spec                                                                                       | Replace with your Issuer’s actual metadata endpoint to discover important configuration details about the Credential Issuer                                                                                                                   | Mandatory |
+| `redirect_uri`           | OAuth2 redirect URI of your app where users are sent after authentication; must match one registered with the Issuer's authorization server                                      | Replace with one of the URI's that were registered during Issuer onboarding on the authorization server                                                                                                                                       | Mandatory |
+| `authorization_audience` | Audience value for token requests                                                                                                                                                | Usually the base URL of the Issuer’s token service                                                                                                                                                                                            | Mandatory |
+| `token_endpoint`         | Internal proxy token endpoint provided by Mimoto to forward requests to the real Auth server and it should be HTTPS URL                                                          | Use an internal/exposed domain or an ngrok URL if testing locally with the Inji mobile wallet                                                                                                                                                 | Mandatory |
+| `proxy_token_endpoint`   | Actual token endpoint of the Authorization server                                                                                                                                | Replace with the Auth server's token endpoint URL                                                                                                                                                                                             | Mandatory |
+| `qr_code_type`           | Type of QR code: `"OnlineSharing"` or `"EmbeddedVC"`                                                                                                                             | Use `"OnlineSharing"` to embed the OpenID4VP authorization request in a Verifiable Credential PDF QR code for verifiers to verify it. Use `"EmbeddedVC"` to embed the entire Verifiable Credential in the QR code (typically for offline use) | Optional  |
+| `credential_issuer_host` | Host/domain of the credential Issuer                                                                                                                                             | Replace with your Issuer's domain                                                                                                                                                                                                             | Mandatory |
+| `enabled`                | Enables or disables this Issuer configuration                                                                                                                                    | Set to `"false"` to disable or hide this Issuer                                                                                                                                                                                               | Mandatory |
+
+### ✅ How to Add a New Issuer
+
+1. Add a new Issuer object in the mimoto-issuers-config.json file using the structure, field descriptions, and example provided above.
+2. Ensure:
+   - All the configured endpoints for the Issuer and its Authorization server are reachable and functional.
+   - `redirect_uri` matches one of the URIs registered with the Issuer’s Authorization server during Issuer onboarding.
+   - `client_id` matches the one provided during Issuer onboarding with the Issuer's Authorization server.
+   - `client_alias` for each Issuer is correctly configured and available in the oidckeystore.p12 file.
+3. For step-by-step guidance on how to add a new Issuer and generate the oidckeystore.p12 file, refer to the [Customization Overview](https://docs.inji.io/inji-wallet/inji-mobile/technical-overview/customization-overview/credential_providers) documentation.
+
+## Inji Mobile Wallet Configuration
+To bind an Android or iOS wallet using the e-signet service via Mimoto, ensure the following property is updated in application-local.properties (if running Mimoto using IDE) or mimoto-default.properties (if running Mimoto using docker compose) to point to the appropriate e-signet instance running in your target environment
+```properties
+    mosip.esignet.host=<Host url of e-signet service> (E.g. https://esignet.env.mosip.net)
+```
 
 Note:
 - Replace mosipbox.public.url, mosip.api.public.url with your public accessible domain. For dev or local env [ngrok](https://ngrok.com/docs/getting-started/) is recommended.
