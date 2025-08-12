@@ -15,8 +15,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import base.BasePage;
 import org.openqa.selenium.TimeoutException;
 
-
-
 public class Loginpage extends BasePage {
 
 	private WebDriver driver;
@@ -120,6 +118,10 @@ public class Loginpage extends BasePage {
 
 	public Boolean isMismatchErroDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='error-passcode']"));
+	}
+
+	public Boolean isTempLockErroDisplayed() {
+		return isElementIsVisible(driver, By.xpath("//div/*[@data-testid='error-msg-passcode']"));
 	}
 
 	public String getMismatchErrorText() {
@@ -458,4 +460,14 @@ public class Loginpage extends BasePage {
 	public String getCurrentUrlUserFAQ() {
 		return waitForUrlContains(driver, "user/faq", 5);
 	}
+
+	public boolean isPasscodeInputDisabled() {
+		WebElement input = driver.findElement(By.cssSelector("input[data-testid='input-passcode']"));
+		return !input.isEnabled(); // returns true if disabled
+	}
+
+	public Boolean isPermLockWarningMsgDisplayed() {
+		return isElementIsVisible(driver, By.xpath("//div/*[@data-testid='error-msg-passcode']"));
+	}
+
 }
