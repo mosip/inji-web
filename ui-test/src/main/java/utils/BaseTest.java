@@ -10,27 +10,28 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.browserstack.local.Local;
-
-import api.InjiWebConfigManager;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.BeforeStep;
 import io.cucumber.plugin.event.PickleStepTestStep;
 import io.cucumber.plugin.event.TestStep;
 import io.mosip.testrig.apirig.utils.ConfigManager;
 import io.mosip.testrig.apirig.utils.S3Adapter;
-
 import com.aventstack.extentreports.Status;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.io.*;
 import java.util.Properties;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 
 public class BaseTest {
 	public void setDriver(WebDriver driver) {
@@ -43,7 +44,6 @@ public class BaseTest {
 	public static WebDriver driver;	
 	private long scenarioStartTime;
 	public static JavascriptExecutor jse;
-	public String PdfNameForMosip = "MOSIPVerifiableCredential.pdf";
 	public String PdfNameForInsurance = "InsuranceCredential.pdf";
 	public String PdfNameForLifeInsurance = "InsuranceCredential.pdf";
 	private static ExtentReports extent;
@@ -52,11 +52,33 @@ public class BaseTest {
 	String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
 	public final String URL = "https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
 	private Scenario scenario;
-
 	
 	public static final String url = System.getenv("TEST_URL") != null && !System.getenv("TEST_URL").isEmpty()
 		    ? System.getenv("TEST_URL")
 		    : loadFromProps("config/injiweb.properties", "injiWebUi");
+
+	String mosipWellKnownUrl = (url.endsWith("/") ? url : url + "/")
+            .replace("injiweb", "injicertify-mosipid") 
+            + "v1/certify/issuance/.well-known/openid-credential-issuer";
+	
+	public static String getSecondTypeValue(String wellKnownUrl) throws Exception {
+	    HttpURLConnection conn = (HttpURLConnection) new URL(wellKnownUrl).openConnection();
+	    conn.setRequestMethod("GET");
+
+	    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	    StringBuilder jsonText = new StringBuilder();
+	    String line;
+	    while ((line = in.readLine()) != null) jsonText.append(line);
+	    in.close();
+
+	    JSONObject json = new JSONObject(jsonText.toString());
+	    String firstKey = json.getJSONObject("credential_configurations_supported").keys().next();
+	    return json.getJSONObject("credential_configurations_supported")
+	               .getJSONObject(firstKey)
+	               .getJSONObject("credential_definition")
+	               .getJSONArray("type")
+	               .getString(1);
+	}
 
 	private static String loadFromProps(String path, String key) {
 	    Properties props = new Properties();
@@ -68,10 +90,18 @@ public class BaseTest {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
-	    return null; // no default fallback
+	    return null; 
 	}
 
-	
+	public String PdfNameForMosip = "";
+
+	{
+	    try {
+	        PdfNameForMosip = getSecondTypeValue(mosipWellKnownUrl)+".pdf";
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 	
 	@Before
 	public void beforeAll(Scenario scenario) throws MalformedURLException {

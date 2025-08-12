@@ -110,7 +110,7 @@ Feature: OIDC Login for InjiWeb
     And User verify vid input box header
     And User enter the uin
     And User click on getOtp button
-    And User enter the otp "<otp>"
+    And User enter the otp
     And User click on verify button
     Then user click on stored credentials button
     Then User click on cards button
@@ -143,8 +143,8 @@ Feature: OIDC Login for InjiWeb
     Then user verifies cards are in horizontal order
 
     Examples:
-      | initialPasscode | otp    |
-      | 123456          | 111111 |
+      | initialPasscode |
+      | 123456          |
 
   @oidcLogin
   Scenario Outline: User Reset passcode and verify login with new passcode

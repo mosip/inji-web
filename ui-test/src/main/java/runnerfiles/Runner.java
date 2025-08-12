@@ -19,6 +19,7 @@ import org.testng.TestNG;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import io.mosip.testrig.apirig.testrunner.OTPListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class Runner extends AbstractTestNGCucumberTests{
 	
 
 	public static void main(String[] args) {
+		OTPListener otpListener = new OTPListener();
 		try {
 			LOGGER.info("** ------------- Inji web ui Run Started for prerequisite creation---------------------------- **");
 			
@@ -79,6 +81,7 @@ public class Runner extends AbstractTestNGCucumberTests{
 			AdminTestUtil.createAndPublishPolicy();
 			AdminTestUtil.createEditAndPublishPolicy();
 			PartnerRegistration.deviceGeneration();
+			otpListener.run();
 
 			// Generating biometric details with mock MDS
 			BiometricDataProvider.generateBiometricTestData("Registration");
@@ -87,6 +90,7 @@ public class Runner extends AbstractTestNGCucumberTests{
 		} catch (Exception e) {
 			LOGGER.error("Exception " + e.getMessage());
 		}
+		otpListener.bTerminate = true;
 		System.exit(0);
 	}
 	

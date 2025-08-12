@@ -11,23 +11,21 @@ Feature: download mosip cridentials
     When User click on mosip national id by e-signet button
     Then User click on data share content validity
     Then User click on select custom validity button
-    Then user enter validity for data share content "<Vailidty>"
+    Then user enter validity for data share content "<Validity>"
     Then Use click on procced button
     And User verify login page lables
     And User verify vid input box header
     And User enter the uin
     And User click on getOtp button
-    And User enter the otp "<otp>"
+    And User enter the otp
     And User click on verify button
     And User verify downloading in progress text
     And User verify go home button
     Then User verify Download Success text displayed
 
-
     Examples:
-      | vid              | otp    | Vailidty |
-      | 2405782960 | 111111 |   3      |
-
+      | Validity |
+      | 3        |
 
   @smoke @VerifySearchWithInvalidString
   Scenario: Verify Search With Invalid String
@@ -37,7 +35,6 @@ Feature: download mosip cridentials
     And User Verify the no issuer found message
     And User search the issuers mosip
     When User click on download mosip credentials button
-
 
   @smoke @VerifyAndDownloadVcViaMosipNatinalId
   Scenario Outline: Verify And DownloadVc Via Mosip NatinalId
@@ -52,22 +49,21 @@ Feature: download mosip cridentials
     When User click on mosip national id by e-signet button
     Then User click on data share content validity
     Then User click on select custom validity button
-    Then user enter validity for data share content "<Vailidty>"
+    Then user enter validity for data share content "<Validity>"
     Then Use click on procced button
     And User verify login page lables
     And User verify vid input box header
     And User enter the uin
     And User click on getOtp button
-    And User enter the otp "<otp>"
+    And User enter the otp
     And User click on verify button
     And User verify go home button
     Then User verify Download Success text displayed
     And User verify pdf is downloaded
-    
 
     Examples:
-      | vid              | otp    | Vailidty |
-      | 2405782960 | 111111 |     3    |
+      | Validity |
+      | 3        |
 
   @smoke @VerifyAndDownloadVcViaMosipNatinalIdAndRfreshPage
   Scenario Outline: Verify And DownloadVc Via Mosip NatinalId And rfreshPage
@@ -80,19 +76,19 @@ Feature: download mosip cridentials
     When User click on mosip national id by e-signet button
     Then User click on data share content validity
     Then User click on select custom validity button
-    Then user enter validity for data share content "<Vailidty>"
+    Then user enter validity for data share content "<Validity>"
     Then Use click on procced button
     And User verify login page lables
     And User verify vid input box header
     And User enter the uin
     And User click on getOtp button
-    And User enter the otp "<otp>"
+    And User enter the otp
     And User click on verify button
     And User verify go home button
-    Then User verify Download Success text displayed    
+    Then User verify Download Success text displayed
     And user refresh the page
     And user verify the page after Refresh
 
     Examples:
-      | vid              | otp    | Vailidty |
-      | 2405782960 | 111111 |     3     |
+      | Validity |
+      | 3        |

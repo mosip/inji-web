@@ -1,10 +1,11 @@
 package utils;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
@@ -43,47 +44,42 @@ public class ExtentReportManager {
 
 	private static void addSystemInfo(String envUrl, String timestamp) {
 		String branch = getGitBranch();
-		if (branch == null || branch.trim().isEmpty()) {
-			branch = System.getenv("BRANCH_NAME");
-		}
-
 		String commitId = getGitCommitId();
-		if (commitId == null || commitId.trim().isEmpty()) {
-			commitId = System.getenv("COMMIT_ID");
-		}
-
 		String testUrl = System.getenv("TEST_URL");
 		if (testUrl == null || testUrl.trim().isEmpty()) {
 			testUrl = envUrl;
 		}
 
 		if (extent != null) {
-			extent.setSystemInfo("Git Branch", branch != null ? branch : "N/A");
-			extent.setSystemInfo("Commit ID", commitId != null ? commitId : "N/A");
-			extent.setSystemInfo("TEST_URL", testUrl);
-			extent.setSystemInfo("Execution Time", timestamp);
+			extent.setSystemInfo("Git BRANCH", branch);
+			extent.setSystemInfo("COMMIT ID", commitId);
+			extent.setSystemInfo("TEST URL", testUrl);
+			extent.setSystemInfo("EXECUTIOM TIME", timestamp);
 		}
 	}
 
 	private static String getGitBranch() {
-		try {
-			Process process = Runtime.getRuntime().exec("git rev-parse --abbrev-ref HEAD");
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			return reader.readLine();
-		} catch (IOException | NullPointerException e) {
-			System.err.println("Failed to get Git branch: " + e.getMessage());
-			return null;
-		}
+		return getGitProperty("git.branch");
 	}
 
 	private static String getGitCommitId() {
-		try {
-			Process process = Runtime.getRuntime().exec("git rev-parse HEAD");
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			return reader.readLine();
-		} catch (IOException | NullPointerException e) {
-			System.err.println("Failed to get Git commit ID: " + e.getMessage());
-			return null;
+		return getGitProperty("git.commit.id");
+	}
+
+	private static String getGitProperty(String key) {
+		Properties properties = new Properties();
+		try (InputStream is = ExtentReportManager.class.getClassLoader().getResourceAsStream("git.properties")) {
+			if (is == null) {
+				throw new IllegalStateException("git.properties file not found in classpath.");
+			}
+			properties.load(is);
+			String value = properties.getProperty(key);
+			if (value == null) {
+				throw new IllegalStateException("Key '" + key + "' not found in git.properties.");
+			}
+			return value;
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to read git.properties", e);
 		}
 	}
 

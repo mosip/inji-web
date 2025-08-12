@@ -16,7 +16,7 @@ public class SunbirdCredentials extends BasePage {
 		} catch (InterruptedException e) {			
 			e.printStackTrace();
 		}
-		return isElementIsVisible(driver, By.xpath("//*[text()='StayProtected Insurance']"));
+		return isElementIsVisible(driver, By.xpath("//div[@data-testid='ItemBox-Outer-Container-0']"));
 
 	}
 
@@ -41,7 +41,7 @@ public class SunbirdCredentials extends BasePage {
 			
 			e.printStackTrace();
 		}
-		clickOnElement(driver, By.xpath("//*[text()='StayProtected Insurance']"));
+		clickOnElement(driver, By.xpath("//div[@data-testid='ItemBox-Outer-Container-0']"));
 
 	}
 
