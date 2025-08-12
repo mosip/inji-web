@@ -117,4 +117,6 @@ fileignoreconfig:
   checksum: 29a91215a4e4f32e58ea5c5bd927919c8b3428da6cf6bff4f8beca4b563d4aab
 - filename: inji-web/src/utils/constants.ts
   checksum: fbdaa8c37e8ae4b6b88db0045bef72cb245f489803ad208c4e86795256e8a5e4
+- filename: inji-web/src/components/Preview/PDFViewer.tsx
+  checksum: 14c4db7c3572eb5d7f78094b0be8b8a2761631b7d350dccad012519910cd6b96
 version: ""
