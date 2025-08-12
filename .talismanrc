@@ -10,11 +10,13 @@ fileignoreconfig:
 - filename: inji-web/package-lock.json
   checksum: f6d0983f7ea3228725d38f9f8d7c2409c032417e248d5a30ebac5346e5d72f8a
 - filename: docker-compose/config/mimoto-default.properties
-  checksum: a7cd0dc8d0d4591cd639588339e40a6663c0e2969657be732b4e31de08976ae5
+  checksum: f9a1ba798884a7db016ad9f89c1b39aa96272e69e063d23a16aebd448d0059dd
 - filename: docker-compose/config/data-share-inji-default.properties
   checksum: 8b59432cb8d33b61f2d510f4f5abf1d7c3de1dbb3ddb90a2dda39337f3a45f4e
 - filename: docker-compose/docker-compose.yml
-  checksum: 804e5bca5cb941dc8ef29eacd8122b7d18c34303d1a7326d3ba193ce064e5bb2
+  checksum: e8c86116304137624fa85bbaaf25035afdfb33bfe3a7b85b788c1ec2e9be8166
+- filename: docker-compose/README.md
+  checksum: e628d77f9e4b96983dc732c0014ec0abd12bffd3547b70b900823c3d966ea8f2
 - filename: inji-web/src/components/DataShare/DataShareContent.tsx
   checksum: 1af797cfef624b32692d625304f9a1403c1719578a0c48b4583ade529a60376d
 - filename: inji-web/src/utils/misc.ts
@@ -115,4 +117,6 @@ fileignoreconfig:
   checksum: 29a91215a4e4f32e58ea5c5bd927919c8b3428da6cf6bff4f8beca4b563d4aab
 - filename: inji-web/src/utils/constants.ts
   checksum: fbdaa8c37e8ae4b6b88db0045bef72cb245f489803ad208c4e86795256e8a5e4
+- filename: inji-web/src/components/Preview/PDFViewer.tsx
+  checksum: 14c4db7c3572eb5d7f78094b0be8b8a2761631b7d350dccad012519910cd6b96
 version: ""
