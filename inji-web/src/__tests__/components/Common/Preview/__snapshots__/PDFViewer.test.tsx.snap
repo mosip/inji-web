@@ -3,7 +3,7 @@
 exports[`PDFViewer Component renders correctly and matches snapshot 1`] = `
 <div>
   <div
-    class="w-full max-h-screen relative"
+    class="w-full max-h-screen relative flex flex-col items-center overflow-auto"
   >
     <div
       data-file="\\"blob:http://localhost:3000/mock-pdf-url\\""
@@ -15,34 +15,46 @@ exports[`PDFViewer Component renders correctly and matches snapshot 1`] = `
         Loading PDF...
       </div>
       <div
-        data-page-number="1"
-        data-render-annotation-layer="false"
-        data-render-text-layer="false"
-        data-testid="pdf-page"
-        data-width="0"
+        class="mb-2 border border-gray-200"
       >
-        Page 
-        1
+        <div
+          data-page-number="1"
+          data-render-annotation-layer="false"
+          data-render-text-layer="false"
+          data-testid="pdf-page"
+          data-width="0"
+        >
+          Page 
+          1
+        </div>
       </div>
       <div
-        data-page-number="2"
-        data-render-annotation-layer="false"
-        data-render-text-layer="false"
-        data-testid="pdf-page"
-        data-width="0"
+        class="mb-2 border border-gray-200"
       >
-        Page 
-        2
+        <div
+          data-page-number="2"
+          data-render-annotation-layer="false"
+          data-render-text-layer="false"
+          data-testid="pdf-page"
+          data-width="0"
+        >
+          Page 
+          2
+        </div>
       </div>
       <div
-        data-page-number="3"
-        data-render-annotation-layer="false"
-        data-render-text-layer="false"
-        data-testid="pdf-page"
-        data-width="0"
+        class="mb-2 border border-gray-200"
       >
-        Page 
-        3
+        <div
+          data-page-number="3"
+          data-render-annotation-layer="false"
+          data-render-text-layer="false"
+          data-testid="pdf-page"
+          data-width="0"
+        >
+          Page 
+          3
+        </div>
       </div>
     </div>
   </div>

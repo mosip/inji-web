@@ -44,13 +44,18 @@ export function PDFViewer(props: Readonly<{ previewContent: Blob }>) {
                 loading={<SpinningLoader/>}
             >
                 {Array.from({length: numPages}, (_, i) => (
-                    <Page
-                        key={i + 1}
-                        pageNumber={i + 1}
-                        width={containerWidth}
-                        renderTextLayer={false}
-                        renderAnnotationLayer={false}
-                    />
+                    <div
+                        key={`page-${i + 1}`}
+                        className={PDFViewerStyles.pageWrapper}
+                    >
+                        <Page
+                            key={i + 1}
+                            pageNumber={i + 1}
+                            width={containerWidth}
+                            renderTextLayer={false}
+                            renderAnnotationLayer={false}
+                        />
+                    </div>
                 ))}
             </Document>
         </div>
