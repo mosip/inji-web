@@ -6,7 +6,7 @@
         "https://injiverify.collab.mosip.net/redirect"
       ],
       "response_uris": [
-        "https://injiverify.collab.mosip.net/redirect"
+        "https://injiverify.collab.mosip.net/v1/verify/vp-direct-post"
       ]
     }
   ]
