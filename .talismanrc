@@ -14,7 +14,7 @@ fileignoreconfig:
 - filename: docker-compose/config/data-share-inji-default.properties
   checksum: 8b59432cb8d33b61f2d510f4f5abf1d7c3de1dbb3ddb90a2dda39337f3a45f4e
 - filename: docker-compose/docker-compose.yml
-  checksum: 34dd7f751195d2f5c5c8ce95c3db78d91f62f71d0343fea7ff34a83357c4755e
+  checksum: e8c86116304137624fa85bbaaf25035afdfb33bfe3a7b85b788c1ec2e9be8166
 - filename: docker-compose/README.md
   checksum: e628d77f9e4b96983dc732c0014ec0abd12bffd3547b70b900823c3d966ea8f2
 - filename: inji-web/src/components/DataShare/DataShareContent.tsx
