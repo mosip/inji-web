@@ -25,7 +25,7 @@ This is not for production use.
          - GOOGLE_OAUTH_CLIENT_ID=<your-client-id>
          - GOOGLE_OAUTH_CLIENT_SECRET=<your-client-secret>
    ```
-   
+
 2. Add identity providers as issuers in the `mimoto-issuers-config.json` file of [docker-compose config folder](config/mimoto-issuers-config.json). For each provider, create a corresponding object with its issuer-specific configuration. Refer to the [Issuers Configuration](#mimoto-issuers-configuration) section for details on how to structure this file and understand each field's purpose and what values need to be updated.
 
 3. Add or update the verifiers clientId, redirect and response Uris in `mimoto-trusted-verifiers.json` file of [docker-compose config folder](config/mimoto-trusted-verifiers.json) for Verifiable credential Online Sharing.
@@ -37,7 +37,7 @@ This is not for production use.
    * Also, update the **client_id** field in the same file with the client_id used during the onboarding process.
    * Set the `oidc_p12_password` environment variable in the Mimoto service configuration inside docker-compose.yml to match the password used for the **oidckeystore.p12** file.
    * Mimoto also uses this same keystore file (oidckeystore.p12) to store keys generated at service startup, which are essential for performing encryption and decryption operations through the KeyManager service.
-   
+
 5. To configure any Mobile Wallet specific configurations refer to the [Inji Mobile Wallet Configuration](#inji-mobile-wallet-configuration) section.
 
 6. Choose your setup for starting the services:
