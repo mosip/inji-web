@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -139,9 +140,17 @@ public class BasePage {
 		}
 	}
 	
-	public void waitForSeconds(WebDriver driver,int seconds) {
-	    new WebDriverWait(driver, Duration.ofSeconds(seconds))
-	        .until(webDriver -> true); 
-	}
+    public static void waitForSeconds(WebDriver driver, int seconds) {
+        Instant startTime = Instant.now();
+
+        new WebDriverWait(driver, Duration.ofSeconds(seconds + 1))  // a buffer
+            .until(new java.util.function.Function<WebDriver, Boolean>() {
+                @Override
+                public Boolean apply(WebDriver driver) {
+                    long elapsed = Duration.between(startTime, Instant.now()).getSeconds();
+                    return elapsed >= seconds;
+                }
+            });
+    }
 	
 }

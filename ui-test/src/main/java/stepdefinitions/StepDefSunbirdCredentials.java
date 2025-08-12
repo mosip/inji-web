@@ -460,8 +460,8 @@ public class StepDefSunbirdCredentials {
 	}
 
 	@Then("User enter the policy number {string}")
-	public void user_enter_the_policy_number(String string)  {
-		
+	public void user_enter_the_policy_number(String string) {
+
 		sunbirdCredentials.enterPolicyNumer(string);
 
 	}
