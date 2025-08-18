@@ -46,7 +46,7 @@ services:
       - redis-data:/data
   mimoto-service:
     container_name: 'mimoto-service'
-    image: 'mosipqa/mimoto:0.18.x'
+    image: 'mosipid/mimoto:0.18.1'
     user: root
     ports:
       - '8099:8099'
@@ -71,7 +71,7 @@ services:
 
   inji-web:
     container_name: 'inji-web'
-    image: 'mosipid/inji-web:0.13.0'
+    image: 'mosipid/inji-web:0.13.1'
     ports:
       - '3004:3004'
     environment:
