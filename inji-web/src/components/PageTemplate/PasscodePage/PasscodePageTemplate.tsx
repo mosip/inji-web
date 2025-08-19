@@ -11,6 +11,7 @@ interface PasscodePageTemplateProps {
     onErrorClose?: () => void;
     content: React.ReactNode;
     testId: string;
+    testIdSuffix?: string;
     contentTestId: string;
     onBack?: () => void;
 }
@@ -22,6 +23,7 @@ export const PasscodePageTemplate: React.FC<PasscodePageTemplateProps> = ({
                                                                               onErrorClose,
                                                                               content,
                                                                               testId,
+                                                                              testIdSuffix = "",
                                                                               contentTestId,
                                                                               onBack
                                                                           }) => {
@@ -75,7 +77,8 @@ export const PasscodePageTemplate: React.FC<PasscodePageTemplateProps> = ({
                             >
                                 <div className={PasscodePageTemplateStyles.errorContentWrapper}>
                                     <div className={PasscodePageTemplateStyles.errorTextContainer}>
-                                        <span data-testid={`error-msg-${testId}`}  className={PasscodePageTemplateStyles.errorText}>
+                                        <span data-testid={`error-msg-${testId}${testIdSuffix}`}
+                                              className={PasscodePageTemplateStyles.errorText}>
                                           {error}
                                         </span>
                                     </div>
