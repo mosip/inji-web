@@ -44,7 +44,7 @@ fileignoreconfig:
 - filename: inji-web/src/pages/User/Passcode/PasscodePage.tsx
   checksum: 4356a42347102c476849a4fb56f2b3101b5d4bba2ae7cff50d42d505044c21f3
 - filename: inji-web/src/__tests__/pages/User/PasscodePage.test.tsx
-  checksum: 25b28b0aff106c38d5e275ef5f7a0802e12635d5ced52e30a2feea5aff99aa93
+  checksum: 0bfb13811734e51dcce0fe584e98988e0f86396c7cf33625bbdb8dc527b87a69
 - filename: inji-web/src/components/PageTemplate/PasscodePage/PasscodePageTemplate.tsx
   checksum: 47b30ab6a488c9d3cf8d4a4a53483b78a52759e0d1535aca1375c750c6ca8fa7
 - filename: inji-web/src/pages/User/Passcode/PasscodePageStyles.ts

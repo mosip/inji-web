@@ -19,6 +19,12 @@ const WalletLockStatus = {
     LAST_ATTEMPT_BEFORE_LOCKOUT: 'last_attempt_before_lockout'
 }
 
+const walletStatusToTestIdSuffix: Record<string, string> = {
+    [WalletLockStatus.TEMPORARILY_LOCKED]: 'temporarily-locked',
+    [WalletLockStatus.PERMANENTLY_LOCKED]: 'permanently-locked',
+    [WalletLockStatus.LAST_ATTEMPT_BEFORE_LOCKOUT]: 'last-attempt-before-lockout',
+};
+
 export const PasscodePage: React.FC = () => {
     const {t} = useTranslation('PasscodePage');
     const navigate = useNavigate();
@@ -35,6 +41,7 @@ export const PasscodePage: React.FC = () => {
     const walletsApi = useApi<Wallet[]>();
     const unlockWalletApi = useApi<Wallet>();
     const [canUnlockWallet, setCanUnlockWallet] = useState<boolean>(true);
+    const [testIdSuffix, setTestIdSuffix] = useState("");
 
     const handleWalletStatusError = (errorCode: string, fallBackError: string | undefined = undefined, httpStatusCode: number | null = null) => {
         if (
@@ -42,6 +49,7 @@ export const PasscodePage: React.FC = () => {
             errorCode === WalletLockStatus.PERMANENTLY_LOCKED ||
             errorCode === WalletLockStatus.LAST_ATTEMPT_BEFORE_LOCKOUT
         ) {
+            setTestIdSuffix(`-${walletStatusToTestIdSuffix[errorCode]}`);
             setError(t(`error.walletStatus.${errorCode}`));
             if (errorCode !== WalletLockStatus.LAST_ATTEMPT_BEFORE_LOCKOUT) {
                 setCanUnlockWallet(false);
@@ -285,6 +293,7 @@ export const PasscodePage: React.FC = () => {
             content={renderContent()}
             contentTestId={"passcode-inputs-container"}
             testId="passcode"
+            testIdSuffix={testIdSuffix}
         />
     );
 };
