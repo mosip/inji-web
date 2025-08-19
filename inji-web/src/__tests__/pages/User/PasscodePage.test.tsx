@@ -191,16 +191,18 @@ describe('Passcode', () => {
         {
             walletStatus: "temporarily_locked",
             expectedError: "You’ve reached the maximum number of attempts. Your wallet is now temporarily locked for sometime",
+            testId: "error-msg-passcode-temporarily-locked"
         },
         {
             walletStatus: "permanently_locked",
             expectedError: "Your wallet has been permanently locked due to multiple failed attempts. Please click on forgot password to reset your wallet to continue",
+            testId: "error-msg-passcode-permanently-locked"
         }
     ];
 
     test.each(walletLockErrorMessages)(
         "should display $walletStatus error and disable input boxes and submit button when landing on the passcode page for a already $walletStatus Wallet",
-        async ({walletStatus, expectedError}) => {
+        async ({walletStatus, expectedError, testId}) => {
             mockApiResponseSequence([{
                 data: [{
                     walletId: "2c2e1810-19c8-4c85-910d-aa1622412413",
@@ -211,13 +213,13 @@ describe('Passcode', () => {
 
             renderWithProviders(<PasscodePage/>);
 
-            await verifyPasscodeErrorAndInteractiveElementStatus(expectedError, true, null, true);
+            await verifyPasscodeErrorAndInteractiveElementStatus(expectedError, true, null, true, testId);
         }
     );
 
     test.each(walletLockErrorMessages)(
         "should display $walletStatus error and disable input boxes and submit button when unlock wallet endpoint returns $walletStatus error code",
-        async ({walletStatus, expectedError}) => {
+        async ({walletStatus, expectedError, testId}) => {
             mockApiResponseSequence([{data: successWalletResponse}, {
                 error: {response: {data: {errorCode: walletStatus}}},
                 status: 400
@@ -232,8 +234,7 @@ describe('Passcode', () => {
             await enterPasscode();
             userEvent.click(screen.getByTestId("btn-submit-passcode"));
 
-            await screen.findByTestId("error-msg-passcode");
-            await verifyPasscodeErrorAndInteractiveElementStatus(expectedError, true, "", true);
+            await verifyPasscodeErrorAndInteractiveElementStatus(expectedError, true, "", true, testId);
         }
     );
 
@@ -249,8 +250,7 @@ describe('Passcode', () => {
 
         renderWithProviders(<PasscodePage/>);
 
-        await screen.findByTestId("error-msg-passcode");
-        await verifyPasscodeErrorAndInteractiveElementStatus(expectedErrorMsg, false, null, true);
+        await verifyPasscodeErrorAndInteractiveElementStatus(expectedErrorMsg, false, null, true, "error-msg-passcode-last-attempt-before-lockout");
     });
 
     test("should display one attempt left before lockout error and enable input boxes when unlock wallet endpoint returns last_attempt_before_lockout error code", async () => {
@@ -269,8 +269,7 @@ describe('Passcode', () => {
         await enterPasscode();
         userEvent.click(screen.getByTestId("btn-submit-passcode"));
 
-        await screen.findByTestId("error-msg-passcode");
-        await verifyPasscodeErrorAndInteractiveElementStatus(expectedErrorMsg, false, "1", false);
+        await verifyPasscodeErrorAndInteractiveElementStatus(expectedErrorMsg, false, "1", false, "error-msg-passcode-last-attempt-before-lockout");
     });
 
 // Testing for re-login scenario in case of session expiry
@@ -296,8 +295,8 @@ describe('Passcode', () => {
         inputs.map((input) => userEvent.type(input, '1'));
     }
 
-    const verifyPasscodeErrorAndInteractiveElementStatus = async (expectedError: string, inputsDisabled: boolean, expectedInputValue: string | null, submitButtonDisabled: boolean) => {
-        const errorSpan = await screen.findByTestId("error-msg-passcode");
+    const verifyPasscodeErrorAndInteractiveElementStatus = async (expectedError: string, inputsDisabled: boolean, expectedInputValue: string | null, submitButtonDisabled: boolean, testId: string) => {
+        const errorSpan = await screen.findByTestId(testId);
         expect(errorSpan).toHaveTextContent(expectedError);
 
         const inputs = screen.getAllByTestId("input-passcode");
