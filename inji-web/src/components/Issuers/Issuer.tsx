@@ -24,7 +24,7 @@ export const Issuer: React.FC<IssuerProps> = ({issuer, index}) => {
                  title={issuerDisplayObject?.name}
                  description={issuerDisplayObject?.description}
                  onClick={() => navigate(credentialsPagePath)}
-                 testIdSuffix={issuer.issuer_id}
+                 testId={issuer.issuer_id}
         />
     )
 }
