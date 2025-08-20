@@ -875,6 +875,8 @@ public class StepDefOIDCLogin {
 	@Then("user enters the wrong passcode {string} for max failed attempts")
 	public void user_enters_wrong_passcode_for_max_failed_attempts(String wrongPasscode) throws Exception {
 		// Fetch from actuator
+		System.out.println(BaseTest.getWalletPasscodeSettings().get("maxFailedAttempts"));
+		
 		int maxNoOfTimes = BaseTest.getWalletPasscodeSettings().get("maxFailedAttempts");
 
 		for (int i = 1; i <= maxNoOfTimes; i++) {
@@ -899,6 +901,7 @@ public class StepDefOIDCLogin {
 
 	@Then("user wait for temporary lock to expire")
 	public void user_wait_for_tempory_lock_to_expire() throws InterruptedException, Exception {
+		System.out.println(BaseTest.getWalletPasscodeSettings().get("retryBlockedUntil")*60);
 		BasePage.waitForSeconds(driver, (BaseTest.getWalletPasscodeSettings().get("retryBlockedUntil") * 60) - 10);
 		driver.navigate().refresh();
 		assertTrue(!loginpage.isSubmitButtonEnabled(), "Before temporaty lock Expire Submit button is enabled");

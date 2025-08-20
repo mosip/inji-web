@@ -39,6 +39,9 @@ import io.cucumber.plugin.event.PickleStepTestStep;
 import io.cucumber.plugin.event.TestStep;
 import io.mosip.testrig.apirig.utils.ConfigManager;
 import io.mosip.testrig.apirig.utils.S3Adapter;
+import api.InjiWebConfigManager;
+import api.InjiWebUtil;
+
 
 public class BaseTest {
 	public void setDriver(WebDriver driver) {
@@ -62,48 +65,12 @@ public class BaseTest {
 
 	public static final String url = System.getenv("TEST_URL") != null && !System.getenv("TEST_URL").isEmpty()
 			? System.getenv("TEST_URL")
-			: loadFromProps("config/injiweb.properties", "injiWebUi");
+			: InjiWebConfigManager.getproperty("injiWebUi");
 
 	String mosipWellKnownUrl = (url.endsWith("/") ? url : url + "/").replace("injiweb", "injicertify-mosipid")
 			+ "v1/certify/issuance/.well-known/openid-credential-issuer";
-
-	public static String getCredentialConfigKey(String wellKnownUrl) throws Exception {
-		HttpURLConnection conn = (HttpURLConnection) new URL(wellKnownUrl).openConnection();
-		conn.setRequestMethod("GET");
-
-		BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		StringBuilder jsonText = new StringBuilder();
-		String line;
-		while ((line = in.readLine()) != null)
-			jsonText.append(line);
-		in.close();
-
-		JSONObject json = new JSONObject(jsonText.toString());
-		return json.getJSONObject("credential_configurations_supported").keys().next();
-	}
-
-	private static String loadFromProps(String path, String key) {
-		Properties props = new Properties();
-		try (InputStream input = BaseTest.class.getClassLoader().getResourceAsStream(path)) {
-			if (input != null) {
-				props.load(input);
-				return props.getProperty(key); // returns null if not found
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public String PdfNameForMosip = "";
-
-	{
-		try {
-			PdfNameForMosip = getCredentialConfigKey(mosipWellKnownUrl) + ".pdf";
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
+	public String PdfNameForMosip = InjiWebUtil.getCredentialConfigKey(mosipWellKnownUrl) + ".pdf";
 
 	@Before
 	public void beforeAll(Scenario scenario) throws MalformedURLException {
@@ -315,59 +282,15 @@ public class BaseTest {
 
 		return new String[] { issuerSearchText, issuerSearchTextforSunbird };
 	}
+	
+	public static HashMap<String, Integer> getWalletPasscodeSettings() throws Exception {
+        HashMap<String, String> keyMap = new HashMap<>();
+        keyMap.put("wallet.passcode.retryBlockedUntil", "retryBlockedUntil");
+        keyMap.put("wallet.passcode.maxFailedAttemptsAllowedPerCycle", "maxFailedAttempts");
+        keyMap.put("wallet.passcode.maxLockCyclesAllowed", "maxLockCycles");
 
-	public static Map<String, Integer> getWalletPasscodeSettings() throws Exception {
-		// Construct actuator URL from existing 'url'
-		String actuatorUrl = (url.endsWith("/") ? url.substring(0, url.length() - 1) : url).replace("injiweb", "api")
-				+ "/v1/mimoto/actuator/env";
+        return InjiWebUtil.getActuatorValues(keyMap);
+    }
 
-		HttpURLConnection conn = (HttpURLConnection) new URL(actuatorUrl).openConnection();
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Accept", "application/json");
-
-		if (conn.getResponseCode() != 200) {
-			throw new RuntimeException("HTTP error: " + conn.getResponseCode());
-		}
-
-		StringBuilder response = new StringBuilder();
-		try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-			String line;
-			while ((line = in.readLine()) != null) {
-				response.append(line);
-			}
-		}
-		conn.disconnect();
-
-		// Parse JSON
-		JSONObject root = new JSONObject(response.toString());
-		Map<String, Integer> result = new HashMap<>();
-
-		// Loop through propertySources
-		for (Object srcObj : root.getJSONArray("propertySources")) {
-			JSONObject src = (JSONObject) srcObj;
-			JSONObject props = src.optJSONObject("properties");
-			if (props == null)
-				continue;
-
-			if (props.has("wallet.passcode.retryBlockedUntil") && !result.containsKey("retryBlockedUntil")) {
-				result.put("retryBlockedUntil", Integer
-						.parseInt(props.getJSONObject("wallet.passcode.retryBlockedUntil").optString("value", "0")));
-			}
-			if (props.has("wallet.passcode.maxFailedAttemptsAllowedPerCycle")
-					&& !result.containsKey("maxFailedAttempts")) {
-				result.put("maxFailedAttempts", Integer.parseInt(props
-						.getJSONObject("wallet.passcode.maxFailedAttemptsAllowedPerCycle").optString("value", "0")));
-			}
-			if (props.has("wallet.passcode.maxLockCyclesAllowed") && !result.containsKey("maxLockCycles")) {
-				result.put("maxLockCycles", Integer
-						.parseInt(props.getJSONObject("wallet.passcode.maxLockCyclesAllowed").optString("value", "0")));
-			}
-
-			if (result.size() == 3)
-				break;
-		}
-
-		return result;
-	}
-
+		
 }

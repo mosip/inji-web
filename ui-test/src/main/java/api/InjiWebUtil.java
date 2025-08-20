@@ -1,22 +1,31 @@
 package api;
 
-import com.github.javafaker.Faker;
-import io.mosip.testrig.apirig.dto.TestCaseDTO;
-import io.mosip.testrig.apirig.utils.*;
-import io.restassured.response.Response;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.testng.SkipException;
 
-import javax.ws.rs.core.MediaType;
+import com.github.javafaker.Faker;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import io.mosip.testrig.apirig.dto.TestCaseDTO;
+import io.mosip.testrig.apirig.utils.AdminTestUtil;
+import io.mosip.testrig.apirig.utils.ConfigManager;
+import io.mosip.testrig.apirig.utils.GlobalConstants;
+import io.mosip.testrig.apirig.utils.RestClient;
+import io.mosip.testrig.apirig.utils.SkipTestCaseHandler;
+import io.restassured.response.Response;
 
 public class InjiWebUtil extends AdminTestUtil {
 
@@ -152,5 +161,65 @@ public class InjiWebUtil extends AdminTestUtil {
 
 		return testCaseDTO;
 	}
+	
+	public static String getCredentialConfigKey(String wellKnownUrl) {
+	    try {
+	        // Use RestClient from your existing utility
+	        Response response = RestClient.getRequest(wellKnownUrl, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
+	        JSONObject json = new JSONObject(response.getBody().asString());
+	        return json.getJSONObject("credential_configurations_supported").keys().next();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "default";
+	    }
+	}
+	
+    public static HashMap<String, Integer> getActuatorValues(HashMap<String, String> keyMapping) throws Exception {
+    	
+    	String url = System.getenv("TEST_URL") != null && !System.getenv("TEST_URL").isEmpty()
+    			? System.getenv("TEST_URL")
+    			: InjiWebConfigManager.getproperty("injiWebUi");
+    	
+        // Construct actuator URL
+        String actuatorUrl = (url.endsWith("/") ? url.substring(0, url.length() - 1) : url)
+                .replace("injiweb", "api") + "/v1/mimoto/actuator/env";
+
+        HttpURLConnection conn = (HttpURLConnection) new URL(actuatorUrl).openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Accept", "application/json");
+
+        if (conn.getResponseCode() != 200) {
+            throw new RuntimeException("HTTP error: " + conn.getResponseCode());
+        }
+
+        StringBuilder response = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+            String line;
+            while ((line = in.readLine()) != null) {
+                response.append(line);
+            }
+        }
+        conn.disconnect();
+
+        JSONObject root = new JSONObject(response.toString());
+        HashMap<String, Integer> result = new HashMap<>();
+
+        for (Object srcObj : root.getJSONArray("propertySources")) {
+            JSONObject src = (JSONObject) srcObj;
+            JSONObject props = src.optJSONObject("properties");
+            if (props == null) continue;
+
+            for (String actuatorKey : keyMapping.keySet()) {
+                String resultKey = keyMapping.get(actuatorKey);
+                if (!result.containsKey(resultKey) && props.has(actuatorKey)) {
+                    result.put(resultKey, Integer.parseInt(props.getJSONObject(actuatorKey).optString("value", "0")));
+                }
+            }
+
+            if (result.size() == keyMapping.size()) break;
+        }
+
+        return result;
+    }
 
 }
