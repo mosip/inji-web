@@ -12,7 +12,7 @@ export type ItemBoxProps = {
     title: string;
     description?: string;
     onClick: () => void;
-    testIdSuffix?: string;
+    testIdSuffix: string;
 }
 export type NavBarProps = {
     title: string;
