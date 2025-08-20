@@ -95,6 +95,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
                                                     ? onSuccess(-1)
                                                     : setCredentialExpiry(true);
                 }}
+                testIdSuffix={filteredCredentialConfig.name}
             />
             {credentialExpiry && (
                 <DataShareExpiryModal
