@@ -19,12 +19,9 @@ jest.mock("../../../utils/i18n", () => ({
     getCredentialTypeDisplayObjectForCurrentLanguage: jest.fn()
 }));
 
-const credential: IssuerConfigurationObject = {
-    ...mockCredentials,
-    credentials_supported: mockCredentials.credentials_supported.filter(
-        (credential) => credential.name === "InsuranceCredential"
-    )
-};
+const insuranceCredential = mockCredentials.credentials_supported.find(
+    (credential) => credential.name === "InsuranceCredential"
+);
 
 const mockIssuer = { issuer_id: "issuer1", qr_code_type: "OnlineSharing" } as any;
 const mockState = {
@@ -62,7 +59,7 @@ describe("Testing the Layout of Credentials", () => {
             <Credential
                 credentialId="InsuranceCredential"
                 index={1}
-                credentialWellknown={credential}
+                credentialWellknown={insuranceCredential}
                 setErrorObj={mockSetErrorObj}
             />
         );
