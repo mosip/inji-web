@@ -34,13 +34,13 @@ describe('Testing the Functionality of Issuer Component', () => {
 
     test('Check if content is rendered properly', () => {
         renderWithProvider(<Issuer index={1} issuer={mockIssuer} />)
-        const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container-1");
+        const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container-1-test-issuer");
         expect(itemBoxElement).toHaveTextContent("Name");
     });
 
     test('Check if onClick function is called', () => {
         renderWithProvider(<Issuer index={1} issuer={mockIssuer} />)
-        const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container-1");
+        const itemBoxElement = screen.getByTestId("ItemBox-Outer-Container-1-test-issuer");
         fireEvent.click(itemBoxElement);
         expect(window.location.pathname).toBe('/issuers/test-issuer');
     });
