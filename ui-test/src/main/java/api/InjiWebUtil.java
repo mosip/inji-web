@@ -174,52 +174,73 @@ public class InjiWebUtil extends AdminTestUtil {
 	    }
 	}
 	
-    public static HashMap<String, Integer> getActuatorValues(HashMap<String, String> keyMapping) throws Exception {
-    	
-    	String url = System.getenv("TEST_URL") != null && !System.getenv("TEST_URL").isEmpty()
-    			? System.getenv("TEST_URL")
-    			: InjiWebConfigManager.getproperty("injiWebUi");
-    	
-        // Construct actuator URL
-        String actuatorUrl = (url.endsWith("/") ? url.substring(0, url.length() - 1) : url)
-                .replace("injiweb", "api") + "/v1/mimoto/actuator/env";
 
-        HttpURLConnection conn = (HttpURLConnection) new URL(actuatorUrl).openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Accept", "application/json");
 
-        if (conn.getResponseCode() != 200) {
-            throw new RuntimeException("HTTP error: " + conn.getResponseCode());
-        }
+	
+	public static HashMap<String, Integer> getActuatorValues(HashMap<String, String> keyMapping) throws Exception {
+	    HashMap<String, Integer> result = new HashMap<>();
+	    String baseUrl = System.getenv("apiInternalEndPoint") != null && !System.getenv("apiInternalEndPoint").isEmpty()
+	            ? System.getenv("apiInternalEndPoint")
+	            : InjiWebConfigManager.getproperty("apiInternalEndPoint");
 
-        StringBuilder response = new StringBuilder();
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-            String line;
-            while ((line = in.readLine()) != null) {
-                response.append(line);
-            }
-        }
-        conn.disconnect();
+	    String actuatorPath = System.getenv("actuatorMimotoEndpoint") != null && !System.getenv("actuatorMimotoEndpoint").isEmpty()
+	            ? System.getenv("actuatorMimotoEndpoint")
+	            : InjiWebConfigManager.getproperty("actuatorMimotoEndpoint");
 
-        JSONObject root = new JSONObject(response.toString());
-        HashMap<String, Integer> result = new HashMap<>();
+	    String actuatorUrl;
+	    if (baseUrl.endsWith("/") && actuatorPath.startsWith("/")) {
+	        actuatorUrl = baseUrl.substring(0, baseUrl.length() - 1) + actuatorPath;
+	    } else if (!baseUrl.endsWith("/") && !actuatorPath.startsWith("/")) {
+	        actuatorUrl = baseUrl + "/" + actuatorPath;
+	    } else {
+	        actuatorUrl = baseUrl + actuatorPath;
+	    }
+	    Response response = RestClient.getRequest(
+	            actuatorUrl,
+	            MediaType.APPLICATION_JSON,
+	            MediaType.APPLICATION_JSON
+	    );
+	    if (response.getStatusCode() != 200) {
+	        throw new RuntimeException("Failed to fetch actuator values. HTTP error: " + response.getStatusCode());
+	    }
 
-        for (Object srcObj : root.getJSONArray("propertySources")) {
-            JSONObject src = (JSONObject) srcObj;
-            JSONObject props = src.optJSONObject("properties");
-            if (props == null) continue;
+	    JSONObject root = new JSONObject(response.getBody().asString());
 
-            for (String actuatorKey : keyMapping.keySet()) {
-                String resultKey = keyMapping.get(actuatorKey);
-                if (!result.containsKey(resultKey) && props.has(actuatorKey)) {
-                    result.put(resultKey, Integer.parseInt(props.getJSONObject(actuatorKey).optString("value", "0")));
-                }
-            }
+	    if (!root.has("propertySources")) {
+	        throw new RuntimeException("[ERROR] No propertySources found in actuator response!");
+	    }
 
-            if (result.size() == keyMapping.size()) break;
-        }
+	    for (Object srcObj : root.getJSONArray("propertySources")) {
+	        if (!(srcObj instanceof JSONObject)) continue;
 
-        return result;
-    }
+	        JSONObject src = (JSONObject) srcObj;
+	        JSONObject props = src.optJSONObject("properties");
+	        if (props == null) continue;
+
+	        for (String actuatorKey : keyMapping.keySet()) {
+	            String resultKey = keyMapping.get(actuatorKey);
+
+	            if (!result.containsKey(resultKey) && props.has(actuatorKey)) {
+	                String rawValue = props.getJSONObject(actuatorKey).optString("value", "0");
+
+	                try {
+	                    int intValue = Integer.parseInt(rawValue.trim());
+	                    result.put(resultKey, intValue);
+	                } catch (NumberFormatException e) {
+	                    System.err.println("[WARN] Failed to parse value for key " + actuatorKey + " (" + rawValue + ")");
+	                }
+	            }
+	        }
+	        if (result.size() == keyMapping.size()) {
+				logger.info("All keys mapped successfully");
+	            break;
+	        }
+	    }
+	    if (result.isEmpty()) {
+			logger.info("No actuator values matched the provided key mapping.\"");
+	    }
+
+	    return result;
+	}
 
 }
