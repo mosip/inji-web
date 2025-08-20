@@ -5,7 +5,7 @@ export const ItemBox: React.FC<ItemBoxProps> = (props) => {
     return (
         <div
             key={props.index}
-            data-testid={`ItemBox-Outer-Container-${props.index}`}
+            data-testid={`ItemBox-Outer-Container-${props.index}-${props.testId}`}
             className={`bg-white w-48 h-full flex flex-col shadow-iw hover:shadow-iw-hover hover:scale-105 transition-all duration-300 p-5 rounded-lg cursor-pointer items-center`}
             onClick={props.onClick}
             onKeyUp={props.onClick}
