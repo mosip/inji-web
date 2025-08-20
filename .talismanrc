@@ -1,6 +1,6 @@
 fileignoreconfig:
 - filename: inji-web/src/components/Common/ItemBox.tsx
-  checksum: c76a16925574c0811fc11c35742fce6fdacc4539a0cf746107fee80acf5d3728
+  checksum: 8f95f08a97bcbcb34487642c1c50f2b427b86424b49fe75d0f1414f006cd2311
 - filename: inji-web/src/components/PageTemplate/Header.tsx
   checksum: c94a6ad1bc1d85bff313c25503b985478241970a499668c8521d3f97f2f16b34
 - filename: inji-web/src/components/Common/LanguageSelector.tsx
