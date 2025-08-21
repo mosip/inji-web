@@ -3,10 +3,10 @@
     {
       "client_id": "https://injiverify.collab.mosip.net",
       "redirect_uris": [
-        "https://injiverify.collab.mosip.net/redirect"
+        "https://injiverify.collab.mosip.net/"
       ],
       "response_uris": [
-        "https://injiverify.collab.mosip.net/v1/verify/vp-direct-post"
+        "https://injiverify.collab.mosip.net/v1/verify/vp-submission/vp-direct-post"
       ]
     }
   ]
