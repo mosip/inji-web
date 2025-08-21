@@ -54,8 +54,6 @@ public class BaseTest {
 	public static WebDriver driver;
 	private long scenarioStartTime;
 	public static JavascriptExecutor jse;
-	public String PdfNameForInsurance = "InsuranceCredential.pdf";
-	public String PdfNameForLifeInsurance = "InsuranceCredential.pdf";
 	private static ExtentReports extent;
 	private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 	String username = System.getenv("BROWSERSTACK_USERNAME");
@@ -66,11 +64,6 @@ public class BaseTest {
 	public static final String url = System.getenv("TEST_URL") != null && !System.getenv("TEST_URL").isEmpty()
 			? System.getenv("TEST_URL")
 			: InjiWebConfigManager.getproperty("injiWebUi");
-
-	String mosipWellKnownUrl = (url.endsWith("/") ? url : url + "/").replace("injiweb", "injicertify-mosipid")
-			+ "v1/certify/issuance/.well-known/openid-credential-issuer";
-	
-	public String PdfNameForMosip = InjiWebUtil.getCredentialConfigKey(mosipWellKnownUrl) + ".pdf";
 
 	@Before
 	public void beforeAll(Scenario scenario) throws MalformedURLException {

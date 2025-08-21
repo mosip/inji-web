@@ -117,11 +117,11 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isMismatchErroDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//div[@data-testid='error-passcode']"));
+		return isElementIsVisible(driver, By.xpath("//div/*[@data-testid='error-msg-passcode']"));
 	}
 
 	public Boolean isTempLockErroDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//div/*[@data-testid='error-msg-passcode']"));
+		return isElementIsVisible(driver, By.xpath("//div/*[@data-testid='error-msg-passcode-temporarily-locked']"));
 	}
 
 	public String getMismatchErrorText() {
@@ -467,7 +467,11 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isPermLockWarningMsgDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//div/*[@data-testid='error-msg-passcode']"));
+		return isElementIsVisible(driver, By.xpath("//div/*[@data-testid='error-msg-passcode-last-attempt-before-lockout']"));
+	}
+	
+	public Boolean isPermLockMsgDisplayed() {
+		return isElementIsVisible(driver, By.xpath("//div/*[@data-testid='error-msg-passcode-permanently-locked']"));
 	}
 
 }

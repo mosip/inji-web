@@ -2,6 +2,7 @@ package pages;
 
 import base.BasePage;
 import org.openqa.selenium.*;
+import utils.BaseTest;
 
 public class SunbirdCredentials extends BasePage {
 	private WebDriver driver;
@@ -13,10 +14,10 @@ public class SunbirdCredentials extends BasePage {
 	public Boolean isDownloadSunbirdCredentialsDisplayed() {
 		try {
 			Thread.sleep(2000);
-		} catch (InterruptedException e) {			
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return isElementIsVisible(driver, By.xpath("//div[@data-testid='ItemBox-Outer-Container-0']"));
+		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 
 	}
 
@@ -26,23 +27,32 @@ public class SunbirdCredentials extends BasePage {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return isElementIsVisible(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-0']"));
+		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
 
 	public void clickOnSunbirdInsurance() {
 
-		clickOnElement(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-0']"));
+		clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
+	}
+
+	public String PdfNameForInsurance() {
+
+		return getElementAttribute(driver, By.xpath("//*[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),
+				"data-testid").replaceFirst("ItemBox-Outer-Container-0-", "");
 	}
 
 	public void clickOnDownloadSunbird() {
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			
+
 			e.printStackTrace();
 		}
-		clickOnElement(driver, By.xpath("//div[@data-testid='ItemBox-Outer-Container-0']"));
 
+		clickOnElement(driver,
+				By.xpath("//h3[@data-testid='ItemBox-Text' and normalize-space(text())='"
+						+ BaseTest.fetchIssuerTexts()[1]
+						+ "']/ancestor::div[contains(@data-testid,'ItemBox-Outer-Container')]"));
 	}
 
 	public void enterPolicyNumer(String string) {
@@ -66,7 +76,7 @@ public class SunbirdCredentials extends BasePage {
 
 		try {
 			Thread.sleep(2000);
-		} catch (InterruptedException e) {			
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
@@ -80,7 +90,7 @@ public class SunbirdCredentials extends BasePage {
 	}
 
 	public Boolean isLifeInceranceDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-1']"));
+		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-1-')]"));
 	}
 
 	public Boolean isLoginFailedDisplayed() {
@@ -88,7 +98,7 @@ public class SunbirdCredentials extends BasePage {
 	}
 
 	public void clickOnLifeInsurance() {
-		clickOnElement(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-1']"));
+		clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-1-')]"));
 	}
 
 	public Boolean isEnterPolicyNumberHeaderDisplayed() {
@@ -108,11 +118,11 @@ public class SunbirdCredentials extends BasePage {
 	}
 
 	public Boolean isVehicleInsuranceDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-1']"));
+		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
 
 	public void clickOnVehicleInsurance() {
-		clickOnElement(driver, By.xpath("//*[@data-testid='ItemBox-Outer-Container-1']"));
+		clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
 
 }

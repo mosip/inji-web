@@ -915,5 +915,10 @@ public class StepDefOIDCLogin {
 	public void user_verify_warning_message_before_permanent_lock() throws InterruptedException {
 		loginpage.isPermLockWarningMsgDisplayed();
 	}
+	
+	@Then("user verify the wallet permanently locked")
+	public void user_verify_the_wallet_permanently_locked() throws InterruptedException {
+		loginpage.isPermLockMsgDisplayed();
+	}
 
 }

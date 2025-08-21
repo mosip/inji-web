@@ -9,8 +9,7 @@ Feature: OIDC Login for InjiWeb
     Then user verify the toggle button
     And user enters the passcode for confirmation "<wrongConfirmation1>"
     And user click on submit button
-    Then user prints error message for mismatch
-    Then user prints verify message for mismatch
+    Then user verify error message for mismatch
     And user enters the passcode for confirmation "<stringPasscode>"
     Then user click on toggle button for confirmation
     And user enters the passcode for confirmation "<initialPasscode>"
@@ -162,7 +161,7 @@ Feature: OIDC Login for InjiWeb
     And user enters the passcode "<resetPasscode>"
     And user enters the passcode for confirmation "<wrongConfirmation1>"
     And user click on submit button
-    Then user prints verify message for mismatch
+    Then user verify error message for mismatch
     And user enters the passcode for confirmation "<resetPasscode>"
     And user click on submit button
     Then user click on dropdown box for profile
@@ -229,8 +228,9 @@ Feature: OIDC Login for InjiWeb
     And user enters the wrong passcode "<wrongConfirmation1>" for max failed attempts
     Then user wait for temporary lock to expire
     And user enters the wrong passcode "<wrongConfirmation1>" to lessthan max failed attempts
-    Then user verify the warning message before to permanent lock    
+    Then user verify the warning message before to permanent lock
     And user enters the passcode "<wrongConfirmation1>"
+    And user verify the wallet permanently locked
     Then user click on forget passcode option
     Then user click on forget passcode button
     And user enters the passcode "<initialPasscode>"

@@ -53,12 +53,21 @@ public class MosipCredentials extends BasePage {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		clickOnElement(driver, By.xpath("//h3[@data-testid='ItemBox-Text']"));
+		clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
 
 	public Boolean isLoginPageLableDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//label[@for='Mosip vid']"));
 	}
+	
+	public String PdfNameForMosip() {
+	    return getElementAttribute(
+	        driver,
+	        By.xpath("//*[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),
+	        "data-testid"
+	    ).replaceFirst("ItemBox-Outer-Container-0-", "");
+	}
+	
 
 	public void clickOnLoginWithOtp() {
 		try {

@@ -273,22 +273,22 @@ public class StepDefMosipCredentials {
 	public String user_verify_pdf_is_downloaded() throws IOException {
 		baseTest.getJse()
 				.executeScript("browserstack_executor: {\"action\": \"fileExists\", \"arguments\": {\"fileName\": \""
-						+ baseTest.PdfNameForMosip + "\"}}");
+						+ mosipCredentials.PdfNameForMosip() + "\"}}");
 		baseTest.getJse().executeScript(
 				"browserstack_executor: {\"action\": \"getFileProperties\", \"arguments\": {\"fileName\": \""
-						+ baseTest.PdfNameForMosip + "\"}}");
+						+ mosipCredentials.PdfNameForMosip() + "\"}}");
 
 		String base64EncodedFile = (String) baseTest.getJse().executeScript(
 				"browserstack_executor: {\"action\": \"getFileContent\", \"arguments\": {\"fileName\": \""
-						+ baseTest.PdfNameForMosip + "\"}}");
+						+ mosipCredentials.PdfNameForMosip() + "\"}}");
 		byte[] data = Base64.getDecoder().decode(base64EncodedFile);
-		OutputStream stream = new FileOutputStream(baseTest.PdfNameForMosip);
+		OutputStream stream = new FileOutputStream(mosipCredentials.PdfNameForMosip());
 		stream.write(data);
 
 		System.out.println(stream);
 		stream.close();
 
-		File pdfFile = new File(System.getProperty("user.dir") + "/" + baseTest.PdfNameForMosip);
+		File pdfFile = new File(System.getProperty("user.dir") + "/" + mosipCredentials.PdfNameForMosip());
 		PDDocument document = PDDocument.load(pdfFile);
 
 		PDFTextStripper stripper = new PDFTextStripper();
