@@ -10,7 +10,6 @@ import org.openqa.selenium.interactions.Actions;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import utils.BaseTest;
 
 public class HomePage extends BasePage {
 
@@ -87,9 +86,7 @@ public class HomePage extends BasePage {
 
 	public void clickOnDownloadMosipCredentials() {
 		clickOnElement(driver,
-				By.xpath("//h3[@data-testid='ItemBox-Text' and normalize-space(text())='"
-						+ BaseTest.fetchIssuerTexts()[0]
-						+ "']/ancestor::div[contains(@data-testid,'ItemBox-Outer-Container')]"));
+				By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
 
 	public Boolean isListOfCredentialsTypeDisplayed() {

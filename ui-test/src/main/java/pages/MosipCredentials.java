@@ -1,12 +1,15 @@
 package pages;
 
-import base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import base.BasePage;
 
 public class MosipCredentials extends BasePage {
 
 	private WebDriver driver;
+	public String pdfName;
+
 
 	public MosipCredentials(WebDriver driver) {
 		this.driver = driver;
@@ -53,19 +56,25 @@ public class MosipCredentials extends BasePage {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
+	    pdfName = getElementAttribute(
+	            driver,
+	            By.xpath("//*[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),"data-testid").replaceFirst("ItemBox-Outer-Container-0-", "") + ".pdf";
+	    clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
+
 
 	public Boolean isLoginPageLableDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//label[@for='Mosip vid']"));
 	}
+
 	
 	public String PdfNameForMosip() {
-	    return getElementAttribute(
+	    String pdfgname= getElementAttribute(
 	        driver,
 	        By.xpath("//*[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),
 	        "data-testid"
-	    ).replaceFirst("ItemBox-Outer-Container-0-", "");
+	    ).replaceFirst("ItemBox-Outer-Container-0-", "") + ".pdf";
+	    return pdfgname;
 	}
 	
 

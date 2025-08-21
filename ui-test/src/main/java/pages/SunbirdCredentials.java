@@ -30,7 +30,14 @@ public class SunbirdCredentials extends BasePage {
 		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
 
+	public String pdfNameInsurance;
+	
 	public void clickOnSunbirdInsurance() {
+		
+		pdfNameInsurance = getElementAttribute(
+	            driver,
+	            By.xpath("//*[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),"data-testid").replaceFirst("ItemBox-Outer-Container-0-", "") + ".pdf";
+	    System.out.println("[DEBUG] Captured PDF name: " + pdfNameInsurance);
 
 		clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
@@ -38,7 +45,7 @@ public class SunbirdCredentials extends BasePage {
 	public String PdfNameForInsurance() {
 
 		return getElementAttribute(driver, By.xpath("//*[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),
-				"data-testid").replaceFirst("ItemBox-Outer-Container-0-", "");
+				"data-testid").replaceFirst("ItemBox-Outer-Container-0-", "")+".pdf";
 	}
 
 	public void clickOnDownloadSunbird() {
@@ -50,9 +57,7 @@ public class SunbirdCredentials extends BasePage {
 		}
 
 		clickOnElement(driver,
-				By.xpath("//h3[@data-testid='ItemBox-Text' and normalize-space(text())='"
-						+ BaseTest.fetchIssuerTexts()[1]
-						+ "']/ancestor::div[contains(@data-testid,'ItemBox-Outer-Container')]"));
+				By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
 
 	public void enterPolicyNumer(String string) {

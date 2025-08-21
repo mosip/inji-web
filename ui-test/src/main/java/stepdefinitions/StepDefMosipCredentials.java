@@ -269,32 +269,37 @@ public class StepDefMosipCredentials {
 		}
 	}
 
+	
 	@Then("User verify pdf is downloaded")
-	public String user_verify_pdf_is_downloaded() throws IOException {
+	public String user_verify_pdf_is_downloaded() throws IOException, InterruptedException {
+		Thread.sleep(5000);
 		baseTest.getJse()
 				.executeScript("browserstack_executor: {\"action\": \"fileExists\", \"arguments\": {\"fileName\": \""
-						+ mosipCredentials.PdfNameForMosip() + "\"}}");
+						+ mosipCredentials.pdfName + "\"}}");
 		baseTest.getJse().executeScript(
 				"browserstack_executor: {\"action\": \"getFileProperties\", \"arguments\": {\"fileName\": \""
-						+ mosipCredentials.PdfNameForMosip() + "\"}}");
+						+ mosipCredentials.pdfName + "\"}}");
 
 		String base64EncodedFile = (String) baseTest.getJse().executeScript(
 				"browserstack_executor: {\"action\": \"getFileContent\", \"arguments\": {\"fileName\": \""
-						+ mosipCredentials.PdfNameForMosip() + "\"}}");
+						+ mosipCredentials.pdfName + "\"}}");
 		byte[] data = Base64.getDecoder().decode(base64EncodedFile);
-		OutputStream stream = new FileOutputStream(mosipCredentials.PdfNameForMosip());
+		OutputStream stream = new FileOutputStream(mosipCredentials.pdfName);
 		stream.write(data);
 
 		System.out.println(stream);
 		stream.close();
 
-		File pdfFile = new File(System.getProperty("user.dir") + "/" + mosipCredentials.PdfNameForMosip());
+		File pdfFile = new File(System.getProperty("user.dir") + "/" + mosipCredentials.pdfName);
 		PDDocument document = PDDocument.load(pdfFile);
 
 		PDFTextStripper stripper = new PDFTextStripper();
 		String text = stripper.getText(document);
 		return text;
 	}
+	
+
+
 
 	@Then("User verifies 'Downloading in Progress' text")
 	public void user_verify_downloading_in_progress_displayed() {

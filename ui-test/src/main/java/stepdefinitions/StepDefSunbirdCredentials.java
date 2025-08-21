@@ -290,8 +290,8 @@ public class StepDefSunbirdCredentials {
 
 	@Then("User verify pdf is downloaded for Insurance")
 	public String user_verify_pdf_is_downloaded_for_insurance() throws IOException {
-	    String pdfName = sunbirdCredentials.PdfNameForInsurance();  // get the pdf name dynamically
-
+		
+		String pdfName =sunbirdCredentials.pdfNameInsurance;
 	    baseTest.getJse().executeScript(
 	            "browserstack_executor: {\"action\": \"fileExists\", \"arguments\": {\"fileName\": \"" + pdfName + "\"}}");
 
