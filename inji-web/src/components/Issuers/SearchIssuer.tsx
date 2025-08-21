@@ -7,7 +7,7 @@ import {IssuerObject} from "../../types/data";
 import {IoCloseCircleSharp} from "react-icons/io5";
 import {RootState} from "../../types/redux";
 import {getIssuerDisplayObjectForCurrentLanguage} from "../../utils/i18n";
-import { SearchIssuerStyles } from "./SearchIssuerStyles";
+import { SearchIssuerStyles } from "./SearchIssuerStyles.ts";
 
 export const SearchIssuer: React.FC = () => {
 
