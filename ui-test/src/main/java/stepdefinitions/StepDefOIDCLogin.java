@@ -871,6 +871,19 @@ public class StepDefOIDCLogin {
 			assertTrue(loginpage.isSubmitButtonEnabled(), "After attempt " + i + ": Submit button disabled");
 		}
 	}
+	
+	
+	@Then("user enters the wrong passcode {string} to lessthan max failed attempts before perm lock")
+	public void user_enters_wrong_passcode_to_lessthan_max_failed_beforeperm_attempts(String wrongPasscode) throws Exception {
+		// Get maxFailedAttempts from actuator and subtract 1
+		int noOfTimes = BaseTest.getWalletPasscodeSettings().get("maxFailedAttempts") - 1;
+
+		for (int i = 1; i <= noOfTimes; i++) {
+			loginpage.enterPasscode(wrongPasscode);
+			loginpage.clickonSubmitButton();
+			assertTrue(loginpage.isSubmitButtonEnabled(), "After attempt " + i + ": Submit button disabled");
+		}
+	}
 
 	@Then("user enters the wrong passcode {string} for max failed attempts")
 	public void user_enters_wrong_passcode_for_max_failed_attempts(String wrongPasscode) throws Exception {
@@ -913,12 +926,13 @@ public class StepDefOIDCLogin {
 
 	@Then("user verify the warning message before to permanent lock")
 	public void user_verify_warning_message_before_permanent_lock() throws InterruptedException {
-		loginpage.isPermLockWarningMsgDisplayed();
+		assertTrue(loginpage.isPermLockWarningMsgDisplayed(), "Warning message before temp lock is not displayed");
 	}
 	
 	@Then("user verify the wallet permanently locked")
 	public void user_verify_the_wallet_permanently_locked() throws InterruptedException {
-		loginpage.isPermLockMsgDisplayed();
+		assertTrue(!loginpage.isPermLockMsgDisplayed(), "Permanent lock message is not displayed");
+		
 	}
 
 }
