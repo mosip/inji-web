@@ -278,15 +278,18 @@ public class BaseTest {
 
 		return new String[] { issuerSearchText, issuerSearchTextforSunbird };
 	}
-	
-	public static HashMap<String, Integer> getWalletPasscodeSettings() throws Exception {
-        HashMap<String, String> keyMap = new HashMap<>();
-        keyMap.put("wallet.passcode.retryBlockedUntil", "retryBlockedUntil");
-        keyMap.put("wallet.passcode.maxFailedAttemptsAllowedPerCycle", "maxFailedAttempts");
-        keyMap.put("wallet.passcode.maxLockCyclesAllowed", "maxLockCycles");
 
-        return InjiWebUtil.getActuatorValues(keyMap);
-    }
+	    private static HashMap<String, Integer> walletPasscodeSettingsCache;
 
-		
-}
+	    public static HashMap<String, Integer> getWalletPasscodeSettings() throws Exception {
+	        if (walletPasscodeSettingsCache == null) {
+	            HashMap<String, String> keyMap = new HashMap<>();
+	            keyMap.put("wallet.passcode.retryBlockedUntil", "retryBlockedUntil");
+	            keyMap.put("wallet.passcode.maxFailedAttemptsAllowedPerCycle", "maxFailedAttempts");
+	            keyMap.put("wallet.passcode.maxLockCyclesAllowed", "maxLockCycles");
+
+	            walletPasscodeSettingsCache = InjiWebUtil.getActuatorValues(keyMap);
+	        }
+	        return walletPasscodeSettingsCache;
+	    }
+	}
