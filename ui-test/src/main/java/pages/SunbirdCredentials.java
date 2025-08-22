@@ -37,15 +37,9 @@ public class SunbirdCredentials extends BasePage {
 		pdfNameInsurance = getElementAttribute(
 	            driver,
 	            By.xpath("//*[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),"data-testid").replaceFirst("ItemBox-Outer-Container-0-", "") + ".pdf";
-	    System.out.println("[DEBUG] Captured PDF name: " + pdfNameInsurance);
+		logger.info("Pdf Name for Insurance: " + pdfNameInsurance);
 
 		clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
-	}
-
-	public String PdfNameForInsurance() {
-
-		return getElementAttribute(driver, By.xpath("//*[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),
-				"data-testid").replaceFirst("ItemBox-Outer-Container-0-", "")+".pdf";
 	}
 
 	public void clickOnDownloadSunbird() {

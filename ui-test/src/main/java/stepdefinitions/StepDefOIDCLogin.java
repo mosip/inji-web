@@ -33,6 +33,8 @@ import utils.GlobelConstants;
 import utils.HttpUtils;
 import utils.ScreenshotUtil;
 import utils.BaseTest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StepDefOIDCLogin {
 
@@ -48,6 +50,7 @@ public class StepDefOIDCLogin {
 	private String sessionCookieValue;
 	String baseUrl = BaseTest.url;
 	String normalizedBaseUrl = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
+	private static final Logger logger = LoggerFactory.getLogger(StepDefOIDCLogin.class);
 
 	public static void updateConfigProperty(String key, String value) throws IOException {
 		File file = new File("src/test/resources/config.properties");
@@ -887,8 +890,7 @@ public class StepDefOIDCLogin {
 
 	@Then("user enters the wrong passcode {string} for max failed attempts")
 	public void user_enters_wrong_passcode_for_max_failed_attempts(String wrongPasscode) throws Exception {
-		// Fetch from actuator
-		System.out.println(BaseTest.getWalletPasscodeSettings().get("maxFailedAttempts"));
+		logger.info("Maximum no.of attempts:"+ BaseTest.getWalletPasscodeSettings().get("maxFailedAttempts"));
 		
 		int maxNoOfTimes = BaseTest.getWalletPasscodeSettings().get("maxFailedAttempts");
 
@@ -914,7 +916,8 @@ public class StepDefOIDCLogin {
 
 	@Then("user wait for temporary lock to expire")
 	public void user_wait_for_tempory_lock_to_expire() throws InterruptedException, Exception {
-		System.out.println(BaseTest.getWalletPasscodeSettings().get("retryBlockedUntil")*60);
+		logger.info("Temp Lock time:"+ BaseTest.getWalletPasscodeSettings().get("retryBlockedUntil")*60);
+
 		BasePage.waitForSeconds(driver, (BaseTest.getWalletPasscodeSettings().get("retryBlockedUntil") * 60) - 10);
 		driver.navigate().refresh();
 		assertTrue(!loginpage.isSubmitButtonEnabled(), "Before temporaty lock Expire Submit button is enabled");

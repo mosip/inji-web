@@ -68,16 +68,6 @@ public class MosipCredentials extends BasePage {
 	}
 
 	
-	public String PdfNameForMosip() {
-	    String pdfgname= getElementAttribute(
-	        driver,
-	        By.xpath("//*[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),
-	        "data-testid"
-	    ).replaceFirst("ItemBox-Outer-Container-0-", "") + ".pdf";
-	    return pdfgname;
-	}
-	
-
 	public void clickOnLoginWithOtp() {
 		try {
 			Thread.sleep(2000);

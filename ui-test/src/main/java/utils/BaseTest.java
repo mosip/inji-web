@@ -41,6 +41,8 @@ import io.mosip.testrig.apirig.utils.ConfigManager;
 import io.mosip.testrig.apirig.utils.S3Adapter;
 import api.InjiWebConfigManager;
 import api.InjiWebUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class BaseTest {
@@ -60,6 +62,7 @@ public class BaseTest {
 	String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
 	public final String URL = "https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
 	private Scenario scenario;
+	private static final Logger logger = LoggerFactory.getLogger(BaseTest.class);
 
 	public static final String url = System.getenv("TEST_URL") != null && !System.getenv("TEST_URL").isEmpty()
 			? System.getenv("TEST_URL")
@@ -269,7 +272,7 @@ public class BaseTest {
 				}
 
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error("Failed to load config.properties from {}", propertyFilePath, e);
 			}
 		}
 
