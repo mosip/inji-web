@@ -30,7 +30,7 @@ This is not for production use.
 
    1. **Ensure Redis Service is Available and Connected:**
       Using Docker Compose: Include the Redis service directly in your docker-compose.yml. Docker Compose will automatically place both services on a shared network.
-      Using Docker CLI: If you are running the services separately, use the following commands to create and connect them to a shared network.
+      Using Docker CLI: If you are running both the services(Redis and Mimoto) separately, use the following commands to create and connect them to a shared network.
       ```bash   
       docker pull redis:alpine # Pull the Redis image if not already available
       docker network create redis-net # Create a new network for the service and replace redis-net with your preferred network name

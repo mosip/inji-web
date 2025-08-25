@@ -16,7 +16,7 @@ fileignoreconfig:
 - filename: docker-compose/docker-compose.yml
   checksum: e8c86116304137624fa85bbaaf25035afdfb33bfe3a7b85b788c1ec2e9be8166
 - filename: docker-compose/README.md
-  checksum: dfcb65e64b5c5bc712cb574eb4e49915a019c26cf3bd26df0765f9d1bd5f9515
+  checksum: 5e864755e9f2643e355b36ac82909a142d80b46265d0045792eccd30d1be72a1
 - filename: inji-web/src/components/DataShare/DataShareContent.tsx
   checksum: 1af797cfef624b32692d625304f9a1403c1719578a0c48b4583ade529a60376d
 - filename: inji-web/src/utils/misc.ts
