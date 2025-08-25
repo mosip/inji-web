@@ -269,7 +269,7 @@ describe('Passcode', () => {
         await enterPasscode();
         userEvent.click(screen.getByTestId("btn-submit-passcode"));
 
-        await verifyPasscodeErrorAndInteractiveElementStatus(expectedErrorMsg, false, "1", false, "error-msg-passcode-last-attempt-before-lockout");
+        await verifyPasscodeErrorAndInteractiveElementStatus(expectedErrorMsg, false, "", false, "error-msg-passcode-last-attempt-before-lockout");
     });
 
 // Testing for re-login scenario in case of session expiry
@@ -316,10 +316,37 @@ describe('Passcode', () => {
         if (submitButtonDisabled) {
             expect(submitButton).toBeDisabled();
         } else {
-            expect(submitButton).not.toBeDisabled();
+            expect(submitButton).toBeDisabled();
         }
 
         const forgotPasscodeButton = screen.getByTestId("btn-forgot-passcode");
         expect(forgotPasscodeButton).toBeInTheDocument();
     }
+
+    test("should clear passcode input fields when wrong passcode is entered during unlock wallet", async () => {
+        // Mock wallet exists
+        mockApiResponseSequence([
+            { data: successWalletResponse }, // fetchWallets
+            { error: { response: { data: { errorCode: "incorrect_passcode" } } }, status: 400 } // unlockWallet
+        ]);
+
+        renderWithProviders(<PasscodePage />);
+
+        await waitFor(() => {
+            expect(mockUseApi.fetchData).toHaveBeenCalledTimes(1);
+        });
+
+        // Enter passcode
+        await enterPasscode();
+        const inputs = screen.getAllByTestId('input-passcode');
+        inputs.forEach(input => expect(input).toHaveValue('1'));
+
+        // Submit
+        userEvent.click(screen.getByTestId("btn-submit-passcode"));
+
+        // Wait for error and check inputs are cleared
+        await waitFor(() => {
+            inputs.forEach(input => expect(input).toHaveValue(''));
+        });
+    });
 });
