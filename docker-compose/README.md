@@ -52,7 +52,7 @@ This is not for production use.
    
 3. Add identity providers as issuers in the `mimoto-issuers-config.json` file of [docker-compose config folder](config/mimoto-issuers-config.json). For each provider, create a corresponding object with its issuer-specific configuration. Refer to the [Issuers Configuration](#mimoto-issuers-configuration) section for details on how to structure this file and understand each field's purpose and what values need to be updated.
 
-4. 4.Add or update the verifiers clientId, redirect and response Uris in `mimoto-trusted-verifiers.json` file of [docker-compose config folder](config/mimoto-trusted-verifiers.json) for Verifiable credential Online Sharing.
+4. Add or update the verifiers clientId, redirect and response Uris in `mimoto-trusted-verifiers.json` file of [docker-compose config folder](config/mimoto-trusted-verifiers.json) for Verifiable credential Online Sharing.
 
 5. In the root directory, create a certs folder and generate an OIDC client. Add the onboard client’s key to the oidckeystore.p12 file and place this file inside the certs folder.
    Refer to the [official documentation](https://docs.inji.io/inji-wallet/inji-mobile/technical-overview/customization-overview/credential_providers) for guidance on how to create the **oidckeystore.p12** file and add the OIDC client key to it.
