@@ -18,19 +18,43 @@ This is not for production use.
 3. "docker-compose.yml" file with mimoto setup.
 
 ## How to run this setup?
-1. Refer to the [How to create Google Client Credentials](#how-to-create-google-client-credentials) section to create
+1. **Configuring Cache Providers:**
+
+   By default, **Mimoto** uses the **Caffeine** cache provider when running through Docker with the provided [docker-compose.yml](docker-compose.yml).  
+   You only need to install and configure **Redis** (or any other cache provider) if you want to store **application data** or **HTTP sessions** outside of Caffeine.  
+   Make sure the corresponding service is either included in your `docker-compose.yml` file or the required image is pulled on your machine and running.
+
+   **Example: Using Redis as Cache Provider**
+
+   1. **Update the below properties** in [mimoto-default.properties](config/mimoto-default.properties):
+      ```properties
+      spring.session.store-type=redis   # Store HTTP sessions in Redis
+      spring.cache.type=redis           # Store application data in Redis
+      ```
+
+   2. **Add the required Redis configurations** in [mimoto-default.properties](config/mimoto-default.properties),  
+      similar to those in the [application-default.properties](https://github.com/mosip/mimoto/blob/develop/src/main/resources/application-default.properties) file of the Mimoto repository.  
+      Look for properties starting with:
+      - `spring.data.redis.*`
+      - `spring.session.redis.*`
+
+   3. **Ensure Redis service is available when running in Docker**:
+      - Include the Redis service in your `docker-compose.yml`, **or**
+      - Pull and run a Redis image separately on your machine.
+   
+2. Refer to the [How to create Google Client Credentials](#how-to-create-google-client-credentials) section to create
    Google client credentials and replace the below placeholders of Mimoto service in the `docker-compose.yml` file with the generated credentials:
    ```yaml
        environment:
          - GOOGLE_OAUTH_CLIENT_ID=<your-client-id>
          - GOOGLE_OAUTH_CLIENT_SECRET=<your-client-secret>
    ```
+   
+3. Add identity providers as issuers in the `mimoto-issuers-config.json` file of [docker-compose config folder](config/mimoto-issuers-config.json). For each provider, create a corresponding object with its issuer-specific configuration. Refer to the [Issuers Configuration](#mimoto-issuers-configuration) section for details on how to structure this file and understand each field's purpose and what values need to be updated.
 
-2. Add identity providers as issuers in the `mimoto-issuers-config.json` file of [docker-compose config folder](config/mimoto-issuers-config.json). For each provider, create a corresponding object with its issuer-specific configuration. Refer to the [Issuers Configuration](#mimoto-issuers-configuration) section for details on how to structure this file and understand each field's purpose and what values need to be updated.
+4. 4.Add or update the verifiers clientId, redirect and response Uris in `mimoto-trusted-verifiers.json` file of [docker-compose config folder](config/mimoto-trusted-verifiers.json) for Verifiable credential Online Sharing.
 
-3. Add or update the verifiers clientId, redirect and response Uris in `mimoto-trusted-verifiers.json` file of [docker-compose config folder](config/mimoto-trusted-verifiers.json) for Verifiable credential Online Sharing.
-
-4. In the root directory, create a certs folder and generate an OIDC client. Add the onboard client’s key to the oidckeystore.p12 file and place this file inside the certs folder.
+5. In the root directory, create a certs folder and generate an OIDC client. Add the onboard client’s key to the oidckeystore.p12 file and place this file inside the certs folder.
    Refer to the [official documentation](https://docs.inji.io/inji-wallet/inji-mobile/technical-overview/customization-overview/credential_providers) for guidance on how to create the **oidckeystore.p12** file and add the OIDC client key to it.
    * The **oidckeystore.p12** file stores keys and certificates, each identified by an alias (e.g., mpartner-default-mimoto-insurance-oidc). Mimoto uses this alias to find the correct entry and access the corresponding private key during the authentication flow.
    * Update the **client_alias** field in the [mimoto-issuers-config.json](config/mimoto-issuers-config.json) file with this alias so that Mimoto can load the correct key from the keystore.
@@ -38,9 +62,9 @@ This is not for production use.
    * Set the `oidc_p12_password` environment variable in the Mimoto service configuration inside docker-compose.yml to match the password used for the **oidckeystore.p12** file.
    * Mimoto also uses this same keystore file (oidckeystore.p12) to store keys generated at service startup, which are essential for performing encryption and decryption operations through the KeyManager service.
 
-5. To configure any Mobile Wallet specific configurations refer to the [Inji Mobile Wallet Configuration](#inji-mobile-wallet-configuration) section.
+6. To configure any Mobile Wallet specific configurations refer to the [Inji Mobile Wallet Configuration](#inji-mobile-wallet-configuration) section.
 
-6. Choose your setup for starting the services:
+7. Choose your setup for starting the services:
    - **Starting all services via Docker Compose (including Inji Web):**
      Run the following command
    ```bash
@@ -51,28 +75,28 @@ This is not for production use.
    - **Running Inji Web in IDE and other services like `mimoto` via Docker Compose:**
      - Use the [Mimoto `docker-compose.yml`](https://github.com/mosip/mimoto/blob/develop/docker-compose/docker-compose.yml) file to start Mimoto and the required services, and refer to its [README](https://github.com/mosip/mimoto/blob/develop/docker-compose/README.md) for setup instructions.
 
-7. To stop all the services, navigate to docker-compose folder and run the following command
+8. To stop all the services, navigate to docker-compose folder and run the following command
    ```bash
    docker-compose down
    ```
 
-8. To stop a specific service (e.g., inji-web) and remove its container and image, run the following commands
+9. To stop a specific service (e.g., inji-web) and remove its container and image, run the following commands
    ```bash
    docker-compose stop <service_name> # To stop a specific service container
    docker-compose rm <service_name> # To remove a specific service container
    docker rmi <image_name:tag> # To remove a specific service image
    ```
 
-9. **Removing the Docker Volume:**
-   - To remove the persistent data for a specific service within an application, you can delete its individual Docker volume. This is necessary in situations where you need to start fresh or when data has become corrupted.
-   - For example, if you update the oidckeystore.p12 file, the mimoto service might fail to start. This happens because the new .p12 file may not contain the keys that are stored in the database's key alias table. Since these keys are used in the encryption and decryption flow, their absence prevents the service from functioning correctly. To fix this, you must remove the postgres-data volume to clear the old, encrypted data, which allows the service to start correctly with a new dataset.
+10. **Removing the Docker Volume:**
+    - To remove the persistent data for a specific service within an application, you can delete its individual Docker volume. This is necessary in situations where you need to start fresh or when data has become corrupted.
+    - For example, if you update the oidckeystore.p12 file, the mimoto service might fail to start. This happens because the new .p12 file may not contain the keys that are stored in the database's key alias table. Since these keys are used in the encryption and decryption flow, their absence prevents the service from functioning correctly. To fix this, you must remove the postgres-data volume to clear the old, encrypted data, which allows the service to start correctly with a new dataset.
 
-   - Use the following command to remove the volume:
-   ```Bash
-   docker volume rm <volume_name> # E.g., docker volume rm docker-compose_postgres-data
-   ```
+    - Use the following command to remove the volume:
+    ```Bash
+    docker volume rm <volume_name> # E.g., docker volume rm docker-compose_postgres-data
+    ```
 
-10. Access Apis as
+11. Access Apis as
    * http://localhost:8099/v1/mimoto/allProperties
    * http://localhost:8099/v1/mimoto/issuers
    * http://localhost:8099/v1/mimoto/issuers/StayProtected
