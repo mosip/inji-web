@@ -28,6 +28,7 @@ jest.mock('react-i18next', () => ({
                 "error.walletStatus.temporarily_locked": "You’ve reached the maximum number of attempts. Your wallet is now temporarily locked for sometime",
                 "error.walletStatus.permanently_locked": "Your wallet has been permanently locked due to multiple failed attempts. Please click on forgot password to reset your wallet to continue",
                 "error.walletStatus.last_attempt_before_lockout": "Incorrect passcode. Last attempt remaining before your wallet is permanently locked",
+                "error.incorrectPasscodeError": "The passcode doesn't seem right. Please try again, or tap 'Forgot Passcode' if you need help resetting it",
             };
             return translations[key] || key;
         }
@@ -269,7 +270,7 @@ describe('Passcode', () => {
         await enterPasscode();
         userEvent.click(screen.getByTestId("btn-submit-passcode"));
 
-        await verifyPasscodeErrorAndInteractiveElementStatus(expectedErrorMsg, false, "", false, "error-msg-passcode-last-attempt-before-lockout");
+        await verifyPasscodeErrorAndInteractiveElementStatus(expectedErrorMsg, false, "", true, "error-msg-passcode-last-attempt-before-lockout");
     });
 
 // Testing for re-login scenario in case of session expiry
@@ -316,7 +317,7 @@ describe('Passcode', () => {
         if (submitButtonDisabled) {
             expect(submitButton).toBeDisabled();
         } else {
-            expect(submitButton).toBeDisabled();
+            expect(submitButton).not.toBeDisabled();
         }
 
         const forgotPasscodeButton = screen.getByTestId("btn-forgot-passcode");
@@ -324,6 +325,7 @@ describe('Passcode', () => {
     }
 
     test("should clear passcode input fields when wrong passcode is entered during unlock wallet", async () => {
+        const expectedErrorMsg = "The passcode doesn't seem right. Please try again, or tap 'Forgot Passcode' if you need help resetting it";
         // Mock wallet exists
         mockApiResponseSequence([
             { data: successWalletResponse }, // fetchWallets
@@ -348,5 +350,7 @@ describe('Passcode', () => {
         await waitFor(() => {
             inputs.forEach(input => expect(input).toHaveValue(''));
         });
+
+        await verifyPasscodeErrorAndInteractiveElementStatus(expectedErrorMsg, false, "", true, "error-msg-passcode");
     });
 });
