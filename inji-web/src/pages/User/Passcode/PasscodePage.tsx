@@ -147,6 +147,9 @@ export const PasscodePage: React.FC = () => {
                 if (!isErrorHandled) {
                     const errorCode = ((response.error as ApiError)?.response?.data as ErrorType).errorCode;
                     handleWalletStatusError(errorCode, "error.incorrectPasscodeError", response.status);
+
+                    // Reset passcode field when incorrect passcode is entered
+                    setPasscode(initialPasscodeArray);
                 }
             } else {
                 saveWalletId(walletId)
