@@ -20,8 +20,12 @@ This is not for production use.
 ## How to run this setup?
 1. **Configuring Cache Providers:**
 
-   By default, **Mimoto** uses the **Caffeine** cache provider when running through Docker with the provided [docker-compose.yml](docker-compose.yml).  
-   You only need to install and configure **Redis** (or any other cache provider) if you want to store **application data** or **HTTP sessions** outside of Caffeine.  
+   By default, Mimoto uses Caffeine, a fast in-memory cache. This works well if you're running just one instance of Mimoto.
+
+   But if you're running multiple Mimoto instances (like in Docker Swarm, Kubernetes, or a load-balanced setup), each instance has its own separate cache with Caffeine — they don’t talk to each other.
+
+   In that case, switching to a shared cache like Redis is important. Redis lets all Mimoto instances share the same cached data, which helps keep things consistent and improves performance in distributed setups.
+
    For detailed setup instructions (including running Redis with Docker CLI and updating configuration), see the [Cache Providers Setup Guide](#cache-providers-setup-guide) section.
    
 2. Refer to the [How to create Google Client Credentials](#how-to-create-google-client-credentials) section to create
@@ -222,7 +226,7 @@ This can be done by adding them to a shared network in your `docker-compose.yml`
       docker restart mimoto-service # Restart Mimoto service to apply network changes
       ```
 
-   - **Running Redis with Docker and starting Mimoto through the IDE bys using Mimoto repository:**
+   - **Running Redis with Docker and starting Mimoto through the IDE (using the Mimoto repository):**
       - Use the following Docker command to start the Redis service and expose it on the default port 6379. Make sure this port is accessible from your local machine.
      ```bash
      docker run -d --name redis-server -p 6379:6379 redis:alpine
