@@ -93,19 +93,16 @@ public class BaseTest {
 	@Before
 	public void beforeAll(Scenario scenario) throws MalformedURLException {
 	       clearSkip();
-
-	        // Example threshold check for skipping scenario
 	        if (scenario.getSourceTagNames().contains("@skipBasedOnThreshold")) {
 	            try {
 	                int retryBlockedUntil = BaseTest.getWalletPasscodeSettings().get("retryBlockedUntil");
 	                String envThreshold = System.getenv("THRESH_TEMP_LOCK");
 	                int THRESH_TEMP_LOCK = (envThreshold != null && !envThreshold.isEmpty())
 	                        ? Integer.parseInt(envThreshold)
-	                        : 1; // default value
+	                        : 1; 
 	                if (retryBlockedUntil > THRESH_TEMP_LOCK) {
 	                    markScenarioSkipped(
 	                            "Threshold not met: retryBlockedUntil(" + retryBlockedUntil + ") < THRESH_TEMP_LOCK(" + THRESH_TEMP_LOCK + ")");
-	                    //throw new io.cucumber.java.PendingException("Scenario skipped due to threshold");
 	                    throw new org.testng.SkipException(
 	                            "Scenario skipped due to threshold: retryBlockedUntil(" + retryBlockedUntil + ") < THRESH_TEMP_LOCK(" + THRESH_TEMP_LOCK + ")");
 	                }
