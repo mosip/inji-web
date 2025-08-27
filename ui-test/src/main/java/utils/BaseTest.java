@@ -22,6 +22,9 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.SkipException;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -29,6 +32,8 @@ import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import com.browserstack.local.Local;
 
+import api.InjiWebConfigManager;
+import api.InjiWebUtil;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.AfterStep;
@@ -39,11 +44,6 @@ import io.cucumber.plugin.event.PickleStepTestStep;
 import io.cucumber.plugin.event.TestStep;
 import io.mosip.testrig.apirig.utils.ConfigManager;
 import io.mosip.testrig.apirig.utils.S3Adapter;
-import api.InjiWebConfigManager;
-import api.InjiWebUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import static org.junit.Assume.assumeTrue;
 
 
 public class BaseTest {
@@ -92,24 +92,7 @@ public class BaseTest {
 
 	@Before
 	public void beforeAll(Scenario scenario) throws MalformedURLException {
-	       clearSkip();
-	        if (scenario.getSourceTagNames().contains("@skipBasedOnThreshold")) {
-	            try {
-	                int retryBlockedUntil = BaseTest.getWalletPasscodeSettings().get("retryBlockedUntil");
-	                String envThreshold = System.getenv("THRESH_TEMP_LOCK");
-	                int THRESH_TEMP_LOCK = (envThreshold != null && !envThreshold.isEmpty())
-	                        ? Integer.parseInt(envThreshold)
-	                        : 1; 
-	                if (retryBlockedUntil > THRESH_TEMP_LOCK) {
-	                    markScenarioSkipped(
-	                            "Threshold not met: retryBlockedUntil(" + retryBlockedUntil + ") < THRESH_TEMP_LOCK(" + THRESH_TEMP_LOCK + ")");
-	                    throw new org.testng.SkipException(
-	                            "Scenario skipped due to threshold: retryBlockedUntil(" + retryBlockedUntil + ") < THRESH_TEMP_LOCK(" + THRESH_TEMP_LOCK + ")");
-	                }
-	            } catch (Exception e) {
-	                logger.error("Error fetching walletPasscodeSettings", e);
-	            }
-	     }
+	     clearSkip();
 		Local bsLocal = new Local();
 		HashMap<String, String> bsLocalArgs = new HashMap<>();
 		bsLocalArgs.put("key", accessKey);
@@ -136,6 +119,27 @@ public class BaseTest {
 		driver.manage().window().maximize();
 		driver.get(url);
 	}
+	
+	@Before("@skipBasedOnThreshold")
+	public void skipScenarioBasedOnThreshold(Scenario scenario) {
+	    try {
+	        int retryBlockedUntil = getWalletPasscodeSettings().get("retryBlockedUntil");
+	        String envThreshold = System.getenv("THRESH_TEMP_LOCK");
+	        int THRESH_TEMP_LOCK = (envThreshold != null && !envThreshold.isEmpty())
+	                ? Integer.parseInt(envThreshold)
+	                : 1;
+
+	        if (retryBlockedUntil > THRESH_TEMP_LOCK) {
+	            String reason = "Threshold not met: retryBlockedUntil(" + retryBlockedUntil +
+	                    ") < THRESH_TEMP_LOCK(" + THRESH_TEMP_LOCK + ")";
+	            markScenarioSkipped(reason);
+	            throw new SkipException("Scenario skipped due to threshold: " + reason);
+	        }
+	    } catch (Exception e) {
+	        logger.error("Error checking threshold for skipping scenario", e);
+	    }
+	}
+
 
 	@BeforeStep
 	public void beforeStep(Scenario scenario) {
@@ -147,6 +151,8 @@ public class BaseTest {
 		ExtentCucumberAdapter.getCurrentStep().log(Status.INFO, "➡️ Step Started: " + stepName);
 	}
 
+	
+	
 	@AfterStep
 	public void afterStep(Scenario scenario) {
 		String stepName = getStepName(scenario);
