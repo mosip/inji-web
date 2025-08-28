@@ -1,22 +1,31 @@
 package api;
 
-import com.github.javafaker.Faker;
-import io.mosip.testrig.apirig.dto.TestCaseDTO;
-import io.mosip.testrig.apirig.utils.*;
-import io.restassured.response.Response;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.testng.SkipException;
 
-import javax.ws.rs.core.MediaType;
+import com.github.javafaker.Faker;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import io.mosip.testrig.apirig.dto.TestCaseDTO;
+import io.mosip.testrig.apirig.utils.AdminTestUtil;
+import io.mosip.testrig.apirig.utils.ConfigManager;
+import io.mosip.testrig.apirig.utils.GlobalConstants;
+import io.mosip.testrig.apirig.utils.RestClient;
+import io.mosip.testrig.apirig.utils.SkipTestCaseHandler;
+import io.restassured.response.Response;
 
 public class InjiWebUtil extends AdminTestUtil {
 
@@ -151,6 +160,87 @@ public class InjiWebUtil extends AdminTestUtil {
 		}
 
 		return testCaseDTO;
+	}
+	
+	public static String getCredentialConfigKey(String wellKnownUrl) {
+	    try {
+	        // Use RestClient from your existing utility
+	        Response response = RestClient.getRequest(wellKnownUrl, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
+	        JSONObject json = new JSONObject(response.getBody().asString());
+	        return json.getJSONObject("credential_configurations_supported").keys().next();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "default";
+	    }
+	}
+	
+
+
+	
+	public static HashMap<String, Integer> getActuatorValues(HashMap<String, String> keyMapping) throws Exception {
+	    HashMap<String, Integer> result = new HashMap<>();
+	    String baseUrl = System.getenv("apiInternalEndPoint") != null && !System.getenv("apiInternalEndPoint").isEmpty()
+	            ? System.getenv("apiInternalEndPoint")
+	            : InjiWebConfigManager.getproperty("apiInternalEndPoint");
+
+	    String actuatorPath = System.getenv("actuatorMimotoEndpoint") != null && !System.getenv("actuatorMimotoEndpoint").isEmpty()
+	            ? System.getenv("actuatorMimotoEndpoint")
+	            : InjiWebConfigManager.getproperty("actuatorMimotoEndpoint");
+
+	    String actuatorUrl;
+	    if (baseUrl.endsWith("/") && actuatorPath.startsWith("/")) {
+	        actuatorUrl = baseUrl.substring(0, baseUrl.length() - 1) + actuatorPath;
+	    } else if (!baseUrl.endsWith("/") && !actuatorPath.startsWith("/")) {
+	        actuatorUrl = baseUrl + "/" + actuatorPath;
+	    } else {
+	        actuatorUrl = baseUrl + actuatorPath;
+	    }
+	    Response response = RestClient.getRequest(
+	            actuatorUrl,
+	            MediaType.APPLICATION_JSON,
+	            MediaType.APPLICATION_JSON
+	    );
+	    if (response.getStatusCode() != 200) {
+	        throw new RuntimeException("Failed to fetch actuator values. HTTP error: " + response.getStatusCode());
+	    }
+
+	    JSONObject root = new JSONObject(response.getBody().asString());
+
+	    if (!root.has("propertySources")) {
+	        throw new RuntimeException("[ERROR] No propertySources found in actuator response!");
+	    }
+
+	    for (Object srcObj : root.getJSONArray("propertySources")) {
+	        if (!(srcObj instanceof JSONObject)) continue;
+
+	        JSONObject src = (JSONObject) srcObj;
+	        JSONObject props = src.optJSONObject("properties");
+	        if (props == null) continue;
+
+	        for (String actuatorKey : keyMapping.keySet()) {
+	            String resultKey = keyMapping.get(actuatorKey);
+
+	            if (!result.containsKey(resultKey) && props.has(actuatorKey)) {
+	                String rawValue = props.getJSONObject(actuatorKey).optString("value", "0");
+
+	                try {
+	                    int intValue = Integer.parseInt(rawValue.trim());
+	                    result.put(resultKey, intValue);
+	                } catch (NumberFormatException e) {
+	                    System.err.println("[WARN] Failed to parse value for key " + actuatorKey + " (" + rawValue + ")");
+	                }
+	            }
+	        }
+	        if (result.size() == keyMapping.size()) {
+				logger.info("All keys mapped successfully");
+	            break;
+	        }
+	    }
+	    if (result.isEmpty()) {
+			logger.info("No actuator values matched the provided key mapping.\"");
+	    }
+
+	    return result;
 	}
 
 }
