@@ -30,9 +30,15 @@ public class MosipCredentials extends BasePage {
 	}
 
 	public void enterVid(String string) {
-		enterText(driver, By.xpath("//input[@id='Otp_mosip-vid']"), string);
+	    if (isElementIsVisible(driver, By.xpath("//input[@id='Otp_mosip-vid']"))) {
+	        enterText(driver, By.xpath("//input[@id='Otp_mosip-vid']"), string);
+	    } else {
+	        if (isElementIsVisible(driver, By.xpath("//input[@id='Otp_vid']"))) {
+	            enterText(driver, By.xpath("//input[@id='Otp_vid']"), string);
+	        }
+	    }
 	}
-
+	
 	public void clickOnGetOtpButton() {
 		clickOnElement(driver, By.xpath("//button[@id='get_otp']"));
 	}
@@ -64,21 +70,24 @@ public class MosipCredentials extends BasePage {
 
 
 	public Boolean isLoginPageLableDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//label[@for='Mosip vid']"));
-	}
-
+		    return isElementIsVisible(driver, By.xpath("//label[@for='Mosip vid']"))
+		        || isElementIsVisible(driver, By.xpath("//label[@for='Otp_vid']"));
+		}	
 	
 	public void clickOnLoginWithOtp() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (isElementIsVisible(driver, By.xpath("//*[@id='login_with_otp']"))) {
-			clickOnElement(driver, By.xpath("//*[@id='login_with_otp']"));
-		}
+	    try {
+	        Thread.sleep(2000);
+	    } catch (InterruptedException e) {
+	        e.printStackTrace();
+	    }
+
+	    if (isElementIsVisible(driver, By.xpath("//*[@id='login_with_otp']"))) {
+	        clickOnElement(driver, By.xpath("//*[@id='login_with_otp']"));
+	    } else if (isElementIsVisible(driver, By.xpath("//*[@id='get_otp']"))) {
+	        clickOnElement(driver, By.xpath("//*[@id='get_otp']"));
+	    }
 	}
+
 
 	public Boolean isVidInputBoxHeaderDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//label[text() = 'UIN/VID']"));
