@@ -871,7 +871,7 @@ public class StepDefOIDCLogin {
 			loginpage.enterPasscode(wrongPasscode);
 			loginpage.clickonSubmitButton();
 			assertTrue(loginpage.isMismatchErroDisplayed(), "After attempt " + i + ": Error Message is not displayed");
-			assertTrue(loginpage.isSubmitButtonEnabled(), "After attempt " + i + ": Submit button disabled");
+			assertTrue(!loginpage.isSubmitButtonEnabled(), "After attempt " + i + ": Submit button disabled");
 		}
 	}
 	
@@ -884,7 +884,7 @@ public class StepDefOIDCLogin {
 		for (int i = 1; i <= noOfTimes; i++) {
 			loginpage.enterPasscode(wrongPasscode);
 			loginpage.clickonSubmitButton();
-			assertTrue(loginpage.isSubmitButtonEnabled(), "After attempt " + i + ": Submit button disabled");
+			assertTrue(!loginpage.isSubmitButtonEnabled(), "After attempt " + i + ": Submit button disabled");
 		}
 	}
 
@@ -901,7 +901,7 @@ public class StepDefOIDCLogin {
 			if (i < maxNoOfTimes) {
 				assertTrue(loginpage.isMismatchErroDisplayed(),
 						"After attempt " + i + ": Mismatch error not displayed");
-				assertTrue(loginpage.isSubmitButtonEnabled(),
+				assertTrue(!loginpage.isSubmitButtonEnabled(),
 						"After attempt " + i + ": Submit button should be enabled");
 			} else {
 				assertTrue(loginpage.isTempLockErroDisplayed(),
