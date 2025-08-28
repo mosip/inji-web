@@ -85,7 +85,8 @@ public class HomePage extends BasePage {
 	}
 
 	public void clickOnDownloadMosipCredentials() {
-		clickOnElement(driver, By.xpath("(//h3[@data-testid='ItemBox-Text'])[1]"));
+		clickOnElement(driver,
+				By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
 
 	public Boolean isListOfCredentialsTypeDisplayed() {
@@ -106,9 +107,8 @@ public class HomePage extends BasePage {
 	}
 
 	public Boolean isMosipNationalIdDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//h3[@data-testid='ItemBox-Text']"));
+		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
-
 
 	public void enterIssuersInSearchBox(String string) {
 		enterText(driver, By.xpath("//input[@type='text']"), string);
@@ -116,7 +116,6 @@ public class HomePage extends BasePage {
 			clickOnElement(driver, By.xpath("//p[@data-testid='IntroBox-SubText']"));
 		}
 	}
-
 
 	public Boolean isGoHomeButtonDisplayed() {
 
@@ -130,7 +129,6 @@ public class HomePage extends BasePage {
 	public Boolean isLanguageDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//button[@class='inline-flex items-center font-semibold']"));
 	}
-
 
 	public void clickOnLanguageButton() {
 
@@ -160,11 +158,12 @@ public class HomePage extends BasePage {
 		clickOnElement(driver, By.xpath("(//button[@type='button'])[3]"));
 
 	}
+
 	public Boolean isNoIssuerFoundMessageDisplayed() {
 
 		return isElementIsVisible(driver, By.xpath("//p[@data-testid='EmptyList-Text']"));
 	}
-	
+
 	public void clickOnArabicLanguage() {
 		clickOnElement(driver, By.xpath("//button[contains(text(), 'عربي')]"));
 	}
@@ -392,6 +391,7 @@ public class HomePage extends BasePage {
 	public boolean isYourDocumentsDownloadedImageDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem2-Image']"));
 	}
+
 	public boolean isEasySharingImageDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem3-Image']"));
 	}
@@ -403,9 +403,9 @@ public class HomePage extends BasePage {
 	public boolean isWiderAccessAndCompatibilityImageDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem5-Image']"));
 	}
-	
+
 	public void waitForseconds() {
-		waitForSeconds(driver,15);
+		waitForSeconds(driver, 15);
 	}
 
 }

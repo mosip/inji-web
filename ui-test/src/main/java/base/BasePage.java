@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +27,12 @@ public class BasePage {
 				.until(ExpectedConditions.presenceOfElementLocated(locator));
 		element.click();
 	}
-	
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public Logger getLogger() {
-        return logger;
-    }
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
+
+	public Logger getLogger() {
+		return logger;
+	}
 
 	public static boolean isElementIsVisible(WebDriver driver, By by) {
 		try {
@@ -138,10 +139,24 @@ public class BasePage {
 			throw new AssertionError("Timed out waiting for URL to contain: " + partialUrl, e);
 		}
 	}
-	
-	public void waitForSeconds(WebDriver driver,int seconds) {
-	    new WebDriverWait(driver, Duration.ofSeconds(seconds))
-	        .until(webDriver -> true); 
+
+	public static void waitForSeconds(WebDriver driver, int seconds) {
+		Instant startTime = Instant.now();
+
+		new WebDriverWait(driver, Duration.ofSeconds(seconds + 1)) // a buffer
+				.until(new java.util.function.Function<WebDriver, Boolean>() {
+					@Override
+					public Boolean apply(WebDriver driver) {
+						long elapsed = Duration.between(startTime, Instant.now()).getSeconds();
+						return elapsed >= seconds;
+					}
+				});
 	}
-	
+
+	public String getElementAttribute(WebDriver driver, By locator, String data) {
+		WebElement element = new WebDriverWait(driver, Duration.ofSeconds(30))
+				.until(ExpectedConditions.presenceOfElementLocated(locator));
+		return element.getAttribute(data);
+	}
+
 }
