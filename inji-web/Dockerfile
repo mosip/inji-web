@@ -70,7 +70,8 @@ RUN echo "DEFAULT_THEME=${DEFAULT_THEME}" >> ${work_dir}/env.env \
     && echo "DEFAULT_LANG=${DEFAULT_LANG}" >> ${work_dir}/env.env \
     && echo "MIMOTO_URL=${MIMOTO_URL}" >> ${work_dir}/env.env \
     && echo "DEFAULT_FAVICON=${DEFAULT_FAVICON}" >> ${work_dir}/env.env \
-    && echo "DEFAULT_TITLE=${DEFAULT_TITLE}" >> ${work_dir}/env.env
+    && echo "DEFAULT_TITLE=${DEFAULT_TITLE}" >> ${work_dir}/env.env \
+    && echo "IGNORED_ISSUER_IDS=${IGNORED_ISSUER_IDS}" >> ${work_dir}/env.env
 
 # Copy and set permissions for the startup script
 COPY configure_start.sh /home/${container_user}/configure_start.sh

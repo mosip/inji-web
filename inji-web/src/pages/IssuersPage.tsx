@@ -30,9 +30,17 @@ export const IssuersPage: React.FC<IssuerPageProps> = ({className}) => {
                 toast.error(t("errorContent"));
                 return
             }
+
+            const ignoredIssuersFromRendering = window._env_.IGNORED_ISSUER_IDS.split(",");
             const issuers = response?.response?.issuers.filter(
-                (issuer: IssuerObject) => issuer.protocol !== "OTP"
+                (issuer: IssuerObject) =>
+                    // Excludes issuers with protocol 'OTP' and those whose issuer_id is in the ignoredIssuersFromRendering list (or contains any ignored issuer id as a substring).
+                    issuer.protocol !== 'OTP' &&
+                    !ignoredIssuersFromRendering.some((ignoredIssuer) =>
+                        issuer.issuer_id.includes(ignoredIssuer)
+                    )
             );
+
             dispatch(storeFilteredIssuers(issuers));
             dispatch(storeIssuers(issuers));
         }
