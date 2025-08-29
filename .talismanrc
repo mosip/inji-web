@@ -6,7 +6,7 @@ fileignoreconfig:
 - filename: inji-web/src/components/Common/LanguageSelector.tsx
   checksum: 64027a9e205f67ed8493c3aecf42238880218f819008d6808f0139ee59dd2dd8
 - filename: inji-web/public/env.config.js
-  checksum: b8c8900028056d6bb5e28130fb133111e0bf8ce7d02de22378b575ef838d9131
+  checksum: d29efa04ed84ad3980e743ca3144848a7d743a1e8c79b0f1b90df978f675d81b
 - filename: inji-web/src/types/env.d.ts
   checksum: 1ed0991998656541ad9af31af148b7f34aaeaa780739cddc76814d3f7ee69a00
 - filename: inji-web/package-lock.json
