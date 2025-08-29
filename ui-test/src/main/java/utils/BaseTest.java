@@ -1,36 +1,49 @@
 package utils;
 
-import io.cucumber.java.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+import org.json.JSONObject;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.SkipException;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import com.browserstack.local.Local;
-import io.cucumber.java.Scenario;
+
+import api.InjiWebConfigManager;
+import api.InjiWebUtil;
+import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
+import io.cucumber.java.AfterStep;
+import io.cucumber.java.Before;
 import io.cucumber.java.BeforeStep;
+import io.cucumber.java.Scenario;
 import io.cucumber.plugin.event.PickleStepTestStep;
 import io.cucumber.plugin.event.TestStep;
 import io.mosip.testrig.apirig.utils.ConfigManager;
 import io.mosip.testrig.apirig.utils.S3Adapter;
-import com.aventstack.extentreports.Status;
-import java.lang.reflect.Field;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.io.*;
-import java.util.Properties;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 
 public class BaseTest {
@@ -41,70 +54,45 @@ public class BaseTest {
 	private static int passedCount = 0;
 	private static int failedCount = 0;
 	private static int totalCount = 0;
-	public static WebDriver driver;	
+	 private static int skippedCount = 0;
+	public static WebDriver driver;
 	private long scenarioStartTime;
 	public static JavascriptExecutor jse;
-	public String PdfNameForInsurance = "InsuranceCredential.pdf";
-	public String PdfNameForLifeInsurance = "InsuranceCredential.pdf";
 	private static ExtentReports extent;
 	private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 	String username = System.getenv("BROWSERSTACK_USERNAME");
 	String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
 	public final String URL = "https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
 	private Scenario scenario;
-	
+	private static final Logger logger = LoggerFactory.getLogger(BaseTest.class);
+	private static ThreadLocal<Boolean> skipScenario = ThreadLocal.withInitial(() -> false);
+	private static ThreadLocal<String> skipReason = new ThreadLocal<>();
+
 	public static final String url = System.getenv("TEST_URL") != null && !System.getenv("TEST_URL").isEmpty()
-		    ? System.getenv("TEST_URL")
-		    : loadFromProps("config/injiweb.properties", "injiWebUi");
-
-	String mosipWellKnownUrl = (url.endsWith("/") ? url : url + "/")
-            .replace("injiweb", "injicertify-mosipid") 
-            + "v1/certify/issuance/.well-known/openid-credential-issuer";
+			? System.getenv("TEST_URL")
+			: InjiWebConfigManager.getproperty("injiWebUi");
 	
-	public static String getSecondTypeValue(String wellKnownUrl) throws Exception {
-	    HttpURLConnection conn = (HttpURLConnection) new URL(wellKnownUrl).openConnection();
-	    conn.setRequestMethod("GET");
+    public static boolean isScenarioSkipped() {
+        return skipScenario.get();
+    }
 
-	    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-	    StringBuilder jsonText = new StringBuilder();
-	    String line;
-	    while ((line = in.readLine()) != null) jsonText.append(line);
-	    in.close();
+    public static String getSkipReason() {
+        return skipReason.get();
+    }
 
-	    JSONObject json = new JSONObject(jsonText.toString());
-	    String firstKey = json.getJSONObject("credential_configurations_supported").keys().next();
-	    return json.getJSONObject("credential_configurations_supported")
-	               .getJSONObject(firstKey)
-	               .getJSONObject("credential_definition")
-	               .getJSONArray("type")
-	               .getString(1);
-	}
+    public static void markScenarioSkipped(String reason) {
+        skipScenario.set(true);
+        skipReason.set(reason);
+    }
 
-	private static String loadFromProps(String path, String key) {
-	    Properties props = new Properties();
-	    try (InputStream input = BaseTest.class.getClassLoader().getResourceAsStream(path)) {
-	        if (input != null) {
-	            props.load(input);
-	            return props.getProperty(key); // returns null if not found
-	        }
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	    return null; 
-	}
+    public static void clearSkip() {
+        skipScenario.set(false);
+        skipReason.remove();
+    }
 
-	public String PdfNameForMosip = "";
-
-	{
-	    try {
-	        PdfNameForMosip = getSecondTypeValue(mosipWellKnownUrl)+".pdf";
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
-	
 	@Before
 	public void beforeAll(Scenario scenario) throws MalformedURLException {
+	     clearSkip();
 		Local bsLocal = new Local();
 		HashMap<String, String> bsLocalArgs = new HashMap<>();
 		bsLocalArgs.put("key", accessKey);
@@ -131,16 +119,47 @@ public class BaseTest {
 		driver.manage().window().maximize();
 		driver.get(url);
 	}
+	
+	@Before("@skipBasedOnThreshold")
+	public void skipScenarioBasedOnThreshold(Scenario scenario) {
+	    try {
+	        int retryBlockedUntil = getWalletPasscodeSettings().get("retryBlockedUntil");
+	        String envThreshold = System.getenv("THRESH_TEMP_LOCK");
+	        int THRESH_TEMP_LOCK = (envThreshold != null && !envThreshold.isEmpty())
+	                ? Integer.parseInt(envThreshold)
+	                : 1;
+
+	        if (retryBlockedUntil > THRESH_TEMP_LOCK) {
+	            String reason = "Threshold not met: retryBlockedUntil(" + retryBlockedUntil +
+	                    ") < THRESH_TEMP_LOCK(" + THRESH_TEMP_LOCK + ")";
+	            markScenarioSkipped(reason);
+	            throw new SkipException("Scenario skipped due to threshold: " + reason);
+	        }
+	    } catch (Exception e) {
+	        logger.error("Error checking threshold for skipping scenario", e);
+	    }
+	}
+
 
 	@BeforeStep
 	public void beforeStep(Scenario scenario) {
 		String stepName = getStepName(scenario);
+        if (isScenarioSkipped()) {
+            ExtentCucumberAdapter.getCurrentStep().log(Status.SKIP, "⏭ Step Skipped: " + stepName + " — " + getSkipReason());
+            throw new io.cucumber.java.PendingException("Scenario skipped: " + getSkipReason());
+        }
 		ExtentCucumberAdapter.getCurrentStep().log(Status.INFO, "➡️ Step Started: " + stepName);
 	}
 
+	
+	
 	@AfterStep
 	public void afterStep(Scenario scenario) {
 		String stepName = getStepName(scenario);
+        if (isScenarioSkipped()) {
+            ExtentCucumberAdapter.getCurrentStep().log(Status.SKIP, "⏭ Step Skipped: " + stepName + " — " + getSkipReason());
+            return;
+        }
 
 		if (scenario.isFailed()) {
 			ExtentCucumberAdapter.getCurrentStep().log(Status.FAIL, "❌ Step Failed: " + stepName);
@@ -152,22 +171,29 @@ public class BaseTest {
 
 	@After
 	public void afterScenario(Scenario scenario) {
-		if (scenario.isFailed()) {
-			failedCount++;
-			ExtentReportManager.getTest().fail("❌ Scenario Failed: " + scenario.getName());
-		} else {
-			passedCount++;
-			ExtentReportManager.getTest().pass("✅ Scenario Passed: " + scenario.getName());
-		}
-
-		ExtentReportManager.flushReport();
-	}
+        try {
+            if (isScenarioSkipped()) {
+                skippedCount++;
+                ExtentReportManager.getTest().skip("⏭ Scenario Skipped: " + scenario.getName() + " — " + getSkipReason());
+            } else if (scenario.isFailed()) {
+                failedCount++;
+                ExtentReportManager.getTest().fail("❌ Scenario Failed: " + scenario.getName());
+            } else {
+                passedCount++;
+                ExtentReportManager.getTest().pass("✅ Scenario Passed: " + scenario.getName());
+            }
+        } finally {
+            ExtentReportManager.flushReport();
+            clearSkip();
+        }
+    }
 
 	private String getStepName(Scenario scenario) {
 		try {
 			Field testCaseField = scenario.getClass().getDeclaredField("testCase");
 			testCaseField.setAccessible(true);
-			io.cucumber.plugin.event.TestCase testCase = (io.cucumber.plugin.event.TestCase) testCaseField.get(scenario);
+			io.cucumber.plugin.event.TestCase testCase = (io.cucumber.plugin.event.TestCase) testCaseField
+					.get(scenario);
 			List<TestStep> testSteps = testCase.getTestSteps();
 			for (TestStep step : testSteps) {
 				if (step instanceof PickleStepTestStep) {
@@ -184,7 +210,7 @@ public class BaseTest {
 		if (driver != null) {
 			byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
 			ExtentCucumberAdapter.getCurrentStep().addScreenCaptureFromBase64String(
-				java.util.Base64.getEncoder().encodeToString(screenshot), "Failure Screenshot");
+					java.util.Base64.getEncoder().encodeToString(screenshot), "Failure Screenshot");
 		}
 	}
 
@@ -204,7 +230,7 @@ public class BaseTest {
 			pushReportsToS3();
 		}));
 	}
-	
+
 	public WebDriver getDriver() {
 		return driver;
 	}
@@ -222,7 +248,7 @@ public class BaseTest {
 		String originalFileName = ExtentReportManager.getCurrentReportFileName();
 		File originalReportFile = new File(System.getProperty("user.dir") + "/test-output/" + originalFileName);
 		String nameWithoutExt = originalFileName.replace(".html", "");
-		String newFileName = nameWithoutExt + "-T-" + totalCount + "-P-" + passedCount + "-F-" + failedCount + ".html";
+	    String newFileName = nameWithoutExt + "-T-" + totalCount + "-P-" + passedCount + "-F-" + failedCount + "-S-" + skippedCount + ".html";
 		File newReportFile = new File(System.getProperty("user.dir") + "/test-output/" + newFileName);
 
 		System.out.println("Attempting to rename report file...");
@@ -241,7 +267,8 @@ public class BaseTest {
 			S3Adapter s3Adapter = new S3Adapter();
 			boolean isStoreSuccess = false;
 			try {
-				isStoreSuccess = s3Adapter.putObject(ConfigManager.getS3Account(), "", null, null, newFileName, newReportFile);
+				isStoreSuccess = s3Adapter.putObject(ConfigManager.getS3Account(), "", null, null, newFileName,
+						newReportFile);
 				System.out.println("isStoreSuccess:: " + isStoreSuccess);
 			} catch (Exception e) {
 				System.out.println("Error occurred while pushing the object: " + e.getLocalizedMessage());
@@ -286,30 +313,43 @@ public class BaseTest {
 	}
 
 	public static String[] fetchIssuerTexts() {
-	    String issuerSearchText = System.getenv("issuerSearchText");
-	    String issuerSearchTextforSunbird = System.getenv("issuerSearchTextforSunbird");
-	    
-	    if (issuerSearchText == null || issuerSearchTextforSunbird == null) {
-	        String propertyFilePath = System.getProperty("user.dir") + "/src/test/resources/config.properties";
-	        Properties properties = new Properties();
+		String issuerSearchText = System.getenv("issuerSearchText");
+		String issuerSearchTextforSunbird = System.getenv("issuerSearchTextforSunbird");
 
-	        try (FileInputStream fileInputStream = new FileInputStream(propertyFilePath)) {
-	            properties.load(fileInputStream);
+		if (issuerSearchText == null || issuerSearchTextforSunbird == null) {
+			String propertyFilePath = System.getProperty("user.dir") + "/src/test/resources/config.properties";
+			Properties properties = new Properties();
 
-	            if (issuerSearchText == null) {
-	                issuerSearchText = properties.getProperty("issuerSearchText");
-	            }
+			try (FileInputStream fileInputStream = new FileInputStream(propertyFilePath)) {
+				properties.load(fileInputStream);
 
-	            if (issuerSearchTextforSunbird == null) {
-	                issuerSearchTextforSunbird = properties.getProperty("issuerSearchTextforSunbird");
-	            }
+				if (issuerSearchText == null) {
+					issuerSearchText = properties.getProperty("issuerSearchText");
+				}
 
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	    }
+				if (issuerSearchTextforSunbird == null) {
+					issuerSearchTextforSunbird = properties.getProperty("issuerSearchTextforSunbird");
+				}
 
-	    return new String[] { issuerSearchText, issuerSearchTextforSunbird };
+			} catch (IOException e) {
+				logger.error("Failed to load config.properties from {}", propertyFilePath, e);
+			}
+		}
+
+		return new String[] { issuerSearchText, issuerSearchTextforSunbird };
 	}
 
-}
+	    private static HashMap<String, Integer> walletPasscodeSettingsCache;
+
+	    public static HashMap<String, Integer> getWalletPasscodeSettings() throws Exception {
+	        if (walletPasscodeSettingsCache == null) {
+	            HashMap<String, String> keyMap = new HashMap<>();
+	            keyMap.put("wallet.passcode.retryBlockedUntil", "retryBlockedUntil");
+	            keyMap.put("wallet.passcode.maxFailedAttemptsAllowedPerCycle", "maxFailedAttempts");
+	            keyMap.put("wallet.passcode.maxLockCyclesAllowed", "maxLockCycles");
+
+	            walletPasscodeSettingsCache = InjiWebUtil.getActuatorValues(keyMap);
+	        }
+	        return walletPasscodeSettingsCache;
+	    }
+	}

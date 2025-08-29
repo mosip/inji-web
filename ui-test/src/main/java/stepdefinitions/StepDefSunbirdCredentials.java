@@ -287,32 +287,35 @@ public class StepDefSunbirdCredentials {
 		}
 	}
 
+
 	@Then("User verify pdf is downloaded for Insurance")
 	public String user_verify_pdf_is_downloaded_for_insurance() throws IOException {
-		baseTest.getJse()
-				.executeScript("browserstack_executor: {\"action\": \"fileExists\", \"arguments\": {\"fileName\": \""
-						+ baseTest.PdfNameForLifeInsurance + "\"}}");
-		baseTest.getJse().executeScript(
-				"browserstack_executor: {\"action\": \"getFileProperties\", \"arguments\": {\"fileName\": \""
-						+ baseTest.PdfNameForLifeInsurance + "\"}}");
+		
+		String pdfName =sunbirdCredentials.pdfNameInsurance;
+	    baseTest.getJse().executeScript(
+	            "browserstack_executor: {\"action\": \"fileExists\", \"arguments\": {\"fileName\": \"" + pdfName + "\"}}");
 
-		String base64EncodedFile = (String) baseTest.getJse().executeScript(
-				"browserstack_executor: {\"action\": \"getFileContent\", \"arguments\": {\"fileName\": \""
-						+ baseTest.PdfNameForLifeInsurance + "\"}}");
-		byte[] data = Base64.getDecoder().decode(base64EncodedFile);
-		OutputStream stream = new FileOutputStream(baseTest.PdfNameForLifeInsurance);
-		stream.write(data);
+	    baseTest.getJse().executeScript(
+	            "browserstack_executor: {\"action\": \"getFileProperties\", \"arguments\": {\"fileName\": \"" + pdfName + "\"}}");
 
-		System.out.println(stream);
-		stream.close();
+	    String base64EncodedFile = (String) baseTest.getJse().executeScript(
+	            "browserstack_executor: {\"action\": \"getFileContent\", \"arguments\": {\"fileName\": \"" + pdfName + "\"}}");
 
-		File pdfFile = new File(System.getProperty("user.dir") + "/" + baseTest.PdfNameForLifeInsurance);
-		PDDocument document = PDDocument.load(pdfFile);
+	    byte[] data = Base64.getDecoder().decode(base64EncodedFile);
+	    OutputStream stream = new FileOutputStream(pdfName);
+	    stream.write(data);
 
-		PDFTextStripper stripper = new PDFTextStripper();
-		String text = stripper.getText(document);
-		return text;
+	    System.out.println(stream);
+	    stream.close();
+
+	    File pdfFile = new File(System.getProperty("user.dir") + "/" + pdfName);
+	    PDDocument document = PDDocument.load(pdfFile);
+
+	    PDFTextStripper stripper = new PDFTextStripper();
+	    String text = stripper.getText(document);
+	    return text;
 	}
+
 
 	@Then("User verify policy number input box header")
 	public void user_verify_policy_number_input_box_header() {
@@ -460,8 +463,8 @@ public class StepDefSunbirdCredentials {
 	}
 
 	@Then("User enter the policy number {string}")
-	public void user_enter_the_policy_number(String string)  {
-		
+	public void user_enter_the_policy_number(String string) {
+
 		sunbirdCredentials.enterPolicyNumer(string);
 
 	}
