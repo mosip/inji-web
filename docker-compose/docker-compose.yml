@@ -39,13 +39,6 @@ services:
       - postgres-data:/var/lib/postgresql/data
       - ./mimoto_init.sql:/docker-entrypoint-initdb.d/mimoto_init.sql
 
-  redis:
-    image: redis:alpine
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis-data:/data
-
   mimoto-service:
     container_name: 'mimoto-service'
     image: 'mosipdev/mimoto:develop'
@@ -60,8 +53,6 @@ services:
       - SPRING_CLOUD_BOOTSTRAP_LOCATION=/home/mosip/mimoto-bootstrap.properties
       - oidc_p12_password=dummypassword
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inji_mimoto
-      - SPRING_REDIS_HOST=redis
-      - SPRING_REDIS_PORT=6379
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - GOOGLE_OAUTH_CLIENT_ID=clientId
@@ -73,7 +64,6 @@ services:
     depends_on:
       - datashare
       - postgres
-      - redis
 
   inji-web:
     container_name: 'inji-web'
@@ -93,4 +83,3 @@ services:
 
 volumes:
   postgres-data:
-  redis-data:
