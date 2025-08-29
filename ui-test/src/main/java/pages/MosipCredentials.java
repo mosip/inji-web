@@ -27,7 +27,13 @@ public class MosipCredentials extends BasePage {
 	}
 
 	public void enterVid(String string) {
+	    if (isElementIsVisible(driver, By.xpath("//input[@id='Otp_mosip-vid']"))) {
 		enterText(driver, By.xpath("//input[@id='Otp_mosip-vid']"), string);
+	    } else {
+	        if (isElementIsVisible(driver, By.xpath("//input[@id='Otp_vid']"))) {
+	            enterText(driver, By.xpath("//input[@id='Otp_vid']"), string);
+	        }
+	    }
 	}
 
 	public void clickOnGetOtpButton() {
@@ -57,7 +63,8 @@ public class MosipCredentials extends BasePage {
 	}
 
 	public Boolean isLoginPageLableDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//label[@for='Mosip vid']"));
+		    return isElementIsVisible(driver, By.xpath("//label[@for='Mosip vid']"))
+		        || isElementIsVisible(driver, By.xpath("//label[@for='Otp_vid']"));
 	}
 
 	public void clickOnLoginWithOtp() {
@@ -69,6 +76,8 @@ public class MosipCredentials extends BasePage {
 		}
 		if (isElementIsVisible(driver, By.xpath("//*[@id='login_with_otp']"))) {
 			clickOnElement(driver, By.xpath("//*[@id='login_with_otp']"));
+	    } else if (isElementIsVisible(driver, By.xpath("//*[@id='get_otp']"))) {
+	        clickOnElement(driver, By.xpath("//*[@id='get_otp']"));
 		}
 	}
 
