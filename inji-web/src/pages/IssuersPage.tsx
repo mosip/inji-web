@@ -31,14 +31,16 @@ export const IssuersPage: React.FC<IssuerPageProps> = ({className}) => {
                 return
             }
 
-            const ignoredIssuersFromRendering = window._env_.IGNORED_ISSUER_IDS.split(",");
+            const ignoredIssuersFromRendering = window._env_.IGNORED_ISSUER_IDS
+                ? window._env_.IGNORED_ISSUER_IDS.split(",").filter((id) => id.trim() !== "")
+                : [];
             const issuers = response?.response?.issuers.filter(
                 (issuer: IssuerObject) =>
                     // Excludes issuers with protocol 'OTP' and those whose issuer_id is in the ignoredIssuersFromRendering list (or contains any ignored issuer id as a substring).
                     issuer.protocol !== 'OTP' &&
-                    !ignoredIssuersFromRendering.some((ignoredIssuer) =>
+                    (ignoredIssuersFromRendering.length === 0 || !ignoredIssuersFromRendering.some((ignoredIssuer) =>
                         issuer.issuer_id.includes(ignoredIssuer)
-                    )
+                    ))
             );
 
             dispatch(storeFilteredIssuers(issuers));
