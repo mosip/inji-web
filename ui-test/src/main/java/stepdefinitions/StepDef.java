@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import base.BasePage;
 
 public class StepDef {
 	private BaseTest baseTest;
@@ -248,8 +249,8 @@ public class StepDef {
 				String[] string = baseTest.fetchIssuerTexts();
 				issuerText = string[0];
 			}
+			homePage.isIssuersDisplayed();
 			homePage.enterIssuersInSearchBox(issuerText);
-			Thread.sleep(6000);
 			test.log(Status.PASS, "Searched issuers with: " + issuerText);
 		} catch (NoSuchElementException e) {
 			test.log(Status.FAIL, "Element not found while searching issuers: " + e.getMessage());
@@ -272,8 +273,8 @@ public class StepDef {
 				String[] string = baseTest.fetchIssuerTexts();
 				issuerText = string[1];
 			}
+			homePage.isIssuersDisplayed();
 			homePage.enterIssuersInSearchBox(issuerText);
-			Thread.sleep(6000);
 			test.log(Status.PASS, "Searched issuers with: " + issuerText);
 		} catch (NoSuchElementException e) {
 			test.log(Status.FAIL, "Element not found while searching issuers: " + e.getMessage());

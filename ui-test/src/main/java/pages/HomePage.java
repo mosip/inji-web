@@ -105,6 +105,10 @@ public class HomePage extends BasePage {
 	public Boolean isMosipNationalIdDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
+	
+	public Boolean isIssuersDisplayed() {
+		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),15);
+	}
 
 	public void enterIssuersInSearchBox(String string) {
 		enterText(driver, By.xpath("//input[@type='text']"), string);
