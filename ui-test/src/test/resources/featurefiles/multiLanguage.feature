@@ -40,12 +40,12 @@ Feature: Inji web multilanguage testing
     And User click on langauge button
     And User click on french langauge
     And User verify home screens in french
-    And User search the issuers with "National Identity Department"
+    And User search the issuers with "National"
     And User verify mosip national id by e-signet displayed
     And User click on langauge button
     And User click on portugues langauge
     And User verify home screens in portugues
-    And User search the issuers with "National Identity Department"
+    And User search the issuers with "National"
     And User verify mosip national id by e-signet displayed
 
   @smoke @verifyingCredentialDetailsPageForMosipInConfiguredLanguge
@@ -152,14 +152,14 @@ Feature: Inji web multilanguage testing
     And User click on french langauge
     And User click on back button
     And User verify home screens in french
-    And User search the issuers with "National Identity Department"
+    And User search the issuers with "National"
     And User verify mosip national id by e-signet displayed
     When User click on download mosip credentials button
     And User click on langauge button
     And User click on portugues langauge
     And User click on back button
     And User verify home screens in portugues
-    And User search the issuers with "National Identity Department"
+    And User search the issuers with "National"
     And User verify mosip national id by e-signet displayed
 
 
