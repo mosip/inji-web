@@ -11,6 +11,7 @@ ARG defaultLang
 ARG defaultFavicon
 ARG defaultTitle
 ARG MIMOTO_URL
+ARG IGNORED_ISSUER_IDS
 
 # Set environment variables
 ENV DEFAULT_THEME=$defaultTheme
@@ -18,6 +19,7 @@ ENV DEFAULT_LANG=$defaultLang
 ENV DEFAULT_FAVICON=$defaultFavicon
 ENV DEFAULT_TITLE=$defaultTitle
 ENV MIMOTO_URL=$MIMOTO_URL
+ENV IGNORED_ISSUER_IDS=$IGNORED_ISSUER_IDS
 
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
@@ -70,7 +72,8 @@ RUN echo "DEFAULT_THEME=${DEFAULT_THEME}" >> ${work_dir}/env.env \
     && echo "DEFAULT_LANG=${DEFAULT_LANG}" >> ${work_dir}/env.env \
     && echo "MIMOTO_URL=${MIMOTO_URL}" >> ${work_dir}/env.env \
     && echo "DEFAULT_FAVICON=${DEFAULT_FAVICON}" >> ${work_dir}/env.env \
-    && echo "DEFAULT_TITLE=${DEFAULT_TITLE}" >> ${work_dir}/env.env
+    && echo "DEFAULT_TITLE=${DEFAULT_TITLE}" >> ${work_dir}/env.env \
+    && echo "IGNORED_ISSUER_IDS=${IGNORED_ISSUER_IDS}" >> ${work_dir}/env.env
 
 # Copy and set permissions for the startup script
 COPY configure_start.sh /home/${container_user}/configure_start.sh
