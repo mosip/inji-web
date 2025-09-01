@@ -467,15 +467,16 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isPermLockWarningMsgDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//div/*[@data-testid='error-msg-passcode-last-attempt-before-lockout']"));
+		return isElementIsVisible(driver,
+				By.xpath("//div/*[@data-testid='error-msg-passcode-last-attempt-before-lockout']"));
 	}
-	
+
 	public Boolean isPermLockMsgDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//div/*[@data-testid='error-msg-passcode-permanently-locked']"));
 	}
-	
+
 	public void waitUntilPasscodeEnabled() {
-		waitUntilElementEnabled(driver,By.cssSelector("input[data-testid='input-passcode']"),10);
+		waitUntilElementEnabled(driver, By.cssSelector("input[data-testid='input-passcode']"), 10);
 	}
 
 }

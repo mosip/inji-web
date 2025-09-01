@@ -35,7 +35,7 @@ public class InjiWebUtil extends AdminTestUtil {
 	private static String fullNameForSunBirdR = generateFullNameForSunBirdR();
 	private static String dobForSunBirdR = generateDobForSunBirdR();
 	private static String policyNumberForSunBirdR = generateRandomNumberString(9);
-	
+
 	public static void setLogLevel() {
 		if (InjiWebConfigManager.IsDebugEnabled())
 			logger.setLevel(Level.ALL);
@@ -45,25 +45,21 @@ public class InjiWebUtil extends AdminTestUtil {
 
 	public static TestCaseDTO isTestCaseValidForTheExecution(TestCaseDTO testCaseDTO) {
 		String testCaseName = testCaseDTO.getTestCaseName();
-		
+
 		int indexof = testCaseName.indexOf("_");
 		String modifiedTestCaseName = testCaseName.substring(indexof + 1);
-		
+
 		addTestCaseDetailsToMap(modifiedTestCaseName, testCaseDTO.getUniqueIdentifier());
-		
-		
+
 		String endpoint = testCaseDTO.getEndPoint();
 		String inputJson = testCaseDTO.getInput();
 
-		
 		if (SkipTestCaseHandler.isTestCaseInSkippedList(testCaseName)) {
 			throw new SkipException(GlobalConstants.KNOWN_ISSUES);
 		}
 		return testCaseDTO;
 	}
-	
 
-	
 	public static String inputstringKeyWordHandeler(String jsonString, String testCaseName) {
 
 		if (jsonString.contains(GlobalConstants.TIMESTAMP)) {
@@ -85,8 +81,6 @@ public class InjiWebUtil extends AdminTestUtil {
 		return jsonString;
 
 	}
-	
-
 
 	public static String generateFullNameForSunBirdR() {
 		return faker.name().fullName();
@@ -98,13 +92,12 @@ public class InjiWebUtil extends AdminTestUtil {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		return dob.format(formatter);
 	}
-	
+
 	public static JSONArray mimotoActuatorResponseArray = null;
 
 	public static String getValueFromMimotoActuator(String section, String key) {
 		String url = ApplnURI + ConfigManager.getproperty("actuatorMimotoEndpoint");
-		if (!(System.getenv("useOldContextURL") == null)
-				&& !(System.getenv("useOldContextURL").isBlank())
+		if (!(System.getenv("useOldContextURL") == null) && !(System.getenv("useOldContextURL").isBlank())
 				&& System.getenv("useOldContextURL").equalsIgnoreCase("true")) {
 			if (url.contains("/v1/mimoto/")) {
 				url = url.replace("/v1/mimoto/", "/residentmobileapp/");
@@ -131,7 +124,7 @@ public class InjiWebUtil extends AdminTestUtil {
 							.get(GlobalConstants.VALUE).toString();
 					if (ConfigManager.IsDebugEnabled())
 //						logger.info("Actuator: " + url + " key: " + key + " value: " + value);
-					break;
+						break;
 				}
 			}
 			actuatorValueCache.put(actuatorCacheKey, value);
@@ -161,70 +154,70 @@ public class InjiWebUtil extends AdminTestUtil {
 
 		return testCaseDTO;
 	}
-	
+
 	public static String getCredentialConfigKey(String wellKnownUrl) {
-	    try {
-	        // Use RestClient from your existing utility
-	        Response response = RestClient.getRequest(wellKnownUrl, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
-	        JSONObject json = new JSONObject(response.getBody().asString());
-	        return json.getJSONObject("credential_configurations_supported").keys().next();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return "default";
-	    }
+		try {
+			// Use RestClient from your existing utility
+			Response response = RestClient.getRequest(wellKnownUrl, MediaType.APPLICATION_JSON,
+					MediaType.APPLICATION_JSON);
+			JSONObject json = new JSONObject(response.getBody().asString());
+			return json.getJSONObject("credential_configurations_supported").keys().next();
+		} catch (Exception e) {
+			logger.error("Failed to fetch credential configuration from URL: " + wellKnownUrl, e);
+			return "default";
+		}
 	}
-	
 
 	public static HashMap<String, Integer> getActuatorValues(HashMap<String, String> keyMapping) throws Exception {
-	    HashMap<String, Integer> result = new HashMap<>();
-		String actuatorUrl = ConfigManager.getproperty("apiInternalEndPoint") + ConfigManager.getproperty("actuatorMimotoEndpoint");
+		HashMap<String, Integer> result = new HashMap<>();
+		String actuatorUrl = ConfigManager.getproperty("apiInternalEndPoint")
+				+ ConfigManager.getproperty("actuatorMimotoEndpoint");
 		logger.info("Printing actauator url" + actuatorUrl);
-	    Response response = RestClient.getRequest(
-	            actuatorUrl,
-	            MediaType.APPLICATION_JSON,
-	            MediaType.APPLICATION_JSON
-	    );
-	    if (response.getStatusCode() != 200) {
-	        throw new RuntimeException("Failed to fetch actuator values. HTTP error: " + response.getStatusCode());
-	    }
+		Response response = RestClient.getRequest(actuatorUrl, MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON);
+		if (response.getStatusCode() != 200) {
+			throw new RuntimeException("Failed to fetch actuator values. HTTP error: " + response.getStatusCode());
+		}
 
-	    JSONObject root = new JSONObject(response.getBody().asString());
+		JSONObject root = new JSONObject(response.getBody().asString());
 
-	    if (!root.has("propertySources")) {
-	        throw new RuntimeException("[ERROR] No propertySources found in actuator response!");
-	    }
+		if (!root.has("propertySources")) {
+			throw new RuntimeException("[ERROR] No propertySources found in actuator response!");
+		}
 
-	    for (Object srcObj : root.getJSONArray("propertySources")) {
-	        if (!(srcObj instanceof JSONObject)) continue;
+		for (Object srcObj : root.getJSONArray("propertySources")) {
+			if (!(srcObj instanceof JSONObject))
+				continue;
 
-	        JSONObject src = (JSONObject) srcObj;
-	        JSONObject props = src.optJSONObject("properties");
-	        if (props == null) continue;
+			JSONObject src = (JSONObject) srcObj;
+			JSONObject props = src.optJSONObject("properties");
+			if (props == null)
+				continue;
 
-	        for (String actuatorKey : keyMapping.keySet()) {
-	            String resultKey = keyMapping.get(actuatorKey);
+			for (String actuatorKey : keyMapping.keySet()) {
+				String resultKey = keyMapping.get(actuatorKey);
 
-	            if (!result.containsKey(resultKey) && props.has(actuatorKey)) {
-	                String rawValue = props.getJSONObject(actuatorKey).optString("value", "0");
+				if (!result.containsKey(resultKey) && props.has(actuatorKey)) {
+					String rawValue = props.getJSONObject(actuatorKey).optString("value", "0");
 
-	                try {
-	                    int intValue = Integer.parseInt(rawValue.trim());
-	                    result.put(resultKey, intValue);
-	                } catch (NumberFormatException e) {
-	                    System.err.println("[WARN] Failed to parse value for key " + actuatorKey + " (" + rawValue + ")");
-	                }
-	            }
-	        }
-	        if (result.size() == keyMapping.size()) {
+					try {
+						int intValue = Integer.parseInt(rawValue.trim());
+						result.put(resultKey, intValue);
+					} catch (NumberFormatException e) {
+						System.err
+								.println("[WARN] Failed to parse value for key " + actuatorKey + " (" + rawValue + ")");
+					}
+				}
+			}
+			if (result.size() == keyMapping.size()) {
 				logger.info("All keys mapped successfully");
-	            break;
-	        }
-	    }
-	    if (result.isEmpty()) {
+				break;
+			}
+		}
+		if (result.isEmpty()) {
 			logger.info("No actuator values matched the provided key mapping.\"");
-	    }
+		}
 
-	    return result;
+		return result;
 	}
 
 }

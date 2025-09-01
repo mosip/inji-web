@@ -37,28 +37,26 @@ public class BasePage {
 			return false;
 		}
 	}
-	
-	
+
 	public static boolean isElementIsVisible(WebDriver driver, By by, int timeoutInSeconds) {
-	    try {
-	        new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds))
-	            .until(ExpectedConditions.visibilityOfElementLocated(by));
-	        return driver.findElement(by).isDisplayed();
-	    } catch (Exception e) {
-	        return false;
-	    }
-	}
-	
-	public static void clickOnElement(WebDriver driver, By locator, int timeoutInSeconds) {
-	    try {
-	        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
-	        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
-	        element.click();
-	    } catch (Exception e) {
-	        throw new RuntimeException("Failed to click on element: " + locator, e);
-	    }
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds))
+					.until(ExpectedConditions.visibilityOfElementLocated(by));
+			return driver.findElement(by).isDisplayed();
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
+	public static void clickOnElement(WebDriver driver, By locator, int timeoutInSeconds) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+			WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+			element.click();
+		} catch (Exception e) {
+			throw new RuntimeException("Failed to click on element: " + locator, e);
+		}
+	}
 
 	public static boolean isElementNotVisible(WebDriver driver, By by) {
 		try {
@@ -174,11 +172,10 @@ public class BasePage {
 				.until(ExpectedConditions.presenceOfElementLocated(locator));
 		return element.getAttribute(data);
 	}
-	
-	public void waitUntilElementEnabled(WebDriver driver, By locator, int timeoutSeconds) {
-	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
-	    wait.until(ExpectedConditions.elementToBeClickable(locator));
-	}
 
+	public void waitUntilElementEnabled(WebDriver driver, By locator, int timeoutSeconds) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+		wait.until(ExpectedConditions.elementToBeClickable(locator));
+	}
 
 }
