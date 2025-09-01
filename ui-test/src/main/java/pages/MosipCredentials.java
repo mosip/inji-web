@@ -16,13 +16,8 @@ public class MosipCredentials extends BasePage {
 	}
 
 	public Boolean isMockVerifiableCredentialDisplayed() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return isElementIsVisible(driver, By.xpath("//h3[text()='Mock Verifiable Credential']"));
+
+		return isElementIsVisible(driver, By.xpath("//h3[text()='Mock Verifiable Credential']"),60);
 	}
 
 	public void clickOnMockVerifiableCredential() {
@@ -44,11 +39,6 @@ public class MosipCredentials extends BasePage {
 	}
 
 	public void enterOtp(WebDriver driver, String otpString) {
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
-		}
 		for (int i = 0; i < otpString.length(); i++) {
 			String locator = "(//input[@class='pincode-input-text'])[" + (i + 1) + "]";
 			driver.findElement(By.xpath(locator)).sendKeys(String.valueOf(otpString.charAt(i)));
@@ -56,16 +46,10 @@ public class MosipCredentials extends BasePage {
 	}
 
 	public void clickOnMosipNationalId() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	    pdfName = getElementAttribute(
 	            driver,
 	            By.xpath("//*[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),"data-testid").replaceFirst("ItemBox-Outer-Container-0-", "") + ".pdf";
-	    clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
+	    clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),60);
 	}
 
 
@@ -75,15 +59,10 @@ public class MosipCredentials extends BasePage {
 		}	
 	
 	public void clickOnLoginWithOtp() {
-	    try {
-	        Thread.sleep(2000);
-	    } catch (InterruptedException e) {
-	        e.printStackTrace();
-	    }
 
-	    if (isElementIsVisible(driver, By.xpath("//*[@id='login_with_otp']"))) {
+	    if (isElementIsVisible(driver, By.xpath("//*[@id='login_with_otp']"),60)) {
 	        clickOnElement(driver, By.xpath("//*[@id='login_with_otp']"));
-	    } else if (isElementIsVisible(driver, By.xpath("//*[@id='get_otp']"))) {
+	    } else if (isElementIsVisible(driver, By.xpath("//*[@id='get_otp']"),60)) {
 	        clickOnElement(driver, By.xpath("//*[@id='get_otp']"));
 	    }
 	}

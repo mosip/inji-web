@@ -175,26 +175,10 @@ public class InjiWebUtil extends AdminTestUtil {
 	}
 	
 
-
-	
 	public static HashMap<String, Integer> getActuatorValues(HashMap<String, String> keyMapping) throws Exception {
 	    HashMap<String, Integer> result = new HashMap<>();
-	    String baseUrl = System.getenv("apiInternalEndPoint") != null && !System.getenv("apiInternalEndPoint").isEmpty()
-	            ? System.getenv("apiInternalEndPoint")
-	            : InjiWebConfigManager.getproperty("apiInternalEndPoint");
-
-	    String actuatorPath = System.getenv("actuatorMimotoEndpoint") != null && !System.getenv("actuatorMimotoEndpoint").isEmpty()
-	            ? System.getenv("actuatorMimotoEndpoint")
-	            : InjiWebConfigManager.getproperty("actuatorMimotoEndpoint");
-
-	    String actuatorUrl;
-	    if (baseUrl.endsWith("/") && actuatorPath.startsWith("/")) {
-	        actuatorUrl = baseUrl.substring(0, baseUrl.length() - 1) + actuatorPath;
-	    } else if (!baseUrl.endsWith("/") && !actuatorPath.startsWith("/")) {
-	        actuatorUrl = baseUrl + "/" + actuatorPath;
-	    } else {
-	        actuatorUrl = baseUrl + actuatorPath;
-	    }
+		String actuatorUrl = ConfigManager.getproperty("apiInternalEndPoint") + ConfigManager.getproperty("actuatorMimotoEndpoint");
+		logger.info("Printing actauator url" + actuatorUrl);
 	    Response response = RestClient.getRequest(
 	            actuatorUrl,
 	            MediaType.APPLICATION_JSON,

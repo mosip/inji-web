@@ -473,5 +473,9 @@ public class Loginpage extends BasePage {
 	public Boolean isPermLockMsgDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//div/*[@data-testid='error-msg-passcode-permanently-locked']"));
 	}
+	
+	public void waitUntilPasscodeEnabled() {
+		waitUntilElementEnabled(driver,By.cssSelector("input[data-testid='input-passcode']"),10);
+	}
 
 }

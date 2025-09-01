@@ -95,9 +95,7 @@ public class HomePage extends BasePage {
 	}
 
 	public void clickOnVerify() {
-		if (isElementIsVisible(driver, By.xpath("//button[@id='verify_otp']"))) {
 			clickOnElement(driver, By.xpath("//button[@id='verify_otp']"));
-		}
 	}
 
 	public Boolean isSuccessMessageDisplayed() {

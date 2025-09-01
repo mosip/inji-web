@@ -923,7 +923,7 @@ public class StepDefOIDCLogin {
 		assertTrue(!loginpage.isSubmitButtonEnabled(), "Before temporaty lock Expire Submit button is enabled");
 		BasePage.waitForSeconds(driver, BaseTest.getWalletPasscodeSettings().get("retryBlockedUntil") * 60);
 		driver.navigate().refresh();
-		Thread.sleep(5000);
+		loginpage.waitUntilPasscodeEnabled();
 		assertTrue(!loginpage.isPasscodeInputDisabled(), "Passocde button is not enabled after temporaty lock Expire");
 	}
 
