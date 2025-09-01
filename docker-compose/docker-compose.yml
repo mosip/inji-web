@@ -48,7 +48,7 @@ services:
 
   mimoto-service:
     container_name: 'mimoto-service'
-    image: 'mosipdev/mimoto:develop'
+    image: 'mosipdev/mimoto:release-0.19.x'
     user: root
     ports:
       - "8099:8099"
@@ -77,12 +77,13 @@ services:
 
   inji-web:
     container_name: 'inji-web'
-    image: 'mosipdev/inji-web:develop'
+    image: 'mosipdev/inji-web:release-0.14.x'
     ports:
       - '3004:3004'
     environment:
       - DEFAULT_LANG=en
       - MIMOTO_URL=http://localhost:3004/v1/mimoto
+      - IGNORED_ISSUER_IDS=MockMdl
     volumes:
       - ./config/mimoto-issuers-config.json:/home/mosip/mimoto-issuers-config.json
       - ./config/mimoto-trusted-verifiers.json:/home/mosip/mimoto-trusted-verifiers.json
