@@ -12,7 +12,7 @@ $ nvm install 18
 ```
 ---
 # Configuration:
-Inji web connects with a backend-for-frontend service called Mimoto. URLs to connect with this service can be updated in the config file by running the following command:
+Inji web connects with a backend-for-frontend service called Mimoto. Configuration details, such as URLs to connect with this service and other environment-specific settings (e.g., `IGNORED_ISSUER_IDS`, `DEFAULT_LANG`), can be updated in the `env.config.js` file by running the following command:
 ```
 $ nano ./inji-web/public/env.config.js
 ```
