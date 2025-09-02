@@ -44,7 +44,8 @@ eSignetbaseurl=https://esignet-mosipid.dev.mosip.net
 Note:- all are config properties has to be updated by replacing the 'dev' with actual env name/url
 
 update src\test\resources\config.properties
-issuerSearchText=National Identity Department issuerSearchTextforSunbird=StayProtected Insurance
+issuerSearchText=National Identity Department
+issuerSearchTextforSunbird=StayProtected Insurance
 
 Note :- update as per the env ex. if it needs to select the for dev use it as 'National Identity Department (dev)'
 ```
