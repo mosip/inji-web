@@ -3,8 +3,11 @@ package pages;
 import base.BasePage;
 import org.openqa.selenium.*;
 import utils.BaseTest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SunbirdCredentials extends BasePage {
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	private WebDriver driver;
 
 	public SunbirdCredentials(WebDriver driver) {
@@ -18,7 +21,6 @@ public class SunbirdCredentials extends BasePage {
 			e.printStackTrace();
 		}
 		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
-
 	}
 
 	public Boolean isSunbirdInsuranceDisplayed() {
@@ -31,12 +33,12 @@ public class SunbirdCredentials extends BasePage {
 	}
 
 	public String pdfNameInsurance;
-	
+
 	public void clickOnSunbirdInsurance() {
-		
-		pdfNameInsurance = getElementAttribute(
-	            driver,
-	            By.xpath("//*[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),"data-testid").replaceFirst("ItemBox-Outer-Container-0-", "") + ".pdf";
+
+		pdfNameInsurance = getElementAttribute(driver,
+				By.xpath("//*[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"), "data-testid")
+				.replaceFirst("ItemBox-Outer-Container-0-", "") + ".pdf";
 		logger.info("Pdf Name for Insurance: " + pdfNameInsurance);
 
 		clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
@@ -50,8 +52,7 @@ public class SunbirdCredentials extends BasePage {
 			e.printStackTrace();
 		}
 
-		clickOnElement(driver,
-				By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
+		clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
 
 	public void enterPolicyNumer(String string) {
