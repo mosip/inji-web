@@ -71,7 +71,7 @@ services:
 
   inji-web:
     container_name: 'inji-web'
-    image: 'mosipid/inji-web:0.13.1'
+    image: 'mosipid/inji-web:0.13.2'
     ports:
       - '3004:3004'
     environment:
