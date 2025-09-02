@@ -28,6 +28,30 @@ export TEST_URL=<<url>>
 
 ---
 
+## Configuration
+
+Update the following configurations according to the environment details:
+
+```
+update src\main\resources\config\injiVerify.properties
+apiEnvUser=api-internal.dev
+apiInternalEndPoint=https://api-internal.dev.mosip.net
+injiverify=https://injiverify.dev.mosip.net/
+injiweb=https://injiweb.dev.mosip.net/issuers
+InsuranceUrl=https://registry.dev.mosip.net/api/v1/Insurance
+actuatorMimotoEndpoint=/v1/mimoto/actuator/dev
+eSignetbaseurl=https://esignet-mosipid.dev.mosip.net
+Note:- all are config properties has to be updated by replacing the 'dev' with actual env name/url
+
+update src\test\resources\config.properties
+issuerSearchText=National Identity Department
+issuerSearchTextforSunbird=StayProtected Insurance
+
+Note :- update as per the env ex. if it needs to select the for dev use it as 'National Identity Department (dev)'
+```
+---
+
+
 ## Refresh Token Generation Steps
 
 1. Open the following URL in your browser (replace placeholders with actual values):
@@ -100,17 +124,3 @@ ui-test/test-output/
 ```
 
 ---
-
-## Extent Report — Environment Details
-
-To include environment and system details in the Extent Report dashboard, add the following snippet to `ExtentReportManager.java`:
-
-```java
-	extent.setSystemInfo("Git Branch", branch != null ? branch : "N/A");
-	extent.setSystemInfo("Commit ID", commitId != null ? commitId : "N/A");
-	extent.setSystemInfo("TEST_URL", testUrl);
-	extent.setSystemInfo("Execution Time", timestamp);
-
-```
-
-This enhances traceability and adds execution context to your HTML report.

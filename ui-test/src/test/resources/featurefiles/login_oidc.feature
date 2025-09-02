@@ -9,8 +9,7 @@ Feature: OIDC Login for InjiWeb
     Then user verify the toggle button
     And user enters the passcode for confirmation "<wrongConfirmation1>"
     And user click on submit button
-    Then user prints error message for mismatch
-    Then user prints verify message for mismatch
+    Then user verify error message for mismatch
     And user enters the passcode for confirmation "<stringPasscode>"
     Then user click on toggle button for confirmation
     And user enters the passcode for confirmation "<initialPasscode>"
@@ -162,7 +161,7 @@ Feature: OIDC Login for InjiWeb
     And user enters the passcode "<resetPasscode>"
     And user enters the passcode for confirmation "<wrongConfirmation1>"
     And user click on submit button
-    Then user prints verify message for mismatch
+    Then user verify error message for mismatch
     And user enters the passcode for confirmation "<resetPasscode>"
     And user click on submit button
     Then user click on dropdown box for profile
@@ -183,4 +182,77 @@ Feature: OIDC Login for InjiWeb
 
     Examples:
       | resetPasscode | wrongConfirmation1 |
-      | 111111        | 123455             |
+      | 111111        | 123455            |
+
+  @oidcLogin
+  Scenario Outline: User verify reset passcode attempts
+    When user performs token-based login using Gmail refresh token
+    And user enters the passcode "<initialPasscode>"
+    And user click on submit button
+    Then user click on dropdown box for profile
+    Then user click on logout button
+    When user performs token-based login using Gmail refresh token
+    And user enters the wrong passcode "<wrongConfirmation1>" to lessthan max failed attempts
+    And user enters the passcode "<initialPasscode>"
+    And user click on submit button
+    Then user click on dropdown box for profile
+    Then user click on logout button
+
+    Examples:
+      | initialPasscode | wrongConfirmation1 |
+      | 111111          | 123455             |
+
+
+  @oidcLogin @skipBasedOnThreshold
+  Scenario Outline: User verify passcode lock and reset flow
+    When user performs token-based login using Gmail refresh token
+    And user enters the wrong passcode "<wrongConfirmation1>" for max failed attempts
+    Then user wait for temporary lock to expire
+    And user enters the passcode "<initialPasscode>"
+    And user click on submit button
+    Then user click on dropdown box for profile
+    Then user click on logout button
+
+    Examples:
+      | initialPasscode | wrongConfirmation1 |
+      | 111111          | 123455             |
+
+
+  @oidcLogin @skipBasedOnThreshold
+  Scenario Outline: User verify lock then less-than max attempts after reset
+    When user performs token-based login using Gmail refresh token
+    And user enters the wrong passcode "<wrongConfirmation1>" for max failed attempts
+    Then user wait for temporary lock to expire
+    And user enters the wrong passcode "<wrongConfirmation1>" to lessthan max failed attempts
+    And user enters the passcode "<initialPasscode>"
+    And user click on submit button
+    Then user click on dropdown box for profile
+    Then user click on logout button
+
+    Examples:
+      | initialPasscode | wrongConfirmation1 |
+      | 111111          | 123455             |
+
+
+  @oidcLogin @skipBasedOnThreshold
+  Scenario Outline: User verify permanent lock and forget passcode flow
+    When user performs token-based login using Gmail refresh token
+    And user enters the wrong passcode "<wrongConfirmation1>" for max failed attempts
+    Then user wait for temporary lock to expire
+    And user enters the wrong passcode "<wrongConfirmation1>" for max failed attempts
+    Then user wait for temporary lock to expire
+    Then user enters the wrong passcode "<wrongConfirmation1>" to lessthan max failed attempts before perm lock
+    Then user verify the warning message before to permanent lock
+    And user enters the passcode "<wrongConfirmation1>"
+    And user verify the wallet permanently locked
+    Then user click on forget passcode option
+    Then user click on forget passcode button
+    And user enters the passcode "<initialPasscode>"
+    And user enters the passcode for confirmation "<initialPasscode>"
+    And user click on submit button
+    Then user click on dropdown box for profile
+    Then user click on logout button
+
+    Examples:
+      | initialPasscode | wrongConfirmation1 |
+      | 111111          | 123455             |

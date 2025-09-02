@@ -3,6 +3,7 @@ package stepdefinitions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.testng.Assert.assertTrue;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,12 +11,16 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
+
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+
+import base.BasePage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -25,9 +30,11 @@ import pages.SetNetwork;
 import utils.BaseTest;
 import utils.ExtentReportManager;
 import utils.GlobelConstants;
-import utils.ScreenshotUtil;
 import utils.HttpUtils;
-
+import utils.ScreenshotUtil;
+import utils.BaseTest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StepDefOIDCLogin {
 
@@ -43,8 +50,8 @@ public class StepDefOIDCLogin {
 	private String sessionCookieValue;
 	String baseUrl = BaseTest.url;
 	String normalizedBaseUrl = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
+	private static final Logger logger = LoggerFactory.getLogger(StepDefOIDCLogin.class);
 
-	
 	public static void updateConfigProperty(String key, String value) throws IOException {
 		File file = new File("src/test/resources/config.properties");
 		Properties props = new Properties();
@@ -86,17 +93,14 @@ public class StepDefOIDCLogin {
 		}
 		driver.manage().deleteAllCookies();
 
-		Cookie myCookie = new Cookie.Builder(sessionCookieName, sessionCookieValue)
-				.path("/v1/mimoto")
-				.isHttpOnly(true)
-				.isSecure(true)
-				.build();
-		Thread.sleep(10000);
+		Cookie myCookie = new Cookie.Builder(sessionCookieName, sessionCookieValue).path("/v1/mimoto").isHttpOnly(true)
+				.isSecure(true).build();
+		BasePage.waitForSeconds(driver, 10);
 		driver.manage().addCookie(myCookie);
-		Thread.sleep(10000);
-		driver.navigate().refresh();		
+		BasePage.waitForSeconds(driver, 10);
+		driver.navigate().refresh();
 	}
-	
+
 	@Then("user enters the passcode {string}")
 	public void user_enters_passcode(String string) throws InterruptedException {
 		loginpage.enterPasscode(string);
@@ -562,7 +566,8 @@ public class StepDefOIDCLogin {
 		try {
 			loginpage.waituntilpagecompletelyloaded();
 			String currentUrl = loginpage.getCurrentUrluserresetpasscode();
-			assertEquals(currentUrl, normalizedBaseUrl + "user/reset-passcode", "URL did not match expected user reset passcode");
+			assertEquals(currentUrl, normalizedBaseUrl + "user/reset-passcode",
+					"URL did not match expected user reset passcode");
 			test.log(Status.PASS, "User successfully redirected to user reset pass code page");
 		} catch (AssertionError | NoSuchElementException e) {
 			test.log(Status.FAIL, "Assertion/Element error: " + e.getMessage());
@@ -855,6 +860,82 @@ public class StepDefOIDCLogin {
 	@Then("user click on collapse button again")
 	public void user_click_on_collpase_button_again() {
 		loginpage.clickOnCollapseButtonAgain();
+	}
+
+	@Then("user enters the wrong passcode {string} to lessthan max failed attempts")
+	public void user_enters_wrong_passcode_to_lessthan_max_failed_attempts(String wrongPasscode) throws Exception {
+		// Get maxFailedAttempts from actuator and subtract 1
+		int noOfTimes = BaseTest.getWalletPasscodeSettings().get("maxFailedAttempts") - 1;
+
+		for (int i = 1; i <= noOfTimes; i++) {
+			loginpage.enterPasscode(wrongPasscode);
+			loginpage.clickonSubmitButton();
+			assertTrue(loginpage.isMismatchErroDisplayed(), "After attempt " + i + ": Error Message is not displayed");
+			assertTrue(!loginpage.isSubmitButtonEnabled(), "After attempt " + i + ": Submit button disabled");
+		}
+	}
+
+	@Then("user enters the wrong passcode {string} to lessthan max failed attempts before perm lock")
+	public void user_enters_wrong_passcode_to_lessthan_max_failed_beforeperm_attempts(String wrongPasscode)
+			throws Exception {
+		// Get maxFailedAttempts from actuator and subtract 1
+		int noOfTimes = BaseTest.getWalletPasscodeSettings().get("maxFailedAttempts") - 1;
+
+		for (int i = 1; i <= noOfTimes; i++) {
+			loginpage.enterPasscode(wrongPasscode);
+			loginpage.clickonSubmitButton();
+			assertTrue(!loginpage.isSubmitButtonEnabled(), "After attempt " + i + ": Submit button disabled");
+		}
+	}
+
+	@Then("user enters the wrong passcode {string} for max failed attempts")
+	public void user_enters_wrong_passcode_for_max_failed_attempts(String wrongPasscode) throws Exception {
+		logger.info("Maximum no.of attempts:" + BaseTest.getWalletPasscodeSettings().get("maxFailedAttempts"));
+
+		int maxNoOfTimes = BaseTest.getWalletPasscodeSettings().get("maxFailedAttempts");
+
+		for (int i = 1; i <= maxNoOfTimes; i++) {
+			loginpage.enterPasscode(wrongPasscode);
+			loginpage.clickonSubmitButton();
+
+			if (i < maxNoOfTimes) {
+				assertTrue(loginpage.isMismatchErroDisplayed(),
+						"After attempt " + i + ": Mismatch error not displayed");
+				assertTrue(!loginpage.isSubmitButtonEnabled(),
+						"After attempt " + i + ": Submit button should be enabled");
+			} else {
+				assertTrue(loginpage.isTempLockErroDisplayed(),
+						"After attempt " + i + ": Temp lock error not displayed");
+				assertFalse(loginpage.isSubmitButtonEnabled(),
+						"After attempt " + i + ": Submit button should be disabled");
+				assertTrue(loginpage.isPasscodeInputDisabled(),
+						"After attempt " + i + ": Pass code not disabled after max fail");
+			}
+		}
+	}
+
+	@Then("user wait for temporary lock to expire")
+	public void user_wait_for_tempory_lock_to_expire() throws InterruptedException, Exception {
+		logger.info("Temp Lock time:" + BaseTest.getWalletPasscodeSettings().get("retryBlockedUntil") * 60);
+
+		BasePage.waitForSeconds(driver, (BaseTest.getWalletPasscodeSettings().get("retryBlockedUntil") * 60) - 10);
+		driver.navigate().refresh();
+		assertTrue(!loginpage.isSubmitButtonEnabled(), "Before temporaty lock Expire Submit button is enabled");
+		BasePage.waitForSeconds(driver, BaseTest.getWalletPasscodeSettings().get("retryBlockedUntil") * 60);
+		driver.navigate().refresh();
+		loginpage.waitUntilPasscodeEnabled();
+		assertTrue(!loginpage.isPasscodeInputDisabled(), "Passocde button is not enabled after temporaty lock Expire");
+	}
+
+	@Then("user verify the warning message before to permanent lock")
+	public void user_verify_warning_message_before_permanent_lock() throws InterruptedException {
+		assertTrue(loginpage.isPermLockWarningMsgDisplayed(), "Warning message before temp lock is not displayed");
+	}
+
+	@Then("user verify the wallet permanently locked")
+	public void user_verify_the_wallet_permanently_locked() throws InterruptedException {
+		assertTrue(!loginpage.isPermLockMsgDisplayed(), "Permanent lock message is not displayed");
+
 	}
 
 }
