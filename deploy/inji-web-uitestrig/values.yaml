@@ -51,7 +51,7 @@ service:
 
 image:
   registry: docker.io
-  repository: mosipdev/pmptest
+  repository: mosipqa/uitest-pmp-v2
   tag: develop
 
   ## Specify a imagePullPolicy
@@ -455,30 +455,12 @@ istio:
       - DELETE
 
 modules:
-  - name: adminui
-    enabled: false
-    image:
-      registry: docker.io
-      repository: mosipqa/admintest
-      tag: develop
-  - name: pmpui
-    enabled: false
-    image:
-      registry: docker.io
-      repository: mosipqa/pmptest
-      tag: develop
-  - name: residentui
-    enabled: false
-    image:
-      registry: docker.io
-      repository: mosipqa/residenttest
-      tag: develop
-  - name: verifyui
+  - name: injiweb-ui
     enabled: true
     image:
       registry: docker.io
-      repository: mosipid/uitest-verify
-      tag: 0.13.0
+      repository: mosipqa/uitest-web
+      tag: develop
 
 crontime: "0 3 * * *"    ## run cronjob every day at 3 AM (time hr: 0-23 )
 
@@ -540,6 +522,7 @@ uitestrig:
         sleep 5
         cd /home/${container_user}/
         bash ./entrypoint.sh
+  secrets:
   volumes:
     configmaps:
       scripts:

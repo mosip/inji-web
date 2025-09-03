@@ -97,7 +97,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NAMESPACE: ${{ secrets.dev_namespace_docker_hub }}
-      SERVICE_NAME: ui-test
+      SERVICE_NAME: uitest-web
       SERVICE_LOCATION: ui-test
       BUILD_ARTIFACT: ui-test-local
     steps:
