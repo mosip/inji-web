@@ -9,6 +9,7 @@ declare global {
             DEFAULT_TITLE: string;
             DEFAULT_FONT_URL: string;
             MIMOTO_URL: string;
+            IGNORED_ISSUER_IDS: string;
         }
     }
 }
