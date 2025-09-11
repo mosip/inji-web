@@ -290,6 +290,36 @@ describe('Passcode', () => {
         expect(mockNavigate).toHaveBeenCalledWith("/previous-url");
     })
 
+    test("should clear passcode input fields when wrong passcode is entered during unlock wallet", async () => {
+        const expectedErrorMsg = "The passcode doesn't seem right. Please try again, or tap 'Forgot Passcode' if you need help resetting it";
+        // Mock wallet exists
+        mockApiResponseSequence([
+            { data: successWalletResponse }, // fetchWallets
+            { error: { response: { data: { errorCode: "incorrect_passcode" } } }, status: 400 } // unlockWallet
+        ]);
+
+        renderWithProviders(<PasscodePage />);
+
+        await waitFor(() => {
+            expect(mockUseApi.fetchData).toHaveBeenCalledTimes(1);
+        });
+
+        // Enter passcode
+        await enterPasscode();
+        const inputs = screen.getAllByTestId('input-passcode');
+        inputs.forEach(input => expect(input).toHaveValue('1'));
+
+        // Submit
+        userEvent.click(screen.getByTestId("btn-submit-passcode"));
+
+        // Wait for error and check inputs are cleared
+        await waitFor(() => {
+            inputs.forEach(input => expect(input).toHaveValue(''));
+        });
+
+        await verifyPasscodeErrorAndInteractiveElementStatus(expectedErrorMsg, false, "", true, "error-msg-passcode");
+    });
+
     const enterPasscode = async () => {
         await screen.findByTestId("passcode-container");
         const inputs = screen.getAllByTestId('input-passcode');

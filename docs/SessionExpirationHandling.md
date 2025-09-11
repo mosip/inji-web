@@ -11,7 +11,7 @@ In an expired session when user tries to perform an action that requires authent
 the frontend will receive a 401 Unauthorized response from the backend. 
 The frontend will then redirect the user to the root page, where they can re-authenticate by clicking `Login with *`. To capture this for multiple actions, an interceptor is used to handle the 401 Unauthorized response and redirect the user to login again.
 
-## Storing of previous page url in AppStorage
+## Storing of current page url in AppStorage
 
 When the user is asked for re-login due to session expiry while performing any authenticated action, the current page URL (or the page they were trying to access) is stored in the AppStorage (session storage). This allows the application to redirect the user back to that page after successful authentication.
 
@@ -23,20 +23,21 @@ When the user is asked for re-login due to session expiry while performing any a
 ## Technical Sequence Diagram
 
 Actors involved:
-1. **Backend** (Mimoto) - Handles API requests and responses.
-2. **Frontend Interceptor** - Intercepts API calls and handles session management.
+1. **User** - The end user interacting with the application.
+2. **AppStorage** - Manages session storage & local storage for the application.
 3. **Frontend** (Inji Web) - The user interface that interacts with the backend.
-4. **AppStorage** - Manages session storage & local storage for the application.
-5. **User** - The end user interacting with the application.
+4. **Frontend Interceptor** - Intercepts API calls and handles session management.
+5. **Backend** (Mimoto) - Handles API requests and responses.
 
 ```mermaid
 
 sequenceDiagram
-    participant be as Backend (Mimoto)
-    participant interceptor as Frontend<br/> Interceptor
-    participant fe as Frontend (Inji Web)
-    participant AppStorage
     participant user as User
+    participant AppStorage
+    participant fe as Frontend (Inji Web)
+    participant interceptor as Frontend<br/> Interceptor
+    participant be as Backend (Mimoto)
+    
     
     note over be, user: Scenario: User is logged in , session has expired,<br/> and user tries to access any protected page (Eg - stored cards)
     
