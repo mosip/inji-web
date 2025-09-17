@@ -1,0 +1,83 @@
+extraEnvVarsCM:
+  - global
+  - s3
+  - keycloak-host
+  - db
+  - uitestrig
+  - config-server-share
+  - artifactory-share
+## Secret with extra environment variables
+##
+extraEnvVarsSecret:
+  - s3
+  - keycloak-client-secrets
+  - postgres-postgresql
+
+modules:
+  - name: injiweb-ui
+    enabled: true
+    image:
+      registry: docker.io
+      repository: mosipqa/uitest-web
+      tag: 0.14.x
+
+crontime: "0 3 * * *"    ## run cronjob every day at 3 AM (time hr: 0-23 )
+
+uitestrig:
+  configmaps:
+    s3:
+      s3-host: 'http://minio.minio:9000'
+      s3-user-key: 'admin'
+      s3-region: ''
+    db:
+      db-port: '5432'
+      db-su-user: 'postgres'
+      db-server: 'api-internal.sandbox.xyz.net'
+    uitestrig:
+      apiInternalEndPoint: 'https://api-internal.sandbox.xyz.net'
+      apiEnvUser: 'api-internal.sandbox.xyz.net'
+      PmpPortalPath: 'https://pmp.sandbox.xyz.net'
+      adminPortalPath: 'https://admin.sandbox.xyz.net'
+      residentPortalPath: 'https://resident.sandbox.xyz.net'
+      CHROME_DRIVER_CPU_LIMIT: "2"
+      CHROME_DRIVER_MEMORY: 3g
+      env: https://injiweb.sandbox.xyz.net/
+      ENV_ENDPOINT: https://api-internal.sandbox.xyz.net
+      ENV_TESTLEVEL: smokeAndRegression
+      TEST_URL: <test_url>  # provide test url
+      ENV_USER: api-internal.released
+      InsuranceUrl: https://registry.sandbox.xyz.net/api/v1/Insurance
+      MOSIP_INJIWEB_GOOGLE_REFRESH_TOKEN: <token> # pass the token
+      MOSIP_INJIWEB_GOOGLE_CLIENT_ID: <client_id> # pass the google client id
+      MOSIP_INJIWEB_GOOGLE_CLIENT_SECRET: <secret> # pass the google client secret
+      NS: <namespace>  # provide the namespace
+      injiWebUi: https://injiweb.sandbox.xyz.net/
+      actuatorMimotoEndpoint: /v1/mimoto/actuator/env
+      eSignetbaseurl: https://esignet-mosipid.sandbox.xyz.net
+      injiverify: https://injiverify.sandbox.xyz.net/
+      injiweb: https://injiweb.sandbox.xyz.net/issuers
+      loginlang: sin
+      mosip_inji_web_url: https://injiweb.sandbox.xyz.net/
+      mosip_components_base_urls: auditmanager=api-internal.sandbox.xyz.net;idrepository=api-internal.sandbox.xyz.net;partnermanager=api-internal.sandbox.xyz.net;idauthentication=api-internal.sandbox.xyz.net;policymanager=api-internal.sandbox.xyz.net;authmanager=api-internal.sandbox.xyz.net;resident=api-internal.sandbox.xyz.net;preregistration=api-internal.sandbox.xyz.net;masterdata=api-internal.sandbox.xyz.net;idgenerator=api-internal.sandbox.xyz.net;
+      verifyPortalPath: https://injiverify.sandbox.xyz.net
+      push-reports-to-s3: 'yes'
+      s3-account: uitestrig
+      BROWSERSTACK_ACCESS_KEY: <Access_key>
+      BROWSERSTACK_USERNAME: <User_name>
+    scripts:
+      fetch_docker_image_hash_ids.sh: |
+        #!/bin/bash
+        sleep 5
+        export DOCKER_HASH_ID=$( kubectl get pod "$HOSTNAME" -n "$NS" -o jsonpath='{.status.containerStatuses[*].imageID}' | sed 's/ /\n/g' | grep -v 'istio' | sed 's/docker\-pullable\:\/\///g' )
+        export DOCKER_IMAGE=$( kubectl get pod "$HOSTNAME" -n "$NS" -o jsonpath='{.status.containerStatuses[*].image}' | sed 's/ /\n/g' | grep -v 'istio' | sed 's/docker\-pullable\:\/\///g' )
+        if [[ -z $DOCKER_HASH_ID ]]; then
+        echo "DOCKER_HASH_ID IS EMPTY;EXITING";
+        exit 1;
+        fi
+        echo "DOCKER_HASH_ID ; $DOCKER_HASH_ID"
+        echo "DOCKER_IMAGE : $DOCKER_IMAGE"
+        kubectl get pods -A -o=jsonpath='{range .items[*]}{.metadata.namespace}{","}{.metadata.labels.app\.kubernetes\.io\/name}{","}{.status.containerStatuses[?(@.name!="istio-proxy")].image}{","}{.status.containerStatuses[?(@.name!="istio-proxy")].imageID}{","}{.metadata.creationTimestamp}{"\n"}' | sed 's/ /\n/g' | grep -vE 'istio*|longhorn*|cattle*|rancher|kube' | sed 's/docker\-pullable\:\/\///g' | sort -u | sed '/,,,/d' | awk -F ',' 'BEGIN {print "{ \"POD_NAME\": \"'$(echo $HOSTNAME)'\", \"DOCKER_IMAGE\": \"'$(echo $DOCKER_IMAGE)'\", \"DOCKER_HASH_ID\": \"'$(echo $DOCKER_HASH_ID)'\", \"k8s-cluster-image-list\": ["} {print "{"} {print "\"namespace\": \"" $1 "\","} {print "\"app_name\": \"" $2 "\","} {print "\"docker_image_name\": \"" $3 "\","} {print "\"docker_image_id\": \"" $4 "\","} {print "\"creation_timestamp\": \"" $5 "\"" } {print "},"} END {print "]}"}' | sed -z 's/},\n]/}\n]/g' | jq -r . | tee -a images-list.json
+        ## run entrypoint script
+        sleep 5
+        cd /home/${container_user}/
+        bash ./entrypoint.sh
