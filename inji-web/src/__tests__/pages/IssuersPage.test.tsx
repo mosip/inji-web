@@ -8,6 +8,7 @@ import {RequestStatus} from "../../utils/constants";
 import {mockIssuerObjectList, mockStore} from "../../test-utils/mockObjects";
 import {IssuersPage} from "../../pages/IssuersPage";
 import {api} from "../../utils/api";
+import {storeFilteredIssuers, storeIssuers} from "../../redux/reducers/issuersReducer";
 
 jest.mock("react-redux", () => ({
     ...jest.requireActual('react-redux'),
@@ -94,6 +95,57 @@ describe("IssuersPage", () => {
             apiConfig: api.fetchIssuers,
         });
         expect(mockDispatch).toHaveBeenCalledTimes(2);
+    });
+
+    it("should exclude issuers specified in IGNORED_ISSUER_IDS when storing issuers list in redux", async () => {
+        mockIsUserLoggedIn.mockReturnValue(false);
+        mockUseApi.state = RequestStatus.DONE;
+        mockApiResponse({
+            data: {response: {issuers: mockIssuerObjectList}},
+            state: RequestStatus.DONE,
+        });
+        window._env_.IGNORED_ISSUER_IDS = "issuer1";
+
+        render(<IssuersPage/>);
+
+        await waitFor(() => {
+            expect(mockFetchUserProfile).not.toHaveBeenCalled();
+        });
+        expect(mockUseApi.fetchData).toHaveBeenCalledWith({
+            apiConfig: api.fetchIssuers,
+        });
+
+        expect(mockDispatch).toHaveBeenCalledTimes(2);
+        // Verify that the dispatched data excludes issuers with IDs in IGNORED_ISSUER_IDS
+        const filteredIssuers = mockIssuerObjectList.filter(
+            (issuer) => !issuer.issuer_id.includes("issuer1")
+        );
+        expect(mockDispatch).toHaveBeenCalledWith(storeFilteredIssuers(filteredIssuers));
+        expect(mockDispatch).toHaveBeenCalledWith(storeIssuers(filteredIssuers));
+    });
+
+    it("should store all issuers in redux when IGNORED_ISSUER_IDS env variable is empty", async () => {
+        mockIsUserLoggedIn.mockReturnValue(false);
+        mockUseApi.state = RequestStatus.DONE;
+        mockApiResponse({
+            data: {response: {issuers: mockIssuerObjectList}},
+            state: RequestStatus.DONE,
+        });
+        window._env_.IGNORED_ISSUER_IDS = "";
+
+        render(<IssuersPage />);
+
+        await waitFor(() => {
+            expect(mockFetchUserProfile).not.toHaveBeenCalled();
+        });
+        expect(mockUseApi.fetchData).toHaveBeenCalledWith({
+            apiConfig: api.fetchIssuers,
+        });
+
+        expect(mockDispatch).toHaveBeenCalledTimes(2);
+        // Verify that all issuers are dispatched to the store
+        expect(mockDispatch).toHaveBeenCalledWith(storeFilteredIssuers(mockIssuerObjectList));
+        expect(mockDispatch).toHaveBeenCalledWith(storeIssuers(mockIssuerObjectList));
     });
 
     it("should fetch user profile and issuers when user is logged in", async () => {
