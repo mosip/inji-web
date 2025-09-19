@@ -44,6 +44,7 @@ import io.cucumber.plugin.event.PickleStepTestStep;
 import io.cucumber.plugin.event.TestStep;
 import io.mosip.testrig.apirig.utils.ConfigManager;
 import io.mosip.testrig.apirig.utils.S3Adapter;
+import org.openqa.selenium.Dimension;
 
 public class BaseTest {
 	public void setDriver(WebDriver driver) {
@@ -66,7 +67,17 @@ public class BaseTest {
 	private static final Logger logger = LoggerFactory.getLogger(BaseTest.class);
 	private static ThreadLocal<Boolean> skipScenario = ThreadLocal.withInitial(() -> false);
 	private static ThreadLocal<String> skipReason = new ThreadLocal<>();
+	private static final ThreadLocal<Boolean> mobileViewFlag = ThreadLocal.withInitial(() -> false);
 
+	public static void setMobileView(boolean isMobile) {
+	    mobileViewFlag.set(isMobile);
+	}
+	public static boolean isMobileView() {
+	    return mobileViewFlag.get();
+	}
+	public static void clearMobileView() {
+	    mobileViewFlag.remove();
+	}
 	public static final String url = System.getenv("TEST_URL") != null && !System.getenv("TEST_URL").isEmpty()
 			? System.getenv("TEST_URL")
 			: InjiWebConfigManager.getproperty("injiWebUi");
@@ -115,7 +126,14 @@ public class BaseTest {
 
 		driver = new RemoteWebDriver(new URL(URL), capabilities);
 		jse = (JavascriptExecutor) driver;
+	    setMobileView(scenario.getSourceTagNames().contains("@mobileview"));
+	    if (isMobileView()) {
+	        driver.manage().window().setSize(new Dimension(390, 844));
+	        logger.info("📱 Running in Mobile View for scenario: {}", scenario.getName());
+	    } else {
 		driver.manage().window().maximize();
+	        logger.info("💻 Running in Desktop View for scenario: {}", scenario.getName());
+	    }
 		driver.get(url);
 	}
 
@@ -181,8 +199,16 @@ public class BaseTest {
 				ExtentReportManager.getTest().pass("✅ Scenario Passed: " + scenario.getName());
 			}
 		} finally {
+	        if (driver != null) {
+	            try {
+	                driver.quit();
+	            } catch (Exception e) {
+	                logger.error("Error quitting WebDriver", e);
+	            }
+	        }
 			ExtentReportManager.flushReport();
 			clearSkip();
+			clearMobileView();
 		}
 	}
 

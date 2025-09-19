@@ -937,5 +937,9 @@ public class StepDefOIDCLogin {
 		assertTrue(!loginpage.isPermLockMsgDisplayed(), "Permanent lock message is not displayed");
 
 	}
+	@Then("user click on hamburger menu")
+	public void user_click_on_hamburger_menu() {
+		loginpage.clickOnHamburgerMenu();
+	}
 
 }

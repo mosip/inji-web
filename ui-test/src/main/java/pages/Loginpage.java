@@ -478,5 +478,8 @@ public class Loginpage extends BasePage {
 	public void waitUntilPasscodeEnabled() {
 		waitUntilElementEnabled(driver, By.cssSelector("input[data-testid='input-passcode']"), 10);
 	}
+	public void clickOnHamburgerMenu() {
+		clickOnElement(driver, By.xpath("//div[@data-testid='hamburger-menu']"));
+	}
 
 }
