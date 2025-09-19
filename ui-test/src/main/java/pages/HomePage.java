@@ -95,9 +95,7 @@ public class HomePage extends BasePage {
 	}
 
 	public void clickOnVerify() {
-		if (isElementIsVisible(driver, By.xpath("//button[@id='verify_otp']"))) {
 			clickOnElement(driver, By.xpath("//button[@id='verify_otp']"));
-		}
 	}
 
 	public Boolean isSuccessMessageDisplayed() {
@@ -106,6 +104,10 @@ public class HomePage extends BasePage {
 
 	public Boolean isMosipNationalIdDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
+	}
+	
+	public Boolean isIssuersDisplayed() {
+		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),15);
 	}
 
 	public void enterIssuersInSearchBox(String string) {

@@ -194,13 +194,14 @@ Feature: OIDC Login for InjiWeb
     When user performs token-based login using Gmail refresh token
     And user enters the wrong passcode "<wrongConfirmation1>" to lessthan max failed attempts
     And user enters the passcode "<initialPasscode>"
-    And user click on submit button    
+    And user click on submit button
     Then user click on dropdown box for profile
     Then user click on logout button
 
     Examples:
       | initialPasscode | wrongConfirmation1 |
-      | 111111          | 123455            |
+      | 111111          | 123455             |
+
 
   @oidcLogin @skipBasedOnThreshold
   Scenario Outline: User verify passcode lock and reset flow
@@ -212,6 +213,13 @@ Feature: OIDC Login for InjiWeb
     Then user click on dropdown box for profile
     Then user click on logout button
 
+    Examples:
+      | initialPasscode | wrongConfirmation1 |
+      | 111111          | 123455             |
+
+
+  @oidcLogin @skipBasedOnThreshold
+  Scenario Outline: User verify lock then less-than max attempts after reset
     When user performs token-based login using Gmail refresh token
     And user enters the wrong passcode "<wrongConfirmation1>" for max failed attempts
     Then user wait for temporary lock to expire
@@ -221,6 +229,13 @@ Feature: OIDC Login for InjiWeb
     Then user click on dropdown box for profile
     Then user click on logout button
 
+    Examples:
+      | initialPasscode | wrongConfirmation1 |
+      | 111111          | 123455             |
+
+
+  @oidcLogin @skipBasedOnThreshold
+  Scenario Outline: User verify permanent lock and forget passcode flow
     When user performs token-based login using Gmail refresh token
     And user enters the wrong passcode "<wrongConfirmation1>" for max failed attempts
     Then user wait for temporary lock to expire
@@ -240,4 +255,4 @@ Feature: OIDC Login for InjiWeb
 
     Examples:
       | initialPasscode | wrongConfirmation1 |
-      | 111111          | 123455            |
+      | 111111          | 123455             |
