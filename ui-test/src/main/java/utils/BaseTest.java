@@ -45,7 +45,6 @@ import io.cucumber.plugin.event.TestStep;
 import io.mosip.testrig.apirig.utils.ConfigManager;
 import io.mosip.testrig.apirig.utils.S3Adapter;
 
-
 public class BaseTest {
 	public void setDriver(WebDriver driver) {
 		this.driver = driver;
@@ -54,7 +53,7 @@ public class BaseTest {
 	private static int passedCount = 0;
 	private static int failedCount = 0;
 	private static int totalCount = 0;
-	 private static int skippedCount = 0;
+	private static int skippedCount = 0;
 	public static WebDriver driver;
 	private long scenarioStartTime;
 	public static JavascriptExecutor jse;
@@ -71,28 +70,28 @@ public class BaseTest {
 	public static final String url = System.getenv("TEST_URL") != null && !System.getenv("TEST_URL").isEmpty()
 			? System.getenv("TEST_URL")
 			: InjiWebConfigManager.getproperty("injiWebUi");
-	
-    public static boolean isScenarioSkipped() {
-        return skipScenario.get();
-    }
 
-    public static String getSkipReason() {
-        return skipReason.get();
-    }
+	public static boolean isScenarioSkipped() {
+		return skipScenario.get();
+	}
 
-    public static void markScenarioSkipped(String reason) {
-        skipScenario.set(true);
-        skipReason.set(reason);
-    }
+	public static String getSkipReason() {
+		return skipReason.get();
+	}
 
-    public static void clearSkip() {
-        skipScenario.set(false);
-        skipReason.remove();
-    }
+	public static void markScenarioSkipped(String reason) {
+		skipScenario.set(true);
+		skipReason.set(reason);
+	}
+
+	public static void clearSkip() {
+		skipScenario.set(false);
+		skipReason.remove();
+	}
 
 	@Before
 	public void beforeAll(Scenario scenario) throws MalformedURLException {
-	     clearSkip();
+		clearSkip();
 		Local bsLocal = new Local();
 		HashMap<String, String> bsLocalArgs = new HashMap<>();
 		bsLocalArgs.put("key", accessKey);
@@ -119,47 +118,45 @@ public class BaseTest {
 		driver.manage().window().maximize();
 		driver.get(url);
 	}
-	
+
 	@Before("@skipBasedOnThreshold")
 	public void skipScenarioBasedOnThreshold(Scenario scenario) {
-	    try {
-	        int retryBlockedUntil = getWalletPasscodeSettings().get("retryBlockedUntil");
-	        String envThreshold = System.getenv("THRESH_TEMP_LOCK");
-	        int THRESH_TEMP_LOCK = (envThreshold != null && !envThreshold.isEmpty())
-	                ? Integer.parseInt(envThreshold)
-	                : 1;
+		try {
+			int retryBlockedUntil = getWalletPasscodeSettings().get("retryBlockedUntil");
+			String envThreshold = System.getenv("THRESH_TEMP_LOCK");
+			int THRESH_TEMP_LOCK = (envThreshold != null && !envThreshold.isEmpty()) ? Integer.parseInt(envThreshold)
+					: 1;
 
-	        if (retryBlockedUntil > THRESH_TEMP_LOCK) {
-	            String reason = "Threshold not met: retryBlockedUntil(" + retryBlockedUntil +
-	                    ") < THRESH_TEMP_LOCK(" + THRESH_TEMP_LOCK + ")";
-	            markScenarioSkipped(reason);
-	            throw new SkipException("Scenario skipped due to threshold: " + reason);
-	        }
-	    } catch (Exception e) {
-	        logger.error("Error checking threshold for skipping scenario", e);
-	    }
+			if (retryBlockedUntil > THRESH_TEMP_LOCK) {
+				String reason = "Threshold not met: retryBlockedUntil(" + retryBlockedUntil + ") < THRESH_TEMP_LOCK("
+						+ THRESH_TEMP_LOCK + ")";
+				markScenarioSkipped(reason);
+				throw new SkipException("Scenario skipped due to threshold: " + reason);
+			}
+		} catch (Exception e) {
+			logger.error("Error checking threshold for skipping scenario", e);
+		}
 	}
-
 
 	@BeforeStep
 	public void beforeStep(Scenario scenario) {
 		String stepName = getStepName(scenario);
-        if (isScenarioSkipped()) {
-            ExtentCucumberAdapter.getCurrentStep().log(Status.SKIP, "⏭ Step Skipped: " + stepName + " — " + getSkipReason());
-            throw new io.cucumber.java.PendingException("Scenario skipped: " + getSkipReason());
-        }
+		if (isScenarioSkipped()) {
+			ExtentCucumberAdapter.getCurrentStep().log(Status.SKIP,
+					"⏭ Step Skipped: " + stepName + " — " + getSkipReason());
+			throw new io.cucumber.java.PendingException("Scenario skipped: " + getSkipReason());
+		}
 		ExtentCucumberAdapter.getCurrentStep().log(Status.INFO, "➡️ Step Started: " + stepName);
 	}
 
-	
-	
 	@AfterStep
 	public void afterStep(Scenario scenario) {
 		String stepName = getStepName(scenario);
-        if (isScenarioSkipped()) {
-            ExtentCucumberAdapter.getCurrentStep().log(Status.SKIP, "⏭ Step Skipped: " + stepName + " — " + getSkipReason());
-            return;
-        }
+		if (isScenarioSkipped()) {
+			ExtentCucumberAdapter.getCurrentStep().log(Status.SKIP,
+					"⏭ Step Skipped: " + stepName + " — " + getSkipReason());
+			return;
+		}
 
 		if (scenario.isFailed()) {
 			ExtentCucumberAdapter.getCurrentStep().log(Status.FAIL, "❌ Step Failed: " + stepName);
@@ -171,22 +168,23 @@ public class BaseTest {
 
 	@After
 	public void afterScenario(Scenario scenario) {
-        try {
-            if (isScenarioSkipped()) {
-                skippedCount++;
-                ExtentReportManager.getTest().skip("⏭ Scenario Skipped: " + scenario.getName() + " — " + getSkipReason());
-            } else if (scenario.isFailed()) {
-                failedCount++;
-                ExtentReportManager.getTest().fail("❌ Scenario Failed: " + scenario.getName());
-            } else {
-                passedCount++;
-                ExtentReportManager.getTest().pass("✅ Scenario Passed: " + scenario.getName());
-            }
-        } finally {
-            ExtentReportManager.flushReport();
-            clearSkip();
-        }
-    }
+		try {
+			if (isScenarioSkipped()) {
+				skippedCount++;
+				ExtentReportManager.getTest()
+						.skip("⏭ Scenario Skipped: " + scenario.getName() + " — " + getSkipReason());
+			} else if (scenario.isFailed()) {
+				failedCount++;
+				ExtentReportManager.getTest().fail("❌ Scenario Failed: " + scenario.getName());
+			} else {
+				passedCount++;
+				ExtentReportManager.getTest().pass("✅ Scenario Passed: " + scenario.getName());
+			}
+		} finally {
+			ExtentReportManager.flushReport();
+			clearSkip();
+		}
+	}
 
 	private String getStepName(Scenario scenario) {
 		try {
@@ -248,7 +246,8 @@ public class BaseTest {
 		String originalFileName = ExtentReportManager.getCurrentReportFileName();
 		File originalReportFile = new File(System.getProperty("user.dir") + "/test-output/" + originalFileName);
 		String nameWithoutExt = originalFileName.replace(".html", "");
-	    String newFileName = nameWithoutExt + "-T-" + totalCount + "-P-" + passedCount + "-F-" + failedCount + "-S-" + skippedCount + ".html";
+		String newFileName = nameWithoutExt + "-T-" + totalCount + "-P-" + passedCount + "-F-" + failedCount + "-S-"
+				+ skippedCount + ".html";
 		File newReportFile = new File(System.getProperty("user.dir") + "/test-output/" + newFileName);
 
 		System.out.println("Attempting to rename report file...");
@@ -339,17 +338,17 @@ public class BaseTest {
 		return new String[] { issuerSearchText, issuerSearchTextforSunbird };
 	}
 
-	    private static HashMap<String, Integer> walletPasscodeSettingsCache;
+	private static HashMap<String, Integer> walletPasscodeSettingsCache;
 
-	    public static HashMap<String, Integer> getWalletPasscodeSettings() throws Exception {
-	        if (walletPasscodeSettingsCache == null) {
-	            HashMap<String, String> keyMap = new HashMap<>();
-	            keyMap.put("wallet.passcode.retryBlockedUntil", "retryBlockedUntil");
-	            keyMap.put("wallet.passcode.maxFailedAttemptsAllowedPerCycle", "maxFailedAttempts");
-	            keyMap.put("wallet.passcode.maxLockCyclesAllowed", "maxLockCycles");
+	public static HashMap<String, Integer> getWalletPasscodeSettings() throws Exception {
+		if (walletPasscodeSettingsCache == null) {
+			HashMap<String, String> keyMap = new HashMap<>();
+			keyMap.put("wallet.passcode.retryBlockedUntil", "retryBlockedUntil");
+			keyMap.put("wallet.passcode.maxFailedAttemptsAllowedPerCycle", "maxFailedAttempts");
+			keyMap.put("wallet.passcode.maxLockCyclesAllowed", "maxLockCycles");
 
-	            walletPasscodeSettingsCache = InjiWebUtil.getActuatorValues(keyMap);
-	        }
-	        return walletPasscodeSettingsCache;
-	    }
+			walletPasscodeSettingsCache = InjiWebUtil.getActuatorValues(keyMap);
+		}
+		return walletPasscodeSettingsCache;
 	}
+}
