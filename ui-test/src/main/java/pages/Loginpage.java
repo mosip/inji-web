@@ -40,7 +40,7 @@ public class Loginpage extends BasePage {
 	}
 
 	public void enterPasscode(String string) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(
 				By.xpath("//div[@data-testid='passcode-container']//input[@type='password' and @maxlength='1']")));
 
@@ -467,11 +467,19 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isPermLockWarningMsgDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//div/*[@data-testid='error-msg-passcode-last-attempt-before-lockout']"));
+		return isElementIsVisible(driver,
+				By.xpath("//div/*[@data-testid='error-msg-passcode-last-attempt-before-lockout']"));
 	}
-	
+
 	public Boolean isPermLockMsgDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//div/*[@data-testid='error-msg-passcode-permanently-locked']"));
+	}
+
+	public void waitUntilPasscodeEnabled() {
+		waitUntilElementEnabled(driver, By.cssSelector("input[data-testid='input-passcode']"), 10);
+	}
+	public void clickOnHamburgerMenu() {
+		clickOnElement(driver, By.xpath("//div[@data-testid='hamburger-menu']"));
 	}
 
 }

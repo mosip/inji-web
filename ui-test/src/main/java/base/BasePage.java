@@ -28,12 +28,6 @@ public class BasePage {
 		element.click();
 	}
 
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
-
-	public Logger getLogger() {
-		return logger;
-	}
-
 	public static boolean isElementIsVisible(WebDriver driver, By by) {
 		try {
 			(new WebDriverWait(driver, Duration.ofSeconds(30)))
@@ -41,6 +35,26 @@ public class BasePage {
 			return driver.findElement(by).isDisplayed();
 		} catch (Exception e) {
 			return false;
+		}
+	}
+
+	public static boolean isElementIsVisible(WebDriver driver, By by, int timeoutInSeconds) {
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds))
+					.until(ExpectedConditions.visibilityOfElementLocated(by));
+			return driver.findElement(by).isDisplayed();
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public static void clickOnElement(WebDriver driver, By locator, int timeoutInSeconds) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+			WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+			element.click();
+		} catch (Exception e) {
+			throw new RuntimeException("Failed to click on element: " + locator, e);
 		}
 	}
 
@@ -157,6 +171,11 @@ public class BasePage {
 		WebElement element = new WebDriverWait(driver, Duration.ofSeconds(30))
 				.until(ExpectedConditions.presenceOfElementLocated(locator));
 		return element.getAttribute(data);
+	}
+
+	public void waitUntilElementEnabled(WebDriver driver, By locator, int timeoutSeconds) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+		wait.until(ExpectedConditions.elementToBeClickable(locator));
 	}
 
 }
