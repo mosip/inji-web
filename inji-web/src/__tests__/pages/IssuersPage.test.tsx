@@ -8,7 +8,7 @@ import {RequestStatus} from "../../utils/constants";
 import {mockIssuerObjectList, mockStore} from "../../test-utils/mockObjects";
 import {IssuersPage} from "../../pages/IssuersPage";
 import {api} from "../../utils/api";
-import {storeFilteredIssuers, storeIssuers} from "../../redux/reducers/issuersReducer.ts";
+import {storeFilteredIssuers, storeIssuers} from "../../redux/reducers/issuersReducer";
 
 jest.mock("react-redux", () => ({
     ...jest.requireActual('react-redux'),
