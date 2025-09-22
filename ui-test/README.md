@@ -110,7 +110,7 @@ mvn clean package
 6. Run the test suite using:
 
 ```bash
-java -cp target/uitest-injiweb-0.12.0-SNAPSHOT.jar   -Dmodules=ui-test   -Denv.user=api-internal.released   -Denv.endpoint=https://api-internal.released.mosip.net   -Denv.testLevel=smokeAndRegression   runnerfiles.Runner testNgXmlFiles/masterSuite.xml
+java -cp target/uitest-injiweb-0.14.1-SNAPSHOT.jar   -Dmodules=ui-test   -Denv.user=api-internal.released   -Denv.endpoint=https://api-internal.released.mosip.net   -Denv.testLevel=smokeAndRegression   runnerfiles.Runner testNgXmlFiles/masterSuite.xml
 ```
 
 ---
