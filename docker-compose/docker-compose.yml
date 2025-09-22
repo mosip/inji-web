@@ -4,7 +4,7 @@ services:
 
   minio:
     container_name: 'minio-service'
-    image: bitnami/minio:2022.2.7-debian-10-r0
+    image: mosipint/minio:2022.2.7-debian-10-r0
     ports:
       - "9001:9001"
       - "9000:9000"
