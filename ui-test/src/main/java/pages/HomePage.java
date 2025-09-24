@@ -27,7 +27,30 @@ public class HomePage extends BasePage {
 			clickOnElement(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"));
 		}
 	}
+    public boolean verifyFaqTitlesDoNotContainInjiWeb() {
+        try {
+            List<String> faqTitles = getElementTexts(driver, By.xpath("//span[@data-testid='Faq-Item-Title-Text']"));
+            for (String title : faqTitles) {
+                if (title.toLowerCase().contains("inji web")) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public void clickOnFaqMobileView() {
+              clickOnElement(driver, By.xpath("//div[@data-testid='Header-Menu-Faq']"));
+      }
 
+    public int getXcordinateForSearch() {
+    	return getXCordinateValue(driver, By.xpath("//div[@data-testid='Search-Issuer-Container']"));
+        }
+    public int getXcordinateForCredentialHeading() {
+    	return getXCordinateValue(driver, By.xpath("//div/*[@data-testid='NavBar-Back-Arrow']"));
+        }
 	public boolean isFaqPageDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='Header-Menu-Faq']"));
 	}
@@ -323,6 +346,9 @@ public class HomePage extends BasePage {
 	public void clickOnContinueAsGuest() {
 		clickOnElement(driver, By.xpath("//button[@data-testid='home-banner-guest-login']"));
 	}
+	public void clickOnHamburgerMenu() {
+		clickOnElement(driver, By.xpath("(//div[@role='button'])[1]"));
+	}
 
 	public boolean isCredentialsSimplifiedDescriptionTextDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem1-FirstFeature-Description']"));
@@ -398,6 +424,9 @@ public class HomePage extends BasePage {
 
 	public boolean isSecureAndPrivateImageDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//*[@data-testid='HomeFeatureItem4-Image']"));
+	}
+	public boolean isNavButtonsDisplayed() {
+		return isElementIsVisible(driver, By.xpath("//div[@data-testid='HomeFeatures-NavButtons']"));
 	}
 
 	public boolean isWiderAccessAndCompatibilityImageDisplayed() {
