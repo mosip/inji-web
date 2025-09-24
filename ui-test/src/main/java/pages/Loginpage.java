@@ -529,6 +529,6 @@ public class Loginpage extends BasePage {
 		clickOnElement(driver, By.xpath("(//button[@data-testid='btn-download'])[2]"));
 	}
 	public void clickOnCancelDeleteCardOption() {
-		clickOnElement(driver, By.xpath("(//button[@data-testid='btn-cancel']"));
+		clickOnElement(driver, By.xpath("(//button[@data-testid='btn-cancel'])"));
 	}
 }
