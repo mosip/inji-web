@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.mosip.injiweb</groupId>
     <artifactId>uitest-injiweb</artifactId>
-    <version>0.14.1</version>
+    <version>0.14.1-SNAPSHOT</version>
     <name>inji-web-test</name>
     <description>Parent project of ui automation of injiweb</description>
     <url>https://github.com/mosip/inji-web</url>
