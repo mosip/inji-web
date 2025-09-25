@@ -3,11 +3,10 @@
 # DST_NS: Destination namespace 
 
 function copying_cm() {
-  COPY_UTIL=./copy_cm_func.sh
+  COPY_UTIL=../copy_cm_func.sh
   DST_NS=injiweb
 
   $COPY_UTIL configmap inji-stack-config default $DST_NS
-  $COPY_UTIL configmap config-server-share config-server $NS
   return 0
 }
 
