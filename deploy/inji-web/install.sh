@@ -7,7 +7,7 @@ if [ $# -ge 1 ] ; then
 fi
 
 NS=injiweb
-CHART_VERSION=0.14.0-develop
+CHART_VERSION=0.14.1
 
 DEFAULT_INJIWEB_HOST=$( kubectl get cm inji-stack-config -n config-server -o jsonpath={.data.injiweb-host} )
 # Check if INJIWEB_HOST is present under configmap/inji-stack-config of configserver

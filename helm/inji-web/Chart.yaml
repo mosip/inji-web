@@ -2,7 +2,7 @@ apiVersion: v2
 name: injiweb
 description: A Helm chart for MOSIP injiweb UI module
 type: application
-version: 0.14.0-develop
+version: 0.14.1
 appVersion: ""
 dependencies:
   - name: common
