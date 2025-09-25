@@ -18,8 +18,8 @@ modules:
     enabled: true
     image:
       registry: docker.io
-      repository: mosipid/uitest-web
-      tag: 0.14.1
+      repository: mosipdev/uitest-web
+      tag: release-0.14.x
 
 crontime: "0 3 * * *"    ## run cronjob every day at 3 AM (time hr: 0-23 )
 

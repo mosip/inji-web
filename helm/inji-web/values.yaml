@@ -51,8 +51,8 @@ service:
 
 image:
   registry: docker.io
-  repository: mosipid/inji-web
-  tag: 0.14.1
+  repository: mosipdev/inji-web
+  tag: release-0.14.x
 
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
