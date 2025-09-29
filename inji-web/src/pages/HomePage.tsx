@@ -6,6 +6,7 @@ import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
 import {useLocation} from 'react-router-dom';
 import {LoginFailedModal} from '../components/Login/LoginFailedModal'
+import { setLandingVisited } from "../utils/sessions";
 
 const Status = {
     SUCCESS: "success",
@@ -18,6 +19,10 @@ export const HomePage: React.FC = () => {
     const location = useLocation();
     const [isLoginFailed, setIsLoginFailed] = useState(false);
 
+    // to mark landing as visited
+    useEffect(() => {
+        setLandingVisited();
+    }, []);
 
     // to stop scrolling the blurred background when login failed modal is showing up, scrolling is locked.
     useEffect(() => {

@@ -23,6 +23,7 @@ import {ResetPasscodePage} from './pages/User/ResetPasscode/ResetPasscodePage';
 import {ProfilePage} from './pages/User/Profile/ProfilePage';
 import {Pages, ROUTES} from "./utils/constants";
 import {useInterceptor} from "./hooks/useInterceptor";
+import { LandingGuard } from "./components/Guards/LandingGuard";
 
 function RedirectToUserHome() {
     return <Navigate to={ROUTES.USER_HOME} replace/>;
@@ -101,9 +102,11 @@ export const AppRouter = () => {
                 />
                 <Route
                     path={Pages.ISSUERS}
-                    element={wrapElement(
-                        <IssuersPage className="mt-10 mb-20"/>
-                    )}
+                    element={
+                        <LandingGuard>
+                            {wrapElement(<IssuersPage className="mt-10 mb-20" />)}
+                        </LandingGuard>
+                    }
                 />
                 <Route
                     path={Pages.ISSUER_TEMPLATE}
@@ -111,7 +114,11 @@ export const AppRouter = () => {
                 />
                 <Route
                     path={Pages.FAQ}
-                    element={wrapElement(<FAQPage backUrl={ROUTES.ROOT}/>)}
+                    element={
+                        <LandingGuard>
+                            {wrapElement(<FAQPage backUrl={ROUTES.ROOT} />)}
+                        </LandingGuard>
+                    }
                 />
                 <Route
                     path={Pages.REDIRECT}
