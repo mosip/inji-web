@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 interface LandingGuardProps {
@@ -7,16 +7,26 @@ interface LandingGuardProps {
 
 export const LandingGuard: React.FC<LandingGuardProps> = ({ children }) => {
     const location = useLocation();
+    const [isLoading, setIsLoading] = useState(true);
+    const [visited, setVisited] = useState(false);
 
-    const hasVisitedLanding = () => {
+    useEffect(() => {
         try {
-            return sessionStorage.getItem("landingVisited") === "true";
+            const flag = sessionStorage.getItem("landingVisited") === "true";
+            setVisited(flag);
         } catch {
-            return false;
+            setVisited(false);
+        } finally {
+            setIsLoading(false);
         }
-    };
+    }, []);
 
-    if (!hasVisitedLanding()) {
+    if (isLoading) {
+        return null;
+    }
+
+
+    if (!visited) {
         return <Navigate to="/" replace state={{ from: location }} />;
     }
 
