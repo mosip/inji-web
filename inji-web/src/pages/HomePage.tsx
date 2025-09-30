@@ -5,8 +5,7 @@ import {HomeQuickTip} from "../components/Home/HomeQuickTip";
 import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
 import {useLocation} from 'react-router-dom';
-import {LoginFailedModal} from '../components/Login/LoginFailedModal'
-import { setLandingVisited } from "../utils/sessions";
+import {LoginFailedModal} from '../components/Login/LoginFailedModal';
 
 const Status = {
     SUCCESS: "success",
@@ -21,7 +20,12 @@ export const HomePage: React.FC = () => {
 
     // to mark landing as visited
     useEffect(() => {
-        setLandingVisited();
+        try {
+            sessionStorage.setItem("landingVisited", "true");
+            console.log("Landing page visited marked in sessionStorage");
+        } catch (e) {
+            console.warn("Unable to access sessionStorage", e);
+        }
     }, []);
 
     // to stop scrolling the blurred background when login failed modal is showing up, scrolling is locked.
@@ -37,7 +41,7 @@ export const HomePage: React.FC = () => {
         };
     }, [isLoginFailed]);
 
-    // If google login is failing,show login failed modal 
+    // If google login is failing,show login failed modal
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         if (params.get("status") === Status.FAILURE) {

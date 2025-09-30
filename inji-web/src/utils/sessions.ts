@@ -24,12 +24,3 @@ export const removeActiveSession = (state: string) => {
     const remainingSessions = getAllActiveSession().filter(session => session.state !== state);
     AppStorage.setItem(AppStorage.SESSION_INFO, JSON.stringify(remainingSessions));
 }
-
-export function setLandingVisited() {
-    document.cookie = "landingVisited=true; path=/";
-}
-
-export function hasVisitedLanding(): boolean {
-    return document.cookie.split("; ").some((c) => c.startsWith("landingVisited="));
-}
-
