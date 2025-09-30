@@ -78,6 +78,30 @@ describe('HomePage', () => {
     jest.clearAllMocks(); 
   });
 
+  test('sets landingVisited flag in sessionStorage on mount', () => {
+      const setItemSpy = jest.spyOn(window.sessionStorage.__proto__, 'setItem');
+      renderComponent();
+      expect(setItemSpy).toHaveBeenCalledWith('landingVisited', 'true');
+  });
+
+  test('logs a warning if sessionStorage.setItem fails', () => {
+      const setItemSpy = jest
+          .spyOn(window.sessionStorage.__proto__, 'setItem')
+          .mockImplementation(() => {
+              throw new Error('storage failed');
+          });
+
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+      renderComponent();
+
+      expect(setItemSpy).toHaveBeenCalledWith('landingVisited', 'true');
+      expect(warnSpy).toHaveBeenCalledWith(
+          'Unable to access sessionStorage',
+          expect.any(Error)
+      );
+  });
+
   test('renders HomeBanner, HomeFeatures, and HomeQuickTip components', () => {
     renderComponent();
     expect(screen.getByTestId('HomeBanner')).toBeInTheDocument();

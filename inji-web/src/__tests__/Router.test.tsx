@@ -101,7 +101,11 @@ describe("AppRouter", () => {
         {isLoggedIn: false, description: "guest mode", route: "/unknown", expectedText: /not found/i},
     ];
 
-    const guestModeRoutes = unProtectedRoutes
+    const guestModeRoutes = unProtectedRoutes.filter(
+        (route) => ![ROUTES.FAQ, ROUTES.ISSUERS, ROUTES.ISSUER("issuer1")].includes(route)
+    );
+
+    const protectedDeepLinks = [ROUTES.FAQ, ROUTES.ISSUERS, ROUTES.ISSUER("issuer1"),];
 
     it.each(routesWithHomeRedirectionOnLoggedIn)(
         "redirects to user home when logged in and url is $route",
@@ -177,4 +181,28 @@ describe("AppRouter", () => {
     function getPageLabelFromRoute(route: string): string {
         return `${route.charAt(1).toUpperCase() + route.slice(2)}Page`;
     }
+
+    describe("LandingGuard integration for protected deep links", () => {
+        beforeEach(() => {
+            jest.clearAllMocks();
+            sessionStorage.clear();
+            (useUserModule.useUser as jest.Mock).mockReturnValue({ isUserLoggedIn: () => false });
+        });
+
+        it.each(protectedDeepLinks)("redirects guest to HomePage when landingVisited is NOT set for %s",
+            async (route) => {
+                renderMemoryRouterWithProvider(<AppRouter />, [route]);
+                expect(await screen.findByText("HomePage")).toBeInTheDocument();
+            }
+        );
+
+        it.each(protectedDeepLinks)("allows access when landingVisited is set for %s",
+            async (route) => {
+                sessionStorage.setItem("landingVisited", "true");
+                renderMemoryRouterWithProvider(<AppRouter />, [route]);
+                const expectedText = getPageLabelFromRoute(route);
+                expect(await screen.findByText(expectedText)).toBeInTheDocument();
+            }
+        );
+    });
 });

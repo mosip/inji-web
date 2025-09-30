@@ -25,7 +25,6 @@ export const LandingGuard: React.FC<LandingGuardProps> = ({ children }) => {
         return null;
     }
 
-
     if (!visited) {
         return <Navigate to="/" replace state={{ from: location }} />;
     }

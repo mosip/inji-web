@@ -22,7 +22,6 @@ export const HomePage: React.FC = () => {
     useEffect(() => {
         try {
             sessionStorage.setItem("landingVisited", "true");
-            console.log("Landing page visited marked in sessionStorage");
         } catch (e) {
             console.warn("Unable to access sessionStorage", e);
         }
