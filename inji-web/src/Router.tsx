@@ -114,7 +114,7 @@ export const AppRouter = () => {
                         <LandingGuard>
                             {wrapElement(<CredentialsPage/>)}
                         </LandingGuard>
-                }
+                    }
                 />
                 <Route
                     path={Pages.FAQ}

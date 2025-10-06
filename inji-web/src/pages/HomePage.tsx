@@ -6,6 +6,7 @@ import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
 import {useLocation} from 'react-router-dom';
 import {LoginFailedModal} from '../components/Login/LoginFailedModal';
+import {LANDING_VISITED} from "../utils/constants";
 
 const Status = {
     SUCCESS: "success",
@@ -21,7 +22,7 @@ export const HomePage: React.FC = () => {
     // to mark landing as visited
     useEffect(() => {
         try {
-            sessionStorage.setItem("landingVisited", "true");
+            sessionStorage.setItem(LANDING_VISITED, "true");
         } catch (e) {
             console.warn("Unable to access sessionStorage", e);
         }

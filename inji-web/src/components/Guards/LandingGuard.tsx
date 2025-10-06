@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import {SpinningLoader} from "../Common/SpinningLoader";
+import {LANDING_VISITED} from "../../utils/constants";
 
 interface LandingGuardProps {
     children: React.ReactNode;
@@ -12,7 +14,7 @@ export const LandingGuard: React.FC<LandingGuardProps> = ({ children }) => {
 
     useEffect(() => {
         try {
-            const flag = sessionStorage.getItem("landingVisited") === "true";
+            const flag = sessionStorage.getItem(LANDING_VISITED) === "true";
             setVisited(flag);
         } catch {
             setVisited(false);
@@ -22,7 +24,7 @@ export const LandingGuard: React.FC<LandingGuardProps> = ({ children }) => {
     }, []);
 
     if (isLoading) {
-        return null;
+        return <SpinningLoader />;
     }
 
     if (!visited) {

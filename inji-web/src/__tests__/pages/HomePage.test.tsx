@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { HomePage } from '../../pages/HomePage';
 import { toast } from 'react-toastify';
 import { AppToaster } from '../../components/Common/toast/AppToaster';
+import {LANDING_VISITED} from "../../utils/constants";
 
 // Mock redux store
 const mockStore = {
@@ -81,7 +82,7 @@ describe('HomePage', () => {
   test('sets landingVisited flag in sessionStorage on mount', () => {
       const setItemSpy = jest.spyOn(window.sessionStorage.__proto__, 'setItem');
       renderComponent();
-      expect(setItemSpy).toHaveBeenCalledWith('landingVisited', 'true');
+      expect(setItemSpy).toHaveBeenCalledWith(LANDING_VISITED, 'true');
   });
 
   test('logs a warning if sessionStorage.setItem fails', () => {
@@ -95,7 +96,7 @@ describe('HomePage', () => {
 
       renderComponent();
 
-      expect(setItemSpy).toHaveBeenCalledWith('landingVisited', 'true');
+      expect(setItemSpy).toHaveBeenCalledWith(LANDING_VISITED, 'true');
       expect(warnSpy).toHaveBeenCalledWith(
           'Unable to access sessionStorage',
           expect.any(Error)

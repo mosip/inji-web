@@ -2,6 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { LandingGuard } from "../../../components/Guards/LandingGuard";
 import { Navigate, useLocation } from "react-router-dom";
+import {LANDING_VISITED} from "../../../utils/constants";
 
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
@@ -24,7 +25,7 @@ describe("LandingGuard", () => {
     });
 
     it.each(landingGuardTestCases)("$description", ({ sessionValue, shouldRenderChild }) => {
-        if (sessionValue) sessionStorage.setItem("landingVisited", sessionValue);
+        if (sessionValue) sessionStorage.setItem(LANDING_VISITED, sessionValue);
 
         render(<LandingGuard><TestChild /></LandingGuard>);
 

@@ -5,7 +5,7 @@ import * as useUserModule from "../hooks/User/useUser";
 import {renderMemoryRouterWithProvider} from "../test-utils/mockUtils";
 import {AppStorage} from "../utils/AppStorage";
 import {mockStore, nonPasscodeRelatedProtectedRoutes, unProtectedRoutes, userProfile} from "../test-utils/mockObjects";
-import {ROUTES} from "../utils/constants";
+import {LANDING_VISITED, ROUTES} from "../utils/constants";
 
 jest.mock('../components/Preview/PDFViewer', () => ({
     PDFViewer: ({previewContent}: {
@@ -198,7 +198,7 @@ describe("AppRouter", () => {
 
         it.each(protectedDeepLinks)("allows access when landingVisited is set for %s",
             async (route) => {
-                sessionStorage.setItem("landingVisited", "true");
+                sessionStorage.setItem(LANDING_VISITED, "true");
                 renderMemoryRouterWithProvider(<AppRouter />, [route]);
                 const expectedText = getPageLabelFromRoute(route);
                 expect(await screen.findByText(expectedText)).toBeInTheDocument();
