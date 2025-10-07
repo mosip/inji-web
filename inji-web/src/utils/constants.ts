@@ -61,3 +61,5 @@ export enum RequestStatus {
 export const pdfWorkerSource = (pdfVersion : string) => `//unpkg.com/pdfjs-dist@${pdfVersion}/build/pdf.worker.min.mjs`;
 
 export const passcodeLength = 6;
+
+export const LANDING_VISITED = "landingVisited";

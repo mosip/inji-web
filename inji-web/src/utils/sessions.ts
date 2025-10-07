@@ -24,4 +24,3 @@ export const removeActiveSession = (state: string) => {
     const remainingSessions = getAllActiveSession().filter(session => session.state !== state);
     AppStorage.setItem(AppStorage.SESSION_INFO, JSON.stringify(remainingSessions));
 }
-
