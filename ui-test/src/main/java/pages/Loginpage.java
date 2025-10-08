@@ -255,12 +255,15 @@ public class Loginpage extends BasePage {
 	public void clickOnProfileOptionMobileView() {
 		clickOnElement(driver, By.xpath("//div[text()='Profile']"));
 	}
+
 	public void clickOnLogoutOptionMobileView() {
 		clickOnElement(driver, By.xpath("//div[text()='Logout']"));
 	}
+
 	public void clickOnFaqOptionMobileView() {
 		clickOnElement(driver, By.xpath("//div[text()='FAQ']"));
 	}
+
 	public String getTextMyProfile() {
 		return getElementText(driver, By.xpath("//span[@data-testid='profile-page']"));
 
@@ -472,6 +475,7 @@ public class Loginpage extends BasePage {
 			return false;
 		}
 	}
+
 	public void clickonFAQLink() {
 		clickOnElement(driver, By.xpath("//div[@data-testid='profile-dropdown']//div[text()='FAQ']"));
 	}
@@ -501,33 +505,43 @@ public class Loginpage extends BasePage {
 	public void clickOnHamburgerMenu() {
 		clickOnElement(driver, By.xpath("//div[@data-testid='hamburger-menu']"));
 	}
+
 	public boolean isDownloadedCardMenubuttonDisplayed() {
 		return isElementIsVisible(driver, By.xpath("(//button[@data-testid='icon-mini-view-card-menu'])[1]"));
 	}
+
 	public void clickOnDownloadedCardMenubutton() {
 		clickOnElement(driver, By.xpath("(//button[@data-testid='icon-mini-view-card-menu'])[1]"));
 	}
+
 	public void clickOnViewCardMenubutton() {
 		clickOnElement(driver, By.xpath("//span[@data-testid='label-view']"));
 	}
+
 	public boolean isDownloadedCardViewDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//span[@data-testid='title-credential-type-display-name']"));
 	}
+
 	public void clickOnViewCardBackbutton() {
 		clickOnElement(driver, By.xpath("//button[@data-testid='btn-back']"));
 	}
+
 	public void clickOnDownloadCardMenubutton() {
 		clickOnElement(driver, By.xpath("//span[@data-testid='label-download']"));
 	}
+
 	public void clickOnDeleteCardMenubutton() {
 		clickOnElement(driver, By.xpath("//span[@data-testid='label-delete']"));
 	}
+
 	public void clickOnConfirmDeleteCardOption() {
 		clickOnElement(driver, By.xpath("//button[@data-testid='btn-confirm']"));
 	}
+
 	public void clickOnDownloadCardFromViewbutton() {
 		clickOnElement(driver, By.xpath("(//button[@data-testid='btn-download'])[2]"));
 	}
+
 	public void clickOnCancelDeleteCardOption() {
 		clickOnElement(driver, By.xpath("(//button[@data-testid='btn-cancel'])"));
 	}
