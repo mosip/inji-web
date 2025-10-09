@@ -272,7 +272,6 @@ public class StepDefMosipCredentials {
 		}
 	}
 
-	
 	@Then("User verify pdf is downloaded")
 	public String user_verify_pdf_is_downloaded() throws IOException, InterruptedException {
 		baseTest.getJse()

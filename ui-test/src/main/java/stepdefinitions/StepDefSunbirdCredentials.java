@@ -287,35 +287,36 @@ public class StepDefSunbirdCredentials {
 		}
 	}
 
-
 	@Then("User verify pdf is downloaded for Insurance")
 	public String user_verify_pdf_is_downloaded_for_insurance() throws IOException {
-		
-		String pdfName =sunbirdCredentials.pdfNameInsurance;
-	    baseTest.getJse().executeScript(
-	            "browserstack_executor: {\"action\": \"fileExists\", \"arguments\": {\"fileName\": \"" + pdfName + "\"}}");
 
-	    baseTest.getJse().executeScript(
-	            "browserstack_executor: {\"action\": \"getFileProperties\", \"arguments\": {\"fileName\": \"" + pdfName + "\"}}");
+		String pdfName = sunbirdCredentials.pdfNameInsurance;
+		baseTest.getJse()
+				.executeScript("browserstack_executor: {\"action\": \"fileExists\", \"arguments\": {\"fileName\": \""
+						+ pdfName + "\"}}");
 
-	    String base64EncodedFile = (String) baseTest.getJse().executeScript(
-	            "browserstack_executor: {\"action\": \"getFileContent\", \"arguments\": {\"fileName\": \"" + pdfName + "\"}}");
+		baseTest.getJse().executeScript(
+				"browserstack_executor: {\"action\": \"getFileProperties\", \"arguments\": {\"fileName\": \"" + pdfName
+						+ "\"}}");
 
-	    byte[] data = Base64.getDecoder().decode(base64EncodedFile);
-	    OutputStream stream = new FileOutputStream(pdfName);
-	    stream.write(data);
+		String base64EncodedFile = (String) baseTest.getJse().executeScript(
+				"browserstack_executor: {\"action\": \"getFileContent\", \"arguments\": {\"fileName\": \"" + pdfName
+						+ "\"}}");
 
-	    System.out.println(stream);
-	    stream.close();
+		byte[] data = Base64.getDecoder().decode(base64EncodedFile);
+		OutputStream stream = new FileOutputStream(pdfName);
+		stream.write(data);
 
-	    File pdfFile = new File(System.getProperty("user.dir") + "/" + pdfName);
-	    PDDocument document = PDDocument.load(pdfFile);
+		System.out.println(stream);
+		stream.close();
 
-	    PDFTextStripper stripper = new PDFTextStripper();
-	    String text = stripper.getText(document);
-	    return text;
+		File pdfFile = new File(System.getProperty("user.dir") + "/" + pdfName);
+		PDDocument document = PDDocument.load(pdfFile);
+
+		PDFTextStripper stripper = new PDFTextStripper();
+		String text = stripper.getText(document);
+		return text;
 	}
-
 
 	@Then("User verify policy number input box header")
 	public void user_verify_policy_number_input_box_header() {

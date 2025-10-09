@@ -237,6 +237,7 @@ public class StepDefOIDCLogin {
 	public void clickonAddCardsButtonforMobile() {
 		loginpage.clickOnElement(driver, By.xpath("(//button[@data-testid='btn-add-cards'])[2]"));
 	}
+
 	@Then("user verify current url userhome")
 	public void user_verify_current_url() {
 		try {
@@ -427,14 +428,17 @@ public class StepDefOIDCLogin {
 	public void user_selects_profile_option_for_mobileView() {
 		loginpage.clickOnProfileOptionMobileView();
 	}
+
 	@Then("user click on logout button for mobile")
 	public void user_selects_logout_option_for_mobileView() {
 		loginpage.clickOnLogoutOptionMobileView();
 	}
+
 	@Then("user click on FAQ button for mobile")
 	public void user_selects_faq_option_for_mobileView() {
 		loginpage.clickOnFaqOptionMobileView();
 	}
+
 	@Then("user verify My Profile Text")
 	public void user_verify_MyProfile_Text() {
 		try {
@@ -814,6 +818,7 @@ public class StepDefOIDCLogin {
 			throw e;
 		}
 	}
+
 	@And("user click on FAQ link")
 	public void user_click_on_faq_link() {
 		loginpage.clickonFAQLink();
@@ -984,14 +989,17 @@ public class StepDefOIDCLogin {
 			throw e;
 		}
 	}
+
 	@Then("user click menu option on downloaded cards")
 	public void user_click_menu_option_on_downloaded_cards() {
 		loginpage.clickOnDownloadedCardMenubutton();
 	}
+
 	@Then("user click view card option")
 	public void user_click_view_card_option() {
 		loginpage.clickOnViewCardMenubutton();
 	}
+
 	@Then("user verify cards details from view option")
 	public void user_verify_cards_details_from_view_option() {
 		try {
@@ -1004,26 +1012,32 @@ public class StepDefOIDCLogin {
 			throw e;
 		}
 	}
+
 	@Then("user click view card back option")
 	public void user_click_view_back_card_option() {
 		loginpage.clickOnViewCardBackbutton();
 	}
+
 	@Then("user click on delete card option")
 	public void user_click_delete_card_option() {
 		loginpage.clickOnDeleteCardMenubutton();
 	}
+
 	@Then("user click on confirm delete card option")
 	public void user_click_confirm_delete_card_option() {
 		loginpage.clickOnConfirmDeleteCardOption();
 	}
+
 	@Then("user click on download card option")
 	public void user_click_on_download_card_option() {
 		loginpage.clickOnDownloadCardMenubutton();
 	}
+
 	@Then("user click on download card option from view page")
 	public void user_click_on_download_card_option_from_view_page() {
 		loginpage.clickOnDownloadCardFromViewbutton();
 	}
+
 	@Then("user click on cancel delete card option")
 	public void user_click_on_cancel_delete_card_option() {
 		loginpage.clickOnCancelDeleteCardOption();

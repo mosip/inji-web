@@ -133,6 +133,7 @@ public class StepDef {
 			throw e;
 		}
 	}
+
 	@When("User clicks on the Faq button from hamburger menu")
 	public void clicksOnFaqButtonFromHamburger() {
 		try {
@@ -2032,6 +2033,7 @@ public class StepDef {
 			throw e;
 		}
 	}
+
 	@Then("User verify navigation button")
 	public void user_verify_navigation_button() {
 		try {
@@ -2054,6 +2056,7 @@ public class StepDef {
 			throw e;
 		}
 	}
+
 	@Then("user click on hamburger menu")
 	public void user_click_on_hamburger_menu() {
 		try {
@@ -2071,6 +2074,7 @@ public class StepDef {
 			throw e;
 		}
 	}
+
 	@Then("User verify search and title are appeare in diff lines")
 	public void user_verify_search_title_appeare_diff_lines() {
 		try {
@@ -2089,21 +2093,23 @@ public class StepDef {
 			throw e;
 		}
 	}
+
 	@Then("User verify inji web text in FAQ page")
 	public void user_verify_injiweb_text_in_FAQ_page() {
-	    try {
-	        assertTrue(homePage.verifyFaqTitlesDoNotContainInjiWeb(), "injiweb text is present in one or more FAQ titles");
-	        test.log(Status.PASS, "Verified that FAQ titles do not contain 'inji web'.");
-	    } catch (NoSuchElementException e) {
-	        test.log(Status.FAIL, "FAQ titles not found: " + e.getMessage());
-	        test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-	        ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-	        throw e;
-	    } catch (Exception e) {
-	        test.log(Status.FAIL, "Error during FAQ title verification: " + e.getMessage());
-	        test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
-	        ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
-	        throw e;
-	    }
+		try {
+			assertTrue(homePage.verifyFaqTitlesDoNotContainInjiWeb(),
+					"injiweb text is present in one or more FAQ titles");
+			test.log(Status.PASS, "Verified that FAQ titles do not contain 'inji web'.");
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL, "FAQ titles not found: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL, "Error during FAQ title verification: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
 	}
 }
