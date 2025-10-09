@@ -114,7 +114,7 @@ describe('Testing of StoredCardsPage ->', () => {
         renderWithRouter(<StoredCardsPage/>);
         // In case of larger screens, the add cards button is inside the page title container
         const container = screen.getByTestId('page-title-container');
-        const addCredentialButton = within(container).getByRole('button', {name: "Add Cards"});
+        const addCredentialButton = within(container).getByRole('button', {name: "ADD CARDS"});
         fireEvent.click(addCredentialButton);
 
         expect(window.location.pathname).toBe('/user/home');
@@ -127,7 +127,7 @@ describe('Testing of StoredCardsPage ->', () => {
         await waitForLoaderDisappearance();
         // In case of smaller screens , the add cards button is inside the content and action container
         const container = screen.getByTestId('content-and-action-container');
-        const addCardsButton = within(container).getByRole('button', {name: "Add Cards"});
+        const addCardsButton = within(container).getByRole('button', {name: "ADD CARDS"});
         fireEvent.click(addCardsButton);
 
         expect(window.location.pathname).toBe('/user/home');
@@ -159,7 +159,7 @@ describe('Testing of StoredCardsPage ->', () => {
         await waitForLoaderDisappearance()
 
         expect(screen.getByText('No Cards Stored!')).toBeInTheDocument();
-        expect(screen.getByText("You haven't downloaded any cards yet. Tap \"Add Cards\" to get started.")).toBeInTheDocument();
+        expect(screen.getByText("You haven't downloaded any cards yet. Tap \"ADD CARDS\" to get started.")).toBeInTheDocument();
     });
 
     const errorScenarios = [

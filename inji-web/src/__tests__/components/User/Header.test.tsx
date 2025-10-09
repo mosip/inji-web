@@ -71,7 +71,7 @@ describe('Header', () => {
             <Header headerRef={mockHeaderRef} headerHeight={50}/>
         );
 
-        const profileArrow = screen.getByTestId('profile-details').querySelector('svg');
+        const profileArrow = screen.getByTestId('profile-details').querySelector('.cursor-pointer');
         expect(screen.queryByTestId('profile-dropdown')).not.toBeInTheDocument();
 
         fireEvent.click(profileArrow!);

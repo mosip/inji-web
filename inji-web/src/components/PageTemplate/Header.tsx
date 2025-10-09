@@ -38,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({headerRef}) => {
                     <div
                         role="button"
                         tabIndex={0}
-                        className={`m-3 sm:hidden ${
+                        className={`sm:hidden ${
                             isRTL(language) ? 'ml-4' : ''
                         }`}
                         onMouseDown={() => setIsOpen((open) => !open)}
@@ -54,8 +54,8 @@ export const Header: React.FC<HeaderProps> = ({headerRef}) => {
                     >
                         <img
                             src={require('../../assets/InjiWebLogo.png')}
-                            className={`h-6 w-36 flex-shrink-0 sm:h-8 sm:w-48 cursor-pointer 
-                                     ${isRTL(language) ? 'mr-4' : ''}`}
+                            className={`h-6 w-36 flex-shrink-0 sm:h-8 sm:w-48 cursor-pointer
+                                ${isRTL(language) ? 'mr-4' : ''}`}
                             data-testid="Header-InjiWeb-Logo"
                             alt="Inji Web Logo"
                         />

@@ -47,7 +47,7 @@ exports[`Testing the Layout of NavBar Check the presence of the navbar container
         data-testid="NavBar-Search-Container"
       >
         <div
-          class="w-full sm:w-96 flex justify-center items-center bg-iw-background shadow-iw undefined"
+          class="gradient-outline-input w-full sm:w-96 flex justify-center items-center bg-iw-background shadow-iw undefined"
           data-testid="Search-Issuer-Container"
         >
           <svg
@@ -67,7 +67,7 @@ exports[`Testing the Layout of NavBar Check the presence of the navbar container
             />
           </svg>
           <input
-            class="py-6 w-11/12 flex text-iw-searchTitle focus:outline-none overflow-ellipsis mr-10"
+            class="py-6 w-11/12 flex text-iw-searchTitle focus:outline-none overflow-ellipsis mr-10 text-[14px] leading-[18px] font-medium"
             data-testid="NavBar-Search-Input"
             placeholder="Search Credential Type"
             type="text"

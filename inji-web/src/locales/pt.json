@@ -26,14 +26,14 @@
       "heading": "Acesse suas credenciais em qualquer lugar que precisar",
       "item1": "Credenciais simplificadas",
       "description1": "Mantenha todos os seus documentos essenciais",
-      "item2": "Chega de papelada. Tudo em um só lugar",
+      "item2": "Chega de papelada, tudo em um só lugar",
       "description2": "Baixe, armazene e recupere seus documentos com facilidade e sem esforço. Ganhe, ganhe, ganhe."
     },
     "FeatureItem2": {
       "heading": "Seus documentos baixados em segundos",
       "item1": "Baixe com confiança",
       "description1": "Salve seus documentos importantes instantaneamente",
-      "item2": "Seguro e protegido",
+      "item2": "Sãos e salvos",
       "description2": "Baixe IDs, licenças e muito mais em um local seguro."
     },
     "FeatureItem3": {
@@ -45,7 +45,7 @@
     },
     "FeatureItem4": {
       "heading": "Seguro e privado",
-      "item1": "Suas credenciais protegidas",
+      "item1": "Suas credenciais, protegidas",
       "description1": "Seus dados permanecem privados com o mecanismo de segurança integrado.",
       "item2": "Fique tranquilo",
       "description2": "Mantenha suas credenciais seguras para que você possa se concentrar no que importa."
@@ -54,21 +54,21 @@
       "heading": "Acesso e compatibilidade mais amplos",
       "item1": "Disponível no seu navegador favorito",
       "description1": "A Inji Wallet funciona com Chrome, Safari, Firefox e Edge.",
-      "item2": "Sempre ao alcance",
+      "item2": "Sempre ao seu alcance",
       "description2": "A conveniência encontra a acessibilidade onde quer que você esteja, garantindo que seus documentos estejam sempre ao alcance."
     },
     "QuickTip": {
       "heading": "Dicas rápidas para baixar suas credenciais instantaneamente",
       "toastText": "Em breve",
-      "buttontext": "Clique aqui"
+      "buttontext": "SABER MAIS"
     },
     "Login": {
       "loginTitle": "Entrar",
       "loginDescription": "Faça login com sua conta ou continue como convidado para acessar suas credenciais.",
       "loginNote": "Alguns recursos podem ser limitados no modo convidado.",
-      "loggingIn": "Entrando",
-      "loginGoogle": "Continuar com o Google",
-      "loginGuest": "Continuar como convidado"
+      "loggingIn": "EFETUANDO LOGIN",
+      "loginGoogle": "CONTINUAR COM O GOOGLE",
+      "loginGuest": "CONTINUAR COMO CONVIDADO"
     },
     "LoginFailedModal": {
       "failureMessage": "Falha no login",
@@ -83,8 +83,8 @@
     }
   },
   "PasscodePage": {
-    "submit": "Enviar",
-    "submitting": "Enviando",
+    "submit": "ENVIAR",
+    "submitting": "ENVIANDO",
     "setPasscode": "Defina seu código de acesso para começar",
     "setPasscodeDescription": "Por favor, lembre-se ou armazene seu código de acesso com segurança. Você precisará dele toda vez que acessar a carteira.",
     "enterPasscode": "Digite seu código de acesso para continuar",
@@ -420,11 +420,11 @@
   "StoredCards": {
     "title": "Cartões Armazenados",
     "header": {
-      "addCards": "Adicionar Cartões"
+      "addCards": "ADICIONAR CARTÕES"
     },
     "emptyScreen": {
       "title": "Nenhum Cartão Armazenado!",
-      "actionText": "Você ainda não baixou nenhum cartão. Toque em \"Adicionar Cartões\" para começar."
+      "actionText": "Você ainda não baixou nenhum cartão. Toque em \"ADICIONAR CARTÕES\" para começar."
     },
     "search": {
       "placeholder": "Pesquise seus cartões por nome",

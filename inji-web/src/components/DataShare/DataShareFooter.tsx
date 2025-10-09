@@ -6,7 +6,7 @@ import {SolidButton} from "../Common/Buttons/SolidButton";
 export const DataShareFooter: React.FC<DSFooterProps> = (props) => {
     return (
         <div
-            className="flex items-center justify-between p-6 rounded-b"
+            className="flex items-center justify-between p-6 rounded-b gap-x-2"
             data-testid={`DataShareFooter-Outer-Container${
                 props.parent ? `-${props.parent}` : ""
             }`}

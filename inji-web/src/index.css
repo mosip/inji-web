@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Gentium+Plus:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;1,400;1,600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -17,7 +17,7 @@
         --iw-color-subTitle: #717171;
         --iw-color-searchTitle: #3E3E3E;
         --iw-color-primary: #FF5300;
-        --iw-color-secondary: #5B03AD;
+        --iw-color-secondary: #451691;
         --iw-color-lightPrimary: #fff1eb;
         --iw-color-lightSecondary: #f2ebf8;
         --iw-color-tertiary: #951F6F;
@@ -29,7 +29,7 @@
         --iw-color-spinningLoaderSecondary: #5B03AD;
         --iw-color-navigationBar: #F2FBFF;
         --iw-color-languageGlobeIcon: #951F6F;
-        --iw-color-languageArrowIcon: #951F6F;
+        --iw-color-languageArrowIcon: #809FB8;
         --iw-color-languageCheckIcon: #951F6F;
         --iw-color-closeIcon: #8E8E8E;
         --iw-color-searchIcon: #8E8E8E;
@@ -141,4 +141,80 @@
     .no-scroll {
         overflow: hidden;
     }
+
+  .gradient-outline-input {
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: box-shadow .15s ease, border-image .15s ease;
+  }
+
+  .gradient-outline-input:focus-within, .gradient-outline-input:focus {
+    outline: none;
+    border-image: linear-gradient(90deg, var(--iw-color-primary), var(--iw-color-secondary)) 1;
+
+   }
+
+  .gradient-outline-input:-moz-focusring {
+    outline: none;
+  }
+}
+
+.inji-toast {
+  position: relative !important;
+  border-radius: 14px !important;
+  display: flex !important;
+  align-items: center;
+  font-family: var(--iw-font-base);
+  font-size: 1rem;
+  font-weight: 400;
+  padding: 0.5rem 1rem !important;
+  box-shadow: none !important;
+}
+
+.inji-toast--success {
+  background: #9DCFBB !important;
+  color: #384455 !important;
+}
+
+.inji-toast--error {
+  background: #EFB3B5 !important;
+  color: #384455 !important;
+}
+
+.inji-toast--warning {
+  background: #FFE799 !important;
+  color: #384455 !important;
+}
+
+.inji-toast--info {
+  background: #99DAFE !important;
+  color: #384455 !important;
+}
+
+.Toastify__toast-icon {
+  width: 27px !important;
+  height: 27px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Toastify__toast-icon img,
+.Toastify__toast-icon svg {
+  width: 27px !important;
+  height: 27px !important;
+}
+
+.Toastify__close-button {
+  position: absolute !important;
+  right: 18px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: #384455 !important;
+  opacity: 1 !important;
+  font-size: 1.5rem !important;
+  z-index: 2;
+  padding: 0 !important;
+  background: none !important;
+  border: none !important;
+  cursor: pointer;
 }

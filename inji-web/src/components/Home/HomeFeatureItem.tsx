@@ -10,7 +10,7 @@ export const HomeFeatureItem: React.FC<HomeFeatureItemProps> = (props) => {
   return (
     <div data-testid={"HomeFeatureItem" + props.itemno + "-Container"} className="bg-gray-50 p-7 max-w-96 shadow-sm">
       <img data-testid={"HomeFeatureItem" + props.itemno + "-Image"} src={require("../../assets/FeatureItem" + props.itemno + ".svg")} alt="feature item" />
-      <div data-testid={"HomeFeatureItem" + props.itemno + "-Heading"} className="font-semibold text-black text-xl text-wrap py-7">
+      <div data-testid={"HomeFeatureItem" + props.itemno + "-Heading"} className="font-bold text-black text-[22px] leading-[30px] text-wrap py-7">
         {t("FeatureItem" + props.itemno + ".heading")}
       </div>
       <div data-testid={"HomeFeatureItem" + props.itemno + "-FirstFeature"} className="flex flex-row container mx-auto py-2">
@@ -20,10 +20,10 @@ export const HomeFeatureItem: React.FC<HomeFeatureItemProps> = (props) => {
           </GradientWrapper>
         </div>
         <div className="flex flex-col">
-          <span data-testid={"HomeFeatureItem" + props.itemno + "-FirstFeature-Item"} className="font-medium">
+          <span data-testid={"HomeFeatureItem" + props.itemno + "-FirstFeature-Item"} className="text-[18px] leading-[22px] font-medium">
             {t("FeatureItem" + props.itemno + ".item1")}
           </span>
-          <span data-testid={"HomeFeatureItem" + props.itemno + "-FirstFeature-Description"} className="font-extralight">
+          <span data-testid={"HomeFeatureItem" + props.itemno + "-FirstFeature-Description"} className="text-[14px] leading-[22px] font-medium">
             {t("FeatureItem" + props.itemno + ".description1")}
           </span>
         </div>
@@ -35,10 +35,10 @@ export const HomeFeatureItem: React.FC<HomeFeatureItemProps> = (props) => {
           </GradientWrapper>
         </div>
         <div className="flex flex-col">
-          <span data-testid={"HomeFeatureItem" + props.itemno + "-SecondFeature-Item"} className="font-medium">
+          <span data-testid={"HomeFeatureItem" + props.itemno + "-SecondFeature-Item"} className="text-[18px] leading-[22px] font-medium">
             {t("FeatureItem" + props.itemno + ".item2")}
           </span>
-          <span data-testid={"HomeFeatureItem" + props.itemno + "-SecondFeature-Description"} className="font-extralight">
+          <span data-testid={"HomeFeatureItem" + props.itemno + "-SecondFeature-Description"} className="text-[14px] leading-[22px] font-medium">
             {t("FeatureItem" + props.itemno + ".description2")}
           </span>
         </div>

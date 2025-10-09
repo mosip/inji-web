@@ -10,7 +10,7 @@ module.exports = {
                 'sm-md': {min: '640px', max: '1024px'}
             },
             fontFamily: {
-                base: 'var(--iw-font-base)',
+                base: 'var(--iw-font-montserrat)',
                 montserrat: 'var(--iw-font-montserrat)'
             },
             fontSize: {

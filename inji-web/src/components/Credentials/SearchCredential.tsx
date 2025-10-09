@@ -55,7 +55,7 @@ export const SearchCredential: React.FC<SearchCredentialProps> = ({
         >
             <div
                 data-testid="Search-Issuer-Container"
-                className={`w-full sm:w-96 flex justify-center items-center bg-iw-background shadow-iw ${issuerContainerBorderRadius}`}
+                className={`gradient-outline-input w-full sm:w-96 flex justify-center items-center bg-iw-background shadow-iw ${issuerContainerBorderRadius}`}
             >
                 <FaSearch
                     data-testid="NavBar-Search-Icon"
@@ -69,7 +69,7 @@ export const SearchCredential: React.FC<SearchCredentialProps> = ({
                     value={searchText}
                     placeholder={t("searchText")}
                     onChange={(event) => filterCredential(event.target.value)}
-                    className="py-6 w-11/12 flex text-iw-searchTitle focus:outline-none overflow-ellipsis mr-10"
+                    className="py-6 w-11/12 flex text-iw-searchTitle focus:outline-none overflow-ellipsis mr-10 text-[14px] leading-[18px] font-medium"
                 />
                 {searchText.length > 0 && (
                     <IoCloseCircleSharp
