@@ -1,5 +1,5 @@
 import React from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import '../../index.css';
 import {useTranslation} from "react-i18next";
 import {BorderedButton} from "../Common/Buttons/BorderedButton";
@@ -8,9 +8,15 @@ import {GoogleSignInButton} from "../Common/Buttons/GoogleSignInButton";
 export const Login: React.FC = () => {
   const { t } = useTranslation("HomePage");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleGoogleLogin = () => {
       window.location.href = `${window._env_.MIMOTO_URL}/oauth2/authorize/google`;
+  };
+
+  const handleGuestLogin = () => {
+      const redirectPath = location.state?.from?.pathname || "/issuers";
+      navigate(redirectPath, { replace: true });
   };
 
   const Separator:React.FC=()=>{
@@ -48,7 +54,7 @@ export const Login: React.FC = () => {
         <div className="w-full">
           <BorderedButton
               testId="home-banner-guest-login"
-              onClick={() => navigate("/issuers")}
+              onClick={handleGuestLogin}
               title={
               t("Login.loginGuest")
             }

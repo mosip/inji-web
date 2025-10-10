@@ -38,12 +38,28 @@ describe("Login Page Tests", () => {
     expect(screen.getByTestId("home-banner-guest-login")).toHaveTextContent("Continue as Guest");
   });
 
-  test("Guest login button navigates to issuers page", () => {
-    render(<MemoryRouter><Login /></MemoryRouter>);
-    const guestButton = screen.getByTestId("home-banner-guest-login");
+  test("Guest login button navigates correctly based on location state", () => {
+      const testFromPath = "/faq";
 
-    fireEvent.click(guestButton);
-    expect(mockNavigate).toHaveBeenCalledWith("/issuers");
+      render(
+          <MemoryRouter initialEntries={[{ pathname: "/", state: { from: { pathname: testFromPath } } }]}>
+              <Login />
+          </MemoryRouter>
+      );
+
+      const guestButton = screen.getByTestId("home-banner-guest-login");
+      fireEvent.click(guestButton);
+
+      expect(mockNavigate).toHaveBeenCalledWith(testFromPath, { replace: true });
+  });
+
+  test("Guest login button navigates to /issuers if no state is provided", () => {
+      render(<MemoryRouter><Login /></MemoryRouter>);
+
+      const guestButton = screen.getByTestId("home-banner-guest-login");
+      fireEvent.click(guestButton);
+
+      expect(mockNavigate).toHaveBeenCalledWith("/issuers", { replace: true });
   });
 
   test("Google login button redirects to Google OAuth URL", () => {
