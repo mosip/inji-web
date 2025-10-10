@@ -60,9 +60,6 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
                         {verifierName}
                     </h1>
 
-                    {/* 🔗 Verifier Domain */}
-                    <p className="text-sm text-gray-500 mt-1">{verifierDomain}</p>
-
                     {/* 📝 Description */}
                     {/* Kept font size consistent (text-base) */}
                     <p
