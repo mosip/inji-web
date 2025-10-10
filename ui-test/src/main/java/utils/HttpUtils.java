@@ -13,6 +13,7 @@ public class HttpUtils {
 	private static final String PROPERTIES_PATH = "src/test/resources/config.properties";
 	private static final Properties properties = loadProperties();
 	public static String baseUrl = BaseTest.url;
+
 	public static String get(String key) {
 		String envValue = System.getenv(key);
 		if (envValue != null && !envValue.trim().isEmpty()) {
@@ -35,10 +36,9 @@ public class HttpUtils {
 		String refreshToken = get("MOSIP_INJIWEB_GOOGLE_REFRESH_TOKEN");
 
 		URL url = new URL("https://oauth2.googleapis.com/token");
-		String urlParameters = "client_id=" + URLEncoder.encode(clientId, "UTF-8") +
-				"&client_secret=" + URLEncoder.encode(clientSecret, "UTF-8") +
-				"&refresh_token=" + URLEncoder.encode(refreshToken, "UTF-8") +
-				"&grant_type=refresh_token";
+		String urlParameters = "client_id=" + URLEncoder.encode(clientId, "UTF-8") + "&client_secret="
+				+ URLEncoder.encode(clientSecret, "UTF-8") + "&refresh_token="
+				+ URLEncoder.encode(refreshToken, "UTF-8") + "&grant_type=refresh_token";
 
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("POST");
@@ -52,7 +52,8 @@ public class HttpUtils {
 		String response = readResponse(conn);
 
 		if (responseCode != 200) {
-			throw new RuntimeException("Failed to get ID token. HTTP error code: " + responseCode + ", response: " + response);
+			throw new RuntimeException(
+					"Failed to get ID token. HTTP error code: " + responseCode + ", response: " + response);
 		}
 
 		String idToken = extractValue(response, "id_token");
@@ -81,7 +82,8 @@ public class HttpUtils {
 		int responseCode = conn.getResponseCode();
 		if (responseCode != 200) {
 			String errorResponse = readErrorResponse(conn);
-			throw new RuntimeException("Failed to get session cookie. HTTP code: " + responseCode + ", response: " + errorResponse);
+			throw new RuntimeException(
+					"Failed to get session cookie. HTTP code: " + responseCode + ", response: " + errorResponse);
 		}
 
 		String cookie = conn.getHeaderField("Set-Cookie");
@@ -104,7 +106,8 @@ public class HttpUtils {
 		String response = readResponse(conn);
 
 		if (responseCode != 200) {
-			throw new RuntimeException("Failed to fetch wallets. HTTP code: " + responseCode + ", response: " + response);
+			throw new RuntimeException(
+					"Failed to fetch wallets. HTTP code: " + responseCode + ", response: " + response);
 		}
 
 		return extractAllValues(response, "walletId");
@@ -158,7 +161,8 @@ public class HttpUtils {
 
 	private static String readErrorResponse(HttpURLConnection conn) throws IOException {
 		InputStream errorStream = conn.getErrorStream();
-		if (errorStream == null) return "";
+		if (errorStream == null)
+			return "";
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(errorStream))) {
 			StringBuilder sb = new StringBuilder();
 			String line;
@@ -173,7 +177,8 @@ public class HttpUtils {
 		String normalized = json.replaceAll("[\\n\\r]", "").replaceAll("\\s+", "");
 		String pattern = "\"" + key + "\":\"";
 		int start = normalized.indexOf(pattern);
-		if (start == -1) return null;
+		if (start == -1)
+			return null;
 		int end = normalized.indexOf("\"", start + pattern.length());
 		return normalized.substring(start + pattern.length(), end);
 	}
