@@ -19,7 +19,7 @@ export const SolidButton: React.FC<SolidButtonProps> = (props) => {
 export type SolidButtonProps = {
     fullWidth?: boolean | false;
     testId: string;
-    onClick: () => void;
+    onClick: (() => void) | undefined;
     title: string;
     icon?: React.ReactNode;
     disabled?: boolean;

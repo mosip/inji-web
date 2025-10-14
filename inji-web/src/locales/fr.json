@@ -479,5 +479,36 @@
         "message": "Veuillez vérifier votre connexion Internet et réessayer."
       }
     }
-  }
+  },
+  "VerifierTrustPage": {
+      "modal": {
+        "title": "Vérificateur inconnu",
+        "domain": "verify.gov.in",
+        "description": "Assurez-vous de reconnaître ou de faire confiance à ce vérificateur. \nUne fois que vous faites confiance à ce vérificateur :",
+        "point1": "La carte sera enregistrée en toute sécurité dans votre portefeuille.",
+        "point2": "Ce vérificateur sera ajouté à votre liste de confiance.",
+        "point3": "Vous n'aurez pas besoin de revoir la confiance lors du prochain téléchargement à partir de celui-ci.",
+        "trustButton": "Oui, je fais confiance à ce Vérificateur",
+        "notTrustButton": "Non, je ne fais pas confiance à ce Vérificateur",
+        "cancelButton": "Annuler",
+        "infoTooltipButton": "Que signifie faire confiance ?",
+        "infoTooltipText": "Faire confiance à un vérificateur leur permet de demander vos informations d'identification. Vous choisirez toujours les informations d'identification à partager à l'étape suivante."
+      },
+      "cancelConfirmationModal": {
+        "title": "Êtes-vous sûr de vouloir annuler ?",
+        "description": "Si vous annulez, votre demande ne sera pas traitée et pourrait être perdue.",
+        "confirmButton": "Oui, Annuler",
+        "goBackButton": "Retourner"
+      },
+      "UserAuthorizationPage": {
+        "validateVerifierError": "Échec de la validation de la demande du vérificateur. Veuillez réessayer.",
+        "invalidVerifierResponse": "Réponse du vérificateur non valide reçue.",
+        "addTrustedVerifierError": "Échec de l'ajout du vérificateur à la liste de confiance."
+      },
+      "ErrorCard": {
+        "defaultTitle": "Erreur",
+        "defaultDescription": "Quelque chose s'est mal passé. Veuillez réessayer.",
+        "closeButton": "Fermer"
+      }
+    }
 }

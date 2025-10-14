@@ -26,6 +26,7 @@ import { Pages, ROUTES } from "./utils/constants";
 import { useInterceptor } from "./hooks/useInterceptor";
 import { LandingGuard } from "./components/Guards/LandingGuard";
 
+
 function RedirectToUserHome() {
     return <Navigate to={ROUTES.USER_HOME} replace />;
 }
@@ -49,9 +50,19 @@ export const AppRouter = () => {
         };
     };
 
+    const PROTECTED_USER_ROUTES = React.useMemo(() => [
+        `/${Pages.USER}/${Pages.AUTHORIZE}`,
+        `/${Pages.USER}/${Pages.HOME}`,
+        `/${Pages.USER}/${Pages.ISSUER_TEMPLATE}`,
+        `/${Pages.USER}/${Pages.CREDENTIALS}`,
+        `/${Pages.USER}/${Pages.PROFILE}`,
+        `/${Pages.USER}/${Pages.FAQ}`,
+    ], []);
+
     useEffect(() => {
-        const isAuthorizePage = location.pathname === `/${Pages.USER}/${Pages.AUTHORIZE}`;
-        if (isAuthorizePage && !isUserLoggedIn()) {
+        const currentPath = location.pathname;
+        const isProtectedPage = PROTECTED_USER_ROUTES.includes(currentPath);
+        if (isProtectedPage && !isUserLoggedIn()) {
             localStorage.setItem(KEYS.REDIRECT_TO, window.location.href);
             window.location.href = ROUTES.USER_PASSCODE;
         }

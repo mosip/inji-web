@@ -479,6 +479,37 @@
         "message": "Por favor, verifique sua conexão com a internet e tente novamente."
       }
     }
-  }
+  },
+  "VerifierTrustPage": {
+      "modal": {
+        "title": "Verificador desconhecido",
+        "domain": "verify.gov.in",
+        "description": "Certifique-se de reconhecer ou confiar neste verificador. \nAssim que você confiar neste Verificador:",
+        "point1": "O cartão será guardado de forma segura na sua carteira.",
+        "point2": "Este verificador será adicionado à sua lista de confiança.",
+        "point3": "Não precisará de rever a confiança ao fazer download a partir dele da próxima vez.",
+        "trustButton": "Sim, eu confio neste Verificador",
+        "notTrustButton": "Não, eu não confio neste Verificador",
+        "cancelButton": "Cancelar",
+        "infoTooltipButton": "O que significa confiar?",
+        "infoTooltipText": "Confiar num verificador permite que ele solicite as suas credenciais. Ainda escolherá quais as credenciais a partilhar na próxima etapa."
+      },
+      "cancelConfirmationModal": {
+        "title": "Tem a certeza de que pretende cancelar?",
+        "description": "Se cancelar, o seu pedido não será processado e poderá ser perdido.",
+        "confirmButton": "Sim, Cancelar",
+        "goBackButton": "Voltar"
+      },
+      "UserAuthorizationPage": {
+        "validateVerifierError": "Falha ao validar o pedido do verificador. Por favor, tente novamente.",
+        "invalidVerifierResponse": "Resposta de verificador inválida recebida.",
+        "addTrustedVerifierError": "Falha ao adicionar verificador à lista de confiança."
+      },
+      "ErrorCard": {
+        "defaultTitle": "Erro",
+        "defaultDescription": "Algo correu mal. Por favor, tente novamente.",
+        "closeButton": "Fechar"
+      }
+    }
 }
   

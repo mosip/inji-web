@@ -2,6 +2,16 @@ import React from "react";
 import { ColorRing } from "react-loader-spinner";
 import { ModalWrapper } from "./ModalWrapper";
 
+export const LoaderModalStyles = {
+    loaderModal: {
+        wrapper: "flex flex-col items-center justify-center py-[6rem] px-[3rem] md:py-[18rem] md:px-[6rem] text-center",
+        spinnerContainer: "mb-6",
+        title: "text-lg font-semibold text-gray-900",
+        subtitle: "text-gray-600 text-sm mt-2"
+    }
+};
+
+
 interface LoaderModalProps {
   isOpen: boolean;
   title?: string;
@@ -11,9 +21,11 @@ interface LoaderModalProps {
 export const LoaderModal: React.FC<LoaderModalProps> = ({
   isOpen,
   title = "Fetching the verifier Info...",
-  subtitle = "Please wait while we verify the request…",
+  subtitle = "Please wait while we verify the request and prepare your credentials.",
 }) => {
   if (!isOpen) return null;
+  
+  const styles = LoaderModalStyles.loaderModal;
 
   return (
     <ModalWrapper
@@ -23,25 +35,24 @@ export const LoaderModal: React.FC<LoaderModalProps> = ({
       footer={<></>}
       content={
         
-            <div className="flex flex-col items-center justify-center py-[18rem] px-[6rem] text-center">
+            <div className={styles.wrapper}>
           {/* Spinner */}
-          <div className="mb-6">
+          <div className={styles.spinnerContainer}>
             <ColorRing
               visible={true}
               height="80"
               width="80"
               ariaLabel="loading-indicator"
+              // Colors are not CSS classes, they remain as a prop
               colors={["#D64246", "#D64246", "#D64246", "#D64246", "#D64246"]}
             />
           </div>
 
-          {/* Title */}
-          <h2 className="text-lg font-semibold text-gray-900">
+          <h2 className={styles.title}>
             {title}
           </h2>
 
-          {/* Subtitle */}
-          <p className="text-gray-600 text-sm mt-2">
+          <p className={styles.subtitle}>
             {subtitle}
           </p>
         </div>

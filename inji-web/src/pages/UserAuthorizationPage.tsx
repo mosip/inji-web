@@ -2,23 +2,28 @@ import React, { useEffect, useState } from "react";
 import { api } from "../utils/api";
 import { LoaderModal } from "../modals/LoadingModal";
 import { useTranslation } from "react-i18next";
-import { TrustVerifierModal } from "../modals/TrustVerifierModal";
+import { TrustVerifierModal } from "../components/Issuers/TrustVerifierModal";
 import { ErrorCard } from "../modals/ErrorCard";
 import { CancelConfirmationModal } from "../modals/CancelConfirmationModal";
 import { useApi } from "../hooks/useApi";
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from "../utils/constants";
 
 export const UserAuthorizationPage: React.FC = () => {
-    const { t } = useTranslation("Common");
+    const { t } = useTranslation("VerifierTrustPage");
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isCancelConfirmation, setIsCancelConfirmation] = useState<boolean>(false);
     const [showTrustVerifier, setShowTrustVerifier] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [verifierData, setVerifierData] = useState<any>(null);
+    const [presentationIdData, setPresentationIdData] = useState<string | null>(null);
 
     const validateApi = useApi();
     const addTrustedVerifierApi = useApi();
+    const userRejectVerifierApi = useApi();
+    const navigate = useNavigate();
 
-    // 🔹 Common Error Handler
+
     const handleError = (message: string, err?: any) => {
         console.error("❌", message, err);
         setError(message);
@@ -26,12 +31,16 @@ export const UserAuthorizationPage: React.FC = () => {
         setShowTrustVerifier(false);
     };
 
-    // 🔹 Validate verifier request
+    const rejectionBody = {
+        errorCode: "access_denied",
+        errorMessage: "User denied authorization to share credentials"
+    };
+
     const validateVerifierRequest = async () => {
         try {
             setIsLoading(true);
             const authorizationRequestUrl =
-                "openid4vp://authorize?" + window.location.search.substring(1);
+                window.location.search;
 
             const response = await validateApi.fetchData({
                 apiConfig: api.validateVerifierRequest,
@@ -41,17 +50,18 @@ export const UserAuthorizationPage: React.FC = () => {
             if (!response.ok()) {
                 return handleError("Failed to validate verifier request. Please try again.", response.error);
             }
-
+            const presentationId = response?.data?.presentationId;
             const verifier = response?.data?.verifier;
             if (!verifier) {
                 return handleError("Invalid verifier response received.");
             }
 
+            setPresentationIdData(presentationId)
             setVerifierData(verifier);
             if (!verifier.trusted) {
                 setShowTrustVerifier(true);
             } else {
-                console.log("✅ Verifier already trusted:", verifier.name);
+                console.log("Verifier already trusted:", verifier.name);
                 setShowTrustVerifier(false);
             }
         } catch (err) {
@@ -61,12 +71,10 @@ export const UserAuthorizationPage: React.FC = () => {
         }
     };
 
-    // 🔹 Add trusted verifier
     const addTrustedVerifier = async () => {
         if (!verifierData?.id) return;
 
         try {
-            setIsLoading(true);
             const response = await addTrustedVerifierApi.fetchData({
                 apiConfig: api.addTrustedVerifier,
                 body: { verifierId: verifierData.id },
@@ -76,16 +84,38 @@ export const UserAuthorizationPage: React.FC = () => {
                 return handleError("Failed to add verifier to trusted list.", response.error);
             }
 
-            console.log("✅ Verifier added to trusted list:", response);
+            console.log("Verifier added to trusted list:", response);
             setShowTrustVerifier(false);
         } catch (err) {
             handleError("Failed to add verifier to trusted list.", err);
-        } finally {
-            setIsLoading(false);
         }
     };
 
-    // 🔹 Initial API call
+    const rejectVerifierRequest = async () => {
+        setShowTrustVerifier(false);
+        if (!presentationIdData) return;
+
+        try {
+            const response = await userRejectVerifierApi.fetchData({
+                apiConfig: api.userRejectVerifier,
+                url: api.userRejectVerifier.url(presentationIdData), 
+                body: rejectionBody,
+            });
+
+            if (!response.ok()) {
+                console.error("Failed to notify server of rejection:", response.error);
+            }
+            
+            console.log("User rejection notified to server.");
+
+        } catch (err) {
+            console.error("Failed to notify server of rejection:", err);
+        } finally {
+            navigate(ROUTES.ROOT);
+        }
+    };
+
+
     useEffect(() => {
         void validateVerifierRequest();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -101,11 +131,7 @@ export const UserAuthorizationPage: React.FC = () => {
                 verifierName={verifierData?.name}
                 verifierDomain={verifierData?.id}
                 onTrust={addTrustedVerifier}
-                onNotTrust={() => {
-                    console.log("🚫 User did NOT trust verifier:", verifierData);
-                    setShowTrustVerifier(false);
-                    setIsCancelConfirmation(true);
-                }}
+                onNotTrust={rejectVerifierRequest}
                 onCancel={() => {
                     setShowTrustVerifier(false);
                     setIsCancelConfirmation(true);
@@ -123,7 +149,9 @@ export const UserAuthorizationPage: React.FC = () => {
 
             <CancelConfirmationModal
                 isOpen={isCancelConfirmation}
-                onConfirm={() => setIsCancelConfirmation(false)}
+                onConfirm={() => {setIsCancelConfirmation(false);
+                    navigate(ROUTES.ROOT);   
+                }}
                 onClose={() => {
                     setIsCancelConfirmation(false);
                     setShowTrustVerifier(true);

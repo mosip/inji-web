@@ -479,5 +479,37 @@
         "message": "Please check your internet connection and try again."
       }
     }
+  },
+  "VerifierTrustPage": {
+      "modal": {
+        "title": "Verifier Name",
+        "domain": "verify.gov.in",
+        "description": "Make sure you recognize or trust this verifier. \nOnce you trust this Verifier:",
+        "point1": "The card will be securely saved in your wallet.",
+        "point2": "This verifier will be added to your trusted list.",
+        "point3": "You won’t need to review trust again when downloading from them next time.",
+        "trustButton": "Yes, I trust this Verifier",
+        "notTrustButton": "No, I don’t trust this Verifier",
+        "cancelButton": "Cancel",
+        "infoTooltipButton": "What does trusting mean?",
+        "infoTooltipText": "Trusting a verifier allows them to request your credentials. You’ll still choose which credentials to share in the next step."
+      },
+      "cancelConfirmationModal": {
+        "title": "Are you sure you want to cancel?",
+        "description": "If you cancel this, your request will not be processed and may be lost.",
+        "confirmButton": "Yes, Cancel",
+        "goBackButton": "Go back"
+      },
+      "UserAuthorizationPage": {
+        "validateVerifierError": "Failed to validate verifier request. Please try again.",
+        "invalidVerifierResponse": "Invalid verifier response received.",
+        "addTrustedVerifierError": "Failed to add verifier to trusted list."
+      },
+      "ErrorCard": {
+        "defaultTitle": "Error",
+        "defaultDescription": "Something went wrong. Please try again.",
+        "closeButton": "Close"
+      }
   }
+
 }

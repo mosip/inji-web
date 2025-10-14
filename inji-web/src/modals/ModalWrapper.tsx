@@ -19,7 +19,7 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = (props) => {
         <div className={`w-auto my-8 mx-4 sm:mx-6 ${props.size === "3xl"
           ? "max-w-3xl"
           : props.size === "xl"
-            ? "max-w-xl"
+            ? "w-[90%] md:w-[28%] h-fit max-h-[90vh]"
             : props.size === "md"
               ? "max-w-md"
               : "max-w-sm"} min-w-[320px]`}>

@@ -3,7 +3,7 @@ import {renderGradientText} from "../../../utils/builder";
 
 export const PlainButton:React.FC<PlainButtonProps> = (props) => {
     return <div className={props.fullWidth ? "w-full" : ""}>
-        <div className={"rounded-lg text-center cursor-pointer"} onClick={props.onClick}>
+        <div className={`rounded-lg text-center cursor-pointer ${props.className || ''}`} onClick={props.onClick}>
             <div className="py-2 px-4 rounded-lg bg-white">
                 <button
                     data-testid={props.testId}
@@ -21,4 +21,5 @@ export type PlainButtonProps = {
     onClick: ()=> void;
     title: string;
     disableGradient?: boolean; 
+    className?: string; 
 }
