@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation} from 'react-router-dom';
 import React, { useEffect, useRef, useState } from 'react';
 import { IssuersPage } from './pages/IssuersPage';
 import { Header } from './components/PageTemplate/Header';
@@ -22,7 +22,7 @@ import { useUser } from './hooks/User/useUser';
 import { CredentialTypesPage } from './pages/User/CredentialTypes/CredentialTypesPage';
 import { ResetPasscodePage } from './pages/User/ResetPasscode/ResetPasscodePage';
 import { ProfilePage } from './pages/User/Profile/ProfilePage';
-import { Pages, ROUTES } from "./utils/constants";
+import { Pages, ROUTES, KEYS} from "./utils/constants";
 import { useInterceptor } from "./hooks/useInterceptor";
 import { LandingGuard } from "./components/Guards/LandingGuard";
 
