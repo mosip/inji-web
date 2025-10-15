@@ -49,8 +49,8 @@ jest.mock("../../../components/Common/Buttons/BorderedButton", () => ({
   ),
 }));
 
-jest.mock("../../../components/Common/Buttons/PlainButtonNormal", () => ({
-  PlainButtonNormal: ({ onClick, title, testId }: any) => (
+jest.mock("../../../components/Common/Buttons/TertiaryButton", () => ({
+  TertiaryButton: ({ onClick, title, testId }: any) => (
     <button data-testid={testId} onClick={onClick}>
       {title}
     </button>

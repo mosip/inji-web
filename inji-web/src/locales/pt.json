@@ -489,7 +489,6 @@
       "benefitSkipReviewFuture": "Não precisará de rever a confiança ao fazer download a partir dele da próxima vez.",
       "trustButton": "Sim, eu confio neste Verificador",
       "notTrustButton": "Não, eu não confio neste Verificador",
-      "cancelButton": "Cancelar",
       "infoTooltipButton": "O que significa confiar?",
       "infoTooltipText": "Confiar num verificador permite que ele solicite as suas credenciais. Ainda escolherá quais as credenciais a partilhar na próxima etapa."
     },

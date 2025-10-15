@@ -93,7 +93,7 @@ exports[`TrustVerifierModal renders modal content when open 1`] = `
         <button
           data-testid="btn-cancel-trust-modal"
         >
-          modal.cancelButton
+          Common:cancel
         </button>
       </div>
       <div

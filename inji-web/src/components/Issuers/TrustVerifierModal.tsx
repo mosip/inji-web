@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 import { SolidButton } from "../Common/Buttons/SolidButton";
 import { InfoTooltipTrigger } from "../Common/ToolTip/InfoTooltipTrigger";
 import { TrustVerifierModalStyles } from "./TrustVerifierModalStyles";
-import { PlainButtonNormal } from "../Common/Buttons/PlainButtonNormal";
 import LogoIcon from "../../assets/logo.svg";
 import { BorderedButton } from "../Common/Buttons/BorderedButton";
+import { TertiaryButton } from "../Common/Buttons/TertiaryButton";
 
 
 interface TrustVerifierModalProps {
@@ -28,7 +28,7 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
     onNotTrust,
     onCancel = () => { },
 }) => {
-    const { t } = useTranslation("VerifierTrustPage");
+    const { t } = useTranslation(["VerifierTrustPage", "Common"]); 
 
     if (!isOpen) return null;
 
@@ -124,10 +124,11 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
                         />
 
 
-                        <PlainButtonNormal
+                        <TertiaryButton
                             testId="btn-cancel-trust-modal"
                             onClick={onCancel}
-                            title={t(`modal.cancelButton`)}
+                            title={t(`Common:cancel`)}
+                            className={styles.cancelButton}
                         />
                     </div>
 

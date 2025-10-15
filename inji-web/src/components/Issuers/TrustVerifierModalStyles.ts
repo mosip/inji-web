@@ -19,6 +19,12 @@ export const TrustVerifierModalStyles = {
         trustButton: `
             !bg-[linear-gradient(90deg,_#FF5300_0%,_#FB5103_16%,_#F04C0F_31%,_#DE4322_46%,_#C5363C_61%,_#A4265F_75%,_#7C1389_90%,_#5B03AD_100%)] 
             !shadow-none hover:opacity-90 !py-3 !font-bold !text-base`,
-        noTrustButton: `!py-3`
+        noTrustButton: `!py-3`,
+        cancelButton: `!text-base              
+    bg-clip-text 
+    !text-transparent       
+    bg-gradient-to-r 
+    from-iw-primary 
+    to-iw-secondary`
     }
-    };
+};

@@ -489,7 +489,6 @@
       "benefitSkipReviewFuture": "Vous n'aurez pas besoin de revoir la confiance lors du prochain téléchargement à partir de celui-ci.",
       "trustButton": "Oui, je fais confiance à ce Vérificateur",
       "notTrustButton": "Non, je ne fais pas confiance à ce Vérificateur",
-      "cancelButton": "Annuler",
       "infoTooltipButton": "Que signifie faire confiance ?",
       "infoTooltipText": "Faire confiance à un vérificateur leur permet de demander vos informations d'identification. Vous choisirez toujours les informations d'identification à partager à l'étape suivante."
     },
