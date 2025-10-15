@@ -46,7 +46,7 @@ describe("ErrorCard", () => {
 
   it("calls onClose when close button is clicked", () => {
     render(<ErrorCard onClose={mockOnClose} isOpen={true} />);
-    fireEvent.click(screen.getByTestId("close-btn"));
+    fireEvent.click(screen.getByTestId("btn-error-card-close"));
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 });

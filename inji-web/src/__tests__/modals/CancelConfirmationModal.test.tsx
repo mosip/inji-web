@@ -3,19 +3,16 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { mockUseTranslation } from '../../test-utils/mockUtils';
 
-// Mock the translation hook
+
 mockUseTranslation();
 
-// FIX: Correcting ALL mock paths to match the component's relative imports.
-
-// 1. Mock ModalWrapper (Sibling path: "./ModalWrapper")
 jest.mock('../../modals/ModalWrapper', () => ({
     ModalWrapper: ({ content }: any) => (
         <div data-testid="ModalWrapper-Mock">{content}</div>
     ),
 }));
 
-// 2. Mock SolidButton (Parent path: "../components/Common/Buttons/SolidButton")
+
 jest.mock('../../components/Common/Buttons/SolidButton', () => ({
     SolidButton: ({ onClick, title, testId }: any) => (
         <button data-testid={testId} onClick={onClick}>
@@ -24,7 +21,7 @@ jest.mock('../../components/Common/Buttons/SolidButton', () => ({
     ),
 }));
 
-// 3. Mock SecondaryBorderedButton (Parent path: "../components/Common/Buttons/SecondaryBorderedButton")
+
 jest.mock('../../components/Common/Buttons/SecondaryBorderedButton', () => ({
     SecondaryBorderedButton: ({ onClick, title, testId }: any) => (
         <button data-testid={testId} onClick={onClick}>
@@ -33,7 +30,7 @@ jest.mock('../../components/Common/Buttons/SecondaryBorderedButton', () => ({
     ),
 }));
 
-// Import the component AFTER its dependencies are mocked
+
 import { CancelConfirmationModal } from '../../modals/CancelConfirmationModal';
 
 describe('CancelConfirmationModal', () => {
@@ -70,19 +67,19 @@ describe('CancelConfirmationModal', () => {
 
     it('calls onConfirm when confirm button clicked', () => {
         render(<CancelConfirmationModal {...defaultProps} />);
-        fireEvent.click(screen.getByTestId('confirm-button'));
+        fireEvent.click(screen.getByTestId('btn-confirm-cancel'));
         expect(mockOnConfirm).toHaveBeenCalledTimes(1);
     });
 
     it('calls onClose when go back clicked', () => {
         render(<CancelConfirmationModal {...defaultProps} />);
-        fireEvent.click(screen.getByTestId('go-back-button'));
+        fireEvent.click(screen.getByTestId('btn-go-back'));
         expect(mockOnClose).toHaveBeenCalledTimes(1);
     });
 
     it('handles default close handler when no onClose provided', () => {
         render(<CancelConfirmationModal isOpen={true} onConfirm={mockOnConfirm} />);
-        fireEvent.click(screen.getByTestId('go-back-button'));
-        expect(mockOnConfirm).not.toHaveBeenCalled(); // only ensures no crash
+        fireEvent.click(screen.getByTestId('btn-go-back'));
+        expect(mockOnConfirm).not.toHaveBeenCalled(); 
     });
 });

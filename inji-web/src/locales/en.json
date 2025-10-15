@@ -509,7 +509,11 @@
         "defaultTitle": "Error",
         "defaultDescription": "Something went wrong. Please try again.",
         "closeButton": "Close"
-      }
+      },
+      "loadingCard": {
+      "title": "Fetching verifier info...",
+      "subtitle": "Please wait while we verify the request and prepare your credentials."
+    }
   }
 
 }

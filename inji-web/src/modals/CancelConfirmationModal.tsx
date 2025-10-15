@@ -41,24 +41,24 @@ export const CancelConfirmationModal: React.FC<CancelConfirmationModalProps> = (
       content={
         <div className={styles.wrapper}>
 
-          <h2 className={styles.title}>
+          <h2 data-testid="title-cancel-confirmation" className={styles.title}>
             {t(`cancelConfirmationModal.title`)}
           </h2>
 
-          <p className={styles.description}>
+          <p data-testid="text-cancel-confirmation-description" className={styles.description}>
             {t(`cancelConfirmationModal.description`)}
           </p>
 
           <div className={styles.buttonsContainer}>
             <SolidButton
-              testId="confirm-button"
+              testId="btn-confirm-cancel"
               onClick={onConfirm}
               title={t(`cancelConfirmationModal.confirmButton`)}
               fullWidth
               className={styles.confirmButton}
             />
             <SecondaryBorderedButton
-              testId="go-back-button"
+              testId="btn-go-back"
               onClick={onClose}
               title={t(`cancelConfirmationModal.goBackButton`)}
               fullWidth

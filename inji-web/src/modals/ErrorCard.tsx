@@ -59,16 +59,17 @@ export const ErrorCard: React.FC<ErrorCardProps> = ({
                             src={ErrorMessageIcon}
                             alt="Error Icon"
                             className={styles.iconImage}
+                            data-testid="img-error-card-icon"
                         />
                     </div>
 
-                    <h2 className={styles.title}>
+                    <h2 id="title-error-card" className={styles.title}>
                         {finalTitle}
                     </h2>
-                    <p className={styles.description}>{finalDescription}</p>
+                    <p data-testid="text-error-card-description" className={styles.description}>{finalDescription}</p>
                     <div className={styles.buttonContainer}>
                         <SolidButton
-                            testId="close-btn"
+                            testId="btn-error-card-close"
                             onClick={onClose}
                             title={closeButtonText}
                             fullWidth

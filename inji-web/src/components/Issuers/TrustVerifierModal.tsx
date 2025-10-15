@@ -40,6 +40,12 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
         t(`modal.point3`),
     ];
 
+    const trustPointTestIds = [
+        'text-trust-point-1',
+        'text-trust-point-2',
+        'text-trust-point-3',
+    ];
+
     return (
         <ModalWrapper
             zIndex={50}
@@ -57,26 +63,28 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
                                 src={logo}
                                 alt={`${verifierName} logo`}
                                 className={styles.logoImage}
+                                data-testid="img-verifier-logo"
                             />
                         ) : (
                             <img
                                 src={LogoIcon}
                                 alt={`${verifierName} logo`}
                                 className={styles.logoImage}
+                                data-testid="img-default-logo"
                             />
                         )}
                     </div>
 
 
                     <h1
-                        id="trustscreen-title"
+                        data-testid="title-verifier-name"
                         className={styles.title}
                     >
                         {verifierName || t(`modal.title`)}
                     </h1>
 
                     <p
-                        id="trustscreen-description"
+                        data-testid="text-modal-description"
                         className={styles.description}
                     >
                         {t(`modal.description`)}
@@ -84,7 +92,7 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
 
                     <ul className={styles.list}>
                         {trustPoints.map((text, i) => (
-                            <li key={i} className={styles.listItem}>
+                            <li data-testid={trustPointTestIds[i]} key={i} className={styles.listItem}>
                                 <span 
                                     className={styles.listItemBullet} 
                                     aria-hidden="true" 
@@ -98,7 +106,7 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
 
                     <div className={styles.buttonsContainer}>
                         <SolidButton
-                            testId="trustscreen-yes-button"
+                            testId="btn-trust-verifier"
                             onClick={onTrust}
                             title={t(`modal.trustButton`)}
                             fullWidth
@@ -106,7 +114,7 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
                         />
 
                         <SecondaryBorderedButton
-                            testId="trustscreen-no-button"
+                            testId="btn-not-trust-verifier"
                             onClick={onNotTrust}
                             title={t(`modal.notTrustButton`)}
                             fullWidth
@@ -114,7 +122,7 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
 
 
                         <PlainButtonNormal
-                            testId="trustscreen-cancel-button"
+                            testId="btn-cancel-trust-modal"
                             onClick={onCancel}
                             title={t(`modal.cancelButton`)}
                         />
@@ -124,6 +132,7 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
                     <InfoTooltipTrigger
                         infoButtonText={t('modal.infoTooltipButton')}
                         tooltipText={t('modal.infoTooltipText')}
+                        testId="btn-info-tooltip"
                     />
                 </div>
             }

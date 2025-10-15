@@ -8,6 +8,9 @@ import { CancelConfirmationModal } from "../modals/CancelConfirmationModal";
 import { useApi } from "../hooks/useApi";
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from "../utils/constants";
+import { ApiRequest, ApiResult } from "../types/data";
+import { useSelector } from "react-redux";
+import { RootState } from "../types/redux";
 
 export const UserAuthorizationPage: React.FC = () => {
     const { t } = useTranslation("VerifierTrustPage");
@@ -20,8 +23,10 @@ export const UserAuthorizationPage: React.FC = () => {
 
     const validateApi = useApi();
     const addTrustedVerifierApi = useApi();
-    const userRejectVerifierApi = useApi();
     const navigate = useNavigate();
+    const useApiInstance = useApi;
+    const userRejectVerifierApi = useApi();
+    const language = useSelector((state: RootState) => state.common.language);
 
 
     const handleError = (message: string, err?: any) => {
@@ -34,6 +39,38 @@ export const UserAuthorizationPage: React.FC = () => {
     const rejectionBody = {
         errorCode: "access_denied",
         errorMessage: "User denied authorization to share credentials"
+    };
+
+    const executeApiRequest = async (
+        apiConfig: ApiRequest,
+        id: string | null,
+        body: any,
+        onSuccess: (response: ApiResult<any>) => Promise<void>,
+        apiInstance: ReturnType<typeof useApiInstance>,
+        errorType: string = "apiError"
+    ) => {
+        if (!id) {
+            throw new Error("Missing ID for API request.");
+        }
+
+        try {
+            const response = await apiInstance.fetchData({
+                url: apiConfig.url(id),
+                headers: apiConfig.headers(language),
+                apiConfig: apiConfig,
+                body: body,
+            });
+
+            if (!response.ok()) {
+                console.error(`Failed to fetch request, got ${errorType} with response - `, response);
+                throw new Error(errorType);
+            }
+
+            await onSuccess(response);
+        } catch (error) {
+            console.error("API request failed:", error);
+            throw new Error(errorType);
+        }
     };
 
     const validateVerifierRequest = async () => {
@@ -92,26 +129,22 @@ export const UserAuthorizationPage: React.FC = () => {
     };
 
     const rejectVerifierRequest = async () => {
-        setShowTrustVerifier(false);
-        if (!presentationIdData) return;
-
         try {
-            const response = await userRejectVerifierApi.fetchData({
-                apiConfig: api.userRejectVerifier,
-                url: api.userRejectVerifier.url(presentationIdData), 
-                body: rejectionBody,
-            });
-
-            if (!response.ok()) {
-                console.error("Failed to notify server of rejection:", response.error);
-            }
-            
-            console.log("User rejection notified to server.");
-
-        } catch (err) {
-            console.error("Failed to notify server of rejection:", err);
+            await executeApiRequest(
+                api.userRejectVerifier,
+                presentationIdData,
+                rejectionBody,
+                async () => {
+                    navigate(ROUTES.ROOT);
+                },
+                userRejectVerifierApi,
+                "rejectError"
+            );
+        } catch (error) {
+            console.error("Failed to reject verifier:", error);
+            setError("rejectError");
         } finally {
-            navigate(ROUTES.ROOT);
+            setShowTrustVerifier(false);
         }
     };
 
@@ -123,7 +156,12 @@ export const UserAuthorizationPage: React.FC = () => {
 
     return (
         <div className="relative flex flex-col items-center justify-center min-h-screen bg-gray-50">
-            <LoaderModal isOpen={isLoading} />
+            <LoaderModal 
+                isOpen={isLoading} 
+                title={t("loadingCard.title")} 
+                subtitle={t("loadingCard.subtitle")} 
+                data-testid="loader-modal"
+            />
 
             <TrustVerifierModal
                 isOpen={showTrustVerifier}
@@ -136,6 +174,7 @@ export const UserAuthorizationPage: React.FC = () => {
                     setShowTrustVerifier(false);
                     setIsCancelConfirmation(true);
                 }}
+                data-testid="modal-trust-verifier"
             />
 
             {error && (
@@ -143,19 +182,22 @@ export const UserAuthorizationPage: React.FC = () => {
                     isOpen={!!error}
                     title={t("errorTitle") || "Error"}
                     description={error}
-                    onClose={() => setError(null)}
+                    onClose={() => { setError(null); navigate(ROUTES.ROOT); }}
+                    data-testid="error-card"
                 />
             )}
 
             <CancelConfirmationModal
                 isOpen={isCancelConfirmation}
-                onConfirm={() => {setIsCancelConfirmation(false);
-                    navigate(ROUTES.ROOT);   
+                onConfirm={() => {
+                    setIsCancelConfirmation(false);
+                    navigate(ROUTES.ROOT);
                 }}
                 onClose={() => {
                     setIsCancelConfirmation(false);
                     setShowTrustVerifier(true);
                 }}
+                data-testid="modal-cancel-confirmation"
             />
         </div>
     );

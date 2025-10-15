@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import InfoIcon from "../../../assets/info icon.svg";
 
 interface InfoTooltipTriggerProps {
     infoButtonText: string; 
     tooltipText: string;    
     buttonId?: string;
     className?: string; 
+    testId?: string;
 }
 
 
@@ -13,6 +15,7 @@ export const InfoTooltipTrigger: React.FC<InfoTooltipTriggerProps> = ({
     tooltipText,
     buttonId = 'trustscreen-info-button',
     className = '',
+    testId = ''
 }) => {
 
     const [showTooltip, setShowTooltip] = useState(false);
@@ -24,7 +27,7 @@ export const InfoTooltipTrigger: React.FC<InfoTooltipTriggerProps> = ({
     const handleMouseLeave = () => setShowTooltip(false);
 
     return (
-        <div className={`relative inline-block mt-4 sm:mt-5 ${className}`}>
+        <div data-testid={testId} className={`relative inline-block mt-4 sm:mt-5 ${className}`}>
            
             <button
                 id={buttonId}
@@ -33,9 +36,15 @@ export const InfoTooltipTrigger: React.FC<InfoTooltipTriggerProps> = ({
                 onMouseLeave={handleMouseLeave}
                 className="flex items-center text-gray-500 hover:text-gray-700 text-sm focus:outline-none"
                 aria-describedby={`tooltip-${buttonId}`}
+                data-testid="btn-info-tooltip-trigger-button"
             >
-                <span className="text-lg mr-1" role="img" aria-label="Information icon">ℹ️</span>
-                <span>{infoButtonText}</span> 
+                <img 
+                    src={InfoIcon} 
+                    alt="Information icon" 
+                    className="w-4 h-4 mr-1" 
+                    data-testid="text-info-icon" 
+                />
+                <span data-testid="text-info-button-label">{infoButtonText}</span> 
             </button>
             {showTooltip && (
                 <div
@@ -45,6 +54,7 @@ export const InfoTooltipTrigger: React.FC<InfoTooltipTriggerProps> = ({
                     style={{
                         filter: "drop-shadow(0px 2px 6px rgba(0,0,0,0.2))",
                     }}
+                    data-testid="text-tooltip-content"
                 >
                     <div className="absolute bottom-0 left-1/2 translate-x-[-50%] translate-y-full">
                         <svg
@@ -56,7 +66,7 @@ export const InfoTooltipTrigger: React.FC<InfoTooltipTriggerProps> = ({
                         </svg>
                     </div>
 
-                    <p className="text-sm leading-snug text-left">
+                    <p data-testid="text-tooltip-message" className="text-sm leading-snug text-left">
                         {tooltipText} 
                     </p>
                 </div>

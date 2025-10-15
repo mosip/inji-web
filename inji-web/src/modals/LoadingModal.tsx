@@ -35,8 +35,8 @@ export const LoaderModal: React.FC<LoaderModalProps> = ({
       footer={<></>}
       content={
         
-            <div className={styles.wrapper}>
-          {/* Spinner */}
+          <div className={styles.wrapper}>
+
           <div className={styles.spinnerContainer}>
             <ColorRing
               visible={true}
@@ -45,14 +45,15 @@ export const LoaderModal: React.FC<LoaderModalProps> = ({
               ariaLabel="loading-indicator"
               // Colors are not CSS classes, they remain as a prop
               colors={["#D64246", "#D64246", "#D64246", "#D64246", "#D64246"]}
+              data-testid="loader-color-ring"
             />
           </div>
 
-          <h2 className={styles.title}>
+          <h2 data-testid="title-loader-modal" className={styles.title}>
             {title}
           </h2>
 
-          <p className={styles.subtitle}>
+          <p data-testid="text-loader-modal-subtitle" className={styles.subtitle}>
             {subtitle}
           </p>
         </div>

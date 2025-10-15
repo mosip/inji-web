@@ -48,8 +48,8 @@ jest.mock("../../../components/Common/Buttons/SecondaryBorderedButton", () => ({
   ),
 }));
 
-jest.mock("../../../components/Common/Buttons/TertiaryButton", () => ({
-  TertiaryButton: ({ onClick, title, testId }: any) => (
+jest.mock("../../../components/Common/Buttons/PlainButtonNormal", () => ({
+  PlainButtonNormal: ({ onClick, title, testId }: any) => (
     <button data-testid={testId} onClick={onClick}>
       {title}
     </button>
@@ -58,7 +58,7 @@ jest.mock("../../../components/Common/Buttons/TertiaryButton", () => ({
 
 jest.mock("../../../components/Common/ToolTip/InfoTooltipTrigger", () => ({
   InfoTooltipTrigger: ({ infoButtonText, tooltipText }: any) => (
-    <div data-testid="info-tooltip">
+    <div data-testid="btn-info-tooltip">
       {infoButtonText} - {tooltipText}
     </div>
   ),
@@ -87,13 +87,14 @@ describe("TrustVerifierModal", () => {
         onCancel={mockOnCancel}
       />
     );
-    expect(screen.getByTestId("ModalWrapper-Mock")).toBeInTheDocument();
-    expect(screen.getByText("Test Verifier")).toBeInTheDocument();
-    expect(screen.getByTestId("trust-verifier-content")).toBeInTheDocument();
-    expect(screen.getByTestId("trustscreen-yes-button")).toBeInTheDocument();
-    expect(screen.getByTestId("trustscreen-no-button")).toBeInTheDocument();
-    expect(screen.getByTestId("trustscreen-cancel-button")).toBeInTheDocument();
-    expect(screen.getByTestId("info-tooltip")).toBeInTheDocument();
+    
+    expect(screen.getByTestId("trust-verifier-content")).toBeInTheDocument(); 
+    
+    expect(screen.getByTestId("btn-trust-verifier")).toBeInTheDocument();
+    expect(screen.getByTestId("btn-not-trust-verifier")).toBeInTheDocument();
+    expect(screen.getByTestId("btn-cancel-trust-modal")).toBeInTheDocument();
+    expect(screen.getByTestId("btn-info-tooltip")).toBeInTheDocument(); 
+    
     expect(container).toMatchSnapshot();
   });
 
@@ -118,7 +119,8 @@ describe("TrustVerifierModal", () => {
         onCancel={mockOnCancel}
       />
     );
-    fireEvent.click(screen.getByTestId("trustscreen-yes-button"));
+
+    fireEvent.click(screen.getByTestId("btn-trust-verifier"));
     expect(mockOnTrust).toHaveBeenCalledTimes(1);
   });
 
@@ -131,7 +133,8 @@ describe("TrustVerifierModal", () => {
         onCancel={mockOnCancel}
       />
     );
-    fireEvent.click(screen.getByTestId("trustscreen-no-button"));
+
+    fireEvent.click(screen.getByTestId("btn-not-trust-verifier"));
     expect(mockOnNotTrust).toHaveBeenCalledTimes(1);
   });
 
@@ -144,7 +147,7 @@ describe("TrustVerifierModal", () => {
         onCancel={mockOnCancel}
       />
     );
-    fireEvent.click(screen.getByTestId("trustscreen-cancel-button"));
+    fireEvent.click(screen.getByTestId("btn-cancel-trust-modal"));
     expect(mockOnCancel).toHaveBeenCalledTimes(1);
   });
 });
