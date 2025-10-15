@@ -45,7 +45,7 @@ exports[`TrustVerifierModal renders modal content when open 1`] = `
             •
           </span>
           <span>
-            modal.point1
+            modal.benefitSaveSecurely
           </span>
         </li>
         <li
@@ -59,7 +59,7 @@ exports[`TrustVerifierModal renders modal content when open 1`] = `
             •
           </span>
           <span>
-            modal.point2
+            modal.benefitAddToTrustedList
           </span>
         </li>
         <li
@@ -73,7 +73,7 @@ exports[`TrustVerifierModal renders modal content when open 1`] = `
             •
           </span>
           <span>
-            modal.point3
+            modal.benefitSkipReviewFuture
           </span>
         </li>
       </ul>
