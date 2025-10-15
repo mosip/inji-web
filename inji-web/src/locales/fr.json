@@ -483,11 +483,10 @@
   "VerifierTrustPage": {
     "modal": {
       "title": "Vérificateur inconnu",
-      "domain": "verify.gov.in",
       "description": "Assurez-vous de reconnaître ou de faire confiance à ce vérificateur. \nUne fois que vous faites confiance à ce vérificateur :",
-      "point1": "La carte sera enregistrée en toute sécurité dans votre portefeuille.",
-      "point2": "Ce vérificateur sera ajouté à votre liste de confiance.",
-      "point3": "Vous n'aurez pas besoin de revoir la confiance lors du prochain téléchargement à partir de celui-ci.",
+      "benefitSaveSecurely": "La carte sera enregistrée en toute sécurité dans votre portefeuille.",
+      "benefitAddToTrustedList": "Ce vérificateur sera ajouté à votre liste de confiance.",
+      "benefitSkipReviewFuture": "Vous n'aurez pas besoin de revoir la confiance lors du prochain téléchargement à partir de celui-ci.",
       "trustButton": "Oui, je fais confiance à ce Vérificateur",
       "notTrustButton": "Non, je ne fais pas confiance à ce Vérificateur",
       "cancelButton": "Annuler",

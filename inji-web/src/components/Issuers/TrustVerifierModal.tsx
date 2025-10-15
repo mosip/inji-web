@@ -35,9 +35,9 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
     const styles = TrustVerifierModalStyles.trustModal;
 
     const trustPoints = [
-        t(`modal.point1`),
-        t(`modal.point2`),
-        t(`modal.point3`),
+        t(`modal.benefitSaveSecurely`),
+        t(`modal.benefitAddToTrustedList`),
+        t(`modal.benefitSkipReviewFuture`),
     ];
 
     const trustPointTestIds = [

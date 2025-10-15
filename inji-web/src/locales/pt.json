@@ -483,11 +483,10 @@
   "VerifierTrustPage": {
     "modal": {
       "title": "Verificador desconhecido",
-      "domain": "verify.gov.in",
       "description": "Certifique-se de reconhecer ou confiar neste verificador. \nAssim que você confiar neste Verificador:",
-      "point1": "O cartão será guardado de forma segura na sua carteira.",
-      "point2": "Este verificador será adicionado à sua lista de confiança.",
-      "point3": "Não precisará de rever a confiança ao fazer download a partir dele da próxima vez.",
+      "benefitSaveSecurely": "O cartão será guardado de forma segura na sua carteira.",
+      "benefitAddToTrustedList": "Este verificador será adicionado à sua lista de confiança.",
+      "benefitSkipReviewFuture": "Não precisará de rever a confiança ao fazer download a partir dele da próxima vez.",
       "trustButton": "Sim, eu confio neste Verificador",
       "notTrustButton": "Não, eu não confio neste Verificador",
       "cancelButton": "Cancelar",

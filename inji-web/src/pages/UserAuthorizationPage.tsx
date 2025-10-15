@@ -29,8 +29,9 @@ export const UserAuthorizationPage: React.FC = () => {
     const language = useSelector((state: RootState) => state.common.language);
 
 
-    const handleError = (message: string, err?: any) => {
-        console.error("❌", message, err);
+    const handleError = (message: string, source: string, err?: any) => {
+        const detailedMessage = `API Error in [${source}]: ${message}`;
+        console.error(detailedMessage, err);
         setError(message);
         setIsLoading(false);
         setShowTrustVerifier(false);
@@ -85,12 +86,12 @@ export const UserAuthorizationPage: React.FC = () => {
             });
 
             if (!response.ok()) {
-                return handleError("Failed to validate verifier request. Please try again.", response.error);
+                return handleError("Failed to validate verifier request. Please try again.", "validateVerifierRequest", response.error);
             }
             const presentationId = response?.data?.presentationId;
             const verifier = response?.data?.verifier;
             if (!verifier) {
-                return handleError("Invalid verifier response received.");
+                return handleError("Invalid verifier response received.", "validateVerifierRequest");
             }
 
             setPresentationIdData(presentationId)
@@ -102,7 +103,7 @@ export const UserAuthorizationPage: React.FC = () => {
                 setShowTrustVerifier(false);
             }
         } catch (err) {
-            handleError("Failed to validate verifier request.", err);
+            handleError("Failed to validate verifier request.", "validateVerifierRequest", err);
         } finally {
             setIsLoading(false);
         }
@@ -118,13 +119,13 @@ export const UserAuthorizationPage: React.FC = () => {
             });
 
             if (!response.ok()) {
-                return handleError("Failed to add verifier to trusted list.", response.error);
+                return handleError("Failed to add verifier to trusted list.", "addTrustedVerifier", response.error);
             }
 
             console.log("Verifier added to trusted list:", response);
             setShowTrustVerifier(false);
         } catch (err) {
-            handleError("Failed to add verifier to trusted list.", err);
+            handleError("Failed to add verifier to trusted list.", "addTrustedVerifier", err);
         }
     };
 
@@ -156,10 +157,10 @@ export const UserAuthorizationPage: React.FC = () => {
 
     return (
         <div className="relative flex flex-col items-center justify-center min-h-screen bg-gray-50">
-            <LoaderModal 
-                isOpen={isLoading} 
-                title={t("loadingCard.title")} 
-                subtitle={t("loadingCard.subtitle")} 
+            <LoaderModal
+                isOpen={isLoading}
+                title={t("loadingCard.title")}
+                subtitle={t("loadingCard.subtitle")}
                 data-testid="loader-modal"
             />
 
@@ -183,7 +184,7 @@ export const UserAuthorizationPage: React.FC = () => {
                     title={t("errorTitle") || "Error"}
                     description={error}
                     onClose={() => { setError(null); navigate(ROUTES.ROOT); }}
-                    data-testid="error-card"
+
                 />
             )}
 
@@ -197,7 +198,6 @@ export const UserAuthorizationPage: React.FC = () => {
                     setIsCancelConfirmation(false);
                     setShowTrustVerifier(true);
                 }}
-                data-testid="modal-cancel-confirmation"
             />
         </div>
     );
