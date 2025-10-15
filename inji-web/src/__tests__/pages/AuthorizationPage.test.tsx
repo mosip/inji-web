@@ -3,13 +3,13 @@ import {renderWithRouter, mockWindowLocation} from "../../test-utils/mockUtils";
 
 jest.mock("../../utils/api", () => ({
   api: {
-    mimotoHost: "http://mocked-api-host"
+    mimotoHost: "http://mocked-api-host", 
   }
 }));
 
 describe('Testing the Layouts of AuthorizationPage', () => {
   test('Check if it renders properly if there is no error in URL', () => {
-    mockWindowLocation('https://api.collab.mosip.net');
+    mockWindowLocation('https://api.collab.mosip.net?resource=datashare-service&datashare=test');
     const {asFragment} = renderWithRouter(<AuthorizationPage />);
     expect(asFragment()).toMatchSnapshot();
   });

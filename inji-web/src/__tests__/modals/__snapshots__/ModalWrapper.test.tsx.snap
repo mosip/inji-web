@@ -225,7 +225,7 @@ exports[`Test the Layout of the Modal Wrapper Snapshot test for ModalWrapper sty
     </div>
   </div>
   <div
-    class="opacity-25 fixed inset-0 z-30 bg-iw-backDrop"
+    class="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm"
     data-testid="ModalWrapper-BackDrop"
   />
 </DocumentFragment>

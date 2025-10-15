@@ -1,12 +1,13 @@
-import {ApiRequest, CodeChallengeObject, CredentialConfigurationObject, IssuerObject} from "../types/data";
+import { ApiRequest, CodeChallengeObject, CredentialConfigurationObject, IssuerObject } from "../types/data";
 import i18n from "i18next";
-import {KEYS, ROUTES} from "./constants";
-import {AppStorage} from "./AppStorage";
+import { KEYS, ROUTES } from "./constants";
+import { AppStorage } from "./AppStorage";
 
 export enum MethodType {
     GET,
     POST,
-    DELETE
+    DELETE,
+    PATCH
 }
 
 export enum ContentTypes {
@@ -246,4 +247,43 @@ export class api {
         },
         credentials: "include"
     }
+
+    static validateVerifierRequest: ApiRequest = {
+        url: () => {
+            const walletId = AppStorage.getItem(KEYS.WALLET_ID);
+            return `${api.mimotoHost}/wallets/${walletId}/presentations`;
+        },
+        methodType: MethodType.POST,
+        headers: () => ({
+            "Content-Type": ContentTypes.JSON,
+            "Accept": ContentTypes.JSON,
+        }),
+        credentials: "include"
+    };
+
+    static addTrustedVerifier: ApiRequest = {
+        url: () => {
+            const walletId = AppStorage.getItem(KEYS.WALLET_ID);
+            return `${api.mimotoHost}/wallets/${walletId}/trusted-verifiers`;
+        },
+        methodType: MethodType.POST,
+        headers: () => ({
+            "Content-Type": ContentTypes.JSON,
+            "Accept": ContentTypes.JSON,
+        }),
+        credentials: "include"
+    };
+
+    static userRejectVerifier: ApiRequest = {
+        url: (presentationId: string ) => {
+            const walletId = AppStorage.getItem(KEYS.WALLET_ID);
+            return `${api.mimotoHost}/wallets/${walletId}/presentations/${presentationId}`;
+        },
+        methodType: MethodType.PATCH,
+        headers: () => ({
+            "Content-Type": ContentTypes.JSON,
+            "Accept": ContentTypes.JSON,
+        }),
+        credentials: "include"
+    };
 }

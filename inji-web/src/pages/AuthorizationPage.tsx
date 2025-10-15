@@ -13,7 +13,14 @@ export const AuthorizationPage: React.FC = () => {
 
     useEffect( () => {
         if(url.indexOf("error") === -1) {
-            window.location.href = api.mimotoHost + "/authorize" + window.location.search;
+            const resource = currentQueryParams.get("resource");
+            if (resource && resource.includes("datashare-service")) {
+                //Datashare flow - stay on /authorize
+                window.location.href = api.mimotoHost + "/authorize" + window.location.search;
+            } else {
+                // Not datashare - redirect to /user/authorize
+                window.location.href = "/user/authorize?" + window.location.search;
+            }
         }
     },[])
 
