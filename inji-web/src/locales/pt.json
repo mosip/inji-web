@@ -493,7 +493,7 @@
       "infoTooltipButton": "O que significa confiar?",
       "infoTooltipText": "Confiar num verificador permite que ele solicite as suas credenciais. Ainda escolherá quais as credenciais a partilhar na próxima etapa."
     },
-    "cancelConfirmationModal": {
+    "TrustRejectionModal": {
       "title": "Tem a certeza de que pretende cancelar?",
       "description": "Se cancelar, o seu pedido não será processado e poderá ser perdido.",
       "confirmButton": "Sim, Cancelar",

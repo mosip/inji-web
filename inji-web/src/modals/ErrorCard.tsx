@@ -21,10 +21,7 @@ export const ErrorCardStyles = {
         description: "text-gray-500 mb-8",
         
         buttonContainer: "w-full flex justify-center",
-        closeButton: `
-            max-w-md !bg-gradient-to-r from-red-500 to-purple-600 
-            !py-3 !rounded-md !font-medium !text-white hover:opacity-90 focus:outline-none
-        `
+        closeButton: `!py-3`
     }
 };
 

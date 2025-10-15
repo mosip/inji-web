@@ -493,7 +493,7 @@
         "infoTooltipButton": "What does trusting mean?",
         "infoTooltipText": "Trusting a verifier allows them to request your credentials. You’ll still choose which credentials to share in the next step."
       },
-      "cancelConfirmationModal": {
+      "TrustRejectionModal": {
         "title": "Are you sure you want to cancel?",
         "description": "If you cancel this, your request will not be processed and may be lost.",
         "confirmButton": "Yes, Cancel",

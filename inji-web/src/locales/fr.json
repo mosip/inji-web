@@ -493,7 +493,7 @@
       "infoTooltipButton": "Que signifie faire confiance ?",
       "infoTooltipText": "Faire confiance à un vérificateur leur permet de demander vos informations d'identification. Vous choisirez toujours les informations d'identification à partager à l'étape suivante."
     },
-    "cancelConfirmationModal": {
+    "TrustRejectionModal": {
       "title": "Êtes-vous sûr de vouloir annuler ?",
       "description": "Si vous annulez, votre demande ne sera pas traitée et pourrait être perdue.",
       "confirmButton": "Oui, Annuler",

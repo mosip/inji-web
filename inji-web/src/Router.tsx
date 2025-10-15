@@ -22,7 +22,7 @@ import { useUser } from './hooks/User/useUser';
 import { CredentialTypesPage } from './pages/User/CredentialTypes/CredentialTypesPage';
 import { ResetPasscodePage } from './pages/User/ResetPasscode/ResetPasscodePage';
 import { ProfilePage } from './pages/User/Profile/ProfilePage';
-import { Pages, ROUTES, KEYS} from "./utils/constants";
+import { Pages, ROUTES} from "./utils/constants";
 import { useInterceptor } from "./hooks/useInterceptor";
 import { LandingGuard } from "./components/Guards/LandingGuard";
 
@@ -50,35 +50,35 @@ export const AppRouter = () => {
         };
     };
 
-    const PROTECTED_USER_ROUTES = React.useMemo(() => [
-        `/${Pages.USER}/${Pages.AUTHORIZE}`,
-        `/${Pages.USER}/${Pages.HOME}`,
-        `/${Pages.USER}/${Pages.ISSUER_TEMPLATE}`,
-        `/${Pages.USER}/${Pages.CREDENTIALS}`,
-        `/${Pages.USER}/${Pages.PROFILE}`,
-        `/${Pages.USER}/${Pages.FAQ}`,
-    ], []);
+    // const PROTECTED_USER_ROUTES = React.useMemo(() => [
+    //     `/${Pages.USER}/${Pages.AUTHORIZE}`,
+    //     `/${Pages.USER}/${Pages.HOME}`,
+    //     `/${Pages.USER}/${Pages.ISSUER_TEMPLATE}`,
+    //     `/${Pages.USER}/${Pages.CREDENTIALS}`,
+    //     `/${Pages.USER}/${Pages.PROFILE}`,
+    //     `/${Pages.USER}/${Pages.FAQ}`,
+    // ], []);
 
-    useEffect(() => {
-        const currentPath = location.pathname;
-        const isProtectedPage = PROTECTED_USER_ROUTES.includes(currentPath);
-        if (isProtectedPage && !isUserLoggedIn()) {
-            localStorage.setItem(KEYS.REDIRECT_TO, window.location.href);
-            window.location.href = ROUTES.USER_PASSCODE;
-        }
-         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.pathname]);
+    // useEffect(() => {
+    //     const currentPath = location.pathname;
+    //     const isProtectedPage = PROTECTED_USER_ROUTES.includes(currentPath);
+    //     if (isProtectedPage && !isUserLoggedIn()) {
+    //         localStorage.setItem(KEYS.REDIRECT_TO, window.location.href);
+    //         window.location.href = ROUTES.USER_PASSCODE;
+    //     }
+    //      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [location.pathname]);
 
-    useEffect(() => {
-        if (isUserLoggedIn()) {
-            const redirectUrl = localStorage.getItem(KEYS.REDIRECT_TO);
-            if (redirectUrl) {
-                localStorage.removeItem(KEYS.REDIRECT_TO);
-                window.location.href = redirectUrl;
-            }
-        }
-         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isUserLoggedIn()]);
+    // useEffect(() => {
+    //     if (isUserLoggedIn()) {
+    //         const redirectUrl = localStorage.getItem(KEYS.REDIRECT_TO);
+    //         if (redirectUrl) {
+    //             localStorage.removeItem(KEYS.REDIRECT_TO);
+    //             window.location.href = redirectUrl;
+    //         }
+    //     }
+    //      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isUserLoggedIn()]);
 
     useEffect(() => {
         const updateHeights = () => {

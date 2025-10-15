@@ -4,7 +4,7 @@ import { LoaderModal } from "../modals/LoadingModal";
 import { useTranslation } from "react-i18next";
 import { TrustVerifierModal } from "../components/Issuers/TrustVerifierModal";
 import { ErrorCard } from "../modals/ErrorCard";
-import { CancelConfirmationModal } from "../modals/CancelConfirmationModal";
+import { TrustRejectionModal } from "../components/Issuers/TrustRejectionModal";
 import { useApi } from "../hooks/useApi";
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from "../utils/constants";
@@ -21,11 +21,9 @@ export const UserAuthorizationPage: React.FC = () => {
     const [verifierData, setVerifierData] = useState<any>(null);
     const [presentationIdData, setPresentationIdData] = useState<string | null>(null);
 
-    const validateApi = useApi();
-    const addTrustedVerifierApi = useApi();
+    const apiService = useApi();
     const navigate = useNavigate();
     const useApiInstance = useApi;
-    const userRejectVerifierApi = useApi();
     const language = useSelector((state: RootState) => state.common.language);
 
 
@@ -80,7 +78,7 @@ export const UserAuthorizationPage: React.FC = () => {
             const authorizationRequestUrl =
                 window.location.search;
 
-            const response = await validateApi.fetchData({
+            const response = await apiService.fetchData({
                 apiConfig: api.validateVerifierRequest,
                 body: { authorizationRequestUrl },
             });
@@ -113,7 +111,7 @@ export const UserAuthorizationPage: React.FC = () => {
         if (!verifierData?.id) return;
 
         try {
-            const response = await addTrustedVerifierApi.fetchData({
+            const response = await apiService.fetchData({
                 apiConfig: api.addTrustedVerifier,
                 body: { verifierId: verifierData.id },
             });
@@ -138,7 +136,7 @@ export const UserAuthorizationPage: React.FC = () => {
                 async () => {
                     navigate(ROUTES.ROOT);
                 },
-                userRejectVerifierApi,
+                apiService,
                 "rejectError"
             );
         } catch (error) {
@@ -188,7 +186,7 @@ export const UserAuthorizationPage: React.FC = () => {
                 />
             )}
 
-            <CancelConfirmationModal
+            <TrustRejectionModal
                 isOpen={isCancelConfirmation}
                 onConfirm={() => {
                     setIsCancelConfirmation(false);
