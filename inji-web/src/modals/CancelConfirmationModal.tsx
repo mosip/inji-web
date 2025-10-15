@@ -2,7 +2,7 @@ import React from "react";
 import { ModalWrapper } from "./ModalWrapper";
 import { useTranslation } from "react-i18next";
 import { SolidButton } from "../components/Common/Buttons/SolidButton";
-import { SecondaryBorderedButton } from "../components/Common/Buttons/SecondaryBorderedButton";
+import { BorderedButton } from "../components/Common/Buttons/BorderedButton";
 
 const CancelConfirmationModalStyles = {
     wrapper: "flex flex-col items-center text-center px-6 py-12 sm:p-8",
@@ -12,7 +12,7 @@ const CancelConfirmationModalStyles = {
     confirmButton: `
         !py-2.5 !rounded-lg font-medium transition mt-4 mb-2 !text-base !font-bold
     `,
-    goBackButton: ""
+    goBackButton: "!py-2.5"
 };
 
 
@@ -57,11 +57,11 @@ export const CancelConfirmationModal: React.FC<CancelConfirmationModalProps> = (
               fullWidth
               className={styles.confirmButton}
             />
-            <SecondaryBorderedButton
+            <BorderedButton
               testId="btn-go-back"
               onClick={onClose}
               title={t(`cancelConfirmationModal.goBackButton`)}
-              fullWidth
+              className={styles.goBackButton}
             />
           </div>
         </div>

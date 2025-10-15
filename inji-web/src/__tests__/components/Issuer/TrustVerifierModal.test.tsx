@@ -40,9 +40,10 @@ jest.mock("../../../components/Common/Buttons/SolidButton", () => ({
   ),
 }));
 
-jest.mock("../../../components/Common/Buttons/SecondaryBorderedButton", () => ({
-  SecondaryBorderedButton: ({ onClick, title, testId }: any) => (
-    <button data-testid={testId} onClick={onClick}>
+jest.mock("../../../components/Common/Buttons/BorderedButton", () => ({
+  BorderedButton: ({ onClick, title, testId }: any) => (
+    // The test framework clicks THIS mocked button
+    <button data-testid={testId} onClick={onClick}> 
       {title}
     </button>
   ),

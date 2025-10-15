@@ -13,51 +13,53 @@ export const LoaderModalStyles = {
 
 
 interface LoaderModalProps {
-  isOpen: boolean;
-  title?: string;
-  subtitle?: string;
+    isOpen: boolean;
+    title: string;
+    subtitle: string;
 }
 
 export const LoaderModal: React.FC<LoaderModalProps> = ({
-  isOpen,
-  title = "Fetching the verifier Info...",
-  subtitle = "Please wait while we verify the request and prepare your credentials.",
+    isOpen,
+    title,
+    subtitle,
 }) => {
-  if (!isOpen) return null;
-  
-  const styles = LoaderModalStyles.loaderModal;
+    if (!isOpen) return null;
+    // const staticRed = 'var(--iw-color-red)'
+    const staticRed = '#D64246';
 
-  return (
-    <ModalWrapper
-      zIndex={50}
-      size="xl"
-      header={<></>}
-      footer={<></>}
-      content={
-        
-          <div className={styles.wrapper}>
 
-          <div className={styles.spinnerContainer}>
-            <ColorRing
-              visible={true}
-              height="80"
-              width="80"
-              ariaLabel="loading-indicator"
-              // Colors are not CSS classes, they remain as a prop
-              colors={["#D64246", "#D64246", "#D64246", "#D64246", "#D64246"]}
-              data-testid="loader-color-ring"
-            />
-          </div>
+    const styles = LoaderModalStyles.loaderModal;
 
-          <h2 data-testid="title-loader-modal" className={styles.title}>
-            {title}
-          </h2>
+    return (
+        <ModalWrapper
+            zIndex={50}
+            size="xl"
+            header={<></>}
+            footer={<></>}
+            content={
 
-          <p data-testid="text-loader-modal-subtitle" className={styles.subtitle}>
-            {subtitle}
-          </p>
-        </div>
-      }
-    />
-  );
+                <div className={styles.wrapper}>
+
+                    <div className={styles.spinnerContainer}>
+                        <ColorRing
+                            visible={true}
+                            height="80"
+                            width="80"
+                            ariaLabel="loading-indicator"
+                            colors={[staticRed, staticRed, staticRed, staticRed, staticRed]}
+                            data-testid="loader-color-ring"
+                        />
+                    </div>
+
+                    <h2 data-testid="title-loader-modal" className={styles.title}>
+                        {title}
+                    </h2>
+
+                    <p data-testid="text-loader-modal-subtitle" className={styles.subtitle}>
+                        {subtitle}
+                    </p>
+                </div>
+            }
+        />
+    );
 };

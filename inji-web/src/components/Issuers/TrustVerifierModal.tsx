@@ -2,11 +2,11 @@ import React from "react";
 import { ModalWrapper } from "../../modals/ModalWrapper";
 import { useTranslation } from "react-i18next";
 import { SolidButton } from "../Common/Buttons/SolidButton";
-import { SecondaryBorderedButton } from "../Common/Buttons/SecondaryBorderedButton";
 import { InfoTooltipTrigger } from "../Common/ToolTip/InfoTooltipTrigger";
 import { TrustVerifierModalStyles } from "./TrustVerifierModalStyles";
 import { PlainButtonNormal } from "../Common/Buttons/PlainButtonNormal";
 import LogoIcon from "../../assets/logo.svg";
+import { BorderedButton } from "../Common/Buttons/BorderedButton";
 
 
 interface TrustVerifierModalProps {
@@ -14,9 +14,9 @@ interface TrustVerifierModalProps {
     logo?: string | null;
     verifierName?: string;
     verifierDomain?: string;
-    onTrust?: () => void;
-    onNotTrust?: () => void;
-    onCancel?: () => void;
+    onTrust: () => void;
+    onNotTrust: () => void;
+    onCancel: () => void;
 }
 
 export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
@@ -29,21 +29,24 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
     onCancel = () => { },
 }) => {
     const { t } = useTranslation("VerifierTrustPage");
-    
+
     if (!isOpen) return null;
 
     const styles = TrustVerifierModalStyles.trustModal;
 
-    const trustPoints = [
-        t(`modal.benefitSaveSecurely`),
-        t(`modal.benefitAddToTrustedList`),
-        t(`modal.benefitSkipReviewFuture`),
-    ];
-
-    const trustPointTestIds = [
-        'text-trust-point-1',
-        'text-trust-point-2',
-        'text-trust-point-3',
+    const trustVerifierInstructions = [
+        {
+            instructionKey: `modal.benefitSaveSecurely`,
+            testId: 'text-trust-point-1'
+        },
+        {
+            instructionKey: `modal.benefitAddToTrustedList`,
+            testId: 'text-trust-point-2'
+        },
+        {
+            instructionKey: `modal.benefitSkipReviewFuture`,
+            testId: 'text-trust-point-3'
+        },
     ];
 
     return (
@@ -91,15 +94,15 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
                     </p>
 
                     <ul className={styles.list}>
-                        {trustPoints.map((text, i) => (
-                            <li data-testid={trustPointTestIds[i]} key={i} className={styles.listItem}>
-                                <span 
-                                    className={styles.listItemBullet} 
-                                    aria-hidden="true" 
+                        {trustVerifierInstructions.map((item) => (
+                            <li data-testid={item.testId} key={item.testId} className={styles.listItem}>
+                                <span
+                                    className={styles.listItemBullet}
+                                    aria-hidden="true"
                                 >
                                     •
                                 </span>
-                                <span>{text}</span>
+                                <span>{t(item.instructionKey)}</span>
                             </li>
                         ))}
                     </ul>
@@ -113,11 +116,11 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
                             className={styles.trustButton}
                         />
 
-                        <SecondaryBorderedButton
+                        <BorderedButton
                             testId="btn-not-trust-verifier"
                             onClick={onNotTrust}
                             title={t(`modal.notTrustButton`)}
-                            fullWidth
+                            className={styles.noTrustButton}
                         />
 
 
