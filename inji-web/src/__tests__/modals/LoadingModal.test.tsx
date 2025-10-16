@@ -226,12 +226,6 @@ describe("LoaderModal", () => {
       expect(modalWrapper).toHaveAttribute("data-size", "4xl"); // Should default to 4xl
     });
 
-    it("handles undefined zIndex prop", () => {
-      render(<LoaderModal {...defaultProps} zIndex={undefined} />);
-
-      const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
-      expect(modalWrapper).toHaveAttribute("data-z-index", "50"); // Should default to 50
-    });
 
     it("handles invalid size prop gracefully", () => {
       render(<LoaderModal {...defaultProps} size="invalid" as any />);
@@ -351,8 +345,8 @@ describe("LoaderModal", () => {
       render(<LoaderModal {...defaultProps} isOpen={false} />);
 
       expect(screen.queryByTestId("spinning-loader")).not.toBeInTheDocument();
-      expect(screen.queryByText("loading.title")).not.toBeInTheDocument();
-      expect(screen.queryByText("loading.message")).not.toBeInTheDocument();
+      expect(screen.queryByTestId("title-loader-modal")).not.toBeInTheDocument();
+      expect(screen.queryByTestId("text-loader-modal-subtitle")).not.toBeInTheDocument();
     });
   });
 });

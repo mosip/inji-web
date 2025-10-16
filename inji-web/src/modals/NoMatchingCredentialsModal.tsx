@@ -11,7 +11,7 @@ import { withErrorHandling } from "../utils/errorHandling";
 interface NoMatchingCredentialsModalProps {
     isVisible: boolean;
     missingClaims?: string[];
-    onGoToHome: () => void;
+    onGoToHome?: () => void;
     redirectUri?: string | null;
     presentationId?: string;
 }
@@ -59,7 +59,7 @@ export const NoMatchingCredentialsModal: React.FC<NoMatchingCredentialsModalProp
         // Redirect to verifier's redirectUri if available, otherwise call onGoToHome
         if (redirectUri) {
             window.location.href = redirectUri;
-        } else {
+        } else if (onGoToHome) {
             onGoToHome();
         }
     };

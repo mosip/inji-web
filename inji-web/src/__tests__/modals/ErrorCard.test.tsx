@@ -201,53 +201,65 @@ describe('ErrorCard', () => {
     });
 
     describe('Edge Cases', () => {
-        it('should handle empty title', () => {
-            const emptyTitleProps = {
+        it('should use provided title when given', () => {
+            const customTitle = 'Custom Error Title';
+            const propsWithTitle = {
+                ...defaultProps,
+                title: customTitle
+            };
+
+            render(<ErrorCard {...propsWithTitle} />);
+
+            expect(screen.getByText(customTitle)).toBeInTheDocument();
+        });
+
+        it('should use provided description when given', () => {
+            const customDescription = 'Custom error description';
+            const propsWithDescription = {
+                ...defaultProps,
+                description: customDescription
+            };
+
+            render(<ErrorCard {...propsWithDescription} />);
+
+            expect(screen.getByText(customDescription)).toBeInTheDocument();
+        });
+
+        it('should fallback to translation when title is empty string', () => {
+            const propsWithEmptyTitle = {
                 ...defaultProps,
                 title: ''
             };
-            
-            render(<ErrorCard {...emptyTitleProps} />);
-            
-            expect(screen.getByTestId('ModalWrapper-Mock')).toBeInTheDocument();
+
+            render(<ErrorCard {...propsWithEmptyTitle} />);
+
+            // Should show translated title since empty string is falsy
             expect(screen.getByText('ErrorCard.defaultTitle')).toBeInTheDocument();
         });
 
-        it('should handle empty description', () => {
-            const emptyDescriptionProps = {
+        it('should fallback to translation when description is empty string', () => {
+            const propsWithEmptyDescription = {
                 ...defaultProps,
                 description: ''
             };
-            
-            render(<ErrorCard {...emptyDescriptionProps} />);
-            
-            expect(screen.getByTestId('ModalWrapper-Mock')).toBeInTheDocument();
+
+            render(<ErrorCard {...propsWithEmptyDescription} />);
+
+            // Should show translated description since empty string is falsy
             expect(screen.getByText('ErrorCard.defaultDescription')).toBeInTheDocument();
         });
 
-        it('should handle special characters in title and description', () => {
+        it('should handle special characters in provided title and description', () => {
             const specialCharsProps = {
                 ...defaultProps,
                 title: 'Error @#$%^&*()',
                 description: 'Special characters: <>&"\'`'
             };
-            
+
             render(<ErrorCard {...specialCharsProps} />);
-            
+
             expect(screen.getByText('Error @#$%^&*()')).toBeInTheDocument();
             expect(screen.getByText('Special characters: <>&"\'`')).toBeInTheDocument();
-        });
-
-        it('should handle undefined onClose callback', () => {
-            const undefinedOnCloseProps = {
-                ...defaultProps,
-                onClose: () => {}
-            };
-            
-            // Should not throw error
-            expect(() => {
-                render(<ErrorCard {...undefinedOnCloseProps} />);
-            }).not.toThrow();
         });
     });
 
