@@ -63,6 +63,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
     "resize-observer-polyfill": "^1.5.1"

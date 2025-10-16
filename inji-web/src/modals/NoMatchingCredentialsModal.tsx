@@ -34,8 +34,7 @@ export const NoMatchingCredentialsModal: React.FC<NoMatchingCredentialsModalProp
 
     const handleGoToHome = async () => {
         if (presentationId) {
-            // Call userRejectVerifier API with access_denied payload
-            await withErrorHandling(
+            const { error } = await withErrorHandling(
                 async () => {
                     const rejectPayload = {
                         errorCode: "access_denied",
@@ -51,9 +50,15 @@ export const NoMatchingCredentialsModal: React.FC<NoMatchingCredentialsModalProp
                 { 
                     context: 'handleGoToHome',
                     logError: true,
-                    showToUser: false // Don't show error to user for go to home action
+                    showToUser: false
                 }
             );
+            
+            // If rejection failed, don't redirect - stay on error screen
+            if (error) {
+                console.error('Failed to reject verifier:', error);
+                return;
+            }
         }
         
         // Redirect to verifier's redirectUri if available, otherwise call onGoToHome
@@ -89,6 +94,11 @@ export const NoMatchingCredentialsModal: React.FC<NoMatchingCredentialsModalProp
                         </h2>
                         <p data-testid="text-no-matching-credentials-description" className={styles.description}>
                             {description}
+                            {missingClaims.length > 0 && (
+                                <span className="block mt-2 text-sm text-gray-600">
+                                    Missing: {missingClaims.join(", ")}
+                                </span>
+                            )}
                         </p>
                         <div className={styles.buttonContainer}>
                             <SolidButton

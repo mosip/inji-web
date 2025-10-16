@@ -50,7 +50,7 @@ describe("LoaderModal", () => {
       expect(screen.queryByTestId("ModalWrapper-Mock")).not.toBeInTheDocument();
     });
 
-        it("renders with correct title and message", () => {
+    it("renders with correct title and message", () => {
           render(<LoaderModal {...defaultProps} />);
 
           expect(screen.getByTestId("title-loader-modal")).toHaveTextContent("Loading...");

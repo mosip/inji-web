@@ -17,9 +17,9 @@ interface CredentialListProps {
 }
 
 export const CredentialList: React.FC<CredentialListProps> = ({
-    credentials = [],
+    credentials,
     selectedCredentials = [],
-    onCredentialToggle,
+    onCredentialToggle = () => {},
     state
 }) => {
     const { t } = useTranslation(['CredentialRequestModal', 'CredentialTypesPage']);
@@ -35,7 +35,7 @@ export const CredentialList: React.FC<CredentialListProps> = ({
         format: 'ldp_vc'
     })) || [];
     
-    const actualCredentials = credentials.length > 0 ? credentials : transformedReduxCredentials;
+    const actualCredentials = credentials ?? transformedReduxCredentials;
 
     // Handle state-based rendering (for CredentialTypesPage)
     if (state !== undefined) {
