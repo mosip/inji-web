@@ -1,23 +1,66 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { PresentationCredential } from '../../types/components';
 import { CredentialRequestModalStyles } from '../../modals/CredentialRequestModalStyles';
 import { CredentialItem } from './CredentialItem';
+import { RequestStatus } from '../../utils/constants';
+import { EmptyListContainer } from '../Common/EmptyListContainer';
+import { SpinningLoader } from '../Common/SpinningLoader';
+import { RootState } from '../../types/redux';
 
 interface CredentialListProps {
-    credentials: PresentationCredential[];
-    selectedCredentials: string[];
-    onCredentialToggle: (credentialId: string) => void;
+    credentials?: PresentationCredential[];
+    selectedCredentials?: string[];
+    onCredentialToggle?: (credentialId: string) => void;
+    state?: RequestStatus;
 }
 
 export const CredentialList: React.FC<CredentialListProps> = ({
     credentials = [],
     selectedCredentials = [],
-    onCredentialToggle
+    onCredentialToggle,
+    state
 }) => {
-    const { t } = useTranslation(['CredentialRequestModal']);
+    const { t } = useTranslation(['CredentialRequestModal', 'CredentialTypesPage']);
+    
+    // Get credentials from Redux if not passed as props
+    const reduxCredentials = useSelector((state: RootState) => state.credentials.credentials);
+    
+    // Transform Redux data to match PresentationCredential structure
+    const transformedReduxCredentials = reduxCredentials?.credentials_supported?.map((cred: any, index: number) => ({
+        credentialId: cred.name || `cred-${index}`,
+        credentialTypeDisplayName: cred.display?.[0]?.name || cred.name || 'Unknown Credential',
+        credentialTypeLogo: cred.display?.[0]?.logo || '',
+        format: 'ldp_vc'
+    })) || [];
+    
+    const actualCredentials = credentials.length > 0 ? credentials : transformedReduxCredentials;
 
-    if (!credentials || credentials.length === 0) {
+    // Handle state-based rendering (for CredentialTypesPage)
+    if (state !== undefined) {
+        if (state === RequestStatus.LOADING) {
+            return (
+                <div className="flex items-center justify-center py-8">
+                    <div className="text-center">
+                        <SpinningLoader />
+                        <p className="text-gray-500 mb-4 mt-4">{t('CredentialTypesPage:loading')}</p>
+                    </div>
+                </div>
+            );
+        }
+
+        if (state === RequestStatus.ERROR) {
+            return <EmptyListContainer content={t('CredentialTypesPage:emptyContainerContent')} />;
+        }
+
+        if (state === RequestStatus.DONE && (!actualCredentials || actualCredentials.length === 0)) {
+            return <EmptyListContainer content={t('CredentialTypesPage:emptyContainerContent')} />;
+        }
+    }
+
+    // Handle credentials-based rendering (for CredentialRequestModal)
+    if (!actualCredentials || actualCredentials.length === 0) {
         return (
             <div className="flex items-center justify-center py-8">
                 <div className="text-center">
@@ -29,9 +72,9 @@ export const CredentialList: React.FC<CredentialListProps> = ({
 
     return (
         <ul className={CredentialRequestModalStyles.content.credentialsList}>
-            {credentials.map((credential: PresentationCredential) => (
+            {actualCredentials.map((credential: any, index: number) => (
                 <CredentialItem
-                    key={credential.credentialId}
+                    key={credential.credentialId || index}
                     credential={credential}
                     isSelected={selectedCredentials.includes(credential.credentialId)}
                     onToggle={onCredentialToggle}

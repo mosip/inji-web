@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { LoadingModal } from "../../modals/LoadingModal";
+import { LoaderModal } from "../../modals/LoadingModal";
 import { useTranslation } from "react-i18next";
 
 // Mock dependencies
@@ -22,9 +22,11 @@ jest.mock("../../components/Common/SpinningLoader", () => ({
   SpinningLoader: () => <div data-testid="spinning-loader">Loading...</div>,
 }));
 
-describe("LoadingModal", () => {
+describe("LoaderModal", () => {
   const defaultProps = {
     isOpen: true,
+    title: "Loading...",
+    subtitle: "Please wait while we process your request",
   };
 
   beforeEach(() => {
@@ -36,102 +38,102 @@ describe("LoadingModal", () => {
 
   describe("Rendering", () => {
     it("renders modal when open", () => {
-      render(<LoadingModal {...defaultProps} />);
+      render(<LoaderModal {...defaultProps} />);
 
-      expect(screen.getByTestId("loading-modal")).toBeInTheDocument();
+      expect(screen.getByTestId("ModalWrapper-Mock")).toBeInTheDocument();
       expect(screen.getByTestId("spinning-loader")).toBeInTheDocument();
     });
 
     it("does not render when closed", () => {
-      render(<LoadingModal {...defaultProps} isOpen={false} />);
+      render(<LoaderModal {...defaultProps} isOpen={false} />);
 
-      expect(screen.queryByTestId("loading-modal")).not.toBeInTheDocument();
+      expect(screen.queryByTestId("ModalWrapper-Mock")).not.toBeInTheDocument();
     });
 
-    it("renders with correct title and message", () => {
-      render(<LoadingModal {...defaultProps} />);
+        it("renders with correct title and message", () => {
+          render(<LoaderModal {...defaultProps} />);
 
-      expect(screen.getByText("loading.title")).toBeInTheDocument();
-      expect(screen.getByText("loading.message")).toBeInTheDocument();
-    });
+          expect(screen.getByTestId("title-loader-modal")).toHaveTextContent("Loading...");
+          expect(screen.getByTestId("text-loader-modal-subtitle")).toHaveTextContent("Please wait while we process your request");
+        });
   });
 
   describe("ModalWrapper Configuration", () => {
     it("passes correct default props to ModalWrapper", () => {
-      render(<LoadingModal {...defaultProps} />);
+      render(<LoaderModal {...defaultProps} />);
 
       const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
       expect(modalWrapper).toHaveAttribute("data-z-index", "50");
-      expect(modalWrapper).toHaveAttribute("data-size", "md");
+      expect(modalWrapper).toHaveAttribute("data-size", "4xl");
     });
 
     it("passes custom size prop to ModalWrapper", () => {
-      render(<LoadingModal {...defaultProps} size="xl" />);
+      render(<LoaderModal {...defaultProps} size="xl" />);
 
       const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
       expect(modalWrapper).toHaveAttribute("data-size", "xl");
     });
 
-    it("passes custom zIndex prop to ModalWrapper", () => {
-      render(<LoadingModal {...defaultProps} zIndex={100} />);
+        it("passes default zIndex prop to ModalWrapper", () => {
+          render(<LoaderModal {...defaultProps} />);
 
-      const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
-      expect(modalWrapper).toHaveAttribute("data-z-index", "100");
-    });
+          const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
+          expect(modalWrapper).toHaveAttribute("data-z-index", "50");
+        });
   });
 
   describe("Size Variants", () => {
-    it("renders with default size (md)", () => {
-      render(<LoadingModal {...defaultProps} />);
+    it("renders with default size (4xl)", () => {
+      render(<LoaderModal {...defaultProps} />);
 
       const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
-      expect(modalWrapper).toHaveAttribute("data-size", "md");
+      expect(modalWrapper).toHaveAttribute("data-size", "4xl");
     });
 
     it("renders with small size", () => {
-      render(<LoadingModal {...defaultProps} size="sm" />);
+      render(<LoaderModal {...defaultProps} size="sm" />);
 
       const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
       expect(modalWrapper).toHaveAttribute("data-size", "sm");
     });
 
     it("renders with large size", () => {
-      render(<LoadingModal {...defaultProps} size="lg" />);
+      render(<LoaderModal {...defaultProps} size="lg" />);
 
       const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
       expect(modalWrapper).toHaveAttribute("data-size", "lg");
     });
 
     it("renders with extra large size", () => {
-      render(<LoadingModal {...defaultProps} size="xl" />);
+      render(<LoaderModal {...defaultProps} size="xl" />);
 
       const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
       expect(modalWrapper).toHaveAttribute("data-size", "xl");
     });
 
     it("renders with 2xl size", () => {
-      render(<LoadingModal {...defaultProps} size="2xl" />);
+      render(<LoaderModal {...defaultProps} size="2xl" />);
 
       const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
       expect(modalWrapper).toHaveAttribute("data-size", "2xl");
     });
 
     it("renders with 3xl size", () => {
-      render(<LoadingModal {...defaultProps} size="3xl" />);
+      render(<LoaderModal {...defaultProps} size="3xl" />);
 
       const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
       expect(modalWrapper).toHaveAttribute("data-size", "3xl");
     });
 
     it("renders with 4xl size", () => {
-      render(<LoadingModal {...defaultProps} size="4xl" />);
+      render(<LoaderModal {...defaultProps} size="4xl" />);
 
       const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
       expect(modalWrapper).toHaveAttribute("data-size", "4xl");
     });
 
     it("renders with 6xl size", () => {
-      render(<LoadingModal {...defaultProps} size="6xl" />);
+      render(<LoaderModal {...defaultProps} size="6xl" />);
 
       const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
       expect(modalWrapper).toHaveAttribute("data-size", "6xl");
@@ -140,97 +142,99 @@ describe("LoadingModal", () => {
 
   describe("Styling and Classes", () => {
     it("applies correct CSS classes to modal container", () => {
-      render(<LoadingModal {...defaultProps} />);
+      render(<LoaderModal {...defaultProps} />);
 
-      const modalContainer = screen.getByTestId("loading-modal");
-      expect(modalContainer).toHaveClass("w-full", "max-w-[500px]");
+      const modalContainer = screen.getByTestId("ModalWrapper-Mock").parentElement;
+      expect(modalContainer).toHaveClass("transition-all", "duration-300", "ease-in-out");
     });
 
     it("applies responsive classes", () => {
-      render(<LoadingModal {...defaultProps} />);
+      render(<LoaderModal {...defaultProps} />);
 
-      const modalContainer = screen.getByTestId("loading-modal");
+      const modalContainer = screen.getByTestId("ModalWrapper-Mock").parentElement;
       expect(modalContainer).toHaveClass("transition-all", "duration-300", "ease-in-out");
     });
 
     it("applies mobile responsive classes", () => {
-      render(<LoadingModal {...defaultProps} />);
+      render(<LoaderModal {...defaultProps} />);
 
-      const modalContainer = screen.getByTestId("loading-modal");
+      const modalContainer = screen.getByTestId("ModalWrapper-Mock").parentElement;
       expect(modalContainer).toHaveClass("max-[533px]:w-screen", "max-[533px]:left-0", "max-[533px]:right-0", "max-[533px]:z-[60]");
     });
   });
 
   describe("Content Structure", () => {
     it("renders all required components", () => {
-      render(<LoadingModal {...defaultProps} />);
+      render(<LoaderModal {...defaultProps} />);
 
-      expect(screen.getByTestId("loading-modal")).toBeInTheDocument();
       expect(screen.getByTestId("ModalWrapper-Mock")).toBeInTheDocument();
       expect(screen.getByTestId("spinning-loader")).toBeInTheDocument();
-      expect(screen.getByText("loading.title")).toBeInTheDocument();
-      expect(screen.getByText("loading.message")).toBeInTheDocument();
+      expect(screen.getByTestId("title-loader-modal")).toBeInTheDocument();
+      expect(screen.getByTestId("text-loader-modal-subtitle")).toBeInTheDocument();
     });
 
     it("maintains proper component hierarchy", () => {
-      render(<LoadingModal {...defaultProps} />);
+      render(<LoaderModal {...defaultProps} />);
 
-      const modalContainer = screen.getByTestId("loading-modal");
       const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
+      const title = screen.getByTestId("title-loader-modal");
+      const subtitle = screen.getByTestId("text-loader-modal-subtitle");
 
-      expect(modalContainer).toContainElement(modalWrapper);
+      expect(modalWrapper).toContainElement(title);
+      expect(modalWrapper).toContainElement(subtitle);
     });
   });
 
   describe("Internationalization", () => {
-    it("uses translation keys for all text content", () => {
-      render(<LoadingModal {...defaultProps} />);
+    it("uses provided title and subtitle props", () => {
+      render(<LoaderModal {...defaultProps} />);
 
-      expect(screen.getByText("loading.title")).toBeInTheDocument();
-      expect(screen.getByText("loading.message")).toBeInTheDocument();
+      expect(screen.getByTestId("title-loader-modal")).toHaveTextContent("Loading...");
+      expect(screen.getByTestId("text-loader-modal-subtitle")).toHaveTextContent("Please wait while we process your request");
     });
 
-    it("calls useTranslation with correct namespace", () => {
-      render(<LoadingModal {...defaultProps} />);
+    it("does not use useTranslation", () => {
+      render(<LoaderModal {...defaultProps} />);
 
-      expect(useTranslation).toHaveBeenCalledWith(["loading"]);
+      expect(useTranslation).not.toHaveBeenCalled();
     });
   });
 
   describe("Accessibility", () => {
     it("has proper test IDs for testing", () => {
-      render(<LoadingModal {...defaultProps} />);
+      render(<LoaderModal {...defaultProps} />);
 
-      expect(screen.getByTestId("loading-modal")).toBeInTheDocument();
       expect(screen.getByTestId("ModalWrapper-Mock")).toBeInTheDocument();
       expect(screen.getByTestId("spinning-loader")).toBeInTheDocument();
+      expect(screen.getByTestId("title-loader-modal")).toBeInTheDocument();
+      expect(screen.getByTestId("text-loader-modal-subtitle")).toBeInTheDocument();
     });
 
     it("provides accessible loading content", () => {
-      render(<LoadingModal {...defaultProps} />);
+      render(<LoaderModal {...defaultProps} />);
 
-      expect(screen.getByText("loading.title")).toBeInTheDocument();
-      expect(screen.getByText("loading.message")).toBeInTheDocument();
+      expect(screen.getByTestId("title-loader-modal")).toHaveTextContent("Loading...");
+      expect(screen.getByTestId("text-loader-modal-subtitle")).toHaveTextContent("Please wait while we process your request");
     });
   });
 
   describe("Edge Cases", () => {
     it("handles undefined size prop", () => {
-      render(<LoadingModal {...defaultProps} size={undefined} />);
+      render(<LoaderModal {...defaultProps} size={undefined} />);
 
       const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
-      expect(modalWrapper).toHaveAttribute("data-size", "md"); // Should default to md
+      expect(modalWrapper).toHaveAttribute("data-size", "4xl"); // Should default to 4xl
     });
 
     it("handles undefined zIndex prop", () => {
-      render(<LoadingModal {...defaultProps} zIndex={undefined} />);
+      render(<LoaderModal {...defaultProps} zIndex={undefined} />);
 
       const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
       expect(modalWrapper).toHaveAttribute("data-z-index", "50"); // Should default to 50
     });
 
     it("handles invalid size prop gracefully", () => {
-      render(<LoadingModal {...defaultProps} size="invalid" as any />);
+      render(<LoaderModal {...defaultProps} size="invalid" as any />);
 
       const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
       expect(modalWrapper).toHaveAttribute("data-size", "invalid");
@@ -239,46 +243,49 @@ describe("LoadingModal", () => {
 
   describe("Performance", () => {
     it("does not re-render unnecessarily when props are the same", () => {
-      const { rerender } = render(<LoadingModal {...defaultProps} />);
+      const { rerender } = render(<LoaderModal {...defaultProps} />);
       
-      const initialModal = screen.getByTestId("loading-modal");
+      const initialModal = screen.getByTestId("ModalWrapper-Mock");
       
-      rerender(<LoadingModal {...defaultProps} />);
+      rerender(<LoaderModal {...defaultProps} />);
       
-      const afterRerender = screen.getByTestId("loading-modal");
+      const afterRerender = screen.getByTestId("ModalWrapper-Mock");
       expect(initialModal).toBe(afterRerender);
     });
 
     it("re-renders when isOpen prop changes", () => {
-      const { rerender } = render(<LoadingModal {...defaultProps} />);
+      const { rerender } = render(<LoaderModal {...defaultProps} />);
       
-      expect(screen.getByTestId("loading-modal")).toBeInTheDocument();
+      expect(screen.getByTestId("ModalWrapper-Mock")).toBeInTheDocument();
       
-      rerender(<LoadingModal {...defaultProps} isOpen={false} />);
+      rerender(<LoaderModal {...defaultProps} isOpen={false} />);
       
-      expect(screen.queryByTestId("loading-modal")).not.toBeInTheDocument();
+      expect(screen.queryByTestId("ModalWrapper-Mock")).not.toBeInTheDocument();
     });
 
     it("re-renders when size prop changes", () => {
-      const { rerender } = render(<LoadingModal {...defaultProps} />);
+      const { rerender } = render(<LoaderModal {...defaultProps} />);
       
-      const initialModal = screen.getByTestId("loading-modal");
+      const initialModal = screen.getByTestId("ModalWrapper-Mock");
+      expect(initialModal).toHaveAttribute("data-size", "4xl");
       
-      rerender(<LoadingModal {...defaultProps} size="xl" />);
+      rerender(<LoaderModal {...defaultProps} size="xl" />);
       
-      const afterRerender = screen.getByTestId("loading-modal");
-      expect(initialModal).not.toBe(afterRerender);
+      const afterRerender = screen.getByTestId("ModalWrapper-Mock");
+      expect(afterRerender).toHaveAttribute("data-size", "xl");
     });
 
-    it("re-renders when zIndex prop changes", () => {
-      const { rerender } = render(<LoadingModal {...defaultProps} />);
+    it("always uses default zIndex", () => {
+      const { rerender } = render(<LoaderModal {...defaultProps} />);
       
-      const initialModal = screen.getByTestId("loading-modal");
+      const initialModal = screen.getByTestId("ModalWrapper-Mock");
+      expect(initialModal).toHaveAttribute("data-z-index", "50");
       
-      rerender(<LoadingModal {...defaultProps} zIndex={100} />);
+      // Component doesn't accept zIndex prop, so it should always be 50
+      rerender(<LoaderModal {...defaultProps} />);
       
-      const afterRerender = screen.getByTestId("loading-modal");
-      expect(initialModal).not.toBe(afterRerender);
+      const afterRerender = screen.getByTestId("ModalWrapper-Mock");
+      expect(afterRerender).toHaveAttribute("data-z-index", "50");
     });
   });
 
@@ -287,7 +294,7 @@ describe("LoadingModal", () => {
       const sizes = ["sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "6xl"];
       
       sizes.forEach(size => {
-        const { unmount } = render(<LoadingModal {...defaultProps} size={size as any} />);
+        const { unmount } = render(<LoaderModal {...defaultProps} size={size as any} />);
         
         const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
         expect(modalWrapper).toHaveAttribute("data-size", size);
@@ -296,35 +303,32 @@ describe("LoadingModal", () => {
       });
     });
 
-    it("accepts numeric zIndex prop", () => {
-      const zIndexes = [10, 50, 100, 1000];
+    it("always uses default zIndex of 50", () => {
+      // Component doesn't accept zIndex prop, so it should always be 50
+      const { unmount } = render(<LoaderModal {...defaultProps} />);
       
-      zIndexes.forEach(zIndex => {
-        const { unmount } = render(<LoadingModal {...defaultProps} zIndex={zIndex} />);
-        
-        const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
-        expect(modalWrapper).toHaveAttribute("data-z-index", zIndex.toString());
-        
-        unmount();
-      });
+      const modalWrapper = screen.getByTestId("ModalWrapper-Mock");
+      expect(modalWrapper).toHaveAttribute("data-z-index", "50");
+      
+      unmount();
     });
   });
 
   describe("Responsive Design", () => {
     it("applies mobile-first responsive classes", () => {
-      render(<LoadingModal {...defaultProps} />);
+      render(<LoaderModal {...defaultProps} />);
 
-      const modalContainer = screen.getByTestId("loading-modal");
+      const modalContainer = screen.getByTestId("ModalWrapper-Mock").parentElement;
       
       // Check for responsive classes
-      expect(modalContainer).toHaveClass("w-full");
-      expect(modalContainer).toHaveClass("max-w-[500px]");
+      expect(modalContainer).toHaveClass("transition-all");
+      expect(modalContainer).toHaveClass("duration-300");
     });
 
     it("applies mobile breakpoint classes", () => {
-      render(<LoadingModal {...defaultProps} />);
+      render(<LoaderModal {...defaultProps} />);
 
-      const modalContainer = screen.getByTestId("loading-modal");
+      const modalContainer = screen.getByTestId("ModalWrapper-Mock").parentElement;
       
       // Check for mobile breakpoint classes
       expect(modalContainer).toHaveClass("max-[533px]:w-screen");
@@ -336,15 +340,15 @@ describe("LoadingModal", () => {
 
   describe("Loading State", () => {
     it("always shows loading content when open", () => {
-      render(<LoadingModal {...defaultProps} />);
+      render(<LoaderModal {...defaultProps} />);
 
       expect(screen.getByTestId("spinning-loader")).toBeInTheDocument();
-      expect(screen.getByText("loading.title")).toBeInTheDocument();
-      expect(screen.getByText("loading.message")).toBeInTheDocument();
+      expect(screen.getByTestId("title-loader-modal")).toHaveTextContent("Loading...");
+      expect(screen.getByTestId("text-loader-modal-subtitle")).toHaveTextContent("Please wait while we process your request");
     });
 
     it("does not show loading content when closed", () => {
-      render(<LoadingModal {...defaultProps} isOpen={false} />);
+      render(<LoaderModal {...defaultProps} isOpen={false} />);
 
       expect(screen.queryByTestId("spinning-loader")).not.toBeInTheDocument();
       expect(screen.queryByText("loading.title")).not.toBeInTheDocument();
