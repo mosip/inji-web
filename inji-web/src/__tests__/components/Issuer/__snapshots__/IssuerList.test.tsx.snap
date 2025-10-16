@@ -7,13 +7,13 @@ exports[`Testing the Layout of IssuersList Check whether it renders empty issuer
     data-testid="Issuers-List-Container"
   >
     <div
-      class="text-center font-bold text-iw-title mt-8 text-[22px] leading-[30px] flex"
+      class="text-center font-bold text-iw-title mt-8 text-[24px] leading-[32px] flex"
       data-testid="HeaderTile-Text"
     >
       List of Issuers
     </div>
     <div
-      class="text-center text-iw-subTitle text-[14px] leading-[22px] font-medium mb-8 mt-2 flex"
+      class="text-center text-iw-subTitle text-[14px] leading-[20px] font-medium mb-8 mt-2 flex"
       data-testid="HeaderTile-Text-SubContent"
     >
       Search for your trusted issuer and choose a credential type in the next step.
@@ -40,13 +40,13 @@ exports[`Testing the Layout of IssuersList Check whether it renders error state 
     data-testid="Issuers-List-Container"
   >
     <div
-      class="text-center font-bold text-iw-title mt-8 text-[22px] leading-[30px] flex"
+      class="text-center font-bold text-iw-title mt-8 text-[24px] leading-[32px] flex"
       data-testid="HeaderTile-Text"
     >
       List of Issuers
     </div>
     <div
-      class="text-center text-iw-subTitle text-[14px] leading-[22px] font-medium mb-8 mt-2 flex"
+      class="text-center text-iw-subTitle text-[14px] leading-[20px] font-medium mb-8 mt-2 flex"
       data-testid="HeaderTile-Text-SubContent"
     >
       Search for your trusted issuer and choose a credential type in the next step.
@@ -73,13 +73,13 @@ exports[`Testing the Layout of IssuersList Check whether it renders issuers list
     data-testid="Issuers-List-Container"
   >
     <div
-      class="text-center font-bold text-iw-title mt-8 text-[22px] leading-[30px] flex"
+      class="text-center font-bold text-iw-title mt-8 text-[24px] leading-[32px] flex"
       data-testid="HeaderTile-Text"
     >
       List of Issuers
     </div>
     <div
-      class="text-center text-iw-subTitle text-[14px] leading-[22px] font-medium mb-8 mt-2 flex"
+      class="text-center text-iw-subTitle text-[14px] leading-[20px] font-medium mb-8 mt-2 flex"
       data-testid="HeaderTile-Text-SubContent"
     >
       Search for your trusted issuer and choose a credential type in the next step.

@@ -60,15 +60,15 @@
     "QuickTip":{
       "heading":"Quick Tips for Instantly Downloading Your Credentials",
       "toastText":"Coming soon",
-      "buttontext":"LEARN MORE"
+      "buttontext":"Learn More"
     },
     "Login":{
       "loginTitle":"Log In",
       "loginDescription":"Log in with your account or continue as a guest to access your credentials.",
       "loginNote":"Some features may be limited in guest mode.",
-      "loggingIn":"LOGGING IN",
-      "loginGoogle":"CONTINUE WITH GOOGLE",
-      "loginGuest":"CONTINUE AS GUEST"
+      "loggingIn":"Logging In",
+      "loginGoogle":"Continue With Google",
+      "loginGuest":"Continue As Guest"
     },
     "LoginFailedModal":{
       "failureMessage":"Login Failed",
@@ -83,8 +83,8 @@
     }
   },
   "PasscodePage":{
-    "submit":"SUBMIT",
-    "submitting":"SUBMITTING",
+    "submit":"Submit",
+    "submitting":"Submitting",
     "setPasscode":"Set your passcode to get started",
     "setPasscodeDescription":"Please remember or securely store your passcode. You’ll need it each time you access the wallet.",
     "enterPasscode":"Enter Your Passcode to Continue",
@@ -420,11 +420,11 @@
   "StoredCards": {
     "title": "Stored Cards",
     "header": {
-      "addCards": "ADD CARDS"
+      "addCards": "Add Cards"
     },
     "emptyScreen": {
       "title": "No Cards Stored!",
-      "actionText": "You haven't downloaded any cards yet. Tap \"ADD CARDS\" to get started."
+      "actionText": "You haven't downloaded any cards yet. Tap \"Add Cards\" to get started."
     },
     "search": {
       "placeholder": "Search your cards by Name",

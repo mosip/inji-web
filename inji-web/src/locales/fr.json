@@ -60,15 +60,15 @@
     "QuickTip": {
       "heading": "Conseils rapides pour télécharger instantanément vos identifiants",
       "toastText": "à venir",
-      "buttontext": "APPRENDRE ENCORE PLUS"
+      "buttontext": "Apprendre encore plus"
     },
     "Login": {
       "loginTitle": "Se connecter",
       "loginDescription": "Connectez-vous avec votre compte ou continuez en tant qu'invité pour accéder à vos identifiants.",
       "loginNote": "Certaines fonctionnalités peuvent être limitées en mode invité.",
-      "loggingIn": "CONNEXION",
-      "loginGoogle": "CONTINUER AVEC GOOGLE",
-      "loginGuest": "CONTINUER EN TANT QU'INVITÉ"
+      "loggingIn": "Connexion",
+      "loginGoogle": "Continuer avec Google",
+      "loginGuest": "Continuer en tant qu'invité"
     },
     "LoginFailedModal": {
       "failureMessage": "Échec de la connexion",
@@ -83,8 +83,8 @@
     }
   },
   "PasscodePage": {
-    "submit": "SOUMETTRE",
-    "submitting": "SOUMISSION",
+    "submit": "Soumettre",
+    "submitting": "Soumission",
     "setPasscode": "Définissez votre code d'accès pour commencer",
     "setPasscodeDescription": "Veuillez mémoriser ou stocker en toute sécurité votre code d'accès. Vous en aurez besoin à chaque accès au portefeuille.",
     "enterPasscode": "Entrez votre code d'accès pour continuer",
@@ -420,11 +420,11 @@
   "StoredCards": {
     "title": "Cartes Stockées",
     "header": {
-      "addCards": "AJOUTER DES CARTES"
+      "addCards": "Ajouter des cartes"
     },
     "emptyScreen": {
       "title": "Aucune Carte Stockée !",
-      "actionText": "Vous n'avez encore téléchargé aucune carte. Appuyez sur \"AJOUTER DES CARTES\" pour commencer."
+      "actionText": "Vous n'avez encore téléchargé aucune carte. Appuyez sur \"Ajouter des cartes\" pour commencer."
     },
     "search": {
       "placeholder": "Recherchez vos cartes par nom",

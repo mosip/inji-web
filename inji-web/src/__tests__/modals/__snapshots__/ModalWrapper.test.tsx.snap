@@ -189,17 +189,17 @@ exports[`Test the Layout of the Modal Wrapper Snapshot test for ModalWrapper sty
               class="w-full"
             >
               <div
-                class="bg-gradient-to-r text-center cursor-pointer from-iw-primary to-iw-secondary p-0.5"
+                class="bg-gradient-to-r text-center cursor-pointer from-iw-primary to-iw-secondary p-0.5 rounded-lg"
               >
                 <div
-                  class="hover:bg-none hover:bg-[#FFF2F2] hover:text-[#E64E4E] py-1 px-2 bg-white justify-center center undefined"
+                  class="hover:bg-none hover:bg-[#FFF2F2] hover:text-[#E64E4E] py-1 px-2 bg-white justify-center center rounded-lg undefined"
                 >
                   <button
-                    class="text-iw-tertiary font-bold text-sm "
+                    class="text-iw-tertiary font-bold text-[16px] leading-[24px] "
                     data-testid="DataShareFooter-Cancel-Button"
                   >
                     <span
-                      class="italic inline-block bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
+                      class="inline-block bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
                     >
                       cancel
                     </span>
@@ -211,7 +211,7 @@ exports[`Test the Layout of the Modal Wrapper Snapshot test for ModalWrapper sty
               class="w-full"
             >
               <button
-                class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 italic hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-[#FFFFFF] "
+                class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 rounded-lg hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-white "
                 data-testid="DataShareFooter-Success-Button"
               >
                 <div

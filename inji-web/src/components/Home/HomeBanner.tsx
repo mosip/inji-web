@@ -19,13 +19,13 @@ export const HomeBanner: React.FC = () => {
           {/* Banner heading */}
           <span 
             data-testid="HomeBanner-Heading"  
-            className="text-[48px] leading-[56px] text-iw-text font-bold sm:font-semibold text-wrap text-center sm:text-left sm:pb-4"
+            className="text-[48px] leading-[60px] tracking-[-0.02em] text-iw-text font-bold sm:font-semibold text-wrap text-center sm:text-left sm:pb-4"
           >
             {t("Banner.heading")}
           </span>
   
           {/* Banner description */}
-          <h2 className="text-[18px] leading-[30px] w-full my-6 sm:my-6 text-iw-text font-extralight">
+          <h2 className="text-[18px] leading-[28px] w-full my-6 sm:my-6 text-iw-text font-extralight">
             {t("Banner.description")}
           </h2>
         </div>

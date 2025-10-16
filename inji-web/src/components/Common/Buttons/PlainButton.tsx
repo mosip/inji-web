@@ -6,7 +6,7 @@ export const PlainButton:React.FC<PlainButtonProps> = (props) => {
 
     return <div className={props.fullWidth ? "w-full" : "w-4/5"}>
         <div className={"rounded-lg text-center cursor-pointer"} onClick={props.onClick}>
-            <div className={`py-2 px-2 font-bold bg-white ${
+            <div className={`py-2 px-2 font-bold bg-white rounded-lg ${
                     isGradient
                         ? "hover:bg-none hover:bg-[#FFF2F2] hover:text-[#E64E4E]"
                         : ""

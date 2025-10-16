@@ -66,13 +66,13 @@ exports[`Passcode check if layout is matching with snapshot when Wallet doesn't 
           class="text-center space-y-5 relative w-full max-w-lg px-4 sm:px-0"
         >
           <h1
-            class="text-[32px] leading-[42px] font-bold text-iw-darkGrayishBlue"
+            class="text-[36px] leading-[44px] tracking-[-0.02em] font-bold text-iw-darkGrayishBlue"
             data-testid="title-passcode"
           >
             Set Passcode
           </h1>
           <p
-            class="text-iw-textTertiary text-[18px] leading-[22px] font-semibold mx-8"
+            class="text-iw-textTertiary text-[16px] leading-[24px] font-semibold mx-8"
             data-testid="passcode-description"
           >
             Set your passcode to get started
@@ -291,7 +291,7 @@ exports[`Passcode check if layout is matching with snapshot when Wallet doesn't 
                   class="w-full"
                 >
                   <button
-                    class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 italic false bg-gray-400 cursor-not-allowed grayscale"
+                    class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 rounded-lg false bg-gray-400 cursor-not-allowed grayscale"
                     data-testid="btn-submit-passcode"
                     disabled=""
                   >
@@ -380,13 +380,13 @@ exports[`Passcode check if layout is matching with snapshot when Wallet exists 1
           class="text-center space-y-5 relative w-full max-w-lg px-4 sm:px-0"
         >
           <h1
-            class="text-[32px] leading-[42px] font-bold text-iw-darkGrayishBlue"
+            class="text-[36px] leading-[44px] tracking-[-0.02em] font-bold text-iw-darkGrayishBlue"
             data-testid="title-passcode"
           >
             Enter Passcode
           </h1>
           <p
-            class="text-iw-textTertiary text-[18px] leading-[22px] font-semibold mx-8"
+            class="text-iw-textTertiary text-[16px] leading-[24px] font-semibold mx-8"
             data-testid="passcode-description"
           >
             Enter your 6 digit passcode

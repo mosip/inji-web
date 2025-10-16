@@ -3,8 +3,8 @@ export const PasscodePageTemplateStyles = {
     container: "rounded-2xl bg-white flex flex-col items-center justify-start relative w-[90%] sm:w-[85%] md:w-[90%] h-fit max-h-[99vh] sm:max-h-[98vh] overflow-y-hidden shadow-iw-pin-page-container",
     contentWrapper: "flex flex-col items-center justify-start w-full mt-44 sm:mt-48 relative z-10 pb-0 sm:pb-8",
     titleContainer: "text-center space-y-5 relative w-full max-w-lg px-4 sm:px-0",
-    title: "text-[32px] leading-[42px] font-bold text-iw-darkGrayishBlue",
-    description: "text-iw-textTertiary text-[18px] leading-[22px] font-semibold mx-8",
+    title: "text-[36px] leading-[44px] tracking-[-0.02em] font-bold text-iw-darkGrayishBlue",
+    description: "text-iw-textTertiary text-[16px] leading-[24px] font-semibold mx-8",
     subTitle: {
         container: 'flex items-start gap-3 justify-center mx-4 px-2',
         backArrowButton: 'cursor-pointer mt-2 sm:mt-1',

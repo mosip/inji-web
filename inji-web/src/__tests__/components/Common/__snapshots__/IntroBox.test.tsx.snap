@@ -7,18 +7,22 @@ exports[`Testing the Layout of IntroBox Check if the layout is matching with the
     data-testid="IntroBox-Container"
   >
     <h2
-      class="text-[32px] leading-[42px] font-bold text-iw-title"
+      class="text-[36px] leading-[44px] tracking-[-0.02em] font-bold text-iw-title"
       data-testid="IntroBox-Text"
     >
       Intro.title 
       <span
-        class="italic inline-block bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
+        class="italic"
       >
-        Intro.title2
+        <span
+          class="inline-block bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
+        >
+          Intro.title2
+        </span>
       </span>
     </h2>
     <p
-      class="mt-2 text-[18px] leading-[22px] font-semibold text-iw-subTitle"
+      class="mt-2 text-[18px] leading-[28px] font-semibold text-iw-subTitle"
       data-testid="IntroBox-SubText"
     >
       Intro.subTitle

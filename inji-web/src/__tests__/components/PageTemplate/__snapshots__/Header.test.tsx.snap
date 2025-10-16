@@ -56,10 +56,10 @@ exports[`Header Container Layout Test Check if the layout is matching with the s
             class="w-full"
           >
             <div
-              class="rounded-lg text-center cursor-pointer "
+              class="rounded-lg text-center cursor-pointer"
             >
               <div
-                class="py-2 px-2 font-bold bg-white "
+                class="py-2 px-2 font-bold bg-white rounded-lg "
               >
                 <button
                   class="font-bold"

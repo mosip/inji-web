@@ -34,7 +34,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage check if the "N
           class="flex flex-col items-start mr-0.5"
         >
           <span
-            class="text-[22px] leading-[30px] font-bold"
+            class="text-[24px] leading-[32px] font-bold"
             data-testid="title-stored-credentials"
           >
             Stored Cards
@@ -54,14 +54,14 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage check if the "N
           class=""
         >
           <button
-            class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 italic hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-[#FFFFFF] "
+            class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 rounded-lg hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-white "
             data-testid="btn-add-cards"
           >
             <div
               class="flex items-center justify-center gap-1.5"
             >
               <span>
-                ADD CARDS
+                Add Cards
               </span>
             </div>
           </button>
@@ -103,7 +103,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage check if the "N
             class="text-[var(--iw-color-info)] font-normal text-sm break-words justify-center text-center"
             data-testid="no-credentials-downloaded-message"
           >
-            You haven't downloaded any cards yet. Tap "ADD CARDS" to get started.
+            You haven't downloaded any cards yet. Tap "Add Cards" to get started.
           </span>
         </div>
         <div
@@ -113,14 +113,14 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage check if the "N
             class=""
           >
             <button
-              class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 italic hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-[#FFFFFF] "
+              class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 rounded-lg hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-white "
               data-testid="btn-add-cards"
             >
               <div
                 class="flex items-center justify-center gap-1.5"
               >
                 <span>
-                  ADD CARDS
+                  Add Cards
                 </span>
               </div>
             </button>
@@ -166,7 +166,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage check if the lo
           class="flex flex-col items-start mr-0.5"
         >
           <span
-            class="text-[22px] leading-[30px] font-bold"
+            class="text-[24px] leading-[32px] font-bold"
             data-testid="title-stored-credentials"
           >
             Stored Cards
@@ -186,14 +186,14 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage check if the lo
           class=""
         >
           <button
-            class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 italic hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-[#FFFFFF] "
+            class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 rounded-lg hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-white "
             data-testid="btn-add-cards"
           >
             <div
               class="flex items-center justify-center gap-1.5"
             >
               <span>
-                ADD CARDS
+                Add Cards
               </span>
             </div>
           </button>
@@ -301,7 +301,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
           class="flex flex-col items-start mr-0.5"
         >
           <span
-            class="text-[22px] leading-[30px] font-bold"
+            class="text-[24px] leading-[32px] font-bold"
             data-testid="title-stored-credentials"
           >
             Stored Cards
@@ -321,14 +321,14 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
           class=""
         >
           <button
-            class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 italic hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-[#FFFFFF] "
+            class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 rounded-lg hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-white "
             data-testid="btn-add-cards"
           >
             <div
               class="flex items-center justify-center gap-1.5"
             >
               <span>
-                ADD CARDS
+                Add Cards
               </span>
             </div>
           </button>
@@ -387,17 +387,17 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
             class=""
           >
             <div
-              class="bg-gradient-to-r text-center cursor-pointer from-iw-primary to-iw-secondary p-0.5"
+              class="bg-gradient-to-r text-center cursor-pointer from-iw-primary to-iw-secondary p-0.5 rounded-lg"
             >
               <div
-                class="hover:bg-none hover:bg-[#FFF2F2] hover:text-[#E64E4E] py-1 px-2 bg-white justify-center center undefined"
+                class="hover:bg-none hover:bg-[#FFF2F2] hover:text-[#E64E4E] py-1 px-2 bg-white justify-center center rounded-lg undefined"
               >
                 <button
-                  class="text-iw-tertiary font-bold text-sm "
+                  class="text-iw-tertiary font-bold text-[16px] leading-[24px] "
                   data-testid="btn-go-home"
                 >
                   <span
-                    class="italic inline-block bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
+                    class="inline-block bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
                   >
                     Go to Home
                   </span>
@@ -446,7 +446,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
           class="flex flex-col items-start mr-0.5"
         >
           <span
-            class="text-[22px] leading-[30px] font-bold"
+            class="text-[24px] leading-[32px] font-bold"
             data-testid="title-stored-credentials"
           >
             Stored Cards
@@ -466,14 +466,14 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
           class=""
         >
           <button
-            class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 italic hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-[#FFFFFF] "
+            class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 rounded-lg hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-white "
             data-testid="btn-add-cards"
           >
             <div
               class="flex items-center justify-center gap-1.5"
             >
               <span>
-                ADD CARDS
+                Add Cards
               </span>
             </div>
           </button>
@@ -508,7 +508,7 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
             />
           </svg>
           <input
-            class="py-6 w-11/12 flex text-iw-searchTitle focus:outline-none overflow-ellipsis mr-10 text-[14px] leading-[18px] font-medium"
+            class="py-6 w-11/12 flex text-iw-searchTitle focus:outline-none overflow-ellipsis mr-10 text-[14px] leading-[20px] font-medium"
             data-testid="input-search"
             placeholder="Search your cards by Name"
             type="text"
@@ -674,14 +674,14 @@ exports[`Testing of StoredCardsPage -> Layout of StoredCardsPage should check if
           class=""
         >
           <button
-            class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 italic hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-[#FFFFFF] "
+            class="w-full bg-[#ADB6BD] text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 rounded-lg hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-white "
             data-testid="btn-add-cards"
           >
             <div
               class="flex items-center justify-center gap-1.5"
             >
               <span>
-                ADD CARDS
+                Add Cards
               </span>
             </div>
           </button>

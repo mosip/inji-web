@@ -20,13 +20,13 @@ export const HomeFeatures: React.FC = () => {
 
   return (
     <div data-testid="HomeFeatures-Container" className="flex justify-center items-center flex-col">
-      <div data-testid="HomeFeatures-Heading" className="font-bold text-[32px] leading-[36px] m-5">
+      <div data-testid="HomeFeatures-Heading" className="font-bold text-[36px] leading-[44px] tracking-[-0.02em] m-5">
         {t("Features.heading")}
       </div>
-      <div data-testid="HomeFeatures-Description1" className="font-extralight text-[22px] leading-[30px] text-center">
+      <div data-testid="HomeFeatures-Description1" className="font-extralight text-[20px] leading-[30px] text-center">
         {t("Features.description1")}
       </div>
-      <div data-testid="HomeFeatures-Description2" className="font-extralight text-[22px] leading-[30px] text-center pb-5">
+      <div data-testid="HomeFeatures-Description2" className="font-extralight text-[20px] leading-[30px] text-center pb-5">
         {t("Features.description2")}
       </div> 
 

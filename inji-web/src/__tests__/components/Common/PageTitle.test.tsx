@@ -19,6 +19,6 @@ describe('PageTitle Component', () => {
         const titleElement = getByTestId('title-test-page');
         expect(titleElement).toBeInTheDocument();
         expect(titleElement).toHaveTextContent('Test Page Title');
-        expect(titleElement).toHaveClass('text-[22px] leading-[30px] font-bold');
+        expect(titleElement).toHaveClass('text-[24px] leading-[32px] font-bold');
     });
 });

@@ -26,7 +26,7 @@ export const Login: React.FC = () => {
     return (
       <div className="flex items-center w-full my-2 sm:my-5">
         <hr className="flex-grow border-t border-gray-300" />
-        <span className="px-4 text-gray-500 font-medium text-[14px] leading-[22px]">OR</span>
+        <span className="px-4 text-gray-500 font-medium text-[14px] leading-[20px]">OR</span>
         <hr className="flex-grow border-t border-gray-300" />
       </div>
     );
@@ -38,15 +38,15 @@ export const Login: React.FC = () => {
           <img src={require("../../assets/Logomark.png")} alt="Inji Web Logo" />
         </div>
 
-        <div data-testid="login-title" className="text-[32px] leading-[36px] text-black font-bold text-center py-4">
+        <div data-testid="login-title" className="text-[36px] leading-[44px] tracking-[-0.02em] text-black font-bold text-center py-4">
           {t("Login.loginTitle")}
         </div>
 
-        <div data-testid="login-description" className="sm:mt-3 text-[18px] leading-[26px] text-muted text-ellipsis text-center pb-0">
+        <div data-testid="login-description" className="sm:mt-3 text-[18px] leading-[28px] text-muted text-ellipsis text-center pb-0">
           {t("Login.loginDescription")}
         </div>
 
-        <div data-testid="login-note" className="sm:my-3 text-[14px] leading-[22px] font-medium text-ellipsis text-center pb-4">
+        <div data-testid="login-note" className="sm:my-3 text-[14px] leading-[20px] font-medium text-ellipsis text-center pb-4">
           {t("Login.loginNote")}
         </div >
 

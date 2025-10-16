@@ -60,15 +60,15 @@
     "QuickTip": {
       "heading": "Dicas rápidas para baixar suas credenciais instantaneamente",
       "toastText": "Em breve",
-      "buttontext": "SABER MAIS"
+      "buttontext": "Saber mais"
     },
     "Login": {
       "loginTitle": "Entrar",
       "loginDescription": "Faça login com sua conta ou continue como convidado para acessar suas credenciais.",
       "loginNote": "Alguns recursos podem ser limitados no modo convidado.",
-      "loggingIn": "EFETUANDO LOGIN",
-      "loginGoogle": "CONTINUAR COM O GOOGLE",
-      "loginGuest": "CONTINUAR COMO CONVIDADO"
+      "loggingIn": "Fazendo login",
+      "loginGoogle": "Continuar com o Google",
+      "loginGuest": "Continuar como convidado"
     },
     "LoginFailedModal": {
       "failureMessage": "Falha no login",
@@ -83,8 +83,8 @@
     }
   },
   "PasscodePage": {
-    "submit": "ENVIAR",
-    "submitting": "ENVIANDO",
+    "submit": "Enviar",
+    "submitting": "Enviando",
     "setPasscode": "Defina seu código de acesso para começar",
     "setPasscodeDescription": "Por favor, lembre-se ou armazene seu código de acesso com segurança. Você precisará dele toda vez que acessar a carteira.",
     "enterPasscode": "Digite seu código de acesso para continuar",
@@ -420,11 +420,11 @@
   "StoredCards": {
     "title": "Cartões Armazenados",
     "header": {
-      "addCards": "ADICIONAR CARTÕES"
+      "addCards": "Adicionar cartões"
     },
     "emptyScreen": {
       "title": "Nenhum Cartão Armazenado!",
-      "actionText": "Você ainda não baixou nenhum cartão. Toque em \"ADICIONAR CARTÕES\" para começar."
+      "actionText": "Você ainda não baixou nenhum cartão. Toque em \"Adicionar cartões\" para começar."
     },
     "search": {
       "placeholder": "Pesquise seus cartões por nome",

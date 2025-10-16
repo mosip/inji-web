@@ -67,7 +67,7 @@ exports[`Testing the Layout of NavBar Check the presence of the navbar container
             />
           </svg>
           <input
-            class="py-6 w-11/12 flex text-iw-searchTitle focus:outline-none overflow-ellipsis mr-10 text-[14px] leading-[18px] font-medium"
+            class="py-6 w-11/12 flex text-iw-searchTitle focus:outline-none overflow-ellipsis mr-10 text-[14px] leading-[20px] font-medium"
             data-testid="NavBar-Search-Input"
             placeholder="Search Credential Type"
             type="text"
