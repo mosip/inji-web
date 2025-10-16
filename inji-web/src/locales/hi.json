@@ -399,6 +399,11 @@
   "LoadingModalLandscape": {
     "message": "आपकी सुरक्षित क्रेडेंशियल प्रस्तुति तैयार की जा रही है..."
   },
+  "CredentialShareSuccessModal": {
+    "sharedWith": "{{verifierName}} के साथ साझा किया गया",
+    "credentialsPresented": "आपकी क्रेडेंशियल सफलतापूर्वक {{verifierName}} को प्रस्तुत की गई",
+    "redirectMessage": "{{count}} सेकंड में सत्यापनकर्ता पर पुनः निर्देशित किया जा रहा है..."
+  },
   "User": {
     "Home": {
       "title": "घर",

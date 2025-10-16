@@ -399,6 +399,11 @@
   "LoadingModalLandscape": {
     "message": "جارٍ إعداد عرض بيانات اعتمادك الآمن..."
   },
+  "CredentialShareSuccessModal": {
+    "sharedWith": "تمت المشاركة مع {{verifierName}}",
+    "credentialsPresented": "تم تقديم بيانات اعتمادك بنجاح إلى {{verifierName}}",
+    "redirectMessage": "إعادة التوجيه إلى المحقق خلال {{count}} ثانية..."
+  },
   "User": {
     "Home": {
       "title": "بيت",

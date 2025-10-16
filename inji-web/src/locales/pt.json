@@ -399,6 +399,11 @@
   "LoadingModalLandscape": {
     "message": "Preparando sua apresentação de credencial segura..."
   },
+  "CredentialShareSuccessModal": {
+    "sharedWith": "Compartilhado com {{verifierName}}",
+    "credentialsPresented": "Suas credenciais foram apresentadas com sucesso a {{verifierName}}",
+    "redirectMessage": "Redirecionando para o verificador em {{count}} segundos..."
+  },
   "User": {
     "Home": {
       "title": "Lar",

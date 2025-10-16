@@ -399,6 +399,11 @@
   "LoadingModalLandscape": {
     "message": "ನಿಮ್ಮ ಸುರಕ್ಷಿತ ಕ್ರೆಡೆನ್ಷಿಯಲ್ ಪ್ರಸ್ತುತಿ ಸಿದ್ಧಪಡಿಸಲಾಗುತ್ತಿದೆ..."
   },
+  "CredentialShareSuccessModal": {
+  "sharedWith": "{{verifierName}} ಜೊತೆಗೆ ಹಂಚಲಾಗಿದೆ",
+  "credentialsPresented": "ನಿಮ್ಮ ಪ್ರಮಾಣಪತ್ರಗಳು ಯಶಸ್ವಿಯಾಗಿ {{verifierName}} ಗೆ ಪ್ರಸ್ತುತಪಡಿಸಲ್ಪಟ್ಟಿವೆ",
+  "redirectMessage": "{{count}} ಸೆಕೆಂಡುಗಳಲ್ಲಿ ಪರಿಶೀಲಕರಿಗೆ ಮರುನಿರ್ದೇಶನ ಮಾಡಲಾಗುತ್ತಿದೆ..."
+},
   "User": {
     "Home": {
       "title": "ಮನೆ",

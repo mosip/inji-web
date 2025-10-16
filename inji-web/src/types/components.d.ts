@@ -147,3 +147,12 @@ export interface CredentialsResponse {
     availableCredentials: PresentationCredential[];
     missingClaims: any[];
 }
+
+export type CredentialShareSuccessModalProps = {
+    isOpen: boolean;
+    verifierName: string;
+    credentials: PresentationCredential[];
+    returnUrl: string;
+    countdownStart?: number;
+    onClose?: () => void;
+}
