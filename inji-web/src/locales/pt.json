@@ -396,6 +396,9 @@
     "success": "Prosseguir",
     "cancel": "Cancelar"
   },
+  "LoadingModalLandscape": {
+    "message": "Preparando sua apresentação de credencial segura..."
+  },
   "User": {
     "Home": {
       "title": "Lar",

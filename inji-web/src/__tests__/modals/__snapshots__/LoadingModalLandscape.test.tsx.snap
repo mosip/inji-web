@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadingModalLandscape Component matches snapshot when open 1`] = `
+<DocumentFragment>
+  <div
+    class="fixed inset-0 z-50 overflow-y-auto overflow-x-hidden"
+    data-testid="ModalWrapper-Outer-Container"
+  >
+    <div
+      class="min-h-full p-0 flex items-center justify-center"
+    >
+      <div
+        class="w-auto my-8 mx-4 sm:mx-6 max-w-3xl min-w-[320px]"
+      >
+        <div
+          class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-iw-background outline-none focus:outline-none"
+          data-testid="ModalWrapper-Inner-Container"
+        >
+          <div
+            class="
+        w-[677px] h-[430px] 
+        flex items-center justify-center 
+        max-w-full max-h-full 
+        min-w-[343px] min-h-[403px]
+        px-4 sm:px-6 md:px-8
+     flex items-center justify-center"
+            id="card-loading-container"
+          >
+            <div
+              class="
+        flex flex-col items-center justify-center 
+        gap-6 
+        w-[250px] h-[136px]
+        text-center
+    "
+            >
+              <div
+                class="
+        flex items-center justify-center
+    "
+                id="spinner-loading"
+              >
+                <div
+                  class="flex justify-center items-center"
+                  data-testid="SpinningLoader-Container"
+                >
+                  <div
+                    aria-busy="true"
+                    aria-label="oval-loading"
+                    class="sc-beySPh gZmPOF"
+                    data-testid="oval-loading"
+                    role="progressbar"
+                  >
+                    <svg
+                      data-testid="oval-svg"
+                      height="80"
+                      stroke="var(--iw-color-spinningLoaderPrimary)"
+                      viewBox="-20.5 -20.5 43 43"
+                      width="80"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g
+                        fill="none"
+                        fill-rule="evenodd"
+                      >
+                        <g
+                          data-testid="oval-secondary-group"
+                          stroke-width="3"
+                          transform="translate(1 1)"
+                        >
+                          <circle
+                            cx="0"
+                            cy="0"
+                            r="20"
+                            stroke="var(--iw-color-spinningLoaderSecondary)"
+                            stroke-opacity=".5"
+                            stroke-width="3"
+                          />
+                          <path
+                            d="M20 0c0-9.94-8.06-20-20-20"
+                          >
+                            <animatetransform
+                              attributeName="transform"
+                              dur="1s"
+                              from="0 0 0"
+                              repeatCount="indefinite"
+                              to="360 0 0"
+                              type="rotate"
+                            />
+                          </path>
+                        </g>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="
+          font-[--iw-font-montserrat]  
+          font-light                                                           
+          text-center                          
+          text-[--iw-color-header]     
+          w-full sm:w-auto 
+          mt-2 break-words px-2
+        "
+                id="text-loading-message"
+              >
+                Preparing your secure credential presentation...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="opacity-25 fixed inset-0 z-40 bg-iw-backDrop"
+    data-testid="ModalWrapper-BackDrop"
+  />
+</DocumentFragment>
+`;

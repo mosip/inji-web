@@ -396,6 +396,9 @@
     "success": "Procéder",
     "cancel": "Annuler"
   },
+  "LoadingModalLandscape": {
+    "message": "Préparation de votre présentation d’identifiants sécurisée..."
+  },
   "User": {
     "Home": {
       "title": "Maison",

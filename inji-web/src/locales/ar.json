@@ -396,6 +396,9 @@
     "success": "يتابع",
     "cancel": "يلغي"
   },
+  "LoadingModalLandscape": {
+    "message": "جارٍ إعداد عرض بيانات اعتمادك الآمن..."
+  },
   "User": {
     "Home": {
       "title": "بيت",

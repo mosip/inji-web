@@ -396,6 +396,9 @@
     "success": "आगे बढ़ना",
     "cancel": "रद्द करना"
   },
+  "LoadingModalLandscape": {
+    "message": "आपकी सुरक्षित क्रेडेंशियल प्रस्तुति तैयार की जा रही है..."
+  },
   "User": {
     "Home": {
       "title": "घर",

@@ -396,6 +396,9 @@
     "success": "Proceed",
     "cancel": "Cancel"
   },
+  "LoadingModalLandscape": {
+    "message": "Preparing your secure credential presentation..."
+  },
   "User": {
     "Home": {
       "title": "Home",
