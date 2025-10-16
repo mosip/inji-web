@@ -71,6 +71,7 @@
         --iw-color-disabled: #ADB6BD;
         --iw-color-dropdown-active-bg: #F7F3F0;
         --iw-color-dropdown-text: #232B38;
+        --iw-color-paleViolet: #FAF8FF;
     }
     [class="emerald_theme"] {
         --iw-font-base: "Inter", sans-serif;
@@ -129,6 +130,7 @@
         --iw-color-disabled: #ADB6BD;
         --iw-color-dropdown-active-bg: #F7F3F0;
         --iw-color-dropdown-text: #232B38;
+        --iw-color-paleViolet: #FAF8FF;
     }
 }
 
