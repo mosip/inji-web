@@ -72,7 +72,7 @@ export const NoMatchingCredentialsModal: React.FC<NoMatchingCredentialsModalProp
     const styles = ErrorCardStyles.errorCard;
 
     return (
-        <div data-testid="card-no-matching-credentials-modal" className="w-full max-w-[400px] min-h-[350px] transition-all duration-300 ease-in-out max-[533px]:w-screen max-[533px]:left-0 max-[533px]:right-0 max-[533px]:z-[60] !max-w-[400px]">
+        <div data-testid="card-no-matching-credentials-modal" className="w-full max-w-[400px] min-h-[350px] transition-all duration-300 ease-in-out max-[533px]:w-screen max-[533px]:fixed max-[533px]:inset-x-0 max-[533px]:z-[60]">
             <ModalWrapper
                 zIndex={50}
                 size="md"

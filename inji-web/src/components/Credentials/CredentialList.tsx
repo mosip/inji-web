@@ -28,8 +28,8 @@ export const CredentialList: React.FC<CredentialListProps> = ({
     const reduxCredentials = useSelector((state: RootState) => state.credentials.credentials);
     
     // Transform Redux data to match PresentationCredential structure
-    const transformedReduxCredentials = reduxCredentials?.credentials_supported?.map((cred: any, index: number) => ({
-        credentialId: cred.name || `cred-${index}`,
+    const transformedReduxCredentials = reduxCredentials?.credentials_supported?.map((cred: { name?: string; display?: Array<{ name?: string; logo?: string }> }, index: number) => ({
+        credentialId: cred.name || `unknown-${Date.now()}-${index}`,
         credentialTypeDisplayName: cred.display?.[0]?.name || cred.name || 'Unknown Credential',
         credentialTypeLogo: cred.display?.[0]?.logo || '',
         format: 'ldp_vc'
