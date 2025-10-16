@@ -503,6 +503,32 @@
       "invalidVerifierResponse": "تم تلقي استجابة مدقق غير صالحة.",
       "addTrustedVerifierError": "فشل في إضافة المدقق إلى قائمة الثقة."
     },
+    "CredentialRequestModal": {
+      "loading": {
+        "title": "تحميل بيانات الاعتماد",
+        "message": "يرجى الانتظار بينما نجلب بيانات الاعتماد المتاحة لديك..."
+      },
+      "header": {
+        "title": "{{verifierName}} يطلب هذه بيانات الاعتماد",
+        "description": "اختر بيانات الاعتماد التي تريد مشاركتها"
+      },
+      "error": {
+        "title": "خطأ في تحميل بيانات الاعتماد",
+        "walletIdMessage": "يرجى التأكد من تسجيل الدخول وفتح محفظتك."
+      },
+      "noCredentials": {
+        "message": "لا توجد بيانات اعتماد متاحة"
+      },
+      "buttons": {
+        "cancel": "إلغاء",
+        "consentShare": "أوافق وأشارك"
+      }
+    },
+    "NoMatchingCredentialsModal": {
+      "title": "لم يتم العثور على بيانات اعتماد مطابقة",
+      "description": "يرجى تحميل بيانات الاعتماد المقابلة وإعادة محاولة عملية المشاركة",
+      "goToHomeButton": "الذهاب إلى الصفحة الرئيسية"
+    },
     "ErrorCard": {
       "defaultTitle": "خطأ",
       "defaultDescription": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",

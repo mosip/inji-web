@@ -52,7 +52,7 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
     return (
         <ModalWrapper
             zIndex={50}
-            size="xl"
+            size="md"
             header={<></>}
             footer={<></>}
             content={

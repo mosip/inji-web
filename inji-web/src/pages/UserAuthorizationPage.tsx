@@ -5,26 +5,24 @@ import { useTranslation } from "react-i18next";
 import { TrustVerifierModal } from "../components/Issuers/TrustVerifierModal";
 import { ErrorCard } from "../modals/ErrorCard";
 import { TrustRejectionModal } from "../components/Issuers/TrustRejectionModal";
+import { CredentialRequestModal } from "../modals/CredentialRequestModal";
 import { useApi } from "../hooks/useApi";
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from "../utils/constants";
-import { ApiRequest, ApiResult } from "../types/data";
-import { useSelector } from "react-redux";
-import { RootState } from "../types/redux";
+import { Sidebar } from "../components/User/Sidebar";
 
 export const UserAuthorizationPage: React.FC = () => {
     const { t } = useTranslation("VerifierTrustPage");
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isCancelConfirmation, setIsCancelConfirmation] = useState<boolean>(false);
     const [showTrustVerifier, setShowTrustVerifier] = useState<boolean>(false);
+    const [showCredentialRequest, setShowCredentialRequest] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [verifierData, setVerifierData] = useState<any>(null);
     const [presentationIdData, setPresentationIdData] = useState<string | null>(null);
 
     const apiService = useApi();
     const navigate = useNavigate();
-    const useApiInstance = useApi;
-    const language = useSelector((state: RootState) => state.common.language);
 
 
     const handleError = (message: string, source: string, err?: any) => {
@@ -35,52 +33,36 @@ export const UserAuthorizationPage: React.FC = () => {
         setShowTrustVerifier(false);
     };
 
-    const rejectionBody = {
-        errorCode: "access_denied",
-        errorMessage: "User denied authorization to share credentials"
-    };
-
-    const executeApiRequest = async (
-        apiConfig: ApiRequest,
-        id: string | null,
-        body: any,
-        onSuccess: (response: ApiResult<any>) => Promise<void>,
-        apiInstance: ReturnType<typeof useApiInstance>,
-        errorType: string = "apiError"
-    ) => {
-        if (!id) {
-            throw new Error("Missing ID for API request.");
-        }
-
-        try {
-            const response = await apiInstance.fetchData({
-                url: apiConfig.url(id),
-                headers: apiConfig.headers(language),
-                apiConfig: apiConfig,
-                body: body,
-            });
-
-            if (!response.ok()) {
-                console.error(`Failed to fetch request, got ${errorType} with response - `, response);
-                throw new Error(errorType);
-            }
-
-            await onSuccess(response);
-        } catch (error) {
-            console.error("API request failed:", error);
-            throw new Error(errorType);
-        }
-    };
 
     const validateVerifierRequest = async () => {
         try {
             setIsLoading(true);
-            const authorizationRequestUrl =
-                window.location.search;
+            // Extract query parameters from URL and get parameters from within authorizationRequestUrl
+            const fullUrl = window.location.search;
+            const queryParams = fullUrl.substring(1); // Remove the ? prefix
+            
+            // Find the authorizationRequestUrl parameter and extract parameters from its value
+            const authUrlIndex = queryParams.indexOf('authorizationRequestUrl=');
+            let cleanParams = '';
+            
+            if (authUrlIndex !== -1) {
+                // Get the value of authorizationRequestUrl parameter
+                const startIndex = authUrlIndex + 'authorizationRequestUrl='.length;
+                
+                let authUrlValue = queryParams.substring(startIndex);
+                
+                // Find the parameters after the second ? (keep URL encoded)
+                const secondQuestionMark = authUrlValue.indexOf('?');
+                
+                if (secondQuestionMark !== -1) {
+                    // Extract parameters after the second ? (including the ?)
+                    cleanParams = authUrlValue.substring(secondQuestionMark);
+                }
+            }
 
             const response = await apiService.fetchData({
                 apiConfig: api.validateVerifierRequest,
-                body: { authorizationRequestUrl },
+                body: { authorizationRequestUrl: cleanParams },
             });
 
             if (!response.ok()) {
@@ -97,8 +79,8 @@ export const UserAuthorizationPage: React.FC = () => {
             if (!verifier.trusted) {
                 setShowTrustVerifier(true);
             } else {
-                console.log("Verifier already trusted:", verifier.name);
                 setShowTrustVerifier(false);
+                setShowCredentialRequest(true);
             }
         } catch (err) {
             handleError("Failed to validate verifier request.", "validateVerifierRequest", err);
@@ -120,32 +102,39 @@ export const UserAuthorizationPage: React.FC = () => {
                 return handleError("Failed to add verifier to trusted list.", "addTrustedVerifier", response.error);
             }
 
-            console.log("Verifier added to trusted list:", response);
             setShowTrustVerifier(false);
+            setShowCredentialRequest(true);
         } catch (err) {
             handleError("Failed to add verifier to trusted list.", "addTrustedVerifier", err);
         }
     };
 
-    const rejectVerifierRequest = async () => {
-        try {
-            await executeApiRequest(
-                api.userRejectVerifier,
-                presentationIdData,
-                rejectionBody,
-                async () => {
-                    navigate(ROUTES.ROOT);
-                },
-                apiService,
-                "rejectError"
-            );
-        } catch (error) {
-            console.error("Failed to reject verifier:", error);
-            setError("rejectError");
-        } finally {
-            setShowTrustVerifier(false);
-        }
+    const handleTrustButton = async () => {
+        await addTrustedVerifier();
     };
+
+    const handleNoTrustButton = () => {
+        setShowTrustVerifier(false);
+        setShowCredentialRequest(true);
+    };
+
+    const handleCredentialRequestCancel = () => {
+        setShowCredentialRequest(false);
+        navigate(ROUTES.ROOT);
+    };
+
+    const handleCredentialRequestConsent = (selectedCredentials: string[]) => {
+        // TODO: Implement consent button logic for next story
+        // This should include:
+        // 1. Handle the selected credentials from CredentialRequestModal
+        // 2. Process the consent and share logic
+        // 3. Handle success/error states
+        // 4. Navigate appropriately after processing
+        
+        setShowCredentialRequest(false);
+        navigate(ROUTES.ROOT);
+    };
+
 
 
     useEffect(() => {
@@ -154,49 +143,68 @@ export const UserAuthorizationPage: React.FC = () => {
     }, []);
 
     return (
-        <div className="relative flex flex-col items-center justify-center min-h-screen bg-gray-50">
-            <LoaderModal
-                isOpen={isLoading}
-                title={t("loadingCard.title")}
-                subtitle={t("loadingCard.subtitle")}
-                data-testid="loader-modal"
-            />
-
-            <TrustVerifierModal
-                isOpen={showTrustVerifier}
-                logo={verifierData?.logo}
-                verifierName={verifierData?.name}
-                verifierDomain={verifierData?.id}
-                onTrust={addTrustedVerifier}
-                onNotTrust={rejectVerifierRequest}
-                onCancel={() => {
-                    setShowTrustVerifier(false);
-                    setIsCancelConfirmation(true);
-                }}
-                data-testid="modal-trust-verifier"
-            />
-
-            {error && (
-                <ErrorCard
-                    isOpen={!!error}
-                    title={t("errorTitle") || "Error"}
-                    description={error}
-                    onClose={() => { setError(null); navigate(ROUTES.ROOT); }}
-
+        <div className="flex min-h-screen bg-gray-50">
+            {/* Sidebar - positioned completely on the left */}
+            <div className="flex-shrink-0">
+                <Sidebar disabled={true} forceLeftPosition={true} />
+            </div>
+            
+            {/* Main Content */}
+            <div className="flex-1 flex flex-col items-center justify-center relative">
+                <LoaderModal
+                    isOpen={isLoading}
+                    title={t("loadingCard.title")}
+                    subtitle={t("loadingCard.subtitle")}
+                    size="xl-loading"
+                    data-testid="loader-modal"
                 />
-            )}
 
-            <TrustRejectionModal
-                isOpen={isCancelConfirmation}
-                onConfirm={() => {
-                    setIsCancelConfirmation(false);
-                    navigate(ROUTES.ROOT);
-                }}
-                onClose={() => {
-                    setIsCancelConfirmation(false);
-                    setShowTrustVerifier(true);
-                }}
-            />
+                <TrustVerifierModal
+                    isOpen={showTrustVerifier}
+                    logo={verifierData?.logo}
+                    verifierName={verifierData?.name}
+                    verifierDomain={verifierData?.id}
+                    onTrust={handleTrustButton}
+                    onNotTrust={handleNoTrustButton}
+                    onCancel={() => {
+                        setShowTrustVerifier(false);
+                        setIsCancelConfirmation(true);
+                    }}
+                    data-testid="modal-trust-verifier"
+                />
+
+                {showCredentialRequest && presentationIdData && (
+                    <CredentialRequestModal
+                        isVisible={showCredentialRequest}
+                        verifierName={verifierData?.name || 'Verifier'}
+                        presentationId={presentationIdData}
+                        verifier={{ redirectUri: verifierData?.redirectUri || null }}
+                        onCancel={handleCredentialRequestCancel}
+                        onConsentAndShare={handleCredentialRequestConsent}
+                    />
+                )}
+
+                {error && (
+                    <ErrorCard
+                        isOpen={!!error}
+                        title={t("errorTitle") || "Error"}
+                        description={error}
+                        onClose={() => { setError(null); navigate(ROUTES.ROOT); }}
+                    />
+                )}
+
+                <TrustRejectionModal
+                    isOpen={isCancelConfirmation}
+                    onConfirm={() => {
+                        setIsCancelConfirmation(false);
+                        navigate(ROUTES.ROOT);
+                    }}
+                    onClose={() => {
+                        setIsCancelConfirmation(false);
+                        setShowTrustVerifier(true);
+                    }}
+                />
+            </div>
         </div>
     );
 };
