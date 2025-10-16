@@ -23,7 +23,6 @@ export const UserAuthorizationPage: React.FC = () => {
 
     const apiService = useApi();
     const navigate = useNavigate();
-    const useApiInstance = useApi;
     const language = useSelector((state: RootState) => state.common.language);
 
 
@@ -45,7 +44,7 @@ export const UserAuthorizationPage: React.FC = () => {
         id: string | null,
         body: any,
         onSuccess: (response: ApiResult<any>) => Promise<void>,
-        apiInstance: ReturnType<typeof useApiInstance>,
+        apiInstance: ReturnType<typeof useApi>,
         errorType: string = "apiError"
     ) => {
         if (!id) {
@@ -159,7 +158,7 @@ export const UserAuthorizationPage: React.FC = () => {
                 isOpen={isLoading}
                 title={t("loadingCard.title")}
                 subtitle={t("loadingCard.subtitle")}
-                data-testid="loader-modal"
+                data-testid="modal-loader"
             />
 
             <TrustVerifierModal
@@ -179,10 +178,8 @@ export const UserAuthorizationPage: React.FC = () => {
             {error && (
                 <ErrorCard
                     isOpen={!!error}
-                    title={t("errorTitle") || "Error"}
-                    description={error}
                     onClose={() => { setError(null); navigate(ROUTES.ROOT); }}
-
+                    data-testid="modal-error-card"
                 />
             )}
 
@@ -196,6 +193,7 @@ export const UserAuthorizationPage: React.FC = () => {
                     setIsCancelConfirmation(false);
                     setShowTrustVerifier(true);
                 }}
+                data-testid="modal-trust-rejection-modal"
             />
         </div>
     );

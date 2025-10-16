@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserAuthorizationPage matches snapshot when TrustVerifierModal is visible (untrusted flow) 1`] = `
+<DocumentFragment>
+  <div
+    class="relative flex flex-col items-center justify-center min-h-screen bg-gray-50"
+  >
+    <div
+      data-testid="modal-trust-verifier"
+    >
+      <span>
+        Untrusted Verifier
+      </span>
+      <button
+        data-testid="btn-trust-verifier"
+      >
+        Trust
+      </button>
+      <button
+        data-testid="btn-not-trust-verifier"
+      >
+        Not Trust
+      </button>
+      <button
+        data-testid="btn-btn-cancel-trust-modal"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;

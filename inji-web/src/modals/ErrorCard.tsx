@@ -7,15 +7,11 @@ import { ErrorCardStyles } from "./ErrorCardStyles";
 
 
 interface ErrorCardProps {
-    title?: string;
-    description?: string;
     onClose: () => void; 
     isOpen: boolean;
 }
 
 export const ErrorCard: React.FC<ErrorCardProps> = ({
-    title,
-    description = "Something went wrong. Please try again.",
     onClose,
     isOpen,
 }) => {
