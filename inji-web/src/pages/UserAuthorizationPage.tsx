@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from "../utils/constants";
 import { Sidebar } from "../components/User/Sidebar";
 
+const AUTHORIZATION_REQUEST_URL_PARAM = 'authorizationRequestUrl=';
+
 export const UserAuthorizationPage: React.FC = () => {
     const { t } = useTranslation("VerifierTrustPage");
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -37,26 +39,16 @@ export const UserAuthorizationPage: React.FC = () => {
     const validateVerifierRequest = async () => {
         try {
             setIsLoading(true);
-            // Extract query parameters from URL and get parameters from within authorizationRequestUrl
-            const fullUrl = window.location.search;
-            const queryParams = fullUrl.substring(1); // Remove the ? prefix
-            
-            // Find the authorizationRequestUrl parameter and extract parameters from its value
-            const authUrlIndex = queryParams.indexOf('authorizationRequestUrl=');
+
+            const queryString = window.location.search.substring(1);
+            const authUrlIndex = queryString.indexOf(AUTHORIZATION_REQUEST_URL_PARAM);
             let cleanParams = '';
             
             if (authUrlIndex !== -1) {
-                // Get the value of authorizationRequestUrl parameter
-                const startIndex = authUrlIndex + 'authorizationRequestUrl='.length;
-                
-                let authUrlValue = queryParams.substring(startIndex);
-                
-                // Find the parameters after the second ? (keep URL encoded)
-                const secondQuestionMark = authUrlValue.indexOf('?');
-                
-                if (secondQuestionMark !== -1) {
-                    // Extract parameters after the second ? (including the ?)
-                    cleanParams = authUrlValue.substring(secondQuestionMark);
+                try {
+                    cleanParams = queryString.substring(authUrlIndex + AUTHORIZATION_REQUEST_URL_PARAM.length);
+                } catch (parseError) {
+                    return handleError("Invalid authorization request URL.", "validateVerifierRequest", parseError);
                 }
             }
 

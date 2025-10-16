@@ -11,13 +11,13 @@ interface CredentialListProps {
 }
 
 export const CredentialList: React.FC<CredentialListProps> = ({
-    credentials,
-    selectedCredentials,
+    credentials = [],
+    selectedCredentials = [],
     onCredentialToggle
 }) => {
     const { t } = useTranslation(['CredentialRequestModal']);
 
-    if (credentials.length === 0) {
+    if (!credentials || credentials.length === 0) {
         return (
             <div className="flex items-center justify-center py-8">
                 <div className="text-center">

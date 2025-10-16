@@ -12,7 +12,6 @@ import { CredentialRequestModalHeader } from '../components/Credentials/Credenti
 import { CredentialRequestModalContent } from '../components/Credentials/CredentialRequestModalContent';
 import { CredentialRequestModalFooter } from '../components/Credentials/CredentialRequestModalFooter';
 import { withErrorHandling } from '../utils/errorHandling';
-import axios from 'axios';
 
 
 interface CredentialRequestModalProps {
@@ -72,12 +71,12 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
         );
         
         // Redirect to verifier's redirectUri if available, otherwise call onCancel
-        if (verifier.redirectUri) {
+        if (verifier?.redirectUri) {
             window.location.href = verifier.redirectUri;
         } else {
             onCancel();
         }
-    }, [presentationId, fetchData, onCancel, verifier.redirectUri]);
+    }, [presentationId, fetchData, onCancel, verifier?.redirectUri]);
 
     const handleCredentialToggle = useCallback((credentialId: string) => {
         setSelectedCredentials(prev => 
@@ -126,53 +125,14 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
         }
 
         const fetchCredentials = async () => {
-            const walletId = localStorage.getItem('walletId');
-
-            if (!walletId) {
-                const walletError = new Error('Wallet ID not available. Please make sure you are logged in and have unlocked your wallet.');
-                handleApiError(walletError, 'fetchCredentials', { 
-                    context: 'wallet_validation',
-                    showToUser: true 
-                });
-                fetchingRef.current = false;
-                return;
-            }
-
             fetchingRef.current = true;
             setIsLoading(true);
             
             try {
-                const apiUrl = api.fetchPresentationCredentials.url(presentationId);
-
-                    // Add timeout to prevent hanging
-                    const timeoutPromise = new Promise((_, reject) => {
-                        setTimeout(() => reject(new Error('API call timeout after 30 seconds')), 30000);
-                    });
-
-                const apiPromise = fetchData({
-                    url: apiUrl,
+                const response = await fetchData({
+                    url: api.fetchPresentationCredentials.url(presentationId),
                     apiConfig: api.fetchPresentationCredentials
                 });
-
-                let response: any;
-                try {
-                    response = await Promise.race([apiPromise, timeoutPromise]);
-                } catch (apiError) {
-                    // Fallback to direct axios call
-                    const directResponse = await axios.get(apiUrl, {
-                        withCredentials: true,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-                    
-                    response = {
-                        data: directResponse.data,
-                        error: null,
-                        status: directResponse.status,
-                        ok: () => directResponse.status >= 200 && directResponse.status <= 299
-                    };
-                }
 
                 if (response.ok()) {
                     const responseData = response.data;

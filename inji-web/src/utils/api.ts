@@ -290,9 +290,6 @@ export class api {
     static fetchPresentationCredentials: ApiRequest = {
         url: (presentationId: string) => {
             const walletId = AppStorage.getItem(KEYS.WALLET_ID);
-            if (!walletId) {
-                throw new Error('Wallet ID not available. Please make sure you are logged in and have unlocked your wallet.');
-            }
             return api.mimotoHost + `/wallets/${walletId}/presentations/${presentationId}/credentials`;
         },
         methodType: MethodType.GET,

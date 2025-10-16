@@ -536,10 +536,5 @@
     "title": "No matching credentials found",
     "description": "Please download the corresponding credentials and retry the sharing process",
     "goToHomeButton": "Go to Home"
-  },
-  "ErrorCard": {
-    "defaultTitle": "Something went wrong",
-    "defaultDescription": "An unexpected error occurred. Please try again later.",
-    "closeButton": "Close"
   }
 }

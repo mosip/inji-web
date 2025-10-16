@@ -24,7 +24,7 @@ const CredentialItemComponent: React.FC<CredentialItemProps> = ({
 
     return (
         <li
-            data-testid={`item-${credentialName.toLowerCase().replace(/\s+/g, '-')}`}
+            data-testid={`item-${credential.credentialId}`}
             className={`${CredentialRequestModalStyles.content.credentialItemWrapper} shadow-md ${
                 isSelected ? 'bg-gradient-to-r from-orange-500 via-red-500 to-purple-600' : ''
             }`}
@@ -47,7 +47,7 @@ const CredentialItemComponent: React.FC<CredentialItemProps> = ({
                 <div className={CredentialRequestModalStyles.content.credentialContent}>
                     {/* Credential Logo */}
                     <div 
-                        data-testid={`icon-${credentialName.toLowerCase().replace(/\s+/g, '-')}`}
+                        data-testid={`icon-${credential.credentialId}`}
                         className={CredentialRequestModalStyles.content.credentialImage}
                         role="img"
                         aria-label={`${credentialName} logo`}
@@ -78,7 +78,7 @@ const CredentialItemComponent: React.FC<CredentialItemProps> = ({
                 {/* Checkbox */}
                 <div className={CredentialRequestModalStyles.content.checkboxContainer}>
                     <input
-                        data-testid={`checkbox-${credentialName.toLowerCase().replace(/\s+/g, '-')}`}
+                        data-testid={`checkbox-${credential.credentialId}`}
                         type="checkbox"
                         checked={isSelected}
                         onChange={handleToggle}
@@ -92,7 +92,8 @@ const CredentialItemComponent: React.FC<CredentialItemProps> = ({
                             position: 'relative'
                         }}
                         aria-label={`Select ${credentialName} credential`}
-                        aria-describedby={`credential-${credential.credentialId}-description`}
+                        aria-checked={isSelected}
+                        role="checkbox"
                     />
                     {isSelected && (
                         <div

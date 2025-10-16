@@ -31,16 +31,14 @@ export const LoaderModal: React.FC<LoaderModalProps> = ({
                         styles.wrapper4xl;
 
     return (
-        <div className="w-full max-w-[500px] transition-all duration-300 ease-in-out max-[533px]:w-screen max-[533px]:left-0 max-[533px]:right-0 max-[533px]:z-[60]">
+        <div className="transition-all duration-300 ease-in-out max-[533px]:w-screen max-[533px]:left-0 max-[533px]:right-0 max-[533px]:z-[60]">
             <ModalWrapper
                 zIndex={50}
                 size={size}
                 header={<></>}
                 footer={<></>}
                 content={
-
                     <div className={wrapperClass}>
-
                         <div className={styles.spinnerContainer}>
                             <SpinningLoader></SpinningLoader>
                         </div>

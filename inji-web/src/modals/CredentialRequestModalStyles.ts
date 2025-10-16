@@ -9,7 +9,6 @@ export const CredentialRequestModalStyles = {
         loadingContainer: "flex items-center justify-center py-6",
         credentialsList: "space-y-2",
         credentialItemWrapper: "w-full transition-colors",
-        credentialItemWrapperSelected: "w-full transition-colors",
         credentialItem: "w-full rounded-lg flex items-center justify-between transition-colors bg-white border border-gray-200 hover:bg-gray-50 p-3",
         credentialItemSelected: "w-full rounded-lg flex items-center justify-between transition-colors opacity-90 p-3",
         credentialContent: "flex items-center space-x-3 min-w-0 flex-1",
@@ -18,7 +17,6 @@ export const CredentialRequestModalStyles = {
         credentialName: "font-montserrat font-semibold text-base leading-none text-gray-900 truncate",
         checkboxContainer: "flex-shrink-0 relative flex items-center justify-center ml-2",
         checkbox: "rounded focus:ring-2 focus:ring-orange-500 w-5 h-5",
-        checkboxSelected: "rounded focus:ring-2 focus:ring-orange-500 w-5 h-5",
         checkboxIcon: "w-3 h-3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
     },
     footer: {

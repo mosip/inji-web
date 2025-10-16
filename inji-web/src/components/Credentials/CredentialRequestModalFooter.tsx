@@ -21,7 +21,8 @@ export const CredentialRequestModalFooter: React.FC<CredentialRequestModalFooter
             <div className={CredentialRequestModalStyles.footer.mobileLayout}>
                 <div className="relative bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 rounded-lg p-0.5">
                     <button
-                        data-testid="btn-cancel"
+                        type="button"
+                        data-testid="btn-cancel-mobile"
                         onClick={onCancel}
                         className={`${CredentialRequestModalStyles.footer.cancelButton} bg-white rounded-md w-full h-full flex items-center justify-center border-none`}
                     >
@@ -29,7 +30,8 @@ export const CredentialRequestModalFooter: React.FC<CredentialRequestModalFooter
                     </button>
                 </div>
                 <button
-                    data-testid="btn-consent-share"
+                    type="button"
+                    data-testid="btn-consent-share-mobile"
                     onClick={onConsentAndShare}
                     disabled={!isConsentButtonEnabled}
                     className={`${CredentialRequestModalStyles.footer.consentButton} ${
@@ -47,7 +49,8 @@ export const CredentialRequestModalFooter: React.FC<CredentialRequestModalFooter
                 {/* Cancel button - positioned just left of consent button */}
                 <div className="relative bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 rounded-lg p-0.5">
                     <button
-                        data-testid="btn-cancel"
+                        type="button"
+                        data-testid="btn-cancel-desktop"
                         onClick={onCancel}
                         className={`${CredentialRequestModalStyles.footer.cancelButton} bg-white rounded-md w-full h-full flex items-center justify-center border-none`}
                     >
@@ -57,7 +60,8 @@ export const CredentialRequestModalFooter: React.FC<CredentialRequestModalFooter
 
                 {/* Consent button - aligned with credentials */}
                 <button
-                    data-testid="btn-consent-share"
+                    type="button"
+                    data-testid="btn-consent-share-desktop"
                     onClick={onConsentAndShare}
                     disabled={!isConsentButtonEnabled}
                     className={`${CredentialRequestModalStyles.footer.consentButton} ${
