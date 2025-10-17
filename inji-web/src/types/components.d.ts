@@ -58,7 +58,10 @@ export type IssuersListProps = {
     state: RequestStatus;
 }
 export type CredentialListProps = {
-    state: RequestStatus;
+    credentials?: PresentationCredential[];
+    selectedCredentials?: string[];
+    onCredentialToggle?: (credentialId: string) => void;
+    state?: RequestStatus;
 }
 export type CTContentProps = {
     expiryTime: number;
@@ -109,3 +112,38 @@ export type IconProps = {
     style?: React.CSSProperties,
     testId: string
 } & React.SVGProps<SVGSVGElement>;
+
+// Presentation API types
+export interface Verifier {
+    id: string;
+    name: string;
+    logo: string | null;
+    redirectUri: string | null;
+    trusted: boolean;
+    preregisteredWithWallet: boolean;
+}
+
+export interface CreatePresentationResponse {
+    presentationId: string;
+    verifier: Verifier;
+}
+
+export interface Presentation {
+    id: string;
+    authorizationRequestUrl: string;
+    createdAt: string;
+    updatedAt: string;
+    status: string;
+}
+
+export interface PresentationCredential {
+    credentialId: string;
+    credentialTypeDisplayName: string;
+    credentialTypeLogo: string;
+    format: string;
+}
+
+export interface CredentialsResponse {
+    availableCredentials: PresentationCredential[];
+    missingClaims: any[];
+}

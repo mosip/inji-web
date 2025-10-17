@@ -3,17 +3,21 @@
 exports[`Test the Layout of the Modal Wrapper Snapshot test for ModalWrapper styling 1`] = `
 <DocumentFragment>
   <div
+    class="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm"
+    data-testid="ModalWrapper-BackDrop"
+  />
+  <div
     class="fixed inset-0 z-40 overflow-y-auto overflow-x-hidden"
     data-testid="ModalWrapper-Outer-Container"
   >
     <div
-      class="min-h-full p-0 flex items-center justify-center"
+      class="min-h-full p-4 flex items-center justify-center"
     >
       <div
-        class="w-auto my-8 mx-4 sm:mx-6 max-w-3xl min-w-[320px]"
+        class="w-auto my-8 mx-2 sm:mx-4 md:mx-6 max-w-3xl min-w-[320px]"
       >
         <div
-          class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-iw-background outline-none focus:outline-none"
+          class="border shadow-lg relative flex flex-col w-full bg-iw-background outline-none focus:outline-none border-0 rounded-lg "
           data-testid="ModalWrapper-Inner-Container"
         >
           <div
@@ -224,9 +228,5 @@ exports[`Test the Layout of the Modal Wrapper Snapshot test for ModalWrapper sty
       </div>
     </div>
   </div>
-  <div
-    class="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm"
-    data-testid="ModalWrapper-BackDrop"
-  />
 </DocumentFragment>
 `;

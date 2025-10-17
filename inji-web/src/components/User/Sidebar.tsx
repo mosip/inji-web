@@ -14,6 +14,7 @@ type SidebarItemProps = {
     path: string;
     isActive: boolean;
     isCollapsed: boolean;
+    disabled?: boolean;
 };
 
 export const SidebarItem: React.FC<SidebarItemProps> = ({
@@ -21,17 +22,26 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
                                                      text,
                                                      path,
                                                      isActive,
-                                                     isCollapsed
+                                                     isCollapsed,
+                                                     disabled = false
                                                  }) => {
     const navigate = useNavigate();
     const language = useSelector((state: RootState) => state.common.language);
 
+    const handleClick = () => {
+        if (!disabled) {
+            navigate(path);
+        }
+    };
+
     return (
         <div
-            className={`relative flex items-center w-full h-12 cursor-pointer transition-all duration-200 rounded-lg ${
-                isRTL(language) ? 'pl-2' : 'pr-2'
-            }`}
-            onClick={() => navigate(path)}
+            className={`relative flex items-center w-full h-12 transition-all duration-200 rounded-lg ${
+                disabled 
+                    ? 'cursor-not-allowed opacity-50' 
+                    : 'cursor-pointer'
+            } ${isRTL(language) ? 'pl-2' : 'pr-2'}`}
+            onClick={handleClick}
         >
             <div
                 className={`${
@@ -69,14 +79,20 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({
     );
 };
 
-export const Sidebar: React.FC = () => {
+type SidebarProps = {
+    disabled?: boolean;
+    forceLeftPosition?: boolean;
+};
+
+export const Sidebar: React.FC<SidebarProps> = ({ disabled = false, forceLeftPosition = false }) => {
     const {t} = useTranslation('User');
     const location = useLocation();
     const [isCollapsed, setIsCollapsed] = useState(false);
     const language = useSelector((state: RootState) => state.common.language);
 
     const toggleSidebar = () => {
-        setIsCollapsed(!isCollapsed);
+        const newCollapsedState = !isCollapsed;
+        setIsCollapsed(newCollapsedState);
     };
 
     const sidebarItems: SidebarItemType[] = [
@@ -110,7 +126,11 @@ export const Sidebar: React.FC = () => {
     return (
         <div
             data-testid="sidebar-container"
-            className={`bg-white h-full transition-all duration-300 shadow-iw-sidebar flex flex-col items-start absolute top-0 z-30 sm:relative sm:w-64 ${
+            className={`bg-white h-full transition-all duration-300 shadow-iw-sidebar flex flex-col items-start ${
+                forceLeftPosition 
+                    ? 'relative' 
+                    : 'absolute top-0 z-30 sm:relative sm:w-64'
+            } ${
                 isRTL(language) ? 'right-0' : 'left-0'
             } ${isCollapsed ? 'w-5 sm:w-[96px]' : 'w-64'}`}
         >
@@ -134,6 +154,7 @@ export const Sidebar: React.FC = () => {
                         path={item.path}
                         isActive={location.pathname === item.path}
                         isCollapsed={isCollapsed}
+                        disabled={disabled}
                     />
                 ))}
             </div>

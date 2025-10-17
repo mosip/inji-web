@@ -25,8 +25,8 @@ export const ErrorCard: React.FC<ErrorCardProps> = ({
 
     const ERROR_KEY_PREFIX = "ErrorCard";
 
-    const finalTitle = t(`${ERROR_KEY_PREFIX}.defaultTitle`);
-    const finalDescription = t(`${ERROR_KEY_PREFIX}.defaultDescription`);
+    const finalTitle = title || t(`${ERROR_KEY_PREFIX}.defaultTitle`);
+    const finalDescription = description || t(`${ERROR_KEY_PREFIX}.defaultDescription`);
     const closeButtonText = t(`${ERROR_KEY_PREFIX}.closeButton`);
 
     const styles = ErrorCardStyles.errorCard;

@@ -512,5 +512,31 @@
       "title": "A buscar informações do verificador...",
       "subtitle": "Por favor, aguarde enquanto verificamos o pedido e preparamos as suas credenciais."
     }
+  },
+  "CredentialRequestModal": {
+    "loading": {
+      "title": "A carregar credenciais",
+      "message": "Por favor, aguarde enquanto buscamos as suas credenciais disponíveis..."
+    },
+    "header": {
+      "title": "{{verifierName}} está a solicitar estas credenciais",
+      "description": "Selecione quais credenciais deseja partilhar"
+    },
+    "error": {
+      "title": "Erro ao carregar credenciais",
+      "walletIdMessage": "Por favor, certifique-se de que está ligado e que a sua carteira está desbloqueada."
+    },
+    "noCredentials": {
+      "message": "Nenhuma credencial disponível"
+    },
+    "buttons": {
+      "cancel": "Cancelar",
+      "consentShare": "Eu consinto e partilho"
+    }
+  },
+  "NoMatchingCredentialsModal": {
+    "title": "Nenhuma credencial correspondente encontrada",
+    "description": "Por favor, descarregue as credenciais correspondentes e tente novamente o processo de partilha",
+    "goToHomeButton": "Ir para o início"
   }
 }

@@ -118,7 +118,7 @@ describe('CredentialTypesPage', () => {
             apiConfig: api.fetchSpecificIssuer,
             url: expect.stringContaining("/issuers")
         }));
-        expect(screen.getByText("emptyContainerContent")).toBeInTheDocument();
+        expect(screen.getByTestId("EmptyList-Text")).toHaveTextContent("emptyContainerContent");
     });
 
     it.todo('should show error when fetching issuer configuration fails');
