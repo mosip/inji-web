@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { PresentationCredential } from '../../types/components';
@@ -24,16 +24,24 @@ export const CredentialList: React.FC<CredentialListProps> = ({
 }) => {
     const { t } = useTranslation(['CredentialRequestModal', 'CredentialTypesPage']);
     
-    // Get credentials from Redux if not passed as props
-    const reduxCredentials = useSelector((state: RootState) => state.credentials.credentials);
+    // Only fetch from Redux if credentials are not passed as props
+    const reduxCredentials = useSelector((state: RootState) => 
+        credentials ? null : state.credentials.credentials
+    );
     
-    // Transform Redux data to match PresentationCredential structure
-    const transformedReduxCredentials = reduxCredentials?.credentials_supported?.map((cred: { name?: string; display?: Array<{ name?: string; logo?: string }> }, index: number) => ({
-        credentialId: cred.name || `unknown-${Date.now()}-${index}`,
-        credentialTypeDisplayName: cred.display?.[0]?.name || cred.name || 'Unknown Credential',
-        credentialTypeLogo: cred.display?.[0]?.logo || '',
-        format: 'ldp_vc'
-    })) || [];
+    // Transform Redux data to match PresentationCredential structure (only when needed)
+    const transformedReduxCredentials = useMemo(() => {
+        if (credentials || !reduxCredentials?.credentials_supported) {
+            return [];
+        }
+        
+        return reduxCredentials.credentials_supported.map((cred: { name?: string; display?: Array<{ name?: string; logo?: string }> }, index: number) => ({
+            credentialId: cred.name || `unknown-${Date.now()}-${index}`,
+            credentialTypeDisplayName: cred.display?.[0]?.name || cred.name || 'Unknown Credential',
+            credentialTypeLogo: cred.display?.[0]?.logo || '',
+            format: 'ldp_vc'
+        }));
+    }, [credentials, reduxCredentials]);
     
     const actualCredentials = credentials ?? transformedReduxCredentials;
 
