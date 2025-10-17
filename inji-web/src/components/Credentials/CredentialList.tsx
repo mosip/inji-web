@@ -34,13 +34,17 @@ export const CredentialList: React.FC<CredentialListProps> = ({
         if (credentials || !reduxCredentials?.credentials_supported) {
             return [];
         }
-        
-        return reduxCredentials.credentials_supported.map((cred: { name?: string; display?: Array<{ name?: string; logo?: string }> }, index: number) => ({
-            credentialId: cred.name || `unknown-${Date.now()}-${index}`,
-            credentialTypeDisplayName: cred.display?.[0]?.name || cred.name || 'Unknown Credential',
-            credentialTypeLogo: cred.display?.[0]?.logo || '',
-            format: 'ldp_vc'
-        }));
+        return reduxCredentials.credentials_supported.map((cred: { name?: string; display?: Array<{ name?: string; logo?: string }> }, index: number) => {
+            if (!cred.name) {
+                console.error('Credential missing required name field', cred);
+            }
+            return {
+                credentialId: cred.name || `fallback-${index}`,
+                credentialTypeDisplayName: cred.display?.[0]?.name || cred.name || 'Unknown Credential',
+                credentialTypeLogo: cred.display?.[0]?.logo || '',
+                format: 'ldp_vc'
+            };
+        });
     }, [credentials, reduxCredentials]);
     
     const actualCredentials = credentials ?? transformedReduxCredentials;
