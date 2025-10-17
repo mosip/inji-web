@@ -53,9 +53,13 @@ describe('NoMatchingCredentialsModal', () => {
   };
 
   const mockFetchData = jest.fn();
+  let originalLocation: Location;
 
   beforeEach(() => {
     jest.clearAllMocks();
+
+    // Store original window.location
+    originalLocation = window.location;
 
     mockUseTranslation.mockReturnValue({
       t: (key: string) => {
@@ -77,6 +81,21 @@ describe('NoMatchingCredentialsModal', () => {
       ok: () => true,
     });
   });
+
+  afterEach(() => {
+    // Restore original window.location
+    Object.defineProperty(window, 'location', {
+      value: originalLocation,
+      writable: true,
+      configurable: true,
+    });
+  });
+
+  // Helper function to setup window.location mock
+  const setupWindowLocationMock = (initialHref: string = '') => {
+    delete (window as any).location;
+    window.location = { href: initialHref } as any;
+  };
 
   describe('Rendering', () => {
     it('renders nothing when not visible', () => {
@@ -141,9 +160,7 @@ describe('NoMatchingCredentialsModal', () => {
         presentationId: undefined,
       };
 
-      // Mock window.location.href
-      delete (window as any).location;
-      window.location = { href: '' } as any;
+      setupWindowLocationMock();
 
       render(<NoMatchingCredentialsModal {...propsWithoutPresentationId} />);
 
@@ -161,9 +178,7 @@ describe('NoMatchingCredentialsModal', () => {
         ok: () => true,
       });
 
-      // Mock window.location.href
-      delete (window as any).location;
-      window.location = { href: '' } as any;
+      setupWindowLocationMock();
 
       render(<NoMatchingCredentialsModal {...defaultProps} />);
 
@@ -187,7 +202,7 @@ describe('NoMatchingCredentialsModal', () => {
     it('calls onGoToHome when no redirectUri is provided', async () => {
       const propsWithoutRedirectUri = {
         ...defaultProps,
-        redirectUri: null,
+        redirectUri: undefined,
       };
 
       mockFetchData.mockResolvedValue({
@@ -219,9 +234,7 @@ describe('NoMatchingCredentialsModal', () => {
         ok: () => true,
       });
 
-      // Mock window.location.href
-      delete (window as any).location;
-      window.location = { href: '' } as any;
+      setupWindowLocationMock();
 
       render(<NoMatchingCredentialsModal {...defaultProps} />);
 
@@ -246,9 +259,7 @@ describe('NoMatchingCredentialsModal', () => {
       const error = new Error('API Error');
       mockFetchData.mockRejectedValue(error);
 
-      // Mock window.location.href
-      delete (window as any).location;
-      window.location = { href: '' } as any;
+      setupWindowLocationMock();
 
       render(<NoMatchingCredentialsModal {...defaultProps} />);
 
@@ -385,9 +396,7 @@ describe('NoMatchingCredentialsModal', () => {
         ok: () => true,
       });
 
-      // Mock window.location.href
-      delete (window as any).location;
-      window.location = { href: '' } as any;
+      setupWindowLocationMock();
 
       render(<NoMatchingCredentialsModal {...defaultProps} />);
 
@@ -399,10 +408,10 @@ describe('NoMatchingCredentialsModal', () => {
       fireEvent.click(goToHomeButton);
 
       await waitFor(() => {
-        expect(mockFetchData).toHaveBeenCalled();
+        expect(mockFetchData).toHaveBeenCalledTimes(1);
       });
 
-      // Should handle multiple clicks without errors
+      // Should handle multiple clicks without errors and only redirect once
       expect(window.location.href).toBe('https://example.com/redirect');
     });
 

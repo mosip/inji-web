@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ModalWrapper } from "./ModalWrapper";
 import ErrorMessageIcon from "../assets/error_message.svg";
 import { useTranslation } from "react-i18next";
@@ -25,6 +25,7 @@ export const NoMatchingCredentialsModal: React.FC<NoMatchingCredentialsModalProp
 }) => {
     const { t } = useTranslation("NoMatchingCredentialsModal");
     const { fetchData: rejectVerifier } = useApi<{ success: boolean }>();
+    const [isSubmitting, setIsSubmitting] = useState(false);
     
     if (!isVisible) return null;
 
@@ -33,39 +34,53 @@ export const NoMatchingCredentialsModal: React.FC<NoMatchingCredentialsModalProp
     const goToHomeButtonText = t("goToHomeButton");
 
     const handleGoToHome = async () => {
-        if (presentationId) {
-            const { error } = await withErrorHandling(
-                async () => {
-                    const rejectPayload = {
-                        errorCode: "access_denied",
-                        errorMessage: "User denied authorization to share credentials"
-                    };
-                    
-                    await rejectVerifier({
-                        url: api.userRejectVerifier.url(presentationId),
-                        apiConfig: api.userRejectVerifier,
-                        body: rejectPayload
-                    });
-                },
-                { 
-                    context: 'handleGoToHome',
-                    logError: true,
-                    showToUser: false
-                }
-            );
-            
-            // If rejection failed, don't redirect - stay on error screen
-            if (error) {
-                console.error('Failed to reject verifier:', error);
-                return;
-            }
+        // Guard against rapid clicks
+        if (isSubmitting) {
+            return;
         }
         
-        // Redirect to verifier's redirectUri if available, otherwise call onGoToHome
-        if (redirectUri) {
-            window.location.href = redirectUri;
-        } else if (onGoToHome) {
-            onGoToHome();
+        setIsSubmitting(true);
+        
+        try {
+            if (presentationId) {
+                const { error } = await withErrorHandling(
+                    async () => {
+                        const rejectPayload = {
+                            errorCode: "access_denied",
+                            errorMessage: "User denied authorization to share credentials"
+                        };
+                        
+                        await rejectVerifier({
+                            url: api.userRejectVerifier.url(presentationId),
+                            apiConfig: api.userRejectVerifier,
+                            body: rejectPayload
+                        });
+                    },
+                    { 
+                        context: 'handleGoToHome',
+                        logError: true,
+                        showToUser: false
+                    }
+                );
+                
+                // If rejection failed, don't redirect - stay on error screen
+                if (error) {
+                    console.error('Failed to reject verifier:', error);
+                    return;
+                }
+            }
+            
+            // Redirect to verifier's redirectUri if available, otherwise call onGoToHome
+            if (redirectUri) {
+                window.location.href = redirectUri;
+            } else if (onGoToHome) {
+                onGoToHome();
+            }
+        } finally {
+            // Reset submitting state only if we're not redirecting
+            if (!redirectUri) {
+                setIsSubmitting(false);
+            }
         }
     };
 
@@ -106,6 +121,7 @@ export const NoMatchingCredentialsModal: React.FC<NoMatchingCredentialsModalProp
                                 onClick={handleGoToHome}
                                 title={goToHomeButtonText}
                                 fullWidth
+                                disabled={isSubmitting}
                                 className={styles.closeButton}
                             />
                         </div>
