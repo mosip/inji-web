@@ -82,10 +82,10 @@ describe("TrustVerifierModal", () => {
       <TrustVerifierModal
         isOpen={true}
         verifierName="Test Verifier"
-        verifierDomain="test.com"
         onTrust={mockOnTrust}
         onNotTrust={mockOnNotTrust}
         onCancel={mockOnCancel}
+        testId={"trust-verifier-content"}
       />
     );
     
@@ -106,6 +106,7 @@ describe("TrustVerifierModal", () => {
         onTrust={mockOnTrust}
         onNotTrust={mockOnNotTrust}
         onCancel={mockOnCancel}
+        testId={"trust-verifier-content"}
       />
     );
     expect(container.firstChild).toBeNull();
@@ -118,6 +119,7 @@ describe("TrustVerifierModal", () => {
         onTrust={mockOnTrust}
         onNotTrust={mockOnNotTrust}
         onCancel={mockOnCancel}
+        testId={"trust-verifier-content"}
       />
     );
 
@@ -132,6 +134,7 @@ describe("TrustVerifierModal", () => {
         onTrust={mockOnTrust}
         onNotTrust={mockOnNotTrust}
         onCancel={mockOnCancel}
+        testId={"trust-verifier-content"}
       />
     );
 
@@ -146,6 +149,7 @@ describe("TrustVerifierModal", () => {
         onTrust={mockOnTrust}
         onNotTrust={mockOnNotTrust}
         onCancel={mockOnCancel}
+        testId={"trust-verifier-content"}
       />
     );
     fireEvent.click(screen.getByTestId("btn-cancel-trust-modal"));

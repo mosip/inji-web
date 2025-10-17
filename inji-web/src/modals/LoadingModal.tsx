@@ -9,12 +9,14 @@ interface LoaderModalProps {
     isOpen: boolean;
     title: string;
     subtitle: string;
+    testId: string;
 }
 
 export const LoaderModal: React.FC<LoaderModalProps> = ({
     isOpen,
     title,
     subtitle,
+    testId
 }) => {
     if (!isOpen) return null;
 
@@ -29,7 +31,7 @@ export const LoaderModal: React.FC<LoaderModalProps> = ({
             footer={<></>}
             content={
 
-                <div className={styles.wrapper}>
+                <div data-testid={testId} className={styles.wrapper}>
 
                     <div className={styles.spinnerContainer}>
                         <SpinningLoader></SpinningLoader>

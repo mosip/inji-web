@@ -13,20 +13,20 @@ interface TrustVerifierModalProps {
     isOpen: boolean;
     logo?: string | null;
     verifierName?: string;
-    verifierDomain?: string;
     onTrust: () => void;
     onNotTrust: () => void;
     onCancel: () => void;
+    testId: string;
 }
 
 export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
     isOpen,
     logo,
     verifierName,
-    verifierDomain,
     onTrust,
     onNotTrust,
     onCancel = () => { },
+    testId
 }) => {
     const { t } = useTranslation(["VerifierTrustPage", "Common"]); 
 
@@ -57,7 +57,7 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
             footer={<></>}
             content={
                 <div
-                    data-testid="trust-verifier-content"
+                    data-testid={testId}
                     className={styles.wrapper}
                 >
                     <div className={styles.logoContainer}>

@@ -20,12 +20,14 @@ interface TrustRejectionModalProps {
   isOpen: boolean;
   onConfirm?: () => void;
   onClose?: () => void;
+  testId: string;
 }
 
 export const TrustRejectionModal: React.FC<TrustRejectionModalProps> = ({
   isOpen,
   onConfirm,
   onClose = () => { },
+  testId
 }) => {
   const { t } = useTranslation("VerifierTrustPage");
   if (!isOpen) return null;
@@ -39,7 +41,7 @@ export const TrustRejectionModal: React.FC<TrustRejectionModalProps> = ({
       header={<></>}
       footer={<></>}
       content={
-        <div className={styles.wrapper}>
+        <div data-testid={testId} className={styles.wrapper}>
 
           <h2 data-testid="title-cancel-confirmation" className={styles.title}>
             {t(`TrustRejectionModal.title`)}

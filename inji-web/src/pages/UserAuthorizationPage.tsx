@@ -158,28 +158,27 @@ export const UserAuthorizationPage: React.FC = () => {
                 isOpen={isLoading}
                 title={t("loadingCard.title")}
                 subtitle={t("loadingCard.subtitle")}
-                data-testid="modal-loader"
+                testId="modal-loader"
             />
 
             <TrustVerifierModal
                 isOpen={showTrustVerifier}
                 logo={verifierData?.logo}
                 verifierName={verifierData?.name}
-                verifierDomain={verifierData?.id}
                 onTrust={addTrustedVerifier}
                 onNotTrust={rejectVerifierRequest}
                 onCancel={() => {
                     setShowTrustVerifier(false);
                     setIsCancelConfirmation(true);
                 }}
-                data-testid="modal-trust-verifier"
+                testId="modal-trust-verifier"
             />
 
             {error && (
                 <ErrorCard
                     isOpen={!!error}
                     onClose={() => { setError(null); navigate(ROUTES.ROOT); }}
-                    data-testid="modal-error-card"
+                    testId="modal-error-card"
                 />
             )}
 
@@ -193,7 +192,7 @@ export const UserAuthorizationPage: React.FC = () => {
                     setIsCancelConfirmation(false);
                     setShowTrustVerifier(true);
                 }}
-                data-testid="modal-trust-rejection-modal"
+                testId="modal-trust-rejection-modal"
             />
         </div>
     );

@@ -9,11 +9,13 @@ import { ErrorCardStyles } from "./ErrorCardStyles";
 interface ErrorCardProps {
     onClose: () => void; 
     isOpen: boolean;
+    testId: string;
 }
 
 export const ErrorCard: React.FC<ErrorCardProps> = ({
     onClose,
     isOpen,
+    testId
 }) => {
     const { t } = useTranslation("VerifierTrustPage");
     if (!isOpen) return null;
@@ -34,7 +36,7 @@ export const ErrorCard: React.FC<ErrorCardProps> = ({
             header={<></>}
             footer={<></>}
             content={
-                <div className={styles.wrapper}>
+                <div data-testid={testId} className={styles.wrapper}>
                     <div className={styles.iconContainer}>
                         <img
                             src={ErrorMessageIcon}
