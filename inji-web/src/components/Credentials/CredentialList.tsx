@@ -1,20 +1,13 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { PresentationCredential } from '../../types/components';
+import { PresentationCredential, CredentialListProps } from '../../types/components';
 import { CredentialRequestModalStyles } from '../../modals/CredentialRequestModalStyles';
 import { CredentialItem } from './CredentialItem';
 import { RequestStatus } from '../../utils/constants';
 import { EmptyListContainer } from '../Common/EmptyListContainer';
 import { SpinningLoader } from '../Common/SpinningLoader';
 import { RootState } from '../../types/redux';
-
-interface CredentialListProps {
-    credentials?: PresentationCredential[];
-    selectedCredentials?: string[];
-    onCredentialToggle?: (credentialId: string) => void;
-    state?: RequestStatus;
-}
 
 export const CredentialList: React.FC<CredentialListProps> = ({
     credentials,
@@ -24,9 +17,8 @@ export const CredentialList: React.FC<CredentialListProps> = ({
 }) => {
     const { t } = useTranslation(['CredentialRequestModal', 'CredentialTypesPage']);
     
-    // Only fetch from Redux if credentials are not passed as props
     const reduxCredentials = useSelector((state: RootState) => 
-        credentials ? null : state.credentials.credentials
+        state.credentials.credentials
     );
     
     // Transform Redux data to match PresentationCredential structure (only when needed)

@@ -58,7 +58,10 @@ export type IssuersListProps = {
     state: RequestStatus;
 }
 export type CredentialListProps = {
-    state: RequestStatus;
+    credentials?: PresentationCredential[];
+    selectedCredentials?: string[];
+    onCredentialToggle?: (credentialId: string) => void;
+    state?: RequestStatus;
 }
 export type CTContentProps = {
     expiryTime: number;
