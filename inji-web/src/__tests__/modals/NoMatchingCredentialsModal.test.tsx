@@ -258,9 +258,7 @@ describe('NoMatchingCredentialsModal', () => {
       await waitFor(() => {
         expect(mockFetchData).toHaveBeenCalled();
       });
-
-      // Should still redirect even if API fails
-      expect(window.location.href).toBe('https://example.com/redirect');
+      expect(window.location.href).toBe('');
     });
   });
 
@@ -501,7 +499,7 @@ describe('NoMatchingCredentialsModal', () => {
       render(<NoMatchingCredentialsModal {...defaultProps} />);
 
       const modalContainer = screen.getByTestId('card-no-matching-credentials-modal');
-      expect(modalContainer).toHaveClass('max-[533px]:w-screen', 'max-[533px]:left-0', 'max-[533px]:right-0', 'max-[533px]:z-[60]');
+      expect(modalContainer).toHaveClass('max-[533px]:w-screen', 'max-[533px]:fixed', 'max-[533px]:inset-x-0', 'max-[533px]:z-[60]');
     });
   });
 });

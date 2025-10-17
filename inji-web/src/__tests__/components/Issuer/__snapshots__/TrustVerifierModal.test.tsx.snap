@@ -3,7 +3,9 @@
 exports[`TrustVerifierModal renders modal content when open 1`] = `
 <div>
   <div
+    data-size="md"
     data-testid="ModalWrapper-Mock"
+    data-z-index="50"
   >
     <div
       class="wrapper"
@@ -16,7 +18,7 @@ exports[`TrustVerifierModal renders modal content when open 1`] = `
           alt="Test Verifier logo"
           class="logoImage"
           data-testid="img-default-logo"
-          src="logo.svg"
+          src="mocked-logo.svg"
         />
       </div>
       <h1
@@ -81,16 +83,20 @@ exports[`TrustVerifierModal renders modal content when open 1`] = `
         class="buttonsContainer"
       >
         <button
+          class="trustButton"
+          data-full-width="true"
           data-testid="btn-trust-verifier"
         >
           modal.trustButton
         </button>
         <button
+          class="noTrustButton"
           data-testid="btn-not-trust-verifier"
         >
           modal.notTrustButton
         </button>
         <button
+          class="cancelButton"
           data-testid="btn-cancel-trust-modal"
         >
           Common:cancel
