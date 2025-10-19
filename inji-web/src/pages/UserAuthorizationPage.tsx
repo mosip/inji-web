@@ -10,6 +10,8 @@ import { useApi } from "../hooks/useApi";
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from "../utils/constants";
 import { Sidebar } from "../components/User/Sidebar";
+import {PresentationCredential} from "../types/components";
+import {CredentialShareHandler} from "../handlers/CredentialShareHandler";
 
 const AUTHORIZATION_REQUEST_URL_PARAM = 'authorizationRequestUrl=';
 
@@ -22,6 +24,7 @@ export const UserAuthorizationPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [verifierData, setVerifierData] = useState<any>(null);
     const [presentationIdData, setPresentationIdData] = useState<string | null>(null);
+    const [selectedCredentialsData, setSelectedCredentialsData] = useState<PresentationCredential[] | null>(null);
 
     const apiService = useApi();
     const navigate = useNavigate();
@@ -43,7 +46,7 @@ export const UserAuthorizationPage: React.FC = () => {
             const queryString = window.location.search.substring(1);
             const authUrlIndex = queryString.indexOf(AUTHORIZATION_REQUEST_URL_PARAM);
             let cleanParams = '';
-            
+
             if (authUrlIndex !== -1) {
                 try {
                     cleanParams = queryString.substring(authUrlIndex + AUTHORIZATION_REQUEST_URL_PARAM.length);
@@ -107,7 +110,10 @@ export const UserAuthorizationPage: React.FC = () => {
 
     const handleNoTrustButton = () => {
         setShowTrustVerifier(false);
+        // right now we are setting it to true for testing but it should be false
+        //setShowCredentialRequest(false);
         setShowCredentialRequest(true);
+        //navigate(verifierData?.redirectUri || ROUTES.ROOT);
     };
 
     const handleCredentialRequestCancel = () => {
@@ -115,18 +121,18 @@ export const UserAuthorizationPage: React.FC = () => {
         navigate(ROUTES.ROOT);
     };
 
-    const handleCredentialRequestConsent = (selectedCredentials: string[]) => {
+    const handleCredentialRequestConsent = (selectedCredentials: PresentationCredential[]) => {
         // TODO: Implement consent button logic for next story
         // This should include:
         // 1. Handle the selected credentials from CredentialRequestModal
         // 2. Process the consent and share logic
         // 3. Handle success/error states
         // 4. Navigate appropriately after processing
-        
-        setShowCredentialRequest(false);
-        navigate(ROUTES.ROOT);
-    };
 
+        setSelectedCredentialsData(selectedCredentials);
+        setShowCredentialRequest(false);
+        // navigate(ROUTES.ROOT);
+    };
 
 
     useEffect(() => {
@@ -173,6 +179,16 @@ export const UserAuthorizationPage: React.FC = () => {
                         verifier={{ redirectUri: verifierData?.redirectUri || null }}
                         onCancel={handleCredentialRequestCancel}
                         onConsentAndShare={handleCredentialRequestConsent}
+                    />
+                )}
+
+                {selectedCredentialsData && verifierData && presentationIdData && (
+                    <CredentialShareHandler
+                        verifierName={verifierData.name}
+                        returnUrl={verifierData.redirectUri || ROUTES.ROOT}
+                        selectedCredentials={selectedCredentialsData}
+                        presentationId={presentationIdData}
+                        onClose={() => setSelectedCredentialsData(null)}
                     />
                 )}
 

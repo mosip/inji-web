@@ -300,4 +300,17 @@ export class api {
         },
         credentials: "include"
     };
+
+    static submitPresentation: ApiRequest = {
+        url: (presentationId: string) => {
+            const walletId = AppStorage.getItem(KEYS.WALLET_ID);
+            return `${api.mimotoHost}/wallets/${walletId}/presentations/${presentationId}`;
+        },
+        methodType: MethodType.PATCH,
+        headers: () => ({
+            "Content-Type": ContentTypes.JSON,
+            "Accept": ContentTypes.JSON,
+        }),
+        credentials: "include"
+    };
 }

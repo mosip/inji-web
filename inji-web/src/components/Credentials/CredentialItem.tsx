@@ -41,7 +41,10 @@ const CredentialItemComponent: React.FC<CredentialItemProps> = ({
                 }`}
                 style={{
                     background: isSelected ? '#FFFFFF' : undefined,
-                    borderRadius: '8px'
+                    borderRadius: '8px',
+                    transform: isSelected ? 'translate(0.2px, 0.2px)' : 'none',
+                    height: isSelected ? 'calc(100% - 0.5px)' : '100%',
+                    width: isSelected ? 'calc(100% - 0.5px)' : '100%',
                 }}
             >
                 <div className={CredentialRequestModalStyles.content.credentialContent}>
