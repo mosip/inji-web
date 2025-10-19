@@ -4,8 +4,8 @@ import { ModalStyles } from "./ModalStyles";
 import { CredentialShareSuccessModalProps } from "../types/components";
 import { RedirectionButton } from "../components/Common/Buttons/RedirectionButton";
 import { SharedCredentialListWrapper } from "../components/Credentials/SharedCredentialListWrapper";
-import SuccessMessageIcon from "../assets/SuccessMessageIcon.svg";
 import { useTranslation } from "react-i18next";
+import {SuccessIcon} from "../components/Common/Icons/SuccessIcon";
 
 export const CredentialShareSuccessModal: React.FC<CredentialShareSuccessModalProps> = (props) => {
     const { t } = useTranslation("CredentialShareSuccessModal");
@@ -49,11 +49,7 @@ export const CredentialShareSuccessModal: React.FC<CredentialShareSuccessModalPr
                     id="icon-success"
                     className={`${ModalStyles.credentialShareSuccessModal.iconWrapper} flex flex-col items-center gap-4`}
                 >
-                    <img
-                        src={SuccessMessageIcon}
-                        alt="Success"
-                        className="w-24 h-24 sm:w-[108px] sm:h-[108px]"
-                    />
+                    <SuccessIcon />
 
                     <h2
                         id="title-shared-with"
