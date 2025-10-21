@@ -1,11 +1,11 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useApi } from "../hooks/useApi";
 import { api } from "../utils/api";
 import { LoadingModalLandscape } from "../modals/LoadingModalLandscape";
 import { ErrorCard } from "../modals/ErrorCard";
 import { CredentialShareSuccessModal } from "../modals/CredentialShareSuccessModal";
 import { PresentationCredential, CredentialShareSuccessModalProps } from "../types/components";
-import { withErrorHandling } from "../utils/errorHandling";
+import { useApiErrorHandler } from "../hooks/useApiErrorHandler";
 
 interface CredentialShareHandlerProps {
     verifierName: string;
@@ -24,9 +24,15 @@ export const CredentialShareHandler: React.FC<CredentialShareHandlerProps> = ({
                                                                               }) => {
     const { fetchData } = useApi();
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const hasSubmittedRef = useRef<boolean>(false);
+
+    const {
+        showErrorCard,
+        errorCardMessage,
+        handleApiError,
+        handleCloseErrorCard
+    } = useApiErrorHandler(onClose);
 
     useEffect(() => {
         if (hasSubmittedRef.current) return;
@@ -35,35 +41,28 @@ export const CredentialShareHandler: React.FC<CredentialShareHandlerProps> = ({
         const submitPresentation = async () => {
             hasSubmittedRef.current = true;
             setIsLoading(true);
-            setError(null);
 
             try {
-                await withErrorHandling(
-                    async () => {
-                        const response = await fetchData({
-                            apiConfig: api.submitPresentation,
-                            url: api.submitPresentation.url(presentationId),
-                            body: {
-                                selectedCredentials: selectedCredentials.map(c => c.credentialId)
-                            }
-                        });
-
-                        if (!response.ok()) {
-                            const msg = response.error?.message || "Failed to submit presentation";
-                            throw new Error(msg);
-                        }
-
-                        setIsSuccess(true);
-                    },
-                    {
-                        context: "submitPresentation",
-                        logError: true,
-                        showToUser: false
+                const response = await fetchData({
+                    apiConfig: api.submitPresentation,
+                    url: api.submitPresentation.url(presentationId),
+                    body: {
+                        selectedCredentials: selectedCredentials.map(c => c.credentialId)
                     }
-                );
+                });
+
+                if (response.ok()) {
+                    setIsSuccess(true);
+                } else {
+                    const errorMessage = response.error?.message || 'Failed to submit presentation';
+                    const error = response.error || new Error(errorMessage);
+                    handleApiError(error, 'submitPresentation');
+                    setIsSuccess(false);
+                }
             } catch (err) {
-                const msg = err instanceof Error ? err.message : "Unexpected error occurred";
-                setError(msg);
+                const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
+                const error = err instanceof Error ? err : new Error(errorMessage);
+                handleApiError(error, 'submitPresentation');
                 setIsSuccess(false);
             } finally {
                 setIsLoading(false);
@@ -71,30 +70,26 @@ export const CredentialShareHandler: React.FC<CredentialShareHandlerProps> = ({
         };
 
         void submitPresentation();
-    }, [fetchData, presentationId, selectedCredentials]);
+    }, [fetchData, presentationId, selectedCredentials, handleApiError]);
 
     const handleSuccessClose = () => {
         if (onClose) onClose();
         if (returnUrl) window.location.href = returnUrl;
     };
 
-    if (isLoading) {
-        return <LoadingModalLandscape isOpen={true} />;
-    }
-
-    if (error) {
+    if (showErrorCard) {
         return (
             <ErrorCard
                 isOpen={true}
                 title="Error"
-                description={error}
-                onClose={() => {
-                    setError(null);
-                    if (onClose) onClose();
-                    if (returnUrl) window.location.href = returnUrl;
-                }}
+                description={errorCardMessage}
+                onClose={handleCloseErrorCard}
             />
         );
+    }
+
+    if (isLoading) {
+        return <LoadingModalLandscape isOpen={true} />;
     }
 
     if (isSuccess) {

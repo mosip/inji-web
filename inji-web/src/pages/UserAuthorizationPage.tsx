@@ -188,7 +188,7 @@ export const UserAuthorizationPage: React.FC = () => {
                         returnUrl={verifierData.redirectUri || ROUTES.ROOT}
                         selectedCredentials={selectedCredentialsData}
                         presentationId={presentationIdData}
-                        onClose={() => setSelectedCredentialsData(null)}
+                        onClose={() => { setSelectedCredentialsData(null); navigate(ROUTES.ROOT); }}
                     />
                 )}
 

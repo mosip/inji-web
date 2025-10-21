@@ -1,13 +1,15 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { CredentialShareHandler } from "../../handlers/CredentialShareHandler";
+import { useApiErrorHandler } from "../../hooks/useApiErrorHandler";
 
-// Mock the useApi hook correctly
 const mockFetchData = jest.fn();
 jest.mock("../../hooks/useApi", () => ({
     useApi: () => ({ fetchData: mockFetchData }),
 }));
 
+jest.mock("../../hooks/useApiErrorHandler");
+const mockUseApiErrorHandler = useApiErrorHandler as jest.Mock;
 
 jest.mock("../../modals/LoadingModalLandscape", () => ({
     LoadingModalLandscape: () => <div data-testid="loading-modal" />,
@@ -38,6 +40,12 @@ describe("CredentialShareHandler", () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
+        mockUseApiErrorHandler.mockReturnValue({
+            showErrorCard: false,
+            errorCardMessage: "",
+            handleApiError: jest.fn(),
+            handleCloseErrorCard: jest.fn(),
+        });
     });
 
     it("shows loading modal initially", () => {
@@ -49,6 +57,54 @@ describe("CredentialShareHandler", () => {
     it("shows success modal when API call succeeds", async () => {
         mockFetchData.mockResolvedValueOnce({ ok: () => true });
         render(<CredentialShareHandler {...defaultProps} />);
-        await waitFor(() => expect(screen.getByTestId("success-modal")).toBeInTheDocument());
+        await waitFor(() =>
+            expect(screen.getByTestId("success-modal")).toBeInTheDocument()
+        );
+    });
+
+    it("shows error card when API call fails (response error)", async () => {
+        const mockHandleApiError = jest.fn();
+        const mockHandleCloseErrorCard = jest.fn();
+
+        const errorResponse = {
+            ok: () => false,
+            error: { message: "Failed to submit presentation" },
+        };
+        mockFetchData.mockResolvedValueOnce(errorResponse);
+
+        mockUseApiErrorHandler.mockImplementationOnce(() => ({
+            showErrorCard: true,
+            errorCardMessage: "Failed to submit presentation",
+            handleApiError: mockHandleApiError,
+            handleCloseErrorCard: mockHandleCloseErrorCard,
+        }));
+
+        render(<CredentialShareHandler {...defaultProps} />);
+
+        await waitFor(() =>
+            expect(screen.getByTestId("error-card")).toHaveTextContent(
+                "Failed to submit presentation"
+            )
+        );
+    });
+
+    it("shows error card when fetch throws (network/unexpected error)", async () => {
+        const mockHandleApiError = jest.fn();
+        const mockHandleCloseErrorCard = jest.fn();
+
+        mockFetchData.mockRejectedValueOnce(new Error("Network error"));
+
+        mockUseApiErrorHandler.mockImplementationOnce(() => ({
+            showErrorCard: true,
+            errorCardMessage: "Network error",
+            handleApiError: mockHandleApiError,
+            handleCloseErrorCard: mockHandleCloseErrorCard,
+        }));
+
+        render(<CredentialShareHandler {...defaultProps} />);
+
+        await waitFor(() =>
+            expect(screen.getByTestId("error-card")).toHaveTextContent("Network error")
+        );
     });
 });
