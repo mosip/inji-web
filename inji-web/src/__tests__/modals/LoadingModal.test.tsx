@@ -23,11 +23,12 @@ jest.mock("../../components/Common/SpinningLoader", () => ({
 }));
 
 describe("LoaderModal", () => {
-    const defaultProps = {
-        isOpen: true,
-        title: "Loading...",
-        subtitle: "Please wait while we process your request",
-    };
+  const defaultProps = {
+    isOpen: true,
+    title: "Loading...",
+    subtitle: "Please wait while we process your request",
+      testId: "testId",
+  };
 
     beforeEach(() => {
         (useTranslation as jest.Mock).mockReturnValue({

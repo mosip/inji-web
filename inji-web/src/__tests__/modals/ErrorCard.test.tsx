@@ -38,7 +38,8 @@ const defaultProps = {
     title: 'Test Error',
     description: 'This is a test error message',
     isOpen: true,
-    onClose: jest.fn()
+    onClose: jest.fn(),
+    testId: 'testId',
 };
 
 describe('ErrorCard', () => {

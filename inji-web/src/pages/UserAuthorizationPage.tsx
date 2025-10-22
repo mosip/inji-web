@@ -122,18 +122,9 @@ export const UserAuthorizationPage: React.FC = () => {
     };
 
     const handleCredentialRequestConsent = (selectedCredentials: PresentationCredential[]) => {
-        // TODO: Implement consent button logic for next story
-        // This should include:
-        // 1. Handle the selected credentials from CredentialRequestModal
-        // 2. Process the consent and share logic
-        // 3. Handle success/error states
-        // 4. Navigate appropriately after processing
-
         setSelectedCredentialsData(selectedCredentials);
         setShowCredentialRequest(false);
-        // navigate(ROUTES.ROOT);
     };
-
 
     useEffect(() => {
         void validateVerifierRequest();
@@ -146,7 +137,7 @@ export const UserAuthorizationPage: React.FC = () => {
             <div className="flex-shrink-0">
                 <Sidebar disabled={true} forceLeftPosition={true} />
             </div>
-            
+
             {/* Main Content */}
             <div className="flex-1 flex flex-col items-center justify-center relative">
                 <LoaderModal
@@ -154,21 +145,20 @@ export const UserAuthorizationPage: React.FC = () => {
                     title={t("loadingCard.title")}
                     subtitle={t("loadingCard.subtitle")}
                     size="xl-loading"
-                    data-testid="loader-modal"
+                    testId="modal-loader"
                 />
 
                 <TrustVerifierModal
                     isOpen={showTrustVerifier}
                     logo={verifierData?.logo}
                     verifierName={verifierData?.name}
-                    verifierDomain={verifierData?.id}
                     onTrust={handleTrustButton}
                     onNotTrust={handleNoTrustButton}
                     onCancel={() => {
                         setShowTrustVerifier(false);
                         setIsCancelConfirmation(true);
                     }}
-                    data-testid="modal-trust-verifier"
+                    testId="modal-trust-verifier"
                 />
 
                 {showCredentialRequest && presentationIdData && (
@@ -195,9 +185,8 @@ export const UserAuthorizationPage: React.FC = () => {
                 {error && (
                     <ErrorCard
                         isOpen={!!error}
-                        title={t("ErrorCard.defaultTitle")}
-                        description={t("ErrorCard.defaultDescription")}
                         onClose={() => { setError(null); navigate(ROUTES.ROOT); }}
+                        testId="modal-error-card"
                     />
                 )}
 
@@ -211,6 +200,7 @@ export const UserAuthorizationPage: React.FC = () => {
                         setIsCancelConfirmation(false);
                         setShowTrustVerifier(true);
                     }}
+                    testId="modal-trust-rejection-modal"
                 />
             </div>
         </div>

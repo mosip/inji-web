@@ -41,6 +41,7 @@ describe('TrustRejectionModal', () => {
         isOpen: true,
         onConfirm: mockOnConfirm,
         onClose: mockOnClose,
+        testId: 'testId',
     };
 
     beforeEach(() => {
