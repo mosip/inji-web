@@ -156,7 +156,6 @@ describe("TrustVerifierModal", () => {
         onTrust={mockOnTrust}
         onNotTrust={mockOnNotTrust}
         onCancel={mockOnCancel}
-        testId={testId}
       />
     );
 
