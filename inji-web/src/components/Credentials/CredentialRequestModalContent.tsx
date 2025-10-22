@@ -1,7 +1,7 @@
 import React from 'react';
 import { PresentationCredential } from '../../types/components';
 import { CredentialRequestModalStyles } from '../../modals/CredentialRequestModalStyles';
-import { CredentialItemsList } from './CredentialItemsList';
+import {PresentationCredentialList} from "./PresentationCredentialList";
 
 interface CredentialRequestModalContentProps {
     credentials: PresentationCredential[];
@@ -16,7 +16,7 @@ export const CredentialRequestModalContent: React.FC<CredentialRequestModalConte
 }) => {
     return (
         <div className={CredentialRequestModalStyles.content.container}>
-            <CredentialItemsList
+            <PresentationCredentialList
                 credentials={credentials}
                 selectedCredentials={selectedCredentials}
                 onCredentialToggle={onCredentialToggle}

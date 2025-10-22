@@ -7,11 +7,12 @@ export const CredentialRequestModalStyles = {
         description: "font-montserrat font-normal text-sm leading-5 !text-[var(--iw-color-subTitle)]"
     },
     content: {
-        container: "overflow-y-auto py-3 px-6 flex-1",
+
+        container: "overflow-y-auto py-3 px-6 flex-1 !max-h-[200px]",
         loadingContainer: "flex items-center justify-center py-6",
-        credentialsList: "space-y-2",
-        credentialItemWrapper: "w-full transition-colors",
-        credentialItem: "w-full rounded-lg flex items-center justify-between transition-colors !bg-[var(--iw-color-tileBackground)] !border-[var(--iw-color-borderLight)] hover:!bg-[var(--iw-color-faqAccordionHover)] p-3 shadow-md",
+        credentialsList: "space-y-4",
+        credentialItemWrapper: "w-full !h-[78px] transition-colors",
+        credentialItem: "w-full !h-[78px] rounded-lg flex items-center justify-between transition-colors !bg-[var(--iw-color-tileBackground)] !border-[var(--iw-color-borderLight)] hover:!bg-[var(--iw-color-faqAccordionHover)] p-3 shadow-md",
         credentialItemSelected: "w-full rounded-lg flex items-center justify-between transition-colors opacity-90 p-3",
         credentialContent: "flex items-center space-x-3 min-w-0 flex-1",
         credentialImage: "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden",
