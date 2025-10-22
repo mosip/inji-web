@@ -204,6 +204,7 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
             <ErrorCard
                 isOpen={true}
                 onClose={handleCloseErrorCard}
+                testId="modal-error-card"
             />
         );
     }
