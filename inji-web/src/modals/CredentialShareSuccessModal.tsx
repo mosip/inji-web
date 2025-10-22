@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal } from "./Modal";
+import { ModalWrapper } from "./ModalWrapper";
 import { ModalStyles } from "./ModalStyles";
 import { CredentialShareSuccessModalProps } from "../types/components";
 import { RedirectionButton } from "../components/Common/Buttons/RedirectionButton";
@@ -17,14 +17,10 @@ export const CredentialShareSuccessModal: React.FC<CredentialShareSuccessModalPr
 
         setCount(props.countdownStart ?? 5);
         const timer = setInterval(() => {
-            setCount(prev => {
-                if (prev > 1) {
-                    return prev - 1;
-                }
+            setCount((prev) => {
+                if (prev > 1) return prev - 1;
                 clearInterval(timer);
-                if (props.returnUrl) {
-                    window.location.href = props.returnUrl;
-                }
+                if (props.returnUrl) window.location.href = props.returnUrl;
                 return 0;
             });
         }, 1000);
@@ -35,54 +31,47 @@ export const CredentialShareSuccessModal: React.FC<CredentialShareSuccessModalPr
     if (!props.isOpen) return null;
 
     return (
-        <Modal
-            isOpen={props.isOpen}
-            onClose={props.onClose ?? (() => {})}
+        <ModalWrapper
+            zIndex={50}
             size="sm"
-            testId="card-share-success"
-        >
-            <div
-                id="card-share-success"
-                className={ModalStyles.credentialShareSuccessModal.container}
-            >
+            header={<></>}
+            footer={<></>}
+            content={
                 <div
-                    id="icon-success"
-                    className={`${ModalStyles.credentialShareSuccessModal.iconWrapper} flex flex-col items-center gap-4`}
+                    id="card-share-success"
+                    className={`${ModalStyles.credentialShareSuccessModal.container} overflow-y-auto max-h-[90vh]`}
                 >
-                    <SuccessIcon />
-
-                    <h2
-                        id="title-shared-with"
-                        className={ModalStyles.credentialShareSuccessModal.title}
+                    <div
+                        id="icon-success"
+                        className={`${ModalStyles.credentialShareSuccessModal.iconWrapper} flex flex-col items-center gap-4 mt-6`}
                     >
-                        {t("sharedWith", { verifierName: props.verifierName })}
-                    </h2>
+                        <SuccessIcon />
 
-                    <p
-                        id="text-credentials-presented"
-                        className={ModalStyles.credentialShareSuccessModal.message}
-                    >
-                        {t("credentialsPresented", { verifierName: props.verifierName })}
-                    </p>
+                        <h2 className={ModalStyles.credentialShareSuccessModal.title}>
+                            {t("sharedWith", { verifierName: props.verifierName })}
+                        </h2>
+
+                        <p className={ModalStyles.credentialShareSuccessModal.message}>
+                            {t("credentialsPresented", { verifierName: props.verifierName })}
+                        </p>
+                    </div>
+
+                    <div className="flex justify-center w-full">
+                        <SharedCredentialListWrapper credentials={props.credentials} />
+                    </div>
+
+                    <div className="flex flex-col items-center gap-2 mt-4 sm:mt-6 w-full">
+                        <RedirectionButton
+                            testId="btn-return-to-verifier"
+                            onClick={() => {
+                                if (props.returnUrl) window.location.href = props.returnUrl;
+                            }}
+                        >
+                            <span id="text-return-timer">{t("redirectMessage", { count })}</span>
+                        </RedirectionButton>
+                    </div>
                 </div>
-
-                <SharedCredentialListWrapper credentials={props.credentials} />
-
-                <div className="flex flex-col items-center gap-2 mt-4 sm:mt-6 w-full">
-                    <RedirectionButton
-                        testId="btn-return-to-verifier"
-                        onClick={() => {
-                            if (props.returnUrl) {
-                                window.location.href = props.returnUrl;
-                            }
-                        }}
-                    >
-                        <span id="text-return-timer">
-                            {t("redirectMessage", { count })}
-                        </span>
-                    </RedirectionButton>
-                </div>
-            </div>
-        </Modal>
+            }
+        />
     );
 };

@@ -28,9 +28,9 @@ export const ModalStyles = {
         message: `font-montserrat font-medium text-center text-[--iw-color-header] w-full sm:w-auto mt-2 break-words px-2`
     },
     credentialShareSuccessModal: {
-        container: `-mt-6 flex flex-col items-stretch justify-center gap-4 bg-white max-w-[450px] w-auto h-auto sm:h-[660px] rounded-lg shadow-lg p-4 sm:p-6 mx-auto`,
+        container: `-mt-6 flex flex-col items-center justify-center gap-4 bg-white max-w-[600px] w-auto h-auto sm:h-[690px] rounded-lg shadow-lg mx-auto text-center p-6`,
         title: "text-xl justify-center font-montserrat text-center text-[--iw-color-title] font-bold",
-        iconWrapper: "flex items-center justify-center mb-4",
+        iconWrapper: "flex items-center justify-center",
         message: "text-[--iw-color-subTitle] font-montserrat font-light text-md text-center mt-2 break-words w-full sm:w-auto px-2",
     }
 }

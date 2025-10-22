@@ -71,52 +71,31 @@ describe("CredentialShareSuccessModal", () => {
         expect(asFragment()).toMatchSnapshot();
     });
 
-    it("renders all elements with correct IDs and texts", () => {
-        act(() => {
-            render(
-                <CredentialShareSuccessModal
-                    isOpen={true}
-                    verifierName={verifierName}
-                    credentials={credentials}
-                    returnUrl="/"
-                />
-            );
-        });
-
-        const modal = document.getElementById("card-share-success");
-        expect(modal).toBeInTheDocument();
-
-        const icon = document.getElementById("icon-success");
-        expect(icon).toBeInTheDocument();
-
-        const title = document.getElementById("title-shared-with");
-        expect(title).toBeInTheDocument();
-        expect(title).toHaveTextContent(`Shared with ${verifierName}`);
-
-        const description = document.getElementById("text-credentials-presented");
-        expect(description).toBeInTheDocument();
-        expect(description).toHaveTextContent(
-            `Your credentials were successfully presented to ${verifierName}`
+    it("renders all elements correctly", () => {
+        const { getByText, getByRole } = render(
+            <CredentialShareSuccessModal
+                isOpen={true}
+                verifierName={verifierName}
+                credentials={credentials}
+                returnUrl="/"
+            />
         );
 
-        credentials.forEach((cred, idx) => {
-            const item = document.getElementById(`item-${cred.credentialTypeDisplayName}-${idx}`);
-            expect(item).toBeInTheDocument();
+        // Title & message
+        expect(getByText(`Shared with ${verifierName}`)).toBeInTheDocument();
+        expect(getByText(`Your credentials were successfully presented to ${verifierName}`)).toBeInTheDocument();
 
-            const img = item?.querySelector("img");
+        // Credentials list
+        credentials.forEach((cred) => {
+            expect(getByText(cred.credentialTypeDisplayName)).toBeInTheDocument();
+            const img = document.querySelector(`img[alt='${cred.credentialTypeDisplayName}']`) as HTMLImageElement;
             expect(img).toHaveAttribute("src", cred.credentialTypeLogo);
-            expect(img).toHaveAttribute("alt", cred.credentialTypeDisplayName);
-
-            const span = item?.querySelector("span");
-            expect(span).toHaveTextContent(cred.credentialTypeDisplayName);
         });
 
-        const button = document.getElementById("btn-return-to-verifier");
+        // Button and countdown
+        const button = getByRole("button");
         expect(button).toBeInTheDocument();
-
-        const countdown = document.getElementById("text-return-timer");
-        expect(countdown).toBeInTheDocument();
-        expect(countdown).toHaveTextContent("Redirecting to verifier in 5 seconds...");
+        expect(getByText("Redirecting to verifier in 5 seconds...")).toBeInTheDocument();
     });
 
     it("counts down correctly and redirects when timer reaches 0", () => {
@@ -125,28 +104,24 @@ describe("CredentialShareSuccessModal", () => {
         // @ts-ignore
         window.location = { href: "" };
 
-        act(() => {
-            render(
-                <CredentialShareSuccessModal
-                    isOpen={true}
-                    verifierName={verifierName}
-                    credentials={credentials}
-                    returnUrl="/redirected"
-                />
-            );
-        });
+        render(
+            <CredentialShareSuccessModal
+                isOpen={true}
+                verifierName={verifierName}
+                credentials={credentials}
+                returnUrl="/redirected"
+            />
+        );
 
         act(() => {
             jest.advanceTimersByTime(1000);
         });
-        let countdown = document.getElementById("text-return-timer");
-        expect(countdown).toHaveTextContent("Redirecting to verifier in 4 seconds...");
+        expect(document.body.textContent).toContain("Redirecting to verifier in 4 seconds...");
 
         act(() => {
             jest.advanceTimersByTime(4000);
         });
-        countdown = document.getElementById("text-return-timer");
-        expect(countdown).toHaveTextContent("Redirecting to verifier in 0 seconds...");
+        expect(document.body.textContent).toContain("Redirecting to verifier in 0 seconds...");
         expect(window.location.href).toBe("/redirected");
     });
 
@@ -156,18 +131,16 @@ describe("CredentialShareSuccessModal", () => {
         // @ts-ignore
         window.location = { href: "" };
 
-        act(() => {
-            render(
-                <CredentialShareSuccessModal
-                    isOpen={true}
-                    verifierName={verifierName}
-                    credentials={credentials}
-                    returnUrl="/clicked"
-                />
-            );
-        });
+        const { getByRole } = render(
+            <CredentialShareSuccessModal
+                isOpen={true}
+                verifierName={verifierName}
+                credentials={credentials}
+                returnUrl="/clicked"
+            />
+        );
 
-        const button = document.getElementById("btn-return-to-verifier") as HTMLElement;
+        const button = getByRole("button");
         act(() => {
             fireEvent.click(button);
         });
@@ -176,17 +149,16 @@ describe("CredentialShareSuccessModal", () => {
     });
 
     it("does not render when isOpen is false", () => {
-        act(() => {
-            render(
-                <CredentialShareSuccessModal
-                    isOpen={false}
-                    verifierName={verifierName}
-                    credentials={credentials}
-                    returnUrl="/"
-                />
-            );
-        });
+        render(
+            <CredentialShareSuccessModal
+                isOpen={false}
+                verifierName={verifierName}
+                credentials={credentials}
+                returnUrl="/"
+            />
+        );
 
-        expect(document.getElementById("card-share-success")).toBeNull();
+        expect(document.body.textContent).not.toContain("Shared with");
+        expect(document.body.textContent).not.toContain("Your credentials were successfully presented");
     });
 });
