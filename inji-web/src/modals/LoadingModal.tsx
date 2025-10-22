@@ -10,7 +10,7 @@ interface LoaderModalProps {
     title: string;
     subtitle: string;
     testId: string;
-    size?: "sm" | "md" | "lg" | "xl" | "xl-loading" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl";
+    size?: "sm" | "md" | "lg" | "xl" | "xl-loading" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl"
 }
 
 export const LoaderModal: React.FC<LoaderModalProps> = ({
@@ -18,7 +18,7 @@ export const LoaderModal: React.FC<LoaderModalProps> = ({
     title,
     subtitle,
     testId,
-    size = "4xl",
+    size = "4xl"
 }) => {
     if (!isOpen) return null;
 

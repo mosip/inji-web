@@ -41,6 +41,7 @@ describe('TrustRejectionModal', () => {
         isOpen: true,
         onConfirm: mockOnConfirm,
         onClose: mockOnClose,
+        testId: "testId"
     };
 
     beforeEach(() => {
@@ -78,7 +79,7 @@ describe('TrustRejectionModal', () => {
     });
 
     it('handles default close handler when no onClose provided', () => {
-        render(<TrustRejectionModal isOpen={true} onConfirm={mockOnConfirm} />);
+        render(<TrustRejectionModal isOpen={true} onConfirm={mockOnConfirm}  testId='testId'/>);
         fireEvent.click(screen.getByTestId('btn-go-back'));
         expect(mockOnConfirm).not.toHaveBeenCalled(); 
     });

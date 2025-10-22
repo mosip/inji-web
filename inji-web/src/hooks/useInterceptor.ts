@@ -30,7 +30,6 @@ export function useInterceptor() {
         // Redirect to / page on logged-in user if unauthorized access is detected
         const currentRoute = location.pathname + location.search + location.hash;
         const isPasscodeRelatedRoute = location.pathname === ROUTES.USER_RESET_PASSCODE || location.pathname === ROUTES.USER_PASSCODE;
-
         const isSessionActive: boolean = !!AppStorage.getItem(KEYS.USER);
         if (error.response && error.response.status === 401) {
             removeUser()

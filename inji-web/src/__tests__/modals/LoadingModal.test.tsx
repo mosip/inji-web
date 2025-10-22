@@ -27,6 +27,7 @@ describe("LoaderModal", () => {
     isOpen: true,
     title: "Loading...",
     subtitle: "Please wait while we process your request",
+    testId: "testId"
   };
 
   beforeEach(() => {

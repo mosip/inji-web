@@ -37,8 +37,8 @@ jest.mock("../../../modals/ModalWrapper", () => ({
 
 jest.mock("../../../components/Common/Buttons/SolidButton", () => ({
   SolidButton: ({ onClick, title, testId, fullWidth, className }: any) => (
-    <button 
-      data-testid={testId} 
+    <button
+      data-testid={testId}
       onClick={onClick}
       data-full-width={fullWidth}
       className={className}
@@ -50,11 +50,11 @@ jest.mock("../../../components/Common/Buttons/SolidButton", () => ({
 
 jest.mock("../../../components/Common/Buttons/BorderedButton", () => ({
   BorderedButton: ({ onClick, title, testId, className }: any) => (
-    <button 
-      data-testid={testId} 
+    <button
+      data-testid={testId}
       onClick={onClick}
       className={className}
-    > 
+    >
       {title}
     </button>
   ),
@@ -62,8 +62,8 @@ jest.mock("../../../components/Common/Buttons/BorderedButton", () => ({
 
 jest.mock("../../../components/Common/Buttons/TertiaryButton", () => ({
   TertiaryButton: ({ onClick, title, testId, className }: any) => (
-    <button 
-      data-testid={testId} 
+    <button
+      data-testid={testId}
       onClick={onClick}
       className={className}
     >
@@ -89,6 +89,7 @@ describe("TrustVerifierModal", () => {
   const mockOnTrust = jest.fn();
   const mockOnNotTrust = jest.fn();
   const mockOnCancel = jest.fn();
+  const testId = "trust-verifier-content"
 
   beforeEach(() => {
     (useTranslation as jest.Mock).mockReturnValue({
@@ -105,17 +106,18 @@ describe("TrustVerifierModal", () => {
         onTrust={mockOnTrust}
         onNotTrust={mockOnNotTrust}
         onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+        testId={testId}
+
       />
     );
-    
-    expect(screen.getByTestId("trust-verifier-content")).toBeInTheDocument(); 
-    
+
+    expect(screen.getByTestId("trust-verifier-content")).toBeInTheDocument();
+
     expect(screen.getByTestId("btn-trust-verifier")).toBeInTheDocument();
     expect(screen.getByTestId("btn-not-trust-verifier")).toBeInTheDocument();
     expect(screen.getByTestId("btn-cancel-trust-modal")).toBeInTheDocument();
-    expect(screen.getByTestId("btn-info-tooltip")).toBeInTheDocument(); 
-    
+    expect(screen.getByTestId("btn-info-tooltip")).toBeInTheDocument();
+
     expect(container).toMatchSnapshot();
   });
 
@@ -126,7 +128,7 @@ describe("TrustVerifierModal", () => {
         onTrust={mockOnTrust}
         onNotTrust={mockOnNotTrust}
         onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+        testId={testId}
       />
     );
     expect(container.firstChild).toBeNull();
@@ -139,7 +141,7 @@ describe("TrustVerifierModal", () => {
         onTrust={mockOnTrust}
         onNotTrust={mockOnNotTrust}
         onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+        testId={testId}
       />
     );
 
@@ -154,7 +156,7 @@ describe("TrustVerifierModal", () => {
         onTrust={mockOnTrust}
         onNotTrust={mockOnNotTrust}
         onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+        testId={testId}
       />
     );
 
@@ -169,7 +171,7 @@ describe("TrustVerifierModal", () => {
         onTrust={mockOnTrust}
         onNotTrust={mockOnNotTrust}
         onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+        testId={testId}
       />
     );
     fireEvent.click(screen.getByTestId("btn-cancel-trust-modal"));
@@ -186,7 +188,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -203,7 +205,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -221,7 +223,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -239,7 +241,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -253,7 +255,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -267,7 +269,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -283,7 +285,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -299,7 +301,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -316,7 +318,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -332,7 +334,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -347,7 +349,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -365,7 +367,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -382,7 +384,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -400,7 +402,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -415,7 +417,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -430,6 +432,20 @@ describe("TrustVerifierModal", () => {
   });
 
   describe("Edge Cases", () => {
+    it("handles undefined verifier domain", () => {
+      render(
+        <TrustVerifierModal
+          isOpen={true}
+          verifierDomain={undefined}
+          onTrust={mockOnTrust}
+          onNotTrust={mockOnNotTrust}
+          onCancel={mockOnCancel}
+          testId={testId}
+        />
+      );
+
+      expect(screen.getByTestId("trust-verifier-content")).toBeInTheDocument();
+    });
 
     it("handles empty string verifier name", () => {
       render(
@@ -439,7 +455,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -455,7 +471,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -471,7 +487,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -492,7 +508,7 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
 
@@ -509,22 +525,22 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
-      
+
       const initialContent = screen.getByTestId("trust-verifier-content");
-      
+
       rerender(
         <TrustVerifierModal
           isOpen={true}
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
-      
+
       const afterRerender = screen.getByTestId("trust-verifier-content");
       expect(initialContent).toBe(afterRerender);
     });
@@ -536,22 +552,22 @@ describe("TrustVerifierModal", () => {
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
-      
+
       expect(screen.getByTestId("trust-verifier-content")).toBeInTheDocument();
-      
+
       rerender(
         <TrustVerifierModal
           isOpen={false}
           onTrust={mockOnTrust}
           onNotTrust={mockOnNotTrust}
           onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
+          testId={testId}
         />
       );
-      
+
       expect(screen.queryByTestId("trust-verifier-content")).not.toBeInTheDocument();
     });
   });

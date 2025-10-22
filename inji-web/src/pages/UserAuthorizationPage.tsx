@@ -175,13 +175,13 @@ export const UserAuthorizationPage: React.FC = () => {
                     />
                 )}
 
-                {error && (
-                    <ErrorCard
-                        isOpen={!!error}
-                        onClose={() => { setError(null); navigate(ROUTES.ROOT); }}
-                        testId="modal-error-card"
-                    />
-                )}
+            {error && (
+                <ErrorCard
+                    isOpen={!!error}
+                    onClose={() => { setError(null); navigate(ROUTES.ROOT); }}
+                    testId="modal-error-card"
+                />
+            )}
 
                 <TrustRejectionModal
                     isOpen={isCancelConfirmation}
