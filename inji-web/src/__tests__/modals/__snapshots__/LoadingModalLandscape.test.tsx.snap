@@ -86,7 +86,7 @@ exports[`LoadingModalLandscape Component matches snapshot when open 1`] = `
                 </div>
               </div>
               <div
-                class="font-montserrat font-light text-center text-[--iw-color-header] w-full sm:w-auto mt-2 break-words px-2"
+                class="font-montserrat font-medium text-center text-[--iw-color-header] w-full sm:w-auto mt-2 break-words px-2"
                 id="text-loading-message"
               >
                 Preparing your secure credential presentation...

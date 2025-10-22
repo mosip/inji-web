@@ -6,12 +6,14 @@ import { SpinningLoader } from "../components/Common/SpinningLoader";
 
 type LoadingModalLandscapeProps = {
     isOpen: boolean;
+    message?: string;
 };
 
-export const LoadingModalLandscape: React.FC<LoadingModalLandscapeProps> = ({ isOpen }) => {
+export const LoadingModalLandscape: React.FC<LoadingModalLandscapeProps> = ({ isOpen, message }) => {
     const { t } = useTranslation("LoadingModalLandscape");
 
     if (!isOpen) return null;
+    const finalMessage = message || t("message");
 
     return (
         <ModalWrapper
@@ -35,7 +37,7 @@ export const LoadingModalLandscape: React.FC<LoadingModalLandscapeProps> = ({ is
                             id="text-loading-message"
                             className={ModalStyles.loadingModalLandscape.message}
                         >
-                            {t("message")}
+                            {finalMessage}
                         </div>
                     </div>
                 </div>

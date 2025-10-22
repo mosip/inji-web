@@ -219,7 +219,7 @@ describe('CredentialRequestModal', () => {
             render(<CredentialRequestModal {...defaultProps} />);
 
             await waitFor(() => {
-                expect(screen.getByTestId('ModalWrapper-Mock')).toBeInTheDocument();
+                expect(screen.getByTestId('ModalWrapper-Outer-Container')).toBeInTheDocument();
                 expect(screen.getByTestId('credential-request-modal-header')).toBeInTheDocument();
             });
         });
@@ -227,7 +227,7 @@ describe('CredentialRequestModal', () => {
         it('does not render when not visible', () => {
             render(<CredentialRequestModal {...defaultProps} isVisible={false} />);
 
-            expect(screen.queryByTestId('ModalWrapper-Mock')).not.toBeInTheDocument();
+            expect(screen.queryByTestId('ModalWrapper-Outer-Container')).not.toBeInTheDocument();
         });
 
         it('renders with correct verifier name', async () => {
@@ -285,7 +285,7 @@ describe('CredentialRequestModal', () => {
             render(<CredentialRequestModal {...defaultProps} />);
 
             // Should show loading state initially
-            expect(screen.getByTestId('loader-modal')).toBeInTheDocument();
+            expect(screen.getByTestId('SpinningLoader-Container')).toBeInTheDocument();
         });
 
         it('hides loading state when not loading', async () => {
@@ -298,7 +298,7 @@ describe('CredentialRequestModal', () => {
 
             // Loading state should be hidden after API call completes
             await waitFor(() => {
-                expect(screen.queryByTestId('loader-modal')).not.toBeInTheDocument();
+                expect(screen.queryByTestId('SpinningLoader-Container')).not.toBeInTheDocument();
             });
         });
     });
@@ -547,12 +547,11 @@ describe('CredentialRequestModal', () => {
             // Wait for the main modal to render (not NoMatchingCredentialsModal)
             await waitFor(() => {
                 expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
-                expect(screen.getByTestId('ModalWrapper-Mock')).toBeInTheDocument();
+                expect(screen.getByTestId('ModalWrapper-Outer-Container')).toBeInTheDocument();
             });
 
-            const modalWrapper = screen.getByTestId('ModalWrapper-Mock');
-            expect(modalWrapper).toHaveAttribute('data-z-index', '50');
-            expect(modalWrapper).toHaveAttribute('data-size', '6xl');
+            const modalWrapper = screen.getByTestId('ModalWrapper-Outer-Container');
+            expect(modalWrapper).toHaveClass('z-50');
         });
     });
 
@@ -664,14 +663,14 @@ describe('CredentialRequestModal', () => {
             // Wait for the main modal to render (not NoMatchingCredentialsModal)
             await waitFor(() => {
                 expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
-                expect(screen.getByTestId('ModalWrapper-Mock')).toBeInTheDocument();
+                expect(screen.getByTestId('ModalWrapper-Outer-Container')).toBeInTheDocument();
             });
 
-            const initialModal = screen.getByTestId('ModalWrapper-Mock');
+            const initialModal = screen.getByTestId('ModalWrapper-Outer-Container');
 
             rerender(<CredentialRequestModal {...defaultProps} />);
 
-            const afterRerender = screen.getByTestId('ModalWrapper-Mock');
+            const afterRerender = screen.getByTestId('ModalWrapper-Outer-Container');
             expect(initialModal).toBe(afterRerender);
         });
 
@@ -681,12 +680,12 @@ describe('CredentialRequestModal', () => {
             // Wait for the main modal to render (not NoMatchingCredentialsModal)
             await waitFor(() => {
                 expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
-                expect(screen.getByTestId('ModalWrapper-Mock')).toBeInTheDocument();
+                expect(screen.getByTestId('ModalWrapper-Outer-Container')).toBeInTheDocument();
             });
 
             rerender(<CredentialRequestModal {...defaultProps} isVisible={false} />);
 
-            expect(screen.queryByTestId('ModalWrapper-Mock')).not.toBeInTheDocument();
+            expect(screen.queryByTestId('ModalWrapper-Outer-Container')).not.toBeInTheDocument();
         });
     });
 });

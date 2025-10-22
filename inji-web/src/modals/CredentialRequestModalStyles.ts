@@ -1,16 +1,16 @@
 const GRADIENT_PRIMARY = "linear-gradient(90deg,_#FF5300_0%,_#FB5103_16%,_#F04C0F_31%,_#DE4322_46%,_#C5363C_61%,_#A4265F_75%,_#7C1389_90%,_#5B03AD_100%)";
 
 export const CredentialRequestModalStyles = {
+    container: "!w-[677px] !h-[430px] top-[235px] left-[382px] rounded-xl border border-gray-200 opacity-100 shadow-sm transition-all duration-300 ease-in-out max-[533px]:w-screen max-[533px]:left-0 max-[533px]:right-0 max-[533px]:z-[60]",
     header: {
         container: "flex flex-col justify-center px-6 py-4 border-b !border-[var(--iw-color-borderLight)]",
         title: "mb-2 font-montserrat font-semibold text-lg leading-7 !text-[var(--iw-color-title)]",
         description: "font-montserrat font-normal text-sm leading-5 !text-[var(--iw-color-subTitle)]"
     },
     content: {
-
-        container: "overflow-y-auto py-3 px-6 flex-1 !max-h-[200px]",
+        container: "overflow-y-auto py-3 px-6 flex-1 !max-h-[250px] scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100",
         loadingContainer: "flex items-center justify-center py-6",
-        credentialsList: "space-y-4",
+        credentialsList: "space-y-4 relative",
         credentialItemWrapper: "w-full !h-[78px] transition-colors",
         credentialItem: "w-full !h-[78px] rounded-lg flex items-center justify-between transition-colors !bg-[var(--iw-color-tileBackground)] !border-[var(--iw-color-borderLight)] hover:!bg-[var(--iw-color-faqAccordionHover)] p-3 shadow-md",
         credentialItemSelected: "w-full rounded-lg flex items-center justify-between transition-colors opacity-90 p-3",

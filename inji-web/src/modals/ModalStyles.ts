@@ -25,7 +25,7 @@ export const ModalStyles = {
         container: `w-[677px] h-[430px] flex items-center justify-center max-w-full max-h-full min-w-[343px] min-h-[403px] px-4 sm:px-6 md:px-8`,
         contentWrapper: `flex flex-col items-center justify-center gap-6 w-[250px] h-[136px] text-center`,
         spinnerWrapper: `flex items-center justify-center`,
-        message: `font-montserrat font-light text-center text-[--iw-color-header] w-full sm:w-auto mt-2 break-words px-2`
+        message: `font-montserrat font-medium text-center text-[--iw-color-header] w-full sm:w-auto mt-2 break-words px-2`
     },
     credentialShareSuccessModal: {
         container: `-mt-6 flex flex-col items-stretch justify-center gap-4 bg-white max-w-[450px] w-auto h-auto sm:h-[660px] rounded-lg shadow-lg p-4 sm:p-6 mx-auto`,

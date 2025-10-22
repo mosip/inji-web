@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef, useCallback, useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {ModalWrapper} from './ModalWrapper';
 import {NoMatchingCredentialsModal} from './NoMatchingCredentialsModal';
-import {LoaderModal} from './LoadingModal';
+import { LoadingModalLandscape } from './LoadingModalLandscape';
 import {ErrorCard} from './ErrorCard';
 import {useApi} from '../hooks/useApi';
 import {useApiErrorHandler} from '../hooks/useApiErrorHandler';
@@ -12,6 +12,7 @@ import {CredentialRequestModalHeader} from '../components/Credentials/Credential
 import {CredentialRequestModalContent} from '../components/Credentials/CredentialRequestModalContent';
 import {CredentialRequestModalFooter} from '../components/Credentials/CredentialRequestModalFooter';
 import {withErrorHandling} from '../utils/errorHandling';
+import { CredentialRequestModalStyles } from './CredentialRequestModalStyles';
 
 
 interface CredentialRequestModalProps {
@@ -201,8 +202,6 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
     if (showErrorCard) {
         return (
             <ErrorCard
-                title="API Error"
-                description={errorCardMessage}
                 isOpen={true}
                 onClose={handleCloseErrorCard}
             />
@@ -212,11 +211,9 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
     // Show loading modal when loading
     if (isLoading) {
         return (
-            <LoaderModal
+            <LoadingModalLandscape
                 isOpen={true}
-                title={t('loading.title')}
-                subtitle={t('loading.message')}
-                size="6xl"
+                message={t('loading.message')}
             />
         );
     }
@@ -236,19 +233,22 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
     }
 
     return (
-        <div
-            className="w-full max-w-[677px] h-[430px] rounded-xl border border-gray-200 opacity-100 shadow-sm transition-all duration-300 ease-in-out max-[533px]:w-screen max-[533px]:left-0 max-[533px]:right-0 max-[533px]:z-[60]">
-            <ModalWrapper
-                header={
-                    <div data-testid="card-credential-request-modal">
-                        {header}
+        <>
+            <div data-testid="ModalWrapper-BackDrop" className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"></div>
+            
+            <div data-testid="ModalWrapper-Outer-Container" className="fixed inset-0 z-50 overflow-y-auto overflow-x-hidden">
+                <div className="min-h-full p-4 flex items-center justify-center">
+                    <div className={`${CredentialRequestModalStyles.container} flex flex-col bg-white rounded-xl border border-gray-200 shadow-lg`}>
+                        <div data-testid="card-credential-request-modal">
+                            {header}
+                        </div>
+                        <div className="flex-1 overflow-y-auto">
+                            {content}
+                        </div>
+                        {footer}
                     </div>
-                }
-                content={content}
-                footer={footer}
-                size="6xl"
-                zIndex={50}
-            />
-        </div>
+                </div>
+            </div>
+        </>
     );
 };
