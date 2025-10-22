@@ -8,6 +8,15 @@ import ErrorIcon from '../../../assets/error-icon.svg';
 import InfoIcon from '../../../assets/info-icon.svg';
 import SuccessIcon from '../../../assets/success-icon.svg';
 
+const TOAST_ICONS = {
+  warning: { src: WarningIcon, alt: 'Warning' },
+  success: { src: SuccessIcon, alt: 'Success' },
+  error: { src: ErrorIcon, alt: 'Error' },
+  info: { src: InfoIcon, alt: 'Info' },
+} as const;
+
+const APP_TOASTER_STYLES = 'w-[30px] h-[30px]';
+
 export const AppToaster: React.FC = () => {
     const language = useSelector((state: RootState) => state.common.language);
     return (
@@ -20,42 +29,10 @@ export const AppToaster: React.FC = () => {
                 closeOnClick
                 rtl={isRTL(language)}
                 icon={({ type }) => {
-                    switch (type) {
-                        case "warning":
-                            return (
-                                <img
-                                    src={WarningIcon}
-                                    alt="Warning"
-                                    className="w-[30px] h-[30px]"
-                                />
-                            );
-                        case "success":
-                            return (
-                                <img
-                                    src={SuccessIcon}
-                                    alt="Success"
-                                    className="w-[30px] h-[30px]"
-                                />
-                            );
-                        case "error":
-                            return (
-                                <img
-                                    src={ErrorIcon}
-                                    alt="Error"
-                                    className="w-[30px] h-[30px]"
-                                />
-                            );
-                        case "info":
-                            return (
-                                <img
-                                    src={InfoIcon}
-                                    alt="Info"
-                                    className="w-[30px] h-[30px]"
-                                />
-                            );
-                        default:
-                            return null;
-                    }
+                    const icon = type && TOAST_ICONS[type as keyof typeof TOAST_ICONS];
+                    return icon ? (
+                        <img src={icon.src} alt={icon.alt} className={APP_TOASTER_STYLES} />
+                    ) : null;
                 }}
                 pauseOnFocusLoss
                 draggable

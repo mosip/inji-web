@@ -386,7 +386,7 @@
     },
     "success": "Proceed",
     "cancel": "Back",
-    "disclaimer": "Please note that the QR Code can be shared only for the number of times you have chosen here. To use the QR Code for sharing again, you have to download the PDF again.",
+    "disclaimer": "Please note that the QR code can be shared only for the number of times you have chosen here. To use the QR code for sharing again, you have to download the PDF again.",
     "toastText": "Coming soon"
   },
   "CustomExpiryModal": {

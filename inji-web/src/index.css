@@ -16,7 +16,7 @@
         --iw-color-title: #000000;
         --iw-color-subTitle: #717171;
         --iw-color-searchTitle: #3E3E3E;
-        --iw-color-primary: #FF5300;
+        --iw-color-primary: #F2680C;
         --iw-color-secondary: #451691;
         --iw-color-lightPrimary: #fff1eb;
         --iw-color-lightSecondary: #f2ebf8;
@@ -68,6 +68,9 @@
         --iw-color-avatarPlaceholder: #DDDDDD;
         --iw-color-avatarText: #1A001D;
         --iw-color-darkGreen: #1F9F60;
+        --iw-color-disabled: #ADB6BD;
+        --iw-color-dropdown-active-bg: #F7F3F0;
+        --iw-color-dropdown-text: #232B38;
     }
     [class="emerald_theme"] {
         --iw-font-base: "Inter", sans-serif;
@@ -123,6 +126,9 @@
         --iw-color-pink50: #FAEFEF;
         --iw-color-darkGrayishBlue: #101828;
         --iw-color-darkGreen: #1F9F60;
+        --iw-color-disabled: #ADB6BD;
+        --iw-color-dropdown-active-bg: #F7F3F0;
+        --iw-color-dropdown-text: #232B38;
     }
 }
 

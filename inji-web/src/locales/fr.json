@@ -66,7 +66,7 @@
       "loginTitle": "Se connecter",
       "loginDescription": "Connectez-vous avec votre compte ou continuez en tant qu'invité pour accéder à vos identifiants.",
       "loginNote": "Certaines fonctionnalités peuvent être limitées en mode invité.",
-      "loggingIn": "Connexion",
+      "loggingIn": "Connexion en cours",
       "loginGoogle": "Continuer avec Google",
       "loginGuest": "Continuer en tant qu'invité"
     },
@@ -84,7 +84,7 @@
   },
   "PasscodePage": {
     "submit": "Soumettre",
-    "submitting": "Soumission",
+    "submitting": "Soumission en cours",
     "setPasscode": "Définissez votre code d'accès pour commencer",
     "setPasscodeDescription": "Veuillez mémoriser ou stocker en toute sécurité votre code d'accès. Vous en aurez besoin à chaque accès au portefeuille.",
     "enterPasscode": "Entrez votre code d'accès pour continuer",

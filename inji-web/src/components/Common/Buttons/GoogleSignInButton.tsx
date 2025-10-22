@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import {SolidButtonStyles} from "./GoogleSignInButtonStyles.ts";
+import {GoogleSolidButtonStyles} from "./GoogleSignInButtonStyles.ts";
 
 export const GoogleSignInButton:React.FC<GoogleSignInButtonProps> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +14,7 @@ export const GoogleSignInButton:React.FC<GoogleSignInButtonProps> = (props) => {
       onClick={onClickHandler}
       disabled={isLoading}
       data-testid="google-login-button"
-      className={`${SolidButtonStyles.baseStyles} ${isLoading ? SolidButtonStyles.disabledClasses : ""}`}
+      className={`${GoogleSolidButtonStyles.baseStyles} ${isLoading ? GoogleSolidButtonStyles.disabledClasses : ""}`}
     >
       <FcGoogle size={24} className="flex-shrink-0" />
       {isLoading ? props.loadingText : props.text}

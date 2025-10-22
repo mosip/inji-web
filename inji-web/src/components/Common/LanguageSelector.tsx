@@ -45,7 +45,7 @@ export const LanguageSelector: React.FC<{ "data-testid"?: string }> = ({ "data-t
                     size={30} color={'var(--iw-color-languageGlobeIcon)'} className="mr-3" />
                 </GradientWrapper>
 
-                <span className="flex-1 text-[#809FB8] font-normal text-left pr-2">
+                <span className="flex-1 text-iw-languageArrowIcon font-normal text-left pr-2">
                         {LanguagesSupported.find(lang => lang.value === language)?.label}
                 </span>
                 <DropdownArrowIcon isOpen={isOpen} />
@@ -63,11 +63,11 @@ export const LanguageSelector: React.FC<{ "data-testid"?: string }> = ({ "data-t
                                     type="button"
                                     className={`w-full px-4 py-3 text-left text-sm flex items-center justify-between flex-row
                                         ${language === item.value
-                                        ? "bg-[#F7F3F0] text-[#F2680C] font-semibold"
-                                        : "text-[#232B38] hover:bg-[#F7F3F0] hover:text-[#F2680C]"} transition-colors`}
+                                        ? "bg-iw-dropdownActiveBg text-iw-primary font-semibold"
+                                        : "text-iw-dropdownText hover:bg-iw-dropdownActiveBg hover:text-iw-primary"} transition-colors`}
                                     onMouseDown={(event) => {event.stopPropagation();handleChange(item)}}>
-                                    {language === item.value ? <span className="text-[#F2680C] font-semibold">{item.label}</span> : item.label}
-                                    {language === item.value && <FaCheck color="text-[#F2680C]" /> }
+                                    {language === item.value ? <span className="text-iw-primary font-semibold">{item.label}</span> : item.label}
+                                    {language === item.value && <FaCheck className="text-iw-primary" /> }
                                 </button>
                             </li>
                         ))}

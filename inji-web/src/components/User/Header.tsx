@@ -235,7 +235,7 @@ export const Header: React.FC<UserHeaderProps> = ({
                                     {dropdownItems.map((item) => (
                                         <div
                                             key={item.key}
-                                            className={`px-4 py-3 text-sm ${item.textColor} cursor-pointer hover:bg-[#F7F3F0] hover:text-[#F2680C]`}
+                                            className={`px-4 py-3 text-sm ${item.textColor} cursor-pointer hover:bg-iw-dropdownActiveBg hover:text-iw-primary`}
                                             onClick={item.onClick}
                                         >
                                             {item.label}
