@@ -38,9 +38,11 @@ export const AppToaster: React.FC = () => {
                 draggable
                 pauseOnHover
                 theme="colored"
-                toastClassName={(context?: { type?: string }) =>
-                    `inji-toast inji-toast--${context?.type ?? ""}`
-                }
+                toastClassName={(context?: { type?: string }) => {
+                    const baseClass = "inji-toast";
+                    const type = context?.type;
+                    return type ? `${baseClass} ${baseClass}--${type}` : baseClass;
+                }}  
             />
         </div>
     );
