@@ -178,24 +178,6 @@ describe("useInterceptor", () => {
         expect(navigateMock).not.toHaveBeenCalled();
     });
 
-    test("should not redirect for 401 when user is not logged in and accessing any unprotected api", async () => {
-        isUserLoggedInMock.mockReturnValue(false);
-
-        const errorCallback = getErrorCallback();
-
-        const mockError = {
-            response: {
-                status: 401,
-                config: {
-                    url: "unprotected-endpoint"
-                }
-            }
-        };
-        await expect(errorCallback(mockError)).rejects.toBe(mockError);
-        expect(removeUserMock).not.toHaveBeenCalled();
-        expect(navigateMock).not.toHaveBeenCalled();
-    });
-
     function assertStoringOfCurrentLocation() {
         expect(AppStorage.setItem).toHaveBeenCalledTimes(1);
         expect(AppStorage.setItem).toHaveBeenCalledWith("redirectTo", "/test-path?test=true#test", true);

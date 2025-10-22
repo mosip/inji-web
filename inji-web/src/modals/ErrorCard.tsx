@@ -7,15 +7,19 @@ import { ErrorCardStyles } from "./ErrorCardStyles";
 
 
 interface ErrorCardProps {
-    onClose: () => void; 
+    onClose: () => void;
     isOpen: boolean;
     testId: string;
+    title?: string;
+    description?: string;
 }
 
 export const ErrorCard: React.FC<ErrorCardProps> = ({
     onClose,
     isOpen,
-    testId
+    testId,
+    title, 
+    description, 
 }) => {
     const { t } = useTranslation("VerifierTrustPage");
     if (!isOpen) return null;
@@ -23,14 +27,19 @@ export const ErrorCard: React.FC<ErrorCardProps> = ({
 
     const ERROR_KEY_PREFIX = "ErrorCard";
 
-    const finalTitle = t(`${ERROR_KEY_PREFIX}.defaultTitle`);
-    const finalDescription = t(`${ERROR_KEY_PREFIX}.defaultDescription`);
+    const defaultTitle = t(`${ERROR_KEY_PREFIX}.defaultTitle`);
+    const defaultDescription = t(`${ERROR_KEY_PREFIX}.defaultDescription`);
+    
+    const finalTitle = title || defaultTitle;
+    const finalDescription = description || defaultDescription;
+    
     const closeButtonText = t(`${ERROR_KEY_PREFIX}.closeButton`);
 
     const styles = ErrorCardStyles.errorCard;
 
     return (
-        <ModalWrapper
+        <div>
+            <ModalWrapper
             zIndex={50}
             size="xl"
             header={<></>}
@@ -62,5 +71,6 @@ export const ErrorCard: React.FC<ErrorCardProps> = ({
                 </div>
             }
         />
+        </div>
     );
 };

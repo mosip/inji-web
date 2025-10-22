@@ -6,8 +6,8 @@ import { AppStorage } from "./AppStorage";
 export enum MethodType {
     GET,
     POST,
-    DELETE,
-    PATCH
+    PATCH,
+    DELETE
 }
 
 export enum ContentTypes {
@@ -284,6 +284,20 @@ export class api {
             "Content-Type": ContentTypes.JSON,
             "Accept": ContentTypes.JSON,
         }),
+        credentials: "include"
+    };
+
+    static fetchPresentationCredentials: ApiRequest = {
+        url: (presentationId: string) => {
+            const walletId = AppStorage.getItem(KEYS.WALLET_ID);
+            return api.mimotoHost + `/wallets/${walletId}/presentations/${presentationId}/credentials`;
+        },
+        methodType: MethodType.GET,
+        headers: () => {
+            return {
+                "Content-Type": ContentTypes.JSON
+            };
+        },
         credentials: "include"
     };
 }

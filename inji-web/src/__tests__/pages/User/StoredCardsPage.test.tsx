@@ -266,7 +266,7 @@ describe('Testing of StoredCardsPage ->', () => {
         await waitFor(() => {
             expect(screen.getByText(expectedTitle)).toBeInTheDocument()
         })
-        expect(screen.getByText(expectedMessage)).toBeInTheDocument();
+        expect(screen.getByTestId('error-helpText-stored-credentials')).toBeInTheDocument();
     });
 
     it('should redirect to root page when response is unAuthorized', () => {

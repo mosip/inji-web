@@ -1,121 +1,89 @@
-import React, {useState} from "react";
-import {Credential} from "./Credential";
-import {useSelector} from "react-redux";
-import {RootState} from "../../types/redux";
-import {EmptyListContainer} from "../Common/EmptyListContainer";
-import {useTranslation} from "react-i18next";
-import {SpinningLoader} from "../Common/SpinningLoader";
-import {HeaderTile} from "../Common/HeaderTile";
-import {DownloadResult} from "../Redirection/DownloadResult";
-import {CredentialConfigurationObject} from "../../types/data";
-import {defaultLanguage} from "../../utils/i18n";
-import {RequestStatus} from "../../utils/constants";
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { PresentationCredential, CredentialListProps } from '../../types/components';
+import { CredentialRequestModalStyles } from '../../modals/CredentialRequestModalStyles';
+import { CredentialItem } from './CredentialItem';
+import { RequestStatus } from '../../utils/constants';
+import { EmptyListContainer } from '../Common/EmptyListContainer';
+import { SpinningLoader } from '../Common/SpinningLoader';
+import { RootState } from '../../types/redux';
 
-interface CredentialListProps {
-    state: RequestStatus;
-}
-
-export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
-    const [errorObj, setErrorObj] = useState({
-        code: "",
-        message: ""
-    });
-    const selectedLanguage = useSelector(
-        (state: RootState) => state.common.language
+export const CredentialList: React.FC<CredentialListProps> = ({
+    credentials,
+    selectedCredentials = [],
+    onCredentialToggle = () => {},
+    state
+}) => {
+    const { t } = useTranslation(['CredentialRequestModal', 'CredentialTypesPage']);
+    
+    const reduxCredentials = useSelector((state: RootState) => 
+        state.credentials.credentials
     );
-
-    const credentials = useSelector((state: RootState) => state.credentials);
-
-    const filterCredentialsBySelectedOrDefaultLanguage = () => {
-        const missingLanguageSupport: CredentialConfigurationObject[] = [];
-
-        const filteredCredentialsList = (
-            credentials?.filtered_credentials?.credentials_supported ?? []
-        ).filter((credential: CredentialConfigurationObject) => {
-            const display = credential.display;
-            const hasMatchingDisplay = display?.some(
-                ({locale}) =>
-                    locale === selectedLanguage || locale === defaultLanguage
-            );
-
-            if (!hasMatchingDisplay) {
-                missingLanguageSupport.push(credential);
+    
+    // Transform Redux data to match PresentationCredential structure (only when needed)
+    const transformedReduxCredentials = useMemo(() => {
+        if (credentials || !reduxCredentials?.credentials_supported) {
+            return [];
+        }
+        return reduxCredentials.credentials_supported.map((cred: { name?: string; display?: Array<{ name?: string; logo?: string }> }, index: number) => {
+            if (!cred.name) {
+                console.error('Credential missing required name field', cred);
             }
-
-            return hasMatchingDisplay;
+            return {
+                credentialId: cred.name || `fallback-${index}`,
+                credentialTypeDisplayName: cred.display?.[0]?.name || cred.name || 'Unknown Credential',
+                credentialTypeLogo: cred.display?.[0]?.logo || '',
+                format: 'ldp_vc'
+            };
         });
+    }, [credentials, reduxCredentials]);
+    
+    const actualCredentials = credentials ?? transformedReduxCredentials;
 
-        if (missingLanguageSupport.length) {
-            console.error(
-                `Language support missing for these credential types of issuer: ${missingLanguageSupport
-                    .map((credential) => credential.name)
-                    .join(", ")}`
+    // Handle state-based rendering (for CredentialTypesPage)
+    if (state !== undefined) {
+        if (state === RequestStatus.LOADING) {
+            return (
+                <div className="flex items-center justify-center py-8">
+                    <div className="text-center">
+                        <SpinningLoader />
+                        <p className="text-gray-500 mb-4 mt-4">{t('CredentialTypesPage:loading')}</p>
+                    </div>
+                </div>
             );
         }
 
-        return filteredCredentialsList;
-    };
+        if (state === RequestStatus.ERROR) {
+            return <EmptyListContainer content={t('CredentialTypesPage:emptyContainerContent')} />;
+        }
 
-    const filteredCredentialsWithLangSupport =
-        filterCredentialsBySelectedOrDefaultLanguage();
-
-    const {t} = useTranslation("CredentialsPage");
-
-    if (state === RequestStatus.LOADING) {
-        return <SpinningLoader />;
+        if (state === RequestStatus.DONE && (!actualCredentials || actualCredentials.length === 0)) {
+            return <EmptyListContainer content={t('CredentialTypesPage:emptyContainerContent')} />;
+        }
     }
 
-    if (
-        state === RequestStatus.ERROR ||
-        Object.keys(filteredCredentialsWithLangSupport).length === 0 ||
-        !credentials?.filtered_credentials?.credentials_supported ||
-        (credentials?.filtered_credentials?.credentials_supported &&
-            credentials?.filtered_credentials?.credentials_supported.length ===
-                0)
-    ) {
+    // Handle credentials-based rendering (for CredentialRequestModal)
+    if (!actualCredentials || actualCredentials.length === 0) {
         return (
-            <div>
-                <HeaderTile
-                    content={t("containerHeading")}
-                    subContent={t("containerSubHeading")}
-                />
-                <EmptyListContainer content={t("emptyContainerContent")} />
+            <div className="flex items-center justify-center py-8">
+                <div className="text-center">
+                    <p className="text-gray-500 mb-4">{t('noCredentials.message')}</p>
+                </div>
             </div>
-        );
-    }
-
-    if (errorObj.code) {
-        return (
-            <DownloadResult
-                title={t(errorObj.code)}
-                subTitle={t(errorObj.message)}
-                state={RequestStatus.ERROR}
-            />
         );
     }
 
     return (
-        <>
-            <HeaderTile
-                content={t("containerHeading")}
-                subContent={t("containerSubHeading")}
-            />
-            <div className="flex flex-wrap gap-3 p-4 pb-20 justify-start">
-                {filteredCredentialsWithLangSupport.map(
-                    (
-                        credentialConfig: CredentialConfigurationObject,
-                        index: number
-                    ) => (
-                        <Credential
-                            key={credentialConfig.name}
-                            credentialId={credentialConfig.name}
-                            credentialWellknown={credentialConfig}
-                            index={index}
-                            setErrorObj={setErrorObj}
-                        />
-                    )
-                )}
-            </div>
-        </>
+        <ul className={CredentialRequestModalStyles.content.credentialsList}>
+            {actualCredentials.map((credential: any, index: number) => (
+                <CredentialItem
+                    key={credential.credentialId || index}
+                    credential={credential}
+                    isSelected={selectedCredentials.includes(credential.credentialId)}
+                    onToggle={onCredentialToggle}
+                />
+            ))}
+        </ul>
     );
 };

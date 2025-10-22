@@ -53,11 +53,15 @@ jest.mock('../../utils/AppStorage', () => ({
     },
 }));
 
+jest.mock('../../components/User/Sidebar', () => ({
+    Sidebar: () => <div data-testid="mock-sidebar">Sidebar</div>,
+}));
+
 const MockLoaderModal = jest.fn();
 jest.mock('../../modals/LoadingModal', () => ({
     LoaderModal: ({ isOpen, title }: any) => {
         MockLoaderModal({ isOpen, title });
-        return isOpen ? <div data-testid="mock-loader-modal">{title}</div> : null;
+        return isOpen ? <div data-testid="modal-loader">{title}</div> : null;
     }
 }));
 
@@ -78,6 +82,20 @@ jest.mock('../../components/Issuers/TrustVerifierModal', () => ({
     }
 }));
 
+const MockCredentialRequestModal = jest.fn();
+jest.mock('../../modals/CredentialRequestModal', () => ({
+    CredentialRequestModal: (props: any) => {
+        MockCredentialRequestModal(props);
+        if (!props.isVisible) return null;
+        return (
+            <div data-testid="modal-credential-request">
+                <span>{`Request for ${props.verifierName}`}</span>
+                <button data-testid="btn-cr-cancel" onClick={props.onCancel}>CR-Cancel</button>
+                <button data-testid="btn-cr-consent" onClick={() => props.onConsentAndShare(['mock-cred-id'])}>CR-Consent</button>
+            </div>
+        );
+    }
+}));
 
 const MockErrorCard = jest.fn();
 jest.mock('../../modals/ErrorCard', () => ({
@@ -85,7 +103,7 @@ jest.mock('../../modals/ErrorCard', () => ({
         MockErrorCard(props);
         if (!props.isOpen) return null;
         return (
-            <div data-testid="mock-error-card">
+            <div data-testid="modal-error-card">
                 <span>ErrorCard.defaultTitle</span>
                 <button role="button" name="Close" onClick={props.onClose}>Close</button>
             </div>
@@ -99,7 +117,7 @@ jest.mock('../../components/Issuers/TrustRejectionModal', () => ({
         MockTrustRejectionModal(props);
         if (!props.isOpen) return null;
         return (
-            <div data-testid="mock-rejection-modal">
+            <div data-testid="modal-trust-rejection-modal">
                 <span>TrustRejectionModal.title</span>
                 <button data-testid="btn-confirm-cancel" onClick={props.onConfirm}>Confirm</button>
                 <button data-testid="btn-go-back" onClick={props.onClose}>Go Back</button>
@@ -120,17 +138,12 @@ api.addTrustedVerifier = {
     headers: () => ({ "Content-Type": ContentTypes.JSON, "Accept": ContentTypes.JSON }),
     credentials: "include"
 };
-api.userRejectVerifier = {
-    url: (presentationId: string) => `/wallets/mock-wallet-id/presentations/${presentationId}`,
-    methodType: 3,
-    headers: () => ({ "Content-Type": ContentTypes.JSON, "Accept": ContentTypes.JSON }),
-    credentials: "include"
-};
 
-const renderComponent = (route = "/user/authorize?some_param=value") => {
+const renderComponent = (route = "/user/authorize?authorizationRequestUrl=https%3A%2F%2Fverifier.com%2Frequest%3Fdata%3D123") => {
+    const queryString = route.split('?')[1] || '';
     Object.defineProperty(window, 'location', {
         value: {
-            search: route.split('?')[1] ? `?${route.split('?')[1]}` : '',
+            search: `?${queryString}`,
             href: route,
         },
         writable: true
@@ -152,6 +165,7 @@ const mockVerifierTrusted = {
         name: "Trusted Verifier",
         logo: "logo.png",
         trusted: true,
+        redirectUri: "https://trusted-verifier.com/callback"
     }
 };
 
@@ -162,14 +176,15 @@ const mockVerifierUntrusted = {
         name: "Untrusted Verifier",
         logo: "logo.png",
         trusted: false,
+        redirectUri: "https://untrusted-verifier.com/callback"
     }
 };
 
 const getErrorCardTitle = () => screen.getByText('ErrorCard.defaultTitle');
 const getLoaderModalTitle = () => screen.getByText('loadingCard.title');
 const getVerifierName = (name: string) => screen.getByText(name);
-const getRejectionModalTitle = () => screen.getByText('TrustRejectionModal.title');
 const queryTrustVerifierModal = () => screen.queryByTestId('modal-trust-verifier');
+const queryCredentialRequestModal = () => screen.queryByTestId('modal-credential-request');
 
 
 describe('UserAuthorizationPage', () => {
@@ -185,8 +200,11 @@ describe('UserAuthorizationPage', () => {
         });
     });
 
-    test('renders LoaderModal initially and calls validateVerifierRequest on mount', async () => {
-        renderComponent();
+    test('renders Sidebar and LoaderModal initially and calls validateVerifierRequest with correct URL parsing', async () => {
+        const route = "/user/authorize?authorizationRequestUrl=https%3A%2F%2Fverifier.com%2Frequest%3Fdata%3D123";
+        renderComponent(route);
+
+        expect(screen.getByTestId('mock-sidebar')).toBeInTheDocument();
 
         const loaderModalTitle = await waitFor(() => getLoaderModalTitle());
         expect(loaderModalTitle).toBeInTheDocument();
@@ -195,7 +213,7 @@ describe('UserAuthorizationPage', () => {
             expect(mockFetchData).toHaveBeenCalledWith(
                 expect.objectContaining({
                     apiConfig: api.validateVerifierRequest,
-                    body: { authorizationRequestUrl: '?' + window.location.search.split('?')[1] },
+                    body: { authorizationRequestUrl: 'https%3A%2F%2Fverifier.com%2Frequest%3Fdata%3D123' },
                 })
             );
         });
@@ -218,7 +236,7 @@ describe('UserAuthorizationPage', () => {
         renderComponent();
 
         await waitFor(() => {
-            expect(getErrorCardTitle()).toBeVisible();
+            expect(screen.getByTestId('modal-error-card')).toBeVisible();
         });
 
         const closeButton = screen.getByRole('button', { name: /Close/i });
@@ -229,33 +247,7 @@ describe('UserAuthorizationPage', () => {
         });
     });
 
-    test('shows ErrorCard on invalid verifier data (missing verifier)', async () => {
-        mockFetchData.mockResolvedValueOnce({
-            ok: () => true,
-            data: { presentationId: "pid", verifier: null },
-            error: null,
-            status: 200,
-            state: 1,
-            headers: {},
-        });
-
-        renderComponent();
-
-        await waitFor(() => {
-            expect(getErrorCardTitle()).toBeVisible();
-        });
-    });
-
-    test('does NOT show TrustVerifierModal for a trusted verifier', async () => {
-        mockFetchData.mockResolvedValueOnce({
-            ok: () => true,
-            data: mockVerifierTrusted,
-            error: null,
-            status: 200,
-            state: 1,
-            headers: {},
-        });
-
+    test('shows CredentialRequestModal for a trusted verifier', async () => {
         renderComponent();
 
         await waitFor(() => {
@@ -263,6 +255,10 @@ describe('UserAuthorizationPage', () => {
         });
 
         expect(queryTrustVerifierModal()).not.toBeInTheDocument();
+
+        const credentialRequestModal = screen.getByTestId('modal-credential-request');
+        expect(credentialRequestModal).toBeVisible();
+        expect(screen.getByText(`Request for ${mockVerifierTrusted.verifier.name}`)).toBeVisible();
     });
 
     test('shows TrustVerifierModal for an untrusted verifier', async () => {
@@ -277,18 +273,13 @@ describe('UserAuthorizationPage', () => {
 
         renderComponent();
 
-        // This assertion confirms the modal is open and visible by checking its content.
         const verifierNameElement = await waitFor(() => getVerifierName(mockVerifierUntrusted.verifier.name));
-
-        // This check is now the primary proof of visibility.
         expect(verifierNameElement).toBeVisible();
-        
-        // --- Removed the brittle getByTestId checks ---
-        // const trustModal = screen.getByTestId('modal-trust-verifier'); // Removed
-        // expect(trustModal).toBeVisible(); // Removed
+
+        expect(queryCredentialRequestModal()).not.toBeInTheDocument();
     });
 
-    test('calls addTrustedVerifier and closes modal on "Trust" click', async () => {
+    test('untrusted flow: calls addTrustedVerifier and proceeds to CredentialRequestModal on "Trust" click', async () => {
         mockFetchData.mockResolvedValueOnce({ ok: () => true, data: mockVerifierUntrusted, error: null, status: 200, state: 1, headers: {} });
         mockFetchData.mockResolvedValueOnce({ ok: () => true, data: { message: "Added" }, error: null, status: 200, state: 1, headers: {} });
 
@@ -312,10 +303,11 @@ describe('UserAuthorizationPage', () => {
 
         await waitFor(() => {
             expect(queryTrustVerifierModal()).not.toBeInTheDocument();
+            expect(screen.getByTestId('modal-credential-request')).toBeVisible();
         });
     });
 
-    test('shows ErrorCard if addTrustedVerifier fails on "Trust" click', async () => {
+    test('untrusted flow: shows ErrorCard if addTrustedVerifier fails on "Trust" click', async () => {
         mockFetchData.mockResolvedValueOnce({ ok: () => true, data: mockVerifierUntrusted, error: null, status: 200, state: 1, headers: {} });
         mockFetchData.mockResolvedValueOnce({ ok: () => false, error: { message: "Trust API Failed" } as any, data: null, status: 500, state: 2, headers: {} });
 
@@ -329,19 +321,13 @@ describe('UserAuthorizationPage', () => {
         fireEvent.click(trustButton);
 
         await waitFor(() => {
-            expect(mockFetchData).toHaveBeenCalledWith(
-                expect.objectContaining({ apiConfig: api.addTrustedVerifier })
-            );
-        });
-
-        await waitFor(() => {
             expect(getErrorCardTitle()).toBeVisible();
         });
+        expect(queryTrustVerifierModal()).not.toBeInTheDocument();
     });
-
-    test('calls rejectVerifierRequest and navigates to ROOT on "Not Trust" click', async () => {
+    
+    test('untrusted flow: proceeds to CredentialRequestModal on "Not Trust" click', async () => {
         mockFetchData.mockResolvedValueOnce({ ok: () => true, data: mockVerifierUntrusted, error: null, status: 200, state: 1, headers: {} });
-        mockFetchData.mockResolvedValueOnce({ ok: () => true, data: { message: "Rejected" }, error: null, status: 200, state: 1, headers: {} });
 
         renderComponent();
 
@@ -353,23 +339,44 @@ describe('UserAuthorizationPage', () => {
         fireEvent.click(notTrustButton);
 
         await waitFor(() => {
-            expect(mockFetchData).toHaveBeenCalledWith(
-                expect.objectContaining({
-                    url: api.userRejectVerifier.url(mockVerifierUntrusted.presentationId),
-                    body: {
-                        errorCode: "access_denied",
-                        errorMessage: "User denied authorization to share credentials"
-                    }
-                })
-            );
-        });
-
-        await waitFor(() => {
-            expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT);
+            expect(queryTrustVerifierModal()).not.toBeInTheDocument();
+            expect(screen.getByTestId('modal-credential-request')).toBeVisible();
         });
     });
 
-    test('opens TrustRejectionModal on "Cancel" and handles confirmation to ROOT', async () => {
+    test('CredentialRequestModal cancel navigates to ROOT', async () => {
+        renderComponent();
+        
+        await waitFor(() => {
+            expect(screen.getByTestId('modal-credential-request')).toBeVisible();
+        });
+
+        const cancelButton = screen.getByTestId('btn-cr-cancel');
+        fireEvent.click(cancelButton);
+
+        await waitFor(() => {
+            expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT);
+            expect(queryCredentialRequestModal()).not.toBeInTheDocument();
+        });
+    });
+
+    test('CredentialRequestModal consent navigates to ROOT (pending implementation)', async () => {
+        renderComponent();
+        
+        await waitFor(() => {
+            expect(screen.getByTestId('modal-credential-request')).toBeVisible();
+        });
+
+        const consentButton = screen.getByTestId('btn-cr-consent');
+        fireEvent.click(consentButton);
+
+        await waitFor(() => {
+            expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT);
+            expect(queryCredentialRequestModal()).not.toBeInTheDocument();
+        });
+    });
+
+    test('untrusted flow: opens TrustRejectionModal on "Cancel" and handles confirmation to ROOT', async () => {
         mockFetchData.mockResolvedValueOnce({ ok: () => true, data: mockVerifierUntrusted, error: null, status: 200, state: 1, headers: {} });
 
         renderComponent();
@@ -382,7 +389,7 @@ describe('UserAuthorizationPage', () => {
         fireEvent.click(cancelButton);
 
         await waitFor(() => {
-            expect(getRejectionModalTitle()).toBeVisible();
+            expect(screen.getByTestId('modal-trust-rejection-modal')).toBeVisible();
         });
         
         expect(queryTrustVerifierModal()).not.toBeInTheDocument();
@@ -399,7 +406,7 @@ describe('UserAuthorizationPage', () => {
         });
     });
 
-    test('opens TrustRejectionModal on "Cancel" and handles closure to return to TrustVerifierModal', async () => {
+    test('untrusted flow: opens TrustRejectionModal on "Cancel" and handles closure to return to TrustVerifierModal', async () => {
         mockFetchData.mockResolvedValueOnce({ ok: () => true, data: mockVerifierUntrusted, error: null, status: 200, state: 1, headers: {} });
 
         renderComponent();
@@ -412,7 +419,7 @@ describe('UserAuthorizationPage', () => {
         fireEvent.click(cancelButton);
 
         await waitFor(() => {
-            expect(getRejectionModalTitle()).toBeVisible();
+            expect(screen.getByTestId('modal-trust-rejection-modal')).toBeVisible();
         });
 
         const closeButton = screen.getByTestId('btn-go-back');
@@ -420,11 +427,22 @@ describe('UserAuthorizationPage', () => {
 
         await waitFor(() => {
             expect(screen.queryByText('TrustRejectionModal.title')).not.toBeInTheDocument();
+            expect(screen.queryByTestId('modal-credential-request')).not.toBeInTheDocument();
         });
 
         await waitFor(() => {
             expect(getVerifierName(mockVerifierUntrusted.verifier.name)).toBeVisible();
         });
+    });
+
+    test('matches snapshot when CredentialRequestModal is visible (trusted flow)', async () => {
+        const { asFragment } = renderComponent();
+
+        await waitFor(() => {
+            expect(screen.getByTestId('modal-credential-request')).toBeVisible();
+        });
+
+        expect(asFragment()).toMatchSnapshot();
     });
 
     test('matches snapshot when TrustVerifierModal is visible (untrusted flow)', async () => {

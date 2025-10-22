@@ -512,5 +512,31 @@
       "title": "Récupération des informations du vérificateur...",
       "subtitle": "Veuillez patienter pendant que nous vérifions la demande et préparons vos informations d'identification."
     }
+  },
+  "CredentialRequestModal": {
+    "loading": {
+      "title": "Chargement des informations d'identification",
+      "message": "Veuillez patienter pendant que nous récupérons vos informations d'identification disponibles..."
+    },
+    "header": {
+      "title": "{{verifierName}} demande ces informations d'identification",
+      "description": "Sélectionnez les informations d'identification que vous souhaitez partager"
+    },
+    "error": {
+      "title": "Erreur lors du chargement des informations d'identification",
+      "walletIdMessage": "Veuillez vous assurer que vous êtes connecté et que votre portefeuille est déverrouillé."
+    },
+    "noCredentials": {
+      "message": "Aucune information d'identification disponible"
+    },
+    "buttons": {
+      "cancel": "Annuler",
+      "consentShare": "J'accepte et partage"
+    }
+  },
+  "NoMatchingCredentialsModal": {
+    "title": "Aucune information d'identification correspondante trouvée",
+    "description": "Veuillez télécharger les informations d'identification correspondantes et réessayer le processus de partage",
+    "goToHomeButton": "Aller à l'accueil"
   }
 }

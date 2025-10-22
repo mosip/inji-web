@@ -464,7 +464,7 @@
       },
       "invalidWalletRequest": {
         "title": "Something Went Wrong",
-        "message": "We couldn’t verify your wallet information. Please try again later."
+        "message": "We couldn't verify your wallet information. Please try again later."
       },
       "invalidRequest": {
         "title": "Request Error",
@@ -489,6 +489,7 @@
         "benefitSkipReviewFuture": "You won’t need to review trust again when downloading from them next time.",
         "trustButton": "Yes, I trust this Verifier",
         "notTrustButton": "No, I don’t trust this Verifier",
+        "cancelButton": "Cancel",
         "infoTooltipButton": "What does trusting mean?",
         "infoTooltipText": "Trusting a verifier allows them to request your credentials. You’ll still choose which credentials to share in the next step."
       },
@@ -512,6 +513,28 @@
       "title": "Fetching verifier info...",
       "subtitle": "Please wait while we verify the request and prepare your credentials."
     }
+  },
+  "CredentialRequestModal": {
+    "loading": {
+      "title": "Loading Credentials",
+      "message": "Please wait while we fetch your available credentials..."
+    },
+    "header": {
+      "title": "{{verifierName}} is requesting these credentials",
+      "description": "Select which credentials you want to share"
+    },
+    "error": {
+      "title": "Error loading credentials",
+      "walletIdMessage": "Please make sure you are logged in and have unlocked your wallet."
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "consentShare": "I Consent & Share"
+    }
+  },
+  "NoMatchingCredentialsModal": {
+    "title": "No matching credentials found",
+    "description": "Please download the corresponding credentials and retry the sharing process",
+    "goToHomeButton": "Go to Home"
   }
-
 }
