@@ -84,6 +84,7 @@ export const CredentialShareHandler: React.FC<CredentialShareHandlerProps> = ({
                 title="Error"
                 description={errorCardMessage}
                 onClose={handleCloseErrorCard}
+                testId="modal-error-card"
             />
         );
     }
