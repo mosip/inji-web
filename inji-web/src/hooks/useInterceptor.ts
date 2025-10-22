@@ -8,7 +8,7 @@ import {AppStorage} from "../utils/AppStorage";
 export function useInterceptor() {
     const navigate = useNavigate();
     const location = useLocation();
-    const {removeUser, isUserLoggedIn} = useUser()
+    const {removeUser} = useUser()
 
     const interceptor = apiInstance.interceptors.response.use(function (response: any) {
         return response;
@@ -30,9 +30,6 @@ export function useInterceptor() {
             // Redirect to / page on logged-in user if unauthorized access is detected
         const currentRoute = location.pathname + location.search + location.hash;
         const isPasscodeRelatedRoute = location.pathname === ROUTES.USER_RESET_PASSCODE || location.pathname === ROUTES.USER_PASSCODE;
-
-        const isSessionActive: boolean = !!AppStorage.getItem(KEYS.USER);
-        if (isUserLoggedIn() || isSessionActive) {
             if (error.response && error.response.status === 401) {
                 removeUser()
                 // Avoid redirecting to passcode related pages in case of unauthorized access and re-login. This avoids unnecessary redirections to passcode related pages. If this is not leads to below sort of scenario.
@@ -43,7 +40,6 @@ export function useInterceptor() {
                 console.warn("Unauthorized access detected. Redirecting to / page.");
                 navigate(ROUTES.ROOT)
             }
-        }
         return Promise.reject(error as unknown as Error);
     });
 
