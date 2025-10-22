@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ModalWrapper } from "./ModalWrapper";
 import { ModalStyles } from "./ModalStyles";
 import { CredentialShareSuccessModalProps } from "../types/components";
@@ -9,6 +10,7 @@ import {SuccessIcon} from "../components/Common/Icons/SuccessIcon";
 
 export const CredentialShareSuccessModal: React.FC<CredentialShareSuccessModalProps> = (props) => {
     const { t } = useTranslation("CredentialShareSuccessModal");
+    const navigate = useNavigate();
     const [count, setCount] = useState(props.countdownStart ?? 5);
 
     // Countdown timer
@@ -18,15 +20,25 @@ export const CredentialShareSuccessModal: React.FC<CredentialShareSuccessModalPr
         setCount(props.countdownStart ?? 5);
         const timer = setInterval(() => {
             setCount((prev) => {
-                if (prev > 1) return prev - 1;
-                clearInterval(timer);
-                if (props.returnUrl) window.location.href = props.returnUrl;
+                if (prev > 1) {
+                    return prev - 1;
+                }
                 return 0;
             });
         }, 1000);
 
-        return () => clearInterval(timer);
-    }, [props.isOpen, props.countdownStart, props.returnUrl]);
+        // Handle navigation when countdown reaches 0
+        const navigationTimer = setTimeout(() => {
+            if (props.returnUrl) {
+                navigate(props.returnUrl);
+            }
+        }, (props.countdownStart ?? 5) * 1000);
+
+        return () => {
+            clearInterval(timer);
+            clearTimeout(navigationTimer);
+        };
+    }, [props.isOpen, props.countdownStart, navigate]);
 
     if (!props.isOpen) return null;
 
@@ -64,7 +76,7 @@ export const CredentialShareSuccessModal: React.FC<CredentialShareSuccessModalPr
                         <RedirectionButton
                             testId="btn-return-to-verifier"
                             onClick={() => {
-                                if (props.returnUrl) window.location.href = props.returnUrl;
+                                if (props.returnUrl) navigate(props.returnUrl);
                             }}
                         >
                             <span id="text-return-timer">{t("redirectMessage", { count })}</span>
