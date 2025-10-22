@@ -194,13 +194,7 @@ export const UserAuthorizationPage: React.FC = () => {
                     isOpen={isCancelConfirmation}
                     onConfirm={() => {
                         setIsCancelConfirmation(false);
-                        if (verifierData?.url) {
-                            console.log(verifierData?.url);
-                            window.location.href = verifierData.url;
-                        } else {
-                            console.log("home");
-                            navigate(ROUTES.ROOT);
-                        }
+                        navigate(ROUTES.ROOT);
                     }}
                     onClose={() => {
                         setIsCancelConfirmation(false);
