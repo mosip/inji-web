@@ -179,8 +179,8 @@ export const UserAuthorizationPage: React.FC = () => {
                 {error && (
                     <ErrorCard
                         isOpen={!!error}
-                        title={t("errorTitle") || "Error"}
-                        description={error}
+                        title={t("ErrorCard.defaultTitle")}
+                        description={t("ErrorCard.defaultDescription")}
                         onClose={() => { setError(null); navigate(ROUTES.ROOT); }}
                     />
                 )}

@@ -27,19 +27,19 @@ export const CredentialRequestModalFooter: React.FC<CredentialRequestModalFooter
                     className={`${CredentialRequestModalStyles.footer.consentButton} ${
                         isConsentButtonEnabled
                             ? CredentialRequestModalStyles.footer.consentButtonEnabled
-                            : `${CredentialRequestModalStyles.footer.consentButtonDisabled} bg-gray-400`
+                            : CredentialRequestModalStyles.footer.consentButtonDisabled
                     }`}
                 >
                     {t('buttons.consentShare')}
                 </button>
-                <div className="relative bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 rounded-lg p-0.5">
+                <div className={CredentialRequestModalStyles.footer.cancelButtonContainer}>
                     <button
                         type="button"
                         data-testid="btn-cancel"
                         onClick={onCancel}
                         className={`${CredentialRequestModalStyles.footer.cancelButton} bg-white rounded-md w-full h-full flex items-center justify-center border-none`}
                     >
-                        <span className="font-montserrat font-bold text-base leading-4 text-center text-orange-500 bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 bg-clip-text text-transparent inline-block whitespace-nowrap overflow-visible p-0.5 m-0 w-auto min-w-fit">{t('buttons.cancel')}</span>
+                        <span className={CredentialRequestModalStyles.footer.cancelButtonText}>{t('buttons.cancel')}</span>
                     </button>
                 </div>
             </div>
@@ -47,14 +47,14 @@ export const CredentialRequestModalFooter: React.FC<CredentialRequestModalFooter
             {/* Desktop Layout - Buttons close together, aligned to right */}
             <div className={CredentialRequestModalStyles.footer.desktopLayout}>
                 {/* Cancel button - positioned just left of consent button */}
-                <div className="relative bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 rounded-lg p-0.5">
+                <div className={CredentialRequestModalStyles.footer.cancelButtonContainer}>
                     <button
                         type="button"
                         data-testid="btn-cancel"
                         onClick={onCancel}
                         className={`${CredentialRequestModalStyles.footer.cancelButton} bg-white rounded-md w-full h-full flex items-center justify-center border-none`}
                     >
-                        <span className="font-montserrat font-bold text-base leading-4 text-center text-orange-500 bg-gradient-to-r from-orange-500 via-red-500 to-purple-600 bg-clip-text text-transparent inline-block whitespace-nowrap overflow-visible p-0.5 m-0 w-auto min-w-fit">{t('buttons.cancel')}</span>
+                        <span className={CredentialRequestModalStyles.footer.cancelButtonText}>{t('buttons.cancel')}</span>
                     </button>
                 </div>
 
@@ -67,7 +67,7 @@ export const CredentialRequestModalFooter: React.FC<CredentialRequestModalFooter
                     className={`${CredentialRequestModalStyles.footer.consentButton} ${
                         isConsentButtonEnabled
                             ? CredentialRequestModalStyles.footer.consentButtonEnabled
-                            : `${CredentialRequestModalStyles.footer.consentButtonDisabled} bg-gray-300`
+                            : CredentialRequestModalStyles.footer.consentButtonDisabled
                     }`}
                 >
                     {t('buttons.consentShare')}
