@@ -3,24 +3,24 @@
 exports[`Testing Layout of the Expiry Footer Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
-    class="flex items-center justify-between p-6 rounded-b"
+    class="flex items-center justify-between p-6 rounded-b gap-x-2"
     data-testid="DataShareFooter-Outer-Container"
   >
     <div
       class="w-full"
     >
       <div
-        class="bg-gradient-to-r rounded-lg text-center cursor-pointer shadow hover:shadow-lg from-iw-primary to-iw-secondary p-0.5"
+        class="bg-gradient-to-r text-center cursor-pointer from-iw-primary to-iw-secondary p-0.5 rounded-lg"
       >
         <div
-          class="py-1 px-2 rounded-lg bg-white justify-center center undefined"
+          class="py-1 px-2 bg-white justify-center center rounded-lg hover:bg-none hover:bg-[#FFF2F2] hover:text-[#E64E4E] undefined"
         >
           <button
-            class="text-iw-tertiary font-bold rounded-lg"
+            class="text-iw-tertiary font-bold text-[16px] leading-[24px] "
             data-testid="DataShareFooter-Cancel-Button"
           >
             <span
-              class="bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
+              class="inline-block bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
             >
               cancel
             </span>
@@ -32,7 +32,7 @@ exports[`Testing Layout of the Expiry Footer Check if the layout is matching wit
       class="w-full"
     >
       <button
-        class="w-full bg-iw-primary text-center items-center text-iw-text font-bold text-sm px-6 py-3 rounded-lg shadow text-white mr-1 hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary "
+        class="w-full text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 rounded-lg hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-white "
         data-testid="DataShareFooter-Success-Button"
       >
         <div

@@ -17,14 +17,14 @@ export const Footer: React.FC<FooterProps> = ({footerRef}) => {
             <div className="container mx-auto flex flex-col sm:flex-row justify-between items-end sm:items-center">
                 <p
                     data-testid="Footer-Text"
-                    className="ps-7 text-iw-subText transform rotate-180"
+                    className="ps-7 text-[#9E9E9E] transform rotate-180 text-[16px] leading-[24px] font-medium mr-4"
                 >
                     {t("Footer.copyRight")}
                 </p>
                 <div className={"flex flex-row items-center me-4"}>
                     <p
                         data-testid="Footer-Text"
-                        className="text-black transform rotate-180 font-bold"
+                        className="transform rotate-180 text-[16px] leading-[24px] font-medium"
                     >
                         {t("Footer.product")}
                     </p>

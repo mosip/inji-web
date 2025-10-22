@@ -1,3 +1,3 @@
 export const SolidButtonStyles = {
-    baseStyles : "w-full bg-iw-primary text-center items-center text-iw-text font-bold text-sm px-6 py-3 rounded-lg shadow text-white mr-1"
+    baseStyles : "w-full text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 rounded-lg"
 }

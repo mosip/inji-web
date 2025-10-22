@@ -66,7 +66,7 @@ exports[`ResetPasscodePage Component should match snapshot 1`] = `
           class="text-center space-y-5 relative w-full max-w-lg px-4 sm:px-0"
         >
           <h1
-            class="text-2xl-plus font-semibold text-iw-darkGrayishBlue"
+            class="text-[36px] leading-[44px] tracking-[-0.02em] font-bold text-iw-darkGrayishBlue"
             data-testid="title-reset-passcode"
           >
             Reset Your Wallet
@@ -87,7 +87,7 @@ exports[`ResetPasscodePage Component should match snapshot 1`] = `
               />
             </button>
             <p
-              class="text-iw-textTertiary text-base font-medium"
+              class="text-iw-textTertiary text-[16px] leading-[22px] font-light"
               data-testid="subtitle-reset-passcode"
             >
               Reset wallet to regain access and re-download credentials
@@ -182,7 +182,7 @@ exports[`ResetPasscodePage Component should match snapshot 1`] = `
               class="w-full"
             >
               <button
-                class="w-full bg-iw-primary text-center items-center text-iw-text font-bold text-sm px-6 py-3 rounded-lg shadow text-white mr-1 hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary mt-3 mb-0 sm:mt-3"
+                class="w-full text-center items-center text-iw-text font-bold px-6 py-2 shadow text-white mr-1 rounded-lg hover:shadow-lg cursor-pointer  bg-gradient-to-r from-iw-primary to-iw-secondary hover:bg-none hover:bg-[#E64E4E] hover:text-white mt-3 mb-0 sm:mt-3"
                 data-testid="btn-set-new-passcode"
               >
                 <div

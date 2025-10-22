@@ -24,51 +24,51 @@
     },
     "FeatureItem1": {
       "heading": "Access Your Credentials, Anywhere You Need",
-      "item1": "Credentials Simplified",
+      "item1": "Credentials simplified",
       "description1": "Keep all your essential documents",
-      "item2": "No more Paperwork. All In One Place",
+      "item2": "No more paperwork, all in one place",
       "description2": "Effortlessly download, store, and retrieve your documents with ease. Win, win, win."
     },
     "FeatureItem2": {
-      "heading": "Your Documents Downloaded in Second",
-      "item1": "Download with Confidence",
+      "heading": "Your Documents Downloaded in Seconds",
+      "item1": "Download with confidence",
       "description1": "Save your important documents instantly",
-      "item2": "Safe and Sound",
+      "item2": "Safe and sound",
       "description2": "Download IDs, licenses, and more, in one secure location."
     },
     "FeatureItem3": {
       "heading": "Easy Sharing",
-      "item1": "Share with a QR Code",
+      "item1": "Share with a QR code",
       "description1": "Seamlessly share your IDs and certificates on the go. Just present the QR code of your document, to be scanned and shared.",
       "item2": "Read, set, share",
       "description2": "QR code verified in real time."
     },
     "FeatureItem4": {
       "heading": "Secure and Private",
-      "item1": "Your Credentials, Protected",
+      "item1": "Your credentials, protected",
       "description1": "Your data stays private, with the built-in security mechanism.",
-      "item2": "Rest Easy",
+      "item2": "Rest easy",
       "description2": "Keep your credentials safe, so you can focus on what matters."
     },
     "FeatureItem5": {
       "heading": "Wider Access & Compatibility",
-      "item1": "Available on Your Favourite Browser",
+      "item1": "Available on your favourite browser",
       "description1": "Inji Wallet works with Chrome, Safari, Firefox, and Edge.",
-      "item2": "Always Within Reach",
+      "item2": "Always within reach",
       "description2": "Convenience meets accessibility wherever you are, ensuring your documents are always within reach."
     },
     "QuickTip":{
       "heading":"Quick Tips for Instantly Downloading Your Credentials",
       "toastText":"Coming soon",
-      "buttontext":"Click Here"
+      "buttontext":"Learn More"
     },
     "Login":{
       "loginTitle":"Log In",
       "loginDescription":"Log in with your account or continue as a guest to access your credentials.",
       "loginNote":"Some features may be limited in guest mode.",
-      "loggingIn":"Logging in",
-      "loginGoogle":"Continue with Google",
-      "loginGuest":"Continue as Guest"
+      "loggingIn":"Logging In",
+      "loginGoogle":"Continue With Google",
+      "loginGuest":"Continue As Guest"
     },
     "LoginFailedModal":{
       "failureMessage":"Login Failed",
@@ -141,7 +141,7 @@
       "title": "Access your Verifiable Credentials",
       "title2": "with ease!",
       "subTitle": "Securely download and share your credentials instantly.",
-      "searchText": "Search Issuers by name"
+      "searchText": "Search issuers by name"
     },
     "emptyContainerContent": "No issuers found. Please refresh your browser window or try again later",
     "containerHeading": "List of Issuers",
@@ -386,7 +386,7 @@
     },
     "success": "Proceed",
     "cancel": "Back",
-    "disclaimer": "Please note that the QR Code can be shared only for the number of times you have chosen here. To use the QR Code for sharing again, you have to download the PDF again.",
+    "disclaimer": "Please note that the QR code can be shared only for the number of times you have chosen here. To use the QR code for sharing again, you have to download the PDF again.",
     "toastText": "Coming soon"
   },
   "CustomExpiryModal": {

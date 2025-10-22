@@ -51,6 +51,7 @@ export const ConfirmationModal = (props: {
                         onClick={props.onConfirm}
                         title={t('confirm')}
                         fullWidth
+                        className={ModalStyles.confirmation.solidButton}
                     />
                 </div>
             </div>

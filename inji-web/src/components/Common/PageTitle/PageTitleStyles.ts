@@ -1,3 +1,3 @@
 export const PageTitleStyles = {
-    title: "text-2xl font-medium",
+    title: "text-[24px] leading-[32px] font-bold",
 }

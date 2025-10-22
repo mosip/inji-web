@@ -9,13 +9,13 @@ export const IntroBox: React.FC = () => {
             <div data-testid="IntroBox-Container" className="text-center pb-10">
                 <h2
                     data-testid="IntroBox-Text"
-                    className="text-lg sm:text-xl lg:text-2xl font-medium text-iw-title "
+                    className="text-[30px] leading-[38px] tracking-[-0.02em] sm:text-[36px] sm:leading-[44px] font-bold text-iw-title"
                 >
-                    {t("Intro.title")} {renderGradientText(t("Intro.title2"))}
+                    {t("Intro.title")} <span className="italic">{renderGradientText(t("Intro.title2"))}</span>
                 </h2>
                 <p
                     data-testid="IntroBox-SubText"
-                    className="mt-2 sm:text-md lg:text-lg font-small text-iw-subTitle"
+                    className="mt-2 text-[18px] leading-[28px] font-semibold text-iw-subTitle"
                 >
                     {t("Intro.subTitle")}
                 </p>

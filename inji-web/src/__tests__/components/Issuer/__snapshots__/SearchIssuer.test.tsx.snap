@@ -6,7 +6,7 @@ exports[`Testing the layout of SearchIssuer Check if the layout is matching with
     class="flex flex-col justify-center items-center w-full"
   >
     <div
-      class="w-full sm:w-4/4 md:w-3/4 flex justify-start items-center bg-iw-background shadow-iw rounded-lg"
+      class="w-full sm:w-4/4 md:w-3/4 flex justify-start items-center bg-iw-background shadow-iw gradient-outline-input rounded-lg"
       data-testid="Search-Issuer-Container"
     >
       <svg
@@ -26,9 +26,9 @@ exports[`Testing the layout of SearchIssuer Check if the layout is matching with
         />
       </svg>
       <input
-        class="py-2 sm:py-3 md:py-4 lg:py-6 w-3/4 sm:w-11/12 text-iw-searchTitle focus:outline-none overflow-ellipsis ml-0 mr-2 sm:mr-3 md:mr-4 lg:mr-10"
+        class="py-2 sm:py-3 md:py-4 lg:py-6 w-3/4 sm:w-11/12 focus:outline-none overflow-ellipsis ml-0 mr-2 sm:mr-3 md:mr-4 lg:mr-10 text-[14px] leading-[20px] text-[#9E9E9E] font-medium"
         data-testid="Search-Issuer-Input"
-        placeholder="Search Issuers by name"
+        placeholder="Search issuers by name"
         type="text"
         value=""
       />
@@ -38,7 +38,7 @@ exports[`Testing the layout of SearchIssuer Check if the layout is matching with
       data-testid="Search-Issuer-HelperAndError-Text"
     >
       <p
-        class="text-iw-closeIcon text-sm-plus"
+        class="text-iw-closeIcon text-[14px] leading-[20px]"
       >
         Search by issuer name using letters, numbers, hyphens (-), underscores (_) or brackets ( ) only.
       </p>

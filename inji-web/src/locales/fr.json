@@ -24,21 +24,21 @@
     },
     "FeatureItem1": {
       "heading": "Accédez à vos identifiants, où que vous soyez",
-      "item1": "Identifiants simplifiés",
+      "item1": "Informations d'identification simplifiées",
       "description1": "Gardez tous vos documents essentiels",
-      "item2": "Plus de paperasse. Tout en un seul endroit",
+      "item2": "Plus de paperasse, tout au même endroit",
       "description2": "Téléchargez, stockez et récupérez facilement vos documents. Gagnant, gagnant, gagnant."
     },
     "FeatureItem2": {
       "heading": "Vos documents téléchargés en une seconde",
       "item1": "Téléchargez en toute confiance",
       "description1": "Enregistrez instantanément vos documents importants",
-      "item2": "Sûr et sécurisé",
+      "item2": "Sain et sauf",
       "description2": "Téléchargez des pièces d'identité, des licences et plus encore, en un seul endroit sécurisé."
     },
     "FeatureItem3": {
       "heading": "Partage facile",
-      "item1": "Partagez avec un code QR",
+      "item1": "Partager avec un code QR",
       "description1": "Partagez facilement vos pièces d'identité et certificats en déplacement. Présentez simplement le code QR de votre document, à scanner et partager.",
       "item2": "Lire, définir, partager",
       "description2": "Code QR vérifié en temps réel."
@@ -47,7 +47,7 @@
       "heading": "Sécurisé et privé",
       "item1": "Vos identifiants, protégés",
       "description1": "Vos données restent privées, grâce au mécanisme de sécurité intégré.",
-      "item2": "Restez tranquille",
+      "item2": "Soyez tranquille",
       "description2": "Gardez vos identifiants en sécurité, pour que vous puissiez vous concentrer sur l'essentiel."
     },
     "FeatureItem5": {
@@ -60,7 +60,7 @@
     "QuickTip": {
       "heading": "Conseils rapides pour télécharger instantanément vos identifiants",
       "toastText": "à venir",
-      "buttontext": "Cliquez ici"
+      "buttontext": "Apprendre encore plus"
     },
     "Login": {
       "loginTitle": "Se connecter",
@@ -420,7 +420,7 @@
   "StoredCards": {
     "title": "Cartes Stockées",
     "header": {
-      "addCards": "Ajouter des Cartes"
+      "addCards": "Ajouter des cartes"
     },
     "emptyScreen": {
       "title": "Aucune Carte Stockée !",

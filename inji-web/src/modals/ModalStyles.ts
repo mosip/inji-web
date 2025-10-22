@@ -1,10 +1,11 @@
 export const ModalStyles = {
     confirmation: {
         container: "flex flex-col items-center pt-4 pb-4 px-8 gap-3",
-        title: "text-2xl justify-center font-medium text-center text-[--iw-color-textTertiary]",
+        title: "text-2xl justify-center font-medium text-center text-[--iw-color-textTertiary] font-montserrat",
         message: "text-[--iw-color-textTertiary] font-base font-light text-sm",
         buttonsContainer: "flex items-center justify-around sm:flex-row flex-col gap-4 w-full pt-3",
-        cancelButton: "py-2"
+        cancelButton: "py-2 font-montserrat text-[16px]",
+        solidButton: "font-montserrat"
     },
     modal: {
         overlay: "fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50",

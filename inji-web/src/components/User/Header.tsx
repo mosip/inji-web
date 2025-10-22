@@ -232,19 +232,14 @@ export const Header: React.FC<UserHeaderProps> = ({
                             >
                                 <div className="absolute top-[-0.3rem] right-8 w-3 h-3 bg-white transform rotate-45" />
                                 <div className="py-2">
-                                    {dropdownItems.map((item, index) => (
-                                        <React.Fragment key={item.key}>
-                                            <div
-                                                className={`px-4 py-2 text-sm ${item.textColor} hover:bg-gray-100 cursor-pointer`}
-                                                onClick={item.onClick}
-                                            >
-                                                {item.label}
-                                            </div>
-                                            {index !==
-                                                dropdownItems.length - 1 && (
-                                                <hr className="border-gray-200 my-1 mx-2" />
-                                            )}
-                                        </React.Fragment>
+                                    {dropdownItems.map((item) => (
+                                        <div
+                                            key={item.key}
+                                            className={`px-4 py-3 text-sm ${item.textColor} cursor-pointer hover:bg-iw-dropdownActiveBg hover:text-iw-primary`}
+                                            onClick={item.onClick}
+                                        >
+                                            {item.label}
+                                        </div>
                                     ))}
                                 </div>
                             </div>

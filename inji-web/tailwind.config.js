@@ -10,7 +10,7 @@ module.exports = {
                 'sm-md': {min: '640px', max: '1024px'}
             },
             fontFamily: {
-                base: 'var(--iw-font-base)',
+                base: 'var(--iw-font-montserrat)',
                 montserrat: 'var(--iw-font-montserrat)'
             },
             fontSize: {
@@ -78,7 +78,10 @@ module.exports = {
                     paleGray: 'var(--iw-color-paleGray)',
                     avatarPlaceholder: 'var(--iw-color-avatarPlaceholder)',
                     avatarText: 'var(--iw-color-avatarText)',
-                    darkgreen: 'var(--iw-color-darkGreen)'
+                    darkgreen: 'var(--iw-color-darkGreen)',
+                    disabled: 'var(--iw-color-disabled)',
+                    dropdownActiveBg: 'var(--iw-color-dropdown-active-bg)',
+                    dropdownText: 'var(--iw-color-dropdown-text)'
                 }
             },
             boxShadow: {

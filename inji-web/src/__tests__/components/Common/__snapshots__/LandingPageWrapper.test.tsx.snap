@@ -36,17 +36,17 @@ exports[`Testing the Layout of LandingPageWrapper ->  matches snapshot when user
       class=""
     >
       <div
-        class="bg-gradient-to-r rounded-lg text-center cursor-pointer shadow hover:shadow-lg from-iw-primary to-iw-secondary p-0.5"
+        class="bg-gradient-to-r text-center cursor-pointer from-iw-primary to-iw-secondary p-0.5 rounded-lg"
       >
         <div
-          class="py-1 px-2 rounded-lg bg-white justify-center center undefined"
+          class="py-1 px-2 bg-white justify-center center rounded-lg hover:bg-none hover:bg-[#FFF2F2] hover:text-[#E64E4E] undefined"
         >
           <button
-            class="text-iw-tertiary font-bold rounded-lg"
+            class="text-iw-tertiary font-bold text-[16px] leading-[24px] "
             data-testid="btn-home-download-result"
           >
             <span
-              class="bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
+              class="inline-block bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
             >
               Go To Home
             </span>
@@ -94,17 +94,17 @@ exports[`Testing the Layout of LandingPageWrapper ->  matches snapshot when user
       class=""
     >
       <div
-        class="bg-gradient-to-r rounded-lg text-center cursor-pointer shadow hover:shadow-lg from-iw-primary to-iw-secondary p-0.5"
+        class="bg-gradient-to-r text-center cursor-pointer from-iw-primary to-iw-secondary p-0.5 rounded-lg"
       >
         <div
-          class="py-1 px-2 rounded-lg bg-white justify-center center undefined"
+          class="py-1 px-2 bg-white justify-center center rounded-lg hover:bg-none hover:bg-[#FFF2F2] hover:text-[#E64E4E] undefined"
         >
           <button
-            class="text-iw-tertiary font-bold rounded-lg"
+            class="text-iw-tertiary font-bold text-[16px] leading-[24px] "
             data-testid="btn-home-download-result"
           >
             <span
-              class="bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
+              class="inline-block bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
             >
               Go To Home
             </span>

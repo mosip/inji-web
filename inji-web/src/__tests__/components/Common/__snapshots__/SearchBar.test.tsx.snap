@@ -3,7 +3,7 @@
 exports[`SearchBar Component Testing the Layout of HeaderTile Check if the layout is matching with the snapshots 1`] = `
 <DocumentFragment>
   <div
-    class="w-full flex justify-center items-center bg-iw-background shadow-iw sm:w-full rounded-md m-2"
+    class="w-full flex justify-center items-center bg-iw-background shadow-iw sm:w-full rounded-md m-2 gradient-outline-input"
     data-testid="test-search-bar-container"
   >
     <svg
@@ -23,7 +23,7 @@ exports[`SearchBar Component Testing the Layout of HeaderTile Check if the layou
       />
     </svg>
     <input
-      class="py-6 w-11/12 flex text-iw-searchTitle focus:outline-none overflow-ellipsis mr-10"
+      class="py-6 w-11/12 flex text-iw-searchTitle focus:outline-none overflow-ellipsis mr-10 text-[14px] leading-[20px] font-medium"
       data-testid="input-search"
       placeholder="Search test"
       type="text"

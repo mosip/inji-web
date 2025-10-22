@@ -1,6 +1,5 @@
 import React from 'react';
-import {RiArrowUpSFill, RiArrowDownSFill} from 'react-icons/ri';
-import { GradientWrapper } from './GradientWrapper';
+import {RiArrowUpSLine, RiArrowDownSLine} from 'react-icons/ri';
 
 type DropdownArrowIconProps = {
     isOpen: boolean;
@@ -8,13 +7,11 @@ type DropdownArrowIconProps = {
     color?: string;
 };
 
-const DropdownArrowIcon: React.FC<DropdownArrowIconProps> = ({isOpen, size = 20, color = 'var(--iw-color-languageArrowIcon)'}) => {
-    const ArrowIcon = isOpen ? RiArrowUpSFill : RiArrowDownSFill;
+const DropdownArrowIcon: React.FC<DropdownArrowIconProps> = ({isOpen, size = 24, color = 'var(--iw-color-languageArrowIcon)'}) => {
+    const ArrowIcon = isOpen ? RiArrowUpSLine : RiArrowDownSLine;
 
     return (
-        <GradientWrapper>
-            <ArrowIcon size={size} color={color} />
-        </GradientWrapper>
+        <ArrowIcon size={size} color={color} />
     );
 };
 
