@@ -127,31 +127,6 @@ export const UserAuthorizationPage: React.FC = () => {
         navigate(ROUTES.ROOT);
     };
 
-    const handleNoTrustButton = () => {
-        setShowTrustVerifier(false);
-        setShowCredentialRequest(true);
-    };
-
-    const handleCredentialRequestCancel = () => {
-        setShowCredentialRequest(false);
-        navigate(ROUTES.ROOT);
-    };
-
-    const handleCredentialRequestConsent = (selectedCredentials: string[]) => {
-        // TODO: Implement consent button logic for next story
-        // This should include:
-        // 1. Handle the selected credentials from CredentialRequestModal
-        // 2. Process the consent and share logic
-        // 3. Handle success/error states
-        // 4. Navigate appropriately after processing
-        
-        setShowCredentialRequest(false);
-        navigate(ROUTES.ROOT);
-    };
-
-
-
-
     useEffect(() => {
         void validateVerifierRequest();
         // eslint-disable-next-line react-hooks/exhaustive-deps
