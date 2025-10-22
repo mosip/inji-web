@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ModalWrapper } from "./ModalWrapper";
 import { ModalStyles } from "./ModalStyles";
@@ -6,39 +6,35 @@ import { CredentialShareSuccessModalProps } from "../types/components";
 import { RedirectionButton } from "../components/Common/Buttons/RedirectionButton";
 import { SharedCredentialListWrapper } from "../components/Credentials/SharedCredentialListWrapper";
 import { useTranslation } from "react-i18next";
-import {SuccessIcon} from "../components/Common/Icons/SuccessIcon";
+import { SuccessIcon } from "../components/Common/Icons/SuccessIcon";
 
 export const CredentialShareSuccessModal: React.FC<CredentialShareSuccessModalProps> = (props) => {
     const { t } = useTranslation("CredentialShareSuccessModal");
     const navigate = useNavigate();
     const [count, setCount] = useState(props.countdownStart ?? 5);
+    const startedRef = useRef(false); // prevent multiple intervals
 
-    // Countdown timer
     useEffect(() => {
-        if (!props.isOpen) return;
+        if (!props.isOpen || startedRef.current) return;
 
+        startedRef.current = true;
         setCount(props.countdownStart ?? 5);
+
         const timer = setInterval(() => {
-            setCount((prev) => {
-                if (prev > 1) {
-                    return prev - 1;
-                }
-                return 0;
-            });
+            setCount(prev => prev > 1 ? prev - 1 : 0);
         }, 1000);
 
-        // Handle navigation when countdown reaches 0
         const navigationTimer = setTimeout(() => {
-            if (props.returnUrl) {
-                navigate(props.returnUrl);
-            }
+            props.onClose?.();
+            if (props.returnUrl) navigate(props.returnUrl);
         }, (props.countdownStart ?? 5) * 1000);
 
         return () => {
             clearInterval(timer);
             clearTimeout(navigationTimer);
+            startedRef.current = false;
         };
-    }, [props.isOpen, props.countdownStart, navigate]);
+    }, [props.isOpen, props.countdownStart, props.returnUrl, navigate, props.onClose]);
 
     if (!props.isOpen) return null;
 
@@ -76,6 +72,7 @@ export const CredentialShareSuccessModal: React.FC<CredentialShareSuccessModalPr
                         <RedirectionButton
                             testId="btn-return-to-verifier"
                             onClick={() => {
+                                props.onClose?.();
                                 if (props.returnUrl) navigate(props.returnUrl);
                             }}
                         >

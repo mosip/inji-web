@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import {RedirectionButton} from "../../../../components/Common/Buttons/RedirectionButton.tsx";
+import { RedirectionButton } from "../../../../components/Common/Buttons/RedirectionButton";
 
 describe("RedirectionButton Component", () => {
     const mockClick = jest.fn();
@@ -26,6 +26,9 @@ describe("RedirectionButton Component", () => {
         // Check for image inside button
         const img = screen.getByAltText("Back");
         expect(img).toBeInTheDocument();
+
+        // Check that type is button
+        expect(button).toHaveAttribute("type", "button");
     });
 
     it("calls onClick when button is clicked", () => {
@@ -47,7 +50,8 @@ describe("RedirectionButton Component", () => {
             </RedirectionButton>
         );
 
-        const button = screen.getByRole("button", { name: /Go Back/i });
+        const button = screen.getByTestId("redirection-btn");
+        expect(button).toBeInTheDocument();
         expect(button).toHaveAttribute("data-testid", "redirection-btn");
     });
 

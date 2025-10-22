@@ -14,6 +14,7 @@ export const RedirectionButton: React.FC<RedirectionButtonProps> = ({
                                                                     }) => {
     return (
         <button
+            type="button"
             data-testid={testId}
             onClick={onClick}
             style={{

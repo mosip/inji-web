@@ -1,5 +1,5 @@
 import React from "react";
-import { PresentationCredential } from "../types/components";
+import { PresentationCredential } from "../../types/components";
 
 type SharedCredentialListWrapperProps = {
     credentials: PresentationCredential[];

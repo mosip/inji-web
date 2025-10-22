@@ -20,6 +20,12 @@ jest.mock("react-i18next", () => ({
     }),
 }));
 
+const mockNavigate = jest.fn();
+jest.mock("react-router-dom", () => ({
+    ...jest.requireActual("react-router-dom"),
+    useNavigate: () => mockNavigate,
+}));
+
 describe("CredentialShareSuccessModal", () => {
     const verifierName = "Verifier Portal";
     const credentials = [
@@ -45,6 +51,7 @@ describe("CredentialShareSuccessModal", () => {
 
     beforeEach(() => {
         jest.useFakeTimers();
+        mockNavigate.mockReset();
     });
 
     afterEach(() => {
@@ -67,7 +74,6 @@ describe("CredentialShareSuccessModal", () => {
             );
             asFragment = rendered.asFragment;
         });
-        // @ts-ignore
         expect(asFragment()).toMatchSnapshot();
     });
 
@@ -81,29 +87,21 @@ describe("CredentialShareSuccessModal", () => {
             />
         );
 
-        // Title & message
         expect(getByText(`Shared with ${verifierName}`)).toBeInTheDocument();
         expect(getByText(`Your credentials were successfully presented to ${verifierName}`)).toBeInTheDocument();
 
-        // Credentials list
         credentials.forEach((cred) => {
             expect(getByText(cred.credentialTypeDisplayName)).toBeInTheDocument();
             const img = document.querySelector(`img[alt='${cred.credentialTypeDisplayName}']`) as HTMLImageElement;
             expect(img).toHaveAttribute("src", cred.credentialTypeLogo);
         });
 
-        // Button and countdown
         const button = getByRole("button");
         expect(button).toBeInTheDocument();
         expect(getByText("Redirecting to verifier in 5 seconds...")).toBeInTheDocument();
     });
 
-    it("counts down correctly and redirects when timer reaches 0", () => {
-        // @ts-ignore
-        delete window.location;
-        // @ts-ignore
-        window.location = { href: "" };
-
+    it("counts down correctly and navigates when timer reaches 0", () => {
         render(
             <CredentialShareSuccessModal
                 isOpen={true}
@@ -122,15 +120,10 @@ describe("CredentialShareSuccessModal", () => {
             jest.advanceTimersByTime(4000);
         });
         expect(document.body.textContent).toContain("Redirecting to verifier in 0 seconds...");
-        expect(window.location.href).toBe("/redirected");
+        expect(mockNavigate).toHaveBeenCalledWith("/redirected");
     });
 
-    it("redirects immediately when button is clicked", () => {
-        // @ts-ignore
-        delete window.location;
-        // @ts-ignore
-        window.location = { href: "" };
-
+    it("navigates immediately when button is clicked", () => {
         const { getByRole } = render(
             <CredentialShareSuccessModal
                 isOpen={true}
@@ -145,7 +138,7 @@ describe("CredentialShareSuccessModal", () => {
             fireEvent.click(button);
         });
 
-        expect(window.location.href).toBe("/clicked");
+        expect(mockNavigate).toHaveBeenCalledWith("/clicked");
     });
 
     it("does not render when isOpen is false", () => {
