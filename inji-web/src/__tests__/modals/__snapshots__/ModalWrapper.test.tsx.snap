@@ -177,7 +177,7 @@ exports[`Test the Layout of the Modal Wrapper Snapshot test for ModalWrapper sty
                 class="px-4 text-center text-iw-disclaimerText text-xs"
                 data-testid="DataShareDisclaimer-Content"
               >
-                Please note that the QR Code can be shared only for the number of times you have chosen here. To use the QR Code for sharing again, you have to download the PDF again.
+                Please note that the QR code can be shared only for the number of times you have chosen here. To use the QR code for sharing again, you have to download the PDF again.
               </div>
             </div>
           </div>
@@ -192,7 +192,7 @@ exports[`Test the Layout of the Modal Wrapper Snapshot test for ModalWrapper sty
                 class="bg-gradient-to-r text-center cursor-pointer from-iw-primary to-iw-secondary p-0.5 rounded-lg"
               >
                 <div
-                  class="hover:bg-none hover:bg-[#FFF2F2] hover:text-[#E64E4E] py-1 px-2 bg-white justify-center center rounded-lg undefined"
+                  class="py-1 px-2 bg-white justify-center center rounded-lg hover:bg-none hover:bg-[#FFF2F2] hover:text-[#E64E4E] undefined"
                 >
                   <button
                     class="text-iw-tertiary font-bold text-[16px] leading-[24px] "

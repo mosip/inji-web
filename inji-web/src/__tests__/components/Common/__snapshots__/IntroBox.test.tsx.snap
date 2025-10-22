@@ -7,7 +7,7 @@ exports[`Testing the Layout of IntroBox Check if the layout is matching with the
     data-testid="IntroBox-Container"
   >
     <h2
-      class="text-[36px] leading-[44px] tracking-[-0.02em] font-bold text-iw-title"
+      class="text-[30px] leading-[38px] tracking-[-0.02em] sm:text-[36px] sm:leading-[44px] font-bold text-iw-title"
       data-testid="IntroBox-Text"
     >
       Intro.title 

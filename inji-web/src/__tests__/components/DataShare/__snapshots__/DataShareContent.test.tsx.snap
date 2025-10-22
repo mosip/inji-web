@@ -138,7 +138,7 @@ exports[`Testing  the Layout of the Expiry Content Check if the layout is matchi
         class="px-4 text-center text-iw-disclaimerText text-xs"
         data-testid="DataShareDisclaimer-Content"
       >
-        Please note that the QR Code can be shared only for the number of times you have chosen here. To use the QR Code for sharing again, you have to download the PDF again.
+        Please note that the QR code can be shared only for the number of times you have chosen here. To use the QR code for sharing again, you have to download the PDF again.
       </div>
     </div>
   </div>

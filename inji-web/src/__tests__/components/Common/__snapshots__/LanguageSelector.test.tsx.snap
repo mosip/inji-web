@@ -57,7 +57,7 @@ exports[`Testing the Layout of Language Selector Check if the layout is matching
           />
         </svg>
         <span
-          class="flex-1 text-[#809FB8] font-normal text-left pr-2"
+          class="flex-1 text-iw-languageArrowIcon font-normal text-left pr-2"
         >
           English
         </span>

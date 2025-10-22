@@ -39,7 +39,7 @@ exports[`Testing the Layout of LandingPageWrapper ->  matches snapshot when user
         class="bg-gradient-to-r text-center cursor-pointer from-iw-primary to-iw-secondary p-0.5 rounded-lg"
       >
         <div
-          class="hover:bg-none hover:bg-[#FFF2F2] hover:text-[#E64E4E] py-1 px-2 bg-white justify-center center rounded-lg undefined"
+          class="py-1 px-2 bg-white justify-center center rounded-lg hover:bg-none hover:bg-[#FFF2F2] hover:text-[#E64E4E] undefined"
         >
           <button
             class="text-iw-tertiary font-bold text-[16px] leading-[24px] "
@@ -97,7 +97,7 @@ exports[`Testing the Layout of LandingPageWrapper ->  matches snapshot when user
         class="bg-gradient-to-r text-center cursor-pointer from-iw-primary to-iw-secondary p-0.5 rounded-lg"
       >
         <div
-          class="hover:bg-none hover:bg-[#FFF2F2] hover:text-[#E64E4E] py-1 px-2 bg-white justify-center center rounded-lg undefined"
+          class="py-1 px-2 bg-white justify-center center rounded-lg hover:bg-none hover:bg-[#FFF2F2] hover:text-[#E64E4E] undefined"
         >
           <button
             class="text-iw-tertiary font-bold text-[16px] leading-[24px] "
