@@ -71,7 +71,7 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
         !credentials?.filtered_credentials?.credentials_supported ||
         (credentials?.filtered_credentials?.credentials_supported &&
             credentials?.filtered_credentials?.credentials_supported.length ===
-            0)
+                0)
     ) {
         return (
             <div>
