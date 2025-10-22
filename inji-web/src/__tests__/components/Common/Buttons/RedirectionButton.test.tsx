@@ -48,7 +48,7 @@ describe("RedirectionButton Component", () => {
         );
 
         const button = screen.getByRole("button", { name: /Go Back/i });
-        expect(button.id).toBe("redirection-btn");
+        expect(button).toHaveAttribute("data-testid", "redirection-btn");
     });
 
     it("has responsive classes for mobile and desktop", () => {

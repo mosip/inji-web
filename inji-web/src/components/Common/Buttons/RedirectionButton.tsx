@@ -14,7 +14,7 @@ export const RedirectionButton: React.FC<RedirectionButtonProps> = ({
                                                                     }) => {
     return (
         <button
-            id={testId}
+            data-testid={testId}
             onClick={onClick}
             style={{
                 backgroundColor: "var(--iw-color-paleViolet)",

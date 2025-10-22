@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { PresentationCredentialListProps } from '../../types/components';
+import { PresentationCredentialListProps, PresentationCredential } from '../../types/components';
 import { CredentialRequestModalStyles } from '../../modals/CredentialRequestModalStyles';
 import { CredentialItem } from './CredentialItem';
 import { RequestStatus } from '../../utils/constants';
@@ -76,7 +76,7 @@ export const PresentationCredentialList: React.FC<PresentationCredentialListProp
 
     return (
         <ul className={CredentialRequestModalStyles.content.credentialsList}>
-            {actualCredentials.map((credential: any, index: number) => (
+            {actualCredentials.map((credential: PresentationCredential, index: number) => (
                 <CredentialItem
                     key={credential.credentialId || index}
                     credential={credential}

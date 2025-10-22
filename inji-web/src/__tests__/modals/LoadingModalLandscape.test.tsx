@@ -17,10 +17,10 @@ describe("LoadingModalLandscape Component", () => {
     });
 
     it("does not render when isOpen is false", () => {
-        render(<LoadingModalLandscape isOpen={false} />);
-        expect(screen.queryByTestId("card-loading-container")).not.toBeInTheDocument();
-        expect(screen.queryByTestId("spinner-loading")).not.toBeInTheDocument();
-        expect(screen.queryByTestId("text-loading-message")).not.toBeInTheDocument();
+        const { container } = render(<LoadingModalLandscape isOpen={false} />);
+        expect(container.querySelector("#card-loading-container")).not.toBeInTheDocument();
+        expect(container.querySelector("#spinner-loading")).not.toBeInTheDocument();
+        expect(container.querySelector("#text-loading-message")).not.toBeInTheDocument();
     });
 
     it("renders spinner and message when open", () => {

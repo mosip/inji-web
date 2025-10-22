@@ -5,12 +5,12 @@ import { setMockUseSelectorState } from '../../../test-utils/mockReactRedux';
 import {RequestStatus} from "../../../utils/constants";
 import {PresentationCredentialList} from "../../../components/Credentials/PresentationCredentialList";
 
-describe("Testing the Layout of CredentialList Layouts", () => {
+describe("Testing the Layout of PresentationCredentialList", () => {
     beforeEach(() => {
         mockUseTranslation();
         setMockUseSelectorState({
             credentials: {
-                filtered_credentials: mockCredentials,
+                credentials: mockCredentials,
             },
             common: {
                 language: 'en',
@@ -32,16 +32,8 @@ describe("Testing the Layout of CredentialList Layouts", () => {
         expect(asFragment()).toMatchSnapshot();
     });
 
-    test('Check if the layout is matching with the snapshots of Empty List', () => {
-        const { asFragment } = renderWithProvider(<PresentationCredentialList state={RequestStatus.DONE} />);
-        expect(asFragment()).toMatchSnapshot();
-    });
-
     test('Check if the layout is matching with the snapshots of credentials list', () => {
         const { asFragment } = renderWithProvider(<PresentationCredentialList state={RequestStatus.DONE} />);
         expect(asFragment()).toMatchSnapshot();
     });
-    afterEach(()=>{
-        jest.clearAllMocks();
-    })
 });

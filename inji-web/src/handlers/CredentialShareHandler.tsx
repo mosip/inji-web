@@ -73,8 +73,8 @@ export const CredentialShareHandler: React.FC<CredentialShareHandlerProps> = ({
     }, [fetchData, presentationId, selectedCredentials, handleApiError]);
 
     const handleSuccessClose = () => {
-        if (onClose) onClose();
         if (returnUrl) window.location.href = returnUrl;
+        else if (onClose) onClose();
     };
 
     if (showErrorCard) {

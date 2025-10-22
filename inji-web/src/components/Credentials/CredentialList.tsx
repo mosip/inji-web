@@ -67,7 +67,7 @@ export const CredentialList: React.FC<CredentialListProps> = ({state}) => {
 
     if (
         state === RequestStatus.ERROR ||
-        Object.keys(filteredCredentialsWithLangSupport).length === 0 ||
+        filteredCredentialsWithLangSupport.length === 0 ||
         !credentials?.filtered_credentials?.credentials_supported ||
         (credentials?.filtered_credentials?.credentials_supported &&
             credentials?.filtered_credentials?.credentials_supported.length ===
