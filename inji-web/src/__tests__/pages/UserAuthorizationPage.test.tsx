@@ -447,23 +447,6 @@ describe('UserAuthorizationPage', () => {
     });
 
     test('untrusted flow: opens TrustRejectionModal on "Cancel" and handles confirmation to redirect', async () => {
-        const mockSetLocationHref = jest.fn();
-        const originalLocation = window.location;
-
-        Object.defineProperty(window, 'location', {
-            configurable: true,
-            writable: true,
-            value: {
-                ...originalLocation,
-                set href(url: string) {
-                    mockSetLocationHref(url);
-                },
-                get href() {
-                    return originalLocation.href;
-                }
-            }
-        });
-
         const mockVerifierWithRedirect = {
             ...mockVerifierUntrusted,
             verifier: {
@@ -495,8 +478,6 @@ describe('UserAuthorizationPage', () => {
         await waitFor(() => {
             expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT);
         });
-
-        Object.defineProperty(window, 'location', { value: originalLocation });
     });
 
     test('untrusted flow: opens TrustRejectionModal on "Cancel" and handles confirmation to ROOT when no redirectUri exists', async () => {

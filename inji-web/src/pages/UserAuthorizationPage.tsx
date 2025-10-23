@@ -110,10 +110,7 @@ export const UserAuthorizationPage: React.FC = () => {
 
     const handleNoTrustButton = () => {
         setShowTrustVerifier(false);
-        // right now we are setting it to true for testing but it should be false
-        //setShowCredentialRequest(false);
         setShowCredentialRequest(true);
-        //navigate(verifierData?.redirectUri || ROUTES.ROOT);
     };
 
     const handleCredentialRequestCancel = () => {

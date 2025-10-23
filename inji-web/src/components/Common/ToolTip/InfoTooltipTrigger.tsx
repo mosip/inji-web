@@ -33,6 +33,9 @@ export const InfoTooltipTrigger: React.FC<InfoTooltipTriggerProps> = ({
                 onClick={handleToggle}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
+                onFocus={handleMouseEnter}
+                onBlur={handleMouseLeave}
+                onKeyDown={(e) => { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); handleToggle(); } }}
                 className={InfoTooltipStyles.button}
                 data-testid="btn-info-tooltip-trigger-button"
                 aria-describedby={showTooltip ? `tooltip-${uniqueId}` : undefined}
@@ -40,6 +43,7 @@ export const InfoTooltipTrigger: React.FC<InfoTooltipTriggerProps> = ({
                 <img
                     src={InfoIcon}
                     alt="Information icon"
+                    aria-hidden="true"
                     className={InfoTooltipStyles.icon}
                     data-testid="text-info-icon"
                 />

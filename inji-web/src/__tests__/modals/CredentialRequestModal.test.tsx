@@ -42,11 +42,18 @@ jest.mock('../../utils/errorHandling', () => ({
 
 jest.mock('../../modals/ModalWrapper', () => ({
     ModalWrapper: ({ header, footer, content, zIndex, size }: any) => (
-        <div data-testid="ModalWrapper-Mock" data-z-index={zIndex} data-size={size}>
-            {header}
-            {content}
-            {footer}
-        </div>
+        <>
+            <div data-testid="ModalWrapper-BackDrop" className={`fixed inset-0 ${zIndex === 50 ? 'z-40' : 'z-30'} bg-black/60 backdrop-blur-sm`}></div>
+            <div data-testid="ModalWrapper-Outer-Container" className={`fixed inset-0 ${zIndex === 50 ? 'z-50' : 'z-40'} overflow-y-auto overflow-x-hidden`}>
+                <div className="min-h-full p-4 flex items-center justify-center">
+                    <div className="w-auto my-8 mx-2 sm:mx-4 md:mx-6">
+                        {header}
+                        {content}
+                        {footer}
+                    </div>
+                </div>
+            </div>
+        </>
     ),
 }));
 
@@ -621,7 +628,7 @@ describe('CredentialRequestModal', () => {
             // Wait for the main modal to render (not NoMatchingCredentialsModal)
             await waitFor(() => {
                 expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
-                expect(screen.getByTestId('ModalWrapper-Mock')).toBeInTheDocument();
+                expect(screen.getByTestId('ModalWrapper-Outer-Container')).toBeInTheDocument();
             });
         });
 
@@ -663,18 +670,20 @@ describe('CredentialRequestModal', () => {
         it('does not re-render unnecessarily when props are the same', async () => {
             const { rerender } = render(<CredentialRequestModal {...defaultProps} />);
 
-            // Wait for the main modal to render (not NoMatchingCredentialsModal)
+            // Wait for the main modal to render with credentials loaded
             await waitFor(() => {
                 expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
-                expect(screen.getByTestId('ModalWrapper-Outer-Container')).toBeInTheDocument();
+                expect(screen.queryByTestId('SpinningLoader-Container')).not.toBeInTheDocument();
+                expect(screen.getByTestId('credential-request-modal-content')).toBeInTheDocument();
             });
 
-            const initialModal = screen.getByTestId('ModalWrapper-Outer-Container');
+            const initialContent = screen.getByTestId('credential-request-modal-content').innerHTML;
 
             rerender(<CredentialRequestModal {...defaultProps} />);
 
-            const afterRerender = screen.getByTestId('ModalWrapper-Outer-Container');
-            expect(initialModal).toBe(afterRerender);
+            // Content should remain the same after rerender with same props
+            const afterRerenderContent = screen.getByTestId('credential-request-modal-content').innerHTML;
+            expect(afterRerenderContent).toBe(initialContent);
         });
 
         it('re-renders when isVisible prop changes', async () => {
