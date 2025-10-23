@@ -11,13 +11,15 @@ interface ErrorCardProps {
     description?: string;
     onClose: () => void; 
     isOpen: boolean;
+    testId: string;
 }
 
 export const ErrorCard: React.FC<ErrorCardProps> = ({
     title,
-    description = "Something went wrong. Please try again.",
+    description,
     onClose,
     isOpen,
+    testId,
 }) => {
     const { t } = useTranslation("VerifierTrustPage");
     if (!isOpen) return null;
@@ -32,37 +34,39 @@ export const ErrorCard: React.FC<ErrorCardProps> = ({
     const styles = ErrorCardStyles.errorCard;
 
     return (
-        <ModalWrapper
-            zIndex={50}
-            size="xl"
-            header={<></>}
-            footer={<></>}
-            content={
-                <div className={styles.wrapper}>
-                    <div className={styles.iconContainer}>
-                        <img
-                            src={ErrorMessageIcon}
-                            alt="Error Icon"
-                            className={styles.iconImage}
-                            data-testid="img-error-card-icon"
-                        />
-                    </div>
+        <div>
+            <ModalWrapper
+                zIndex={50}
+                size="xl"
+                header={<></>}
+                footer={<></>}
+                content={
+                    <div data-testid={testId} className={styles.wrapper}>
+                        <div className={styles.iconContainer}>
+                            <img
+                                src={ErrorMessageIcon}
+                                alt="Error Icon"
+                                className={styles.iconImage}
+                                data-testid="img-error-card-icon"
+                            />
+                        </div>
 
-                    <h2 id="title-error-card" className={styles.title}>
-                        {finalTitle}
-                    </h2>
-                    <p data-testid="text-error-card-description" className={styles.description}>{finalDescription}</p>
-                    <div className={styles.buttonContainer}>
-                        <SolidButton
-                            testId="btn-error-card-close"
-                            onClick={onClose}
-                            title={closeButtonText}
-                            fullWidth
-                            className={styles.closeButton}
-                        />
+                        <h2 id="title-error-card" className={styles.title}>
+                            {finalTitle}
+                        </h2>
+                        <p data-testid="text-error-card-description" className={styles.description}>{finalDescription}</p>
+                        <div className={styles.buttonContainer}>
+                            <SolidButton
+                                testId="btn-error-card-close"
+                                onClick={onClose}
+                                title={closeButtonText}
+                                fullWidth
+                                className={styles.closeButton}
+                            />
+                        </div>
                     </div>
-                </div>
-            }
-        />
+                }
+            />
+        </div>
     );
 };

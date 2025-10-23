@@ -57,12 +57,6 @@ export type HeaderTileProps = {
 export type IssuersListProps = {
     state: RequestStatus;
 }
-export type CredentialListProps = {
-    credentials?: PresentationCredential[];
-    selectedCredentials?: string[];
-    onCredentialToggle?: (credentialId: string) => void;
-    state?: RequestStatus;
-}
 export type CTContentProps = {
     expiryTime: number;
     setExpiryTime: (expiry: number) => void;
@@ -146,4 +140,20 @@ export interface PresentationCredential {
 export interface CredentialsResponse {
     availableCredentials: PresentationCredential[];
     missingClaims: any[];
+}
+
+export type CredentialShareSuccessModalProps = {
+    isOpen: boolean;
+    verifierName: string;
+    credentials: PresentationCredential[];
+    returnUrl: string;
+    countdownStart?: number;
+    onClose?: () => void;
+}
+
+export type PresentationCredentialListProps = {
+    credentials?: PresentationCredential[];
+    selectedCredentials?: string[];
+    onCredentialToggle?: (credentialId: string) => void;
+    state?: RequestStatus;
 }

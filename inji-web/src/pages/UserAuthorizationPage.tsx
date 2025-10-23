@@ -10,6 +10,8 @@ import { useApi } from "../hooks/useApi";
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from "../utils/constants";
 import { Sidebar } from "../components/User/Sidebar";
+import {PresentationCredential} from "../types/components";
+import {CredentialShareHandler} from "../handlers/CredentialShareHandler";
 
 const AUTHORIZATION_REQUEST_URL_PARAM = 'authorizationRequestUrl=';
 
@@ -22,6 +24,7 @@ export const UserAuthorizationPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [verifierData, setVerifierData] = useState<any>(null);
     const [presentationIdData, setPresentationIdData] = useState<string | null>(null);
+    const [selectedCredentialsData, setSelectedCredentialsData] = useState<PresentationCredential[] | null>(null);
 
     const apiService = useApi();
     const navigate = useNavigate();
@@ -43,7 +46,7 @@ export const UserAuthorizationPage: React.FC = () => {
             const queryString = window.location.search.substring(1);
             const authUrlIndex = queryString.indexOf(AUTHORIZATION_REQUEST_URL_PARAM);
             let cleanParams = '';
-            
+
             if (authUrlIndex !== -1) {
                 try {
                     cleanParams = queryString.substring(authUrlIndex + AUTHORIZATION_REQUEST_URL_PARAM.length);
@@ -115,19 +118,10 @@ export const UserAuthorizationPage: React.FC = () => {
         navigate(ROUTES.ROOT);
     };
 
-    const handleCredentialRequestConsent = (selectedCredentials: string[]) => {
-        // TODO: Implement consent button logic for next story
-        // This should include:
-        // 1. Handle the selected credentials from CredentialRequestModal
-        // 2. Process the consent and share logic
-        // 3. Handle success/error states
-        // 4. Navigate appropriately after processing
-        
+    const handleCredentialRequestConsent = (selectedCredentials: PresentationCredential[]) => {
+        setSelectedCredentialsData(selectedCredentials);
         setShowCredentialRequest(false);
-        navigate(ROUTES.ROOT);
     };
-
-
 
     useEffect(() => {
         void validateVerifierRequest();
@@ -140,7 +134,7 @@ export const UserAuthorizationPage: React.FC = () => {
             <div className="flex-shrink-0">
                 <Sidebar disabled={true} forceLeftPosition={true} />
             </div>
-            
+
             {/* Main Content */}
             <div className="flex-1 flex flex-col items-center justify-center relative">
                 <LoaderModal
@@ -148,21 +142,20 @@ export const UserAuthorizationPage: React.FC = () => {
                     title={t("loadingCard.title")}
                     subtitle={t("loadingCard.subtitle")}
                     size="xl-loading"
-                    data-testid="loader-modal"
+                    testId="modal-loader"
                 />
 
                 <TrustVerifierModal
                     isOpen={showTrustVerifier}
                     logo={verifierData?.logo}
                     verifierName={verifierData?.name}
-                    verifierDomain={verifierData?.id}
                     onTrust={handleTrustButton}
                     onNotTrust={handleNoTrustButton}
                     onCancel={() => {
                         setShowTrustVerifier(false);
                         setIsCancelConfirmation(true);
                     }}
-                    data-testid="modal-trust-verifier"
+                    testId="modal-trust-verifier"
                 />
 
                 {showCredentialRequest && presentationIdData && (
@@ -176,12 +169,21 @@ export const UserAuthorizationPage: React.FC = () => {
                     />
                 )}
 
+                {selectedCredentialsData && verifierData && presentationIdData && (
+                    <CredentialShareHandler
+                        verifierName={verifierData.name}
+                        returnUrl={verifierData.redirectUri || ROUTES.ROOT}
+                        selectedCredentials={selectedCredentialsData}
+                        presentationId={presentationIdData}
+                        onClose={() => { setSelectedCredentialsData(null); navigate(ROUTES.ROOT); }}
+                    />
+                )}
+
                 {error && (
                     <ErrorCard
                         isOpen={!!error}
-                        title={t("errorTitle") || "Error"}
-                        description={error}
                         onClose={() => { setError(null); navigate(ROUTES.ROOT); }}
+                        testId="modal-error-card"
                     />
                 )}
 
@@ -195,6 +197,7 @@ export const UserAuthorizationPage: React.FC = () => {
                         setIsCancelConfirmation(false);
                         setShowTrustVerifier(true);
                     }}
+                    testId="modal-trust-rejection-modal"
                 />
             </div>
         </div>

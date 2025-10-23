@@ -396,6 +396,14 @@
     "success": "தொடரவும்",
     "cancel": "ரத்து செய்"
   },
+  "LoadingModalLandscape": {
+    "message": "உங்கள் பாதுகாப்பான அங்கீகார அறிக்கையை தயாரித்து வருகிறது..."
+  },
+  "CredentialShareSuccessModal": {
+    "sharedWith": "{{verifierName}} உடன் பகிரப்பட்டது",
+    "credentialsPresented": "உங்கள் சான்றுகள் வெற்றிகரமாக {{verifierName}} க்கு வழங்கப்பட்டன",
+    "redirectMessage": "{{count}} விநாடிகளில் சரிபார்ப்பாளரிடம் மாற்றம் செய்யப்படுகிறது..."
+  },
   "User": {
     "Home": {
       "title": "முகப்பு",

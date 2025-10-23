@@ -162,7 +162,7 @@
     "errorContent": "الخدمة غير متاحة حالياً.",
     "errors": {
       "authorizationGrantTypeNotSupportedByWallet": {
-        "title": "نوع المنحة غير مدعوم خطأ في التفويض!",
+        "code": "نوع المنحة غير مدعوم خطأ في التفويض!",
         "message": "شكرًا على صبرك! نحن نواجه صعوبات تقنية في الوقت الحالي. يُرجى المحاولة مرة أخرى لاحقًا أو الاتصال بالمسؤول للحصول على مزيد من المساعدة!"
       }
     }
@@ -395,6 +395,14 @@
     "metrics": "مرات",
     "success": "يتابع",
     "cancel": "يلغي"
+  },
+  "LoadingModalLandscape": {
+    "message": "جارٍ إعداد عرض بيانات اعتمادك الآمن..."
+  },
+  "CredentialShareSuccessModal": {
+    "sharedWith": "تمت المشاركة مع {{verifierName}}",
+    "credentialsPresented": "تم تقديم بيانات اعتمادك بنجاح إلى {{verifierName}}",
+    "redirectMessage": "إعادة التوجيه إلى المحقق خلال {{count}} ثانية..."
   },
   "User": {
     "Home": {

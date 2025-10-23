@@ -10,6 +10,7 @@ interface LoaderModalProps {
     title: string;
     subtitle: string;
     size?: "sm" | "md" | "lg" | "xl" | "xl-loading" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl";
+    testId: string;
 }
 
 export const LoaderModal: React.FC<LoaderModalProps> = ({
@@ -17,6 +18,7 @@ export const LoaderModal: React.FC<LoaderModalProps> = ({
     title,
     subtitle,
     size = "4xl",
+    testId,
 }) => {
     if (!isOpen) return null;
 
@@ -38,7 +40,7 @@ export const LoaderModal: React.FC<LoaderModalProps> = ({
                 header={<></>}
                 footer={<></>}
                 content={
-                    <div className={wrapperClass}>
+                    <div data-testid={testId} className={wrapperClass}>
                         <div className={styles.spinnerContainer}>
                             <SpinningLoader></SpinningLoader>
                         </div>

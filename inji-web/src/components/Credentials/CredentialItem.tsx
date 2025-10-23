@@ -25,8 +25,8 @@ const CredentialItemComponent: React.FC<CredentialItemProps> = ({
     return (
         <li
             data-testid={`item-${credential.credentialId}`}
-            className={`${CredentialRequestModalStyles.content.credentialItemWrapper} shadow-md ${
-                isSelected ? 'bg-gradient-to-r from-orange-500 via-red-500 to-purple-600' : ''
+            className={`${CredentialRequestModalStyles.content.credentialItemSelectedWrapper} ${
+                isSelected ? CredentialRequestModalStyles.content.credentialItemSelectedBackground : ''
             }`}
             style={{
                 padding: isSelected ? '1px' : '0px',
@@ -41,7 +41,10 @@ const CredentialItemComponent: React.FC<CredentialItemProps> = ({
                 }`}
                 style={{
                     background: isSelected ? '#FFFFFF' : undefined,
-                    borderRadius: '8px'
+                    borderRadius: '8px',
+                    transform: isSelected ? 'translate(0.2px, 0.2px)' : 'none',
+                    height: isSelected ? 'calc(100% - 0.5px)' : '100%',
+                    width: isSelected ? 'calc(100% - 0.5px)' : '100%',
                 }}
             >
                 <div className={CredentialRequestModalStyles.content.credentialContent}>
@@ -82,9 +85,7 @@ const CredentialItemComponent: React.FC<CredentialItemProps> = ({
                         type="checkbox"
                         checked={isSelected}
                         onChange={handleToggle}
-                        className={`${CredentialRequestModalStyles.content.checkbox} ${
-                            isSelected ? 'bg-gradient-to-r from-orange-500 via-red-500 to-purple-600' : ''
-                        }`}
+                        className={`${isSelected ? CredentialRequestModalStyles.content.checkboxSelected : CredentialRequestModalStyles.content.checkbox}`}
                         style={{
                             appearance: 'none',
                             border: isSelected ? 'none' : '1px solid #d1d5db',

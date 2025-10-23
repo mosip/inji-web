@@ -396,6 +396,14 @@
     "success": "Procéder",
     "cancel": "Annuler"
   },
+  "LoadingModalLandscape": {
+    "message": "Préparation de votre présentation d’identifiants sécurisée..."
+  },
+  "CredentialShareSuccessModal": {
+    "sharedWith": "Partagé avec {{verifierName}}",
+    "credentialsPresented": "Vos informations d'identification ont été présentées avec succès à {{verifierName}}",
+    "redirectMessage": "Redirection vers le vérificateur dans {{count}} secondes..."
+  },
   "User": {
     "Home": {
       "title": "Maison",

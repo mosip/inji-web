@@ -20,5 +20,17 @@ export const ModalStyles = {
             container: "overflow-y-auto flex-1 min-h-0 sm:mx-5 sm:m-0 m-2 sm:bg-transparent bg-white sm:rounded-none rounded-xl"
         },
         action: "sm:absolute sm:right-6 sm:bottom-0 sm:mr-10 sm:pb-8 sm:bg-transparent sm:w-auto static bg-white flex px-2 w-full py-2 sm:rounded-b-lg"
+    },
+    loadingModalLandscape: {
+        container: `w-[677px] h-[430px] flex items-center justify-center max-w-full max-h-full min-w-[343px] min-h-[403px] px-4 sm:px-6 md:px-8`,
+        contentWrapper: `flex flex-col items-center justify-center gap-6 w-[250px] h-[136px] text-center`,
+        spinnerWrapper: `flex items-center justify-center`,
+        message: `font-montserrat font-medium text-center text-[--iw-color-header] w-full sm:w-auto mt-2 break-words px-2`
+    },
+    credentialShareSuccessModal: {
+        container: `-mt-6 flex flex-col items-center justify-center gap-4 bg-white max-w-[600px] w-auto h-auto sm:h-[690px] rounded-lg shadow-lg mx-auto text-center p-6`,
+        title: "text-xl justify-center font-montserrat text-center text-[--iw-color-title] font-bold",
+        iconWrapper: "flex items-center justify-center",
+        message: "text-[--iw-color-subTitle] font-montserrat font-light text-md text-center mt-2 break-words w-full sm:w-auto px-2",
     }
 }

@@ -1,64 +1,67 @@
-import React, { useState } from 'react';
-import InfoIcon from "../../../assets/info icon.svg";
+import React, { useState, useId } from 'react';
+import InfoIcon from "../../../assets/infoIconWhite.svg";
+import { InfoTooltipStyles } from './InfoTooltipStyles';
 
 interface InfoTooltipTriggerProps {
-    infoButtonText: string; 
-    tooltipText: string;    
-    buttonId?: string;
-    className?: string; 
+    infoButtonText: string;
+    tooltipText: string;
+    className?: string;
     testId?: string;
 }
 
 
 export const InfoTooltipTrigger: React.FC<InfoTooltipTriggerProps> = ({
-    infoButtonText,
-    tooltipText,
-    buttonId = 'trustscreen-info-button',
-    className = '',
-    testId = ''
-}) => {
+                                                                          infoButtonText,
+                                                                          tooltipText,
+                                                                          className = '',
+                                                                          testId = ''
+                                                                      }) => {
 
+    const uniqueId = useId();
     const [showTooltip, setShowTooltip] = useState(false);
 
-    
+
     const handleToggle = () => setShowTooltip(prev => !prev);
 
     const handleMouseEnter = () => setShowTooltip(true);
     const handleMouseLeave = () => setShowTooltip(false);
 
     return (
-        <div data-testid={testId} className={`relative inline-block mt-4 sm:mt-5 ${className}`}>
-           
+        <div data-testid={testId} className={`${InfoTooltipStyles.wrapper} ${className}`}>
+
             <button
-                id={buttonId}
                 onClick={handleToggle}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className="flex items-center text-gray-500 hover:text-gray-700 text-sm focus:outline-none"
-                aria-describedby={`tooltip-${buttonId}`}
+                onFocus={handleMouseEnter}
+                onBlur={handleMouseLeave}
+                onKeyDown={(e) => { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); handleToggle(); } }}
+                className={InfoTooltipStyles.button}
                 data-testid="btn-info-tooltip-trigger-button"
+                aria-describedby={showTooltip ? `tooltip-${uniqueId}` : undefined}
             >
-                <img 
-                    src={InfoIcon} 
-                    alt="Information icon" 
-                    className="w-4 h-4 mr-1" 
-                    data-testid="text-info-icon" 
+                <img
+                    src={InfoIcon}
+                    alt="Information icon"
+                    aria-hidden="true"
+                    className={InfoTooltipStyles.icon}
+                    data-testid="text-info-icon"
                 />
-                <span data-testid="text-info-button-label">{infoButtonText}</span> 
+                <span data-testid="text-info-button-label">{infoButtonText}</span>
             </button>
             {showTooltip && (
                 <div
-                    id={`tooltip-${buttonId}`}
+                    id={`tooltip-${uniqueId}`}
                     role="tooltip"
-                    className="absolute left-1/2 bottom-full mb-3 -translate-x-1/2 z-10 bg-[#5A26C5] text-white text-sm rounded-xl shadow-lg p-3 w-[290px] md:w-[380px] pr-[60px]"
+                    className={InfoTooltipStyles.tooltipContainer}
                     style={{
-                        filter: "drop-shadow(0px 2px 6px rgba(0,0,0,0.2))",
+                        filter: InfoTooltipStyles.tooltipShadow,
                     }}
                     data-testid="text-tooltip-content"
                 >
-                    <div className="absolute bottom-0 left-1/2 translate-x-[-50%] translate-y-full">
+                    <div className={InfoTooltipStyles.tooltipTriangleWrapper}>
                         <svg
-                            className="w-4 h-4 text-[#5A26C5]"
+                            className={InfoTooltipStyles.tooltipTriangle}
                             viewBox="0 0 20 20"
                             fill="currentColor"
                         >
@@ -66,8 +69,8 @@ export const InfoTooltipTrigger: React.FC<InfoTooltipTriggerProps> = ({
                         </svg>
                     </div>
 
-                    <p data-testid="text-tooltip-message" className="text-sm leading-snug text-left">
-                        {tooltipText} 
+                    <p data-testid="text-tooltip-message" className={InfoTooltipStyles.tooltipText}>
+                        {tooltipText}
                     </p>
                 </div>
             )}
