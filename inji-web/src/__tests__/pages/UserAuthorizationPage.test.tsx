@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { UserAuthorizationPage } from '../../pages/UserAuthorizationPage';
 import { api, ContentTypes } from "../../utils/api";
 import { ROUTES } from "../../utils/constants";
-import { PresentationCredential } from '../../types/components';
+import { PresentationCredential } from '../../types/components'; // Assuming this import exists
 
 const mockFetchData = jest.fn();
 const mockNavigate = jest.fn();
@@ -82,12 +82,10 @@ jest.mock('../../components/Issuers/TrustVerifierModal', () => ({
     }
 }));
 
-// ADDED MOCK: CredentialShareHandler is now rendered conditionally in the component
 const MockCredentialShareHandler = jest.fn();
 jest.mock('../../handlers/CredentialShareHandler', () => ({
     CredentialShareHandler: (props: any) => {
         MockCredentialShareHandler(props);
-        // Add a mock element to check visibility and props
         if (props.selectedCredentials && props.selectedCredentials.length > 0) {
             return (
                 <div data-testid="mock-credential-share-handler">
@@ -101,20 +99,29 @@ jest.mock('../../handlers/CredentialShareHandler', () => ({
 }));
 
 
+// DEFINE THE NEW MOCK CREDENTIAL DATA
+const mockPresentationCredentials: PresentationCredential[] = [
+    {
+        credentialId: 'mock-cred-id',
+        credentialTypeDisplayName: 'Mock Credential',
+        credentialTypeLogo: '',
+        format: 'vc'
+    }
+] as PresentationCredential[];
+
+
 const MockCredentialRequestModal = jest.fn();
 jest.mock('../../modals/CredentialRequestModal', () => ({
     CredentialRequestModal: (props: any) => {
         MockCredentialRequestModal(props);
         if (!props.isVisible) return null;
 
-        const mockCredentials: PresentationCredential[] = [{ id: 'cred-1', type: ['Credential'] }] as PresentationCredential[];
-
         return (
             <div data-testid="modal-credential-request">
                 <span>{`Request for ${props.verifierName}`}</span>
                 <button data-testid="btn-cr-cancel" onClick={props.onCancel}>CR-Cancel</button>
-                {/* Updated onClick to pass the mock data structure */}
-                <button data-testid="btn-cr-consent" onClick={() => props.onConsentAndShare(mockCredentials)}>CR-Consent</button>
+                {/* Updated onClick to pass the standardized mock data */}
+                <button data-testid="btn-cr-consent" onClick={() => props.onConsentAndShare(mockPresentationCredentials)}>CR-Consent</button>
             </div>
         );
     }
@@ -349,7 +356,6 @@ describe('UserAuthorizationPage', () => {
         expect(queryTrustVerifierModal()).not.toBeInTheDocument();
     });
 
-    // UPDATED TEST: Now checking that 'Not Trust' correctly proceeds to the CredentialRequestModal
     test('untrusted flow: proceeds to CredentialRequestModal on "Not Trust" click (current component logic)', async () => {
         mockFetchData.mockResolvedValueOnce({ ok: () => true, data: mockVerifierUntrusted, error: null, status: 200, state: 1, headers: {} });
 
@@ -363,9 +369,7 @@ describe('UserAuthorizationPage', () => {
         fireEvent.click(notTrustButton);
 
         await waitFor(() => {
-            // Assert: TrustVerifierModal closes
             expect(queryTrustVerifierModal()).not.toBeInTheDocument();
-            // Assert: CredentialRequestModal opens (as per component's handleNoTrustButton)
             expect(screen.getByTestId('modal-credential-request')).toBeVisible();
         });
     });
@@ -386,7 +390,7 @@ describe('UserAuthorizationPage', () => {
         });
     });
 
-    // NEW TEST: Covers the updated state transition to CredentialShareHandler
+    // UPDATED TEST: Reflects the corrected PresentationCredential structure
     test('CredentialRequestModal consent sets state and renders CredentialShareHandler', async () => {
         const presentationId = mockVerifierTrusted.presentationId;
         const verifierName = mockVerifierTrusted.verifier.name;
@@ -402,33 +406,28 @@ describe('UserAuthorizationPage', () => {
         fireEvent.click(consentButton);
 
         await waitFor(() => {
-            // Assert 1: The request modal closes
             expect(queryCredentialRequestModal()).not.toBeInTheDocument();
 
-            // Assert 2: The CredentialShareHandler renders
             const shareHandler = screen.getByTestId('mock-credential-share-handler');
             expect(shareHandler).toBeVisible();
 
-            // Assert 3: The CredentialShareHandler receives the correct props
+            // ASSERTION UPDATED WITH THE NEW DATA STRUCTURE
             expect(MockCredentialShareHandler).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    selectedCredentials: [{ id: 'cred-1', type: ['Credential'] }],
+                    selectedCredentials: mockPresentationCredentials,
                     presentationId: presentationId,
                     verifierName: verifierName,
                     returnUrl: redirectUri,
                 })
             );
 
-            // Assert 4: No immediate navigation happens
             expect(mockNavigate).not.toHaveBeenCalled();
         });
     });
 
-    // NEW TEST: Covers the CredentialShareHandler's onClose prop
     test('CredentialShareHandler onClose navigates to ROOT and clears state', async () => {
         renderComponent();
 
-        // 1. Trigger the Share Handler to render
         await waitFor(() => {
             expect(screen.getByTestId('modal-credential-request')).toBeVisible();
         });
@@ -438,11 +437,9 @@ describe('UserAuthorizationPage', () => {
             expect(screen.getByTestId('mock-credential-share-handler')).toBeVisible();
         });
 
-        // 2. Click the close button
         const closeButton = screen.getByTestId('btn-share-handler-close');
         fireEvent.click(closeButton);
 
-        // 3. Assert cleanup and navigation
         await waitFor(() => {
             expect(screen.queryByTestId('mock-credential-share-handler')).not.toBeInTheDocument();
             expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT);
@@ -494,10 +491,6 @@ describe('UserAuthorizationPage', () => {
 
         const confirmButton = screen.getByTestId('btn-confirm-cancel');
         fireEvent.click(confirmButton);
-
-        // FIX: The original component code did not correctly implement the redirect for rejection modal.
-        // It currently navigates to ROUTES.ROOT regardless. Reverting to check navigation.
-        // If the component is updated, this assertion must change to check mockSetLocationHref.
 
         await waitFor(() => {
             expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT);
