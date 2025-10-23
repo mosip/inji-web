@@ -26,7 +26,8 @@ export const CredentialShareSuccessModal: React.FC<CredentialShareSuccessModalPr
 
         const navigationTimer = setTimeout(() => {
             props.onClose?.();
-            if (props.returnUrl) navigate(props.returnUrl);
+            if (props.returnUrl) 
+                window.location.href = props.returnUrl;
         }, (props.countdownStart ?? 5) * 1000);
 
         return () => {
@@ -73,7 +74,8 @@ export const CredentialShareSuccessModal: React.FC<CredentialShareSuccessModalPr
                             testId="btn-return-to-verifier"
                             onClick={() => {
                                 props.onClose?.();
-                                if (props.returnUrl) navigate(props.returnUrl);
+                                if (props.returnUrl)
+                                    window.location.href = props.returnUrl;
                             }}
                         >
                             <span id="text-return-timer">{t("redirectMessage", { count })}</span>
