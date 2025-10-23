@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useId } from 'react';
 import InfoIcon from "../../../assets/infoIconWhite.svg";
 import { InfoTooltipStyles } from './InfoTooltipStyles';
 
@@ -17,6 +17,7 @@ export const InfoTooltipTrigger: React.FC<InfoTooltipTriggerProps> = ({
                                                                           testId = ''
                                                                       }) => {
 
+    const uniqueId = useId();
     const [showTooltip, setShowTooltip] = useState(false);
 
 
@@ -34,6 +35,7 @@ export const InfoTooltipTrigger: React.FC<InfoTooltipTriggerProps> = ({
                 onMouseLeave={handleMouseLeave}
                 className={InfoTooltipStyles.button}
                 data-testid="btn-info-tooltip-trigger-button"
+                aria-describedby={showTooltip ? `tooltip-${uniqueId}` : undefined}
             >
                 <img
                     src={InfoIcon}
@@ -45,6 +47,7 @@ export const InfoTooltipTrigger: React.FC<InfoTooltipTriggerProps> = ({
             </button>
             {showTooltip && (
                 <div
+                    id={`tooltip-${uniqueId}`}
                     role="tooltip"
                     className={InfoTooltipStyles.tooltipContainer}
                     style={{

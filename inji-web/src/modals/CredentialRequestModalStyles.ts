@@ -1,5 +1,3 @@
-const GRADIENT_PRIMARY = "linear-gradient(90deg,_#FF5300_0%,_#FB5103_16%,_#F04C0F_31%,_#DE4322_46%,_#C5363C_61%,_#A4265F_75%,_#7C1389_90%,_#5B03AD_100%)";
-
 export const CredentialRequestModalStyles = {
     container: "!w-[677px] !h-[430px] top-[235px] left-[382px] rounded-xl border border-gray-200 opacity-100 shadow-sm transition-all duration-300 ease-in-out max-[533px]:w-screen max-[533px]:left-0 max-[533px]:right-0 max-[533px]:z-[60]",
     header: {
@@ -22,8 +20,8 @@ export const CredentialRequestModalStyles = {
         checkbox: "rounded focus:ring-2 focus:!ring-[var(--iw-color-primary)] w-5 h-5",
         checkboxIcon: "w-3 h-3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2",
         credentialItemSelectedWrapper: "w-full transition-colors shadow-md",
-        credentialItemSelectedBackground: `!bg-[${GRADIENT_PRIMARY}]`,
-        checkboxSelected: `rounded focus:ring-2 focus:!ring-[var(--iw-color-primary)] w-5 h-5 !bg-[${GRADIENT_PRIMARY}]`
+        credentialItemSelectedBackground: "!bg-[linear-gradient(90deg,_#FF5300_0%,_#FB5103_16%,_#F04C0F_31%,_#DE4322_46%,_#C5363C_61%,_#A4265F_75%,_#7C1389_90%,_#5B03AD_100%)]",
+        checkboxSelected: "rounded focus:ring-2 focus:!ring-[var(--iw-color-primary)] w-5 h-5 !bg-[linear-gradient(90deg,_#FF5300_0%,_#FB5103_16%,_#F04C0F_31%,_#DE4322_46%,_#C5363C_61%,_#A4265F_75%,_#7C1389_90%,_#5B03AD_100%)]"
     },
     footer: {
         container: "px-6 py-4 border-t !border-[var(--iw-color-borderLight)]",
@@ -31,9 +29,9 @@ export const CredentialRequestModalStyles = {
         desktopLayout: "hidden sm:flex justify-end items-center gap-3",
         cancelButton: "transition-all relative w-full h-10 min-h-[40px] sm:w-36 sm:h-12 sm:min-h-[48px] text-base text-center border-none !bg-[var(--iw-color-tileBackground)] p-0",
         consentButton: "rounded-lg transition-all w-full h-10 min-h-[40px] sm:w-44 sm:h-12 sm:min-h-[48px] text-center border-none p-0 font-montserrat font-bold text-base leading-4",
-        consentButtonEnabled: `hover:opacity-90 text-white !bg-[${GRADIENT_PRIMARY}]`,
+        consentButtonEnabled: "hover:opacity-90 text-white !bg-[linear-gradient(90deg,_#FF5300_0%,_#FB5103_16%,_#F04C0F_31%,_#DE4322_46%,_#C5363C_61%,_#A4265F_75%,_#7C1389_90%,_#5B03AD_100%)]",
         consentButtonDisabled: "cursor-not-allowed text-white !bg-[var(--iw-color-grayLight)]",
-        cancelButtonContainer: `relative rounded-lg p-0.5 !bg-[${GRADIENT_PRIMARY}]`,
-        cancelButtonText: `font-montserrat font-bold text-base leading-4 text-center inline-block whitespace-nowrap overflow-visible p-0.5 m-0 w-auto min-w-fit !bg-[${GRADIENT_PRIMARY}] !bg-clip-text !text-transparent`
+        cancelButtonContainer: "relative rounded-lg p-0.5 !bg-[linear-gradient(90deg,_#FF5300_0%,_#FB5103_16%,_#F04C0F_31%,_#DE4322_46%,_#C5363C_61%,_#A4265F_75%,_#7C1389_90%,_#5B03AD_100%)]",
+        cancelButtonText: "font-montserrat font-bold text-base leading-4 text-center inline-block whitespace-nowrap overflow-visible p-0.5 m-0 w-auto min-w-fit !bg-[linear-gradient(90deg,_#FF5300_0%,_#FB5103_16%,_#F04C0F_31%,_#DE4322_46%,_#C5363C_61%,_#A4265F_75%,_#7C1389_90%,_#5B03AD_100%)] !bg-clip-text !text-transparent"
     }
 };
