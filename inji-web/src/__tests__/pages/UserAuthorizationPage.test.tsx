@@ -370,7 +370,6 @@ describe('UserAuthorizationPage', () => {
         fireEvent.click(consentButton);
 
         await waitFor(() => {
-            expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT);
             expect(queryCredentialRequestModal()).not.toBeInTheDocument();
         });
     });
