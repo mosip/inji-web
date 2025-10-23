@@ -337,7 +337,10 @@ describe('CredentialRequestModal', () => {
     describe('No Credentials State', () => {
         it('shows no credentials message when no credentials are available', async () => {
             mockFetchData.mockResolvedValue({
-                data: { credentials: [] },
+                data: { 
+                    availableCredentials: [], 
+                    missingClaims: [],
+                },
                 error: null,
                 status: 200,
                 ok: () => true,
