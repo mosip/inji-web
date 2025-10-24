@@ -18,6 +18,7 @@ exports[`Testing Layout of the Expiry Footer Check if the layout is matching wit
           <button
             class="text-iw-tertiary font-bold text-[16px] leading-[24px] "
             data-testid="DataShareFooter-Cancel-Button"
+            id="DataShareFooter-Cancel-Button"
           >
             <span
               class="inline-block bg-gradient-to-r from-iw-primary to-iw-secondary bg-clip-text text-md font-bold text-transparent"
