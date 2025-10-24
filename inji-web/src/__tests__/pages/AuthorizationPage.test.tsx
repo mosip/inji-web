@@ -9,7 +9,7 @@ jest.mock("../../utils/api", () => ({
 
 describe('Testing the Layouts of AuthorizationPage', () => {
   test('Check if it renders properly if there is no error in URL', () => {
-    mockWindowLocation('https://api.collab.mosip.net?resource=datashare-service&datashare=test');
+    mockWindowLocation('https://api.collab.mosip.net?resource=datashare&datashare=test');
     const {asFragment} = renderWithRouter(<AuthorizationPage />);
     expect(asFragment()).toMatchSnapshot();
   });
