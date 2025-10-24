@@ -68,7 +68,7 @@
       "loginNote":"Some features may be limited in guest mode.",
       "loggingIn":"Logging In",
       "loginGoogle":"Continue With Google",
-      "loginGuest":"Continue As Guest"
+      "loginGuest":"Continue as Guest"
     },
     "LoginFailedModal":{
       "failureMessage":"Login Failed",
