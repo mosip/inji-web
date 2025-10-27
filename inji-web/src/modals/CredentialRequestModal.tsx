@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useRef, useCallback, useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
-import {ModalWrapper} from './ModalWrapper';
 import {NoMatchingCredentialsModal} from './NoMatchingCredentialsModal';
-import { LoadingModalLandscape } from './LoadingModalLandscape';
+import { LoaderModal } from './LoadingModal';
 import {ErrorCard} from './ErrorCard';
 import {useApi} from '../hooks/useApi';
 import {useApiErrorHandler} from '../hooks/useApiErrorHandler';
@@ -212,9 +211,11 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
     // Show loading modal when loading
     if (isLoading) {
         return (
-            <LoadingModalLandscape
+            <LoaderModal
                 isOpen={true}
                 message={t('loading.message')}
+                size="xl-loading"
+                testId="modal-loader-card"
             />
         );
     }

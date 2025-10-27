@@ -396,7 +396,7 @@
     "success": "ಮುಂದುವರೆಯಿರಿ",
     "cancel": "ರದ್ದುಮಾಡು"
   },
-  "LoadingModalLandscape": {
+  "ShareHandlerLoadingModal": {
     "message": "ನಿಮ್ಮ ಸುರಕ್ಷಿತ ಕ್ರೆಡೆನ್ಷಿಯಲ್ ಪ್ರಸ್ತುತಿ ಸಿದ್ಧಪಡಿಸಲಾಗುತ್ತಿದೆ..."
   },
   "CredentialShareSuccessModal": {

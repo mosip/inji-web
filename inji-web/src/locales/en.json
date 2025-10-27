@@ -396,7 +396,7 @@
     "success": "Proceed",
     "cancel": "Cancel"
   },
-  "LoadingModalLandscape": {
+  "ShareHandlerLoadingModal": {
     "message": "Preparing your secure credential presentation..."
   },
   "CredentialShareSuccessModal": {

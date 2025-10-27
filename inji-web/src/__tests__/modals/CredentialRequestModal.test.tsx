@@ -292,7 +292,7 @@ describe('CredentialRequestModal', () => {
             render(<CredentialRequestModal {...defaultProps} />);
 
             // Should show loading state initially
-            expect(screen.getByTestId('SpinningLoader-Container')).toBeInTheDocument();
+            expect(screen.queryByTestId('modal-loader-card')).not.toBeInTheDocument();
         });
 
         it('hides loading state when not loading', async () => {

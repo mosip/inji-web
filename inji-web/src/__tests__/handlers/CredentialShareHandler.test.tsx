@@ -51,7 +51,7 @@ describe("CredentialShareHandler", () => {
     it("shows loading modal initially", () => {
         mockFetchData.mockResolvedValueOnce({ ok: () => true });
         render(<CredentialShareHandler {...defaultProps} />);
-        expect(screen.getByTestId("loading-modal")).toBeInTheDocument();
+        expect(screen.queryByTestId('modal-loader-card')).toBeInTheDocument();
     });
 
     it("shows success modal when API call succeeds", async () => {

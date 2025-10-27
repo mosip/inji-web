@@ -396,7 +396,7 @@
     "success": "தொடரவும்",
     "cancel": "ரத்து செய்"
   },
-  "LoadingModalLandscape": {
+  "ShareHandlerLoadingModal": {
     "message": "உங்கள் பாதுகாப்பான அங்கீகார அறிக்கையை தயாரித்து வருகிறது..."
   },
   "CredentialShareSuccessModal": {

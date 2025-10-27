@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
+import {useTranslation} from 'react-i18next';
 import { useApi } from "../hooks/useApi";
 import { api } from "../utils/api";
-import { LoadingModalLandscape } from "../modals/LoadingModalLandscape";
+import { LoaderModal } from "../modals/LoadingModal";
 import { ErrorCard } from "../modals/ErrorCard";
 import { CredentialShareSuccessModal } from "../modals/CredentialShareSuccessModal";
 import { PresentationCredential, CredentialShareSuccessModalProps } from "../types/components";
@@ -23,6 +24,7 @@ export const CredentialShareHandler: React.FC<CredentialShareHandlerProps> = ({
                                                                                   onClose
                                                                               }) => {
     const { fetchData } = useApi();
+    const {t} = useTranslation("ShareHandlerLoadingModal");
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const hasSubmittedRef = useRef<boolean>(false);
@@ -90,7 +92,12 @@ export const CredentialShareHandler: React.FC<CredentialShareHandlerProps> = ({
     }
 
     if (isLoading) {
-        return <LoadingModalLandscape isOpen={true} />;
+        return <LoaderModal
+            isOpen={true}
+            message={t("message")}
+            size="xl-loading"
+            testId="modal-loader-card"
+        />;
     }
 
     if (isSuccess) {

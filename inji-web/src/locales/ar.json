@@ -396,7 +396,7 @@
     "success": "يتابع",
     "cancel": "يلغي"
   },
-  "LoadingModalLandscape": {
+  "ShareHandlerLoadingModal": {
     "message": "جارٍ إعداد عرض بيانات اعتمادك الآمن..."
   },
   "CredentialShareSuccessModal": {
