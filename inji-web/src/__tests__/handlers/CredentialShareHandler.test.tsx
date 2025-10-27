@@ -11,8 +11,8 @@ jest.mock("../../hooks/useApi", () => ({
 jest.mock("../../hooks/useApiErrorHandler");
 const mockUseApiErrorHandler = useApiErrorHandler as jest.Mock;
 
-jest.mock("../../modals/LoadingModalLandscape", () => ({
-    LoadingModalLandscape: () => <div data-testid="loading-modal" />,
+jest.mock("../../modals/LoadingModal", () => ({
+    LoaderModal: () => <div data-testid="modal-loader-card" />,
 }));
 jest.mock("../../modals/ErrorCard", () => ({
     ErrorCard: ({ isOpen, description }: { isOpen: boolean; description: string }) =>
@@ -51,7 +51,7 @@ describe("CredentialShareHandler", () => {
     it("shows loading modal initially", () => {
         mockFetchData.mockResolvedValueOnce({ ok: () => true });
         render(<CredentialShareHandler {...defaultProps} />);
-        expect(screen.queryByTestId('modal-loader-card')).toBeInTheDocument();
+        expect(screen.getByTestId("modal-loader-card")).toBeInTheDocument();
     });
 
     it("shows success modal when API call succeeds", async () => {

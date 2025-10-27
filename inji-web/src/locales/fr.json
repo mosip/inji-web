@@ -491,10 +491,10 @@
   "VerifierTrustPage": {
     "modal": {
       "title": "Vérificateur inconnu",
-      "description": "Assurez-vous de reconnaître ou de faire confiance à cet Émetteur. \nUne fois que vous faites confiance à ce Vérificateur:",
-      "benefitSaveSecurely": "La carte sera enregistrée en toute sécurité dans votre portefeuille.",
+      "description": "Assurez-vous de reconnaître ou de faire confiance à ce vérificateur. \nUne fois que vous faites confiance à ce Vérificateur:",
+      "benefitSaveSecurely": "Votre portefeuille se souviendra de ce Vérificateur comme étant fiable.",
       "benefitAddToTrustedList": "Ce vérificateur sera ajouté à votre liste de confiance.",
-      "benefitSkipReviewFuture": "Vous n'aurez pas besoin de revoir la confiance lors du prochain téléchargement à partir de celui-ci.",
+      "benefitSkipReviewFuture": "Les futures demandes de vérification de ce Vérificateur seront automatiquement approuvées.",
       "trustButton": "Oui, je fais confiance à ce Vérificateur",
       "notTrustButton": "Non, je ne fais pas confiance à ce Vérificateur",
       "infoTooltipButton": "Que signifie faire confiance ?",

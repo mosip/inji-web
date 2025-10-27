@@ -491,10 +491,10 @@
   "VerifierTrustPage": {
     "modal": {
       "title": "Verificador desconhecido",
-      "description": "Certifique-se de que você reconhece ou confia neste Emissor. \nDepois que confiar neste Verificador:",
-      "benefitSaveSecurely": "O cartão será guardado de forma segura na sua carteira.",
+      "description": "Certifique-se de que você reconhece ou confia neste Verificador. \nDepois que confiar neste Verificador:",
+      "benefitSaveSecurely": "Sua carteira lembrará este Verificador como confiável.",
       "benefitAddToTrustedList": "Este verificador será adicionado à sua lista de confiança.",
-      "benefitSkipReviewFuture": "Não precisará de rever a confiança ao fazer download a partir dele da próxima vez.",
+      "benefitSkipReviewFuture": "Futuros pedidos de verificação deste Verificador serão confiados automaticamente.",
       "trustButton": "Sim, eu confio neste Verificador",
       "notTrustButton": "Não, eu não confio neste Verificador",
       "infoTooltipButton": "O que significa confiar?",

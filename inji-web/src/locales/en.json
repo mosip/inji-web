@@ -491,10 +491,10 @@
   "VerifierTrustPage": {
       "modal": {
         "title": "Verifier Name",
-        "description": "Make sure you recognize or trust this issuer. \nOnce you trust this Verifier:",
-        "benefitSaveSecurely": "The card will be securely saved in your wallet.",
+        "description": "Make sure you recognize or trust this verifier. \nOnce you trust this Verifier:",
+        "benefitSaveSecurely": "Your wallet will remember this verifier as trusted.",
         "benefitAddToTrustedList": "This verifier will be added to your trusted list.",
-        "benefitSkipReviewFuture": "You won’t need to review trust again when downloading from them next time.",
+        "benefitSkipReviewFuture": "Future verification requests from this verifier will be automatically trusted.",
         "trustButton": "Yes, I trust this Verifier",
         "notTrustButton": "No, I don’t trust this Verifier",
         "cancelButton": "Cancel",
