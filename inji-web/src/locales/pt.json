@@ -491,7 +491,7 @@
   "VerifierTrustPage": {
     "modal": {
       "title": "Verificador desconhecido",
-      "description": "Certifique-se de que você reconhece ou confia neste Verificador. \nDepois que confiar neste Verificador:",
+      "description": "Certifique-se de que você reconhece ou confia neste Verificador. \nDepois que confiar neste verificador:",
       "benefitSaveSecurely": "Sua carteira lembrará este Verificador como confiável.",
       "benefitAddToTrustedList": "Este verificador será adicionado à sua lista de confiança.",
       "benefitSkipReviewFuture": "Futuros pedidos de verificação deste Verificador serão confiados automaticamente.",

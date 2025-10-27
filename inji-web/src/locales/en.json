@@ -491,7 +491,7 @@
   "VerifierTrustPage": {
       "modal": {
         "title": "Verifier Name",
-        "description": "Make sure you recognize or trust this verifier. \nOnce you trust this Verifier:",
+        "description": "Make sure you recognize or trust this verifier. \nOnce you trust this verifier:",
         "benefitSaveSecurely": "Your wallet will remember this verifier as trusted.",
         "benefitAddToTrustedList": "This verifier will be added to your trusted list.",
         "benefitSkipReviewFuture": "Future verification requests from this verifier will be automatically trusted.",

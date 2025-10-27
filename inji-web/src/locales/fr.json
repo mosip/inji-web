@@ -491,7 +491,7 @@
   "VerifierTrustPage": {
     "modal": {
       "title": "Vérificateur inconnu",
-      "description": "Assurez-vous de reconnaître ou de faire confiance à ce vérificateur. \nUne fois que vous faites confiance à ce Vérificateur:",
+      "description": "Assurez-vous de reconnaître ou de faire confiance à ce vérificateur. \nUne fois que vous faites confiance à ce vérificateur:",
       "benefitSaveSecurely": "Votre portefeuille se souviendra de ce Vérificateur comme étant fiable.",
       "benefitAddToTrustedList": "Ce vérificateur sera ajouté à votre liste de confiance.",
       "benefitSkipReviewFuture": "Les futures demandes de vérification de ce Vérificateur seront automatiquement approuvées.",
