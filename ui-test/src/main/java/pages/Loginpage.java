@@ -129,8 +129,7 @@ public class Loginpage extends BasePage {
 	}
 
 	public void clickonuserprofiledropdownbutton() {
-		clickOnElement(driver, By
-				.xpath("//div[@data-testid='profile-details']/div/div[@class='relative inline-block cursor-pointer']"));
+		clickOnElement(driver, By.xpath("(//div[@data-testid='profile-details']//div)[4]"), 60);
 	}
 
 	public void clickonLogout() {
@@ -155,8 +154,7 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isProfileDropDownDisplayed() {
-		return isElementIsVisible(driver,
-				By.xpath("//div[@data-testid='profile-details']//div[@class='relative inline-block cursor-pointer']"));
+		return isElementIsVisible(driver, By.xpath("(//div[@data-testid='profile-details']//div)[4]"));
 	}
 
 	public Boolean isProfileNameDisplayed() {
@@ -165,8 +163,7 @@ public class Loginpage extends BasePage {
 
 	public void clickOnProfileDropDown() {
 
-		clickOnElement(driver,
-				By.xpath("//div[@data-testid='profile-details']//div[@class='relative inline-block cursor-pointer']"));
+		clickOnElement(driver, By.xpath("(//div[@data-testid='profile-details']//div)[4]"), 60);
 	}
 
 	public void waituntilpagecompletelyloaded() {
@@ -176,8 +173,7 @@ public class Loginpage extends BasePage {
 
 	public void clickOnProfileDropDownDisplayedAgain() {
 		waituntilpagecompletelyloaded();
-		clickOnElement(driver,
-				By.xpath("//div[@data-testid='profile-details']//div[@class='relative inline-block cursor-pointer']"));
+		clickOnElement(driver, By.xpath("(//div[@data-testid='profile-details']//div)[4]"), 60);
 
 	}
 
@@ -187,8 +183,7 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isCollapseButtonDisplayed() {
-		return isElementIsVisible(driver,
-				By.xpath("//button[@class='absolute top-1/4 sm:top-9 p-2 z-40 right-[-20px]']"));
+		return isElementIsVisible(driver, By.xpath("(//div[@data-testid='sidebar-container']//button)[1]"));
 
 	}
 
@@ -197,7 +192,7 @@ public class Loginpage extends BasePage {
 	}
 
 	public void clickOnCollapseButton() {
-		clickOnElement(driver, By.xpath("//button[@class='absolute top-1/4 sm:top-9 p-2 z-40 right-[-20px]']"));
+		clickOnElement(driver, By.xpath("(//div[@data-testid='sidebar-container']//button)[1]"));
 	}
 
 	public Boolean isHomeStringDisplayedAfterCollpase() {
@@ -207,12 +202,11 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isIconVisibleAfterCollpase() {
-		return isElementIsVisible(driver, By.xpath(
-				"(//div[@data-testid='sidebar-container']/div/div)[1]/div[@class='hidden sm:block flex items-center justify-center p-2 rounded-lg shadow-[0_-0.5px_4px_-1px_rgba(0,0,0,0.078),_0_4px_4px_-1px_rgba(0,0,0,0.078)] ml-6 mr-4']"));
+		return isElementIsVisible(driver, By.xpath("//div[@data-testid='sidebar-container']/div[1]"));
 	}
 
 	public void clickOnCollapseButtonAgain() {
-		clickOnElement(driver, By.xpath("//button[@class='absolute top-1/4 sm:top-9 p-2 z-40 right-[-20px]']"));
+		clickOnElement(driver, By.xpath("(//div[@data-testid='sidebar-container']//button)[1]"));
 	}
 
 	public Boolean isVerifyStoredCredentialsButtonDisplayed() {
@@ -258,8 +252,7 @@ public class Loginpage extends BasePage {
 	}
 
 	public Boolean isArrowButtonDisplayed() {
-		return isElementIsVisible(driver,
-				By.xpath("//div[contains(@class, 'items-start')]/*[@data-testid='back-arrow-icon']"));
+		return isElementIsVisible(driver, By.xpath("//*[@data-testid='back-arrow-icon']"));
 	}
 
 	public Boolean isHomeArrowButtonDisplayed() {
@@ -287,7 +280,7 @@ public class Loginpage extends BasePage {
 	}
 
 	public void clickonBackAwroeButton() {
-		clickOnElement(driver, By.xpath("//div[contains(@class, 'items-start')]/*[@data-testid='back-arrow-icon']"));
+		clickOnElement(driver, By.xpath("//*[@data-testid='back-arrow-icon']"));
 	}
 
 	public void clickonHomeAwroeButton() {

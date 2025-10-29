@@ -113,8 +113,12 @@ public class SunbirdCredentials extends BasePage {
 		return isElementIsVisible(driver, By.xpath("//label[text() = 'Enter DOB']"));
 	}
 
+//	public Boolean isAuthenticationFailedDisplayed() {
+//		return isElementIsVisible(driver, By.xpath("//div[@class='error-banner-text text-sm font-semibold']"));
+//	}
+
 	public Boolean isAuthenticationFailedDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//div[@class='error-banner-text text-sm font-semibold']"));
+		return isElementIsVisible(driver, By.xpath("//div[@id='error-banner']"));
 	}
 
 	public Boolean isVehicleInsuranceDisplayed() {
