@@ -35,7 +35,6 @@ public class SunbirdCredentials extends BasePage {
 	public String pdfNameInsurance;
 
 	public void clickOnSunbirdInsurance() {
-
 		pdfNameInsurance = getElementAttribute(driver,
 				By.xpath("//*[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"), "data-testid")
 				.replaceFirst("ItemBox-Outer-Container-0-", "") + ".pdf";
@@ -51,7 +50,6 @@ public class SunbirdCredentials extends BasePage {
 
 			e.printStackTrace();
 		}
-
 		clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
 
@@ -68,10 +66,8 @@ public class SunbirdCredentials extends BasePage {
 	}
 
 	public void selectDateOfBirth(String string) {
-
 		driver.findElement(By.xpath("//input[@id='_form_fullName']")).sendKeys(Keys.TAB);
 		driver.findElement(By.id("_form_dob")).sendKeys(string);
-
 		driver.findElement(By.xpath("//input[@id='_form_dob']")).click();
 
 		try {
@@ -112,10 +108,6 @@ public class SunbirdCredentials extends BasePage {
 	public Boolean isEnterDOBHeaderDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//label[text() = 'Enter DOB']"));
 	}
-
-//	public Boolean isAuthenticationFailedDisplayed() {
-//		return isElementIsVisible(driver, By.xpath("//div[@class='error-banner-text text-sm font-semibold']"));
-//	}
 
 	public Boolean isAuthenticationFailedDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//div[@id='error-banner']"));

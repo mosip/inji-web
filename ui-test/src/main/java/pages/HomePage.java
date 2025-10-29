@@ -22,7 +22,6 @@ public class HomePage extends BasePage {
 	public void clickOnFaq() {
 		if (isElementIsVisible(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"))) {
 			clickOnElement(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"));
-
 		} else {
 			clickOnElement(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"));
 		}
@@ -89,7 +88,6 @@ public class HomePage extends BasePage {
 	}
 
 	public Boolean isListOfCredentialsTypeDisplayed() {
-
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='HeaderTile-Text']"));
 	}
 
@@ -118,13 +116,8 @@ public class HomePage extends BasePage {
 	}
 
 	public Boolean isGoHomeButtonDisplayed() {
-
 		return isElementIsVisible(driver, By.xpath("//*[text()='Go To Home']"));
 	}
-
-//	public Boolean isBackButtonDisplayed() {
-//		return isElementIsVisible(driver, By.xpath("//*[@class='cursor-pointer']"));
-//	}
 
 	public Boolean isLanguageDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//button[@data-testid='Language-Selector-Button']"));

@@ -184,8 +184,7 @@ public class BaseTest {
 			ExtentReportManager.flushReport();
 			clearSkip();
 		}
-
-		// 🧹 Kill the driver cleanly after each scenario
+		// Kill the driver cleanly after each scenario
 		if (driver != null) {
 			try {
 				driver.quit();

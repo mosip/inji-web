@@ -162,7 +162,6 @@ public class Loginpage extends BasePage {
 	}
 
 	public void clickOnProfileDropDown() {
-
 		clickOnElement(driver, By.xpath("(//div[@data-testid='profile-details']//div)[4]"), 60);
 	}
 
@@ -174,17 +173,14 @@ public class Loginpage extends BasePage {
 	public void clickOnProfileDropDownDisplayedAgain() {
 		waituntilpagecompletelyloaded();
 		clickOnElement(driver, By.xpath("(//div[@data-testid='profile-details']//div)[4]"), 60);
-
 	}
 
 	public Boolean isHomeButtonDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//span[normalize-space(text())='Home']"));
-
 	}
 
 	public Boolean isCollapseButtonDisplayed() {
 		return isElementIsVisible(driver, By.xpath("(//div[@data-testid='sidebar-container']//button)[1]"));
-
 	}
 
 	public Boolean isHomeStringDisplayedBeforeCollpase() {
@@ -289,7 +285,6 @@ public class Loginpage extends BasePage {
 
 	public String getResetInstructionText() {
 		return getElementText(driver, By.xpath("//div[@data-testid='text-reset-instruction']")).trim();
-
 	}
 
 	public Boolean isForgetPasscodeOptionDisplayed() {
