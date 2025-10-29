@@ -8,6 +8,7 @@ import io.mosip.testrig.apirig.injiweb.testscripts.SimplePostForAutoGenId;
 import io.mosip.testrig.apirig.utils.AdminTestUtil;
 
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
@@ -119,6 +120,24 @@ public class StepDef {
 		try {
 			homePage.ClickOnFaqForMobileBrowse();
 			homePage.clickOnFaq();
+			test.log(Status.PASS, "User successfully clicked on the Faq button");
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL, "Faq button not found: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL, "Unexpected error while clicking the Faq button: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
+
+	@When("User clicks on the Faq button from hamburger menu")
+	public void clicksOnFaqButtonFromHamburger() {
+		try {
+			homePage.clickOnFaqMobileView();
 			test.log(Status.PASS, "User successfully clicked on the Faq button");
 		} catch (NoSuchElementException e) {
 			test.log(Status.FAIL, "Faq button not found: " + e.getMessage());
@@ -2009,6 +2028,85 @@ public class StepDef {
 			throw e;
 		} catch (Exception e) {
 			test.log(Status.FAIL, "Unexpected error while clicking the continue as guest button: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
+
+	@Then("User verify navigation button")
+	public void user_verify_navigation_button() {
+		try {
+			assertTrue(homePage.isNavButtonsDisplayed(), "Navigation Button is not displayed");
+			test.log(Status.PASS, "User verified that the Navigation Button is displayed successfully");
+		} catch (AssertionError e) {
+			test.log(Status.FAIL, "Assertion failed: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL, "Element not found while verifying Navigation Button: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL, "Unexpected error while verifying the Navigation Button: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
+
+	@Then("user click on hamburger menu")
+	public void user_click_on_hamburger_menu() {
+		try {
+			homePage.clickOnHamburgerMenu();
+			test.log(Status.PASS, "User successfully clicked on hamburger menu");
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL, "hamburger menu button not found: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL, "Unexpected error while clicking hamburger menu button: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
+
+	@Then("User verify search and title are appeare in diff lines")
+	public void user_verify_search_title_appeare_diff_lines() {
+		try {
+			assertTrue((homePage.getXcordinateForSearch() - homePage.getXcordinateForCredentialHeading()) <= 30,
+					"Credential types title does not match the expected Portuguese text.");
+			test.log(Status.PASS, "search and tile heading are in appeared in the same line");
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL, "search or Heading element not present: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL, "search or Heading element not present:: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		}
+	}
+
+	@Then("User verify inji web text in FAQ page")
+	public void user_verify_injiweb_text_in_FAQ_page() {
+		try {
+			assertTrue(homePage.verifyFaqTitlesDoNotContainInjiWeb(),
+					"injiweb text is present in one or more FAQ titles");
+			test.log(Status.PASS, "Verified that FAQ titles do not contain 'inji web'.");
+		} catch (NoSuchElementException e) {
+			test.log(Status.FAIL, "FAQ titles not found: " + e.getMessage());
+			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
+			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
+			throw e;
+		} catch (Exception e) {
+			test.log(Status.FAIL, "Error during FAQ title verification: " + e.getMessage());
 			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
 			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
 			throw e;

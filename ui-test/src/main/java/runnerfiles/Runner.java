@@ -27,32 +27,32 @@ import java.util.List;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = {"/home/mosip/featurefiles/"},
-		dryRun = false,
-		glue = {"stepdefinitions", "utils"},
-		snippets = SnippetType.CAMELCASE,
-		monochrome = true,
-		plugin = {"pretty",
-				"html:reports",
-				"html:target/cucumber.html", "json:target/cucumber.json",
-				"summary","com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}
-		//tags = "@smoke"
+        features = {"/home/mosip/featurefiles/"},
+        dryRun = false,
+        glue = {"stepdefinitions", "utils"},
+        snippets = SnippetType.CAMELCASE,
+        monochrome = true,
+        plugin = {"pretty",
+                "html:reports",
+                "html:target/cucumber.html", "json:target/cucumber.json",
+                "summary","com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}
+        //tags = "@smoke"
 )
-public class Runner extends AbstractTestNGCucumberTests{
-	
+public class Runner extends AbstractTestNGCucumberTests {
+
 	private static final Logger LOGGER = Logger.getLogger(Runner.class);
 	private static String cachedPath = null;
 
 	public static String jarUrl = Runner.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 	public static List<String> languageList = new ArrayList<>();
 	public static boolean skipAll = false;
-	
 
 	public static void main(String[] args) {
 		OTPListener otpListener = new OTPListener();
 		try {
-			LOGGER.info("** ------------- Inji web ui Run Started for prerequisite creation---------------------------- **");
-			
+			LOGGER.info(
+					"** ------------- Inji web ui Run Started for prerequisite creation---------------------------- **");
+
 			BaseTestCase.setRunContext(getRunType(), jarUrl);
 			ExtractResource.removeOldMosipTestTestResource();
 			if (getRunType().equalsIgnoreCase("JAR")) {
@@ -62,7 +62,7 @@ public class Runner extends AbstractTestNGCucumberTests{
 			}
 			AdminTestUtil.init();
 			InjiWebConfigManager.init();
-			
+
 			suiteSetup(getRunType());
 			setLogLevels();
 
@@ -70,12 +70,12 @@ public class Runner extends AbstractTestNGCucumberTests{
 			healthcheck.setCurrentRunningModule(BaseTestCase.currentModule);
 			Thread trigger = new Thread(healthcheck);
 			trigger.start();
-			
+
 			KeycloakUserManager.removeUser();
 			KeycloakUserManager.createUsers();
 			KeycloakUserManager.closeKeycloakInstance();
 			AdminTestUtil.getRequiredField();
-			
+
 			// Generate device certificates to be consumed by Mock-MDS
 			PartnerRegistration.deleteCertificates();
 			AdminTestUtil.createAndPublishPolicy();
@@ -93,7 +93,7 @@ public class Runner extends AbstractTestNGCucumberTests{
 		otpListener.bTerminate = true;
 		System.exit(0);
 	}
-	
+
 	public static void suiteSetup(String runType) {
 		BaseTestCase.initialize();
 		LOGGER.info("Done with BeforeSuite and test case setup! su TEST EXECUTION!\n\n");
@@ -101,12 +101,12 @@ public class Runner extends AbstractTestNGCucumberTests{
 		if (!runType.equalsIgnoreCase("JAR")) {
 			AuthTestsUtil.removeOldMosipTempTestResource();
 		}
-		
+
 		BaseTestCase.currentModule = "injiweb";
 		BaseTestCase.certsForModule = "injiweb";
 		AdminTestUtil.copymoduleSpecificAndConfigFile("injiweb");
 	}
-		
+
 	public static void startTestRunner() {
 		File homeDir = null;
 		String os = System.getProperty("os.name");
@@ -144,7 +144,7 @@ public class Runner extends AbstractTestNGCucumberTests{
 		else
 			return "IDE";
 	}
-	
+
 	@Override
 	@DataProvider(parallel = false)
 	public Object[][] scenarios() {
@@ -167,15 +167,13 @@ public class Runner extends AbstractTestNGCucumberTests{
 		result.getMethod().setDescription("Running Scenario: " + result.getMethod().getMethodName());
 	}
 
-
-
 	@Test(dataProvider = "scenarios")
 	public void runScenario(PickleWrapper pickle, FeatureWrapper feature) {
 		System.out.println("Running Scenario: " + pickle.getPickle().getName());
 		Thread.currentThread().setName(pickle.getPickle().getName());
 		super.runScenario(pickle, feature);
 	}
-	
+
 	public static String getGlobalResourcePath() {
 		if (cachedPath != null) {
 			return cachedPath;
@@ -199,11 +197,10 @@ public class Runner extends AbstractTestNGCucumberTests{
 		}
 	}
 
-
 	public static String getResourcePath() {
 		return getGlobalResourcePath();
 	}
-	
+
 	private static void setLogLevels() {
 		AdminTestUtil.setLogLevel();
 		OutputValidationUtil.setLogLevel();
@@ -216,12 +213,12 @@ public class Runner extends AbstractTestNGCucumberTests{
 
 	public static void updateFeaturesPath() {
 		File homeDir = null;
-	    String os = System.getProperty("os.name").toLowerCase();
-	    if (os.contains("windows")) {
-	        System.setProperty("cucumber.features", "src\\test\\resources\\featurefiles\\");
-	    } else {
-	        System.setProperty("cucumber.features", "/home/mosip/featurefiles/");
-	    }
-	} 
+		String os = System.getProperty("os.name").toLowerCase();
+		if (os.contains("windows")) {
+			System.setProperty("cucumber.features", "src\\test\\resources\\featurefiles\\");
+		} else {
+			System.setProperty("cucumber.features", "/home/mosip/featurefiles/");
+		}
+	}
 
 }

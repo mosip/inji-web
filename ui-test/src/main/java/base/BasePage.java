@@ -21,10 +21,29 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BasePage {
+	private static final Logger logger = LoggerFactory.getLogger(BasePage.class);
+
+	public static void safeScrollForMobileView(WebDriver driver, By locator) {
+		int maxAttempts = 3;
+		for (int i = 0; i < maxAttempts; i++) {
+			try {
+				WebElement element = driver.findElement(locator);
+				((JavascriptExecutor) driver)
+						.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'center'});", element);
+				return;
+			} catch (NoSuchElementException | StaleElementReferenceException e) {
+				logger.warn("Attempt {}: Retrying scroll for {}", i + 1, locator);
+			} catch (Exception e) {
+				logger.error("Attempt {}: Unexpected error while scrolling {} - {}", i + 1, locator, e.getMessage());
+			}
+		}
+		logger.error("⚠️ Element {} not visible after {} attempts.", locator, maxAttempts);
+	}
 
 	public void clickOnElement(WebDriver driver, By locator) {
 		WebElement element = new WebDriverWait(driver, Duration.ofSeconds(30))
 				.until(ExpectedConditions.presenceOfElementLocated(locator));
+		safeScrollForMobileView(driver, locator);
 		element.click();
 	}
 
@@ -32,6 +51,7 @@ public class BasePage {
 		try {
 			(new WebDriverWait(driver, Duration.ofSeconds(30)))
 					.until(ExpectedConditions.visibilityOfElementLocated(by));
+			safeScrollForMobileView(driver, by);
 			return driver.findElement(by).isDisplayed();
 		} catch (Exception e) {
 			return false;
@@ -42,6 +62,7 @@ public class BasePage {
 		try {
 			new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds))
 					.until(ExpectedConditions.visibilityOfElementLocated(by));
+			safeScrollForMobileView(driver, by);
 			return driver.findElement(by).isDisplayed();
 		} catch (Exception e) {
 			return false;
@@ -52,6 +73,7 @@ public class BasePage {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
 			WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+			safeScrollForMobileView(driver, locator);
 			element.click();
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to click on element: " + locator, e);
@@ -63,13 +85,20 @@ public class BasePage {
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 			return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
 		} catch (Exception e) {
-			return true; // Treat errors as "not visible"
+			try {
+				safeScrollForMobileView(driver, by);
+				WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+				return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+			} catch (Exception ex) {
+				return true; // Treat errors as "not visible"
+			}
 		}
 	}
 
 	public void enterText(WebDriver driver, By locator, String text) {
 		WebElement element = new WebDriverWait(driver, Duration.ofSeconds(30))
 				.until(ExpectedConditions.presenceOfElementLocated(locator));
+		safeScrollForMobileView(driver, locator);
 		element.clear();
 		element.sendKeys(text);
 	}
@@ -77,6 +106,7 @@ public class BasePage {
 	public String getElementText(WebDriver driver, By locator) {
 		WebElement element = new WebDriverWait(driver, Duration.ofSeconds(30))
 				.until(ExpectedConditions.presenceOfElementLocated(locator));
+		safeScrollForMobileView(driver, locator);
 		return element.getText();
 	}
 
@@ -85,6 +115,7 @@ public class BasePage {
 		List<WebElement> elements = new WebDriverWait(driver, Duration.ofSeconds(30))
 				.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
 		for (WebElement element : elements) {
+			safeScrollForMobileView(driver, locator);
 			textContents.add(element.getText());
 		}
 		return textContents;
@@ -136,8 +167,8 @@ public class BasePage {
 
 	public static boolean isElementEnabled(WebDriver driver, By by) {
 		try {
-			(new WebDriverWait(driver, Duration.ofSeconds(10)))
-					.until(ExpectedConditions.visibilityOfElementLocated(by));
+			new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(by));
+			safeScrollForMobileView(driver, by);
 			return driver.findElement(by).isEnabled();
 		} catch (Exception e) {
 			return false;
@@ -170,6 +201,7 @@ public class BasePage {
 	public String getElementAttribute(WebDriver driver, By locator, String data) {
 		WebElement element = new WebDriverWait(driver, Duration.ofSeconds(30))
 				.until(ExpectedConditions.presenceOfElementLocated(locator));
+		safeScrollForMobileView(driver, locator);
 		return element.getAttribute(data);
 	}
 
@@ -178,4 +210,9 @@ public class BasePage {
 		wait.until(ExpectedConditions.elementToBeClickable(locator));
 	}
 
+	public int getXCordinateValue(WebDriver driver, By locator) {
+		WebElement element = new WebDriverWait(driver, Duration.ofSeconds(30))
+				.until(ExpectedConditions.presenceOfElementLocated(locator));
+		return element.getLocation().getX();
+	}
 }
