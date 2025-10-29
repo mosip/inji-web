@@ -124,12 +124,10 @@ public class HomePage extends BasePage {
 	}
 
 	public void clickOnLanguageButton() {
-
 		if (isElementIsVisible(driver, By.xpath("//div[@data-testid='HeaderTile-Text']"))) {
 			clickOnElement(driver, By.xpath("//div[@data-testid='HeaderTile-Text']"));
 		}
 		clickOnElement(driver, By.xpath("//*[@data-testid='Language-Selector-Button']"));
-
 	}
 
 	public boolean verifyLanguagesInLanguageFilter() {
@@ -139,7 +137,6 @@ public class HomePage extends BasePage {
 		try {
 			actualLanguages = getElementTexts(driver,
 					By.xpath("//li[starts-with(@data-testid, 'Language-Selector-DropDown-Item-')]"));
-
 		} catch (TimeoutException e) {
 			e.printStackTrace();
 		}
@@ -148,11 +145,9 @@ public class HomePage extends BasePage {
 
 	public void selectOtherLangauge() {
 		clickOnElement(driver, By.xpath("(//button[@type='button'])[3]"));
-
 	}
 
 	public Boolean isNoIssuerFoundMessageDisplayed() {
-
 		return isElementIsVisible(driver, By.xpath("//p[@data-testid='EmptyList-Text']"));
 	}
 
