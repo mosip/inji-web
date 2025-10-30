@@ -512,9 +512,16 @@
       "addTrustedVerifierError": "Falha ao adicionar verificador à lista de confiança."
     },
     "ErrorCard": {
-      "defaultTitle": "Erro",
-      "defaultDescription": "Algo correu mal. Por favor, tente novamente.",
+      "defaultTitle": "Algo deu errado",
+      "defaultDescription": "Não foi possível concluir sua solicitação. Feche e tente novamente mais tarde.",
+      "technicalTitle": "Ops! Ocorreu um erro.",
+      "technicalDescription": "Ocorreu um problema técnico ao processar sua solicitação. Tente novamente em alguns instantes.",
       "closeButton": "Fechar"
+    },
+    "RetryCard": {
+      "defaultTitle": "Algo deu errado",
+      "defaultDescription": "Não foi possível concluir sua solicitação. Por favor, tente novamente.",
+      "retryButton": "Tentar novamente"
     },
     "loadingCard": {
       "title": "A buscar informações do verificador...",

@@ -512,9 +512,16 @@
       "addTrustedVerifierError": "فشل في إضافة المدقق إلى قائمة الثقة."
     },
     "ErrorCard": {
-      "defaultTitle": "خطأ",
-      "defaultDescription": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+      "defaultTitle": "حدث خطأ ما",
+      "defaultDescription": "تعذر إكمال طلبك. يرجى الإغلاق والمحاولة لاحقًا.",
+      "technicalTitle": "عذرًا! حدث خطأ فني.",
+      "technicalDescription": "حدثت مشكلة تقنية أثناء معالجة طلبك. يمكنك المحاولة مرة أخرى بعد قليل.",
       "closeButton": "إغلاق"
+    },
+    "RetryCard": {
+      "defaultTitle": "حدث خطأ ما",
+      "defaultDescription": "تعذر إكمال طلبك. يرجى المحاولة مرة أخرى.",
+      "retryButton": "إعادة المحاولة"
     },
     "loadingCard": {
       "title": "جلب معلومات المدقق...",

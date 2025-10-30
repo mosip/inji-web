@@ -19,7 +19,7 @@ export interface ErrorHandlingOptions {
 }
 
 // Internal error types and mappings (not exported as they're only used internally)
-const ERROR_TYPES = {
+export const ERROR_TYPES = {
     API_TIMEOUT: 'API_TIMEOUT',
     API_NETWORK: 'API_NETWORK',
     API_SERVER: 'API_SERVER',

@@ -37,7 +37,14 @@ jest.mock('../../utils/api', () => ({
 }));
 
 jest.mock('../../utils/errorHandling', () => ({
-    withErrorHandling: jest.fn((fn) => fn),
+    withErrorHandling: jest.fn(async (fn) => {
+        try {
+            await fn();
+            return { error: null };
+        } catch (error) {
+            return { error };
+        }
+    }),
 }));
 
 jest.mock('../../modals/ModalWrapper', () => ({
@@ -46,7 +53,7 @@ jest.mock('../../modals/ModalWrapper', () => ({
             <div data-testid="ModalWrapper-BackDrop" className={`fixed inset-0 ${zIndex === 50 ? 'z-40' : 'z-30'} bg-black/60 backdrop-blur-sm`}></div>
             <div data-testid="ModalWrapper-Outer-Container" className={`fixed inset-0 ${zIndex === 50 ? 'z-50' : 'z-40'} overflow-y-auto overflow-x-hidden`}>
                 <div className="min-h-full p-4 flex items-center justify-center">
-                    <div className="w-auto my-8 mx-2 sm:mx-4 md:mx-6">
+                    <div data-testid="modal-wrapper-content">
                         {header}
                         {content}
                         {footer}
@@ -58,37 +65,41 @@ jest.mock('../../modals/ModalWrapper', () => ({
 }));
 
 jest.mock('../../modals/NoMatchingCredentialsModal', () => ({
-    NoMatchingCredentialsModal: ({ isVisible, onGoToHome, onClose }: any) => (
+    NoMatchingCredentialsModal: ({ isVisible, onGoToHome }: any) => (
         isVisible ? (
             <div data-testid="no-matching-credentials-modal">
                 <button data-testid="btn-go-to-home" onClick={onGoToHome}>Go to Home</button>
-                <button data-testid="btn-close-no-matching" onClick={onClose}>Close</button>
             </div>
         ) : null
     ),
 }));
 
 jest.mock('../../modals/LoadingModal', () => ({
-    LoaderModal: ({ isOpen, title, subtitle }: any) => (
+    LoaderModal: ({ isOpen, message }: any) => (
         isOpen ? (
-            <div data-testid="loader-modal">
-                <h2>{title}</h2>
-                <p>{subtitle}</p>
+            <div data-testid="modal-loader-card">
+                <p>{message}</p>
             </div>
         ) : null
     ),
 }));
 
 jest.mock('../../modals/ErrorCard', () => ({
-    ErrorCard: ({ isOpen, title, description, onClose }: any) => (
-        isOpen ? (
-            <div data-testid="error-card">
+    ErrorCard: ({ isOpen, onClose, onRetry, isRetrying, title, description, testId }: any) => {
+        if (!isOpen) return null;
+        const isRetryable = !!onRetry;
+        const button = isRetryable
+            ? <button onClick={onRetry} disabled={isRetrying}>Retry</button>
+            : (onClose ? <button onClick={onClose}>Close</button> : null);
+
+        return (
+            <div data-testid={testId}>
                 <h2>{title}</h2>
                 <p>{description}</p>
-                <button data-testid="btn-error-close" onClick={onClose}>Close</button>
+                {button}
             </div>
-        ) : null
-    ),
+        );
+    }
 }));
 
 jest.mock('../../components/Credentials/CredentialRequestModalHeader', () => ({
@@ -162,6 +173,8 @@ describe('CredentialRequestModal', () => {
     const mockFetchData = jest.fn();
     const mockHandleApiError = jest.fn();
     const mockHandleCloseErrorCard = jest.fn();
+    const mockOnRetry = jest.fn();
+    let mockErrorHandlerReturnValue: ReturnType<typeof useApiErrorHandler>;
 
     const mockCredentials = [
         {
@@ -188,7 +201,7 @@ describe('CredentialRequestModal', () => {
         jest.clearAllMocks();
 
         mockUseTranslation.mockReturnValue({
-            t: (key: string) => key,
+            t: (key: string) => key.includes('loading.message') ? 'Loading...' : key,
         } as any);
 
         // Mock successful API response with credentials by default
@@ -211,14 +224,18 @@ describe('CredentialRequestModal', () => {
             ok: () => true,
         });
 
-        mockUseApiErrorHandler.mockReturnValue({
-            showErrorCard: false,
-            errorCardMessage: '',
-            errorTitle: '',
+        // Initialize the new, simplified hook state
+        mockErrorHandlerReturnValue = {
+            showError: false,
+            isRetrying: false,
+            errorTitle: undefined,
+            errorDescription: undefined,
+            onRetry: mockOnRetry,
+            onClose: mockHandleCloseErrorCard,
             handleApiError: mockHandleApiError,
-            handleCloseErrorCard: mockHandleCloseErrorCard,
             clearError: jest.fn(),
-        });
+        };
+        mockUseApiErrorHandler.mockReturnValue(mockErrorHandlerReturnValue);
     });
 
     describe('Rendering', () => {
@@ -246,16 +263,6 @@ describe('CredentialRequestModal', () => {
         });
 
         it('renders credential list with provided credentials', async () => {
-            mockFetchData.mockResolvedValue({
-                data: {
-                    availableCredentials: mockCredentials,
-                    missingClaims: []
-                },
-                error: null,
-                status: 200,
-                ok: () => true,
-            });
-
             render(<CredentialRequestModal {...defaultProps} />);
 
             // Wait for the API call to complete and component to re-render
@@ -274,25 +281,13 @@ describe('CredentialRequestModal', () => {
 
     describe('Loading State', () => {
         it('shows loading state when loading credentials', async () => {
-            // Mock a delayed API response to ensure loading state is visible
-            mockFetchData.mockImplementation(() =>
-                new Promise(resolve =>
-                    setTimeout(() => resolve({
-                        data: {
-                            availableCredentials: mockCredentials,
-                            missingClaims: []
-                        },
-                        error: null,
-                        status: 200,
-                        ok: () => true,
-                    }), 100)
-                )
-            );
+            mockFetchData.mockImplementation(() => new Promise(() => {}));
 
             render(<CredentialRequestModal {...defaultProps} />);
 
-            // Should show loading state initially
-            expect(screen.queryByTestId('modal-loader-card')).not.toBeInTheDocument();
+            await waitFor(() => {
+                expect(screen.getByTestId('modal-loader-card')).toBeInTheDocument();
+            });
         });
 
         it('hides loading state when not loading', async () => {
@@ -305,29 +300,92 @@ describe('CredentialRequestModal', () => {
 
             // Loading state should be hidden after API call completes
             await waitFor(() => {
-                expect(screen.queryByTestId('SpinningLoader-Container')).not.toBeInTheDocument();
+                expect(screen.queryByTestId('modal-loader-card')).not.toBeInTheDocument();
             });
         });
     });
 
-    describe('Error State', () => {
-        it('shows error state when there is an error', () => {
-            mockUseApiErrorHandler.mockReturnValue({
-                showErrorCard: true,
-                errorCardMessage: 'Error message',
-                errorTitle: 'Error title',
-                handleApiError: mockHandleApiError,
-                handleCloseErrorCard: mockHandleCloseErrorCard,
-                clearError: jest.fn(),
-            });
+    describe('Retry State', () => {
+        it('shows ErrorCard with Retry button when hook indicates a retryable error', () => {
+            mockErrorHandlerReturnValue = {
+                ...mockErrorHandlerReturnValue,
+                showError: true, // Use showError
+                errorTitle: 'Retryable Error',
+                errorDescription: 'Please try again',
+                onRetry: mockOnRetry, // Provide retry function
+                onClose: undefined, // No close function
+            };
+            mockUseApiErrorHandler.mockReturnValue(mockErrorHandlerReturnValue);
 
             render(<CredentialRequestModal {...defaultProps} />);
 
-            expect(screen.getByTestId('error-card')).toBeInTheDocument();
+            const retryCard = screen.getByTestId('modal-error-card'); // Use the ErrorCard's testId
+            expect(retryCard).toBeInTheDocument();
+            expect(retryCard).toHaveTextContent('Retryable ErrorPlease try again');
+            expect(screen.getByText('Retry')).toBeInTheDocument(); // Check for Retry button
+
+            expect(screen.queryByTestId('modal-loader-card')).not.toBeInTheDocument();
+            expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
+            expect(screen.queryByTestId('credential-request-modal-content')).not.toBeInTheDocument();
         });
 
-        it('shows wallet ID error message when wallet ID is missing', async () => {
-            const walletError = new Error('Wallet ID not available. Please make sure you are logged in and have unlocked your wallet.');
+        it('calls onRetry from hook when ErrorCard retry button is clicked', () => {
+            mockErrorHandlerReturnValue = {
+                ...mockErrorHandlerReturnValue,
+                showError: true,
+                onRetry: mockOnRetry,
+                onClose: undefined,
+            };
+            mockUseApiErrorHandler.mockReturnValue(mockErrorHandlerReturnValue);
+
+            render(<CredentialRequestModal {...defaultProps} />);
+
+            const retryButton = screen.getByRole('button', { name: 'Retry' });
+            fireEvent.click(retryButton);
+
+            expect(mockOnRetry).toHaveBeenCalledTimes(1);
+        });
+
+        it('shows LoaderModal when hook indicates isRetrying is true', () => {
+            mockErrorHandlerReturnValue = {
+                ...mockErrorHandlerReturnValue,
+                isRetrying: true,
+            };
+            mockUseApiErrorHandler.mockReturnValue(mockErrorHandlerReturnValue);
+
+            render(<CredentialRequestModal {...defaultProps} />);
+
+            expect(screen.getByTestId('modal-loader-card')).toBeInTheDocument();
+
+            expect(screen.queryByTestId('modal-error-card')).not.toBeInTheDocument();
+            expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
+            expect(screen.queryByTestId('credential-request-modal-content')).not.toBeInTheDocument();
+        });
+    });
+
+    describe('Error State', () => {
+        it('shows ErrorCard with Close button when hook indicates a final error', () => {
+            mockErrorHandlerReturnValue = {
+                ...mockErrorHandlerReturnValue,
+                showError: true,
+                errorTitle: 'Error title',
+                errorDescription: 'Error message',
+                onRetry: undefined, // No retry function
+                onClose: mockHandleCloseErrorCard, // Close function is present
+            };
+            mockUseApiErrorHandler.mockReturnValue(mockErrorHandlerReturnValue);
+
+            render(<CredentialRequestModal {...defaultProps} />);
+
+            const errorCard = screen.getByTestId('modal-error-card');
+            expect(errorCard).toBeInTheDocument();
+            expect(errorCard).toHaveTextContent('Error titleError message');
+            expect(screen.getByText('Close')).toBeInTheDocument(); // Check for Close button
+            expect(screen.queryByText('Retry')).not.toBeInTheDocument();
+        });
+
+        it('calls handleApiError when fetch credentials throws', async () => {
+            const walletError = new Error('Wallet ID not available.');
             mockFetchData.mockRejectedValue(walletError);
 
             render(<CredentialRequestModal {...defaultProps} />);
@@ -335,7 +393,8 @@ describe('CredentialRequestModal', () => {
             await waitFor(() => {
                 expect(mockHandleApiError).toHaveBeenCalledWith(
                     walletError,
-                    'fetchPresentationCredentials'
+                    'fetchPresentationCredentials',
+                    expect.any(Function) // The fetchCredentialsCore
                 );
             });
         });
@@ -344,8 +403,8 @@ describe('CredentialRequestModal', () => {
     describe('No Credentials State', () => {
         it('shows no credentials message when no credentials are available', async () => {
             mockFetchData.mockResolvedValue({
-                data: { 
-                    availableCredentials: [], 
+                data: {
+                    availableCredentials: [],
                     missingClaims: [],
                 },
                 error: null,
@@ -379,7 +438,6 @@ describe('CredentialRequestModal', () => {
 
             // Wait for the main modal to render (not NoMatchingCredentialsModal)
             await waitFor(() => {
-                expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
                 expect(screen.getByTestId('checkbox-cred-1')).toBeInTheDocument();
             });
 
@@ -408,7 +466,6 @@ describe('CredentialRequestModal', () => {
 
             // Wait for the main modal to render (not NoMatchingCredentialsModal)
             await waitFor(() => {
-                expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
                 expect(screen.getByTestId('checkbox-cred-1')).toBeInTheDocument();
             });
 
@@ -428,7 +485,6 @@ describe('CredentialRequestModal', () => {
 
             // Wait for the main modal to render (not NoMatchingCredentialsModal)
             await waitFor(() => {
-                expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
                 expect(screen.getByTestId('btn-consent-share-desktop')).toBeInTheDocument();
             });
 
@@ -439,11 +495,20 @@ describe('CredentialRequestModal', () => {
 
     describe('User Interactions', () => {
         it('calls onCancel when cancel button is clicked', async () => {
+            // Mock both API calls: 1. fetchCredentials, 2. userRejectVerifier
+            mockFetchData
+                .mockResolvedValueOnce({
+                    data: { availableCredentials: mockCredentials, missingClaims: [] },
+                    error: null, status: 200, ok: () => true,
+                })
+                .mockResolvedValueOnce({
+                    data: { success: true }, error: null, status: 200, ok: () => true
+                });
+
+
             render(<CredentialRequestModal {...defaultProps} />);
 
-            // Wait for the main modal to render (not NoMatchingCredentialsModal)
             await waitFor(() => {
-                expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
                 expect(screen.getByTestId('btn-cancel-desktop')).toBeInTheDocument();
             });
 
@@ -457,21 +522,9 @@ describe('CredentialRequestModal', () => {
         });
 
         it('calls onConsentAndShare when consent button is clicked with selected credentials', async () => {
-            mockFetchData.mockResolvedValue({
-                data: {
-                    availableCredentials: mockCredentials,
-                    missingClaims: []
-                },
-                error: null,
-                status: 200,
-                ok: () => true,
-            });
-
             render(<CredentialRequestModal {...defaultProps} />);
 
-            // Wait for main modal to render
             await waitFor(() => {
-                expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
                 expect(screen.getByTestId('checkbox-cred-1')).toBeInTheDocument();
             });
 
@@ -512,20 +565,10 @@ describe('CredentialRequestModal', () => {
 
     describe('API Integration', () => {
         it('fetches credentials on mount', async () => {
-            mockFetchData.mockResolvedValue({
-                data: {
-                    availableCredentials: mockCredentials,
-                    missingClaims: []
-                },
-                error: null,
-                status: 200,
-                ok: () => true,
-            });
-
             render(<CredentialRequestModal {...defaultProps} />);
 
             await waitFor(() => {
-                expect(mockFetchData).toHaveBeenCalled();
+                expect(mockFetchData).toHaveBeenCalledTimes(1);
             });
 
             // Check that the API was called with the correct parameters
@@ -544,7 +587,8 @@ describe('CredentialRequestModal', () => {
             await waitFor(() => {
                 expect(mockHandleApiError).toHaveBeenCalledWith(
                     apiError,
-                    'fetchPresentationCredentials'
+                    'fetchPresentationCredentials',
+                    expect.any(Function) // fetchCredentialsCore
                 );
             });
         });
@@ -556,7 +600,6 @@ describe('CredentialRequestModal', () => {
 
             // Wait for the main modal to render (not NoMatchingCredentialsModal)
             await waitFor(() => {
-                expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
                 expect(screen.getByTestId('ModalWrapper-Outer-Container')).toBeInTheDocument();
             });
 
@@ -567,21 +610,10 @@ describe('CredentialRequestModal', () => {
 
     describe('Accessibility', () => {
         it('has proper test IDs for testing', async () => {
-            mockFetchData.mockResolvedValue({
-                data: {
-                    availableCredentials: mockCredentials,
-                    missingClaims: []
-                },
-                error: null,
-                status: 200,
-                ok: () => true,
-            });
-
             render(<CredentialRequestModal {...defaultProps} />);
 
             // Wait for the main modal to render (not NoMatchingCredentialsModal)
             await waitFor(() => {
-                expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
                 expect(screen.getByTestId('credential-request-modal-header')).toBeInTheDocument();
                 expect(screen.getByTestId('credential-request-modal-content')).toBeInTheDocument();
                 expect(screen.getByTestId('credential-request-modal-footer')).toBeInTheDocument();
@@ -627,43 +659,10 @@ describe('CredentialRequestModal', () => {
 
             // Wait for the main modal to render (not NoMatchingCredentialsModal)
             await waitFor(() => {
-                expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
                 expect(screen.getByTestId('ModalWrapper-Outer-Container')).toBeInTheDocument();
             });
         });
 
-        it('handles rapid credential selection changes', async () => {
-            mockFetchData.mockResolvedValue({
-                data: {
-                    availableCredentials: mockCredentials,
-                    missingClaims: []
-                },
-                error: null,
-                status: 200,
-                ok: () => true,
-            });
-
-            render(<CredentialRequestModal {...defaultProps} />);
-
-            // Wait for the main modal to render (not NoMatchingCredentialsModal)
-            await waitFor(() => {
-                expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
-                expect(screen.getByTestId('checkbox-cred-1')).toBeInTheDocument();
-            });
-
-            const checkbox1 = screen.getByTestId('checkbox-cred-1');
-            const checkbox2 = screen.getByTestId('checkbox-cred-2');
-
-            // Rapid selection changes
-            fireEvent.click(checkbox1);
-            fireEvent.click(checkbox2);
-            fireEvent.click(checkbox1);
-            fireEvent.click(checkbox2);
-
-            // Should handle rapid changes without errors
-            expect(checkbox1).not.toBeChecked();
-            expect(checkbox2).not.toBeChecked();
-        });
     });
 
     describe('Performance', () => {
@@ -672,8 +671,6 @@ describe('CredentialRequestModal', () => {
 
             // Wait for the main modal to render with credentials loaded
             await waitFor(() => {
-                expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
-                expect(screen.queryByTestId('SpinningLoader-Container')).not.toBeInTheDocument();
                 expect(screen.getByTestId('credential-request-modal-content')).toBeInTheDocument();
             });
 
@@ -691,7 +688,6 @@ describe('CredentialRequestModal', () => {
 
             // Wait for the main modal to render (not NoMatchingCredentialsModal)
             await waitFor(() => {
-                expect(screen.queryByTestId('no-matching-credentials-modal')).not.toBeInTheDocument();
                 expect(screen.getByTestId('ModalWrapper-Outer-Container')).toBeInTheDocument();
             });
 

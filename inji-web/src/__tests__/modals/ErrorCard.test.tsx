@@ -19,12 +19,13 @@ jest.mock('../../modals/ModalWrapper', () => ({
 }));
 
 jest.mock('../../components/Common/Buttons/SolidButton', () => ({
-  SolidButton: ({ onClick, title, testId, fullWidth, className }: any) => (
+  SolidButton: ({ onClick, title, testId, fullWidth, className, disabled }: any) => (
     <button
       data-testid={testId}
       onClick={onClick}
       data-full-width={fullWidth}
       className={className}
+      disabled={disabled}
     >
       {title}
     </button>
@@ -39,13 +40,22 @@ const defaultProps = {
     description: 'This is a test error message',
     isOpen: true,
     onClose: jest.fn(),
-    testId: 'testId',
+    testId: 'test-error-card',
 };
 
 describe('ErrorCard', () => {
     beforeEach(() => {
         (useTranslation as jest.Mock).mockReturnValue({
-            t: (key: string) => key,
+            t: (key: string) => {
+                const translations: Record<string, string> = {
+                    'ErrorCard.defaultTitle': 'Default Error Title',
+                    'ErrorCard.defaultDescription': 'Default Error Description',
+                    'ErrorCard.closeButton': 'Close',
+                    'RetryCard.defaultDescription': 'Default Retry Description',
+                    'RetryCard.retryButton': 'Retry',
+                };
+                return translations[key] || key;
+            },
         });
         jest.clearAllMocks();
     });
@@ -59,6 +69,7 @@ describe('ErrorCard', () => {
         it('should render when isOpen is true', () => {
             render(<ErrorCard {...defaultProps} />);
             expect(screen.getByTestId('ModalWrapper-Mock')).toBeInTheDocument();
+            expect(screen.getByTestId(defaultProps.testId)).toBeInTheDocument();
         });
 
         it('should display the correct title and description', () => {
@@ -78,14 +89,59 @@ describe('ErrorCard', () => {
     });
 
     describe('User Interactions', () => {
-        it('should call onClose when close button is clicked', () => {
+        it('should show Close button and call onClose when no onRetry is provided', () => {
             const mockOnClose = jest.fn();
             render(<ErrorCard {...defaultProps} onClose={mockOnClose} />);
             
             const closeButton = screen.getByTestId('btn-error-card-close');
+            expect(closeButton).toBeInTheDocument();
+            expect(closeButton).toHaveTextContent('Close');
+
             fireEvent.click(closeButton);
             
             expect(mockOnClose).toHaveBeenCalledTimes(1);
+        });
+
+        it('should show Retry button and call onRetry when onRetry is provided', () => {
+            const mockOnRetry = jest.fn();
+            const propsWithRetry = {
+                ...defaultProps,
+                onClose: undefined, // Ensure onClose is not passed if onRetry is
+                onRetry: mockOnRetry,
+            };
+            render(<ErrorCard {...propsWithRetry} />);
+
+            const retryButton = screen.getByTestId('btn-retry-card-retry');
+            expect(retryButton).toBeInTheDocument();
+            expect(retryButton).toHaveTextContent('Retry');
+
+            fireEvent.click(retryButton);
+            expect(mockOnRetry).toHaveBeenCalledTimes(1);
+
+            // Ensure close button is not rendered
+            expect(screen.queryByTestId('btn-error-card-close')).not.toBeInTheDocument();
+        });
+
+        it('should disable the retry button when isRetrying is true', () => {
+            render(<ErrorCard {...defaultProps} onRetry={jest.fn()} isRetrying={true} />);
+
+            const retryButton = screen.getByTestId('btn-retry-card-retry');
+            expect(retryButton).toBeDisabled();
+        });
+
+        it('should enable the retry button when isRetrying is false', () => {
+            render(<ErrorCard {...defaultProps} onRetry={jest.fn()} isRetrying={false} />);
+
+            const retryButton = screen.getByTestId('btn-retry-card-retry');
+            expect(retryButton).not.toBeDisabled();
+        });
+
+        it('should not disable the close button even if isRetrying is true', () => {
+            // This tests that `disabled` is only applied in the retryable case
+            render(<ErrorCard {...defaultProps} onClose={jest.fn()} isRetrying={true} />);
+
+            const closeButton = screen.getByTestId('btn-error-card-close');
+            expect(closeButton).not.toBeDisabled();
         });
     });
 
@@ -170,12 +226,6 @@ describe('ErrorCard', () => {
             expect(description).toBeInTheDocument();
         });
 
-        it('should have proper button labels', () => {
-            render(<ErrorCard {...defaultProps} />);
-            
-            const closeButton = screen.getByTestId('btn-error-card-close');
-            expect(closeButton).toBeInTheDocument();
-        });
     });
 
     describe('Styling and Layout', () => {
@@ -212,6 +262,7 @@ describe('ErrorCard', () => {
             render(<ErrorCard {...propsWithTitle} />);
 
             expect(screen.getByText(customTitle)).toBeInTheDocument();
+            expect(screen.queryByText('Default Error Title')).not.toBeInTheDocument();
         });
 
         it('should use provided description when given', () => {
@@ -224,6 +275,21 @@ describe('ErrorCard', () => {
             render(<ErrorCard {...propsWithDescription} />);
 
             expect(screen.getByText(customDescription)).toBeInTheDocument();
+            expect(screen.queryByText('Default Error Description')).not.toBeInTheDocument();
+        });
+
+        it('should use provided description when given (retryable)', () => {
+            const customDescription = 'Custom retry description';
+            const propsWithDescription = {
+                ...defaultProps,
+                description: customDescription,
+                onRetry: jest.fn()
+            };
+
+            render(<ErrorCard {...propsWithDescription} />);
+
+            expect(screen.getByText(customDescription)).toBeInTheDocument();
+            expect(screen.queryByText('Default Retry Description')).not.toBeInTheDocument();
         });
 
         it('should fallback to translation when title is empty string', () => {
@@ -234,11 +300,10 @@ describe('ErrorCard', () => {
 
             render(<ErrorCard {...propsWithEmptyTitle} />);
 
-            // Should show translated title since empty string is falsy
-            expect(screen.getByText('ErrorCard.defaultTitle')).toBeInTheDocument();
+            expect(screen.getByText('Default Error Title')).toBeInTheDocument();
         });
 
-        it('should fallback to translation when description is empty string', () => {
+        it('should fallback to default error translation when description is empty string', () => {
             const propsWithEmptyDescription = {
                 ...defaultProps,
                 description: ''
@@ -246,8 +311,19 @@ describe('ErrorCard', () => {
 
             render(<ErrorCard {...propsWithEmptyDescription} />);
 
-            // Should show translated description since empty string is falsy
-            expect(screen.getByText('ErrorCard.defaultDescription')).toBeInTheDocument();
+            expect(screen.getByText('Default Error Description')).toBeInTheDocument();
+        });
+
+        it('should fallback to default retry translation when description is empty and onRetry is provided', () => {
+            const propsWithEmptyDescription = {
+                ...defaultProps,
+                description: '',
+                onRetry: jest.fn(),
+            };
+
+            render(<ErrorCard {...propsWithEmptyDescription} />);
+
+            expect(screen.getByText('Default Retry Description')).toBeInTheDocument();
         });
 
         it('should handle special characters in provided title and description', () => {
@@ -261,6 +337,19 @@ describe('ErrorCard', () => {
 
             expect(screen.getByText('Error @#$%^&*()')).toBeInTheDocument();
             expect(screen.getByText('Special characters: <>&"\'`')).toBeInTheDocument();
+        });
+
+        it('should render no button if both onClose and onRetry are missing', () => {
+            const propsWithNoActions = {
+                ...defaultProps,
+                onClose: undefined as any,
+                onRetry: undefined,
+            };
+
+            render(<ErrorCard {...propsWithNoActions} />);
+
+            expect(screen.queryByTestId('btn-error-card-close')).not.toBeInTheDocument();
+            expect(screen.queryByTestId('btn-retry-card-retry')).not.toBeInTheDocument();
         });
     });
 

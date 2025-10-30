@@ -512,9 +512,16 @@
       "addTrustedVerifierError": "सत्यापनकर्ता को विश्वसनीय सूची में जोड़ने में विफल रहा।"
     },
     "ErrorCard": {
-      "defaultTitle": "त्रुटि",
-      "defaultDescription": "कुछ गलत हो गया। कृपया पुन: प्रयास करें।",
+      "defaultTitle": "कुछ गलत हो गया",
+      "defaultDescription": "हम आपका अनुरोध पूरा नहीं कर सके। कृपया बंद करें और बाद में पुनः प्रयास करें।",
+      "technicalTitle": "ओह! एक त्रुटि हुई।",
+      "technicalDescription": "आपके अनुरोध को संसाधित करते समय एक तकनीकी समस्या हुई। कृपया कुछ समय बाद पुनः प्रयास करें।",
       "closeButton": "बंद करें"
+    },
+    "RetryCard": {
+      "defaultTitle": "कुछ गलत हो गया",
+      "defaultDescription": "हम आपका अनुरोध पूरा नहीं कर सके। कृपया पुनः प्रयास करें।",
+      "retryButton": "पुनः प्रयास करें"
     },
     "loadingCard": {
       "title": "सत्यापनकर्ता जानकारी लाई जा रही है...",

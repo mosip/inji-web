@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import {useTranslation} from 'react-i18next';
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useTranslation } from 'react-i18next';
 import { useApi } from "../hooks/useApi";
 import { api } from "../utils/api";
 import { LoaderModal } from "../modals/LoadingModal";
@@ -30,75 +30,66 @@ export const CredentialShareHandler: React.FC<CredentialShareHandlerProps> = ({
     const hasSubmittedRef = useRef<boolean>(false);
 
     const {
-        showErrorCard,
-        errorCardMessage,
-        handleApiError,
-        handleCloseErrorCard
-    } = useApiErrorHandler(onClose);
+        showError,
+        isRetrying,
+        errorTitle,
+        errorDescription,
+        onRetry,
+        onClose: handleModalClose,
+        handleApiError
+    } = useApiErrorHandler({ onClose });
+
+    const submitPresentationCore = useCallback(async () => {
+        const response = await fetchData({
+            apiConfig: api.submitPresentation,
+            url: api.submitPresentation.url(presentationId),
+            body: {
+                selectedCredentials: selectedCredentials.map(c => c.credentialId)
+            }
+        });
+        return response;
+    }, [fetchData, presentationId, selectedCredentials]);
+
+    const handleRetrySuccess = useCallback(() => {
+        setIsSuccess(true);
+    }, []);
+
+    const submitPresentation = useCallback(async () => {
+        setIsLoading(true);
+
+        try {
+            const response = await submitPresentationCore();
+
+            if (response.ok()) {
+                setIsSuccess(true);
+            } else {
+                const errorMessage = response.error?.message || 'Failed to submit presentation';
+                const error = response.error || new Error(errorMessage);
+                handleApiError(error, "submitPresentation", submitPresentationCore, handleRetrySuccess);
+                setIsSuccess(false);
+            }
+        } catch (err) {
+            const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
+            const error = err instanceof Error ? err : new Error(errorMessage);
+            handleApiError(error, "submitPresentation", submitPresentationCore, handleRetrySuccess);
+            setIsSuccess(false);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [submitPresentationCore, handleApiError, handleRetrySuccess]);
 
     useEffect(() => {
         if (hasSubmittedRef.current) return;
-        if (!selectedCredentials || selectedCredentials.length === 0 || !presentationId) return;
+        if (!selectedCredentials?.length || !presentationId) return;
 
-        const submitPresentation = async () => {
-            hasSubmittedRef.current = true;
-            setIsLoading(true);
-
-            try {
-                const response = await fetchData({
-                    apiConfig: api.submitPresentation,
-                    url: api.submitPresentation.url(presentationId),
-                    body: {
-                        selectedCredentials: selectedCredentials.map(c => c.credentialId)
-                    }
-                });
-
-                if (response.ok()) {
-                    setIsSuccess(true);
-                } else {
-                    const errorMessage = response.error?.message || 'Failed to submit presentation';
-                    const error = response.error || new Error(errorMessage);
-                    handleApiError(error, 'submitPresentation');
-                    setIsSuccess(false);
-                }
-            } catch (err) {
-                const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
-                const error = err instanceof Error ? err : new Error(errorMessage);
-                handleApiError(error, 'submitPresentation');
-                setIsSuccess(false);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
+        hasSubmittedRef.current = true;
         void submitPresentation();
-    }, [fetchData, presentationId, selectedCredentials, handleApiError]);
+    }, [submitPresentation, selectedCredentials, presentationId]);
 
     const handleSuccessClose = () => {
         if (returnUrl) window.location.href = returnUrl;
         else if (onClose) onClose();
     };
-
-    if (showErrorCard) {
-        return (
-            <ErrorCard
-                isOpen={true}
-                title="Error"
-                description={errorCardMessage}
-                onClose={handleCloseErrorCard}
-                testId="modal-error-card"
-            />
-        );
-    }
-
-    if (isLoading) {
-        return <LoaderModal
-            isOpen={true}
-            message={t("message")}
-            size="xl-loading"
-            testId="modal-loader-card"
-        />;
-    }
 
     if (isSuccess) {
         const successModalProps: CredentialShareSuccessModalProps = {
@@ -108,8 +99,32 @@ export const CredentialShareHandler: React.FC<CredentialShareHandlerProps> = ({
             returnUrl,
             onClose: handleSuccessClose
         };
-
         return <CredentialShareSuccessModal {...successModalProps} />;
+    }
+
+    if (showError) {
+        return (
+            <ErrorCard
+                isOpen={true}
+                title={errorTitle}
+                description={errorDescription}
+                onClose={handleModalClose}
+                onRetry={onRetry}
+                isRetrying={isRetrying}
+                testId="modal-error-card"
+            />
+        );
+    }
+
+    if (isLoading || isRetrying) {
+        return (
+            <LoaderModal
+                isOpen={true}
+                message={t("message")}
+                size="xl-loading"
+                testId="modal-loader-card"
+            />
+        );
     }
 
     return null;

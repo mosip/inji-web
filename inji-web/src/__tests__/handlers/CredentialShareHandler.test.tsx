@@ -1,5 +1,6 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import '@testing-library/jest-dom';
 import { CredentialShareHandler } from "../../handlers/CredentialShareHandler";
 import { useApiErrorHandler } from "../../hooks/useApiErrorHandler";
 
@@ -12,14 +13,36 @@ jest.mock("../../hooks/useApiErrorHandler");
 const mockUseApiErrorHandler = useApiErrorHandler as jest.Mock;
 
 jest.mock("../../modals/LoadingModal", () => ({
-    LoaderModal: () => <div data-testid="modal-loader-card" />,
+    LoaderModal: ({ isOpen }: { isOpen: boolean }) =>
+        isOpen ? <div data-testid="modal-loader-card" /> : null,
 }));
+
 jest.mock("../../modals/ErrorCard", () => ({
-    ErrorCard: ({ isOpen, description }: { isOpen: boolean; description: string }) =>
-        isOpen ? <div data-testid="error-card">{description}</div> : null,
+    ErrorCard: ({ isOpen, onClose, onRetry, isRetrying, title, description, testId }: any) => {
+        if (!isOpen) return null;
+        const isRetryable = !!onRetry;
+        const button = isRetryable
+            ? <button onClick={onRetry} disabled={isRetrying}>Retry</button>
+            : (onClose ? <button onClick={onClose}>Close</button> : null);
+
+        return (
+            <div data-testid={testId}>
+                {title}: {description}
+                {button}
+            </div>
+        );
+    }
 }));
+
 jest.mock("../../modals/CredentialShareSuccessModal", () => ({
-    CredentialShareSuccessModal: () => <div data-testid="success-modal" />,
+    CredentialShareSuccessModal: ({ isOpen }: { isOpen: boolean }) =>
+        isOpen ? <div data-testid="success-modal" /> : null,
+}));
+
+jest.mock('react-i18next', () => ({
+    useTranslation: () => ({
+        t: (key: string) => key === 'message' ? 'Sharing credentials...' : key,
+    }),
 }));
 
 describe("CredentialShareHandler", () => {
@@ -38,14 +61,24 @@ describe("CredentialShareHandler", () => {
         onClose: jest.fn(),
     };
 
+    const mockHandleApiError = jest.fn();
+    const mockHandleCloseErrorCard = jest.fn();
+    const mockOnRetry = jest.fn();
+    let mockErrorHandlerReturnValue: ReturnType<typeof useApiErrorHandler>;
+
     beforeEach(() => {
         jest.clearAllMocks();
-        mockUseApiErrorHandler.mockReturnValue({
-            showErrorCard: false,
-            errorCardMessage: "",
-            handleApiError: jest.fn(),
-            handleCloseErrorCard: jest.fn(),
-        });
+        mockErrorHandlerReturnValue = {
+            showError: false,
+            isRetrying: false,
+            errorTitle: undefined,
+            errorDescription: undefined,
+            onRetry: mockOnRetry,
+            onClose: mockHandleCloseErrorCard,
+            handleApiError: mockHandleApiError,
+            clearError: jest.fn(),
+        };
+        mockUseApiErrorHandler.mockReturnValue(mockErrorHandlerReturnValue);
     });
 
     it("shows loading modal initially", () => {
@@ -60,51 +93,137 @@ describe("CredentialShareHandler", () => {
         await waitFor(() =>
             expect(screen.getByTestId("success-modal")).toBeInTheDocument()
         );
+        expect(screen.queryByTestId("modal-loader-card")).not.toBeInTheDocument();
     });
 
     it("shows error card when API call fails (response error)", async () => {
-        const mockHandleApiError = jest.fn();
-        const mockHandleCloseErrorCard = jest.fn();
-
         const errorResponse = {
             ok: () => false,
             error: { message: "Failed to submit presentation" },
         };
         mockFetchData.mockResolvedValueOnce(errorResponse);
 
-        mockUseApiErrorHandler.mockImplementationOnce(() => ({
-            showErrorCard: true,
-            errorCardMessage: "Failed to submit presentation",
-            handleApiError: mockHandleApiError,
-            handleCloseErrorCard: mockHandleCloseErrorCard,
-        }));
+        mockUseApiErrorHandler.mockImplementation(() => {
+            if (mockHandleApiError.mock.calls.length > 0) {
+                return {
+                    ...mockErrorHandlerReturnValue,
+                    showError: true,
+                    errorTitle: 'API Error',
+                    errorDescription: 'Failed to submit presentation',
+                    onRetry: undefined,
+                };
+            }
+            return mockErrorHandlerReturnValue;
+        });
 
-        render(<CredentialShareHandler {...defaultProps} />);
-
+        const { rerender } = render(<CredentialShareHandler {...defaultProps} />);
+        await waitFor(() => expect(mockHandleApiError).toHaveBeenCalled());
+        rerender(<CredentialShareHandler {...defaultProps} />);
         await waitFor(() =>
-            expect(screen.getByTestId("error-card")).toHaveTextContent(
+            expect(screen.getByTestId("modal-error-card")).toHaveTextContent(
                 "Failed to submit presentation"
             )
         );
+        expect(screen.getByText("Close")).toBeInTheDocument();
     });
 
     it("shows error card when fetch throws (network/unexpected error)", async () => {
-        const mockHandleApiError = jest.fn();
-        const mockHandleCloseErrorCard = jest.fn();
+        const networkError = new Error("Network error");
+        mockFetchData.mockRejectedValueOnce(networkError);
 
-        mockFetchData.mockRejectedValueOnce(new Error("Network error"));
+        mockUseApiErrorHandler.mockImplementation(() => {
+            if (mockHandleApiError.mock.calls.length > 0) {
+                return {
+                    ...mockErrorHandlerReturnValue,
+                    showError: true,
+                    errorTitle: 'Network Error',
+                    errorDescription: 'Network error',
+                    onRetry: undefined,
+                };
+            }
+            return mockErrorHandlerReturnValue;
+        });
 
-        mockUseApiErrorHandler.mockImplementationOnce(() => ({
-            showErrorCard: true,
-            errorCardMessage: "Network error",
-            handleApiError: mockHandleApiError,
-            handleCloseErrorCard: mockHandleCloseErrorCard,
-        }));
-
-        render(<CredentialShareHandler {...defaultProps} />);
-
+        const { rerender } = render(<CredentialShareHandler {...defaultProps} />);
+        await waitFor(() => expect(mockHandleApiError).toHaveBeenCalled());
+        rerender(<CredentialShareHandler {...defaultProps} />);
         await waitFor(() =>
-            expect(screen.getByTestId("error-card")).toHaveTextContent("Network error")
+            expect(screen.getByTestId("modal-error-card")).toHaveTextContent(
+                "Network error"
+            )
         );
+        expect(screen.getByText("Close")).toBeInTheDocument();
+    });
+
+    it("shows ErrorCard with Retry button when API fails with a retryable error", async () => {
+        const retryableErrorResponse = {
+            ok: () => false,
+            error: { message: "Server busy, please retry" },
+        };
+        mockFetchData.mockResolvedValueOnce(retryableErrorResponse);
+
+        mockUseApiErrorHandler.mockImplementation(() => {
+            if (mockHandleApiError.mock.calls.length > 0) {
+                return {
+                    ...mockErrorHandlerReturnValue,
+                    showError: true,
+                    errorTitle: 'Temporary Issue',
+                    errorDescription: 'Server busy, please retry',
+                    onRetry: mockOnRetry,
+                    onClose: undefined,
+                };
+            }
+            return mockErrorHandlerReturnValue;
+        });
+
+        const { rerender } = render(<CredentialShareHandler {...defaultProps} />);
+        await waitFor(() => expect(mockHandleApiError).toHaveBeenCalled());
+        rerender(<CredentialShareHandler {...defaultProps} />);
+        await waitFor(() => {
+            const retryCard = screen.getByTestId("modal-error-card");
+            expect(retryCard).toBeInTheDocument();
+            expect(retryCard).toHaveTextContent("Temporary Issue: Server busy, please retry");
+            expect(screen.getByText("Retry")).toBeInTheDocument();
+        });
+        expect(screen.queryByTestId("success-modal")).not.toBeInTheDocument();
+    });
+
+    it("calls onRetry from hook when Retry button is clicked", async () => {
+        const retryableErrorResponse = { ok: () => false, error: { message: "Retry me" } };
+        mockFetchData.mockResolvedValueOnce(retryableErrorResponse);
+
+        mockUseApiErrorHandler.mockImplementation(() => {
+            if (mockHandleApiError.mock.calls.length > 0) {
+                return {
+                    ...mockErrorHandlerReturnValue,
+                    showError: true,
+                    onRetry: mockOnRetry,
+                    onClose: undefined
+                };
+            }
+            return mockErrorHandlerReturnValue;
+        });
+
+        const { rerender } = render(<CredentialShareHandler {...defaultProps} />);
+        await waitFor(() => expect(mockHandleApiError).toHaveBeenCalled());
+        rerender(<CredentialShareHandler {...defaultProps} />);
+        await waitFor(() => {
+            const retryButton = screen.getByRole('button', { name: 'Retry' });
+            expect(retryButton).toBeInTheDocument();
+            fireEvent.click(retryButton);
+        });
+        expect(mockOnRetry).toHaveBeenCalledTimes(1);
+    });
+
+    it("shows LoaderModal when isRetrying is true", async () => {
+        mockErrorHandlerReturnValue = {
+            ...mockErrorHandlerReturnValue,
+            isRetrying: true,
+        };
+        mockUseApiErrorHandler.mockReturnValue(mockErrorHandlerReturnValue);
+        render(<CredentialShareHandler {...defaultProps} />);
+        expect(screen.getByTestId("modal-loader-card")).toBeInTheDocument();
+        expect(screen.queryByTestId("success-modal")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("modal-error-card")).not.toBeInTheDocument();
     });
 });

@@ -513,9 +513,16 @@
         "addTrustedVerifierError": "Failed to add verifier to trusted list."
       },
       "ErrorCard": {
-        "defaultTitle": "Error",
-        "defaultDescription": "Something went wrong. Please try again.",
+        "defaultTitle": "Something went wrong",
+        "defaultDescription": "We couldn’t complete your request. Please close and try again later.",
+        "technicalTitle": "Oops! An Error Occurred.",
+        "technicalDescription": "There was a technical issue while processing your request. You can try again in a moment.",
         "closeButton": "Close"
+      },
+      "RetryCard": {
+        "defaultTitle": "Something went wrong",
+        "defaultDescription": "We couldn’t complete your request. Please try again.",
+        "retryButton": "Retry"
       },
       "loadingCard": {
       "title": "Fetching verifier info...",

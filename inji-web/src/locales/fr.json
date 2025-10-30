@@ -512,9 +512,16 @@
       "addTrustedVerifierError": "Échec de l'ajout du vérificateur à la liste de confiance."
     },
     "ErrorCard": {
-      "defaultTitle": "Erreur",
-      "defaultDescription": "Quelque chose s'est mal passé. Veuillez réessayer.",
+      "defaultTitle": "Une erreur s’est produite",
+      "defaultDescription": "Nous n’avons pas pu terminer votre demande. Veuillez fermer et réessayer plus tard.",
+      "technicalTitle": "Oups ! Une erreur est survenue.",
+      "technicalDescription": "Un problème technique est survenu lors du traitement de votre demande. Vous pouvez réessayer dans un instant.",
       "closeButton": "Fermer"
+    },
+    "RetryCard": {
+      "defaultTitle": "Une erreur s’est produite",
+      "defaultDescription": "Nous n’avons pas pu terminer votre demande. Veuillez réessayer.",
+      "retryButton": "Réessayer"
     },
     "loadingCard": {
       "title": "Récupération des informations du vérificateur...",
