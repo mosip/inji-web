@@ -20,11 +20,7 @@ public class HomePage extends BasePage {
 	}
 
 	public void clickOnFaq() {
-		if (isElementIsVisible(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"))) {
-			clickOnElement(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"));
-		} else {
-			clickOnElement(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"));
-		}
+		clickOnElement(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"));
 	}
 
 	public boolean isFaqPageDisplayed() {
@@ -143,9 +139,9 @@ public class HomePage extends BasePage {
 		return new HashSet<>(expectedLanguages).equals(new HashSet<>(actualLanguages));
 	}
 
-	public void selectOtherLangauge() {
-		clickOnElement(driver, By.xpath("(//button[@type='button'])[3]"));
-	}
+//	public void selectOtherLangauge() {
+//		clickOnElement(driver, By.xpath("(//button[@type='button'])[3]"));
+//	}
 
 	public Boolean isNoIssuerFoundMessageDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//p[@data-testid='EmptyList-Text']"));

@@ -19,12 +19,8 @@ public class SunbirdCredentials extends BasePage {
 	}
 
 	public Boolean isSunbirdInsuranceDisplayed() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
+		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),
+				60);
 	}
 
 	public String pdfNameInsurance;

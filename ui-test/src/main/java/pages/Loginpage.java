@@ -226,7 +226,7 @@ public class Loginpage extends BasePage {
 	}
 
 	public void getTextonMosipCredential() {
-		String mosipcredentialname = getElementText(driver, By.xpath("//h3[@data-testid='ItemBox-Text'])[1]"));
+		String mosipcredentialname = getElementText(driver, By.xpath("(//h3[@data-testid='ItemBox-Text'])[1]"));
 		enterText(driver, By.xpath("//input[@type='text']"), mosipcredentialname);
 	}
 

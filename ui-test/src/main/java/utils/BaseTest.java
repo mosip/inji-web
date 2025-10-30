@@ -181,19 +181,18 @@ public class BaseTest {
 				ExtentReportManager.getTest().pass("✅ Scenario Passed: " + scenario.getName());
 			}
 		} finally {
+			if (driver != null) {
+				try {
+					driver.quit();
+					logger.info("✅ WebDriver instance quit successfully after scenario: {}", scenario.getName());
+				} catch (Exception e) {
+					logger.error("❌ Error while quitting WebDriver after scenario: {}", scenario.getName(), e);
+				} finally {
+					driver = null; // ensure cleanup
+				}
+			}
 			ExtentReportManager.flushReport();
 			clearSkip();
-		}
-		// Kill the driver cleanly after each scenario
-		if (driver != null) {
-			try {
-				driver.quit();
-				logger.info("✅ WebDriver instance quit successfully after scenario: {}", scenario.getName());
-			} catch (Exception e) {
-				logger.error("❌ Error while quitting WebDriver after scenario: {}", scenario.getName(), e);
-			} finally {
-				driver = null; // ensure cleanup
-			}
 		}
 	}
 
