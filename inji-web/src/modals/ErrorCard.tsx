@@ -35,9 +35,10 @@ export const ErrorCard: React.FC<ErrorCardProps> = ({
     const RETRY_KEY_PREFIX = "RetryCard";
 
     const finalTitle = title || t(`${ERROR_KEY_PREFIX}.defaultTitle`);
-    const finalDescription = description || (isRetryable
-        ? t(`${RETRY_KEY_PREFIX}.defaultDescription`)
-        : t(`${ERROR_KEY_PREFIX}.defaultDescription`));
+    const retryDescriptionText = description || t(`${RETRY_KEY_PREFIX}.defaultDescription`);
+    const errorDescriptionText = description || t(`${ERROR_KEY_PREFIX}.defaultDescription`);
+
+    const finalDescription = isRetryable ? retryDescriptionText : errorDescriptionText;
 
     const buttonText = isRetryable ? t(`${RETRY_KEY_PREFIX}.retryButton`) : t(`${ERROR_KEY_PREFIX}.closeButton`);
     const buttonAction = isRetryable ? onRetry : onClose;

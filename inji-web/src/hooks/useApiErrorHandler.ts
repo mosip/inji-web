@@ -35,7 +35,7 @@ export interface UseApiErrorHandlerReturn {
 const TECHNICAL_ERROR_CODES = [
     "API_NETWORK",
     "API_UNAUTHORIZED",
-    "API_SERVER"
+    // "API_SERVER"
 ];
 
 const DEFAULT_RETRY_CODES = Object.values(ERROR_TYPES).filter(
@@ -84,31 +84,37 @@ export const useApiErrorHandler = (
         ) => {
             const stdError: StandardError = standardizeError(error, { context });
             const isTechnicalError = TECHNICAL_ERROR_CODES.includes(stdError.code);
-            logError(stdError, { context });
-
-            if (isTechnicalError) {
-                setErrorTitle(t("ErrorCard.technicalTitle"));
-                setErrorDescription(t("ErrorCard.technicalDescription"));
-            } else {
-                setErrorTitle(t("ErrorCard.defaultTitle"));
-                setErrorDescription(t("ErrorCard.defaultDescription"));
-            }
-
             const isRetryableError = retryableErrorCodes.includes(stdError.code);
 
-            // Set the modal to show
+            logError(stdError, { context });
+
+            // ✅ Decide which kind of error text to show
+            let title: string;
+            let description: string;
+
+            if (isTechnicalError) {
+                title = t("ErrorCard.technicalTitle");
+                description = t("ErrorCard.technicalDescription");
+            } else if (isRetryableError && retryFn) {
+                title = t("RetryCard.defaultTitle");
+                description = t("RetryCard.defaultDescription");
+            } else {
+                title = t("ErrorCard.defaultTitle");
+                description = t("ErrorCard.defaultDescription");
+            }
+
+            setErrorTitle(title);
+            setErrorDescription(description);
             setShowError(true);
 
-            // If not retryable OR no retry function provided, set as final error
-            if (!isRetryableError || !retryFn) {
-                retryFnRef.current = null;
-                onRetrySuccessRef.current = null;
-                setIsRetryable(false); // This is a final error
-            } else {
-                // This is a retryable error
+            if (isRetryableError && retryFn) {
                 retryFnRef.current = retryFn;
                 onRetrySuccessRef.current = onRetrySuccess || null;
                 setIsRetryable(true);
+            } else {
+                retryFnRef.current = null;
+                onRetrySuccessRef.current = null;
+                setIsRetryable(false);
             }
         },
         [retryableErrorCodes, t]
