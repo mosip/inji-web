@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { api } from "../utils/api";
 import { LoaderModal } from "../modals/LoadingModal";
 import { useTranslation } from "react-i18next";
@@ -26,6 +26,7 @@ export const UserAuthorizationPage: React.FC = () => {
     const [verifierData, setVerifierData] = useState<any>(null);
     const [presentationIdData, setPresentationIdData] = useState<string | null>(null);
     const [selectedCredentialsData, setSelectedCredentialsData] = useState<PresentationCredential[] | null>(null);
+    const fetchingRef = useRef<boolean>(false);
 
     const apiService = useApi();
     const navigate = useNavigate();
@@ -46,13 +47,25 @@ export const UserAuthorizationPage: React.FC = () => {
             apiConfig: api.validateVerifierRequest,
             body: { authorizationRequestUrl: cleanParams },
         });
-
-        if (!response.ok()) {
-            throw response.error || new Error("Failed to validate verifier request. Please try again.");
-        }
-
-        return response.data;
+        return response;
     }, [apiService]);
+
+    const handleValidationSuccess = useCallback((response: any) => {
+        const data = response.data;
+        const presentationId = data?.presentationId;
+        const verifier = data?.verifier;
+        if (!verifier) {
+            throw new Error("Invalid verifier response received.");
+        }
+        setPresentationIdData(presentationId);
+        setVerifierData(verifier);
+        if (!verifier.trusted) {
+            setShowTrustVerifier(true);
+        } else {
+            setShowTrustVerifier(false);
+            setShowCredentialRequest(true);
+        }
+    }, [setPresentationIdData, setVerifierData, setShowTrustVerifier, setShowCredentialRequest]);
 
     const loadInitialData = useCallback(async () => {
         let cleanParams = '';
@@ -71,59 +84,66 @@ export const UserAuthorizationPage: React.FC = () => {
 
         setIsLoading(true);
         try {
-            const data = await validateVerifierRequestCore(cleanParams);
+            const response = await validateVerifierRequestCore(cleanParams);
 
-            const presentationId = data?.presentationId;
-            const verifier = data?.verifier;
-            if (!verifier) {
-                throw new Error("Invalid verifier response received.");
-            }
-
-            setPresentationIdData(presentationId)
-            setVerifierData(verifier);
-            if (!verifier.trusted) {
-                setShowTrustVerifier(true);
+            if (response.ok()) {
+                handleValidationSuccess(response);
             } else {
-                setShowTrustVerifier(false);
-                setShowCredentialRequest(true);
+                throw response.error || new Error("Failed to validate verifier request. Please try again.");
             }
             setIsLoading(false);
         } catch (err) {
             setIsLoading(false);
-            handleApiError(err,"validateVerifierRequest", () => validateVerifierRequestCore(cleanParams));
+
+            handleApiError(err,
+                "validateVerifierRequest",
+                () => validateVerifierRequestCore(cleanParams),
+                handleValidationSuccess
+            );
         }
     }, [
         validateVerifierRequestCore,
         handleApiError,
-        setPresentationIdData,
-        setVerifierData,
-        setShowTrustVerifier,
-        setShowCredentialRequest
+        handleValidationSuccess
     ]);
 
     const addTrustedVerifierCore = useCallback(async () => {
         if (!verifierData?.id) return;
-
         const response = await apiService.fetchData({
             apiConfig: api.addTrustedVerifier,
             body: { verifierId: verifierData.id },
         });
 
-        if (!response.ok()) {
-            throw response.error || new Error("Failed to add verifier to trusted list.");
-        }
+        return response;
+    }, [apiService, verifierData?.id]);
 
+    const handleTrustSuccess = useCallback(() => {
         setShowTrustVerifier(false);
         setShowCredentialRequest(true);
-    }, [apiService, verifierData?.id, setShowTrustVerifier, setShowCredentialRequest]);
+    }, [setShowTrustVerifier, setShowCredentialRequest]);
 
     const handleTrustButton = useCallback(async () => {
+        setIsLoading(true);
         try {
-            await addTrustedVerifierCore();
+            const response = await addTrustedVerifierCore();
+
+            if (response && response.ok()) {
+                handleTrustSuccess();
+            } else {
+                throw response?.error || new Error("Failed to add verifier to trusted list.");
+            }
+            setIsLoading(false);
         } catch (err) {
-            handleApiError(err, "addTrustedVerifier", addTrustedVerifierCore);
+            setIsLoading(false);
+
+            handleApiError(
+                err,
+                "addTrustedVerifier",
+                addTrustedVerifierCore,
+                handleTrustSuccess
+            );
         }
-    }, [addTrustedVerifierCore, handleApiError]);
+    }, [addTrustedVerifierCore, handleApiError, handleTrustSuccess]);
 
     const handleNoTrustButton = () => {
         setShowTrustVerifier(false);
@@ -141,12 +161,14 @@ export const UserAuthorizationPage: React.FC = () => {
     };
 
     useEffect(() => {
-        if (!isUserLoggedIn()) {
+        if (!isUserLoggedIn() || fetchingRef.current) {
             return;
         }
+
+        fetchingRef.current = true;
         void loadInitialData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [isUserLoggedIn]);
 
     const isErrorActive = showError;
 

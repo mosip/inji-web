@@ -39,8 +39,6 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
     const [missingClaims, setMissingClaims] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const fetchingRef = useRef<boolean>(false);
-
-
     const {fetchData} = useApi<CredentialsResponse>();
 
     const {
@@ -113,31 +111,37 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
         />
     );
 
+    const handleFetchSuccess = useCallback((response: any) => {
+        const data = response.data;
+        setCredentials(data?.availableCredentials || []);
+        setMissingClaims(data?.missingClaims || []);
+    }, []);
+
     const fetchCredentialsCore = useCallback(async () => {
         const response = await fetchData({
             url: api.fetchPresentationCredentials.url(presentationId),
             apiConfig: api.fetchPresentationCredentials
         });
 
-        if (response.ok()) {
-            const data = response.data;
-            setCredentials(data?.availableCredentials || []);
-            setMissingClaims(data?.missingClaims || []);
-        } else {
-            throw response.error || new Error("Failed to fetch presentation credentials");
-        }
+        return response;
     }, [presentationId, fetchData]);
 
     const loadCredentials = useCallback(async () => {
         setIsLoading(true);
         try {
-            await fetchCredentialsCore();
+            const response = await fetchCredentialsCore();
+
+            if (response.ok()) {
+                handleFetchSuccess(response);
+            } else {
+                throw response.error || new Error("Failed to fetch presentation credentials");
+            }
             setIsLoading(false);
         } catch (err) {
             setIsLoading(false);
-            handleApiError(err, "fetchPresentationCredentials", fetchCredentialsCore);
+            handleApiError(err, "fetchPresentationCredentials", fetchCredentialsCore, handleFetchSuccess);
         }
-    }, [fetchCredentialsCore, handleApiError]);
+    }, [fetchCredentialsCore, handleApiError, handleFetchSuccess]);
 
     useEffect(() => {
         if (!isVisible || !presentationId) return;

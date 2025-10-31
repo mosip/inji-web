@@ -27,7 +27,7 @@ export interface UseApiErrorHandlerReturn {
         error: any,
         context: string,
         retryFn?: () => Promise<any>,
-        onRetrySuccess?: () => void
+        onRetrySuccess?: (response: any) => void
     ) => void;
     clearError: () => void;
 }
@@ -58,7 +58,7 @@ export const useApiErrorHandler = (
     const [isRetrying, setIsRetrying] = useState(false);
 
     const retryFnRef = useRef<(() => Promise<any>) | null>(null);
-    const onRetrySuccessRef = useRef<(() => void) | null>(null);
+    const onRetrySuccessRef = useRef<((response: any) => void) | null>(null);
 
     const clearError = useCallback(() => {
         setShowError(false);
@@ -80,7 +80,7 @@ export const useApiErrorHandler = (
             error: any,
             context: string,
             retryFn?: () => Promise<any>,
-            onRetrySuccess?: () => void
+            onRetrySuccess?: (response: any) => void
         ) => {
             const stdError: StandardError = standardizeError(error, { context });
             const isTechnicalError = TECHNICAL_ERROR_CODES.includes(stdError.code);
@@ -88,7 +88,6 @@ export const useApiErrorHandler = (
 
             logError(stdError, { context });
 
-            // ✅ Decide which kind of error text to show
             let title: string;
             let description: string;
 
@@ -129,10 +128,10 @@ export const useApiErrorHandler = (
 
         try {
             const response = await apiCallToRetry();
-            if (response.ok()) {
+            if (response && response.ok()) {
                 const onRetrySuccess = onRetrySuccessRef.current;
                 clearError();
-                onRetrySuccess?.();
+                onRetrySuccess?.(response);
                 return;
             }
 

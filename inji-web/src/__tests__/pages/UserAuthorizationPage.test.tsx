@@ -347,7 +347,8 @@ describe('UserAuthorizationPage', () => {
             expect(mockHandleApiError).toHaveBeenCalledWith(
                 apiError,
                 "validateVerifierRequest",
-                expect.any(Function) // The retryFn
+                expect.any(Function),
+                expect.any(Function)
             );
         });
 
@@ -438,6 +439,7 @@ describe('UserAuthorizationPage', () => {
             expect(mockHandleApiError).toHaveBeenCalledWith(
                 apiError,
                 "addTrustedVerifier",
+                expect.any(Function),
                 expect.any(Function)
             );
         });

@@ -394,7 +394,8 @@ describe('CredentialRequestModal', () => {
                 expect(mockHandleApiError).toHaveBeenCalledWith(
                     walletError,
                     'fetchPresentationCredentials',
-                    expect.any(Function) // The fetchCredentialsCore
+                    expect.any(Function),
+                    expect.any(Function)
                 );
             });
         });
@@ -588,7 +589,8 @@ describe('CredentialRequestModal', () => {
                 expect(mockHandleApiError).toHaveBeenCalledWith(
                     apiError,
                     'fetchPresentationCredentials',
-                    expect.any(Function) // fetchCredentialsCore
+                    expect.any(Function),
+                    expect.any(Function)
                 );
             });
         });

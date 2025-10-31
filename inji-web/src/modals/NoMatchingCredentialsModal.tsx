@@ -58,9 +58,7 @@ export const NoMatchingCredentialsModal: React.FC<NoMatchingCredentialsModalProp
             body: rejectPayload
         });
 
-        if (!response.ok()) {
-            throw response.error || new Error("Failed to reject verifier");
-        }
+        return response;
     }, [rejectVerifier, presentationId]);
 
     const handleGoToHome = useCallback(async () => {
@@ -76,8 +74,12 @@ export const NoMatchingCredentialsModal: React.FC<NoMatchingCredentialsModalProp
         }
 
         try {
-            await rejectVerifierCore();
-            handleExit();
+            const response = await rejectVerifierCore();
+            if (response.ok()) {
+                handleExit();
+            } else {
+                throw response.error || new Error("Failed to reject verifier");
+            }
             if (!redirectUri) setIsSubmitting(false);
         } catch (err) {
             handleApiError( err, "rejectVerifier", rejectVerifierCore, handleExit );
