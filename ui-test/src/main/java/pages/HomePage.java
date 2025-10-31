@@ -139,10 +139,6 @@ public class HomePage extends BasePage {
 		return new HashSet<>(expectedLanguages).equals(new HashSet<>(actualLanguages));
 	}
 
-//	public void selectOtherLangauge() {
-//		clickOnElement(driver, By.xpath("(//button[@type='button'])[3]"));
-//	}
-
 	public Boolean isNoIssuerFoundMessageDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//p[@data-testid='EmptyList-Text']"));
 	}
