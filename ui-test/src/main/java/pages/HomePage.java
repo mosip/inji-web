@@ -20,12 +20,7 @@ public class HomePage extends BasePage {
 	}
 
 	public void clickOnFaq() {
-		if (isElementIsVisible(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"))) {
-			clickOnElement(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"));
-
-		} else {
-			clickOnElement(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"));
-		}
+		clickOnElement(driver, By.xpath("//button[@data-testid='Header-Menu-FAQ']"));
 	}
 
 	public boolean isFaqPageDisplayed() {
@@ -85,17 +80,15 @@ public class HomePage extends BasePage {
 	}
 
 	public void clickOnDownloadMosipCredentials() {
-		clickOnElement(driver,
-				By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
+		clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
 
 	public Boolean isListOfCredentialsTypeDisplayed() {
-
 		return isElementIsVisible(driver, By.xpath("//div[@data-testid='HeaderTile-Text']"));
 	}
 
 	public void clickOnVerify() {
-			clickOnElement(driver, By.xpath("//button[@id='verify_otp']"));
+		clickOnElement(driver, By.xpath("//button[@id='verify_otp']"));
 	}
 
 	public Boolean isSuccessMessageDisplayed() {
@@ -105,9 +98,10 @@ public class HomePage extends BasePage {
 	public Boolean isMosipNationalIdDisplayed() {
 		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
-	
+
 	public Boolean isIssuersDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),15);
+		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),
+				15);
 	}
 
 	public void enterIssuersInSearchBox(String string) {
@@ -118,25 +112,18 @@ public class HomePage extends BasePage {
 	}
 
 	public Boolean isGoHomeButtonDisplayed() {
-
 		return isElementIsVisible(driver, By.xpath("//*[text()='Go To Home']"));
 	}
 
-	public Boolean isBackButtonDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//*[@class='cursor-pointer']"));
-	}
-
 	public Boolean isLanguageDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//button[@class='inline-flex items-center font-semibold']"));
+		return isElementIsVisible(driver, By.xpath("//button[@data-testid='Language-Selector-Button']"));
 	}
 
 	public void clickOnLanguageButton() {
-
 		if (isElementIsVisible(driver, By.xpath("//div[@data-testid='HeaderTile-Text']"))) {
 			clickOnElement(driver, By.xpath("//div[@data-testid='HeaderTile-Text']"));
 		}
 		clickOnElement(driver, By.xpath("//*[@data-testid='Language-Selector-Button']"));
-
 	}
 
 	public boolean verifyLanguagesInLanguageFilter() {
@@ -144,23 +131,15 @@ public class HomePage extends BasePage {
 				"Português");
 		List<String> actualLanguages = null;
 		try {
-			actualLanguages = getElementTexts(driver, By.xpath("//ul[@class='py-1 divide-y divide-gray-200']//li"));
-
+			actualLanguages = getElementTexts(driver,
+					By.xpath("//li[starts-with(@data-testid, 'Language-Selector-DropDown-Item-')]"));
 		} catch (TimeoutException e) {
 			e.printStackTrace();
 		}
-		System.out.println("expectedLanguages" + expectedLanguages);
-		System.out.println("actualLanguages" + actualLanguages);
 		return new HashSet<>(expectedLanguages).equals(new HashSet<>(actualLanguages));
 	}
 
-	public void selectOtherLangauge() {
-		clickOnElement(driver, By.xpath("(//button[@type='button'])[3]"));
-
-	}
-
 	public Boolean isNoIssuerFoundMessageDisplayed() {
-
 		return isElementIsVisible(driver, By.xpath("//p[@data-testid='EmptyList-Text']"));
 	}
 
@@ -232,8 +211,7 @@ public class HomePage extends BasePage {
 	}
 
 	public boolean isHomeBannerHeadingDescriptionDisplayed() {
-		return isElementIsVisible(driver, By.xpath(
-				"//*[@class='text-sm sm:text-xl w-full sm:w-[80%] my-6 sm:my-6 text-iw-text font-extralight leading-relaxed']"));
+		return isElementIsVisible(driver, By.xpath("//span[@data-testid='HomeBanner-Heading']/following-sibling::h2"));
 	}
 
 	public boolean isGetStartedButtonDisplayed() {

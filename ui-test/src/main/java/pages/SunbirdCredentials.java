@@ -15,43 +15,25 @@ public class SunbirdCredentials extends BasePage {
 	}
 
 	public Boolean isDownloadSunbirdCredentialsDisplayed() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
 
 	public Boolean isSunbirdInsuranceDisplayed() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
+		return isElementIsVisible(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"),
+				60);
 	}
 
 	public String pdfNameInsurance;
 
 	public void clickOnSunbirdInsurance() {
-
 		pdfNameInsurance = getElementAttribute(driver,
 				By.xpath("//*[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"), "data-testid")
 				.replaceFirst("ItemBox-Outer-Container-0-", "") + ".pdf";
 		logger.info("Pdf Name for Insurance: " + pdfNameInsurance);
-
 		clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
 
 	public void clickOnDownloadSunbird() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-
-			e.printStackTrace();
-		}
-
 		clickOnElement(driver, By.xpath("//div[starts-with(@data-testid, 'ItemBox-Outer-Container-0-')]"));
 	}
 
@@ -68,17 +50,9 @@ public class SunbirdCredentials extends BasePage {
 	}
 
 	public void selectDateOfBirth(String string) {
-
 		driver.findElement(By.xpath("//input[@id='_form_fullName']")).sendKeys(Keys.TAB);
 		driver.findElement(By.id("_form_dob")).sendKeys(string);
-
 		driver.findElement(By.xpath("//input[@id='_form_dob']")).click();
-
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void clickOnLogin() {
@@ -114,7 +88,7 @@ public class SunbirdCredentials extends BasePage {
 	}
 
 	public Boolean isAuthenticationFailedDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//div[@class='error-banner-text text-sm font-semibold']"));
+		return isElementIsVisible(driver, By.xpath("//div[@id='error-banner']"));
 	}
 
 	public Boolean isVehicleInsuranceDisplayed() {
