@@ -80,9 +80,9 @@ jest.mock("../../../components/Common/ToolTip/InfoTooltipTrigger", () => ({
   ),
 }));
 
-jest.mock("../../../assets/logo.svg", () => ({
+jest.mock("../../../assets/unknown_v.png", () => ({
   __esModule: true,
-  default: "mocked-logo.svg",
+  default: "mocked-unknown_v.png",
 }));
 
 describe("TrustVerifierModal", () => {
@@ -209,7 +209,7 @@ describe("TrustVerifierModal", () => {
       );
 
       const logo = screen.getByTestId("img-default-logo");
-      expect(logo).toHaveAttribute("src", "mocked-logo.svg");
+      expect(logo).toHaveAttribute("src", "mocked-unknown_v.png");
       expect(logo).toHaveAttribute("alt", "Test Verifier logo");
     });
 
@@ -227,7 +227,7 @@ describe("TrustVerifierModal", () => {
       );
 
       const logo = screen.getByTestId("img-default-logo");
-      expect(logo).toHaveAttribute("src", "mocked-logo.svg");
+      expect(logo).toHaveAttribute("src", "mocked-unknown_v.png");
     });
   });
 

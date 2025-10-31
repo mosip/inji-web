@@ -18,7 +18,7 @@ exports[`TrustVerifierModal renders modal content when open 1`] = `
           alt="Test Verifier logo"
           class="logoImage"
           data-testid="img-default-logo"
-          src="mocked-logo.svg"
+          src="mocked-unknown_v.png"
         />
       </div>
       <h1

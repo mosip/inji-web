@@ -1,5 +1,5 @@
 import React from 'react';
-import FallbackLogo from '../../assets/logo.svg';
+import FallbackLogo from '../../assets/unknown_v.png';
 
 interface CredentialFallbackIconProps {
     className?: string;
