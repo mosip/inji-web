@@ -514,7 +514,7 @@
     "ErrorCard": {
       "defaultTitle": "Une erreur s’est produite",
       "defaultDescription": "Nous n’avons pas pu terminer votre demande. Veuillez fermer et réessayer plus tard.",
-      "technicalTitle": "Oups ! Une erreur est survenue.",
+      "technicalTitle": "Oups ! Une erreur est survenu.",
       "technicalDescription": "Un problème technique est survenu lors du traitement de votre demande. Vous pouvez réessayer dans un instant.",
       "closeButton": "Fermer"
     },
