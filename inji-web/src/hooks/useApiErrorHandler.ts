@@ -35,7 +35,7 @@ export interface UseApiErrorHandlerReturn {
 const TECHNICAL_ERROR_CODES = [
     "API_NETWORK",
     "API_UNAUTHORIZED",
-    // "API_SERVER"
+    "API_SERVER"
 ];
 
 const DEFAULT_RETRY_CODES = Object.values(ERROR_TYPES).filter(

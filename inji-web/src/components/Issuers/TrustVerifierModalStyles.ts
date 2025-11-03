@@ -4,7 +4,7 @@ export const TrustVerifierModalStyles = {
         wrapper: "flex flex-col items-center text-center px-4 sm:px-6 py-6 sm:py-8 animate-fadeIn",
 
         logoContainer: "h-20 w-20 mb-4 flex items-center justify-center",
-        logoImage: "h-20 w-20 object-contain rounded-full border border-gray-200 shadow-sm",
+        logoImage: "h-20 w-20 object-contain rounded-full",
         logoPlaceholder: "h-20 w-20 rounded-full bg-gray-100",
 
         title: "text-xl sm:text-2xl font-semibold text-gray-900 **break-all**",
