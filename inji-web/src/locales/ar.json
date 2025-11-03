@@ -396,7 +396,7 @@
     "success": "يتابع",
     "cancel": "يلغي"
   },
-  "LoadingModalLandscape": {
+  "ShareHandlerLoadingModal": {
     "message": "جارٍ إعداد عرض بيانات اعتمادك الآمن..."
   },
   "CredentialShareSuccessModal": {
@@ -490,15 +490,15 @@
   },
   "VerifierTrustPage": {
     "modal": {
-      "title": "مدقق غير معروف",
-      "description": "تأكد من أنك تتعرف على هذا المدقق أو تثق به. \nبمجرد أن تثق بهذا المدقق:",
-      "benefitSaveSecurely": "سيتم حفظ البطاقة بأمان في محفظتك.",
-      "benefitAddToTrustedList": "ستتم إضافة هذا المدقق إلى قائمة الثقة الخاصة بك.",
-      "benefitSkipReviewFuture": "لن تحتاج إلى مراجعة الثقة مرة أخرى عند التنزيل منهم في المرة القادمة.",
-      "trustButton": "نعم، أنا أثق بهذا المدقق",
-      "notTrustButton": "لا، أنا لا أثق بهذا المدقق",
+      "title": "موثّق غير معروف",
+      "description": "تأكد من أنك تتعرّف على هذا الموثّق أو تثق به. \nبمجرد أن تثق بهذا الموثّق:",
+      "benefitSaveSecurely": "سيتذكر محفظتك هذا الموثّق كجهة موثوقة.",
+      "benefitAddToTrustedList": "ستتم إضافة هذا الموثّق إلى قائمة الثقة الخاصة بك.",
+      "benefitSkipReviewFuture": "طلبات التحقق المستقبلية من هذا الموثّق سيتم الوثوق بها تلقائيًا.",
+      "trustButton": "نعم، أنا أثق بهذا الموثّق",
+      "notTrustButton": "لا، أنا لا أثق بهذا الموثّق",
       "infoTooltipButton": "ماذا تعني الثقة؟",
-      "infoTooltipText": "إن الثقة في المدقق تسمح له بطلب بيانات الاعتماد الخاصة بك. ستظل تختار بيانات الاعتماد التي تريد مشاركتها في الخطوة التالية."
+      "infoTooltipText": "إن الثقة في الموثّق تسمح له بطلب بيانات الاعتماد الخاصة بك. ستظل تختار بيانات الاعتماد التي تريد مشاركتها في الخطوة التالية."
     },
     "TrustRejectionModal": {
       "title": "هل أنت متأكد أنك تريد الإلغاء؟",
@@ -512,9 +512,16 @@
       "addTrustedVerifierError": "فشل في إضافة المدقق إلى قائمة الثقة."
     },
     "ErrorCard": {
-      "defaultTitle": "خطأ",
-      "defaultDescription": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+      "defaultTitle": "حدث خطأ ما",
+      "defaultDescription": "تعذر إكمال طلبك. يرجى الإغلاق والمحاولة لاحقًا.",
+      "technicalTitle": "عذرًا! حدث خطأ فني.",
+      "technicalDescription": "حدثت مشكلة تقنية أثناء معالجة طلبك. يمكنك المحاولة مرة أخرى بعد قليل.",
       "closeButton": "إغلاق"
+    },
+    "RetryCard": {
+      "defaultTitle": "حدث خطأ ما",
+      "defaultDescription": "تعذر إكمال طلبك. يرجى المحاولة مرة أخرى.",
+      "retryButton": "إعادة المحاولة"
     },
     "loadingCard": {
       "title": "جلب معلومات المدقق...",

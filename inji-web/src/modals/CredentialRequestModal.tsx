@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useRef, useCallback, useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
-import {ModalWrapper} from './ModalWrapper';
 import {NoMatchingCredentialsModal} from './NoMatchingCredentialsModal';
-import { LoadingModalLandscape } from './LoadingModalLandscape';
+import { LoaderModal } from './LoadingModal';
 import {ErrorCard} from './ErrorCard';
 import {useApi} from '../hooks/useApi';
 import {useApiErrorHandler} from '../hooks/useApiErrorHandler';
@@ -40,38 +39,32 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
     const [missingClaims, setMissingClaims] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const fetchingRef = useRef<boolean>(false);
-
-
     const {fetchData} = useApi<CredentialsResponse>();
 
+    const {
+        showError,
+        errorDescription,
+        errorTitle,
+        isRetrying,
+        handleApiError,
+        onClose: handleModalClose,
+        onRetry
+    } = useApiErrorHandler({ onClose: onCancel });
 
-    // Use the API error handler hook
-    const {showErrorCard, errorCardMessage, handleApiError, handleCloseErrorCard} = useApiErrorHandler(onCancel);
-
-    // Memoize callback functions at the top level (before any conditional returns)
     const handleCancel = useCallback(async () => {
-        await withErrorHandling(
-            async () => {
-                // Call userRejectVerifier API with access_denied payload
-                const cancelPayload = {
-                    errorCode: "access_denied",
-                    errorMessage: "User denied authorization to share credentials"
-                };
+        await withErrorHandling(async () => {
+            const cancelPayload = {
+                errorCode: "access_denied",
+                errorMessage: "User denied authorization to share credentials"
+            };
 
-                await fetchData({
-                    url: api.userRejectVerifier.url(presentationId),
-                    apiConfig: api.userRejectVerifier,
-                    body: cancelPayload
-                });
-            },
-            {
-                context: 'handleCancel',
-                logError: true,
-                showToUser: false // Don't show error to user for cancel action
-            }
-        );
+            await fetchData({
+                url: api.userRejectVerifier.url(presentationId),
+                apiConfig: api.userRejectVerifier,
+                body: cancelPayload
+            });
+        });
 
-        // Redirect to verifier's redirectUri if available, otherwise call onCancel
         if (verifier?.redirectUri) {
             window.location.href = verifier.redirectUri;
         } else {
@@ -118,73 +111,44 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
         />
     );
 
-    useEffect(() => {
-        if (!isVisible || !presentationId) {
-            return;
-        }
+    const handleFetchSuccess = useCallback((response: any) => {
+        const data = response.data;
+        setCredentials(data?.availableCredentials || []);
+        setMissingClaims(data?.missingClaims || []);
+    }, []);
 
-        // Prevent double API calls
-        if (fetchingRef.current) {
-            return;
-        }
+    const fetchCredentialsCore = useCallback(async () => {
+        const response = await fetchData({
+            url: api.fetchPresentationCredentials.url(presentationId),
+            apiConfig: api.fetchPresentationCredentials
+        });
 
-        const fetchCredentials = async () => {
-            fetchingRef.current = true;
-            setIsLoading(true);
+        return response;
+    }, [presentationId, fetchData]);
 
-            try {
-                const response = await fetchData({
-                    url: api.fetchPresentationCredentials.url(presentationId),
-                    apiConfig: api.fetchPresentationCredentials
-                });
+    const loadCredentials = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const response = await fetchCredentialsCore();
 
-                if (response.ok()) {
-                    const responseData = response.data;
-
-                    if (responseData && responseData.availableCredentials) {
-                        setCredentials(responseData.availableCredentials);
-
-                        // Handle missing claims
-                        if (responseData.missingClaims) {
-                            setMissingClaims(responseData.missingClaims);
-                        } else {
-                            setMissingClaims([]);
-                        }
-                    } else {
-                        setCredentials([]);
-
-                        // Handle missing claims even when no available credentials
-                        if (responseData && responseData.missingClaims) {
-                            setMissingClaims(responseData.missingClaims);
-                        } else {
-                            setMissingClaims([]);
-                        }
-                    }
-                } else {
-                    const errorMessage = response.error?.message || 'Failed to fetch presentation credentials';
-                    const error = response.error || new Error(errorMessage);
-                    handleApiError(error, 'fetchPresentationCredentials');
-                    setCredentials([]);
-                    setMissingClaims([]);
-                }
-            } catch (err) {
-                const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
-                const error = err instanceof Error ? err : new Error(errorMessage);
-                handleApiError(error, 'fetchPresentationCredentials');
-                setCredentials([]);
-                setMissingClaims([]);
-            } finally {
-                fetchingRef.current = false;
-                setIsLoading(false);
+            if (response.ok()) {
+                handleFetchSuccess(response);
+            } else {
+                throw response.error || new Error("Failed to fetch presentation credentials");
             }
-        };
+            setIsLoading(false);
+        } catch (err) {
+            setIsLoading(false);
+            handleApiError(err, "fetchPresentationCredentials", fetchCredentialsCore, handleFetchSuccess);
+        }
+    }, [fetchCredentialsCore, handleApiError, handleFetchSuccess]);
 
-        void fetchCredentials();
+    useEffect(() => {
+        if (!isVisible || !presentationId) return;
+        if (fetchingRef.current) return;
 
-        // Cleanup function
-        return () => {
-            fetchingRef.current = false;
-        };
+        fetchingRef.current = true;
+        void loadCredentials();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isVisible, presentationId]);
 
@@ -199,22 +163,28 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
 
 
     // Show ErrorCard when there are API errors
-    if (showErrorCard) {
+    if (showError) {
         return (
             <ErrorCard
                 isOpen={true}
-                onClose={handleCloseErrorCard}
+                title={errorTitle}
+                description={errorDescription}
+                onClose={handleModalClose}
+                onRetry={onRetry}
+                isRetrying={isRetrying}
                 testId="modal-error-card"
             />
         );
     }
 
-    // Show loading modal when loading
-    if (isLoading) {
+    // Show loading modal when loading or retrying
+    if (isLoading || isRetrying) {
         return (
-            <LoadingModalLandscape
+            <LoaderModal
                 isOpen={true}
                 message={t('loading.message')}
+                size="xl-loading"
+                testId="modal-loader-card"
             />
         );
     }

@@ -3,12 +3,11 @@ import { ModalWrapper } from "./ModalWrapper";
 import { LoaderModalStyles } from "./LoaderModalStyles";
 import { SpinningLoader } from "../components/Common/SpinningLoader";
 
-
-
 interface LoaderModalProps {
     isOpen: boolean;
-    title: string;
-    subtitle: string;
+    title?: string;
+    subtitle?: string;
+    message?: string;
     size?: "sm" | "md" | "lg" | "xl" | "xl-loading" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl";
     testId: string;
 }
@@ -17,6 +16,7 @@ export const LoaderModal: React.FC<LoaderModalProps> = ({
     isOpen,
     title,
     subtitle,
+    message,
     size = "4xl",
     testId,
 }) => {
@@ -51,6 +51,10 @@ export const LoaderModal: React.FC<LoaderModalProps> = ({
 
                         <p data-testid="text-loader-modal-subtitle" className={styles.subtitle}>
                             {subtitle}
+                        </p>
+
+                        <p data-testid="text-loader-modal-message" className={styles.message}>
+                            {message}
                         </p>
                     </div>
                 }

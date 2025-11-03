@@ -5,7 +5,9 @@ import { MemoryRouter } from 'react-router-dom';
 import { UserAuthorizationPage } from '../../pages/UserAuthorizationPage';
 import { api, ContentTypes } from "../../utils/api";
 import { ROUTES } from "../../utils/constants";
-import { PresentationCredential } from '../../types/components'; // Assuming this import exists
+import { PresentationCredential } from '../../types/components';
+import { useUser } from '../../hooks/User/useUser';
+import { useApiErrorHandler } from '../../hooks/useApiErrorHandler'; // Import hook
 
 const mockFetchData = jest.fn();
 const mockNavigate = jest.fn();
@@ -18,6 +20,8 @@ jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: () => mockNavigate,
 }));
+jest.mock('../../hooks/User/useUser'); // Mock the hook's path
+jest.mock('../../hooks/useApiErrorHandler'); // Mock the hook's path
 
 const mockStore = {
     getState: () => ({
@@ -99,7 +103,6 @@ jest.mock('../../handlers/CredentialShareHandler', () => ({
 }));
 
 
-// DEFINE THE NEW MOCK CREDENTIAL DATA
 const mockPresentationCredentials: PresentationCredential[] = [
     {
         credentialId: 'mock-cred-id',
@@ -120,22 +123,29 @@ jest.mock('../../modals/CredentialRequestModal', () => ({
             <div data-testid="modal-credential-request">
                 <span>{`Request for ${props.verifierName}`}</span>
                 <button data-testid="btn-cr-cancel" onClick={props.onCancel}>CR-Cancel</button>
-                {/* Updated onClick to pass the standardized mock data */}
                 <button data-testid="btn-cr-consent" onClick={() => props.onConsentAndShare(mockPresentationCredentials)}>CR-Consent</button>
             </div>
         );
     }
 }));
 
+// Update ErrorCard mock to be "smart"
 const MockErrorCard = jest.fn();
 jest.mock('../../modals/ErrorCard', () => ({
     ErrorCard: (props: any) => {
         MockErrorCard(props);
         if (!props.isOpen) return null;
+
+        const isRetryable = !!props.onRetry;
+        const button = isRetryable
+            ? <button onClick={props.onRetry} disabled={props.isRetrying}>Retry</button>
+            : (props.onClose ? <button onClick={props.onClose}>Close</button> : null);
+
         return (
             <div data-testid="modal-error-card">
-                <span>ErrorCard.defaultTitle</span>
-                <button role="button" name="Close" onClick={props.onClose}>Close</button>
+                <span>{props.title}</span>
+                <span>{props.description}</span>
+                {button}
             </div>
         );
     }
@@ -155,6 +165,11 @@ jest.mock('../../components/Issuers/TrustRejectionModal', () => ({
         );
     }
 }));
+
+// Cast hooks
+const mockUseUser = useUser as jest.Mock;
+const mockUseApiErrorHandler = useApiErrorHandler as jest.Mock;
+
 
 api.validateVerifierRequest = {
     url: () => "/wallets/mock-wallet-id/presentations",
@@ -210,16 +225,44 @@ const mockVerifierUntrusted = {
     }
 };
 
-const getErrorCardTitle = () => screen.getByText('ErrorCard.defaultTitle');
+// Removed getErrorCardTitle, as mock is simpler
 const getLoaderModalTitle = () => screen.getByText('loadingCard.title');
 const getVerifierName = (name: string) => screen.getByText(name);
 const queryTrustVerifierModal = () => screen.queryByTestId('modal-trust-verifier');
 const queryCredentialRequestModal = () => screen.queryByTestId('modal-credential-request');
 
+// Define stable mocks for hook functions
+const mockHandleApiError = jest.fn();
+const mockOnClose = jest.fn();
+const mockOnRetry = jest.fn();
+let mockErrorHandlerReturnValue: ReturnType<typeof useApiErrorHandler>;
+
 
 describe('UserAuthorizationPage', () => {
     beforeEach(() => {
         jest.clearAllMocks();
+
+        // Default mock for useUser (logged in, not loading)
+        mockUseUser.mockReturnValue({
+            user: { displayName: 'Test User' },
+            walletId: 'mock-wallet-id',
+            isLoading: false,
+            isUserLoggedIn: () => true,
+        });
+
+        // Default mock for useApiErrorHandler
+        mockErrorHandlerReturnValue = {
+            showError: false,
+            isRetrying: false,
+            errorTitle: undefined,
+            errorDescription: undefined,
+            onRetry: mockOnRetry,
+            onClose: mockOnClose,
+            handleApiError: mockHandleApiError,
+            clearError: jest.fn(),
+        };
+        mockUseApiErrorHandler.mockReturnValue(mockErrorHandlerReturnValue);
+
         mockFetchData.mockResolvedValue({
             ok: () => true,
             data: mockVerifierTrusted,
@@ -230,12 +273,34 @@ describe('UserAuthorizationPage', () => {
         });
     });
 
-    test('renders Sidebar and LoaderModal initially and calls validateVerifierRequest with correct URL parsing', async () => {
+    test('does not call loadInitialData if user is not logged in', async () => {
+        // Override useUser mock for this test
+        mockUseUser.mockReturnValue({
+            user: null,
+            walletId: null,
+            isLoading: false,
+            isUserLoggedIn: () => false, // User is logged out
+        });
+
+        renderComponent();
+
+        // Wait a tick to ensure useEffect runs
+        await waitFor(() => {
+            // Loader should NOT appear
+            expect(screen.queryByTestId('modal-loader')).not.toBeInTheDocument();
+        });
+
+        // API call should NOT be made
+        expect(mockFetchData).not.toHaveBeenCalled();
+    });
+
+    test('renders Sidebar and LoaderModal initially and calls validateVerifierRequest', async () => {
         const route = "/user/authorize?authorizationRequestUrl=https%3A%2F%2Fverifier.com%2Frequest%3Fdata%3D123";
         renderComponent(route);
 
         expect(screen.getByTestId('mock-sidebar')).toBeInTheDocument();
 
+        // Loader should be visible because isLoading is set to true in loadInitialData
         const loaderModalTitle = await waitFor(() => getLoaderModalTitle());
         expect(loaderModalTitle).toBeInTheDocument();
 
@@ -248,44 +313,63 @@ describe('UserAuthorizationPage', () => {
             );
         });
 
+        // Loader should disappear after API call finishes
         await waitFor(() => {
             expect(screen.queryByText('loadingCard.title')).not.toBeInTheDocument();
         });
     });
 
-    test('shows ErrorCard and navigates to ROOT on initial validation failure', async () => {
+    test('shows ErrorCard with "Close" button on initial validation failure', async () => {
+        const apiError = { message: "Network Error" };
         mockFetchData.mockResolvedValueOnce({
-            ok: () => false,
-            error: { message: "Network Error" } as any,
-            data: null,
-            status: 500,
-            state: 2,
-            headers: {},
+            ok: () => false, error: apiError as any, data: null, status: 500, state: 2, headers: {},
         });
 
-        renderComponent();
+        // Simulate hook updating its state after handleApiError is called
+        mockUseApiErrorHandler.mockImplementation(() => {
+            if (mockHandleApiError.mock.calls.length > 0) {
+                return {
+                    ...mockErrorHandlerReturnValue,
+                    showError: true,
+                    errorTitle: 'Error',
+                    errorDescription: 'Failed',
+                    onRetry: undefined, // It's a final error
+                    onClose: mockOnClose,
+                };
+            }
+            return mockErrorHandlerReturnValue;
+        });
+
+        const { rerender } = renderComponent();
+
+        // Wait for handleApiError to be called
+        await waitFor(() => {
+            expect(mockHandleApiError).toHaveBeenCalledWith(
+                apiError,
+                "validateVerifierRequest",
+                expect.any(Function),
+                expect.any(Function)
+            );
+        });
+
+        rerender(<UserAuthorizationPage />); // Re-render to show updated hook state
 
         await waitFor(() => {
             expect(screen.getByTestId('modal-error-card')).toBeVisible();
+            expect(screen.getByText('Close')).toBeInTheDocument();
+            expect(screen.queryByText('Retry')).not.toBeInTheDocument();
         });
 
-        const closeButton = screen.getByRole('button', { name: /Close/i });
-        fireEvent.click(closeButton);
-
-        await waitFor(() => {
-            expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT);
-        });
+        fireEvent.click(screen.getByText('Close'));
+        expect(mockOnClose).toHaveBeenCalled();
     });
 
     test('shows CredentialRequestModal for a trusted verifier', async () => {
         renderComponent();
-
         await waitFor(() => {
             expect(screen.queryByText('loadingCard.title')).not.toBeInTheDocument();
         });
-
         expect(queryTrustVerifierModal()).not.toBeInTheDocument();
-
         const credentialRequestModal = screen.getByTestId('modal-credential-request');
         expect(credentialRequestModal).toBeVisible();
         expect(screen.getByText(`Request for ${mockVerifierTrusted.verifier.name}`)).toBeVisible();
@@ -293,35 +377,23 @@ describe('UserAuthorizationPage', () => {
 
     test('shows TrustVerifierModal for an untrusted verifier', async () => {
         mockFetchData.mockResolvedValueOnce({
-            ok: () => true,
-            data: mockVerifierUntrusted,
-            error: null,
-            status: 200,
-            state: 1,
-            headers: {},
+            ok: () => true, data: mockVerifierUntrusted, error: null, status: 200, state: 1, headers: {},
         });
-
         renderComponent();
-
         const verifierNameElement = await waitFor(() => getVerifierName(mockVerifierUntrusted.verifier.name));
         expect(verifierNameElement).toBeVisible();
-
         expect(queryCredentialRequestModal()).not.toBeInTheDocument();
     });
 
-    test('untrusted flow: calls addTrustedVerifier and proceeds to CredentialRequestModal on "Trust" click', async () => {
+    test('untrusted flow: calls addTrustedVerifier and proceeds on "Trust" click', async () => {
         mockFetchData.mockResolvedValueOnce({ ok: () => true, data: mockVerifierUntrusted, error: null, status: 200, state: 1, headers: {} });
         mockFetchData.mockResolvedValueOnce({ ok: () => true, data: { message: "Added" }, error: null, status: 200, state: 1, headers: {} });
-
         renderComponent();
-
         await waitFor(() => {
             expect(getVerifierName(mockVerifierUntrusted.verifier.name)).toBeVisible();
         });
-
         const trustButton = screen.getByTestId('btn-trust-verifier');
         fireEvent.click(trustButton);
-
         await waitFor(() => {
             expect(mockFetchData).toHaveBeenCalledWith(
                 expect.objectContaining({
@@ -330,19 +402,32 @@ describe('UserAuthorizationPage', () => {
                 })
             );
         });
-
         await waitFor(() => {
             expect(queryTrustVerifierModal()).not.toBeInTheDocument();
             expect(screen.getByTestId('modal-credential-request')).toBeVisible();
         });
     });
 
-    test('untrusted flow: shows ErrorCard if addTrustedVerifier fails on "Trust" click', async () => {
+    test('untrusted flow: shows ErrorCard with "Retry" button if addTrustedVerifier fails', async () => {
+        const apiError = { message: "Trust API Failed" };
         mockFetchData.mockResolvedValueOnce({ ok: () => true, data: mockVerifierUntrusted, error: null, status: 200, state: 1, headers: {} });
-        mockFetchData.mockResolvedValueOnce({ ok: () => false, error: { message: "Trust API Failed" } as any, data: null, status: 500, state: 2, headers: {} });
+        mockFetchData.mockResolvedValueOnce({ ok: () => false, error: apiError as any, data: null, status: 500, state: 2, headers: {} });
 
-        renderComponent();
+        mockUseApiErrorHandler.mockImplementation(() => {
+            if (mockHandleApiError.mock.calls.length > 0) {
+                return {
+                    ...mockErrorHandlerReturnValue,
+                    showError: true,
+                    errorTitle: 'Error',
+                    errorDescription: 'Failed',
+                    onRetry: mockOnRetry, // It's a retryable error
+                    onClose: undefined,
+                };
+            }
+            return mockErrorHandlerReturnValue;
+        });
 
+        const { rerender } = renderComponent();
         await waitFor(() => {
             expect(getVerifierName(mockVerifierUntrusted.verifier.name)).toBeVisible();
         });
@@ -351,23 +436,31 @@ describe('UserAuthorizationPage', () => {
         fireEvent.click(trustButton);
 
         await waitFor(() => {
-            expect(getErrorCardTitle()).toBeVisible();
+            expect(mockHandleApiError).toHaveBeenCalledWith(
+                apiError,
+                "addTrustedVerifier",
+                expect.any(Function),
+                expect.any(Function)
+            );
+        });
+
+        rerender(<UserAuthorizationPage />);
+
+        await waitFor(() => {
+            expect(screen.getByTestId('modal-error-card')).toBeVisible();
+            expect(screen.getByText('Retry')).toBeInTheDocument(); // Should show retry
         });
         expect(queryTrustVerifierModal()).not.toBeInTheDocument();
     });
 
-    test('untrusted flow: proceeds to CredentialRequestModal on "Not Trust" click (current component logic)', async () => {
+    test('untrusted flow: proceeds to CredentialRequestModal on "Not Trust" click', async () => {
         mockFetchData.mockResolvedValueOnce({ ok: () => true, data: mockVerifierUntrusted, error: null, status: 200, state: 1, headers: {} });
-
         renderComponent();
-
         await waitFor(() => {
             expect(getVerifierName(mockVerifierUntrusted.verifier.name)).toBeVisible();
         });
-
         const notTrustButton = screen.getByTestId('btn-not-trust-verifier');
         fireEvent.click(notTrustButton);
-
         await waitFor(() => {
             expect(queryTrustVerifierModal()).not.toBeInTheDocument();
             expect(screen.getByTestId('modal-credential-request')).toBeVisible();
@@ -376,42 +469,31 @@ describe('UserAuthorizationPage', () => {
 
     test('CredentialRequestModal cancel navigates to ROOT', async () => {
         renderComponent();
-
         await waitFor(() => {
             expect(screen.getByTestId('modal-credential-request')).toBeVisible();
         });
-
         const cancelButton = screen.getByTestId('btn-cr-cancel');
         fireEvent.click(cancelButton);
-
         await waitFor(() => {
             expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT);
             expect(queryCredentialRequestModal()).not.toBeInTheDocument();
         });
     });
 
-    // UPDATED TEST: Reflects the corrected PresentationCredential structure
-    test('CredentialRequestModal consent sets state and renders CredentialShareHandler', async () => {
+    test('CredentialRequestModal consent renders CredentialShareHandler', async () => {
         const presentationId = mockVerifierTrusted.presentationId;
         const verifierName = mockVerifierTrusted.verifier.name;
         const redirectUri = mockVerifierTrusted.verifier.redirectUri;
-
         renderComponent();
-
         await waitFor(() => {
             expect(screen.getByTestId('modal-credential-request')).toBeVisible();
         });
-
         const consentButton = screen.getByTestId('btn-cr-consent');
         fireEvent.click(consentButton);
-
         await waitFor(() => {
             expect(queryCredentialRequestModal()).not.toBeInTheDocument();
-
             const shareHandler = screen.getByTestId('mock-credential-share-handler');
             expect(shareHandler).toBeVisible();
-
-            // ASSERTION UPDATED WITH THE NEW DATA STRUCTURE
             expect(MockCredentialShareHandler).toHaveBeenCalledWith(
                 expect.objectContaining({
                     selectedCredentials: mockPresentationCredentials,
@@ -420,159 +502,80 @@ describe('UserAuthorizationPage', () => {
                     returnUrl: redirectUri,
                 })
             );
-
             expect(mockNavigate).not.toHaveBeenCalled();
         });
     });
 
     test('CredentialShareHandler onClose navigates to ROOT and clears state', async () => {
         renderComponent();
-
         await waitFor(() => {
             expect(screen.getByTestId('modal-credential-request')).toBeVisible();
         });
         fireEvent.click(screen.getByTestId('btn-cr-consent'));
-
         await waitFor(() => {
             expect(screen.getByTestId('mock-credential-share-handler')).toBeVisible();
         });
-
         const closeButton = screen.getByTestId('btn-share-handler-close');
         fireEvent.click(closeButton);
-
         await waitFor(() => {
             expect(screen.queryByTestId('mock-credential-share-handler')).not.toBeInTheDocument();
             expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT);
         });
     });
 
-    test('untrusted flow: opens TrustRejectionModal on "Cancel" and handles confirmation to redirect', async () => {
-        const mockVerifierWithRedirect = {
-            ...mockVerifierUntrusted,
-            verifier: {
-                ...mockVerifierUntrusted.verifier,
-                redirectUri: 'https://untrusted-verifier.com/callback-reject'
-            }
-        };
-
-        mockFetchData.mockResolvedValueOnce({ ok: () => true, data: mockVerifierWithRedirect, error: null, status: 200, state: 1, headers: {} });
-
-        renderComponent();
-
-        await waitFor(() => {
-            expect(getVerifierName(mockVerifierWithRedirect.verifier.name)).toBeVisible();
-        });
-
-        const cancelButton = screen.getByTestId('btn-btn-cancel-trust-modal');
-        fireEvent.click(cancelButton);
-
-        await waitFor(() => {
-            expect(screen.getByTestId('modal-trust-rejection-modal')).toBeVisible();
-        });
-
-        expect(queryTrustVerifierModal()).not.toBeInTheDocument();
-
-        const confirmButton = screen.getByTestId('btn-confirm-cancel');
-        fireEvent.click(confirmButton);
-
-        await waitFor(() => {
-            expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT);
-        });
-    });
-
-    test('untrusted flow: opens TrustRejectionModal on "Cancel" and handles confirmation to ROOT when no redirectUri exists', async () => {
-        const mockVerifierNoRedirect = {
-            ...mockVerifierUntrusted,
-            verifier: {
-                ...mockVerifierUntrusted.verifier,
-                redirectUri: ''
-            }
-        };
-
-        mockFetchData.mockResolvedValueOnce({ ok: () => true, data: mockVerifierNoRedirect, error: null, status: 200, state: 1, headers: {} });
-
-        renderComponent();
-
-        await waitFor(() => {
-            expect(getVerifierName(mockVerifierNoRedirect.verifier.name)).toBeVisible();
-        });
-
-        const cancelButton = screen.getByTestId('btn-btn-cancel-trust-modal');
-        fireEvent.click(cancelButton);
-
-        await waitFor(() => {
-            expect(screen.getByTestId('modal-trust-rejection-modal')).toBeVisible();
-        });
-
-        expect(queryTrustVerifierModal()).not.toBeInTheDocument();
-
-        const confirmButton = screen.getByTestId('btn-confirm-cancel');
-        fireEvent.click(confirmButton);
-
-        await waitFor(() => {
-            expect(screen.queryByText('TrustRejectionModal.title')).not.toBeInTheDocument();
-        });
-
-        await waitFor(() => {
-            expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT);
-        });
-    });
-
-    test('untrusted flow: opens TrustRejectionModal on "Cancel" and handles closure to return to TrustVerifierModal', async () => {
+    test('untrusted flow: TrustRejectionModal "Confirm" button navigates to ROOT', async () => {
         mockFetchData.mockResolvedValueOnce({ ok: () => true, data: mockVerifierUntrusted, error: null, status: 200, state: 1, headers: {} });
-
         renderComponent();
-
         await waitFor(() => {
             expect(getVerifierName(mockVerifierUntrusted.verifier.name)).toBeVisible();
         });
-
         const cancelButton = screen.getByTestId('btn-btn-cancel-trust-modal');
         fireEvent.click(cancelButton);
-
         await waitFor(() => {
             expect(screen.getByTestId('modal-trust-rejection-modal')).toBeVisible();
         });
+        const confirmButton = screen.getByTestId('btn-confirm-cancel');
+        fireEvent.click(confirmButton);
+        await waitFor(() => {
+            expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT);
+        });
+    });
 
+    test('untrusted flow: TrustRejectionModal "Close" button returns to TrustVerifierModal', async () => {
+        mockFetchData.mockResolvedValueOnce({ ok: () => true, data: mockVerifierUntrusted, error: null, status: 200, state: 1, headers: {} });
+        renderComponent();
+        await waitFor(() => {
+            expect(getVerifierName(mockVerifierUntrusted.verifier.name)).toBeVisible();
+        });
+        const cancelButton = screen.getByTestId('btn-btn-cancel-trust-modal');
+        fireEvent.click(cancelButton);
+        await waitFor(() => {
+            expect(screen.getByTestId('modal-trust-rejection-modal')).toBeVisible();
+        });
         const closeButton = screen.getByTestId('btn-go-back');
         fireEvent.click(closeButton);
-
         await waitFor(() => {
-            expect(screen.queryByText('TrustRejectionModal.title')).not.toBeInTheDocument();
-            expect(queryCredentialRequestModal()).not.toBeInTheDocument();
-        });
-
-        await waitFor(() => {
+            expect(screen.queryByTestId('modal-trust-rejection-modal')).not.toBeInTheDocument();
             expect(getVerifierName(mockVerifierUntrusted.verifier.name)).toBeVisible();
         });
     });
 
     test('matches snapshot when CredentialRequestModal is visible (trusted flow)', async () => {
         const { asFragment } = renderComponent();
-
         await waitFor(() => {
             expect(screen.getByTestId('modal-credential-request')).toBeVisible();
         });
-
         expect(asFragment()).toMatchSnapshot();
     });
 
     test('matches snapshot when TrustVerifierModal is visible (untrusted flow)', async () => {
         mockFetchData.mockResolvedValueOnce({
-            ok: () => true,
-            data: mockVerifierUntrusted,
-            error: null,
-            status: 200,
-            state: 1,
-            headers: {},
+            ok: () => true, data: mockVerifierUntrusted, error: null, status: 200, state: 1, headers: {},
         });
-
         const { asFragment } = renderComponent();
-
         await waitFor(() => {
             expect(getVerifierName(mockVerifierUntrusted.verifier.name)).toBeVisible();
         });
-
         expect(asFragment()).toMatchSnapshot();
     });
 });

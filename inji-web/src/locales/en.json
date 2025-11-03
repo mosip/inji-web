@@ -396,7 +396,7 @@
     "success": "Proceed",
     "cancel": "Cancel"
   },
-  "LoadingModalLandscape": {
+  "ShareHandlerLoadingModal": {
     "message": "Preparing your secure credential presentation..."
   },
   "CredentialShareSuccessModal": {
@@ -492,9 +492,9 @@
       "modal": {
         "title": "Verifier Name",
         "description": "Make sure you recognize or trust this verifier. \nOnce you trust this verifier:",
-        "benefitSaveSecurely": "The card will be securely saved in your wallet.",
+        "benefitSaveSecurely": "Your wallet will remember this verifier as trusted.",
         "benefitAddToTrustedList": "This verifier will be added to your trusted list.",
-        "benefitSkipReviewFuture": "You won’t need to review trust again when downloading from them next time.",
+        "benefitSkipReviewFuture": "Future verification requests from this verifier will be automatically trusted.",
         "trustButton": "Yes, I trust this Verifier",
         "notTrustButton": "No, I don’t trust this Verifier",
         "cancelButton": "Cancel",
@@ -513,9 +513,16 @@
         "addTrustedVerifierError": "Failed to add verifier to trusted list."
       },
       "ErrorCard": {
-        "defaultTitle": "Error",
-        "defaultDescription": "Something went wrong. Please try again.",
+        "defaultTitle": "Something went wrong",
+        "defaultDescription": "We couldn’t complete your request. Please close and try again later.",
+        "technicalTitle": "Oops! An Error Occurred.",
+        "technicalDescription": "There was a technical issue while processing your request. You can try again in a moment.",
         "closeButton": "Close"
+      },
+      "RetryCard": {
+        "defaultTitle": "Something went wrong",
+        "defaultDescription": "We couldn’t complete your request. Please try again.",
+        "retryButton": "Retry"
       },
       "loadingCard": {
       "title": "Fetching verifier info...",

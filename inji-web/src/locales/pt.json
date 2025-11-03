@@ -396,7 +396,7 @@
     "success": "Prosseguir",
     "cancel": "Cancelar"
   },
-  "LoadingModalLandscape": {
+  "ShareHandlerLoadingModal": {
     "message": "Preparando sua apresentação de credencial segura..."
   },
   "CredentialShareSuccessModal": {
@@ -491,10 +491,10 @@
   "VerifierTrustPage": {
     "modal": {
       "title": "Verificador desconhecido",
-      "description": "Certifique-se de reconhecer ou confiar neste verificador. \nAssim que você confiar neste Verificador:",
-      "benefitSaveSecurely": "O cartão será guardado de forma segura na sua carteira.",
+      "description": "Certifique-se de que você reconhece ou confia neste Verificador. \nDepois que confiar neste verificador:",
+      "benefitSaveSecurely": "Sua carteira lembrará este Verificador como confiável.",
       "benefitAddToTrustedList": "Este verificador será adicionado à sua lista de confiança.",
-      "benefitSkipReviewFuture": "Não precisará de rever a confiança ao fazer download a partir dele da próxima vez.",
+      "benefitSkipReviewFuture": "Futuros pedidos de verificação deste Verificador serão confiados automaticamente.",
       "trustButton": "Sim, eu confio neste Verificador",
       "notTrustButton": "Não, eu não confio neste Verificador",
       "infoTooltipButton": "O que significa confiar?",
@@ -512,9 +512,16 @@
       "addTrustedVerifierError": "Falha ao adicionar verificador à lista de confiança."
     },
     "ErrorCard": {
-      "defaultTitle": "Erro",
-      "defaultDescription": "Algo correu mal. Por favor, tente novamente.",
+      "defaultTitle": "Algo deu errado",
+      "defaultDescription": "Não foi possível concluir sua solicitação. Feche e tente novamente mais tarde.",
+      "technicalTitle": "Ops! Ocorreu um erro.",
+      "technicalDescription": "Ocorreu um problema técnico ao processar sua solicitação. Tente novamente em alguns instantes.",
       "closeButton": "Fechar"
+    },
+    "RetryCard": {
+      "defaultTitle": "Algo deu errado",
+      "defaultDescription": "Não foi possível concluir sua solicitação. Por favor, tente novamente.",
+      "retryButton": "Tentar novamente"
     },
     "loadingCard": {
       "title": "A buscar informações do verificador...",

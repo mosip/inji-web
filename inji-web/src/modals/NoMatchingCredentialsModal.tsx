@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { ModalWrapper } from "./ModalWrapper";
 import ErrorMessageIcon from "../assets/error_message.svg";
 import { useTranslation } from "react-i18next";
@@ -6,7 +6,8 @@ import { SolidButton } from "../components/Common/Buttons/SolidButton";
 import { ErrorCardStyles } from "./ErrorCardStyles";
 import { useApi } from "../hooks/useApi";
 import { api } from "../utils/api";
-import { withErrorHandling } from "../utils/errorHandling";
+import { useApiErrorHandler } from "../hooks/useApiErrorHandler";
+import { ErrorCard } from "./ErrorCard";
 
 interface NoMatchingCredentialsModalProps {
     isVisible: boolean;
@@ -26,65 +27,86 @@ export const NoMatchingCredentialsModal: React.FC<NoMatchingCredentialsModalProp
     const { t } = useTranslation("NoMatchingCredentialsModal");
     const { fetchData: rejectVerifier } = useApi<{ success: boolean }>();
     const [isSubmitting, setIsSubmitting] = useState(false);
-    
+
+    const {
+        showError,
+        errorDescription,
+        errorTitle,
+        isRetrying,
+        handleApiError,
+        onClose: handleModalClose,
+        onRetry
+    } = useApiErrorHandler({ onClose: onGoToHome });
+
+    const handleExit = useCallback(() => {
+        if (redirectUri) {
+            window.location.href = redirectUri;
+        } else if (onGoToHome) {
+            onGoToHome();
+        }
+    }, [redirectUri, onGoToHome]);
+
+    const rejectVerifierCore = useCallback(async () => {
+        const rejectPayload = {
+            errorCode: "access_denied",
+            errorMessage: "User denied authorization to share credentials"
+        };
+
+        const response = await rejectVerifier({
+            url: api.userRejectVerifier.url(presentationId!),
+            apiConfig: api.userRejectVerifier,
+            body: rejectPayload
+        });
+
+        return response;
+    }, [rejectVerifier, presentationId]);
+
+    const handleGoToHome = useCallback(async () => {
+        if (isSubmitting || isRetrying) {
+            return;
+        }
+        setIsSubmitting(true);
+
+        if (!presentationId) {
+            handleExit();
+            if (!redirectUri) setIsSubmitting(false);
+            return;
+        }
+
+        try {
+            const response = await rejectVerifierCore();
+            if (response.ok()) {
+                handleExit();
+            } else {
+                throw response.error || new Error("Failed to reject verifier");
+            }
+            if (!redirectUri) setIsSubmitting(false);
+        } catch (err) {
+            handleApiError( err, "rejectVerifier", rejectVerifierCore, handleExit );
+            setIsSubmitting(false);
+        }
+    }, [isSubmitting, isRetrying, presentationId, rejectVerifierCore, handleExit, handleApiError, redirectUri]);
+
     if (!isVisible) return null;
 
     const title = t("title");
     const description = t("description");
     const goToHomeButtonText = t("goToHomeButton");
-
-    const handleGoToHome = async () => {
-        // Guard against rapid clicks
-        if (isSubmitting) {
-            return;
-        }
-        
-        setIsSubmitting(true);
-        
-        try {
-            if (presentationId) {
-                const { error } = await withErrorHandling(
-                    async () => {
-                        const rejectPayload = {
-                            errorCode: "access_denied",
-                            errorMessage: "User denied authorization to share credentials"
-                        };
-                        
-                        await rejectVerifier({
-                            url: api.userRejectVerifier.url(presentationId),
-                            apiConfig: api.userRejectVerifier,
-                            body: rejectPayload
-                        });
-                    },
-                    { 
-                        context: 'handleGoToHome',
-                        logError: true,
-                        showToUser: false
-                    }
-                );
-                
-                // If rejection failed, don't redirect - stay on error screen
-                if (error) {
-                    console.error('Failed to reject verifier:', error);
-                    return;
-                }
-            }
-            
-            // Redirect to verifier's redirectUri if available, otherwise call onGoToHome
-            if (redirectUri) {
-                window.location.href = redirectUri;
-            } else if (onGoToHome) {
-                onGoToHome();
-            }
-        } finally {
-            // Reset submitting state only if we're not redirecting
-            if (!redirectUri) {
-                setIsSubmitting(false);
-            }
-        }
-    };
-
     const styles = ErrorCardStyles.errorCard;
+
+    if (showError) {
+        return (
+            <ErrorCard
+                isOpen={true}
+                title={errorTitle}
+                description={errorDescription}
+                onClose={handleModalClose}
+                onRetry={onRetry}
+                isRetrying={isRetrying}
+                testId="modal-error-handler-no-matching"
+            />
+        );
+    }
 
     return (
         <div data-testid="card-no-matching-credentials-modal" className="w-full max-w-[400px] min-h-[350px] transition-all duration-300 ease-in-out max-[533px]:w-screen max-[533px]:fixed max-[533px]:inset-x-0 max-[533px]:z-[60]">
@@ -121,7 +143,7 @@ export const NoMatchingCredentialsModal: React.FC<NoMatchingCredentialsModalProp
                                 onClick={handleGoToHome}
                                 title={goToHomeButtonText}
                                 fullWidth
-                                disabled={isSubmitting}
+                                disabled={isSubmitting || isRetrying}
                                 className={styles.closeButton}
                             />
                         </div>

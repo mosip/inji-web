@@ -396,7 +396,7 @@
     "success": "Procéder",
     "cancel": "Annuler"
   },
-  "LoadingModalLandscape": {
+  "ShareHandlerLoadingModal": {
     "message": "Préparation de votre présentation d’identifiants sécurisée..."
   },
   "CredentialShareSuccessModal": {
@@ -491,10 +491,10 @@
   "VerifierTrustPage": {
     "modal": {
       "title": "Vérificateur inconnu",
-      "description": "Assurez-vous de reconnaître ou de faire confiance à ce vérificateur. \nUne fois que vous faites confiance à ce vérificateur :",
-      "benefitSaveSecurely": "La carte sera enregistrée en toute sécurité dans votre portefeuille.",
+      "description": "Assurez-vous de reconnaître ou de faire confiance à ce vérificateur. \nUne fois que vous faites confiance à ce vérificateur:",
+      "benefitSaveSecurely": "Votre portefeuille se souviendra de ce Vérificateur comme étant fiable.",
       "benefitAddToTrustedList": "Ce vérificateur sera ajouté à votre liste de confiance.",
-      "benefitSkipReviewFuture": "Vous n'aurez pas besoin de revoir la confiance lors du prochain téléchargement à partir de celui-ci.",
+      "benefitSkipReviewFuture": "Les futures demandes de vérification de ce Vérificateur seront automatiquement approuvées.",
       "trustButton": "Oui, je fais confiance à ce Vérificateur",
       "notTrustButton": "Non, je ne fais pas confiance à ce Vérificateur",
       "infoTooltipButton": "Que signifie faire confiance ?",
@@ -512,9 +512,16 @@
       "addTrustedVerifierError": "Échec de l'ajout du vérificateur à la liste de confiance."
     },
     "ErrorCard": {
-      "defaultTitle": "Erreur",
-      "defaultDescription": "Quelque chose s'est mal passé. Veuillez réessayer.",
+      "defaultTitle": "Une erreur s’est produite",
+      "defaultDescription": "Nous n’avons pas pu terminer votre demande. Veuillez fermer et réessayer plus tard.",
+      "technicalTitle": "Oups ! Une erreur est survenu.",
+      "technicalDescription": "Un problème technique est survenu lors du traitement de votre demande. Vous pouvez réessayer dans un instant.",
       "closeButton": "Fermer"
+    },
+    "RetryCard": {
+      "defaultTitle": "Une erreur s’est produite",
+      "defaultDescription": "Nous n’avons pas pu terminer votre demande. Veuillez réessayer.",
+      "retryButton": "Réessayer"
     },
     "loadingCard": {
       "title": "Récupération des informations du vérificateur...",
