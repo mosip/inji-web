@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { SolidButton } from "../Common/Buttons/SolidButton";
 import { InfoTooltipTrigger } from "../Common/ToolTip/InfoTooltipTrigger";
 import { TrustVerifierModalStyles } from "./TrustVerifierModalStyles";
-import LogoIcon from "../../assets/unknown_v.png";
+import LogoIcon from "../../assets/unknown_verifier_logo.png";
 import { BorderedButton } from "../Common/Buttons/BorderedButton";
 import { TertiaryButton } from "../Common/Buttons/TertiaryButton";
 
