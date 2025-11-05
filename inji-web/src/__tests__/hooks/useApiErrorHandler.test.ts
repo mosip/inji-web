@@ -423,7 +423,12 @@ describe('useApiErrorHandler', () => {
             // Start first retry
             const retry1Promise = result.current.onRetry?.();
             
-            // Immediately start second retry (should be blocked because isRetrying is true)
+            // Wait for state to update so isRetrying becomes true
+            await waitFor(() => {
+                expect(result.current.isRetrying).toBe(true);
+            });
+            
+            // Now start second retry (should be blocked because isRetrying is true)
             const retry2Promise = result.current.onRetry?.();
 
             await act(async () => {
