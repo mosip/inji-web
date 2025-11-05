@@ -59,6 +59,7 @@ export const useApiErrorHandler = (
 
     const retryFnRef = useRef<(() => Promise<any>) | null>(null);
     const onRetrySuccessRef = useRef<((response: any) => void) | null>(null);
+    const isRetryingRef = useRef(false);
 
     const clearError = useCallback(() => {
         setShowError(false);
@@ -68,6 +69,7 @@ export const useApiErrorHandler = (
         setIsRetrying(false);
         retryFnRef.current = null;
         onRetrySuccessRef.current = null;
+        isRetryingRef.current = false;
     }, []);
 
     const internalOnClose = useCallback(() => {
@@ -121,8 +123,9 @@ export const useApiErrorHandler = (
 
     const internalOnRetry = useCallback(async () => {
         const apiCallToRetry = retryFnRef.current;
-        if (!apiCallToRetry || isRetrying) return;
+        if (!apiCallToRetry || isRetryingRef.current) return;
 
+        isRetryingRef.current = true;
         setIsRetrying(true);
         setShowError(false);
 
@@ -142,9 +145,10 @@ export const useApiErrorHandler = (
             // If retry failed, show a FINAL error
             handleApiError(err, 'retryHandler');
         } finally {
+            isRetryingRef.current = false;
             setIsRetrying(false);
         }
-    }, [clearError, handleApiError, isRetrying]);
+    }, [clearError, handleApiError]);
 
     return {
         showError,
