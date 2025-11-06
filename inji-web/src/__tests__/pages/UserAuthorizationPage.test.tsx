@@ -295,7 +295,7 @@ describe('UserAuthorizationPage', () => {
     });
 
     test('renders Sidebar and LoaderModal initially and calls validateVerifierRequest', async () => {
-        const route = "/user/authorize?authorizationRequestUrl=https%3A%2F%2Fverifier.com%2Frequest%3Fdata%3D123";
+        const route = "/user/authorize?https%3A%2F%2Fverifier.com%2Frequest%3Fdata%3D123";
         renderComponent(route);
 
         expect(screen.getByTestId('mock-sidebar')).toBeInTheDocument();
@@ -308,7 +308,7 @@ describe('UserAuthorizationPage', () => {
             expect(mockFetchData).toHaveBeenCalledWith(
                 expect.objectContaining({
                     apiConfig: api.validateVerifierRequest,
-                    body: { authorizationRequestUrl: 'https%3A%2F%2Fverifier.com%2Frequest%3Fdata%3D123' },
+                    body: { authorizationRequestUrl: '?https%3A%2F%2Fverifier.com%2Frequest%3Fdata%3D123' },
                 })
             );
         });

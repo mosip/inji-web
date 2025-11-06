@@ -15,8 +15,6 @@ import { CredentialShareHandler } from "../handlers/CredentialShareHandler";
 import { useApiErrorHandler } from "../hooks/useApiErrorHandler";
 import { useUser } from '../hooks/User/useUser';
 
-const AUTHORIZATION_REQUEST_URL_PARAM = 'authorizationRequestUrl=';
-
 export const UserAuthorizationPage: React.FC = () => {
     const { t } = useTranslation("VerifierTrustPage");
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -68,13 +66,11 @@ export const UserAuthorizationPage: React.FC = () => {
     }, [setPresentationIdData, setVerifierData, setShowTrustVerifier, setShowCredentialRequest]);
 
     const loadInitialData = useCallback(async () => {
-        let cleanParams = '';
-        try {
-            const queryString = window.location.search.substring(1);
-            const authUrlIndex = queryString.indexOf(AUTHORIZATION_REQUEST_URL_PARAM);
+        let cleanParams = window.location.search;
 
-            if (authUrlIndex !== -1) {
-                cleanParams = queryString.substring(authUrlIndex + AUTHORIZATION_REQUEST_URL_PARAM.length);
+        try {
+            if (!cleanParams) {
+                throw new Error("No query parameters found in URL");
             }
         } catch (parseError) {
             setIsLoading(false);
