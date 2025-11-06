@@ -8,7 +8,7 @@ import { TrustRejectionModal } from "../components/Issuers/TrustRejectionModal";
 import { CredentialRequestModal } from "../modals/CredentialRequestModal";
 import { useApi } from "../hooks/useApi";
 import { useNavigate } from 'react-router-dom';
-import { ROUTES } from "../utils/constants";
+import {OPENID4VP_AUTHORIZE_PREFIX, ROUTES} from "../utils/constants";
 import { Sidebar } from "../components/User/Sidebar";
 import { PresentationCredential } from "../types/components";
 import { CredentialShareHandler } from "../handlers/CredentialShareHandler";
@@ -43,7 +43,7 @@ export const UserAuthorizationPage: React.FC = () => {
     const validateVerifierRequestCore = useCallback(async (cleanParams: string) => {
         const response = await apiService.fetchData({
             apiConfig: api.validateVerifierRequest,
-            body: { authorizationRequestUrl: cleanParams },
+            body: { authorizationRequestUrl: `${OPENID4VP_AUTHORIZE_PREFIX}${cleanParams}` },
         });
         return response;
     }, [apiService]);

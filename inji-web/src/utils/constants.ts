@@ -63,3 +63,5 @@ export const pdfWorkerSource = (pdfVersion : string) => `//unpkg.com/pdfjs-dist@
 export const passcodeLength = 6;
 
 export const LANDING_VISITED = "landingVisited";
+
+export const OPENID4VP_AUTHORIZE_PREFIX = "openid4vp://authorize";

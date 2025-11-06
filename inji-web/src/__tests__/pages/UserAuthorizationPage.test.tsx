@@ -308,7 +308,7 @@ describe('UserAuthorizationPage', () => {
             expect(mockFetchData).toHaveBeenCalledWith(
                 expect.objectContaining({
                     apiConfig: api.validateVerifierRequest,
-                    body: { authorizationRequestUrl: '?https%3A%2F%2Fverifier.com%2Frequest%3Fdata%3D123' },
+                    body: { authorizationRequestUrl: "openid4vp://authorize?https%3A%2F%2Fverifier.com%2Frequest%3Fdata%3D123" },
                 })
             );
         });
