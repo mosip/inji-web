@@ -8,14 +8,12 @@ import { TrustRejectionModal } from "../components/Issuers/TrustRejectionModal";
 import { CredentialRequestModal } from "../modals/CredentialRequestModal";
 import { useApi } from "../hooks/useApi";
 import { useNavigate } from 'react-router-dom';
-import { ROUTES } from "../utils/constants";
+import {OPENID4VP_AUTHORIZE_PREFIX, ROUTES} from "../utils/constants";
 import { Sidebar } from "../components/User/Sidebar";
 import { PresentationCredential } from "../types/components";
 import { CredentialShareHandler } from "../handlers/CredentialShareHandler";
 import { useApiErrorHandler } from "../hooks/useApiErrorHandler";
 import { useUser } from '../hooks/User/useUser';
-
-const AUTHORIZATION_REQUEST_URL_PARAM = 'authorizationRequestUrl=';
 
 export const UserAuthorizationPage: React.FC = () => {
     const { t } = useTranslation("VerifierTrustPage");
@@ -45,7 +43,7 @@ export const UserAuthorizationPage: React.FC = () => {
     const validateVerifierRequestCore = useCallback(async (cleanParams: string) => {
         const response = await apiService.fetchData({
             apiConfig: api.validateVerifierRequest,
-            body: { authorizationRequestUrl: cleanParams },
+            body: { authorizationRequestUrl: `${OPENID4VP_AUTHORIZE_PREFIX}${cleanParams}` },
         });
         return response;
     }, [apiService]);
@@ -68,13 +66,11 @@ export const UserAuthorizationPage: React.FC = () => {
     }, [setPresentationIdData, setVerifierData, setShowTrustVerifier, setShowCredentialRequest]);
 
     const loadInitialData = useCallback(async () => {
-        let cleanParams = '';
-        try {
-            const queryString = window.location.search.substring(1);
-            const authUrlIndex = queryString.indexOf(AUTHORIZATION_REQUEST_URL_PARAM);
+        let cleanParams = window.location.search;
 
-            if (authUrlIndex !== -1) {
-                cleanParams = queryString.substring(authUrlIndex + AUTHORIZATION_REQUEST_URL_PARAM.length);
+        try {
+            if (!cleanParams) {
+                throw new Error("No query parameters found in URL");
             }
         } catch (parseError) {
             setIsLoading(false);
