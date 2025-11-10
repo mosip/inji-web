@@ -20,6 +20,24 @@ jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: () => mockNavigate,
 }));
+jest.mock('../../utils/errorHandling', () => ({
+    withErrorHandling: (fn: () => Promise<any>) => fn(),
+    ERROR_TYPES: {
+        API_TIMEOUT: 'API_TIMEOUT',
+        API_NETWORK: 'API_NETWORK',
+        API_SERVER: 'API_SERVER',
+        API_CLIENT: 'API_CLIENT',
+        API_UNAUTHORIZED: 'API_UNAUTHORIZED',
+        API_FORBIDDEN: 'API_FORBIDDEN',
+        API_NOT_FOUND: 'API_NOT_FOUND',
+        WALLET_NOT_AVAILABLE: 'WALLET_NOT_AVAILABLE',
+        CREDENTIALS_NOT_FOUND: 'CREDENTIALS_NOT_FOUND',
+        UNKNOWN: 'UNKNOWN',
+        VALIDATION: 'VALIDATION'
+    },
+    standardizeError: jest.fn(),
+    logError: jest.fn(),
+}));
 jest.mock('../../hooks/User/useUser'); // Mock the hook's path
 jest.mock('../../hooks/useApiErrorHandler'); // Mock the hook's path
 
@@ -151,20 +169,49 @@ jest.mock('../../modals/ErrorCard', () => ({
     }
 }));
 
-const MockTrustRejectionModal = jest.fn();
-jest.mock('../../components/Issuers/TrustRejectionModal', () => ({
-    TrustRejectionModal: (props: any) => {
-        MockTrustRejectionModal(props);
-        if (!props.isOpen) return null;
-        return (
-            <div data-testid="modal-trust-rejection-modal">
-                <span>TrustRejectionModal.title</span>
-                <button data-testid="btn-confirm-cancel" onClick={props.onConfirm}>Confirm</button>
-                <button data-testid="btn-go-back" onClick={props.onClose}>Go Back</button>
-            </div>
-        );
-    }
+jest.mock('../../utils/verifierUtils', () => ({
+    rejectVerifierRequest: jest.fn(),
 }));
+
+const MockTrustRejectionModal = jest.fn();
+jest.mock('../../components/Issuers/TrustRejectionModal', () => {
+    const React = require('react');
+    const { rejectVerifierRequest } = require('../../utils/verifierUtils');
+    const { useApi } = require('../../hooks/useApi');
+    const { useNavigate } = require('react-router-dom');
+    
+    return {
+        TrustRejectionModal: (props: any) => {
+            MockTrustRejectionModal(props);
+            if (!props.isOpen) return null;
+            
+            // Use the mocked hooks
+            const { fetchData } = useApi();
+            const navigate = useNavigate();
+            
+            const handleConfirm = async () => {
+                await rejectVerifierRequest({
+                    presentationId: props.presentationId,
+                    fetchData,
+                    onSuccess: props.onConfirm,
+                    navigate
+                });
+            };
+            
+            return (
+                <div data-testid="modal-trust-rejection-modal">
+                    <span>TrustRejectionModal.title</span>
+                    <button data-testid="btn-confirm-cancel" onClick={handleConfirm}>Confirm</button>
+                    <button data-testid="btn-go-back" onClick={props.onClose}>Go Back</button>
+                </div>
+            );
+        }
+    };
+});
+
+// Import mocked function after mock is set up
+import { rejectVerifierRequest } from '../../utils/verifierUtils';
+const mockRejectVerifierRequest = rejectVerifierRequest as jest.MockedFunction<typeof rejectVerifierRequest>;
 
 // Cast hooks
 const mockUseUser = useUser as jest.Mock;
@@ -241,6 +288,14 @@ let mockErrorHandlerReturnValue: ReturnType<typeof useApiErrorHandler>;
 describe('UserAuthorizationPage', () => {
     beforeEach(() => {
         jest.clearAllMocks();
+        mockRejectVerifierRequest.mockImplementation(async (options) => {
+            if (options.onSuccess) {
+                options.onSuccess();
+            }
+            if (options.navigate) {
+                options.navigate(ROUTES.ROOT);
+            }
+        });
 
         // Default mock for useUser (logged in, not loading)
         mockUseUser.mockReturnValue({
@@ -523,7 +578,7 @@ describe('UserAuthorizationPage', () => {
         });
     });
 
-    test('untrusted flow: TrustRejectionModal "Confirm" button navigates to ROOT', async () => {
+    test('untrusted flow: TrustRejectionModal "Confirm" button makes API call and navigates to ROOT', async () => {
         mockFetchData.mockResolvedValueOnce({ ok: () => true, data: mockVerifierUntrusted, error: null, status: 200, state: 1, headers: {} });
         renderComponent();
         await waitFor(() => {
@@ -537,6 +592,15 @@ describe('UserAuthorizationPage', () => {
         const confirmButton = screen.getByTestId('btn-confirm-cancel');
         fireEvent.click(confirmButton);
         await waitFor(() => {
+            expect(mockRejectVerifierRequest).toHaveBeenCalledTimes(1);
+            expect(mockRejectVerifierRequest).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    presentationId: expect.any(String),
+                    fetchData: expect.any(Function),
+                    onSuccess: expect.any(Function),
+                    navigate: mockNavigate
+                })
+            );
             expect(mockNavigate).toHaveBeenCalledWith(ROUTES.ROOT);
         });
     });
