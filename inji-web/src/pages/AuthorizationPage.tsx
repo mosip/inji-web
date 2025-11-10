@@ -19,7 +19,10 @@ export const AuthorizationPage: React.FC = () => {
                 window.location.href = api.mimotoHost + "/authorize" + window.location.search;
             } else {
                 // Not datashare - redirect to /user/authorize
-                window.location.href = "/user/authorize" + window.location.search;
+                const search = window.location.search.startsWith('?')
+                    ? window.location.search
+                    : `?${window.location.search}`;
+                window.location.href = `/user/authorize${search}`;
             }
         }
         // eslint-disable-next-line

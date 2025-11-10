@@ -69,7 +69,7 @@ export const UserAuthorizationPage: React.FC = () => {
         let cleanParams = window.location.search;
 
         try {
-            if (!cleanParams) {
+            if (!cleanParams || cleanParams === '?') {
                 throw new Error("No query parameters found in URL");
             }
         } catch (parseError) {

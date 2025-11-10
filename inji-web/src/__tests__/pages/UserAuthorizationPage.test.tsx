@@ -231,7 +231,7 @@ api.addTrustedVerifier = {
     credentials: "include"
 };
 
-const renderComponent = (route = "/user/authorize?authorizationRequestUrl=https%3A%2F%2Fverifier.com%2Frequest%3Fdata%3D123") => {
+const renderComponent = (route = "/user/authorize?client_id=mock-client&presentation_definition_uri=https%3A%2F%2Fverifier.com%2Frequest%3Fdata%3D123") => {
     const queryString = route.split('?')[1] || '';
     Object.defineProperty(window, 'location', {
         value: {
@@ -347,6 +347,38 @@ describe('UserAuthorizationPage', () => {
 
         // API call should NOT be made
         expect(mockFetchData).not.toHaveBeenCalled();
+    });
+
+    test('shows error when URL search is empty', async () => {
+        Object.defineProperty(window, 'location', {
+            value: { search: '', href: '/user/authorize' },
+            writable: true
+        });
+
+        renderComponent("/user/authorize");
+        await waitFor(() => {
+            expect(mockHandleApiError).toHaveBeenCalledWith(
+                expect.any(Error),
+                "validateVerifierRequest"
+            );
+        });
+        expect(mockHandleApiError.mock.calls[0][0].message).toBe("Invalid authorization request URL.");
+    });
+
+    test('shows error when URL search is just "?"', async () => {
+        Object.defineProperty(window, 'location', {
+            value: { search: '?', href: '/user/authorize?' },
+            writable: true
+        });
+
+        renderComponent("/user/authorize?");
+        await waitFor(() => {
+            expect(mockHandleApiError).toHaveBeenCalledWith(
+                expect.any(Error),
+                "validateVerifierRequest"
+            );
+        });
+        expect(mockHandleApiError.mock.calls[0][0].message).toBe("Invalid authorization request URL.");
     });
 
     test('renders Sidebar and LoaderModal initially and calls validateVerifierRequest', async () => {
