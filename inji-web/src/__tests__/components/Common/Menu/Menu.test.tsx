@@ -152,16 +152,14 @@ describe('EllipsisMenu Component', () => {
         };
 
         render(
-            <div className="overflow-y-auto">
-                <Menu
-                    triggerComponent={<span data-testid="trigger-menu">...</span>}
-                    menuItems={[
-                        {label: 'Edit', onClick: jest.fn(), id: 'edit'},
-                        {label: 'Delete', onClick: jest.fn(), id: 'delete'}
-                    ]}
-                    testId="test-view"
-                />
-            </div>
+            <Menu
+                triggerComponent={<span data-testid="trigger-menu">...</span>}
+                menuItems={[
+                    {label: 'Edit', onClick: jest.fn(), id: 'edit'},
+                    {label: 'Delete', onClick: jest.fn(), id: 'delete'}
+                ]}
+                testId="test-view"
+            />
         );
 
         fireEvent.click(screen.getByTestId('trigger-menu'));
