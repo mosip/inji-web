@@ -25,7 +25,7 @@ export interface RejectVerifierOptions {
 export const rejectVerifierRequest = async (options: RejectVerifierOptions): Promise<void> => {
     const { presentationId, fetchData, redirectUri, onSuccess, navigate } = options;
 
-    await withErrorHandling(async () => {
+    const { error } = await withErrorHandling(async () => {
         const cancelPayload = {
             errorCode: "access_denied",
             errorMessage: "User denied authorization to share credentials"
@@ -38,12 +38,14 @@ export const rejectVerifierRequest = async (options: RejectVerifierOptions): Pro
         });
     });
 
-    // Execute success callback if provided
+    if(error) {
+        return;
+    }
+
     if (onSuccess) {
         onSuccess();
     }
 
-    // Handle navigation/redirect
     if (redirectUri) {
         window.location.href = redirectUri;
     } else if (navigate) {

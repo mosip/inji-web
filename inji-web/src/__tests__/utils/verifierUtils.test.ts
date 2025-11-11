@@ -16,7 +16,14 @@ jest.mock('../../utils/api', () => ({
 }));
 
 jest.mock('../../utils/errorHandling', () => ({
-    withErrorHandling: jest.fn((fn: () => Promise<any>) => fn())
+    withErrorHandling: jest.fn(async (fn: () => Promise<any>) => {
+        try {
+            const data = await fn();
+            return { data };
+        } catch (error) {
+            return { error };
+        }
+    })
 }));
 
 describe('verifierUtils', () => {
@@ -33,7 +40,12 @@ describe('verifierUtils', () => {
         jest.clearAllMocks();
         mockFetchData.mockResolvedValue({ ok: () => true });
         (withErrorHandling as jest.Mock).mockImplementation(async (fn: () => Promise<any>) => {
-            return await fn();
+            try {
+                const data = await fn();
+                return { data };
+            } catch (error) {
+                return { error };
+            }
         });
         (api.userRejectVerifier.url as jest.Mock).mockImplementation(
             (presentationId: string) => `/wallets/test-wallet/presentations/${presentationId}`
@@ -206,30 +218,35 @@ describe('verifierUtils', () => {
         it('should handle withErrorHandling errors gracefully', async () => {
             const error = new Error('API Error');
             (withErrorHandling as jest.Mock).mockImplementationOnce(async (fn: () => Promise<any>) => {
-                await fn(); // Call the function first
-                throw error; // Then throw error
+                try {
+                    await fn();
+                } catch {
+                    // Ignore errors from fn
+                }
+                return { error };
             });
 
-            await expect(
-                rejectVerifierRequest(defaultOptions)
-            ).rejects.toThrow('API Error');
+            await rejectVerifierRequest(defaultOptions);
 
             expect(mockFetchData).toHaveBeenCalled();
+            expect(mockOnSuccess).not.toHaveBeenCalled();
         });
 
         it('should not call onSuccess if API call fails', async () => {
             const error = new Error('API Error');
             (withErrorHandling as jest.Mock).mockImplementationOnce(async (fn: () => Promise<any>) => {
-                await fn(); // Call the function first
-                throw error; // Then throw error
+                try {
+                    await fn();
+                } catch {
+                    // Ignore errors from fn
+                }
+                return { error };
             });
 
-            await expect(
-                rejectVerifierRequest({
-                    ...defaultOptions,
-                    onSuccess: mockOnSuccess
-                })
-            ).rejects.toThrow('API Error');
+            await rejectVerifierRequest({
+                ...defaultOptions,
+                onSuccess: mockOnSuccess
+            });
 
             expect(mockOnSuccess).not.toHaveBeenCalled();
         });
@@ -237,16 +254,18 @@ describe('verifierUtils', () => {
         it('should not navigate if API call fails', async () => {
             const error = new Error('API Error');
             (withErrorHandling as jest.Mock).mockImplementationOnce(async (fn: () => Promise<any>) => {
-                await fn(); // Call the function first
-                throw error; // Then throw error
+                try {
+                    await fn();
+                } catch {
+                    // Ignore errors from fn
+                }
+                return { error };
             });
 
-            await expect(
-                rejectVerifierRequest({
-                    ...defaultOptions,
-                    navigate: mockNavigate
-                })
-            ).rejects.toThrow('API Error');
+            await rejectVerifierRequest({
+                ...defaultOptions,
+                navigate: mockNavigate
+            });
 
             expect(mockNavigate).not.toHaveBeenCalled();
         });
