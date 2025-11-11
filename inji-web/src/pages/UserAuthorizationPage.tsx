@@ -233,6 +233,7 @@ export const UserAuthorizationPage: React.FC = () => {
                     <TrustRejectionModal
                         isOpen={isCancelConfirmation && !isErrorActive}
                         presentationId={presentationIdData}
+                        redirectUri={verifierData?.redirectUri || null}
                         onConfirm={() => {
                             setIsCancelConfirmation(false);
                         }}

@@ -22,6 +22,7 @@ const TrustRejectionModalStyles = {
 interface TrustRejectionModalProps {
   isOpen: boolean;
   presentationId: string;
+  redirectUri?: string | null;
   onConfirm?: () => void;
   onClose?: () => void;
   testId: string;
@@ -30,6 +31,7 @@ interface TrustRejectionModalProps {
 export const TrustRejectionModal: React.FC<TrustRejectionModalProps> = ({
   isOpen,
   presentationId,
+  redirectUri,
   onConfirm,
   onClose = () => { },
   testId,
@@ -42,10 +44,11 @@ export const TrustRejectionModal: React.FC<TrustRejectionModalProps> = ({
     await rejectVerifierRequest({
       presentationId,
       fetchData,
+      redirectUri,
       onSuccess: onConfirm,
       navigate
     });
-  }, [presentationId, fetchData, onConfirm, navigate]);
+  }, [presentationId, fetchData, redirectUri, onConfirm, navigate]);
 
   if (!isOpen) return null;
 
