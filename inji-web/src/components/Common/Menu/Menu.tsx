@@ -35,6 +35,27 @@ export const Menu: React.FC<MenuProps> = ({triggerComponent, menuItems, testId})
         };
     }, [isOpen]);
 
+    useEffect(() => {
+        if (!isOpen || !menuRef.current) return;
+
+        const menu = menuRef.current;
+        const scrollContainer = menu.closest('[class*="overflow-y-auto"]');
+        const viewportHeight = window.innerHeight;
+
+        const menuRect = menu.getBoundingClientRect();
+        const containerBottomBoundary = scrollContainer
+            ? scrollContainer.getBoundingClientRect().bottom
+            : viewportHeight;
+
+        const isOutOfView = menuRect.bottom > containerBottomBoundary;
+
+        if (isOutOfView) {
+            menu.scrollIntoView({
+                behavior: "smooth",
+                block: "end"
+            });
+        }
+    }, [isOpen]);
 
     return (
         <div className={MenuStyles.menu.container} data-testid={`${testId}-menu`}>
