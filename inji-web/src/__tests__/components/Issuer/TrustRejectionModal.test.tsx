@@ -1,8 +1,9 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { mockUseTranslation } from '../../../test-utils/mockUtils';
-
+import { TrustRejectionModal } from '../../../components/Issuers/TrustRejectionModal';
+import { rejectVerifierRequest } from '../../../utils/verifierUtils';
 
 mockUseTranslation();
 
@@ -30,15 +31,34 @@ jest.mock('../../../components/Common/Buttons/BorderedButton', () => ({
     ),
 }));
 
+const mockFetchData = jest.fn();
+jest.mock('../../../hooks/useApi', () => ({
+    useApi: () => ({
+        fetchData: mockFetchData,
+    }),
+}));
 
-import { TrustRejectionModal } from '../../../components/Issuers/TrustRejectionModal';
+jest.mock('../../../utils/verifierUtils', () => ({
+    rejectVerifierRequest: jest.fn(),
+}));
+
+const mockNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockNavigate,
+}));
+
+
+
 
 describe('TrustRejectionModal', () => {
     const mockOnConfirm = jest.fn();
     const mockOnClose = jest.fn();
+    const mockRejectVerifierRequest = rejectVerifierRequest as jest.MockedFunction<typeof rejectVerifierRequest>;
 
     const defaultProps = {
         isOpen: true,
+        presentationId: 'test-presentation-id',
         onConfirm: mockOnConfirm,
         onClose: mockOnClose,
         testId: 'testId',
@@ -46,6 +66,7 @@ describe('TrustRejectionModal', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
+        mockRejectVerifierRequest.mockResolvedValue(undefined);
     });
 
     it('does not render when isOpen is false', () => {
@@ -57,19 +78,26 @@ describe('TrustRejectionModal', () => {
         render(<TrustRejectionModal {...defaultProps} />);
 
         expect(screen.getByTestId('ModalWrapper-Mock')).toBeInTheDocument();
-        expect(screen.getByText('Are you sure you want to cancel?')).toBeInTheDocument();
-        expect(
-            screen.getByText('If you cancel this, your request will not be processed and may be lost.')
-        ).toBeInTheDocument();
-        expect(screen.getByText('Yes, Cancel')).toBeInTheDocument();
-        expect(screen.getByText('Go back')).toBeInTheDocument();
+        expect(screen.getByTestId('title-cancel-confirmation')).toBeInTheDocument();
+        expect(screen.getByTestId('text-cancel-confirmation-description')).toBeInTheDocument();
+        expect(screen.getByTestId('btn-confirm-cancel')).toBeInTheDocument();
+        expect(screen.getByTestId('btn-go-back')).toBeInTheDocument();
     });
 
 
-    it('calls onConfirm when confirm button clicked', () => {
+    it('calls rejectVerifierRequest utility when confirm button clicked', async () => {
         render(<TrustRejectionModal {...defaultProps} />);
         fireEvent.click(screen.getByTestId('btn-confirm-cancel'));
-        expect(mockOnConfirm).toHaveBeenCalledTimes(1);
+        
+        await waitFor(() => {
+            expect(mockRejectVerifierRequest).toHaveBeenCalledTimes(1);
+            expect(mockRejectVerifierRequest).toHaveBeenCalledWith({
+                presentationId: 'test-presentation-id',
+                fetchData: expect.any(Function),
+                onSuccess: mockOnConfirm,
+                navigate: mockNavigate
+            });
+        });
     });
 
     it('calls onClose when go back clicked', () => {
@@ -79,8 +107,23 @@ describe('TrustRejectionModal', () => {
     });
 
     it('handles default close handler when no onClose provided', () => {
-        render(<TrustRejectionModal isOpen={true} onConfirm={mockOnConfirm} />);
+        render(<TrustRejectionModal isOpen={true} presentationId="test-id" onConfirm={mockOnConfirm} testId="test" />);
         fireEvent.click(screen.getByTestId('btn-go-back'));
         expect(mockOnConfirm).not.toHaveBeenCalled(); 
+    });
+
+    it('calls rejectVerifierRequest even when onConfirm is not provided', async () => {
+        render(<TrustRejectionModal isOpen={true} presentationId="test-id" testId="test" />);
+        fireEvent.click(screen.getByTestId('btn-confirm-cancel'));
+        
+        await waitFor(() => {
+            expect(mockRejectVerifierRequest).toHaveBeenCalledTimes(1);
+            expect(mockRejectVerifierRequest).toHaveBeenCalledWith({
+                presentationId: 'test-id',
+                fetchData: expect.any(Function),
+                onSuccess: undefined,
+                navigate: mockNavigate
+            });
+        });
     });
 });
