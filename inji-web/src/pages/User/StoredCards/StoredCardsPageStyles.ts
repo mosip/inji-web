@@ -14,5 +14,5 @@ export const StoredCardsPageStyles = {
     contentContainer:
         'mx-auto w-full relative h-full min-h-0 flex flex-col sm:px-4',
     searchContainer: 'flex-shrink-0 px-4 py-0',
-    listContainer: 'flex-1 overflow-y-auto pl-4 py-0'
+    listContainer: 'flex-1 pl-4 py-0'
 };
