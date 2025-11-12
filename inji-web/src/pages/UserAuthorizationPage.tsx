@@ -229,18 +229,21 @@ export const UserAuthorizationPage: React.FC = () => {
                     testId="modal-error-card"
                 />
 
-                <TrustRejectionModal
-                    isOpen={isCancelConfirmation && !isErrorActive}
-                    onConfirm={() => {
-                        setIsCancelConfirmation(false);
-                        navigate(ROUTES.ROOT);
-                    }}
-                    onClose={() => {
-                        setIsCancelConfirmation(false);
-                        setShowTrustVerifier(true);
-                    }}
-                    testId="modal-trust-rejection-modal"
-                />
+                {isCancelConfirmation && presentationIdData && (
+                    <TrustRejectionModal
+                        isOpen={isCancelConfirmation && !isErrorActive}
+                        presentationId={presentationIdData}
+                        redirectUri={verifierData?.redirectUri || null}
+                        onConfirm={() => {
+                            setIsCancelConfirmation(false);
+                        }}
+                        onClose={() => {
+                            setIsCancelConfirmation(false);
+                            setShowTrustVerifier(true);
+                        }}
+                        testId="modal-trust-rejection-modal"
+                    />
+                )}
             </div>
         </div>
     );

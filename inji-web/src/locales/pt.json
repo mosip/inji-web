@@ -501,9 +501,9 @@
       "infoTooltipText": "Confiar num verificador permite que ele solicite as suas credenciais. Ainda escolherá quais as credenciais a partilhar na próxima etapa."
     },
     "TrustRejectionModal": {
-      "title": "Tem a certeza de que pretende cancelar?",
-      "description": "Se cancelar, o seu pedido não será processado e poderá ser perdido.",
-      "confirmButton": "Sim, Cancelar",
+      "title": "Tem a certeza de que não quer confiar neste verificador?",
+      "description": "Este pedido não pode prosseguir a menos que confie neste verificador. Se não o fizer, o pedido será interrompido e terá de iniciar um novo pedido com o seu verificador.",
+      "confirmButton": "Não confiar e cancelar",
       "goBackButton": "Voltar"
     },
     "UserAuthorizationPage": {
