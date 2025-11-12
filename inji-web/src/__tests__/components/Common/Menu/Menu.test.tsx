@@ -128,4 +128,44 @@ describe('EllipsisMenu Component', () => {
         // Menu should still be visible
         expect(screen.getByRole('menu')).toBeInTheDocument();
     });
+
+    it('calls scrollIntoView when menu is out of visible scroll container', () => {
+        const mockScrollIntoView = jest.fn();
+
+        const originalRect = HTMLElement.prototype.getBoundingClientRect;
+        const originalScroll = HTMLElement.prototype.scrollIntoView;
+
+        (HTMLElement.prototype as any).scrollIntoView = mockScrollIntoView;
+        (HTMLElement.prototype as any).getBoundingClientRect = function () {
+            const isMenu = this.getAttribute?.('role') === 'menu';
+            return {
+                top: isMenu ? 1000 : 0,
+                bottom: isMenu ? 1200 : 800,
+                height: isMenu ? 200 : 800,
+                width: 100,
+                left: 0,
+                right: 100,
+                x: 0,
+                y: isMenu ? 1000 : 0,
+                toJSON: () => ({})
+            } as DOMRect;
+        };
+
+        render(
+            <Menu
+                triggerComponent={<span data-testid="trigger-menu">...</span>}
+                menuItems={[
+                    {label: 'Edit', onClick: jest.fn(), id: 'edit'},
+                    {label: 'Delete', onClick: jest.fn(), id: 'delete'}
+                ]}
+                testId="test-view"
+            />
+        );
+
+        fireEvent.click(screen.getByTestId('trigger-menu'));
+        expect(mockScrollIntoView).toHaveBeenCalled();
+
+        HTMLElement.prototype.getBoundingClientRect = originalRect;
+        HTMLElement.prototype.scrollIntoView = originalScroll;
+    });
 });
