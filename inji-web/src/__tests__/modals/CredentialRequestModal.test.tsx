@@ -39,10 +39,18 @@ jest.mock('../../utils/api', () => ({
 jest.mock('../../utils/errorHandling', () => ({
     withErrorHandling: jest.fn(async (fn) => {
         try {
-            await fn();
-            return { error: null };
+            const data = await fn();
+            return { data };
         } catch (error) {
             return { error };
+        }
+    }),
+}));
+
+jest.mock('../../utils/verifierUtils', () => ({
+    rejectVerifierRequest: jest.fn(async (options) => {
+        if (options.onSuccess) {
+            options.onSuccess();
         }
     }),
 }));
@@ -501,11 +509,14 @@ describe('CredentialRequestModal', () => {
                 .mockResolvedValueOnce({
                     data: { availableCredentials: mockCredentials, missingClaims: [] },
                     error: null, status: 200, ok: () => true,
-                })
-                .mockResolvedValueOnce({
-                    data: { success: true }, error: null, status: 200, ok: () => true
                 });
 
+            const { rejectVerifierRequest } = require('../../utils/verifierUtils');
+            (rejectVerifierRequest as jest.Mock).mockImplementation(async (options) => {
+                if (options.onSuccess) {
+                    options.onSuccess();
+                }
+            });
 
             render(<CredentialRequestModal {...defaultProps} />);
 
@@ -519,7 +530,7 @@ describe('CredentialRequestModal', () => {
             // Wait for async operations to complete
             await waitFor(() => {
                 expect(defaultProps.onCancel).toHaveBeenCalledTimes(1);
-            });
+            }, { timeout: 3000 });
         });
 
         it('calls onConsentAndShare when consent button is clicked with selected credentials', async () => {

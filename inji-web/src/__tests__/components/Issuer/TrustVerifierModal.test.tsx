@@ -22,7 +22,6 @@ jest.mock("../../../components/Issuers/TrustVerifierModalStyles", () => ({
       buttonsContainer: "buttonsContainer",
       trustButton: "trustButton",
       noTrustButton: "noTrustButton",
-      cancelButton: "cancelButton",
     },
   },
 }));
@@ -55,18 +54,6 @@ jest.mock("../../../components/Common/Buttons/BorderedButton", () => ({
       onClick={onClick}
       className={className}
     > 
-      {title}
-    </button>
-  ),
-}));
-
-jest.mock("../../../components/Common/Buttons/TertiaryButton", () => ({
-  TertiaryButton: ({ onClick, title, testId, className }: any) => (
-    <button 
-      data-testid={testId} 
-      onClick={onClick}
-      className={className}
-    >
       {title}
     </button>
   ),
@@ -114,7 +101,6 @@ describe("TrustVerifierModal", () => {
     
     expect(screen.getByTestId("btn-trust-verifier")).toBeInTheDocument();
     expect(screen.getByTestId("btn-not-trust-verifier")).toBeInTheDocument();
-    expect(screen.getByTestId("btn-cancel-trust-modal")).toBeInTheDocument();
     expect(screen.getByTestId("btn-info-tooltip")).toBeInTheDocument(); 
     
     expect(container).toMatchSnapshot();
@@ -148,7 +134,7 @@ describe("TrustVerifierModal", () => {
     expect(mockOnTrust).toHaveBeenCalledTimes(1);
   });
 
-  it("calls onNotTrust when No button is clicked", () => {
+  it("calls onCancel when No button is clicked", () => {
     render(
       <TrustVerifierModal
         isOpen={true}
@@ -160,21 +146,8 @@ describe("TrustVerifierModal", () => {
     );
 
     fireEvent.click(screen.getByTestId("btn-not-trust-verifier"));
-    expect(mockOnNotTrust).toHaveBeenCalledTimes(1);
-  });
-
-  it("calls onCancel when Cancel button is clicked", () => {
-    render(
-      <TrustVerifierModal
-        isOpen={true}
-        onTrust={mockOnTrust}
-        onNotTrust={mockOnNotTrust}
-        onCancel={mockOnCancel}
-        testId={"trust-verifier-content"}
-      />
-    );
-    fireEvent.click(screen.getByTestId("btn-cancel-trust-modal"));
     expect(mockOnCancel).toHaveBeenCalledTimes(1);
+    expect(mockOnNotTrust).not.toHaveBeenCalled();
   });
 
   describe("Logo Display", () => {
@@ -310,7 +283,7 @@ describe("TrustVerifierModal", () => {
   });
 
   describe("Button Functionality", () => {
-    it("renders all three buttons with correct test IDs", () => {
+    it("renders both buttons with correct test IDs", () => {
       render(
         <TrustVerifierModal
           isOpen={true}
@@ -323,7 +296,6 @@ describe("TrustVerifierModal", () => {
 
       expect(screen.getByTestId("btn-trust-verifier")).toBeInTheDocument();
       expect(screen.getByTestId("btn-not-trust-verifier")).toBeInTheDocument();
-      expect(screen.getByTestId("btn-cancel-trust-modal")).toBeInTheDocument();
     });
 
     it("renders trust button with fullWidth prop", () => {
@@ -354,7 +326,6 @@ describe("TrustVerifierModal", () => {
 
       expect(screen.getByTestId("btn-trust-verifier")).toHaveTextContent("modal.trustButton");
       expect(screen.getByTestId("btn-not-trust-verifier")).toHaveTextContent("modal.notTrustButton");
-      expect(screen.getByTestId("btn-cancel-trust-modal")).toHaveTextContent("Common:cancel");
     });
   });
 
@@ -422,11 +393,9 @@ describe("TrustVerifierModal", () => {
 
       const trustButton = screen.getByTestId("btn-trust-verifier");
       const noTrustButton = screen.getByTestId("btn-not-trust-verifier");
-      const cancelButton = screen.getByTestId("btn-cancel-trust-modal");
 
       expect(trustButton).toHaveClass("trustButton");
       expect(noTrustButton).toHaveClass("noTrustButton");
-      expect(cancelButton).toHaveClass("cancelButton");
     });
   });
 
@@ -495,7 +464,6 @@ describe("TrustVerifierModal", () => {
       expect(screen.getByTestId("text-modal-description")).toBeInTheDocument();
       expect(screen.getByTestId("btn-trust-verifier")).toBeInTheDocument();
       expect(screen.getByTestId("btn-not-trust-verifier")).toBeInTheDocument();
-      expect(screen.getByTestId("btn-cancel-trust-modal")).toBeInTheDocument();
       expect(screen.getByTestId("btn-info-tooltip")).toBeInTheDocument();
     });
 

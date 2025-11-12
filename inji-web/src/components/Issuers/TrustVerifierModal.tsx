@@ -120,17 +120,9 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
 
                         <BorderedButton
                             testId="btn-not-trust-verifier"
-                            onClick={onNotTrust}
+                            onClick={onCancel}
                             title={t(`modal.notTrustButton`)}
                             className={styles.noTrustButton}
-                        />
-
-
-                        <TertiaryButton
-                            testId="btn-cancel-trust-modal"
-                            onClick={onCancel}
-                            title={t(`Common:cancel`)}
-                            className={styles.cancelButton}
                         />
                     </div>
 

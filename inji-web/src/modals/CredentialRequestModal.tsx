@@ -10,7 +10,7 @@ import {PresentationCredential, CredentialsResponse} from '../types/components';
 import {CredentialRequestModalHeader} from '../components/Credentials/CredentialRequestModalHeader';
 import {CredentialRequestModalContent} from '../components/Credentials/CredentialRequestModalContent';
 import {CredentialRequestModalFooter} from '../components/Credentials/CredentialRequestModalFooter';
-import {withErrorHandling} from '../utils/errorHandling';
+import { rejectVerifierRequest } from '../utils/verifierUtils';
 import { CredentialRequestModalStyles } from './CredentialRequestModalStyles';
 
 
@@ -52,24 +52,12 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
     } = useApiErrorHandler({ onClose: onCancel });
 
     const handleCancel = useCallback(async () => {
-        await withErrorHandling(async () => {
-            const cancelPayload = {
-                errorCode: "access_denied",
-                errorMessage: "User denied authorization to share credentials"
-            };
-
-            await fetchData({
-                url: api.userRejectVerifier.url(presentationId),
-                apiConfig: api.userRejectVerifier,
-                body: cancelPayload
-            });
+        await rejectVerifierRequest({
+            presentationId,
+            fetchData,
+            redirectUri: verifier?.redirectUri || null,
+            onSuccess: onCancel
         });
-
-        if (verifier?.redirectUri) {
-            window.location.href = verifier.redirectUri;
-        } else {
-            onCancel();
-        }
     }, [presentationId, fetchData, onCancel, verifier?.redirectUri]);
 
     const handleCredentialToggle = useCallback((credentialId: string) => {

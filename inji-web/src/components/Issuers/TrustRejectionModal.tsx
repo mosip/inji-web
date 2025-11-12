@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { ModalWrapper } from "../../modals/ModalWrapper";
 import { useTranslation } from "react-i18next";
 import { SolidButton } from "../Common/Buttons/SolidButton";
 import { BorderedButton } from "../Common/Buttons/BorderedButton";
+import { useApi } from "../../hooks/useApi";
+import { useNavigate } from "react-router-dom";
+import { rejectVerifierRequest } from "../../utils/verifierUtils";
 
 const TrustRejectionModalStyles = {
     wrapper: "flex flex-col items-center text-center px-6 py-12 sm:p-8",
@@ -18,6 +21,8 @@ const TrustRejectionModalStyles = {
 
 interface TrustRejectionModalProps {
   isOpen: boolean;
+  presentationId: string;
+  redirectUri?: string | null;
   onConfirm?: () => void;
   onClose?: () => void;
   testId: string;
@@ -25,11 +30,26 @@ interface TrustRejectionModalProps {
 
 export const TrustRejectionModal: React.FC<TrustRejectionModalProps> = ({
   isOpen,
+  presentationId,
+  redirectUri,
   onConfirm,
   onClose = () => { },
   testId,
 }) => {
   const { t } = useTranslation("VerifierTrustPage");
+  const { fetchData } = useApi();
+  const navigate = useNavigate();
+
+  const handleConfirm = useCallback(async () => {
+    await rejectVerifierRequest({
+      presentationId,
+      fetchData,
+      redirectUri,
+      onSuccess: onConfirm,
+      navigate
+    });
+  }, [presentationId, fetchData, redirectUri, onConfirm, navigate]);
+
   if (!isOpen) return null;
 
   const styles = TrustRejectionModalStyles;
@@ -54,7 +74,7 @@ export const TrustRejectionModal: React.FC<TrustRejectionModalProps> = ({
           <div className={styles.buttonsContainer}>
             <SolidButton
               testId="btn-confirm-cancel"
-              onClick={onConfirm}
+              onClick={handleConfirm}
               title={t(`TrustRejectionModal.confirmButton`)}
               fullWidth
               className={styles.confirmButton}
