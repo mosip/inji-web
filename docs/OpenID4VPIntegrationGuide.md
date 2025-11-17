@@ -46,7 +46,7 @@ The verifier initiates the flow by redirecting the user to the wallet with the r
 ## 3. Authorization Endpoint
 All verifier integrations begin by redirecting the user to:
 
-```
+```bash
 https://example.injiweb.com/authorize
 ```
 
@@ -73,7 +73,7 @@ https://example.injiweb.com/authorize
 ### 4.2 `pre-registered`
 - `client_id` and metadata must be pre-registered with the wallet operator.
 - Example:  
-  ```
+  ```bash
   client_id=sample-app
   client_id_scheme=pre-registered
   ```
@@ -143,7 +143,7 @@ Client metadata provides trusted UI information and capability details.
 
 ## 7. Sample Complete Authorization Request
 
-```
+```bash
 https://example.injiweb.com/authorize
   ?client_id=sample-app
   &client_id_scheme=pre-registered
@@ -196,7 +196,7 @@ Wallet POSTs form-encoded data to the `response_uri`.
 
 ### Example (URL decoded)
 
-```
+```bash
 POST /vp-submission
 Content-Type: application/x-www-form-urlencoded
 
@@ -222,14 +222,15 @@ state=req_68af3c2d-6424-44ee-b3f8-01585e487d6c
 
 ### 9.2 For response_mode `direct_post.jwt`
 
-### POST Body Fields
+### POST Body Fields (JWT)
+
 | Field | Description |
 |-------|-------------|
 | `response` | The Verifiable Presentation in JWT format, containing vp_token, presentation_submission and state in the payload.  |
 
 ### Example
 
-```
+```bash
 POST /vp-submission
 Content-Type: application/x-www-form-urlencoded
 
@@ -269,9 +270,9 @@ Possible errors:
 
 | Error code | Reason |
 |-------|-------------|
-| `invalid_request` | Invalid or missing parameters
-| `invalid_presentation_definition_uri` | Presentation definition URI not reachable
-| `access_denied` | User cancelled, matching credentials not found or denied consent
+| `invalid_request` | Invalid or missing parameters |
+| `invalid_presentation_definition_uri` | Presentation definition URI not reachable |
+| `access_denied` | User cancelled, matching credentials not found or denied consent |
 
 The above error codes are not exhaustive list but the most common ones, please refer the OpenID for VP Draft 23 specification for all possible scenarios and errors : [OpenID4VP Draft 23 - Error codes and description](https://openid.net/specs/openid-4-verifiable-presentations-1_0-ID3.html#name-error-response)
 
