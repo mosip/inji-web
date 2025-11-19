@@ -40,9 +40,15 @@ public class Loginpage extends BasePage {
 	}
 
 	public void enterPasscode(String string) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(
-				By.xpath("//div[@data-testid='passcode-container']//input[@type='password' and @maxlength='1']")));
+//		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+//		wait.until(ExpectedConditions.visibilityOfElementLocated(
+//				By.xpath("//div[@data-testid='passcode-container']//input[@type='password' and @maxlength='1']")));
+
+		if (!isElementIsVisible(driver,
+				By.xpath("//div[@data-testid='passcode-container']//input[@type='password' and @maxlength='1']"), 60)) {
+			throw new NoSuchElementException("passcode input field not found — cannot enter passcode.");
+
+		}
 
 		List<WebElement> passcodeFields = driver.findElements(
 				By.xpath("//div[@data-testid='passcode-container']//input[@type='password' and @maxlength='1']"));
@@ -65,9 +71,18 @@ public class Loginpage extends BasePage {
 	}
 
 	public void enterConfirmPasscode(String string) {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
-				"//div[@data-testid='confirm-passcode-container']//input[@type='password' and @maxlength='1']")));
+//		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+//		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
+//				"//div[@data-testid='confirm-passcode-container']//input[@type='password' and @maxlength='1']")));
+
+		if (!isElementIsVisible(driver,
+				By.xpath(
+						"//div[@data-testid='confirm-passcode-container']//input[@type='password' and @maxlength='1']"),
+				60)) {
+			throw new NoSuchElementException("passcode input field not found — cannot enter passcode.");
+
+		}
+
 		List<WebElement> confirmFields = driver.findElements(By
 				.xpath("//div[@data-testid='confirm-passcode-container']//input[@type='password' and @maxlength='1']"));
 
@@ -240,6 +255,18 @@ public class Loginpage extends BasePage {
 
 	public void clickOnProfileOption() {
 		clickOnElement(driver, By.xpath("//div[@data-testid='profile-dropdown']//div[text()='Profile']"));
+	}
+
+	public void clickOnProfileOptionMobileView() {
+		clickOnElement(driver, By.xpath("//div[text()='Profile']"));
+	}
+
+	public void clickOnLogoutOptionMobileView() {
+		clickOnElement(driver, By.xpath("//div[text()='Logout']"));
+	}
+
+	public void clickOnFaqOptionMobileView() {
+		clickOnElement(driver, By.xpath("//div[text()='FAQ']"));
 	}
 
 	public String getTextMyProfile() {
@@ -441,6 +468,17 @@ public class Loginpage extends BasePage {
 		}
 	}
 
+	public boolean isMobileMenuOptionPresent(String optionText) {
+		try {
+			String xpath = String.format("//div[@data-testid='hamburger-menu-dropdown']//div[text()='%s']", optionText);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+			return isElementIsVisible(driver, By.xpath(xpath));
+		} catch (NoSuchElementException e) {
+			return false;
+		}
+	}
+
 	public void clickonFAQLink() {
 		clickOnElement(driver, By.xpath("//div[@data-testid='profile-dropdown']//div[text()='FAQ']"));
 	}
@@ -467,4 +505,47 @@ public class Loginpage extends BasePage {
 		waitUntilElementEnabled(driver, By.cssSelector("input[data-testid='input-passcode']"), 10);
 	}
 
+	public void clickOnHamburgerMenu() {
+		clickOnElement(driver, By.xpath("//div[@data-testid='hamburger-menu']"));
+	}
+
+	public boolean isDownloadedCardMenubuttonDisplayed() {
+		return isElementIsVisible(driver, By.xpath("(//button[@data-testid='icon-mini-view-card-menu'])[1]"));
+	}
+
+	public void clickOnDownloadedCardMenubutton() {
+		clickOnElement(driver, By.xpath("(//button[@data-testid='icon-mini-view-card-menu'])[1]"));
+	}
+
+	public void clickOnViewCardMenubutton() {
+		clickOnElement(driver, By.xpath("//span[@data-testid='label-view']"));
+	}
+
+	public boolean isDownloadedCardViewDisplayed() {
+		return isElementIsVisible(driver, By.xpath("//span[@data-testid='title-credential-type-display-name']"));
+	}
+
+	public void clickOnViewCardBackbutton() {
+		clickOnElement(driver, By.xpath("//button[@data-testid='btn-back']"));
+	}
+
+	public void clickOnDownloadCardMenubutton() {
+		clickOnElement(driver, By.xpath("//span[@data-testid='label-download']"));
+	}
+
+	public void clickOnDeleteCardMenubutton() {
+		clickOnElement(driver, By.xpath("//span[@data-testid='label-delete']"));
+	}
+
+	public void clickOnConfirmDeleteCardOption() {
+		clickOnElement(driver, By.xpath("//button[@data-testid='btn-confirm']"));
+	}
+
+	public void clickOnDownloadCardFromViewbutton() {
+		clickOnElement(driver, By.xpath("(//button[@data-testid='btn-download'])[2]"));
+	}
+
+	public void clickOnCancelDeleteCardOption() {
+		clickOnElement(driver, By.xpath("(//button[@data-testid='btn-cancel'])"));
+	}
 }
