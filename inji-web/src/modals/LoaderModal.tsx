@@ -62,3 +62,4 @@ export const LoaderModal: React.FC<LoaderModalProps> = ({
         </div>
     );
 };
+

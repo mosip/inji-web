@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { UserAuthorizationPage } from '../../pages/UserAuthorizationPage';
+import { VerifierPresentationPage } from '../../pages/VerifierPresentationPage';
 import { api, ContentTypes } from "../../utils/api";
 import { ROUTES } from "../../utils/constants";
 import { PresentationCredential } from '../../types/components';
@@ -80,7 +80,7 @@ jest.mock('../../components/User/Sidebar', () => ({
 }));
 
 const MockLoaderModal = jest.fn();
-jest.mock('../../modals/LoadingModal', () => ({
+jest.mock('../../modals/LoaderModal', () => ({
     LoaderModal: ({ isOpen, title }: any) => {
         MockLoaderModal({ isOpen, title });
         return isOpen ? <div data-testid="modal-loader">{title}</div> : null;
@@ -244,7 +244,7 @@ const renderComponent = (route = "/user/authorize?client_id=mock-client&presenta
     return render(
         <Provider store={mockStore as any}>
             <MemoryRouter initialEntries={[route]}>
-                <UserAuthorizationPage />
+                <VerifierPresentationPage />
             </MemoryRouter>
         </Provider>
     );
@@ -285,7 +285,7 @@ const mockOnRetry = jest.fn();
 let mockErrorHandlerReturnValue: ReturnType<typeof useApiErrorHandler>;
 
 
-describe('UserAuthorizationPage', () => {
+describe('VerifierPresentationPage', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         mockRejectVerifierRequest.mockImplementation(async (options) => {
@@ -439,7 +439,7 @@ describe('UserAuthorizationPage', () => {
             );
         });
 
-        rerender(<UserAuthorizationPage />); // Re-render to show updated hook state
+        rerender(<VerifierPresentationPage />); // Re-render to show updated hook state
 
         await waitFor(() => {
             expect(screen.getByTestId('modal-error-card')).toBeVisible();
@@ -531,7 +531,7 @@ describe('UserAuthorizationPage', () => {
             );
         });
 
-        rerender(<UserAuthorizationPage />);
+        rerender(<VerifierPresentationPage />);
 
         await waitFor(() => {
             expect(screen.getByTestId('modal-error-card')).toBeVisible();

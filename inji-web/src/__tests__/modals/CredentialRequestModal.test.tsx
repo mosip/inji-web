@@ -82,7 +82,7 @@ jest.mock('../../modals/NoMatchingCredentialsModal', () => ({
     ),
 }));
 
-jest.mock('../../modals/LoadingModal', () => ({
+jest.mock('../../modals/LoaderModal', () => ({
     LoaderModal: ({ isOpen, message }: any) => (
         isOpen ? (
             <div data-testid="modal-loader-card">

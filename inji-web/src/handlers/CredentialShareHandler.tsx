@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useTranslation } from 'react-i18next';
 import { useApi } from "../hooks/useApi";
 import { api } from "../utils/api";
-import { LoaderModal } from "../modals/LoadingModal";
+import { LoaderModal } from "../modals/LoaderModal";
 import { ErrorCard } from "../modals/ErrorCard";
 import { CredentialShareSuccessModal } from "../modals/CredentialShareSuccessModal";
 import { PresentationCredential, CredentialShareSuccessModalProps } from "../types/components";
@@ -39,7 +39,7 @@ export const CredentialShareHandler: React.FC<CredentialShareHandlerProps> = ({
         handleApiError
     } = useApiErrorHandler({ onClose });
 
-    const submitPresentationCore = useCallback(async () => {
+    const submitPresentationCallback = useCallback(async () => {
         const response = await fetchData({
             apiConfig: api.submitPresentation,
             url: api.submitPresentation.url(presentationId),
@@ -58,25 +58,25 @@ export const CredentialShareHandler: React.FC<CredentialShareHandlerProps> = ({
         setIsLoading(true);
 
         try {
-            const response = await submitPresentationCore();
+            const response = await submitPresentationCallback();
 
             if (response.ok()) {
                 setIsSuccess(true);
             } else {
                 const errorMessage = response.error?.message || 'Failed to submit presentation';
                 const error = response.error || new Error(errorMessage);
-                handleApiError(error, "submitPresentation", submitPresentationCore, handleRetrySuccess);
+                handleApiError(error, "submitPresentation", submitPresentationCallback, handleRetrySuccess);
                 setIsSuccess(false);
             }
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
             const error = err instanceof Error ? err : new Error(errorMessage);
-            handleApiError(error, "submitPresentation", submitPresentationCore, handleRetrySuccess);
+            handleApiError(error, "submitPresentation", submitPresentationCallback, handleRetrySuccess);
             setIsSuccess(false);
         } finally {
             setIsLoading(false);
         }
-    }, [submitPresentationCore, handleApiError, handleRetrySuccess]);
+    }, [submitPresentationCallback, handleApiError, handleRetrySuccess]);
 
     useEffect(() => {
         if (hasSubmittedRef.current) return;

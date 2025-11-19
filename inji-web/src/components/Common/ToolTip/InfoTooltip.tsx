@@ -10,7 +10,7 @@ interface InfoTooltipTriggerProps {
 }
 
 
-export const InfoTooltipTrigger: React.FC<InfoTooltipTriggerProps> = ({
+export const InfoTooltip: React.FC<InfoTooltipTriggerProps> = ({
                                                                           infoButtonText,
                                                                           tooltipText,
                                                                           className = '',

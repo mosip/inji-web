@@ -2,7 +2,7 @@ import React from "react";
 import { ModalWrapper } from "../../modals/ModalWrapper";
 import { useTranslation } from "react-i18next";
 import { SolidButton } from "../Common/Buttons/SolidButton";
-import { InfoTooltipTrigger } from "../Common/ToolTip/InfoTooltipTrigger";
+import { InfoTooltip } from "../Common/ToolTip/InfoTooltip";
 import { TrustVerifierModalStyles } from "./TrustVerifierModalStyles";
 import LogoIcon from "../../assets/unknown_verifier_logo.png";
 import { BorderedButton } from "../Common/Buttons/BorderedButton";
@@ -127,7 +127,7 @@ export const TrustVerifierModal: React.FC<TrustVerifierModalProps> = ({
                     </div>
 
 
-                    <InfoTooltipTrigger
+                    <InfoTooltip
                         infoButtonText={t('modal.infoTooltipButton')}
                         tooltipText={t('modal.infoTooltipText')}
                         testId="btn-info-tooltip"
