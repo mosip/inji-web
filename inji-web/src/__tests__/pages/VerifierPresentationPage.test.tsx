@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { VerifierPresentationPage } from '../../pages/VerifierPresentationPage';
+import { VPAuthorizationPage } from '../../pages/VerifierPresentationPage';
 import { api, ContentTypes } from "../../utils/api";
 import { ROUTES } from "../../utils/constants";
 import { PresentationCredential } from '../../types/components';
@@ -244,7 +244,7 @@ const renderComponent = (route = "/user/authorize?client_id=mock-client&presenta
     return render(
         <Provider store={mockStore as any}>
             <MemoryRouter initialEntries={[route]}>
-                <VerifierPresentationPage />
+                <VPAuthorizationPage />
             </MemoryRouter>
         </Provider>
     );
@@ -439,7 +439,7 @@ describe('VerifierPresentationPage', () => {
             );
         });
 
-        rerender(<VerifierPresentationPage />); // Re-render to show updated hook state
+        rerender(<VPAuthorizationPage />); // Re-render to show updated hook state
 
         await waitFor(() => {
             expect(screen.getByTestId('modal-error-card')).toBeVisible();
@@ -531,7 +531,7 @@ describe('VerifierPresentationPage', () => {
             );
         });
 
-        rerender(<VerifierPresentationPage />);
+        rerender(<VPAuthorizationPage />);
 
         await waitFor(() => {
             expect(screen.getByTestId('modal-error-card')).toBeVisible();

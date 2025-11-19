@@ -15,7 +15,7 @@ import { CredentialShareHandler } from "../handlers/CredentialShareHandler";
 import { useApiErrorHandler } from "../hooks/useApiErrorHandler";
 import { useUser } from '../hooks/User/useUser';
 
-export const VerifierPresentationPage: React.FC = () => {
+export const VPAuthorizationPage: React.FC = () => {
     const { t } = useTranslation("VerifierTrustPage");
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isCancelConfirmation, setIsCancelConfirmation] = useState<boolean>(false);
