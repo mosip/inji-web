@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { VPAuthorizationPage } from '../../pages/VerifierPresentationPage';
+import { VPAuthorizationPage } from '../../pages/VPAuthorization';
 import { api, ContentTypes } from "../../utils/api";
 import { ROUTES } from "../../utils/constants";
 import { PresentationCredential } from '../../types/components';
