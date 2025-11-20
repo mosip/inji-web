@@ -80,7 +80,7 @@ public class HomePage extends BasePage {
 	}
 
 	public boolean isIssuerLogoDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//*[@data-testid='ItemBox-Logo']"), 60);
+		return isElementIsVisible(driver, By.xpath("//*[@data-testid='ItemBox-Logo']"), (BasePage.explicit_timeout)*2);
 	}
 
 	public void clickOnAboutInji() {
@@ -116,11 +116,11 @@ public class HomePage extends BasePage {
 	}
 
 	public void clickOnVerify() {
-		clickOnElement(driver, By.xpath("//button[@id='verify_otp']"), 60);
+		clickOnElement(driver, By.xpath("//button[@id='verify_otp']"), (BasePage.explicit_timeout)*2);
 	}
 
 	public Boolean isSuccessMessageDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//p[@data-testid='title-download-result']"), 60);
+		return isElementIsVisible(driver, By.xpath("//p[@data-testid='title-download-result']"), (BasePage.explicit_timeout)*2);
 	}
 
 	public Boolean isMosipNationalIdDisplayed() {
@@ -141,7 +141,7 @@ public class HomePage extends BasePage {
 	}
 
 	public Boolean isGoHomeButtonDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//*[text()='Go To Home']"), 60);
+		return isElementIsVisible(driver, By.xpath("//*[text()='Go To Home']"), (BasePage.explicit_timeout)*2);
 	}
 
 	public Boolean isBackButtonDisplayed() {
@@ -177,7 +177,7 @@ public class HomePage extends BasePage {
 	}
 
 	public Boolean isNoIssuerFoundMessageDisplayed() {
-		return isElementIsVisible(driver, By.xpath("//p[@data-testid='EmptyList-Text']"), 60);
+		return isElementIsVisible(driver, By.xpath("//p[@data-testid='EmptyList-Text']"), (BasePage.explicit_timeout)*2);
 	}
 
 	public void clickOnArabicLanguage() {
@@ -396,11 +396,11 @@ public class HomePage extends BasePage {
 	}
 
 	public void clickOnProccedCustomButton() {
-		clickOnElement(driver, By.xpath("(//*[@data-testid='DataShareFooter-Success-Button'])[2]"), 60);
+		clickOnElement(driver, By.xpath("(//*[@data-testid='DataShareFooter-Success-Button'])[2]"), (BasePage.explicit_timeout)*2);
 	}
 
 	public void clickOnProccedConsentButton() {
-		clickOnElement(driver, By.xpath("(//*[@data-testid='DataShareFooter-Success-Button'])[1]"), 60);
+		clickOnElement(driver, By.xpath("(//*[@data-testid='DataShareFooter-Success-Button'])[1]"), (BasePage.explicit_timeout)*2);
 	}
 
 	public boolean isAccessYourCredentialsImageDisplayed() {

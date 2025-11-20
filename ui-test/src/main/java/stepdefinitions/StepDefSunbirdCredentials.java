@@ -283,33 +283,22 @@ public class StepDefSunbirdCredentials {
 
 	@Then("User verify pdf is downloaded for Insurance")
 	public String user_verify_pdf_is_downloaded_for_insurance() throws IOException {
-
 		String pdfName = sunbirdCredentials.pdfNameInsurance;
-		baseTest.getJse()
-				.executeScript("browserstack_executor: {\"action\": \"fileExists\", \"arguments\": {\"fileName\": \""
-						+ pdfName + "\"}}");
-
-		baseTest.getJse().executeScript(
-				"browserstack_executor: {\"action\": \"getFileProperties\", \"arguments\": {\"fileName\": \"" + pdfName
-						+ "\"}}");
-
 		String base64EncodedFile = (String) baseTest.getJse().executeScript(
 				"browserstack_executor: {\"action\": \"getFileContent\", \"arguments\": {\"fileName\": \"" + pdfName
 						+ "\"}}");
 
 		byte[] data = Base64.getDecoder().decode(base64EncodedFile);
-		OutputStream stream = new FileOutputStream(pdfName);
-		stream.write(data);
 
-		System.out.println(stream);
-		stream.close();
+		try (OutputStream os = new FileOutputStream(pdfName)) {
+			os.write(data);
+		}
 
 		File pdfFile = new File(System.getProperty("user.dir") + "/" + pdfName);
-		PDDocument document = PDDocument.load(pdfFile);
-
-		PDFTextStripper stripper = new PDFTextStripper();
-		String text = stripper.getText(document);
-		return text;
+		try (PDDocument document = PDDocument.load(pdfFile)) {
+			PDFTextStripper stripper = new PDFTextStripper();
+			return stripper.getText(document);
+		}
 	}
 
 	@Then("User verify policy number input box header")

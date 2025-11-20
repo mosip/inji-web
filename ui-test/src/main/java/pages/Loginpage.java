@@ -40,12 +40,8 @@ public class Loginpage extends BasePage {
 	}
 
 	public void enterPasscode(String string) {
-//		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-//		wait.until(ExpectedConditions.visibilityOfElementLocated(
-//				By.xpath("//div[@data-testid='passcode-container']//input[@type='password' and @maxlength='1']")));
-
 		if (!isElementIsVisible(driver,
-				By.xpath("//div[@data-testid='passcode-container']//input[@type='password' and @maxlength='1']"), 60)) {
+				By.xpath("//div[@data-testid='passcode-container']//input[@type='password' and @maxlength='1']"), (BasePage.explicit_timeout)*2)) {
 			throw new NoSuchElementException("passcode input field not found — cannot enter passcode.");
 
 		}
@@ -71,10 +67,6 @@ public class Loginpage extends BasePage {
 	}
 
 	public void enterConfirmPasscode(String string) {
-//		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-//		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
-//				"//div[@data-testid='confirm-passcode-container']//input[@type='password' and @maxlength='1']")));
-
 		if (!isElementIsVisible(driver,
 				By.xpath(
 						"//div[@data-testid='confirm-passcode-container']//input[@type='password' and @maxlength='1']"),
@@ -144,7 +136,7 @@ public class Loginpage extends BasePage {
 	}
 
 	public void clickonuserprofiledropdownbutton() {
-		clickOnElement(driver, By.xpath("(//div[@data-testid='profile-details']//div)[4]"), 60);
+		clickOnElement(driver, By.xpath("(//div[@data-testid='profile-details']//div)[4]"), (BasePage.explicit_timeout)*2);
 	}
 
 	public void clickonLogout() {
@@ -177,7 +169,7 @@ public class Loginpage extends BasePage {
 	}
 
 	public void clickOnProfileDropDown() {
-		clickOnElement(driver, By.xpath("(//div[@data-testid='profile-details']//div)[4]"), 60);
+		clickOnElement(driver, By.xpath("(//div[@data-testid='profile-details']//div)[4]"), (BasePage.explicit_timeout)*2);
 	}
 
 	public void waituntilpagecompletelyloaded() {
@@ -187,7 +179,7 @@ public class Loginpage extends BasePage {
 
 	public void clickOnProfileDropDownDisplayedAgain() {
 		waituntilpagecompletelyloaded();
-		clickOnElement(driver, By.xpath("(//div[@data-testid='profile-details']//div)[4]"), 60);
+		clickOnElement(driver, By.xpath("(//div[@data-testid='profile-details']//div)[4]"), (BasePage.explicit_timeout)*2);
 	}
 
 	public Boolean isHomeButtonDisplayed() {
@@ -469,14 +461,8 @@ public class Loginpage extends BasePage {
 	}
 
 	public boolean isMobileMenuOptionPresent(String optionText) {
-		try {
-			String xpath = String.format("//div[@data-testid='hamburger-menu-dropdown']//div[text()='%s']", optionText);
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
-			return isElementIsVisible(driver, By.xpath(xpath));
-		} catch (NoSuchElementException e) {
-			return false;
-		}
+		String xpath = String.format("//div[@data-testid='hamburger-menu-dropdown']//div[text()='%s']", optionText);
+		return isElementIsVisible(driver, By.xpath(xpath), 10);
 	}
 
 	public void clickonFAQLink() {

@@ -172,18 +172,16 @@ public class Runner extends AbstractTestNGCucumberTests {
 	@Override
 	@DataProvider(parallel = true, name = "scenarios")
 	public Object[][] scenarios() {
-		// Detect @sequentialFeature tag at FEATURE level
-
-		// Read thread count from properties, fallback to 3 if not set
-		String threadCountStr = ConfigManager.getproperty("threadCount");
 		int threadCount = 3; // default
+		String threadCountStr = ConfigManager.getproperty("threadCount");
 		if (threadCountStr != null && !threadCountStr.isEmpty()) {
 			try {
 				threadCount = Integer.parseInt(threadCountStr);
 			} catch (NumberFormatException e) {
-				System.out.println("Invalid threadCount in config, using default 3");
+				System.out.println("Invalid threadCount in config, using default " + threadCount);
 			}
 		}
+
 		System.setProperty("dataproviderthreadcount", String.valueOf(threadCount));
 		System.setProperty("testng.threadcount", String.valueOf(threadCount));
 		Object[][] scenarios = super.scenarios();

@@ -145,8 +145,6 @@ public class BaseTest {
 		browserstackOptions.put("local", true);
 		browserstackOptions.put("interactiveDebugging", true);
 		capabilities.setCapability("bstack:options", browserstackOptions);
-
-		// driver = new RemoteWebDriver(new URL(URL), capabilities);
 		WebDriver driver = new RemoteWebDriver(new URL(URL), capabilities);
 		setDriver(driver); // sets ThreadLocal
 		setJse((JavascriptExecutor) driver); // sets ThreadLocal
@@ -196,7 +194,6 @@ public class BaseTest {
 			ExtentReportManager.logStep("⏭ Step Skipped: — " + BaseTest.getSkipReason());
 			throw new io.cucumber.java.PendingException("Scenario skipped: " + BaseTest.getSkipReason());
 		}
-//	    ExtentReportManager.logStep("➡️ Step Started"); 
 	}
 
 	@AfterStep
@@ -207,7 +204,6 @@ public class BaseTest {
 		}
 
 		if (scenario.isFailed()) {
-//	        ExtentReportManager.logStep("❌ Step Failed");
 			captureScreenshot();
 		}
 	}
@@ -225,6 +221,8 @@ public class BaseTest {
 	            String auth = username + ":" + accessKey;
 	            String basicAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
 	            HttpURLConnection conn = (HttpURLConnection) new URL(jsonUrl).openConnection();
+	                        conn.setConnectTimeout(10_000);
+	                        conn.setReadTimeout(30_000);
 	            conn.setRequestMethod("GET");
 	            conn.setRequestProperty("Authorization", basicAuth);
 	            if (conn.getResponseCode() == 200) {
@@ -236,10 +234,12 @@ public class BaseTest {
 	                JSONObject jsonResponse = new JSONObject(response.toString());
 	                JSONObject session = jsonResponse.getJSONObject("automation_session");
 	                publicUrl = session.getString("public_url");
-	                videoUrl = session.getString("video_url");
-	                if (publicUrl != null) {
-	                    ExtentReportManager.getTest().info("<a href='" + publicUrl + "' target='_blank'>View on BrowserStack</a>");
-	                }
+	                videoUrl = session.getString("video_url");	                
+	                ExtentTest test = ExtentReportManager.getTest();
+	                               if (test != null && publicUrl != null) {
+	                                    test.info("<a href='" + publicUrl + "' target='_blank'>View on BrowserStack</a>");
+	                                }
+	                
 	                if (videoUrl != null) {
 	                    ExtentReportManager.getTest().info("<a href='" + videoUrl + "' target='_blank'>Click here to view only Video</a>");
 	                }
@@ -320,26 +320,11 @@ public class BaseTest {
 	public static void afterAll() {
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			utils.HttpUtils.cleanupWallets();
-//			if (extent != null) {
-//				extent.flush();
-//			}
-//			try {
-//				Thread.sleep(5000); // ensure report file is flushed before rename
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
 			ExtentReportManager.flushReport();
 
 			pushReportsToS3();
 		}));
 	}
-
-//	public WebDriver getDriver() {
-//		return driver;
-//	}
-
-//	public JavascriptExecutor getJse() {
-//		return jse;
-//	}
 
 	public static void pushReportsToS3() {
 		executeLsCommand(System.getProperty("user.dir") + "/test-output/ExtentReport.html");
