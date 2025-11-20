@@ -46,7 +46,7 @@ export const NoMatchingCredentialsModal: React.FC<NoMatchingCredentialsModalProp
         }
     }, [redirectUri, onGoToHome]);
 
-    const rejectVerifierCore = useCallback(async () => {
+    const rejectVerifierCallback = useCallback(async () => {
         const rejectPayload = {
             errorCode: "access_denied",
             errorMessage: "User denied authorization to share credentials"
@@ -74,7 +74,7 @@ export const NoMatchingCredentialsModal: React.FC<NoMatchingCredentialsModalProp
         }
 
         try {
-            const response = await rejectVerifierCore();
+            const response = await rejectVerifierCallback();
             if (response.ok()) {
                 handleExit();
             } else {
@@ -82,10 +82,10 @@ export const NoMatchingCredentialsModal: React.FC<NoMatchingCredentialsModalProp
             }
             if (!redirectUri) setIsSubmitting(false);
         } catch (err) {
-            handleApiError( err, "rejectVerifier", rejectVerifierCore, handleExit );
+            handleApiError( err, "rejectVerifier", rejectVerifierCallback, handleExit );
             setIsSubmitting(false);
         }
-    }, [isSubmitting, isRetrying, presentationId, rejectVerifierCore, handleExit, handleApiError, redirectUri]);
+    }, [isSubmitting, isRetrying, presentationId, rejectVerifierCallback, handleExit, handleApiError, redirectUri]);
 
     if (!isVisible) return null;
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { InfoTooltipTrigger } from '../../../../components/Common/ToolTip/InfoTooltipTrigger';
+import { InfoTooltip } from '../../../../components/Common/ToolTip/InfoTooltip';
 
 jest.mock('../../../../assets/infoIconWhite.svg', () => 'mocked-info-icon-path');
 
-describe('InfoTooltipTrigger Component', () => {
+describe('InfoTooltip Component', () => {
     const defaultProps = {
         infoButtonText: 'Info',
         tooltipText: 'This is a helpful tooltip message',
@@ -14,7 +14,7 @@ describe('InfoTooltipTrigger Component', () => {
     };
 
     const renderInfoTooltip = (props = {}) => {
-        return render(<InfoTooltipTrigger {...defaultProps} {...props} />);
+        return render(<InfoTooltip {...defaultProps} {...props} />);
     };
 
     beforeEach(() => {

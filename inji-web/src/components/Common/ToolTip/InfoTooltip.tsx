@@ -2,7 +2,7 @@ import React, { useState, useId } from 'react';
 import InfoIcon from "../../../assets/infoIconWhite.svg";
 import { InfoTooltipStyles } from './InfoTooltipStyles';
 
-interface InfoTooltipTriggerProps {
+interface InfoTooltipProps {
     infoButtonText: string;
     tooltipText: string;
     className?: string;
@@ -10,7 +10,7 @@ interface InfoTooltipTriggerProps {
 }
 
 
-export const InfoTooltipTrigger: React.FC<InfoTooltipTriggerProps> = ({
+export const InfoTooltip: React.FC<InfoTooltipProps> = ({
                                                                           infoButtonText,
                                                                           tooltipText,
                                                                           className = '',

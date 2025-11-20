@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { LoaderModal } from "../../modals/LoadingModal";
+import { LoaderModal } from "../../modals/LoaderModal";
 import { useTranslation } from "react-i18next";
 
 // Mock dependencies

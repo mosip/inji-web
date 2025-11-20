@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import { api } from "../utils/api";
-import { LoaderModal } from "../modals/LoadingModal";
+import { LoaderModal } from "../modals/LoaderModal";
 import { useTranslation } from "react-i18next";
 import { TrustVerifierModal } from "../components/Issuers/TrustVerifierModal";
 import { ErrorCard } from "../modals/ErrorCard";
@@ -15,7 +15,7 @@ import { CredentialShareHandler } from "../handlers/CredentialShareHandler";
 import { useApiErrorHandler } from "../hooks/useApiErrorHandler";
 import { useUser } from '../hooks/User/useUser';
 
-export const UserAuthorizationPage: React.FC = () => {
+export const VPAuthorizationPage: React.FC = () => {
     const { t } = useTranslation("VerifierTrustPage");
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isCancelConfirmation, setIsCancelConfirmation] = useState<boolean>(false);
@@ -40,7 +40,7 @@ export const UserAuthorizationPage: React.FC = () => {
         onRetry
     } = useApiErrorHandler({ onClose: () => navigate(ROUTES.ROOT) });
 
-    const validateVerifierRequestCore = useCallback(async (cleanParams: string) => {
+    const validateVerifierRequestCallback = useCallback(async (cleanParams: string) => {
         const response = await apiService.fetchData({
             apiConfig: api.validateVerifierRequest,
             body: { authorizationRequestUrl: `${OPENID4VP_AUTHORIZE_PREFIX}${cleanParams}` },
@@ -80,7 +80,7 @@ export const UserAuthorizationPage: React.FC = () => {
 
         setIsLoading(true);
         try {
-            const response = await validateVerifierRequestCore(cleanParams);
+            const response = await validateVerifierRequestCallback(cleanParams);
 
             if (response.ok()) {
                 handleValidationSuccess(response);
@@ -93,17 +93,17 @@ export const UserAuthorizationPage: React.FC = () => {
 
             handleApiError(err,
                 "validateVerifierRequest",
-                () => validateVerifierRequestCore(cleanParams),
+                () => validateVerifierRequestCallback(cleanParams),
                 handleValidationSuccess
             );
         }
     }, [
-        validateVerifierRequestCore,
+        validateVerifierRequestCallback,
         handleApiError,
         handleValidationSuccess
     ]);
 
-    const addTrustedVerifierCore = useCallback(async () => {
+    const addTrustedVerifierCallback = useCallback(async () => {
         if (!verifierData?.id) return;
         const response = await apiService.fetchData({
             apiConfig: api.addTrustedVerifier,
@@ -121,7 +121,7 @@ export const UserAuthorizationPage: React.FC = () => {
     const handleTrustButton = useCallback(async () => {
         setIsLoading(true);
         try {
-            const response = await addTrustedVerifierCore();
+            const response = await addTrustedVerifierCallback();
 
             if (response && response.ok()) {
                 handleTrustSuccess();
@@ -135,11 +135,11 @@ export const UserAuthorizationPage: React.FC = () => {
             handleApiError(
                 err,
                 "addTrustedVerifier",
-                addTrustedVerifierCore,
+                addTrustedVerifierCallback,
                 handleTrustSuccess
             );
         }
-    }, [addTrustedVerifierCore, handleApiError, handleTrustSuccess]);
+    }, [addTrustedVerifierCallback, handleApiError, handleTrustSuccess]);
 
     const handleNoTrustButton = () => {
         setShowTrustVerifier(false);
@@ -248,3 +248,4 @@ export const UserAuthorizationPage: React.FC = () => {
         </div>
     );
 };
+

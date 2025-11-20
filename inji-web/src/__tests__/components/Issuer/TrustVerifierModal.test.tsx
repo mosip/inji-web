@@ -59,8 +59,8 @@ jest.mock("../../../components/Common/Buttons/BorderedButton", () => ({
   ),
 }));
 
-jest.mock("../../../components/Common/ToolTip/InfoTooltipTrigger", () => ({
-  InfoTooltipTrigger: ({ infoButtonText, tooltipText, testId }: any) => (
+jest.mock("../../../components/Common/ToolTip/InfoTooltip", () => ({
+  InfoTooltip: ({ infoButtonText, tooltipText, testId }: any) => (
     <div data-testid={testId}>
       {infoButtonText} - {tooltipText}
     </div>

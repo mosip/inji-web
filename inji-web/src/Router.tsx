@@ -11,7 +11,7 @@ import { RootState } from './types/redux';
 import { getDirCurrentLanguage } from './utils/i18n';
 import { PageNotFound } from './pages/PageNotFound';
 import { AuthorizationPage } from './pages/AuthorizationPage';
-import { UserAuthorizationPage } from './pages/UserAuthorizationPage';
+import { VPAuthorizationPage } from './pages/VPAuthorizationPage';
 import { HomePage } from './pages/HomePage';
 import LoginSessionStatusChecker from './components/Common/LoginSessionStatusChecker';
 import { PasscodePage } from './pages/User/Passcode/PasscodePage';
@@ -136,7 +136,7 @@ export const AppRouter = () => {
                 <Route path={Pages.USER}>
                     <Route path={Pages.PASSCODE} element={renderBasedOnAuthStatus(PasscodePage)} />
                     <Route path={Pages.RESET_PASSCODE} element={renderBasedOnAuthStatus(ResetPasscodePage)} />
-                    <Route path={Pages.AUTHORIZE} element={wrapElement(<UserAuthorizationPage />)} />
+                    <Route path={Pages.AUTHORIZE} element={wrapElement(<VPAuthorizationPage />)} />
                     <Route element={<Layout />}>
 
                         <Route path={Pages.ISSUERS} element={<RedirectToUserHome />} />

@@ -10,7 +10,7 @@ interface CredentialItemProps {
     onToggle: (credentialId: string) => void;
 }
 
-const CredentialItemComponent: React.FC<CredentialItemProps> = ({
+export const CredentialItem = memo<CredentialItemProps>(({
     credential,
     isSelected,
     onToggle
@@ -117,6 +117,4 @@ const CredentialItemComponent: React.FC<CredentialItemProps> = ({
             </div>
         </li>
     );
-};
-
-export const CredentialItem = memo(CredentialItemComponent);
+});
