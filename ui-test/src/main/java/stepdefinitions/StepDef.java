@@ -2052,19 +2052,20 @@ public class StepDef {
 		}
 	}
 
-	@Then("User verify search and title are appeare in diff lines")
+	@Then("User verify search and title are appeare in the same line")
 	public void user_verify_search_title_appeare_diff_lines() {
 		try {
 			assertTrue((homePage.getXCoordinateForSearch() - homePage.getXCoordinateForCredentialHeading()) <= 30,
-					"Credential types title does not match the expected Portuguese text.");
-			test.log(Status.PASS, "search and tile heading are in appeared in the same line");
+					"Search and title are NOT aligned in the same line as expected.");
+
+			test.log(Status.PASS, "Search and title heading appear on the same line");
 		} catch (NoSuchElementException e) {
-			test.log(Status.FAIL, "search or Heading element not present: " + e.getMessage());
+			test.log(Status.FAIL, "Search or heading element not present: " + e.getMessage());
 			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
 			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
 			throw e;
 		} catch (Exception e) {
-			test.log(Status.FAIL, "search or Heading element not present:: " + e.getMessage());
+			test.log(Status.FAIL, "Unexpected error while verifying alignment: " + e.getMessage());
 			test.log(Status.FAIL, ExceptionUtils.getStackTrace(e));
 			ScreenshotUtil.attachScreenshot(driver, "FailureScreenshot");
 			throw e;
