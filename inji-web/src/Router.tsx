@@ -11,7 +11,7 @@ import { RootState } from './types/redux';
 import { getDirCurrentLanguage } from './utils/i18n';
 import { PageNotFound } from './pages/PageNotFound';
 import { AuthorizationPage } from './pages/AuthorizationPage';
-import { VPAuthorizationPage } from './pages/VPAuthorization';
+import { VPAuthorizationPage } from './pages/VPAuthorizationPage';
 import { HomePage } from './pages/HomePage';
 import LoginSessionStatusChecker from './components/Common/LoginSessionStatusChecker';
 import { PasscodePage } from './pages/User/Passcode/PasscodePage';
