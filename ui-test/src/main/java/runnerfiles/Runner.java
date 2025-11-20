@@ -169,37 +169,80 @@ public class Runner extends AbstractTestNGCucumberTests {
 			return "IDE";
 	}
 
+//	@Override
+//	@DataProvider(parallel = true, name = "scenarios")
+//	public Object[][] scenarios() {
+//		int threadCount = 3; // default
+//		String threadCountStr = ConfigManager.getproperty("threadCount");
+//		if (threadCountStr != null && !threadCountStr.isEmpty()) {
+//			try {
+//				threadCount = Integer.parseInt(threadCountStr);
+//			} catch (NumberFormatException e) {
+//				System.out.println("Invalid threadCount in config, using default " + threadCount);
+//			}
+//		}
+//
+//		System.setProperty("dataproviderthreadcount", String.valueOf(threadCount));
+//		System.setProperty("testng.threadcount", String.valueOf(threadCount));
+//		Object[][] scenarios = super.scenarios();
+//		System.out.println("Number of scenarios provided: " + scenarios.length);
+//		for (Object[] scenario : scenarios) {
+//			if (scenario.length > 0 && scenario[0] instanceof PickleWrapper) {
+//				System.out.println("Scenario Name: " + ((PickleWrapper) scenario[0]).getPickle().getName());
+//			} else {
+//				System.out.println("Scenario data is not as expected!");
+//			}
+//		}
+//		// Wrap scenarios in Object[][] for parallel execution
+//		List<Object[]> parallelScenarios = new ArrayList<>();
+//		for (Object[] scenario : scenarios) {
+//			parallelScenarios.add(new Object[] { scenario[0], scenario[1] }); // keep as-is
+//		}
+//		return parallelScenarios.toArray(new Object[0][]);
+//	}
+	
+	
 	@Override
 	@DataProvider(parallel = true, name = "scenarios")
 	public Object[][] scenarios() {
-		int threadCount = 3; // default
-		String threadCountStr = ConfigManager.getproperty("threadCount");
-		if (threadCountStr != null && !threadCountStr.isEmpty()) {
-			try {
-				threadCount = Integer.parseInt(threadCountStr);
-			} catch (NumberFormatException e) {
-				System.out.println("Invalid threadCount in config, using default " + threadCount);
-			}
-		}
 
-		System.setProperty("dataproviderthreadcount", String.valueOf(threadCount));
-		System.setProperty("testng.threadcount", String.valueOf(threadCount));
-		Object[][] scenarios = super.scenarios();
-		System.out.println("Number of scenarios provided: " + scenarios.length);
-		for (Object[] scenario : scenarios) {
-			if (scenario.length > 0 && scenario[0] instanceof PickleWrapper) {
-				System.out.println("Scenario Name: " + ((PickleWrapper) scenario[0]).getPickle().getName());
-			} else {
-				System.out.println("Scenario data is not as expected!");
-			}
-		}
-		// Wrap scenarios in Object[][] for parallel execution
-		List<Object[]> parallelScenarios = new ArrayList<>();
-		for (Object[] scenario : scenarios) {
-			parallelScenarios.add(new Object[] { scenario[0], scenario[1] }); // keep as-is
-		}
-		return parallelScenarios.toArray(new Object[0][]);
+	    // Defensive initialization
+	    int threadCount = 3; // default value
+
+	    // Safe property read
+	    String threadCountStr = ConfigManager.getproperty("threadCount");
+	    if (threadCountStr != null && !threadCountStr.trim().isEmpty()) {
+	        try {
+	            threadCount = Integer.parseInt(threadCountStr.trim());
+	        } catch (NumberFormatException e) {
+	            System.out.println("Invalid threadCount in config, using default " + threadCount);
+	        }
+	    }
+
+	    Object[][] scenarios = super.scenarios();
+	    System.out.println("Number of scenarios provided: " + scenarios.length);
+
+	    // Safe scenario logging
+	    for (Object[] scenario : scenarios) {
+	        if (scenario != null && scenario.length > 0 && scenario[0] instanceof PickleWrapper) {
+	            System.out.println("Scenario Name: "
+	                    + ((PickleWrapper) scenario[0]).getPickle().getName());
+	        } else {
+	            System.out.println("Scenario data is not as expected!");
+	        }
+	    }
+
+	    // Wrap scenarios into a new Object[][] (keeps your framework behavior unchanged)
+	    List<Object[]> parallelScenarios = new ArrayList<>();
+	    for (Object[] scenario : scenarios) {
+	        if (scenario != null && scenario.length >= 2) {
+	            parallelScenarios.add(new Object[]{scenario[0], scenario[1]});
+	        }
+	    }
+
+	    return parallelScenarios.toArray(new Object[0][]);
 	}
+
 
 	@BeforeMethod
 	public void setTestName(ITestResult result) {
