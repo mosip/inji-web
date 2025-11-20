@@ -41,6 +41,7 @@ public class HomePage extends BasePage {
 			return false;
 		}
 	}
+	
 
 	public void clickOnFaqMobileView() {
 		clickOnElement(driver, By.xpath("//div[@data-testid='Header-Menu-Faq']"));

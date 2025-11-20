@@ -212,45 +212,47 @@ public class BaseTest {
 	public void afterScenario(Scenario scenario) {
 		WebDriver driver = getDriver();
 		String publicUrl = null;
-	    String videoUrl = null;
-	    if (driver instanceof RemoteWebDriver) {
-	        RemoteWebDriver remoteDriver = (RemoteWebDriver) driver;
-	        String sessionId = remoteDriver.getSessionId().toString();
-	        try {
-	            String jsonUrl = "https://api.browserstack.com/automate/sessions/" + sessionId + ".json";
-	            String auth = username + ":" + accessKey;
-	            String basicAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
-	            HttpURLConnection conn = (HttpURLConnection) new URL(jsonUrl).openConnection();
-	                        conn.setConnectTimeout(10_000);
-	                        conn.setReadTimeout(30_000);
-	            conn.setRequestMethod("GET");
-	            conn.setRequestProperty("Authorization", basicAuth);
-	            if (conn.getResponseCode() == 200) {
-	                StringBuilder response = new StringBuilder();
-	                try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-	                    String inputLine;
-	                    while ((inputLine = in.readLine()) != null) response.append(inputLine);
-	                }
-	                JSONObject jsonResponse = new JSONObject(response.toString());
-	                JSONObject session = jsonResponse.getJSONObject("automation_session");
-	                publicUrl = session.getString("public_url");
-	                videoUrl = session.getString("video_url");	                
-	                ExtentTest test = ExtentReportManager.getTest();
-	                               if (test != null && publicUrl != null) {
-	                                    test.info("<a href='" + publicUrl + "' target='_blank'>View on BrowserStack</a>");
-	                                }
-	                
-	                if (videoUrl != null) {
-	                    ExtentReportManager.getTest().info("<a href='" + videoUrl + "' target='_blank'>Click here to view only Video</a>");
-	                }
-	            } else {
-	                ExtentReportManager.getTest().warning(
-	                        "Failed to fetch BrowserStack session JSON, response code: " + conn.getResponseCode());
-	            }
-	        } catch (Exception e) {
-	            ExtentReportManager.getTest().warning("Failed to fetch BrowserStack build/session info:" + e.getMessage());
-	        }
-	    }
+		String videoUrl = null;
+		if (driver instanceof RemoteWebDriver) {
+			RemoteWebDriver remoteDriver = (RemoteWebDriver) driver;
+			String sessionId = remoteDriver.getSessionId().toString();
+			try {
+				String jsonUrl = "https://api.browserstack.com/automate/sessions/" + sessionId + ".json";
+				String auth = username + ":" + accessKey;
+				String basicAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
+				HttpURLConnection conn = (HttpURLConnection) new URL(jsonUrl).openConnection();
+				conn.setConnectTimeout(10_000);
+				conn.setReadTimeout(30_000);
+				conn.setRequestMethod("GET");
+				conn.setRequestProperty("Authorization", basicAuth);
+				if (conn.getResponseCode() == 200) {
+					StringBuilder response = new StringBuilder();
+					try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+						String inputLine;
+						while ((inputLine = in.readLine()) != null)
+							response.append(inputLine);
+					}
+					JSONObject jsonResponse = new JSONObject(response.toString());
+					JSONObject session = jsonResponse.getJSONObject("automation_session");
+					publicUrl = session.getString("public_url");
+					videoUrl = session.getString("video_url");
+					ExtentTest test = ExtentReportManager.getTest();
+					if (test != null && publicUrl != null) {
+						test.info("<a href='" + publicUrl + "' target='_blank'>View on BrowserStack</a>");
+					}
+
+					if (test != null && videoUrl != null) {
+						test.info("<a href='" + videoUrl + "' target='_blank'>Click here to view only Video</a>");
+					}
+				} else {
+					ExtentReportManager.getTest().warning(
+							"Failed to fetch BrowserStack session JSON, response code: " + conn.getResponseCode());
+				}
+			} catch (Exception e) {
+				ExtentReportManager.getTest()
+						.warning("Failed to fetch BrowserStack build/session info:" + e.getMessage());
+			}
+		}
 		try {
 			if (isScenarioSkipped()) {
 				skippedCount++;

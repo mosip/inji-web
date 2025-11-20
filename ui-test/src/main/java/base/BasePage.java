@@ -25,20 +25,24 @@ public class BasePage {
 	private static final Logger logger = LoggerFactory.getLogger(BasePage.class);
 	public static int explicit_timeout;
 	static {
-	    int fallback = 30; // reasonable default
-	    try {
-	        String configured = ConfigManager.getproperty("explicit_timeout");
-	        if (configured != null && !configured.isEmpty()) {
-	            explicit_timeout = Integer.parseInt(configured);
-	        } else {
-	            explicit_timeout = fallback;
-	        }
-	    } catch (NumberFormatException e) {
-	        logger.warn("Invalid explicit_timeout config; defaulting to {}", fallback);
-	        explicit_timeout = fallback;
-	    }
+		int fallback = 30; // reasonable default
+		try {
+			String configured = ConfigManager.getproperty("explicit_timeout");
+			if (configured != null && !configured.isEmpty()) {
+				explicit_timeout = Integer.parseInt(configured);
+				if (explicit_timeout <= 0) {
+					logger.warn("explicit_timeout must be positive; defaulting to {}", fallback);
+					explicit_timeout = fallback;
+				}
+			} else {
+				explicit_timeout = fallback;
+			}
+		} catch (NumberFormatException e) {
+			logger.warn("Invalid explicit_timeout config; defaulting to {}", fallback);
+			explicit_timeout = fallback;
+		}
 	}
-	
+
 	public static void safeScrollForMobileView(WebDriver driver, By locator) {
 		int maxAttempts = 3; // fallback
 		try {
@@ -65,7 +69,7 @@ public class BasePage {
 	}
 
 	public void clickOnElement(WebDriver driver, By locator) {
-		WebElement element = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout)*2))
+		WebElement element = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout) * 2))
 				.until(ExpectedConditions.presenceOfElementLocated(locator));
 		safeScrollForMobileView(driver, locator);
 		element.click();
@@ -73,7 +77,7 @@ public class BasePage {
 
 	public static boolean isElementIsVisible(WebDriver driver, By by) {
 		try {
-			(new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout)*2)))
+			(new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout) * 2)))
 					.until(ExpectedConditions.visibilityOfElementLocated(by));
 			safeScrollForMobileView(driver, by);
 			return driver.findElement(by).isDisplayed();
@@ -106,13 +110,13 @@ public class BasePage {
 
 	public static boolean isElementNotVisible(WebDriver driver, By by) {
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout)/5));
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout) / 5));
 			return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
 		} catch (Exception e) {
 			// Retry after scroll
 			try {
 				safeScrollForMobileView(driver, by);
-				WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout)/6));
+				WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout) / 6));
 				return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
 			} catch (Exception ex) {
 				// ❗ As per pattern: exception = could not verify → return false
@@ -122,7 +126,7 @@ public class BasePage {
 	}
 
 	public void enterText(WebDriver driver, By locator, String text) {
-		WebElement element = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout)*2))
+		WebElement element = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout) * 2))
 				.until(ExpectedConditions.presenceOfElementLocated(locator));
 		safeScrollForMobileView(driver, locator);
 		element.clear();
@@ -130,7 +134,7 @@ public class BasePage {
 	}
 
 	public String getElementText(WebDriver driver, By locator) {
-		WebElement element = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout)*2))
+		WebElement element = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout) * 2))
 				.until(ExpectedConditions.presenceOfElementLocated(locator));
 		safeScrollForMobileView(driver, locator);
 		return element.getText();
@@ -138,7 +142,7 @@ public class BasePage {
 
 	public List<String> getElementTexts(WebDriver driver, By locator) throws TimeoutException {
 		List<String> textContents = new ArrayList<>();
-		List<WebElement> elements = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout)*2))
+		List<WebElement> elements = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout) * 2))
 				.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
 		for (WebElement element : elements) {
 			safeScrollForMobileView(driver, locator);
@@ -193,7 +197,8 @@ public class BasePage {
 
 	public static boolean isElementEnabled(WebDriver driver, By by) {
 		try {
-			new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout)/10)).until(ExpectedConditions.visibilityOfElementLocated(by));
+			new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout) / 10))
+					.until(ExpectedConditions.visibilityOfElementLocated(by));
 			safeScrollForMobileView(driver, by);
 			return driver.findElement(by).isEnabled();
 		} catch (Exception e) {
@@ -225,7 +230,7 @@ public class BasePage {
 	}
 
 	public String getElementAttribute(WebDriver driver, By locator, String data) {
-		WebElement element = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout)*2))
+		WebElement element = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout) * 2))
 				.until(ExpectedConditions.presenceOfElementLocated(locator));
 		safeScrollForMobileView(driver, locator);
 		return element.getAttribute(data);
@@ -237,7 +242,7 @@ public class BasePage {
 	}
 
 	public int getXCoordinateValue(WebDriver driver, By locator) {
-		WebElement element = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout)*2))
+		WebElement element = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout) * 2))
 				.until(ExpectedConditions.presenceOfElementLocated(locator));
 		return element.getLocation().getX();
 	}

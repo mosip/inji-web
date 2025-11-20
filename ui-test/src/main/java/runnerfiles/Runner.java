@@ -39,7 +39,7 @@ import io.mosip.testrig.apirig.utils.OutputValidationUtil;
 import io.mosip.testrig.apirig.utils.PartnerRegistration;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = { "/home/mosip/featurefiles/" }, dryRun = false, glue = { "stepdefinitions",
+@CucumberOptions(features = {}, dryRun = false, glue = { "stepdefinitions",
 		"utils" }, snippets = SnippetType.CAMELCASE, monochrome = true, plugin = { "pretty", "html:reports",
 				"html:target/cucumber.html", "json:target/cucumber.json", "summary",
 				"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:" }
