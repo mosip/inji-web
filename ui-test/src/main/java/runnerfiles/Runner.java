@@ -65,10 +65,13 @@ public class Runner extends AbstractTestNGCucumberTests {
 	}
 
 	public static void releaseLockIfRequired() {
-		if (sequentialFeatureFlag.get()) {
-			sequentialLock.unlock();
-			sequentialFeatureFlag.remove();
-		}
+		    try {
+			      if (sequentialFeatureFlag.get()) {
+			            sequentialLock.unlock();
+			        }
+			    } finally {
+			        sequentialFeatureFlag.remove();
+			    }
 	}
 
 	public static void main(String[] args) {
