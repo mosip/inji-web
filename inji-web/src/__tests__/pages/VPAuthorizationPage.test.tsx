@@ -285,7 +285,7 @@ const mockOnRetry = jest.fn();
 let mockErrorHandlerReturnValue: ReturnType<typeof useApiErrorHandler>;
 
 
-describe('VerifierPresentationPage', () => {
+describe('VPAuthorizationPage', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         mockRejectVerifierRequest.mockImplementation(async (options) => {
