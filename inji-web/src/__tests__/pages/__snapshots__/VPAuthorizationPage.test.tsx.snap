@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`UserAuthorizationPage matches snapshot when CredentialRequestModal is visible (trusted flow) 1`] = `
+exports[`VPAuthorizationPage matches snapshot when CredentialRequestModal is visible (trusted flow) 1`] = `
 <DocumentFragment>
   <div
     class="flex min-h-screen bg-gray-50"
@@ -39,7 +39,7 @@ exports[`UserAuthorizationPage matches snapshot when CredentialRequestModal is v
 </DocumentFragment>
 `;
 
-exports[`UserAuthorizationPage matches snapshot when TrustVerifierModal is visible (untrusted flow) 1`] = `
+exports[`VPAuthorizationPage matches snapshot when TrustVerifierModal is visible (untrusted flow) 1`] = `
 <DocumentFragment>
   <div
     class="flex min-h-screen bg-gray-50"

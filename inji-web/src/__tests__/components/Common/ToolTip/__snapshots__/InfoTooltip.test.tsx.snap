@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InfoTooltipTrigger Component Initial rendering should match snapshot with custom props 1`] = `
+exports[`InfoTooltip Component Initial rendering should match snapshot with custom props 1`] = `
 <DocumentFragment>
   <div
     class="relative inline-block mt-4 sm:mt-5 custom-class"
@@ -27,7 +27,7 @@ exports[`InfoTooltipTrigger Component Initial rendering should match snapshot wi
 </DocumentFragment>
 `;
 
-exports[`InfoTooltipTrigger Component Initial rendering should match snapshot with default props 1`] = `
+exports[`InfoTooltip Component Initial rendering should match snapshot with default props 1`] = `
 <DocumentFragment>
   <div
     class="relative inline-block mt-4 sm:mt-5 "

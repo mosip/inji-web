@@ -193,7 +193,7 @@ describe('useApiErrorHandler', () => {
 
             const { result } = renderHook(() => 
                 useApiErrorHandler({ 
-                    retryableErrorCodes: [ERROR_TYPES.UNKNOWN] 
+                    errorCodesToRetry: [ERROR_TYPES.UNKNOWN] 
                 })
             );
 

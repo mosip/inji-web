@@ -295,8 +295,7 @@ export const PasscodePage: React.FC = () => {
             onErrorClose={() => setError(null)}
             content={renderContent()}
             contentTestId={"passcode-inputs-container"}
-            testId="passcode"
-            testIdSuffix={testIdSuffix}
+            testId={`passcode${testIdSuffix}`}
         />
     );
 };
