@@ -1,19 +1,22 @@
 package pages;
 
-import base.BasePage;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import base.BasePage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HomePage extends BasePage {
 
 	private WebDriver driver;
+	private static final Logger logger = LoggerFactory.getLogger(HomePage.class);
 
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
@@ -34,7 +37,7 @@ public class HomePage extends BasePage {
 			}
 			return true;
 		} catch (TimeoutException e) {
-			e.printStackTrace();
+			logger.error("Timeout while verifying FAQ titles", e);
 			return false;
 		}
 	}
@@ -43,12 +46,12 @@ public class HomePage extends BasePage {
 		clickOnElement(driver, By.xpath("//div[@data-testid='Header-Menu-Faq']"));
 	}
 
-	public int getXcordinateForSearch() {
-		return getXCordinateValue(driver, By.xpath("//div[@data-testid='Search-Issuer-Container']"));
+	public int getXCoordinateForSearch() {
+		return getXCoordinateValue(driver, By.xpath("//div[@data-testid='Search-Issuer-Container']"));
 	}
 
-	public int getXcordinateForCredentialHeading() {
-		return getXCordinateValue(driver, By.xpath("//div/*[@data-testid='NavBar-Back-Arrow']"));
+	public int getXCoordinateForCredentialHeading() {
+		return getXCoordinateValue(driver, By.xpath("//div/*[@data-testid='NavBar-Back-Arrow']"));
 	}
 
 	public boolean isFaqPageDisplayed() {
@@ -172,7 +175,7 @@ public class HomePage extends BasePage {
 		return new HashSet<>(expectedLanguages).equals(new HashSet<>(actualLanguages));
 	}
 
-	public void selectOtherLangauge() {
+	public void selectOtherLanguage() {
 		clickOnElement(driver, By.xpath("(//button[@type='button'])[3]"));
 	}
 

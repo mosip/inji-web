@@ -2055,7 +2055,7 @@ public class StepDef {
 	@Then("User verify search and title are appeare in diff lines")
 	public void user_verify_search_title_appeare_diff_lines() {
 		try {
-			assertTrue((homePage.getXcordinateForSearch() - homePage.getXcordinateForCredentialHeading()) <= 30,
+			assertTrue((homePage.getXCoordinateForSearch() - homePage.getXCoordinateForCredentialHeading()) <= 30,
 					"Credential types title does not match the expected Portuguese text.");
 			test.log(Status.PASS, "search and tile heading are in appeared in the same line");
 		} catch (NoSuchElementException e) {

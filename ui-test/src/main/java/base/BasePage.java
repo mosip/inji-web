@@ -23,7 +23,22 @@ import org.slf4j.LoggerFactory;
 
 public class BasePage {
 	private static final Logger logger = LoggerFactory.getLogger(BasePage.class);
-	public static int explicit_timeout = Integer.parseInt(ConfigManager.getproperty("explicit_timeout"));
+	public static int explicit_timeout;
+	static {
+	    int fallback = 30; // reasonable default
+	    try {
+	        String configured = ConfigManager.getproperty("explicit_timeout");
+	        if (configured != null && !configured.isEmpty()) {
+	            explicit_timeout = Integer.parseInt(configured);
+	        } else {
+	            explicit_timeout = fallback;
+	        }
+	    } catch (NumberFormatException e) {
+	        logger.warn("Invalid explicit_timeout config; defaulting to {}", fallback);
+	        explicit_timeout = fallback;
+	    }
+	}
+	
 	public static void safeScrollForMobileView(WebDriver driver, By locator) {
 		int maxAttempts = 3; // fallback
 		try {
@@ -221,7 +236,7 @@ public class BasePage {
 		wait.until(ExpectedConditions.elementToBeClickable(locator));
 	}
 
-	public int getXCordinateValue(WebDriver driver, By locator) {
+	public int getXCoordinateValue(WebDriver driver, By locator) {
 		WebElement element = new WebDriverWait(driver, Duration.ofSeconds((BasePage.explicit_timeout)*2))
 				.until(ExpectedConditions.presenceOfElementLocated(locator));
 		return element.getLocation().getX();
