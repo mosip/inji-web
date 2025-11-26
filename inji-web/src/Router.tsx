@@ -103,27 +103,20 @@ export const AppRouter = () => {
                 />
                 <Route
                     path={Pages.ISSUERS}
-                    element={
-                        <LandingGuard>
-                            {wrapElement(<IssuersPage className="mt-10 mb-20" />)}
-                        </LandingGuard>
-                    }
+                    element=
+                            {wrapElement(
+                            <LandingGuard><IssuersPage className="mt-10 mb-20" /></LandingGuard>)}
                 />
                 <Route
                     path={Pages.ISSUER_TEMPLATE}
-                    element={
-                        <LandingGuard>
-                            {wrapElement(<CredentialsPage/>)}
-                        </LandingGuard>
-                    }
+                    element=
+                            {wrapElement(<LandingGuard><CredentialsPage/></LandingGuard>)}
+                        
                 />
                 <Route
                     path={Pages.FAQ}
-                    element={
-                        <LandingGuard>
-                            {wrapElement(<FAQPage backUrl={ROUTES.ROOT} />)}
-                        </LandingGuard>
-                    }
+                    element=
+                            {wrapElement(<LandingGuard><FAQPage backUrl={ROUTES.ROOT} /></LandingGuard>)}  
                 />
                 <Route
                     path={Pages.REDIRECT}
