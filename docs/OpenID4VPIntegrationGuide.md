@@ -56,7 +56,7 @@ https://example.injiweb.com/authorize
 |----------|----------|-------------|
 | `client_id` | Yes | Identifier for the verifier. Interpretation depends on `client_id_scheme`. |
 | `client_id_scheme` | Optional | Supported values: `redirect_uri`, `pre-registered`, `did`. If not provided, the wallet interpret it based on the value in `client_id` field |
-| `presentation_definition` or `presentation_definition_uri` | Yes | URL-encoded Presentation Exchange definition used to specify credential requirements or URL of the presentation definition object. Either of them are mandatory. |
+| `presentation_definition` or `presentation_definition_uri` | Yes | URL-encoded Presentation Exchange definition used to specify credential requirements or URL of the presentation definition object. Either one is mandatory. |
 | `response_type` | Yes | Must be `vp_token`. |
 | `response_mode` | Yes | Must be `direct_post` or `direct_post.jwt`. |
 | `nonce` | Yes | Cryptographically secure random value for replay protection. |
