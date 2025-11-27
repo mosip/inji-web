@@ -30,15 +30,15 @@ The verifier initiates the flow by redirecting the user to the wallet with the r
       Verifier->>User: 3. Redirect to /authorize with parameters
       User->>InjiWebWallet: 4. User arrives at wallet login
       InjiWebWallet->>User: 5. Display login form
-      User->>InjiWebWallet: 6. Enter credentials & authenticate
+      User->>InjiWebWallet: 6. Enter login credentials and authenticate
       InjiWebWallet->>InjiWebWallet: 7. Validate authorization request<br/>parameters
       InjiWebWallet->>User: 8. Display verifier trust consent<br/>(client_name, logo_uri)
       User->>InjiWebWallet: 9. Accept/Trust verifier
       InjiWebWallet->>InjiWebWallet: 10. Filter available credentials<br/>using presentation_definition/presentation_definition_uri
       InjiWebWallet->>User: 11. Display eligible credentials<br/>for selection
       User->>InjiWebWallet: 12. Select credential to share
-      InjiWebWallet->>InjiWebWallet: 13. Generate Verifiable Presentation<br/>(JSON-LD or JWT format)
-      InjiWebWallet->>Verifier: 14. POST VP to response_uri<br/>(vp_token, state, presentation_submission)
+      InjiWebWallet->>InjiWebWallet: 13. Generate Verifiable Presentation
+      InjiWebWallet->>Verifier: 14. POST VP to response_uri<br/>(vp_token, state, presentation_submission, nonce)
       Verifier->>Verifier: 15. Validate VP signature,<br/>nonce, state, and compliance
       Verifier->>User: 16. Complete user session<br/>with verification result
 ```
@@ -121,7 +121,7 @@ The `presentation_definition` parameter defines what credential the verifier is 
 ```
 
 ## 6. Client Metadata
-Client metadata provides trusted UI information and capability details.
+Client metadata provides verifier branding information (such as name and logo) displayed during the consent step, along with the supported VP formats and proof types the verifier can process.
 
 ### Example (decoded)
 
@@ -300,6 +300,8 @@ Sample Error :
 * If the user rejects, InjiWeb issues a PATCH error update, and Mimoto notifies the verifier accordingly.
 
 
+### Detailed Integration Flow
+
 ```mermaid
 sequenceDiagram
     autonumber
@@ -307,15 +309,16 @@ sequenceDiagram
     participant User
     participant InjiWeb
     participant Mimoto
-    participant Inji-openid4vp_JAR
+    participant Inji-openid4vp JAR
     participant Database(PostgreSQL)
 
-    Verifier->>User: Redirect user to /authorize with OpenID4VP params
-    User->>InjiWeb: Check for database param
-    alt database param exists
-        InjiWeb->>InjiWeb: Continue database flow
-    else database param missing
-        InjiWeb->>User: Redirect to /user/authorize (preserve params)
+    User->>Verifier: Initiate credential sharing flow
+    Verifier->>InjiWeb: Redirect user to /authorize with required params
+    InjiWeb->>InjiWeb: Check for datashare param
+    alt datashare param exists
+        InjiWeb->>InjiWeb: Continue datashare flow
+    else datashare param missing
+        InjiWeb->>InjiWeb: Redirect to /user/authorize (preserve params)
     end
 
     User->>InjiWeb: Access /user/authorize
@@ -323,9 +326,11 @@ sequenceDiagram
     User->>InjiWeb: Login
 
     InjiWeb->>Mimoto: POST /wallets/{walletId}/presentations (OpenID4VP params)
-    Mimoto->>Mimoto: authenticateVerifier(), parse request
-    Mimoto->>Mimoto: presentation_definition, verifier info
-    Mimoto->>Mimoto: Cache request context by presentation_id
+    Mimoto->>Inji-openid4vp JAR: authenticateVerifier(), parse request
+    Inji-openid4vp JAR-->> Mimoto: presentation_definition, verifier info
+    Mimoto->> Mimoto: Cache request context by presentation_id
+    Mimoto->> Database(PostgreSQL): Get trusted verifiers for the user
+    Database(PostgreSQL) -->> Mimoto: Trusted verifiers
     Mimoto-->>InjiWeb: Return verifier info, claims, is_trusted
 
     InjiWeb->>User: Prompt trust if verifier not trusted
@@ -334,35 +339,87 @@ sequenceDiagram
     Mimoto->>Database(PostgreSQL): Store trusted verifier
 
     InjiWeb->>Mimoto: GET /wallets/{walletId}/presentations/{presentation_id}/credentials
+
+    Mimoto->>Database(PostgreSQL): Fetch credentials for the user
+     Database(PostgreSQL) -->> Mimoto: User's Credentials
     Mimoto->>Mimoto: Match credentials
     Mimoto-->>InjiWeb: Return available/matching credentials
 
     User->>InjiWeb: Select credentials, submit
     InjiWeb->>Mimoto: PATCH /wallets/{walletId}/presentations/{presentation_id} (selected_credentials)
     Mimoto->>Database(PostgreSQL): Fetch credentials by ID
-    Mimoto->>Mimoto: constructUnsignedVPToken()
-    Mimoto->>Mimoto: Unsigned VP Token
+    Mimoto->>Inji-openid4vp JAR: constructUnsignedVPToken()
+    Inji-openid4vp JAR-->>Mimoto: Unsigned VP Token
     Mimoto->>Mimoto: Sign VP token
-    Mimoto->>Verifier: shareVerifiablePresentation() (POST to response_uri)
-
+    Mimoto->>Inji-openid4vp JAR: sendVPResponseToVerifier() (POST to response_uri)
+    Inji-openid4vp JAR-->>Verifier: POST VP token to verifier
+    Verifier-->>Inji-openid4vp JAR: response
     alt Submission result
-        Verifier-->>Mimoto: Success
+        Inji-openid4vp JAR-->>Mimoto: Success
         Mimoto->>Database(PostgreSQL): Store presentation record (status=success)
         Mimoto-->>InjiWeb: Notify success
     else Error
-        Verifier-->>Mimoto: Error
+        Inji-openid4vp JAR-->>Mimoto: Error
         Mimoto->>Database(PostgreSQL): Store presentation record (status=error)
         Mimoto-->>InjiWeb: Notify error
     end
 
-    InjiWeb->>User: Show result
+    Inji-openid4vp JAR-->>Mimoto: verifier response
+    Mimoto-->>InjiWeb: Send redirect_uri
+    InjiWeb->>InjiWeb: Show result to user
+    alt redirect_uri from verifier response exists
+        InjiWeb->>Verifier: Redirect to redirect_uri
+    else redirect_uri not present
+        InjiWeb->>InjiWeb: Redirect to wallet home page
+    end
+```
 
-    User->>InjiWeb: [User rejects]
+### User Rejects Verifier Flow
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Verifier
+    participant User
+    participant InjiWeb
+    participant Mimoto
+    participant Inji-openid4vp JAR
+    participant Database(PostgreSQL)
+
+    User->>Verifier: Initiate credential sharing flow
+    Verifier->>InjiWeb: Redirect user to /authorize with required params
+    InjiWeb->>InjiWeb: Check for datashare param
+    alt datashare param exists
+        InjiWeb->>InjiWeb: Continue datashare flow
+    else datashare param missing
+        InjiWeb->>InjiWeb: Redirect to /user/authorize (preserve params)
+    end
+
+    User->>InjiWeb: Access /user/authorize
+    InjiWeb->>User: Prompt login if not authenticated
+    User->>InjiWeb: Login
+
+    InjiWeb->>Mimoto: POST /wallets/{walletId}/presentations (OpenID4VP params)
+    Mimoto->>Inji-openid4vp JAR: authenticateVerifier(), parse request
+    Inji-openid4vp JAR-->> Mimoto: presentation_definition, verifier info
+    Mimoto->> Mimoto: Cache request context by presentation_id
+    Mimoto->> Database(PostgreSQL): Get trusted verifier for the user
+    Database(PostgreSQL) -->> Mimoto: trusted verifiers
+    Mimoto-->>InjiWeb: Return verifier info, claims, is_trusted
+
+    InjiWeb->>User: Prompt trust if verifier not trusted
+    User->>InjiWeb: User rejects verifier
     InjiWeb->>Mimoto: PATCH /wallets/{walletId}/presentations/{presentation_id} (error)
-    Mimoto->>Verifier: Respond to response_uri with error
-    Mimoto->>Database(PostgreSQL): Store presentation record (status=error)
+    Mimoto->>Inji-openid4vp JAR: sendErrorToVerifier() (POST to response_uri)
+    Inji-openid4vp JAR->>Verifier: Respond to response_uri with error
+    Verifier-->>Inji-openid4vp JAR: response
+    Inji-openid4vp JAR-->>Mimoto: verifier response
+    Mimoto-->>InjiWeb: Send redirect_uri
+    alt redirect_uri from verifier response exists
+        InjiWeb->>Verifier: Redirect to redirect_uri
+    else redirect_uri not present
+        InjiWeb->>InjiWeb: Redirect to wallet home page
+    end
 
-    User->>Verifier: Notify rejection
 ```
 
 ## References
