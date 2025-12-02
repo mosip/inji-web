@@ -116,20 +116,6 @@ export interface Verifier {
     trusted: boolean;
     preregisteredWithWallet: boolean;
 }
-
-export interface CreatePresentationResponse {
-    presentationId: string;
-    verifier: Verifier;
-}
-
-export interface Presentation {
-    id: string;
-    authorizationRequestUrl: string;
-    createdAt: string;
-    updatedAt: string;
-    status: string;
-}
-
 export interface PresentationCredential {
     credentialId: string;
     credentialTypeDisplayName: string;

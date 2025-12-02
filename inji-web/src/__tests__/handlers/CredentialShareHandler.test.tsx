@@ -12,7 +12,7 @@ jest.mock("../../hooks/useApi", () => ({
 jest.mock("../../hooks/useApiErrorHandler");
 const mockUseApiErrorHandler = useApiErrorHandler as jest.Mock;
 
-jest.mock("../../modals/LoadingModal", () => ({
+jest.mock("../../modals/LoaderModal", () => ({
     LoaderModal: ({ isOpen }: { isOpen: boolean }) =>
         isOpen ? <div data-testid="modal-loader-card" /> : null,
 }));

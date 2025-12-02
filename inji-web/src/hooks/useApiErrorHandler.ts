@@ -8,11 +8,11 @@ import {
 } from '../utils/errorHandling';
 
 export interface RetryConfig {
-    retryableErrorCodes?: string[];
+    errorCodesToRetry?: string[];
     onClose?: () => void;
 }
 
-export interface UseApiErrorHandlerReturn {
+export interface UseApiErrorHandlerProps {
     showError: boolean;
 
     isRetrying: boolean;
@@ -44,10 +44,10 @@ const DEFAULT_RETRY_CODES = Object.values(ERROR_TYPES).filter(
 
 export const useApiErrorHandler = (
     retryConfig: RetryConfig = {}
-): UseApiErrorHandlerReturn => {
+): UseApiErrorHandlerProps => {
     const { t } = useTranslation("VerifierTrustPage");
     const {
-        retryableErrorCodes = DEFAULT_RETRY_CODES,
+        errorCodesToRetry = DEFAULT_RETRY_CODES,
         onClose: onFinalClose,
     } = retryConfig;
 
@@ -84,7 +84,7 @@ export const useApiErrorHandler = (
         ) => {
             const stdError: StandardError = standardizeError(error, { context });
             const isTechnicalError = TECHNICAL_ERROR_CODES.includes(stdError.code);
-            const isRetryableError = retryableErrorCodes.includes(stdError.code);
+            const isRetryableError = errorCodesToRetry.includes(stdError.code);
 
             logError(stdError, { context });
 
@@ -116,7 +116,7 @@ export const useApiErrorHandler = (
                 setIsRetryable(false);
             }
         },
-        [retryableErrorCodes, t]
+        [errorCodesToRetry, t]
     );
 
     const internalOnRetry = useCallback(async () => {

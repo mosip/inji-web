@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef, useCallback, useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {NoMatchingCredentialsModal} from './NoMatchingCredentialsModal';
-import { LoaderModal } from './LoadingModal';
+import { LoaderModal } from './LoaderModal';
 import {ErrorCard} from './ErrorCard';
 import {useApi} from '../hooks/useApi';
 import {useApiErrorHandler} from '../hooks/useApiErrorHandler';
@@ -105,7 +105,7 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
         setMissingClaims(data?.missingClaims || []);
     }, []);
 
-    const fetchCredentialsCore = useCallback(async () => {
+    const fetchCredentialsCallback = useCallback(async () => {
         const response = await fetchData({
             url: api.fetchPresentationCredentials.url(presentationId),
             apiConfig: api.fetchPresentationCredentials
@@ -117,7 +117,7 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
     const loadCredentials = useCallback(async () => {
         setIsLoading(true);
         try {
-            const response = await fetchCredentialsCore();
+            const response = await fetchCredentialsCallback();
 
             if (response.ok()) {
                 handleFetchSuccess(response);
@@ -127,9 +127,9 @@ export const CredentialRequestModal: React.FC<CredentialRequestModalProps> = ({
             setIsLoading(false);
         } catch (err) {
             setIsLoading(false);
-            handleApiError(err, "fetchPresentationCredentials", fetchCredentialsCore, handleFetchSuccess);
+            handleApiError(err, "fetchPresentationCredentials", fetchCredentialsCallback, handleFetchSuccess);
         }
-    }, [fetchCredentialsCore, handleApiError, handleFetchSuccess]);
+    }, [fetchCredentialsCallback, handleApiError, handleFetchSuccess]);
 
     useEffect(() => {
         if (!isVisible || !presentationId) return;
