@@ -7,6 +7,8 @@ import {HTTP_STATUS_CODES, RequestStatus} from "../utils/constants";
 export const apiInstance = axios.create({
     baseURL: window._env_.MIMOTO_URL,
     withCredentials: true,
+    xsrfCookieName: "XSRF-TOKEN",
+    xsrfHeaderName: "X-XSRF-TOKEN"
 });
 
 export interface RequestConfig {
@@ -69,7 +71,7 @@ export function useApi<T = any>(): UseApiReturn<T> {
                 data: requestBody,
                 withCredentials: apiConfig.credentials === "include",
                 responseType: apiConfig.responseType ?? "json",
-                withXSRFToken: apiConfig.includeXSRFToken ?? false,
+                withXSRFToken: apiConfig.includeXSRFToken ?? true,
             });
 
             setData(response.data);
