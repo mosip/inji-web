@@ -47,9 +47,7 @@ export const mockCredentials: IssuerConfigurationObject = {
         }
     ],
     "authorization_endpoint": "https://env.net/authorize",
-    "grant_types_supported": ["authorization_code"],
-    "token_endpoint": "https://auth.env.net/token",
-    "credential_endpoint": "https://issuer.env.net/credential"
+    "grant_types_supported": ["authorization_code"]
 };
 
 export const mockVerifiableCredentials: WalletCredential[] = [
@@ -189,9 +187,7 @@ export const credentialWellknown: IssuerConfigurationObject = {
         }
     ],
     "authorization_endpoint": "https://env.net/authorize",
-    "grant_types_supported": ["authorization_code"],
-    "token_endpoint": "https://auth.env.net/token",
-    "credential_endpoint": "https://issuer.env.net/credential"
+    "grant_types_supported": ["authorization_code"]
 };
 
 export const userProfile = {

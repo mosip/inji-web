@@ -28,8 +28,6 @@ export type IssuerConfigurationObject = {
     credentials_supported: CredentialConfigurationObject[];
     authorization_endpoint: string;
     grant_types_supported: string[];
-    token_endpoint: string;
-    credential_endpoint: string;
 };
 
 export type CredentialConfigurationObject = {
