@@ -94,7 +94,7 @@ export const RedirectionPage: React.FC = () => {
                 await handleGuestDownloadFlow(requestBody);
             }
         } else {
-            setSession(null);
+            navigate(isUserLoggedIn() ? ROUTES.USER_HOME : '/');
         }
     };
 
