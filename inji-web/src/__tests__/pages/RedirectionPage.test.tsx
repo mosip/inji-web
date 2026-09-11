@@ -4,7 +4,9 @@ import {getActiveSession} from '../../utils/sessions';
 import {downloadCredentialPDF, getErrorObject} from '../../utils/misc';
 import {mockusei18n, renderWithProvider, renderWithRouter} from '../../test-utils/mockUtils';
 import {mockApiResponse, mockUseApi} from "../../test-utils/setupUseApiMock";
-import {RequestStatus} from "../../utils/constants";
+import {RequestStatus, ROUTES} from "../../utils/constants";
+import {useUser} from '../../hooks/User/useUser';
+import {waitFor} from '@testing-library/react';
 
 //todo : extract the local method to mockUtils, which is added to bypass the routing problems
 // Mock the utility functions
@@ -22,9 +24,15 @@ jest.mock('../../hooks/useApi.ts', () => ({
     useApi: () => mockUseApi
 }))
 
+jest.mock('../../hooks/User/useUser', () => ({
+    useUser: jest.fn(),
+}));
+
+const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useSearchParams: jest.fn(() => [new URLSearchParams('state=sessionId1'), jest.fn()]),
+    useNavigate: () => mockNavigate,
 }));
 
 describe('Testing the Layout of RedirectionPage', () => {
@@ -36,6 +44,7 @@ describe('Testing the Layout of RedirectionPage', () => {
                 display: [{name: 'Test Issuer'}]
             }
         });
+        (useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => false});
         mockApiResponse({})
         jest.spyOn(require('react-router-dom'), 'useSearchParams').mockReturnValue([new URLSearchParams('state=sessionId1'), jest.fn()]);
 
@@ -56,12 +65,14 @@ describe('Testing the Functionality of RedirectionPage', () => {
                 display: [{name: 'Test Issuer'}]
             }
         });
+        (useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => false});
         mockApiResponse()
         jest.spyOn(require('react-router-dom'), 'useSearchParams').mockReturnValue([new URLSearchParams('state=sessionId1'), jest.fn()]);
     });
 
     afterEach(() => {
         jest.clearAllMocks();
+        mockNavigate.mockClear();
     });
 
     test("check if getSession is called with the sessionId from url search params state", () => {
@@ -112,6 +123,28 @@ describe('Testing the Functionality of RedirectionPage', () => {
         setup();
         const {asFragment} = renderWithRouter(<RedirectionPage/>);
         expect(asFragment()).toMatchSnapshot();
+    });
+
+    test('redirects guest user to home when session is empty or already consumed', async () => {
+        (getActiveSession as jest.Mock).mockReturnValue({});
+        (useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => false});
+
+        renderWithRouter(<RedirectionPage/>);
+
+        await waitFor(() => {
+            expect(mockNavigate).toHaveBeenCalledWith('/');
+        });
+    });
+
+    test('redirects logged-in user to user home when session is empty or already consumed', async () => {
+        (getActiveSession as jest.Mock).mockReturnValue({});
+        (useUser as jest.Mock).mockReturnValue({isUserLoggedIn: () => true});
+
+        renderWithRouter(<RedirectionPage/>);
+
+        await waitFor(() => {
+            expect(mockNavigate).toHaveBeenCalledWith(ROUTES.USER_HOME);
+        });
     });
 
     test.todo("check if credential download API with right params is called for logged in user")
