@@ -163,12 +163,13 @@ describe("Testing the Functionality of Credentials", () => {
         await waitFor(() => expect(createAuthorizationUrl).toHaveBeenCalledTimes(1));
         expect(createAuthorizationUrl).toHaveBeenCalledWith("issuer1", expect.objectContaining({
             redirectUri: expect.any(String),
-            scope: "mosip_vc_ldp",
-            responseType: "code",
+            credentialConfigurationId: "InsuranceCredential",
             uiLocales: "en"
         }));
         expect(createAuthorizationUrl).toHaveBeenCalledWith("issuer1", expect.not.objectContaining({
             state: expect.anything(),
+            scope: expect.anything(),
+            responseType: expect.anything(),
             codeChallenge: expect.anything(),
             codeChallengeMethod: expect.anything()
         }));

@@ -46,7 +46,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
             });
             return;
         }
-        if (!selectedIssuer?.issuer_id || !filteredCredentialConfig.scope) {
+        if (!selectedIssuer?.issuer_id || !filteredCredentialConfig.name) {
             props.setErrorObj({
                 code: "errors.dpopInitializationFailed.code",
                 message: "errors.dpopInitializationFailed.message"
@@ -57,8 +57,7 @@ export const Credential: React.FC<CredentialProps> = (props) => {
         try {
             const {authorizationUrl, state} = await createAuthorizationUrl(selectedIssuer.issuer_id, {
                 redirectUri: api.authorizationRedirectionUrl,
-                scope: filteredCredentialConfig.scope,
-                responseType: "code",
+                credentialConfigurationId: filteredCredentialConfig.name,
                 uiLocales: language
             });
             addNewSession({

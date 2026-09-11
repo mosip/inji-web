@@ -56,8 +56,7 @@ describe('Test misc.ts utility functions', () => {
 
         const result = await createAuthorizationUrl('issuer1', {
             redirectUri: window.location.origin + '/redirect',
-            scope: 'mosip_vc_ldp',
-            responseType: 'code',
+            credentialConfigurationId: 'InsuranceCredential',
             uiLocales: 'en'
         });
 
@@ -69,8 +68,7 @@ describe('Test misc.ts utility functions', () => {
             method: 'POST',
             withCredentials: true,
             data: expect.objectContaining({
-                scope: 'mosip_vc_ldp',
-                responseType: 'code',
+                credentialConfigurationId: 'InsuranceCredential',
                 uiLocales: 'en'
             })
         }));
@@ -80,6 +78,8 @@ describe('Test misc.ts utility functions', () => {
             }),
             data: expect.not.objectContaining({
                 state: expect.anything(),
+                scope: expect.anything(),
+                responseType: expect.anything(),
                 codeChallenge: expect.anything(),
                 codeChallengeMethod: expect.anything()
             })

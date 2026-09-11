@@ -52,7 +52,7 @@ Credential download APIs require a DPoP session. They do not accept a client `DP
 
 | Component | Responsibilities |
 | --------- | ---------------- |
-| Inji Web | Call `POST /issuers/{issuer-id}/authorize` with `redirectUri`, `scope`, `responseType`, and `uiLocales`; store the returned `state` in browser session storage for the redirect; open the returned authorization URL (`window.open`); after redirect, send `state` as a request header plus `code` on the credential download APIs. Do not generate PKCE, and do not send tokens or DPoP proofs. |
+| Inji Web | Call `POST /issuers/{issuer-id}/authorize` with `redirectUri`, `credentialConfigurationId`, and `uiLocales`; store the returned `state` in browser session storage for the redirect; open the returned authorization URL (`window.open`); after redirect, send `state` as a request header plus `code` on the credential download APIs. Do not generate PKCE, and do not send tokens or DPoP proofs. |
 | Mimoto | Generate OAuth `state` and PKCE; generate DPoP key; put `dpop_jkt` (and PKCE) on the authorization URL; return `authorizationUrl` and `state`; exchange the auth code during download using the stored verifier; sign token proofs; retry AS `use_dpop_nonce`; keep the access token in session; sign credential proofs with `ath`; retry issuer `use_dpop_nonce`; delete the DPoP session after download. |
 | Authorization Server | Validate token-endpoint proofs, bind DPoP access tokens to the proof key, may issue `DPoP-Nonce` challenges. |
 | Credential Issuer | Validate the DPoP-bound access token and credential-endpoint proof, may issue resource-server `DPoP-Nonce` challenges. Some issuers (for example Certify) may reject `Authorization: DPoP` and require Bearer. |
@@ -82,13 +82,12 @@ Content-Type: application/json
 
 {
   "redirectUri": "https://injiweb.example.com/redirect",
-  "scope": "openid MockVerifiableCredential",
-  "responseType": "code",
+  "credentialConfigurationId": "MockVerifiableCredential",
   "uiLocales": "en"
 }
 ```
 
-All body fields are required. Inji Web does **not** send `state`, `codeChallenge`, or `codeChallengeMethod`; Mimoto generates PKCE and OAuth `state` server-side. `uiLocales` is the Inji Web UI language and is placed on the authorization URL as `ui_locales`. `client_id` and `authorization_endpoint` come from issuer configuration.
+All body fields are required. Inji Web does **not** send `state`, `codeChallenge`, or `codeChallengeMethod`; Mimoto generates PKCE and OAuth `state` server-side. `uiLocales` is the Inji Web UI language and is placed on the authorization URL as `ui_locales`. `client_id`, `authorization_endpoint`, and `scope` come from issuer configuration using `credentialConfigurationId`. `response_type` is always `code`.
 
 Response:
 
@@ -196,7 +195,7 @@ sequenceDiagram
   participant AS as Authorization Server
   participant CI as Credential Issuer
 
-  W->>M: POST /issuers/{issuer-id}/authorize (redirectUri, scope, responseType, uiLocales)
+  W->>M: POST /issuers/{issuer-id}/authorize (redirectUri, credentialConfigurationId, uiLocales)
   M-->>W: authorizationUrl + state + SESSION cookie
   W->>AS: window.open(authUrl) including ui_locales and dpop_jkt
   AS-->>W: redirect?code&state
@@ -319,7 +318,7 @@ The Bearer-only retry is intentional compatibility behavior and is logged as a w
 
 ## Client contract summary (Inji Web)
 
-1. `POST /issuers/{issuer-id}/authorize` with `redirectUri`, `scope`, `responseType`, and `uiLocales`, and credentials included.
+1. `POST /issuers/{issuer-id}/authorize` with `redirectUri`, `credentialConfigurationId`, and `uiLocales`, and credentials included.
 2. Persist the returned `state` in the browser download session; open the returned `authorizationUrl`.
 3. Guest: `POST /credentials/download` with `state` in the request header and `issuer`, `credential`, `vcStorageExpiryLimitInTimes`, and `code` in the form body. Do not send `access_token`, `code_verifier`, or `DPoP`.
 4. Logged-in: `POST /wallets/{walletId}/credentials` with `state` in the request header and `issuer`, `credentialConfigurationId`, and `code` in the JSON body. Do not send `accessToken`, `codeVerifier`, or `DPoP`.

@@ -41,8 +41,7 @@ export const isObjectEmpty = (object: any) => {
 
 export type IssuerAuthorizeRequest = {
     redirectUri: string;
-    scope: string;
-    responseType: string;
+    credentialConfigurationId: string;
     uiLocales: string;
 };
 
