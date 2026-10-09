@@ -38,6 +38,7 @@ public class StepDefOIDCLogin {
 
 	private String sessionCookieName = "SESSION";
 	private String sessionCookieValue;
+	private int storedCredentialCardCountBeforeDownload;
 	String baseUrl = BaseTest.url;
 	String normalizedBaseUrl = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
 	private static final Logger logger = LoggerFactory.getLogger(StepDefOIDCLogin.class);
@@ -224,6 +225,30 @@ public class StepDefOIDCLogin {
 	@Then("user verify substring when no cards stored")
 	public void user_verify_substring_when_nocards_stored() throws InterruptedException {
 		assertTrue(loginpage.isnoCardsAddedMessageSubstringMessage(), "Substring for no cards message displayed");
+	}
+
+	@Then("user captures the stored credential card count")
+	public void user_captures_the_stored_credential_card_count() {
+		storedCredentialCardCountBeforeDownload = loginpage.getStoredCredentialCardCount();
+	}
+
+	@Then("user verifies a new credential card is added to stored cards")
+	public void user_verifies_a_new_credential_card_is_added_to_stored_cards() {
+		assertTrue(loginpage.waitForStoredCredentialCardCount(
+						storedCredentialCardCountBeforeDownload + 1, BasePage.getConfiguredWaitTimeInSeconds()),
+				"Downloaded credential card is not displayed in stored cards");
+	}
+
+	@Then("user deletes the most recently added credential card")
+	public void user_deletes_the_most_recently_added_credential_card() {
+		loginpage.deleteLastStoredCredentialCard();
+	}
+
+	@Then("user verifies the credential card is removed from stored cards")
+	public void user_verifies_the_credential_card_is_removed_from_stored_cards() {
+		assertTrue(loginpage.waitForStoredCredentialCardCount(
+						storedCredentialCardCountBeforeDownload, BasePage.getConfiguredWaitTimeInSeconds()),
+				"Deleted credential card is still displayed in stored cards");
 	}
 
 	@Then("user toggles the password visibility using keyboard")

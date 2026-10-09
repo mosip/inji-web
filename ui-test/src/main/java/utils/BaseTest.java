@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -73,14 +74,15 @@ public class BaseTest {
     private static volatile boolean walletCreationPassed = false;
 
     // Gate between "uses 123456" and "resets passcode" groups.
-    // The three @preResetPasscode scenarios (Profile, Home, Download card) each
+    // The six @preResetPasscode scenarios (Profile, Home, Download card,
+    // Delete stored card, VP verification sunbird, VP verification MOSIP) each
     // count this down once when they finish. @resetPasscodeScenario waits for 0
     // before touching the passcode, so it never races a live 123456 session.
     // Count is hardcoded to match the number of @preResetPasscode scenarios.
     // The @NeedsUIN/@NeedsPolicy scenario may retry; we only count down on a real
     // run (uinRetryAttempt==false) to avoid decrementing on intermediate retries.
     // A 30-minute timeout is the safety net if that scenario is permanently skipped.
-    private static final int PRE_RESET_SCENARIO_COUNT = 3;
+    private static final int PRE_RESET_SCENARIO_COUNT = 6;
     private static final CountDownLatch PRE_RESET_LATCH = new CountDownLatch(PRE_RESET_SCENARIO_COUNT);
     // Tracks which scenario IDs have already counted down so retries don't double-decrement.
     private static final java.util.Set<String> preResetCompleted = java.util.concurrent.ConcurrentHashMap.newKeySet();
@@ -101,6 +103,15 @@ public class BaseTest {
             new java.util.concurrent.Semaphore(1);
     private static final ThreadLocal<Boolean> afterResetSemaphoreHeld =
             ThreadLocal.withInitial(() -> false);
+
+
+    // Serialization lock for @mutatesWalletCards scenarios.
+    // All scenarios in this group download or delete a card in the same shared
+    // OIDC wallet. Running them concurrently can result in unexpected outcomes.
+    // A Semaphore(1) ensures only ONE @mutatesWalletCards scenario is active at
+    // a time so each starts with a consistent wallet-card state.
+    private static final Semaphore WALLET_CARDS_SEMAPHORE = new Semaphore(1);
+    private static final ThreadLocal<Boolean> walletCardsSemaphoreHeld = ThreadLocal.withInitial(() -> false);
 
     private static Local browserStackLocal;
     private static final AtomicInteger passedCount  = new AtomicInteger();
@@ -393,7 +404,7 @@ public class BaseTest {
      * Skipped when the scenario is a UIN/Policy retry attempt so intermediate
      * retries don't prematurely release the gate.
      */
-    @After(value = "@preResetPasscode", order = 10001)
+    @After(value = "@preResetPasscode", order = 8000)
     public void countDownPreResetLatch(Scenario scenario) {
         if (!uinRetryAttempt.get() && !policyRetryAttempt.get()) {
             if (preResetCompleted.add(scenario.getId())) {
@@ -423,6 +434,44 @@ public class BaseTest {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             logger.warn("Interrupted while waiting for PRE_RESET_LATCH in '{}'", scenario.getName());
+        }
+    }
+
+
+    /**
+     * Serializes @mutatesWalletCards scenarios (any scenario that downloads or
+     * deletes a card in the shared OIDC wallet) so only one runs at a time,
+     * preventing card-count/position races between them.
+     * Runs at order=550, after the wallet-creation check at order=500.
+     */
+    @Before(value = "@mutatesWalletCards", order = 550)
+    public void acquireWalletCardsSemaphore(Scenario scenario) {
+        try {
+            logger.info("'{}' waiting for wallet-cards serialization semaphore...", scenario.getName());
+            WALLET_CARDS_SEMAPHORE.acquire();
+            walletCardsSemaphoreHeld.set(true);
+            logger.info("'{}' acquired wallet-cards serialization semaphore", scenario.getName());
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            String reason = "Interrupted while waiting for wallet-cards semaphore";
+            markScenarioSkipped(reason);
+            throw new SkipException(reason);
+        }
+    }
+
+    /**
+     * Releases the wallet-cards semaphore so the next @mutatesWalletCards
+     * scenario can begin. order=9000 mirrors releaseAfterResetPasscodeSemaphore,
+     * ensuring the browser is fully closed first.
+     * Not reached when the earlier @Before throws SkipException, so the
+     * semaphore is never acquired in that case and this release is a safe no-op.
+     */
+    @After(value = "@mutatesWalletCards", order = 9000)
+    public void releaseWalletCardsSemaphore(Scenario scenario) {
+        if (walletCardsSemaphoreHeld.get()) {
+            WALLET_CARDS_SEMAPHORE.release();
+            walletCardsSemaphoreHeld.set(false);
+            logger.info("'{}' released wallet-cards serialization semaphore", scenario.getName());
         }
     }
 
