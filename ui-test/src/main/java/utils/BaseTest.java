@@ -74,16 +74,28 @@ public class BaseTest {
     private static volatile boolean walletCreationPassed = false;
 
     // Gate between "uses 123456" and "resets passcode" groups.
-    // The six @preResetPasscode scenarios (Profile, Home, Download card,
+    // The @preResetPasscode scenarios (Profile, Home, Download card,
     // Delete stored card, VP verification sunbird, VP verification MOSIP) each
     // count this down once when they finish. @resetPasscodeScenario waits for 0
     // before touching the passcode, so it never races a live 123456 session.
-    // Count is hardcoded to match the number of @preResetPasscode scenarios.
+    // The count is set by Runner's scenarios() data provider from the number of
+    // @preResetPasscode scenarios actually selected after applying the
+    // cucumber tag filter, so a filtered run never waits on scenarios that were
+    // excluded from the run. Defaults to 0 (no wait) until initPreResetLatch is called.
     // The @NeedsUIN/@NeedsPolicy scenario may retry; we only count down on a real
     // run (uinRetryAttempt==false) to avoid decrementing on intermediate retries.
-    // A 30-minute timeout is the safety net if that scenario is permanently skipped.
-    private static final int PRE_RESET_SCENARIO_COUNT = 6;
-    private static final CountDownLatch PRE_RESET_LATCH = new CountDownLatch(PRE_RESET_SCENARIO_COUNT);
+    // A 10-minute timeout is the safety net if that scenario is permanently skipped.
+    private static volatile CountDownLatch PRE_RESET_LATCH = new CountDownLatch(0);
+
+    /**
+     * Sets the number of @preResetPasscode scenarios {@link #PRE_RESET_LATCH} should wait
+     * for. Must be called with the count of such scenarios actually selected to run
+     * (after tag filtering) before any scenario execution begins, e.g. from Runner's
+     * scenarios() data provider.
+     */
+    public static void initPreResetLatch(int expectedCount) {
+        PRE_RESET_LATCH = new CountDownLatch(Math.max(expectedCount, 0));
+    }
     // Tracks which scenario IDs have already counted down so retries don't double-decrement.
     private static final java.util.Set<String> preResetCompleted = java.util.concurrent.ConcurrentHashMap.newKeySet();
 
@@ -416,6 +428,17 @@ public class BaseTest {
     }
 
     /**
+     * Clears the UIN/Policy retry markers after countDownPreResetLatch has had a
+     * chance to read them. Runs last (order=7000) so a retry-abort attempt is
+     * never mistaken for a completed run.
+     */
+    @After(order = 7000)
+    public void clearRetryAttemptFlags(Scenario scenario) {
+        uinRetryAttempt.remove();
+        policyRetryAttempt.remove();
+    }
+
+    /**
      * @resetPasscodeScenario must not start until all @preResetPasscode scenarios
      * have finished — they all use passcode 123456 which this scenario will change.
      * Runs at order=600, after the wallet-creation check at order=500.
@@ -601,8 +624,6 @@ public class BaseTest {
         // Clean up thread state and exit — the retry analyzer re-queues the scenario;
         // no counting or reporting for this transient attempt.
         if (uinRetryAttempt.get() || policyRetryAttempt.get()) {
-            uinRetryAttempt.remove();
-            policyRetryAttempt.remove();
             UINManager.releaseCurrentThreadUIN();
             PolicyManager.releaseCurrentThreadPolicy();
             clearScenarioState();

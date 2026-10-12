@@ -26,14 +26,15 @@ public class VpVerificationPage extends BasePage {
 
 	public void openInjiVerifyInNewTab() {
 		String injiVerifyUrl = InjiWebConfigManager.getproperty("injiVerifyUi");
+		Set<String> previousHandles = driver.getWindowHandles();
 		((JavascriptExecutor) driver).executeScript("window.open(arguments[0]);", injiVerifyUrl);
-		Set<String> allWindowHandles = driver.getWindowHandles();
 
-		if (allWindowHandles.size() >= 2) {
-			String secondWindowHandle = allWindowHandles.toArray(new String[0])[1];
-			driver.switchTo().window(secondWindowHandle);
-		}
-
+		String newHandle = new WebDriverWait(driver, Duration.ofSeconds(getConfiguredWaitTimeInSeconds())).until(d -> {
+			Set<String> handles = d.getWindowHandles();
+			handles.removeAll(previousHandles);
+			return handles.isEmpty() ? null : handles.iterator().next();
+		});
+		driver.switchTo().window(newHandle);
 		logStep("Open inji verify in a new tab");
 	}
 
@@ -79,21 +80,36 @@ public class VpVerificationPage extends BasePage {
 		clickOnElement(driver, trustVerifierButton, "Click on 'Yes, I trust this Verifier' button");
 	}
 
-	public void selectCredentialForVerification() {
-		By credentialSelectButton = By.cssSelector("button[data-testid$='-select']");
-		WebElement selectButton = waitForPresence(credentialSelectButton, "Wait for credential card select button");
-		String credentialName = selectButton.getAttribute("data-testid").replaceAll("-select$", "");
+	public void selectCredentialForVerification(String credentialName) {
+		By credentialSelectButton = By.xpath(String.format(
+				"//p[normalize-space(text())='%s']/ancestor::button[contains(@data-testid,'-select')][1]",
+				credentialName));
+		By credentialSelectedIndicator = By.xpath(String.format(
+				"//p[normalize-space(text())='%s']/ancestor::button[contains(@data-testid,'-select')][1]"
+						+ "//img[contains(@src,'SelectedTickIcon')]",
+				credentialName));
 
-		// The share button is enabled by the wallet only when at least one credential is selected,
-		// so it is the authoritative selection signal rather than the card styling.
-		if (isElementEnabled(driver, SHOW_CONSENT_MODAL_BUTTON, getConfiguredShortWaitTimeInSeconds())) {
-			logStep("A credential is already selected — skipping selection of '" + credentialName + "'");
+		waitForPresence(credentialSelectButton, "Wait for '" + credentialName + "' credential select button");
+
+		if (probeElementVisible(driver, credentialSelectedIndicator, getConfiguredShortWaitTimeInSeconds())) {
+			logStep("Credential '" + credentialName + "' is already selected — skipping selection");
 			return;
 		}
 
 		clickOnElement(driver, credentialSelectButton,
 				"Select credential '" + credentialName + "' for verification");
 		waitUntilElementEnabled(driver, SHOW_CONSENT_MODAL_BUTTON, getConfiguredWaitTimeInSeconds());
+
+		if (!probeElementVisible(driver, credentialSelectedIndicator, getConfiguredWaitTimeInSeconds())) {
+			String diagnostics = describePageState();
+			ExtentReportManager.logFailure(
+					"Credential '" + credentialName + "' was not selected after clicking",
+					credentialSelectButton.toString(), null);
+			BaseTest.markScenarioFailed();
+			throw new AssertionError(
+					"Credential '" + credentialName + "' was not selected after clicking — " + diagnostics);
+		}
+		logStep("Verified credential '" + credentialName + "' is selected before sharing");
 	}
 
 	private WebElement waitForPresence(By locator, String stepDesc) {

@@ -68,9 +68,9 @@ public class StepDefVpVerification {
 		vpVerificationPage.clickOnTrustVerifier();
 	}
 
-	@Then("User selects the credential for verification")
-	public void user_selects_the_credential_for_verification() {
-		vpVerificationPage.selectCredentialForVerification();
+	@Then("User selects the {string} credential for verification")
+	public void user_selects_the_credential_for_verification(String credentialName) {
+		vpVerificationPage.selectCredentialForVerification(credentialName);
 	}
 
 	@Then("User clicks consent and share button")

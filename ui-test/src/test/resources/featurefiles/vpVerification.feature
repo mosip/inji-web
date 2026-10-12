@@ -24,7 +24,7 @@ Feature: OVP verification using inji verify
     And User selects configured inji web wallet in verifier
     And User click on wallet proceed button
     And User click on trust verifier
-    And User selects the credential for verification
+    And User selects the "Health Insurance" credential for verification
     And User clicks consent and share button
     Then VP result is posted back to inji verify successfully
 
@@ -59,7 +59,7 @@ Feature: OVP verification using inji verify
     And User selects configured inji web wallet in verifier
     And User click on wallet proceed button
     And User click on trust verifier
-    And User selects the credential for verification
+    And User selects the "MOSIP National ID" credential for verification
     And User clicks consent and share button
     Then VP result is posted back to inji verify successfully
 

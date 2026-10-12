@@ -558,16 +558,22 @@ public class Loginpage extends BasePage {
 		return true;
 	}
 
+	private boolean isStoredCredentialsPageLoaded(WebDriver webDriver) {
+		return !webDriver.findElements(By.xpath("//div[@data-testid='vc-card-view']")).isEmpty()
+				|| !webDriver.findElements(By.xpath("//h2[@data-testid='no-credentials-downloaded-title']")).isEmpty();
+	}
+
 	public int getStoredCredentialCardCount() {
-		isElementNotVisible(driver, By.xpath("//*[@data-testid='loader-credentials']"),
-				"Wait for stored cards loading spinner to disappear before counting cards");
+		new WebDriverWait(driver, Duration.ofSeconds(getConfiguredWaitTimeInSeconds()))
+				.until(this::isStoredCredentialsPageLoaded);
 		return driver.findElements(By.xpath("//div[@data-testid='vc-card-view']")).size();
 	}
 
 	public boolean waitForStoredCredentialCardCount(int expectedCount, int timeoutInSeconds) {
 		try {
 			return new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds))
-					.until(d -> d.findElements(By.xpath("//div[@data-testid='vc-card-view']")).size() == expectedCount);
+					.until(d -> isStoredCredentialsPageLoaded(d)
+							&& d.findElements(By.xpath("//div[@data-testid='vc-card-view']")).size() == expectedCount);
 		} catch (Exception e) {
 			return false;
 		}

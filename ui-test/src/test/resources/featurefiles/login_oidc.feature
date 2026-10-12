@@ -98,6 +98,7 @@ Feature: OIDC Login for InjiWeb
     Then user verify current url user credentials
     Then user verify no cards stored message
     Then user verify substring when no cards stored
+    Then user captures the stored credential card count
     Then User click on cards button
     And User search the issuers mosip
     When User click on download mosip credentials button
@@ -112,6 +113,11 @@ Feature: OIDC Login for InjiWeb
     And User click on verify button
     Then User verifies mosip vc is downloaded successfully
     Then user click on stored credentials button
+    Then user verifies a new credential card is added to stored cards
+    Then user deletes the most recently added credential card
+    Then user verifies the credential card is removed from stored cards
+    Then user refresh the page
+    Then user verifies the credential card is removed from stored cards
     Then User click on cards button
     And User search the issuers sunbird
     And User verify sunbird credentials button
@@ -119,11 +125,19 @@ Feature: OIDC Login for InjiWeb
     Then User verify list of credential types displayed
     And User verify sunbird rc insurance verifiable credential displayed
     And User click on sunbird rc insurance verifiable credential button
+    And User verify policy number input box header
     And User enter the policy number
+    And User verify full name input box header
     And User enter the full name
+    And User verify date of birth input box header
     And User enter the date of birth
     And User click on login button
     Then user click on stored credentials button
+    Then user verifies a new credential card is added to stored cards
+    Then user deletes the most recently added credential card
+    Then user verifies the credential card is removed from stored cards
+    Then user refresh the page
+    Then user verifies the credential card is removed from stored cards
     Then User click on cards button
     And User search the issuers sunbird
     And User verify sunbird credentials button
@@ -138,45 +152,11 @@ Feature: OIDC Login for InjiWeb
     And User verify date of birth input box header
     And User enter the date of birth
     And User click on login button
-    Then user verifies card search functionality
-    Then user verifies cards are in horizontal order
-
-    Examples:
-      | initialPasscode |
-      | 123456          |
-
-  @oidcLogin @preResetPasscode @deleteStoredCard @mutatesWalletCards @NeedsPolicy
-  Scenario Outline: User deletes a stored sunbird card and verifies deletion persists after refresh
-    When user performs token-based login using Gmail refresh token
-    And user enters the passcode "<initialPasscode>"
-    And user click on submit button
     Then user click on stored credentials button
-    Then user verify current url user credentials
-    Then user captures the stored credential card count
-    Then User click on cards button
-    And User search the issuers sunbird
-    And User verify sunbird credentials button
-    And User click on sunbird credentials button
-    Then User verify list of credential types displayed
-    And User verify sunbird rc insurance verifiable credential displayed
-    And User click on sunbird rc insurance verifiable credential button
-    And User verify policy number input box header
-    And User enter the policy number
-    And User verify full name input box header
-    And User enter the full name
-    And User verify date of birth input box header
-    And User enter the date of birth
-    And User click on login button
-    Then user click on stored credentials button
-    Then user verify current url user credentials
-    Then user verifies a new credential card is added to stored cards
-    And user refresh the page
-    Then user verify current url user credentials
     Then user verifies a new credential card is added to stored cards
     Then user deletes the most recently added credential card
     Then user verifies the credential card is removed from stored cards
-    And user refresh the page
-    Then user verify current url user credentials
+    Then user refresh the page
     Then user verifies the credential card is removed from stored cards
 
     Examples:

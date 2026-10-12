@@ -1,5 +1,6 @@
 package runnerfiles;
 
+import utils.BaseTest;
 import utils.InjiWebConfigManager;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
@@ -175,7 +176,14 @@ public class Runner extends AbstractTestNGCucumberTests{
 	@Override
 	@DataProvider(parallel = true)
 	public Object[][] scenarios() {
-		return Arrays.stream(super.scenarios())
+		Object[][] allScenarios = super.scenarios();
+
+		long preResetScenarioCount = Arrays.stream(allScenarios)
+				.filter(row -> ((PickleWrapper) row[0]).getPickle().getTags().contains("@preResetPasscode"))
+				.count();
+		BaseTest.initPreResetLatch((int) preResetScenarioCount);
+
+		return Arrays.stream(allScenarios)
 				.sorted(Comparator.comparingInt(row -> dispatchRank((PickleWrapper) row[0])))
 				.toArray(Object[][]::new);
 	}
