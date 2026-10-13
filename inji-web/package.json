@@ -42,7 +42,7 @@
     "build": "CI=false react-scripts build",
     "test": "react-scripts test --silent --testPathPattern=__tests__",
     "eject": "react-scripts eject",
-    "sonar": "sonar-scanner"
+    "sonar": "npm test -- --coverage && sonar-scanner"
   },
   "eslintConfig": {
     "extends": [
