@@ -558,6 +558,39 @@ public class Loginpage extends BasePage {
 		return true;
 	}
 
+	private boolean isStoredCredentialsPageLoaded(WebDriver webDriver) {
+		return !webDriver.findElements(By.xpath("//div[@data-testid='vc-card-view']")).isEmpty()
+				|| !webDriver.findElements(By.xpath("//h2[@data-testid='no-credentials-downloaded-title']")).isEmpty();
+	}
+
+	public int getStoredCredentialCardCount() {
+		new WebDriverWait(driver, Duration.ofSeconds(getConfiguredWaitTimeInSeconds()))
+				.until(this::isStoredCredentialsPageLoaded);
+		return driver.findElements(By.xpath("//div[@data-testid='vc-card-view']")).size();
+	}
+
+	public boolean waitForStoredCredentialCardCount(int expectedCount, int timeoutInSeconds) {
+		try {
+			return new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds))
+					.until(d -> isStoredCredentialsPageLoaded(d)
+							&& d.findElements(By.xpath("//div[@data-testid='vc-card-view']")).size() == expectedCount);
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public void deleteLastStoredCredentialCard() {
+		clickOnElement(driver,
+				By.xpath("(//div[@data-testid='vc-card-view'])[last()]//button[@data-testid='icon-mini-view-card-menu']"),
+				"Click ellipsis menu icon for the most recently added credential card");
+		clickOnElement(driver,
+				By.xpath("(//div[@data-testid='vc-card-view'])[last()]//button[@data-testid='menu-item-delete']"),
+				"Click 'Delete' option in card menu for the most recently added credential card");
+		clickOnElement(driver,
+				By.xpath("//button[@data-testid='btn-confirm']"),
+				"Click 'Confirm' button on delete confirmation modal");
+	}
+
 	public Boolean isProfileDropDownOptionsDisplayed() {
 		return isElementIsVisible(driver,
 				By.xpath("//div[@data-testid='profile-dropdown']"),

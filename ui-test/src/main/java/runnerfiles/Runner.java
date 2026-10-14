@@ -1,5 +1,6 @@
 package runnerfiles;
 
+import utils.BaseTest;
 import utils.InjiWebConfigManager;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
@@ -29,6 +30,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -165,11 +168,40 @@ public class Runner extends AbstractTestNGCucumberTests{
 		else
 			return "IDE";
 	}
-	
+
+	// Scenarios are sorted so that scenarios other tests wait on always run
+	// first. Without this, scenarios could be dispatched in an order where
+	// every thread ends up waiting on a scenario that hasn't had a chance to
+	// run yet, since TestNG runs them in parallel across a limited thread pool.
 	@Override
 	@DataProvider(parallel = true)
 	public Object[][] scenarios() {
-		return super.scenarios();
+		Object[][] allScenarios = super.scenarios();
+
+		long preResetScenarioCount = Arrays.stream(allScenarios)
+				.filter(row -> ((PickleWrapper) row[0]).getPickle().getTags().contains("@preResetPasscode"))
+				.count();
+		BaseTest.initPreResetLatch((int) preResetScenarioCount);
+
+		return Arrays.stream(allScenarios)
+				.sorted(Comparator.comparingInt(row -> dispatchRank((PickleWrapper) row[0])))
+				.toArray(Object[][]::new);
+	}
+
+	// Lower rank = runs earlier. Order matches the dependency chain:
+	// walletCreation -> (everything else) -> resetPasscodeScenario -> afterResetPasscode.
+	private static int dispatchRank(PickleWrapper pickleWrapper) {
+		List<String> tags = pickleWrapper.getPickle().getTags();
+		if (tags.contains("@walletCreation")) {
+			return 0; // runs first, creates the wallet everything else depends on
+		}
+		if (tags.contains("@resetPasscodeScenario")) {
+			return 2; // waits for all rank-1 scenarios to finish before running
+		}
+		if (tags.contains("@afterResetPasscode")) {
+			return 3; // waits for the rank-2 scenario to finish before running
+		}
+		return 1; // everything else — doesn't wait on anything, safe to run early
 	}
 
 	@BeforeMethod
