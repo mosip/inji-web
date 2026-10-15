@@ -10,6 +10,8 @@ import utils.InjiWebConfigManager;
 import utils.InjiWebUtil;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class SunbirdCredentials extends BasePage {
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -73,18 +75,28 @@ public class SunbirdCredentials extends BasePage {
 				"Enter full name");
 	}
 
-	public void selectDateOfBirth(String dob) {
-		WebElement fullNameField = driver.findElement(By.id("fullName"));
-		By realDateInput = By.cssSelector("input.real-date-input[name='dob']");
-		WebElement dobField = driver.findElement(realDateInput);
-		InjiWebUtil injiWebUtil = new InjiWebUtil();
-		String formattedDob = injiWebUtil.resolveAcceptedDateOfBirthFormat(dob, dobField);
+//	public void selectDateOfBirth(String dob) {
+//		WebElement fullNameField = driver.findElement(By.id("fullName"));
+//		By realDateInput = By.cssSelector("input.real-date-input[name='dob']");
+//		WebElement dobField = driver.findElement(realDateInput);
+//		InjiWebUtil injiWebUtil = new InjiWebUtil();
+//		String formattedDob = injiWebUtil.resolveAcceptedDateOfBirthFormat(dob, dobField);
+//
+//		fullNameField.sendKeys(Keys.TAB);
+//
+//		dobField.clear();
+//		dobField.sendKeys(formattedDob);
+//		dobField.sendKeys(Keys.TAB);
+//
+//		logStep("Enter date of birth", By.id("dob"));
+//	}
 
-		fullNameField.sendKeys(Keys.TAB);
+	public void selectDateOfBirth(String dob) {
+		WebElement dobField = driver.findElement(By.id("dob"));
+		String formattedDob = LocalDate.parse(dob.trim()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
 		dobField.clear();
 		dobField.sendKeys(formattedDob);
-		dobField.sendKeys(Keys.TAB);
 
 		logStep("Enter date of birth", By.id("dob"));
 	}
