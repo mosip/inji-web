@@ -77,6 +77,27 @@ public class MosipCredentials extends BasePage {
 		logStep("Clear OTP input fields", OTP_INPUT);
 	}
 
+	public Boolean isOtpCleared(WebDriver driver) {
+		try {
+			new WebDriverWait(driver, Duration.ofSeconds(getConfiguredWaitTimeInSeconds()))
+					.until(webDriver -> {
+						for (int i = 1; i <= OTP_LENGTH; i++) {
+							String locator = "(//input[@class='pincode-input-text'])[" + i + "]";
+							String value = webDriver.findElement(By.xpath(locator)).getAttribute("value");
+							if (value != null && !value.isEmpty()) {
+								return false;
+							}
+						}
+						return true;
+					});
+			logStep("Verify all OTP input fields are empty", OTP_INPUT);
+			return true;
+		} catch (Exception e) {
+			logWarning("OTP input fields are not empty after clearing", OTP_INPUT);
+			return false;
+		}
+	}
+
 	public Boolean isEsignetErrorMessageDisplayed(String message) {
 		By errorMessage = By.xpath(String.format("//*[contains(normalize-space(text()), \"%s\")]", message));
 		return isElementIsVisible(driver, errorMessage, getConfiguredWaitTimeInSeconds(),

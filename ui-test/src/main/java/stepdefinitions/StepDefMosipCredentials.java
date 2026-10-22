@@ -79,10 +79,16 @@ public class StepDefMosipCredentials {
 		mosipCredentials.clickOnGetOtpButton();
 	}
 
-	@Then("User verify esignet error message {string}")
-	public void user_verify_esignet_error_message(String message) {
-		assertTrue(mosipCredentials.isEsignetErrorMessageDisplayed(message),
-				"Expected e-Signet error message is not displayed: " + message);
+	@Then("User verify unable to send otp error message")
+	public void user_verify_unable_to_send_otp_error_message() {
+		assertTrue(mosipCredentials.isEsignetErrorMessageDisplayed(InjiWebConstants.EsignetSendOtpFailedMessage),
+				"Expected e-Signet error message is not displayed: " + InjiWebConstants.EsignetSendOtpFailedMessage);
+	}
+
+	@Then("User verify invalid otp error message")
+	public void user_verify_invalid_otp_error_message() {
+		assertTrue(mosipCredentials.isEsignetErrorMessageDisplayed(InjiWebConstants.EsignetInvalidOtpMessage),
+				"Expected e-Signet error message is not displayed: " + InjiWebConstants.EsignetInvalidOtpMessage);
 	}
 
 	@When("User click on getOtp button")
@@ -127,6 +133,8 @@ public class StepDefMosipCredentials {
 	@When("User clear the otp")
 	public void user_clear_the_otp() {
 		mosipCredentials.clearOtp(baseTest.getDriver());
+		assertTrue(mosipCredentials.isOtpCleared(baseTest.getDriver()),
+				"OTP input fields are not empty after clearing");
 	}
 
 	@When("User click on mosip national id by e-signet button")

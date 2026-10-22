@@ -17,12 +17,12 @@ Feature: download mosip cridentials
     And User verify vid input box header
     And User enter the uin "<invalid uin>"
     And User click on getOtp button expecting failure
-    Then User verify esignet error message "Unable to send OTP. Please try again."
+    Then User verify unable to send otp error message
     And User enter the uin
     And User click on getOtp button
     And User enter the otp "<invalid otp>"
     And User click on verify button expecting failure
-    Then User verify esignet error message "Please enter valid OTP."
+    Then User verify invalid otp error message
     And User clear the otp
     And User enter the otp
     And User click on verify button
